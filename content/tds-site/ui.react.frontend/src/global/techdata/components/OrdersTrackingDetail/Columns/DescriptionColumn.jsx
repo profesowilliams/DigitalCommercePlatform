@@ -9,7 +9,6 @@ import Tooltip from '@mui/material/Tooltip';
 
 function DescriptionColumn({ line, config }) {
   const [open, setOpen] = useState(false);
-
   const {
     name,
     firstName,
@@ -70,16 +69,9 @@ function DescriptionColumn({ line, config }) {
         {result.map((el, idx) => {
           return <div key={idx}>{el}</div>;
         })}
-        <button
-          className="cmp-order-tracking-grid-details__description-button"
-          onClick={handleTooltipClose}
-        >
-          {getDictionaryValueOrKey(config?.itemsLabels?.endUserInfoClose)}
-        </button>
       </div>
     );
   };
-
   return (
     <div className="cmp-order-tracking-grid-details__description-row">
       <div className="cmp-order-tracking-grid-details__description-image">
@@ -125,7 +117,19 @@ function DescriptionColumn({ line, config }) {
           )}
           {endUserInformationFlag && line?.endUser && (
             <Tooltip
-              title={renderTemplate(template)}
+              title={
+                <>
+                  <div>{renderTemplate(template)}</div>
+                  <button
+                    className="cmp-order-tracking-grid-details__description-button"
+                    onClick={handleTooltipClose}
+                  >
+                    {getDictionaryValueOrKey(
+                      config?.itemsLabels?.endUserInfoClose
+                    )}
+                  </button>
+                </>
+              }
               placement="top"
               arrow
               PopperProps={{
