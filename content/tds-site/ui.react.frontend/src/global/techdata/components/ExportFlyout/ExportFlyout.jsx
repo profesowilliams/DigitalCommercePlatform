@@ -147,8 +147,8 @@ function ExportFlyout({
 
   function getExportLinesWithSerialNumbersOnly() {
     const url =
-      componentProp?.uiCommerceServiceDomain +
-        endpoints.exportLinesWithSerialNumbersOnly || 'nourl';
+      componentProp?.uiCommerceServiceDomain + endpoints.exportAllOrderLines ||
+      'nourl';
     urlSearchParams.set('OnlyWithSerialNumbers', true);
     return requestFileBlobWithoutModal(
       url + '?' + urlSearchParams.toString(),

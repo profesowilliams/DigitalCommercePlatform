@@ -66,7 +66,7 @@ function OrderModificationFlyout({
   const flyoutVisible = orderModificationConfig?.show;
   const enableAddLine = orderModificationContent?.addLine === true;
   const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${orderNumber}`;
-  const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}${endpoints.orderModifyEndpoint}`;
+  const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}${endpoints.orderModify}`;
 
   const getOrderModificationData = async () => {
     try {

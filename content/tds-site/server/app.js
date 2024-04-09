@@ -7834,14 +7834,14 @@ app.get("/ui-commerce/v3/ordermodification/:id", function (req, res) {
   }, 200);
 });
 
-app.get("/ui-commerce/v2/OrdersExport", function (req, res) {
+app.get("/ui-commerce/v2/OrderExport", function (req, res) {
   return res.download("exportOrderDetail.xlsx");
 });
 app.get("/ui-commerce/v2/ReportOrdersExport", function (req, res) {
   return res.download("exportOrderDetail.xlsx");
 });
 
-app.get("/ui-commerce/v2/ReportOrders", function (req, res) {
+app.get("/ui-commerce/v3/OrderReport", function (req, res) {
   const response = {
     content: {
       items: [
@@ -8816,7 +8816,7 @@ app.get("/ui-commerce/v2/ReportOrders", function (req, res) {
   }, 200);
 });
 
-app.get("/ui-commerce/v2/ReportOrdersCount", function (req, res) {
+app.get("/ui-commerce/v3/OrderReport/Count", function (req, res) {
   const response = {
     content: {
       totalItems: 1,
