@@ -23,9 +23,14 @@ function DescriptionColumn({ line, config }) {
     zip,
     country,
   } = line?.endUser || {};
+  
   const endUserInformationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.endUserInformation
   );
+  const enableTooltip =
+    endUserInformationFlag &&
+    line?.endUser &&
+    Object.entries(line?.endUser).length > 0;
   const endUserInfoTemplateDefault =
     '{name}<br/>{firstName} {lastName}<br/>{line1}<br/>{line2}<br/>{line3}<br/>{city} {state} {zip} {country}<br/>{phone}<br/>{email}';
   const template = getDictionaryValue(
@@ -119,7 +124,7 @@ function DescriptionColumn({ line, config }) {
               line?.tdNumber
             }`}</div>
           )}
-          {endUserInformationFlag && line?.endUser && (
+          {enableTooltip && (
             <Tooltip
               title={
                 <>
