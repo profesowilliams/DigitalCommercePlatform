@@ -5,7 +5,9 @@ export async function fetchData(config) {
   const { id = '' } = getUrlParams();
 
   try {
-    const result = await usGet(`${config.uiServiceEndPoint}/${id}/lines`);
+    const result = await usGet(
+      `${config.uiServiceEndPoint}/orderdetails/${id}/lines`
+    );
     return result;
   } catch (error) {
     console.error('🚀error on orders tracking details grid >>', error);
