@@ -188,7 +188,7 @@ function OrdersTrackingGrid(props) {
     );
     const ordersReportCountUrl = new URL(
       componentProp.uiCommerceServiceDomain +
-        endpoints.ordersReportCountEndpoint
+        endpoints.ordersReportCount
     );
 
     const ordersCountUrl = new URL(
