@@ -15,13 +15,13 @@ import {
 import { ORDER_FILTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 
 export const endpoints = {
-  ordersReport: '/v2/ReportOrders',
-  ordersReportCount: '/v2/ReportOrdersCount',
-  exportAllOrderLines: '/v2/OrdersExport',
-  exportLinesWithSerialNumbersOnly: '/v2/ReportOrdersExport',
+  ordersReport: '/v3/ReportOrders',
+  ordersReportCount: '/v3/ReportOrdersCount',
+  exportAllOrderLines: '/v3/OrdersExport',
+  exportLinesWithSerialNumbersOnly: '/v3/ReportOrdersExport',
   orderModify: '/v2/OrderModify',
-  orderModifyChange: '/v2/OrderModifyChange',
-  uiService: '/v2/orders',
+  orderModifyChange: '/v3/OrderModifyChange',
+  uiService: '/v3/orders',
   orderDetail: '/v3/orderdetails',
   replaceProduct: '/v2/OrderEOL',
   replacementsProducts: '/v2/Product/Replacement',

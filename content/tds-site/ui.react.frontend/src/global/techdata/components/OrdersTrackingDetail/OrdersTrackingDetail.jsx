@@ -61,7 +61,7 @@ function OrdersTrackingDetail(props) {
   const headerRequest = async () => {
     try {
       const apiResponse = await usGet(
-        `${config.uiCommerceServiceDomain+endpoints.orderDetailEndpoint}/${id}`
+        `${config.uiCommerceServiceDomain}${endpoints.orderDetail}/${id}`
       );
       setContent(apiResponse?.data?.content);
       if (apiResponse.status === 204) {
