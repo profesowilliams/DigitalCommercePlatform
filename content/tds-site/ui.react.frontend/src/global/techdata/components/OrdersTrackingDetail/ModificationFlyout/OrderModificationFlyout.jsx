@@ -281,10 +281,24 @@ function OrderModificationFlyout({
     setNewlyAddedItems(newItemsList);
   };
 
-  const handleChangeNewItem = (index, quantity) => {
+  const handleChangeNewItem = async (index, quantity) => {
     const newItemsList = [...newlyAddedItems];
-    newItemsList[index].quantity = quantity;
-    setNewlyAddedItems(newItemsList);
+    try {
+      const result = await usPost(
+        `${gridConfig.uiCommerceServiceDomain}/v2/Price/GetPriceForProduct`,
+        {
+          productId: newItemsList[index].id,
+          quantity: quantity,
+        }
+      );
+      const { price } = result?.data?.content?.priceData || {};
+      newItemsList[index].quantity = quantity;
+      newItemsList[index].price = price;
+      setNewlyAddedItems(newItemsList);
+      return result;
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   useEffect(() => {

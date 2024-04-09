@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button } from '@mui/material';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Autocomplete from '@mui/material/Autocomplete';
-import { usGet } from '../../../../../utils/api';
+import { usGet, usPost } from '../../../../../utils/api';
 
 const NewItemForm = ({
   labels = {},
@@ -55,7 +55,7 @@ const NewItemForm = ({
   const fetchSuggestions = async (newValue) => {
     try {
       const result = await usGet(
-        `${domain}/v2/SearchProduct?SearchTerm=${newValue}`
+        `${domain}/v2/Product/Search?query=${newValue}`
       );
       return result;
     } catch (error) {
@@ -65,18 +65,29 @@ const NewItemForm = ({
 
   const handleAutocompleteInput = (newValue) => {
     setAutocompleteInputValue(newValue);
-    fetchSuggestions(newValue).then((result) => {
-      setNewSuggestions(result.data.content);
-    });
+    newValue.length >= 3 &&
+      fetchSuggestions(newValue).then((result) => {
+        setNewSuggestions(result.data.content);
+      });
   };
 
   const handleChange = (key, newValue) => {
     setValues((prevState) => ({ ...prevState, [key]: newValue }));
   };
 
-  const handleAddNewItem = () => {
-    addNewItem(values.item, values.quantity);
+  const handleAddNewItem = async () => {
     setNewItemFormVisible(false);
+    try {
+      const result = await usPost(`${domain}/v2/Price/GetPriceForProduct`, {
+        productId: values.item.id,
+        quantity: values.quantity,
+      });
+      const { price, currency } = result?.data?.content?.priceData || {};
+      addNewItem({ ...values.item, price, currency }, values.quantity);
+      return result;
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const isFormFilled = Object.values(values).every((value) => Boolean(value));

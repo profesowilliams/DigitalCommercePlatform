@@ -32,6 +32,7 @@ function DescriptionColumn({ line, config }) {
     config?.itemsLabels?.endUserInfoTemplate,
     endUserInfoTemplateDefault
   );
+
   const replacements = {
     '{name}': name,
     '{firstName}': firstName,
@@ -46,6 +47,7 @@ function DescriptionColumn({ line, config }) {
     '{zip}': zip,
     '{country}': country,
   };
+
   const handleTooltipClose = () => {
     setOpen(false);
   };
@@ -53,6 +55,7 @@ function DescriptionColumn({ line, config }) {
   const handleTooltipOpen = () => {
     setOpen(true);
   };
+
   const renderTemplate = (aemTemplate) => {
     let replacedTemplate = aemTemplate;
     for (const [placeholder, val] of Object.entries(replacements)) {
@@ -82,28 +85,29 @@ function DescriptionColumn({ line, config }) {
         />
       </div>
       <div className="cmp-order-tracking-grid-details__description-right">
-        <Tooltip
-          title={line?.displayName ?? ''}
-          placement="top"
-          arrow
-          disableInteractive={true}
-          disableHoverListener={line?.displayName?.length < 50}
-        >
-          {line?.displayName &&
-            (line?.urlProductDetailsPage ? (
+        {line?.displayName && (
+          <Tooltip
+            title={line.displayName}
+            placement="top"
+            arrow
+            disableInteractive={true}
+            disableHoverListener={line.displayName.length < 50}
+          >
+            {line.urlProductDetailsPage ? (
               <a
                 href={line?.urlProductDetailsPage}
                 target="_blank"
                 className="cmp-order-tracking-grid-details__description-link"
               >
-                {line?.displayName}
+                {line.displayName}
               </a>
             ) : (
               <div className="cmp-order-tracking-grid-details__description-link--disabled">
-                {line?.displayName}
+                {line.displayName}
               </div>
-            ))}
-        </Tooltip>
+            )}
+          </Tooltip>
+        )}
         <div className="cmp-order-tracking-grid-details__description-text">
           {line?.mfrNumber && (
             <div>{`${getDictionaryValueOrKey(config?.itemsLabels?.mfrPartNo)} ${

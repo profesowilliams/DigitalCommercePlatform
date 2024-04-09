@@ -27,7 +27,7 @@ const NewlyAddedLineItem = ({
       <div className="cmp-flyout-list__element__counter">
         <Counter
           minVal={0}
-          value={item.quantity}
+          value={Number(item.quantity)}
           onChange={handleAmountChange}
         />
         <a

@@ -45,7 +45,7 @@ const EmailsForm = ({
       setValues([...values, key]);
       onChange(activeFlag, true);
     }
-    newValue && onChange(key, newValue);
+    newValue != null && onChange(key, newValue);
   };
 
   const handleAdditionalEmailChange = (newValue) => {

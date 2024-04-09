@@ -7465,7 +7465,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
 
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 2000);
+  }, 200);
 });
 
 app.get("/ui-commerce/v3/orders/count", (req, res) => {
@@ -7561,13 +7561,12 @@ app.get("/ui-commerce/v3/invoices", (req, res) => {
   }
 });
 
-app.get("/ui-commerce/v2/ReplacementProduct", (req, res) => {
+app.get("/ui-commerce/v2/Product/Replacement", (req, res) => {
   const response = {
     content: {
       productDtos: [
         {
           image: {
-            id: "4d32db61-aa75-4aab-9397-ef1f01b92567",
             url: "https://cdn.cs.1worldsync.com/4d/32/4d32db61-aa75-4aab-9397-ef1f01b92567.jpg",
             type: "Product shot",
             angle: "Front",
@@ -7764,14 +7763,14 @@ app.post("/ui-commerce/v2/OrderModify", (req, res) => {
 
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 20000);
+  }, 200);
 });
 
 app.get("/ui-commerce/v3/ordermodification/:id", function (req, res) {
   const response = {
     content: {
       id: "6110014079",
-      orderEditable: false,
+      orderEditable: true,
       addLine: true,
       items: [
         {
@@ -9220,7 +9219,7 @@ app.post("/security", function (req, res) {
   }
 });
 
-app.get("/ui-commerce/v2/SearchProduct", function (req, res) {
+app.get("/ui-commerce/v2/Product/Search", function (req, res) {
   const response = {
     content: {
       products: [
@@ -9317,5 +9316,45 @@ app.get("/ui-commerce/v2/SearchProduct", function (req, res) {
   };
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 2000);
+  }, 200);
+});
+
+app.post("/ui-commerce/v2/Price/GetPriceForProduct", function (req, res) {
+  const response = {
+    content: {
+      priceData: {
+        currency: "GBP",
+        price: 20,
+        endUserPromos: [
+          {
+            endCustomer: "string",
+            id: ["string"],
+            includesWebDiscount: true,
+            type: "string",
+            value: 0,
+            sortValue: 0,
+            expiration: "2024-04-09T11:07:39.266Z",
+            minQuantity: 0,
+            vendorBidNumber: "string",
+            remainingQuantity: 0,
+            quantityLimited: true,
+            info: [
+              {
+                name: "string",
+                value: "string",
+              },
+            ],
+          },
+        ],
+      },
+    },
+    error: {
+      code: 0,
+      messages: ["string"],
+      isError: true,
+    },
+  };
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
 });

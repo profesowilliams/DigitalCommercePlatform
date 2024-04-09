@@ -23,7 +23,7 @@ const Counter = ({ value = 0, onChange, minVal = 0, maxVal = null }) => {
         min={minVal}
         value={value}
         onChange={(e) => {
-          onChange(e.target.value);
+          onChange(Number(e.target.value));
         }}
       />
       <div className="plus" onClick={increase}>

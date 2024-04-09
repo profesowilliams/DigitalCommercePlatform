@@ -24,7 +24,7 @@ export const endpoints = {
   uiService: '/v2/orders',
   orderDetail: '/v3/orderdetails',
   replaceProduct: '/v2/OrderEOL',
-  replacementsProducts: '/v2/ReplacementProduct',
+  replacementsProducts: '/v2/Product/Replacement',
 };
 
 export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
