@@ -7322,7 +7322,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?/lines", (req, res) => {
               ],
               serialsAny: false,
               canTrackAndTrace: false,
-              isEOL: false,
+              isEOL: true,
             },
           ],
           endUser: {

@@ -3,6 +3,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
   const item = data?.line;
+  const lineIndex = data?.index;
   const {
     line,
     urlProductImage,
@@ -32,7 +33,7 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
           <p className="bold">
             {getDictionaryValueOrKey(labels?.qty || labels?.qtyReplacement)}:
           </p>
-          <p>{lineDetails[0]?.quantity ?? originalOrderQuantity}</p>
+          <p>{lineDetails[lineIndex]?.quantity ?? originalOrderQuantity}</p>
         </div>
         <div className="cmp-flyout-list__element__unit-cost">
           <p className="bold">
@@ -47,7 +48,7 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
             )}{' '}
             ({currency})
           </p>
-          <p>{lineDetails[0]?.subtotalPriceFormatted}</p>
+          <p>{lineDetails[lineIndex]?.subtotalPriceFormatted}</p>
         </div>
       </div>
     </div>

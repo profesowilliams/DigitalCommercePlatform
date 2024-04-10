@@ -40,7 +40,7 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
     ),
   };
 
-  const handleSeeOptionsClick = () => {
+  const handleSeeOptionsClick = (index) => {
     getValidationData()
       .then((result) => {
         const orderEditable = result.data.content.orderEditable;
@@ -49,7 +49,7 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
           ? setCustomState({
               key: 'productReplacementFlyout',
               value: {
-                data: { line },
+                data: { line, index },
                 enableReplace,
                 show: true,
               },
@@ -85,7 +85,8 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
   return (
     <div className="cmp-order-tracking-grid-details__splitLine-column">
       {sortedLineDetails(line)?.map((el, index) => {
-        const isLastElement = multiple && index === line?.lineDetails?.length - 1;
+        const isLastElement =
+          multiple && index === line?.lineDetails?.length - 1;
         const isEOL = line?.lineDetails[index].isEOL;
         return (
           <div
@@ -99,7 +100,9 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
             <span
               className="cmp-order-tracking-grid-details__splitLine__separateLineText"
               onClick={
-                isEOL && orderModificationFlag ? handleSeeOptionsClick : null
+                isEOL && orderModificationFlag
+                  ? () => handleSeeOptionsClick(index)
+                  : null
               }
             >
               {isEOL ? EOLStatus : el.statusText || ''}
