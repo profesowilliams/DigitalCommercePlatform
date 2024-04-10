@@ -80,6 +80,13 @@ export const getEnglishFiltersLabel = (optionKey) => {
   return labels[optionKey] || optionKey;
 };
 
+export const getEngUserDataAnalyticsGoogle = () => {
+  return {
+    event: "Order tracking - End User Data",
+    action: "popup"
+  }
+}
+
 export const getReportAnalyticsGoogle = (category, option) => {
   const reportEnglishLabel = getEnglishReportLabel(option.key);
   return {
@@ -206,6 +213,23 @@ export const getProActiveTypesAnalyticsGoogle = ( value ) => {
     label: value,
   };
 };
+
+export const getSelectItemAnalyticsGoogle = (item_name, item_id, price, index) => {
+  return {
+    event: "select_item",
+    ecommerce: {
+      item_list_name: "OrderTrackingDetails",
+      items: [
+        {
+          item_name,
+          item_id,
+          price,
+          index
+        }
+      ]
+    }
+  }
+}
 
 export const getProActiveMailAnalyticsGoogle = (value, isAdditional) => {
   const additional = isAdditional ? " Additional" : "";

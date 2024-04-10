@@ -212,8 +212,7 @@ function OrdersTrackingGrid(props) {
           isOnSearchAction.current
         )
       : await fetchData(queryOperations);
-
-    if (ordersCountResponse.error?.isError) {
+    if (ordersCountResponse.error?.isError || response?.status !== 200 || response?.data?.content?.items?.length === 0) {
       setResponseError(true);
       if (reportFilterValue?.current?.value) {
         pushDataLayerGoogle(

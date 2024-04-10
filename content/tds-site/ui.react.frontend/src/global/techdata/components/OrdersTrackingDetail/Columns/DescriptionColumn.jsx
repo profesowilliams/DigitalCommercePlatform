@@ -6,6 +6,7 @@ import {
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { PeopleIcon } from '../../../../../fluentIcons/FluentIcons';
 import Tooltip from '@mui/material/Tooltip';
+import { getEngUserDataAnalyticsGoogle, getSelectItemAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 function DescriptionColumn({ line, config }) {
   const [open, setOpen] = useState(false);
@@ -59,6 +60,7 @@ function DescriptionColumn({ line, config }) {
 
   const handleTooltipOpen = () => {
     setOpen(true);
+    pushDataLayerGoogle(getEngUserDataAnalyticsGoogle());
   };
 
   const renderTemplate = (aemTemplate) => {
@@ -104,7 +106,20 @@ function DescriptionColumn({ line, config }) {
                 target="_blank"
                 className="cmp-order-tracking-grid-details__description-link"
               >
-                {line.displayName}
+                <span
+                  onClick={() => {
+                    pushDataLayerGoogle(
+                      getSelectItemAnalyticsGoogle(
+                        line?.displayName,
+                        line?.id,
+                        line?.unitPrice,
+                        line?.line
+                      )
+                    );
+                  }}
+                >
+                  {line.displayName}
+                </span>
               </a>
             ) : (
               <div className="cmp-order-tracking-grid-details__description-link--disabled">
