@@ -7,7 +7,7 @@ import {
 } from '../../../../utils/featureFlagUtils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 
-const OrderTrackingDetailFooter = ({ content, config }) => {
+const OrderTrackingDetailFooter = ({ paymentDetails, config }) => {
   const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
     ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA))
     : null;
@@ -19,7 +19,7 @@ const OrderTrackingDetailFooter = ({ content, config }) => {
     isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : userDataLS;
   const activeCustomer = currentUserData?.activeCustomer;
   const defaultCurrency = activeCustomer?.defaultCurrency || '';
-  const currency = content.paymentDetails?.currency;
+  const currency = paymentDetails?.currency;
 
   return (
     <>
@@ -44,8 +44,8 @@ const OrderTrackingDetailFooter = ({ content, config }) => {
               {getDictionaryValueOrKey(config.footerLabels?.totalOrderNetPrice)}
             </span>
             <span className="box-container__rightPart-subtotalValue">
-              {orderDetailSubtotalValue ||
-                content.paymentDetails?.subtotalFormatted}{' '}
+              {orderDetailSubtotalValue?.toFixed(2) ||
+                paymentDetails?.subtotalFormatted}{' '}
               {currency ?? defaultCurrency}
             </span>
           </div>

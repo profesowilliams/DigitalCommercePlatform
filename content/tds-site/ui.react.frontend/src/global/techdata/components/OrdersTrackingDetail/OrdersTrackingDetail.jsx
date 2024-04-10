@@ -194,6 +194,7 @@ function OrdersTrackingDetail(props) {
   useEffect(() => {
     if (orderModifyHeaderInfo) {
       headerRequest();
+      setOrderModifyHeaderInfo(false);
     }
   }, [orderModifyHeaderInfo]);
 
@@ -220,7 +221,10 @@ function OrdersTrackingDetail(props) {
                 rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
                 newItem={newItem}
               />
-              <OrderTrackingDetailFooter config={config} content={content} />
+              <OrderTrackingDetailFooter
+                config={config}
+                paymentDetails={content.paymentDetails}
+              />
             </>
           )}
         </section>
