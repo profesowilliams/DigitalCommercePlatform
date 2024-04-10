@@ -4522,7 +4522,7 @@ app.get("/ui-account/v1/topActions", function (req, res) {
 
   res.json(response);
 });
-app.post("/ui-renewal/v1/Details", function (req, res) {
+app.get("/ui-renewal/v1/Details", function (req, res) {
   const { id } = req.query;
   const response = {
     content: {
@@ -4897,7 +4897,6 @@ app.post("/ui-renewal/v1/Details", function (req, res) {
           "currency": "INR",
           "documentType": null,
           "quoteType": "Opportunity",
-          "canRequestQuote": true,
           "type": null,
           "level": null,
           "creator": null,
@@ -4955,10 +4954,6 @@ app.post("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
       "error": {
         "code": 400,
         "messages": [
-          {
-            "email": "abc@test.com",
-            "message": "Invalid Email Format"
-          },
           {
             "email": "abc@test.com",
             "message": "Dont have access to this quote"

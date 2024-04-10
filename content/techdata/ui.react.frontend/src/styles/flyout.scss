@@ -429,10 +429,34 @@ $flyout-small-height-formax: 779px;
           line-height: 24px;
           margin-top: 10px;
           display: inline-block;
+          cursor: pointer;
           &:hover {
             border-color: map-get($color-palette, 'deep-teal');
             background: rgba(0, 111, 186, 0.1);
             color: #006fba;
+          }
+        }
+
+        input {
+          border: 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+          font-size: 16px;
+          padding: 7px 4px;
+          margin-right: 5px;
+          max-width: 190px;
+
+          &.error-input {
+            border-color: red;
+          }
+        }
+
+        .close-icon {
+          vertical-align: sub;
+          margin-left: 6px;
+          svg {
+            path {
+              fill: rgba(0,0,0, 0.26);
+            }
           }
         }
       }

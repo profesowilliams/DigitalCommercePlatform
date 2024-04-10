@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   WarningTriangleIcon,
-  ProhibitedIcon
+  ProhibitedIcon,
+  DeleteIcon
 } from '../../../../fluentIcons/FluentIcons';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { Button, TextField, Autocomplete, Chip } from '@mui/material';
@@ -13,6 +14,56 @@ import { shareQuote } from './api';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
 import {useStore} from '../../../../utils/useStore';
+
+function ErrorModelEmailPill({item, updateAccessErrObject}) {
+
+  const [editPill, setEditPill] = useState(false);
+  const [value, setValue] = useState(item.email);
+  const [isError, setError] = useState(false);
+
+  const editEmailPill = () => {
+    setEditPill(true);
+  };
+
+  const isValidEmailFormat = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      if (isValidEmailFormat(Object.values(e.target.value))) {
+        setError(false);
+        setEditPill(false);
+        updateAccessErrObject({
+          [item.email]: e.target.value
+        });
+      } else {
+        setError(true);
+      }
+    }
+  };
+
+  const updateValue = (e) => {
+    setValue(e.target.value);
+  };
+
+  const deleteEmailPill = () => {
+    updateAccessErrObject({
+      [item.email]: ''
+    });
+  };
+
+  return (
+      editPill === false ?
+        <span className="email-pills" onDoubleClick={editEmailPill}>{value}
+          <span className="close-icon" onClick={deleteEmailPill}><DeleteIcon width="15" height="15" /></span></span> :
+        <input className={isError ? 'error-input' : ''} value={value} type="text"
+          onKeyDown={handleEnter}
+          onChange={updateValue}
+        />
+  );
+}
 
 export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const shareFlyoutConfig = store((st) => st.shareFlyout);
@@ -31,17 +82,20 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const [isLoading, setIsLoading] = useState(false);
   const [requestObj, setRequestObj] = useState({});
   const [apiResponseFlag, setApiResponseFlag] = useState(false);
+  const [toEmailsArr, setToEmailsArr] = useState([]);
   const [errorFlags, setErrorFlags] = useState({
     incorrect: false,
     notFound: false,
     serverError: false
   })
   const [errorObj, setErrorObj] = useState({});
+  const [accessErrObj, setAccessErrObj] = useState([]);
 
   useEffect(() => {
     resetCount();
     if (!shareFlyoutConfig?.show) {
       setRequestObj({});
+      setAccessErrObj([]);
     }
     if (vendorName && quoteType) {
       setRequestObj({
@@ -66,6 +120,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
       serverError: false
     });
     setApiResponseFlag(false);
+    setAccessErrObj([]);
   };
 
   const handleTryAgainBtn = (e) => {
@@ -74,6 +129,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
     }
     closeAlert();
     handleShareItClick();
+    setAccessErrObj([]);
   };
 
   const handleShareItClick = async (event) => {
@@ -110,7 +166,11 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
     else {
       setApiResponseFlag(true);
       setErrorObj(response.messages);
+      let accessObj = [];
       if (response?.code === 400) {
+        accessObj = response.messages.filter((item) => {
+          return item.message?.indexOf('access ') > -1;
+        });
         for(var i = 0; i < response.messages.length; i++) {
           if (response.messages[i]?.message?.indexOf('Invalid ') > -1) {
             setErrorFlags({
@@ -138,11 +198,47 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
           serverError: true
         });
       }
+      setAccessErrObj(accessObj);
     }
   };
 
   const onCloseToaster = () => {
     effects.setCustomState({ key: 'toaster', value: false });
+  };
+
+  const updateAccessErrObject = (updatedObj) => {
+   let errObj = [...accessErrObj];
+   accessErrObj.forEach((item, i) => {
+    if (errObj[i].email === Object.keys(updatedObj)[0]) {
+      if (Object.values(updatedObj)[0] === '') {
+        errObj.splice([i], 1);
+      } else {
+        errObj[i].email = Object.values(updatedObj)[0];
+      }
+    }
+   });
+   const updatedEmailsArr = errObj.map((item) => item.email);
+   const toArr = toEmailsArr;
+   if (isValidEmailFormat(Object.values(updatedObj)[0])) {
+     const index = toArr.indexOf(Object.keys(updatedObj)[0]);
+     if (index > -1) {
+      toArr.splice(index, 1);
+     }
+     toArr.push(Object.values(updatedObj)[0]);
+     setToEmailsArr([...toArr]);
+     setAccessErrObj([...errObj]);
+   }
+  };
+
+  const isValidEmailFormat = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const updatedEmailArr = (arr, flag = true) => {
+    if (flag) {
+      setToEmailsArr([...arr]);
+    }
   };
 
   const updateRequestObject = (updatedData) => {
@@ -206,6 +302,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
             required="true"
             enableShareButton={enableShareButton}
             updateRequestObject={updateRequestObject}
+            updatedEmailArr={updatedEmailArr}
+            emailsArr={toEmailsArr}
             requiredText={getDictionaryValueOrKey(shareFlyoutContent.requiredText)}/>
           <div className="email-preview-section">
             <h3 className="email-preview-section-title">{getDictionaryValueOrKey(shareFlyoutContent.emailPreviewDescription)}:</h3>
@@ -274,10 +372,14 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
                           <h3>{shareFlyoutContent.recipientNotFoundLabel}</h3>
                           <p>{shareFlyoutContent.recipientNotFoundDescription}</p>
                           {
-                            errorObj?.map((item) => {
+                            accessErrObj?.map((item) => {
                               if (item.email && item.message.indexOf('access') > -1) {
                                 return (
-                                  <span className="email-pills">{item.email}</span>
+                                  <ErrorModelEmailPill
+                                    item={item}
+                                    accessErrObj={accessErrObj}
+                                    updateAccessErrObject={updateAccessErrObject}
+                                  />
                                 )
                               }
                             })
