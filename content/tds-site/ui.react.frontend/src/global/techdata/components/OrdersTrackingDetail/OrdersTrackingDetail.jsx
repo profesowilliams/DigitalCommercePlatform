@@ -212,6 +212,7 @@ function OrdersTrackingDetail(props) {
                 openFilePdf={openFilePdf}
                 componentProps={componentProps}
                 userData={userData}
+                setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
               />
               <OrderTrackingDetailBody
                 config={config}

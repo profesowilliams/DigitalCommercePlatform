@@ -29,8 +29,9 @@ const OrderTrackingDetailHeader = ({
   openFilePdf,
   componentProps,
   userData,
+  setOrderModifyHeaderInfo,
 }) => {
-  const saleslogin = getUrlParamsCaseInsensitive().get("saleslogin");
+  const saleslogin = getUrlParamsCaseInsensitive().get('saleslogin');
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -240,6 +241,7 @@ const OrderTrackingDetailHeader = ({
         }
       })
       .finally(() => {
+        setOrderModifyHeaderInfo(true);
         setOpenAlert(true);
         setTimeout(() => {
           setOpenAlert(false);
