@@ -33,7 +33,7 @@ export function OrderSearchField({
         ref={inputRef}
         onKeyDown={triggerSearchOnEnter}
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => setSearchTerm(e.target.value.replace('*', ''))}
       />
       {(inputRef.current?.value || searchTerm) && (
         <>

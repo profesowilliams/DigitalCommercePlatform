@@ -56,6 +56,11 @@ function NotShippedTabGrid({
     hasOrderModificationRights && orderEditable && orderModificationFlag;
   const isSeeOptionsButtonVisible =
     hasOrderModificationRights && orderModificationFlag;
+  const isReleaseOrderButtonVisible =
+    hasOrderModificationRights &&
+    shipCompleted &&
+    status &&
+    ordersOrderEditable;
   const gridColumnWidths = Object.freeze({
     lineNumber: '83px',
     item: '590px',
@@ -209,7 +214,7 @@ function NotShippedTabGrid({
           {getDictionaryValueOrKey(config?.orderLineDetails?.notShippedLabel)}
         </span>
         <span>
-          {shipCompleted && status && ordersOrderEditable && (
+          {isReleaseOrderButtonVisible && (
             <button
               className="order-line-details__content__release-button"
               onClick={() => setReleaseOrderShow(true)}

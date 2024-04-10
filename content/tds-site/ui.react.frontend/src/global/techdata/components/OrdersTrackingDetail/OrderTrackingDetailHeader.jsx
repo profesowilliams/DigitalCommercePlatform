@@ -79,7 +79,8 @@ const OrderTrackingDetailHeader = ({
   const areInvoicesAvailable =
     content?.invoices?.length > 1 ||
     (content?.invoices?.length === 1 && isInvoiceDownloadable);
-  const areReleaseTheOrderAvailable =
+  const isReleaseTheOrderAvailable =
+    hasOrderModificationRights &&
     content.shipComplete === true &&
     content.status !== 'Completed' &&
     content.orderEditable;
@@ -139,7 +140,7 @@ const OrderTrackingDetailHeader = ({
       key: 'exportFlyout',
       value: { data: config.exportFlyout, show: true, id },
     });
-    setExportFlyoutSource("Details");
+    setExportFlyoutSource('Details');
   };
 
   const triggerXMLMessage = async () => {
@@ -178,7 +179,7 @@ const OrderTrackingDetailHeader = ({
     ...(orderModificationFlag
       ? [
           {
-            condition: areReleaseTheOrderAvailable,
+            condition: isReleaseTheOrderAvailable,
             label: labels?.releaseTheOrder,
             onClick: () => setReleaseOrderShow(true),
           },
