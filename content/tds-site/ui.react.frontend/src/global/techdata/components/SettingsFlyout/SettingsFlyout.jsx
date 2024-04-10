@@ -79,7 +79,7 @@ const SettingsFlyout = ({
   };
 
   const handleDataChange = (key, value) => {
-    setData({ ...data, [key]: value });
+    setData((data) => ({ ...data, [key]: value }));
   };
 
   const saveData = async () => {
