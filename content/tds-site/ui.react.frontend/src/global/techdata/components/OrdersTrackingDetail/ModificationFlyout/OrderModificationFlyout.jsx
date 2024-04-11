@@ -282,24 +282,11 @@ function OrderModificationFlyout({
     setNewlyAddedItems(newItemsList);
   };
 
-  const handleChangeNewItem = async (index, quantity) => {
+  const handleChangeNewItem = async (index, quantity, price) => {
     const newItemsList = [...newlyAddedItems];
-    try {
-      const result = await usPost(
-        `${gridConfig.uiCommerceServiceDomain}/v2/Price/GetPriceForProduct`,
-        {
-          productId: newItemsList[index].id,
-          quantity: quantity,
-        }
-      );
-      const { price } = result?.data?.content?.priceData || {};
-      newItemsList[index].quantity = quantity;
-      newItemsList[index].price = price;
-      setNewlyAddedItems(newItemsList);
-      return result;
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    newItemsList[index].quantity = quantity;
+    newItemsList[index].price = price;
+    setNewlyAddedItems(newItemsList);
   };
 
   useEffect(() => {
@@ -372,6 +359,7 @@ function OrderModificationFlyout({
                 item={item}
                 onChange={handleChangeNewItem}
                 removeElement={() => handleRemoveNewItem(index)}
+                domain={gridConfig.uiCommerceServiceDomain}
               />
             ))}
           </ul>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button } from '@mui/material';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Autocomplete from '@mui/material/Autocomplete';
-import { usGet, usPost } from '../../../../../utils/api';
+import { usGet } from '../../../../../utils/api';
 
 const NewItemForm = ({
   labels = {},
@@ -22,30 +22,37 @@ const NewItemForm = ({
   const loading = open && suggestions.length === 0;
   const [autocompleteInputValue, setAutocompleteInputValue] = useState('');
 
+  const findMatchingLabel = (product) => {
+    let matchingKey = 'manufacturerPartNumber';
+    if (
+      product.manufacturerPartNumber
+        ?.toLowerCase()
+        ?.includes(autocompleteInputValue.toLowerCase())
+    ) {
+      matchingKey = 'manufacturerPartNumber';
+    } else if (
+      product.id.toLowerCase()?.includes(autocompleteInputValue.toLowerCase())
+    ) {
+      matchingKey = 'id';
+    }
+    return product[matchingKey];
+  };
+
   const setNewSuggestions = (response) => {
     if (response) {
-      let matchingKey = 'manufacturerPartNumber';
-      if (
-        response.products?.[0]?.manufacturerPartNumber
-          ?.toLowerCase()
-          ?.includes(autocompleteInputValue.toLowerCase())
-      ) {
-        matchingKey = 'manufacturerPartNumber';
-      } else if (
-        response.products?.[0]?.id
-          .toLowerCase()
-          ?.includes(autocompleteInputValue.toLowerCase())
-      ) {
-        matchingKey = 'id';
-      }
       if (response.products.length === 0) {
         setIsError(true);
+        setOpen(false);
       } else {
         setIsError(false);
       }
       setSuggestions(
         response.products.map((product) => {
-          product.title = product[matchingKey];
+          product.title =
+            findMatchingLabel(product) +
+            ' - ' +
+            product.description.slice(0, 50) +
+            '...';
           return product;
         })
       );
@@ -77,17 +84,7 @@ const NewItemForm = ({
 
   const handleAddNewItem = async () => {
     setNewItemFormVisible(false);
-    try {
-      const result = await usPost(`${domain}/v2/Price/GetPriceForProduct`, {
-        productId: values.item.id,
-        quantity: values.quantity,
-      });
-      const { price, currency } = result?.data?.content?.priceData || {};
-      addNewItem({ ...values.item, price, currency }, values.quantity);
-      return result;
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    addNewItem({ ...values.item }, values.quantity);
   };
 
   const isFormFilled = Object.values(values).every((value) => Boolean(value));
@@ -123,6 +120,7 @@ const NewItemForm = ({
           handleChange('manufacturersPartNumber', event.target.textContent);
           handleChange('item', value);
         }}
+        sx={{ width: 400, fontSize: 12 }}
         renderInput={(params) => (
           <TextField
             {...params}
