@@ -36,6 +36,7 @@ import {
   getSearchNRFAnalyticsGoogle,
   getAdvancedSearchNRFAnalyticsGoogle,
   getReportsNRFAnalyticsGoogle,
+  fixCountryCode
 } from './utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import MainGridHeader from './MainGrid/MainGridHeader';
@@ -421,7 +422,7 @@ function OrdersTrackingGrid(props) {
       if (isGTMReady) {
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
-            country: data[1]?.country == 'UK' ? 'GB' : data[1]?.country,
+            country: fixCountryCode(data[1]?.country),
             internalTraffic: data[1]?.isInternalUser ? 'True' : 'False',
             pageName: 'Main Dashboard',
             number: '',

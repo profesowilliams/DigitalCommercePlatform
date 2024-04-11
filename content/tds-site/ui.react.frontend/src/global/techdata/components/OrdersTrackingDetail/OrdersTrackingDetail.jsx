@@ -11,6 +11,7 @@ import {
   getPageReloadAnalyticsGoogle,
   pushDataLayerGoogle,
   pushFailedDownloadGoogleAnalytics,
+  fixCountryCode
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
@@ -167,7 +168,7 @@ function OrdersTrackingDetail(props) {
       if (isGTMReady) {
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
-            country: data[1]?.country == 'UK' ? 'GB' : data[1]?.country,
+            country: fixCountryCode(data[1]?.country),
             internalTraffic: data[1]?.isInternalUser ? 'True' : 'False',
             pageName: 'Order Details',
             number: id,

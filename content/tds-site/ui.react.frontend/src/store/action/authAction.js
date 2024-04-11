@@ -1,8 +1,9 @@
 import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } from '../constants/auth';
 import { post } from '../../utils/api';
-import { createSessionId, setSessionId, createMaxTimeout, getHeaderInfoFromUrl, getConsumerRequestHeader } from '../../utils';
+import { createSessionId, setSessionId, createMaxTimeout, getConsumerRequestHeader } from '../../utils';
+import { getHeaderInfo } from '../../utils/headers/get';
 import {refreshPage} from '../../utils/policies';
-import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../utils/featureFlagUtils"
+import { isHttpOnlyEnabled } from "../../utils/featureFlagUtils"
 
 export const signInRequest = () => {
 	return {
@@ -34,7 +35,7 @@ export const signInAsynAction = (apiUrl, handleLoginResponse) => {
 	
 	let code = localStorage.getItem('signInCode');
 	const signInUrl = apiUrl;
-	const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
+	const headerInfo = getHeaderInfo();
 	const consumer = getConsumerRequestHeader();
 
 	const  prepareSignInHeader = () => {

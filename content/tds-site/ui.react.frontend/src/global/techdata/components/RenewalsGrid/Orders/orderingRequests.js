@@ -1,4 +1,3 @@
-import { getHeaderInfoFromUrl } from "../../../../../utils";
 import { get, post } from "../../../../../utils/api";
 import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, RENEWAL_STATUS_ACTIVE, UPDATE_FAILED } from "../../../../../utils/constants";
 import { isImpersonateAccountHeaderDisabled } from "../../../../../utils/featureFlagUtils";
@@ -6,8 +5,6 @@ import { isHouseAccount } from "../../../../../utils/user/utils";
 
 const awaitRequest = (fetch, delay) =>
   new Promise((resolve) => setTimeout(() => resolve(fetch()), delay));
-
-const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 
 const setAdditionalHeaders = (impersonationAccount, userData) => {
   return isHouseAccount(userData) ? {headers: {impersonateAccount: impersonationAccount}, validateStatus: false } : {validateStatus: false};

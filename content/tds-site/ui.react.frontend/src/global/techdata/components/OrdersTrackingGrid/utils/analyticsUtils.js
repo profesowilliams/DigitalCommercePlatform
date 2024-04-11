@@ -1,4 +1,8 @@
 
+export const fixCountryCode = (country) => {
+  country == 'UK' ? 'GB' : country;
+};
+
 export const pushDataLayerGoogle = (analyticsData) => {
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(analyticsData);

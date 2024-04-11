@@ -129,28 +129,6 @@ export const getUrlParamsCaseInsensitive = () => {
 export const isObject = (val) =>
   typeof val === "object" && !Array.isArray(val) && val !== null;
 
-// Return request site and language from dcp url segments
-export function getHeaderInfoFromUrl(pathName) { 
-  let countryIndex = 1; // uat/stage/prod
-  let languageIndex = 2
-  const pathArray = pathName?.split('/');
-  if (pathArray && pathArray.length >= 5 && pathArray[1] === 'content') {
-    countryIndex = 4; // dit/sit
-    languageIndex = 5; 
-  }
-  const country = pathArray[countryIndex]?.toUpperCase() || '';
-  const language = pathArray[languageIndex]?.replace('.html', '') || country === 'US' ? 'en' : '';
-  return {
-    site: country,
-    acceptLanguage: resolveAcceptLanguage(language, country)
-  };
-}
-
-function resolveAcceptLanguage(language, country) {
-  const collectiveCountry = country === 'UK' ? 'GB' : country;
-  return language + '-' + collectiveCountry;
-}
-
 // Return request consumer from global-config
 export function getConsumerRequestHeader() {
   if (
@@ -160,18 +138,4 @@ export function getConsumerRequestHeader() {
     return document.body.getAttribute('data-consumer-request-header');
   }
   return 'AEM';
-}
-
-export function isEnvironmentEnabled() {
-  return document.body.hasAttribute('data-environment-header-enabled');
-}
-
-export function getEnvironmentHeader() {
-  if (
-    document.body.hasAttribute('data-environment-request-header') &&
-    document.body.getAttribute('data-environment-request-header').length > 0
-  ) {
-    return document.body.getAttribute('data-environment-request-header');
-  }
-  return '';
 }
