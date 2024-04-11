@@ -369,7 +369,8 @@ export function updateQueryString(pageNumber) {
 export async function handleFetchDataStrategy(renewalOperations) {
     const { hasSortChanged, isFilterDataPopulated } = renewalOperations;
     const shouldFetchByPost = isFilterPostRequest(hasSortChanged, isFilterDataPopulated);   
-    return fetchRenewalsFilterByPost({ ...renewalOperations });
+    return shouldFetchByPost ? fetchRenewalsFilterByPost({ ...renewalOperations })
+                             : fetchRenewalsByGet({ ...renewalOperations });
 };
 
 export const analyticsColumnDataToPush = (name) => ({
