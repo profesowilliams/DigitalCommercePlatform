@@ -47,7 +47,9 @@ function QuantityAndDeliveryEstimateLine({
       .then((result) => {
         const orderEditable = result.data.content.orderEditable;
         const enableReplace = result.data.content.replace;
-        orderEditable
+        const enableCancel = result.data.content.cancel;
+        const disableReplaceAndCancel = !(enableReplace || enableCancel);
+        orderEditable && !disableReplaceAndCancel
           ? setCustomState({
               key: 'productReplacementFlyout',
               value: {
@@ -70,7 +72,7 @@ function QuantityAndDeliveryEstimateLine({
         });
       });
   };
-
+  
   const EOLStatus = (
     <>
       <span className="line-status">
