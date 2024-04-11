@@ -26,7 +26,7 @@ const LineItem = ({ item, index, onChange, labels }) => {
       orderQuantity: newValue,
       origQuantity: item.orderQuantity,
     });
-    if (currentValue >= item.orderQuantity) {
+    if (newValue >= item.orderQuantity) {
       setDoesReasonDropdownHaveEmptyItems(false);
     }
   };
@@ -48,7 +48,6 @@ const LineItem = ({ item, index, onChange, labels }) => {
       RejectionReason: val,
     });
   };
-
   return (
     <li key={item.line} className="cmp-flyout-list__element">
       <div className="cmp-flyout-list__element__number">{item.line}</div>
