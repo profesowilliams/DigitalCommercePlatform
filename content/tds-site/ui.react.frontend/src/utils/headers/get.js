@@ -48,7 +48,7 @@ export function getHeaderInfoFromUrl(pathName) {
 
 export function resolveAcceptLanguage(language, country) {
   language = language.toLowerCase();
-  country = language.toUpperCase();
+  country = country.toUpperCase();
 
   const collectiveCountry = country === 'UK' ? 'GB' : country;
 
