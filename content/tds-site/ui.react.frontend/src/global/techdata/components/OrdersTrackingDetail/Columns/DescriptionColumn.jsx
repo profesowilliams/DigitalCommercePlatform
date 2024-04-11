@@ -28,10 +28,16 @@ function DescriptionColumn({ line, config }) {
   const endUserInformationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.endUserInformation
   );
+  const lineNotEmpty = () => {
+    for (const value of Object.values(line?.endUser || {})) {
+      if (value.trim() !== '') {
+        return true;
+      }
+    }
+    return false;
+  };
   const enableTooltip =
-    endUserInformationFlag &&
-    line?.endUser &&
-    Object.entries(line?.endUser).length > 0;
+    endUserInformationFlag && line?.endUser && lineNotEmpty();
   const endUserInfoTemplateDefault =
     '{name}<br/>{firstName} {lastName}<br/>{line1}<br/>{line2}<br/>{line3}<br/>{city} {state} {zip} {country}<br/>{phone}<br/>{email}';
   const template = getDictionaryValue(
