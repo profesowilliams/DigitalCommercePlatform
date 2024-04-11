@@ -188,8 +188,7 @@ function OrdersTrackingGrid(props) {
       componentProp.uiCommerceServiceDomain + endpoints.ordersReport
     );
     const ordersReportCountUrl = new URL(
-      componentProp.uiCommerceServiceDomain +
-        endpoints.ordersReportCount
+      componentProp.uiCommerceServiceDomain + endpoints.ordersReportCount
     );
 
     const ordersCountUrl = new URL(
@@ -213,47 +212,52 @@ function OrdersTrackingGrid(props) {
           isOnSearchAction.current
         )
       : await fetchData(queryOperations);
-    if (ordersCountResponse.error?.isError || response?.status !== 200 || response?.data?.content?.items?.length === 0) {
+    if (
+      ordersCountResponse.error?.isError ||
+      response?.status !== 200 ||
+      response?.data?.content?.items?.length === 0
+    ) {
       setResponseError(true);
       if (reportFilterValue?.current?.value) {
         pushDataLayerGoogle(
           getReportsNRFAnalyticsGoogle(reportFilterValue.current.value)
         );
-      } 
+      }
       if (searchCriteria?.current?.field) {
         pushDataLayerGoogle(getSearchNRFAnalyticsGoogle());
       }
       const filtersStatusAndType =
-        (filtersRefs?.current?.type ?? '') + (filtersRefs?.current?.status ?? '');
-        const dateFilters = Object.entries(filtersRefs?.current).filter(
-          (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
-        );
+        (filtersRefs?.current?.type ?? '') +
+        (filtersRefs?.current?.status ?? '');
+      const dateFilters = Object.entries(filtersRefs?.current).filter(
+        (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
+      );
       if (filtersStatusAndType !== '' || dateFilters.length > 0) {
         pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
       }
     } else {
       setResponseError(false);
-      const mappedResponse = mapServiceData(response);
-      const paginationValue = getPaginationValue(
-        mappedResponse,
-        ordersCountResponse,
-        gridConfig
-      );
-
-      const responseContent = response?.data?.content;
-      const pageNumber = responseContent?.pageNumber;
-      if (responseContent?.pageCount === pageNumber)
-        gridApi.paginationSetPageSize(responseContent?.items?.length);
-      updateQueryString(pageNumber);
-      setCustomState(
-        { key: 'pagination', value: paginationValue },
-        {
-          key: ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-          saveToLocal: true,
-        }
-      );
-      return mappedResponse;
     }
+    const mappedResponse = mapServiceData(response);
+    const paginationValue = getPaginationValue(
+      mappedResponse,
+      ordersCountResponse,
+      gridConfig
+    );
+
+    const responseContent = response?.data?.content;
+    const pageNumber = responseContent?.pageNumber;
+    if (responseContent?.pageCount === pageNumber)
+      gridApi.paginationSetPageSize(responseContent?.items?.length);
+    updateQueryString(pageNumber);
+    setCustomState(
+      { key: 'pagination', value: paginationValue },
+      {
+        key: ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+        saveToLocal: true,
+      }
+    );
+    return mappedResponse;
   };
 
   const onSortChanged = (evt) => {
@@ -271,13 +275,9 @@ function OrdersTrackingGrid(props) {
       sortingEventFilter.length === 1 &&
       !compareSort(currentSortState, hasSortChanged.current)
     ) {
-      pushDataLayerGoogle(
-        getSortAnalyticsGoogle(sortedModel, 'Click')
-      );
+      pushDataLayerGoogle(getSortAnalyticsGoogle(sortedModel, 'Click'));
     } else if (sortingEventFilter.length === 1) {
-      pushDataLayerGoogle(
-        getSortAnalyticsGoogle(sortedModel, 'View')
-      );
+      pushDataLayerGoogle(getSortAnalyticsGoogle(sortedModel, 'View'));
     }
   };
 

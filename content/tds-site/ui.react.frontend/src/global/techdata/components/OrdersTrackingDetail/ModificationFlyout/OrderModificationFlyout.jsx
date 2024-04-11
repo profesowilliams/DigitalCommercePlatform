@@ -161,7 +161,6 @@ function OrderModificationFlyout({
     }, []);
     setOrderDetailSubtotalValue(subtotalValue);
     greyOutRows(rowsDeleted);
-    closeFlyout();
     addLineForGTM.map((line) => {
       pushDataLayerGoogle(getAddLineAnalyticsGoogle(line));
     });
@@ -216,6 +215,7 @@ function OrderModificationFlyout({
           </ul>
         ),
       };
+      closeFlyout();
       if (result.data && !result.data?.error?.isError) {
         changeRefreshDetailApiState('lineDetails');
         setCustomState({ key: 'toaster', value: { ...toasterSucess } });
@@ -237,6 +237,7 @@ function OrderModificationFlyout({
         ),
       };
       console.error('Error updating order:', error);
+      closeFlyout();
       setCustomState({ key: 'toaster', value: { ...toasterError } });
     } finally {
       greyOutRows([]);
