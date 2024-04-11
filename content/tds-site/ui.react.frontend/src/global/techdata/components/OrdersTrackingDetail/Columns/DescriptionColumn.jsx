@@ -111,7 +111,7 @@ function DescriptionColumn({ line, config }) {
                     pushDataLayerGoogle(
                       getSelectItemAnalyticsGoogle(
                         line?.displayName,
-                        line?.id,
+                        line?.productId,
                         line?.unitPrice,
                         line?.line
                       )

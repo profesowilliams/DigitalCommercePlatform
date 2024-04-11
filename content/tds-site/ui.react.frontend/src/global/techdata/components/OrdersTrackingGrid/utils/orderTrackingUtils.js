@@ -34,7 +34,7 @@ export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
   }
 };
 
-const filtersDateGroup = [
+export const filtersDateGroup = [
   'createdFrom',
   'createdTo',
   'invoiceDateFrom',

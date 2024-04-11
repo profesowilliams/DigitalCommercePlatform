@@ -24,6 +24,7 @@ import {
   getFilterFlyoutCustomized,
   getInitialFiltersDataFromLS,
   endpoints,
+  filtersDateGroup,
 } from './utils/orderTrackingUtils';
 import {
   getHomeAnalyticsGoogle,
@@ -224,6 +225,9 @@ function OrdersTrackingGrid(props) {
       }
       const filtersStatusAndType =
         (filtersRefs?.current?.type ?? '') + (filtersRefs?.current?.status ?? '');
+        const dateFilters = Object.entries(filtersRefs?.current).filter(
+          (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
+        );
       if (filtersStatusAndType !== '' || dateFilters.length > 0) {
         pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
       }
