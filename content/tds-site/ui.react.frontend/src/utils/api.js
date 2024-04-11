@@ -1,8 +1,5 @@
 import axios from 'axios';
-import {
-  getConsumerRequestHeader,
-  isEnvironmentEnabled
-} from '../utils';
+import { getConsumerRequestHeader } from '../utils';
 import { getHeaderInfo } from "./headers/get";
 
 const isHttpOnlyEnabled = () =>
@@ -10,9 +7,11 @@ const isHttpOnlyEnabled = () =>
 
 const headerInfo = getHeaderInfo();
 const consumer = getConsumerRequestHeader();
+const traceId = crypto.randomUUID();
 
 const headers = {
   common: {
+    'TraceId': traceId,
     'Site': headerInfo.site,
     'Accept-Language': headerInfo.acceptLanguage,
     'Consumer': consumer,
@@ -24,6 +23,7 @@ export const USaxios = axios.create({
   headers
 });
 
+axios.defaults.headers.common['TraceId'] = traceId;
 axios.defaults.headers.common['Accept-Language'] = headerInfo.acceptLanguage;
 axios.defaults.headers.common['Consumer'] = consumer;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
