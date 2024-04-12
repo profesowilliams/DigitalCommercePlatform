@@ -133,6 +133,10 @@ use(['../../../common/utils.js'], function(utils) {
         jsonObject["enableShareOption"] = this.serviceData.enableShareOption;
     }
 
+    if (this.shareQuoteEndpoint && this.serviceData.uiServiceDomain) {
+        shareFlyout.shareQuoteEndpoint = this.serviceData.uiServiceDomain + this.shareQuoteEndpoint;
+    }
+
     if (properties && properties["quotePreviewlabel"]) {
         quotePreview["quotePreviewlabel"] = properties["quotePreviewlabel"];
     }

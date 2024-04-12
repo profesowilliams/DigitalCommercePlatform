@@ -15,7 +15,6 @@ import {useStore} from '../../../../utils/useStore';
 
 export function RequestFlyout({ store, requestFlyoutContent, subheaderReference }) {
   const requestFlyoutConfig = store((st) => st.requestFlyout);
-  console.log(requestFlyoutConfig, 'config');
   const quoteType = getDictionaryValueOrKey('Renewal');
   const effects = store((st) => st.effects);
   const [enableShare, setEnableShare] = useState(false);

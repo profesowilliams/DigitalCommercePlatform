@@ -6,17 +6,24 @@ import { CustomTextField } from '../Widgets/CustomTextField';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
-export function EmailInput({ id, label, required, enableShareButton, requiredText, updateRequestObject, updatedEmailArr, emailsArr }) {
+export function EmailInput({ id, label, required, enableShareButton, resetDataFlag, requiredText, updateRequestObject, updatedEmailArr, emailsArr = [] }) {
 
   const [inputValue, setInputValue] = useState("");
   const [selectedEmails, setSelectedEmails] = useState([]);
   const [invalidEmails, setInvalidEmails] = useState([]);
 
   useEffect(() => {
-    if (JSON.stringify(selectedEmails) !== JSON.stringify(emailsArr)) {
+    if (emailsArr && selectedEmails && (JSON.stringify(selectedEmails) !== JSON.stringify(emailsArr))) {
       setSelectedEmails(emailsArr);
     }
   }, [emailsArr]);
+
+  useEffect(() => {
+    if (resetDataFlag) {
+      setInvalidEmails([]);
+      setSelectedEmails([]);
+    }
+  }, [resetDataFlag]);
 
   useEffect(() =>{
     if (selectedEmails?.length) {
@@ -49,15 +56,15 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
     if (event?.keyCode === 8) {
       selectedEmails.pop();
       setSelectedEmails([...selectedEmails]);
-      updatedEmailArr([...selectedEmails]);
+      updatedEmailArr([...selectedEmails], id === 'to-email');
     } else if (situation === 'removeOption') {
       const filteredEmails = selectedEmails.filter(item => item !== option.option);
       setSelectedEmails([...filteredEmails]);
-      updatedEmailArr([...filteredEmails]);
+      updatedEmailArr([...filteredEmails], id === 'to-email');
     } else {
       const lastEmail = value[value.length - 1];
       setSelectedEmails([...new Set([...selectedEmails, ...value])]);
-      updatedEmailArr([...new Set([...selectedEmails, ...value])]);
+      updatedEmailArr([...new Set([...selectedEmails, ...value])], id === 'to-email');
       if (!isValidEmailFormat(value[value.length - 1])) {
         setInvalidEmails([...invalidEmails, lastEmail])
       }
@@ -69,7 +76,7 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
       (email) => email !== emailToDelete
     );
     setSelectedEmails(updatedEmails);
-    updatedEmailArr(updatedEmails);
+    updatedEmailArr(updatedEmails, id === 'to-email');
     setInvalidEmails([]);
   };
 
@@ -84,7 +91,7 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
     );
 
     setSelectedEmails([...selectedEmails, ...emailsToPaste]);
-    updatedEmailArr([...selectedEmails, ...emailsToPaste]);
+    updatedEmailArr([...selectedEmails, ...emailsToPaste], id === 'to-email');
     setInputValue("");
     setInvalidEmails([...invalidEmails, ...invalidEmailsFilter]);
     event.preventDefault();
@@ -99,7 +106,7 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
       updatedEmails.push(inputValue);
     }
     setSelectedEmails([...updatedEmails]);
-    updatedEmailArr([...updatedEmails]);
+    updatedEmailArr([...updatedEmails], id === 'to-email');
     if (!isValidEmailFormat(inputValue)) {
       setInvalidEmails([...invalidEmails, inputValue])
     }

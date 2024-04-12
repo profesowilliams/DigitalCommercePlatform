@@ -159,6 +159,7 @@ function GridHeader({ gridProps, data }) {
        <ShareFlyout
        store={useRenewalGridState}
        shareFlyoutContent={gridProps.shareFlyout}
+       reseller={data.reseller}
        subheaderReference={document.querySelector('.subheader > div > div')}
        />
      <RequestFlyout

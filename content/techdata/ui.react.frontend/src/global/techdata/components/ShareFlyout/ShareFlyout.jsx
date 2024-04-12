@@ -65,17 +65,17 @@ function ErrorModelEmailPill({item, updateAccessErrObject}) {
   );
 }
 
-export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
+export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, reseller }) {
   const shareFlyoutConfig = store((st) => st.shareFlyout);
   const vendorName = shareFlyoutConfig?.data?.vendor?.name || '';
-  const endUserName = shareFlyoutConfig?.data?.endUser?.name || '';
+  const endUserName = reseller ? reseller.name : shareFlyoutConfig?.data?.endUser?.name;
   const firstName = shareFlyoutConfig?.data?.endUser?.contact?.firstName || '';
   const lastName = shareFlyoutConfig?.data?.endUser?.contact?.lastName || '';
   const quoteType = getDictionaryValueOrKey('Renewal');
   const activeAgreementID = shareFlyoutConfig?.data?.source?.id || '';
   const effects = store((st) => st.effects);
   const [enableShare, setEnableShare] = useState(false);
-  const closeFlyout = () => effects.setCustomState({ key: 'shareFlyout', value: {show:false} });
+  const closeFlyoutModal = () => effects.setCustomState({ key: 'shareFlyout', value: {show:false} });
   const [count, setCount] = useState(getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount));
   const userData = useStore(state => state.userData);
   const [errorMessage, setErrorMessage] = useState('');
@@ -83,6 +83,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const [requestObj, setRequestObj] = useState({});
   const [apiResponseFlag, setApiResponseFlag] = useState(false);
   const [toEmailsArr, setToEmailsArr] = useState([]);
+  const [ccEmailsArr, setCcEmailsArr] = useState([]);
+  const [resetDataFlag, setResetDataFlag] = useState(false);
   const [errorFlags, setErrorFlags] = useState({
     incorrect: false,
     notFound: false,
@@ -208,25 +210,43 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
 
   const updateAccessErrObject = (updatedObj) => {
    let errObj = [...accessErrObj];
-   accessErrObj.forEach((item, i) => {
+   for (var i=0; i < accessErrObj.length; i++) {
     if (errObj[i].email === Object.keys(updatedObj)[0]) {
       if (Object.values(updatedObj)[0] === '') {
         errObj.splice([i], 1);
       } else {
         errObj[i].email = Object.values(updatedObj)[0];
       }
+      break;
     }
-   });
+   }
    const updatedEmailsArr = errObj.map((item) => item.email);
    const toArr = toEmailsArr;
+   const ccArr = ccEmailsArr;
    if (isValidEmailFormat(Object.values(updatedObj)[0])) {
-     const index = toArr.indexOf(Object.keys(updatedObj)[0]);
-     if (index > -1) {
-      toArr.splice(index, 1);
-     }
-     toArr.push(Object.values(updatedObj)[0]);
-     setToEmailsArr([...toArr]);
+     const toIndex = toArr.indexOf(Object.keys(updatedObj)[0]);
+     const ccIndex = ccArr.indexOf(Object.keys(updatedObj)[0]);
+     if (toIndex > -1) {
+      toArr.splice(toIndex, 1);
+      toArr.push(Object.values(updatedObj)[0]);
+      setToEmailsArr([...toArr]);
+     } else if (ccIndex > -1) {
+       ccArr.splice(ccIndex, 1);
+       ccArr.push(Object.values(updatedObj)[0]);
+       setCcEmailsArr([...ccArr]);
+      }
      setAccessErrObj([...errObj]);
+   } else if (Object.values(updatedObj)[0] === '' ) {
+      const toIndex = toArr.indexOf(Object.keys(updatedObj)[0]);
+       const ccIndex = ccArr.indexOf(Object.keys(updatedObj)[0]);
+       if (toIndex > -1) {
+        toArr.splice(toIndex, 1);
+        setToEmailsArr([...toArr]);
+       } else if (ccIndex > -1) {
+         ccArr.splice(ccIndex, 1);
+         setCcEmailsArr([...ccArr]);
+        }
+       setAccessErrObj([...errObj]);
    }
   };
 
@@ -235,9 +255,11 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
     return emailRegex.test(email);
   };
 
-  const updatedEmailArr = (arr, flag = true) => {
+  const updatedEmailArr = (arr, flag) => {
     if (flag) {
       setToEmailsArr([...arr]);
+    } else {
+      setCcEmailsArr([...arr]);
     }
   };
 
@@ -254,6 +276,22 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
     updateRequestObject({
       'AdditionalComments': e.target.value
     });
+  };
+
+  const closeFlyout = () => {
+    resetData();
+    closeFlyoutModal();
+  };
+
+  const resetData = () => {
+    setToEmailsArr([]);
+    setAccessErrObj([]);
+    setErrorFlags({
+      incorrect: false,
+      notFound: false,
+      serverError: false
+    });
+    setResetDataFlag(true);
   };
 
   const resetCount = () => {
@@ -304,7 +342,15 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
             updateRequestObject={updateRequestObject}
             updatedEmailArr={updatedEmailArr}
             emailsArr={toEmailsArr}
+            resetDataFlag={resetDataFlag}
             requiredText={getDictionaryValueOrKey(shareFlyoutContent.requiredText)}/>
+          <EmailInput
+           id="cc-email"
+           updateRequestObject={updateRequestObject}
+           label={getDictionaryValueOrKey(shareFlyoutContent.emailCCLabel)}
+           updatedEmailArr={updatedEmailArr}
+           resetDataFlag={resetDataFlag}
+           emailsArr={ccEmailsArr}/>
           <div className="email-preview-section">
             <h3 className="email-preview-section-title">{getDictionaryValueOrKey(shareFlyoutContent.emailPreviewDescription)}:</h3>
             <p className="email-preview-section-product">{vendorName} {quoteType} for {endUserName} - {activeAgreementID}</p>
@@ -372,10 +418,11 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
                           <h3>{shareFlyoutContent.recipientNotFoundLabel}</h3>
                           <p>{shareFlyoutContent.recipientNotFoundDescription}</p>
                           {
-                            accessErrObj?.map((item) => {
+                            accessErrObj?.map((item, i) => {
                               if (item.email && item.message.indexOf('access') > -1) {
                                 return (
                                   <ErrorModelEmailPill
+                                    key={item.email}
                                     item={item}
                                     accessErrObj={accessErrObj}
                                     updateAccessErrObject={updateAccessErrObject}
