@@ -225,7 +225,9 @@ function OrdersTrackingGrid(props) {
         );
       }
       if (searchCriteria?.current?.field) {
-        pushDataLayerGoogle(getSearchNRFAnalyticsGoogle());
+        pushDataLayerGoogle(
+          getSearchNRFAnalyticsGoogle(searchCriteria?.current?.field)
+        );
       }
       const filtersStatusAndType =
         (filtersRefs?.current?.type ?? '') +

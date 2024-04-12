@@ -336,10 +336,10 @@ export const getCopySerialNumbersAnalyticsGoogle = () => {
   };
 };
 
-export const getSearchNRFAnalyticsGoogle = () => {
+export const getSearchNRFAnalyticsGoogle = (searchCriteria) => {
   return {
     event: 'Search|NRF',
-    orderTracking: 'NRF',
+    orderTracking: searchCriteria,
     label: 'No results found',
   };
 };
