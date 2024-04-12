@@ -12,12 +12,13 @@ const traceId = crypto.randomUUID();
 const headers = {
   common: {
     'TraceId': traceId,
-    'Site': headerInfo.site,
     'Accept-Language': headerInfo.acceptLanguage,
     'Consumer': consumer,
     'Content-Type': 'application/json',
+    'Site': headerInfo.site
   }
 };
+headerInfo.salesLogin && (headers.common['SalesLogin'] = headerInfo.salesLogin);
 
 export const USaxios = axios.create({
   headers
