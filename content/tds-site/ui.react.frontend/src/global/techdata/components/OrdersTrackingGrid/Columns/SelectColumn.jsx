@@ -4,7 +4,7 @@ import {
   ChevronDownIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 import { getExpandedLineAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
-function SelectColumn({ eventProps, orderId }) {
+function SelectColumn({ eventProps, orderId, created }) {
   const [isToggled, setIsToggled] = useState(false);
 
   // removed unnecessary useEffect, state change will actually rerender the component
@@ -13,7 +13,7 @@ function SelectColumn({ eventProps, orderId }) {
 
   const toggleDetails = () => {
     setIsToggled(!isToggled);
-    pushDataLayerGoogle(getExpandedLineAnalyticsGoogle(orderId));
+    pushDataLayerGoogle(getExpandedLineAnalyticsGoogle(orderId, created));
   };
 
   return (

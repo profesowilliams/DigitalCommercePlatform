@@ -312,11 +312,16 @@ export const getInvoiceDownloadFailedAnalyticsGoogle = (
   };
 };
 
-export const getExpandedLineAnalyticsGoogle = (orderId) => {
+export const getExpandedLineAnalyticsGoogle = (orderId, orderDate) => {
+  const today = new Date();
+  const created = new Date(orderDate);
+  const daysDiff = Math.round((today - created) / (1000 * 60 * 60 * 24));
   return {
     event: 'Order tracking - Expanded Line View',
     orderTracking: `Expanded Line VIew`,
     label: orderId,
+    order_age_in_days: daysDiff,
+    order_date: created,
   };
 };
 
