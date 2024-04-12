@@ -4,6 +4,7 @@ import Counter from '../../Counter/Counter';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 import RejectedReasonDropdown from './RejectedReasonDropdown';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import Tooltip from '@mui/material/Tooltip';
 
 const LineItem = ({ item, index, onChange, labels }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
@@ -55,7 +56,16 @@ const LineItem = ({ item, index, onChange, labels }) => {
         <img src={item?.urlProductImage} alt="" />
       </div>
       <div className="cmp-flyout-list__element__title">
-        <p>{item.displayName}</p>
+        <Tooltip
+          title={item.displayName}
+          placement="top"
+          arrow
+          disableInteractive={true}
+          disableHoverListener={item.displayName.length < 74}
+        >
+          <p>{item.displayName}</p>
+        </Tooltip>
+
         <div className="cmp-flyout-list__element__title__mfr-number">{`${getDictionaryValueOrKey(
           labels?.lineMfgPartNo
         )} ${item.mfrNumber}`}</div>

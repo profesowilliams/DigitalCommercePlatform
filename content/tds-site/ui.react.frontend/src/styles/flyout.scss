@@ -548,6 +548,9 @@ $flyout-small-height-formax: 779px;
       p {
         color: $brand-green;
         font-size: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       &__mfr-number {
         color: $brand-charcoal !important;
