@@ -24,13 +24,14 @@ function DescriptionColumn({ line, config }) {
     zip,
     country,
   } = line?.endUser || {};
-  
+
   const endUserInformationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.endUserInformation
   );
+
   const lineNotEmpty = () => {
     for (const value of Object.values(line?.endUser || {})) {
-      if (value.trim() !== '') {
+      if (typeof value === 'string' && value.trim() !== '') {
         return true;
       }
     }
