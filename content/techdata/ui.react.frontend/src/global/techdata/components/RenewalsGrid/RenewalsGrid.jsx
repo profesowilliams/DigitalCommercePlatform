@@ -105,6 +105,7 @@ function RenewalsGrid(props) {
   const [options, setOptions] = useState(currentOptions);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [secondLevelOptions, setSecondLevelOptions] = useState(currentSecondLevelOptions);
+  const [isGridInitialized, setIsGridInitialized] = useState(false);
 
   const redirectToShop = () => {
     if(!shopURL) return;
@@ -248,6 +249,26 @@ function RenewalsGrid(props) {
     }
   }, [])
 
+  const showToasterFromLocalStorage = () => {
+    if (hasLocalStorageData(TOASTER_LOCAL_STORAGE_KEY) ) {
+      const toasterData = getLocalStorageData(TOASTER_LOCAL_STORAGE_KEY);
+      const transactionNumber = toasterData.Child?.props?.data;
+      toasterData.Child = <TransactionNumber data={transactionNumber}/>
+
+      setTimeout(() => setCustomState({key:'toaster', value:toasterData}), 800);
+    }
+
+    if(!isFromRenewalDetailsPage()) {
+      clearLocalStorageGridData();
+    }
+  }
+
+  useEffect(() => {
+    if (isGridInitialized && !!userData) {
+      showToasterFromLocalStorage();
+    }
+  }, [isGridInitialized, userData]);
+
   const _onAfterGridInit = (config) => {
     const value = config.api;
     setCustomState({ key: 'gridApi', value });
@@ -266,19 +287,7 @@ function RenewalsGrid(props) {
     }
     config.columnApi.applyColumnState({...columnState})
 
-    if (!!userData) {
-      if (hasLocalStorageData(TOASTER_LOCAL_STORAGE_KEY) ) {
-        const toasterData = getLocalStorageData(TOASTER_LOCAL_STORAGE_KEY);
-        const transactionNumber = toasterData.Child?.props?.data;
-        toasterData.Child = <TransactionNumber data={transactionNumber}/>
-        setTimeout(() => setCustomState({key:'toaster', value:toasterData}), 800);
-      }
-
-      if(!isFromRenewalDetailsPage()) {
-        clearLocalStorageGridData();
-      }
-    }
-
+    setIsGridInitialized(true);
   }
 
   function tootltipVal(event) {
