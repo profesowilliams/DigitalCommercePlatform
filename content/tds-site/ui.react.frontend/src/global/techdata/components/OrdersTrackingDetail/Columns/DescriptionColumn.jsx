@@ -115,10 +115,13 @@ function DescriptionColumn({ line, config }) {
               >
                 <span
                   onClick={() => {
+                    const params = new URL(line?.urlProductDetailsPage)
+                      .searchParams;
+                    const productId = params.get('productId');
                     pushDataLayerGoogle(
                       getSelectItemAnalyticsGoogle(
                         line?.displayName,
-                        line?.productId,
+                        productId,
                         line?.unitPrice,
                         line?.line
                       )

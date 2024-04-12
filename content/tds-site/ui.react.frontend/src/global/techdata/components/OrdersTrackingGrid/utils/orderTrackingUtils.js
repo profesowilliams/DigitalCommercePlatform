@@ -243,11 +243,11 @@ export async function fetchData(config) {
 }
 
 export function setPaginationData(response, pageNumber, pageSize = 25) {
-  const pageCount = Math.ceil(response.totalItems / pageSize);
+  const pageCount = Math.ceil(response?.totalItems / pageSize);
 
   return {
     currentResultsInPage: pageSize,
-    totalCounter: response.totalItems,
+    totalCounter: response?.totalItems,
     pageCount,
     pageNumber: parseInt(pageNumber) || 1,
   };

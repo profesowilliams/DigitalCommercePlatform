@@ -126,12 +126,12 @@ function Toaster({
               {isSuccess && !!Child && <br />}
               {Child && Child}
             </div>
-            {(!isAutoClose || closeEnabled) && (
-              <div className="cmp-toaster-content__closeIcon">
-                <Dismiss onClick={onClose} />
-              </div>
-            )}
           </div>
+          {(!isAutoClose || closeEnabled) && (
+            <div className="cmp-toaster-content__closeIcon">
+              <Dismiss onClick={onClose} />
+            </div>
+          )}
         </Drawer>
       </div>
     )

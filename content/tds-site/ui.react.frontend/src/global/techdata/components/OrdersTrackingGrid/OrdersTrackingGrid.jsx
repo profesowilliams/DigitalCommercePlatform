@@ -274,7 +274,8 @@ function OrdersTrackingGrid(props) {
       .filter((val) => val.sort);
     if (
       sortingEventFilter.length === 1 &&
-      !compareSort(currentSortState, hasSortChanged.current)
+      !compareSort(currentSortState, hasSortChanged.current) &&
+      !!hasSortChanged?.current
     ) {
       pushDataLayerGoogle(getSortAnalyticsGoogle(sortedModel, 'Click'));
     } else if (sortingEventFilter.length === 1) {

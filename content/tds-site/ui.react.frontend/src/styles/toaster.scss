@@ -9,6 +9,8 @@
     padding: 0;
     margin: 0;
     margin-bottom: 21px;
+    max-width: 344px;
+    overflow-y: auto;
   }
 
   &__closeIcon {
@@ -73,12 +75,14 @@
     padding: 0;
     margin: 0;
     margin-bottom: 21px;
+    max-width: 344px;
+    overflow-y: auto;
   }
 
   &__closeIcon {
     position: absolute;
     top: 12px;
-    right: 22px;
+    right: 12px;
     cursor: pointer;
     svg {
       width: 20px;
@@ -103,7 +107,7 @@
 
         p {
           font-family: $font-family-arial;
-          margin: 0 42px 0 0;
+          margin: 0;
           line-height: 24px;
         }
 
