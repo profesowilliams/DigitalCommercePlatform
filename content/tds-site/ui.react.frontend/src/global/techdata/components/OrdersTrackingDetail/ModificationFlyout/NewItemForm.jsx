@@ -20,25 +20,16 @@ const NewItemForm = ({
   const [isError, setIsError] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const loading = open && suggestions.length === 0;
-  const [autocompleteInputValue, setAutocompleteInputValue] = useState('');
 
-  const findMatchingLabel = (product) => {
+  const findMatchingLabel = (product, inputValue) => {
     let matchingKey = 'manufacturerPartNumber';
-    if (
-      product.manufacturerPartNumber
-        ?.toLowerCase()
-        ?.includes(autocompleteInputValue.toLowerCase())
-    ) {
-      matchingKey = 'manufacturerPartNumber';
-    } else if (
-      product.id.toLowerCase()?.includes(autocompleteInputValue.toLowerCase())
-    ) {
+    if (product.id.toLowerCase()?.includes(inputValue.toLowerCase())) {
       matchingKey = 'id';
     }
     return product[matchingKey];
   };
 
-  const setNewSuggestions = (response) => {
+  const setNewSuggestions = (response, inputValue) => {
     if (response) {
       if (response.products.length === 0) {
         setIsError(true);
@@ -49,7 +40,7 @@ const NewItemForm = ({
       setSuggestions(
         response.products.map((product) => {
           product.title =
-            findMatchingLabel(product) +
+            findMatchingLabel(product, inputValue) +
             ' - ' +
             product.description.slice(0, 50) +
             '...';
@@ -71,10 +62,9 @@ const NewItemForm = ({
   };
 
   const handleAutocompleteInput = (newValue) => {
-    setAutocompleteInputValue(newValue);
     newValue.length >= 3 &&
       fetchSuggestions(newValue).then((result) => {
-        setNewSuggestions(result.data.content);
+        setNewSuggestions(result?.data?.content || [], newValue);
       });
   };
 
@@ -108,8 +98,10 @@ const NewItemForm = ({
         freeSolo
         options={suggestions}
         getOptionLabel={(option) => option.title}
+        filterOptions={(x) => x}
         loading={loading}
         open={open}
+        autoSelect={false}
         onOpen={() => {
           setOpen(true);
         }}
@@ -138,7 +130,12 @@ const NewItemForm = ({
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(event) => handleAutocompleteInput(event.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === '*') e.preventDefault();
+            }}
+            onChange={(event) =>
+              handleAutocompleteInput(event.target.value.replace('*', ''))
+            }
           />
         )}
       />
