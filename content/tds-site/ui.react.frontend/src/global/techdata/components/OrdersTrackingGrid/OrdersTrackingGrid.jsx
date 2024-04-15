@@ -168,6 +168,27 @@ function OrdersTrackingGrid(props) {
   };
   const params = getUrlParamsCaseInsensitive();
 
+  const sendGTMDataOnError = () => {
+    if (reportFilterValue?.current?.value) {
+      pushDataLayerGoogle(
+        getReportsNRFAnalyticsGoogle(reportFilterValue.current.value)
+      );
+    }
+    if (searchCriteria?.current?.field) {
+      pushDataLayerGoogle(
+        getSearchNRFAnalyticsGoogle(searchCriteria?.current?.field)
+      );
+    }
+    const filtersStatusAndType =
+      (filtersRefs?.current?.type ?? '') + (filtersRefs?.current?.status ?? '');
+    const dateFilters = Object.entries(filtersRefs?.current).filter(
+      (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
+    );
+    if (filtersStatusAndType !== '' || dateFilters.length > 0) {
+      pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
+    }
+  };
+
   const customRequestInterceptor = async (request) => {
     const gridApi = gridApiRef?.current?.api;
     const queryOperations = {
@@ -213,33 +234,17 @@ function OrdersTrackingGrid(props) {
           isOnSearchAction.current
         )
       : await fetchData(queryOperations);
-    if (
-      ordersCountResponse.error?.isError ||
-      response?.status !== 200 ||
-      response?.data?.content?.items?.length === 0
-    ) {
+    if (ordersCountResponse.error?.isError) {
       setResponseError(true);
-      if (reportFilterValue?.current?.value) {
-        pushDataLayerGoogle(
-          getReportsNRFAnalyticsGoogle(reportFilterValue.current.value)
-        );
-      }
-      if (searchCriteria?.current?.field) {
-        pushDataLayerGoogle(
-          getSearchNRFAnalyticsGoogle(searchCriteria?.current?.field)
-        );
-      }
-      const filtersStatusAndType =
-        (filtersRefs?.current?.type ?? '') +
-        (filtersRefs?.current?.status ?? '');
-      const dateFilters = Object.entries(filtersRefs?.current).filter(
-        (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
-      );
-      if (filtersStatusAndType !== '' || dateFilters.length > 0) {
-        pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
-      }
+      sendGTMDataOnError();
     } else {
       setResponseError(false);
+      if (
+        response?.status !== 200 ||
+        response?.data?.content?.items?.length === 0
+      ) {
+        sendGTMDataOnError();
+      }
     }
     const mappedResponse = mapServiceData(response);
     const paginationValue = getPaginationValue(
