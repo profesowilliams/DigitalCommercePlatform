@@ -6,12 +6,15 @@ import DueDateColumn from '../Columns/DueDateColumn';
 import DueDateDayColumn from '../Columns/DueDateDayColumn';
 import PriceColumn from '../Columns/PriceColumn';
 import RenewalActionColumn from "../Columns/RenewalActionColumn";
+import {
+    EnterArrowIcon
+} from '../../../../../fluentIcons/FluentIcons';
 
-export const renewalsDefinitions = (componentProp) => {
+export const renewalsDefinitions = (componentProp, triggerRequestFlyout) => {
 
   const createColumnComponent = (eventProps, aemDefinition) => {  
     const { columnKey } = aemDefinition;
-    const { value, data } = eventProps;   
+    const { value, data } = eventProps;
     const columnComponents = {
       resellername: data?.reseller?.name,
       endUser: value?.name,
@@ -20,7 +23,7 @@ export const renewalsDefinitions = (componentProp) => {
       dueDays: <DueDateDayColumn columnValue={data?.dueDays} />,
       dueDate: <DueDateColumn columnValue={data?.formattedDueDate} />,
       actions: <RenewalActionColumn eventProps={eventProps} />,
-      total: <PriceColumn columnValue={data?.renewal?.total} currency={data?.renewal?.currency} />,
+      total: (componentProp.enableRequestQuote && data.canRequestQuote) ? <span className='request-quote' onClick={ () => triggerRequestFlyout(data)}><EnterArrowIcon />Request Quote</span> : <PriceColumn columnValue={data?.renewal?.total} currency={data?.renewal?.currency} />,
       agreementNumber: data?.agreementNumber === 'Multiple' ? componentProp?.productGrid?.multipleLabel : data?.agreementNumber,
       Id: <DistiQuoteColumn id={data?.source?.id} />,
     };

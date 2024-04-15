@@ -30,16 +30,28 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
       if (enableShareButton) {
         enableShareButton(true);
       }
-      updateRequestObject({
-        'ToEmail': selectedEmails
-      });
+      if (id === 'to-email') {
+        updateRequestObject({
+          'ToEmail': selectedEmails
+        });
+      } else {
+        updateRequestObject({
+          'cc': selectedEmails
+        });
+      }
     } else {
       if (enableShareButton) {
         enableShareButton(false);
       }
-      updateRequestObject({
-        'ToEmail': []
-      });
+      if (id === 'to-email') {
+        updateRequestObject({
+          'ToEmail': selectedEmails
+        });
+      } else {
+        updateRequestObject({
+          'cc': selectedEmails
+        });
+      }
     }
   }, [selectedEmails]);
 

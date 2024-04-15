@@ -199,6 +199,18 @@
     justify-content: flex-end;
     padding-right: 12px;
   }
+  .request-quote {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 14px;
+    line-height: 16px;
+    color: #006FBA;
+    cursor: pointer;
+    svg {
+      margin-right: 5px;
+    }
+  }
   .cmp-card-marketing-section {
     @include common-planoption-card;
     display: flex;

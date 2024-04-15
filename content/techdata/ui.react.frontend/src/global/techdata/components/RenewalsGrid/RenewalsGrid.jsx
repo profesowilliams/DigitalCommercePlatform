@@ -335,6 +335,11 @@ function RenewalsGrid(props) {
   const contextMenuItems = (params) => getContextMenuItems(params, gridConfig);
   const processCustomClipboardAction = (params) => copyToClipboardAction(params);
 
+  const triggerRequestFlyout = (data) => {
+      data['link'] = '';
+      setCustomState({ key: 'requestFlyout', value: { data, show:true} });
+  };
+
   return (
     isLoggedIn ? (
     <section ref={renewalsRef} id="renewals-grid-component">
@@ -362,7 +367,7 @@ function RenewalsGrid(props) {
       />
       <BaseGrid
         columnList={componentProp.columnList}
-        definitions={renewalsDefinitions(componentProp)}
+        definitions={renewalsDefinitions(componentProp, triggerRequestFlyout)}
         config={gridConfig}
         options={options}
         sortingOrder={componentProp.disableDefaultSort ? ['asc', 'desc'] : ['desc', 'asc', null]}

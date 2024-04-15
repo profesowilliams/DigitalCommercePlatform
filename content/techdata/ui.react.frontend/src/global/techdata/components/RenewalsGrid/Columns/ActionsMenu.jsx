@@ -12,7 +12,7 @@ import { redirectToRenewalDetail } from '../utils/renewalUtils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS, pushDataLayer } from '../../Analytics/analytics';
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from '../../../../../utils/utils';
 
-function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy, canShare, canRequestQuote, detailUrl }) {
+function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy, canShare, detailUrl }) {
     const dialogRef = useRef();
     const { productGrid } = useRenewalGridState(st => st.aemConfig);
     const { setCustomState } = useRenewalGridState(st => st.effects);
@@ -29,7 +29,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
     };
     
     useOutsideClick(dialogRef, onClose, 'mousedown', [onClose]);
-    const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, enableShareOption, enableRequestQuote } = endpoints;
+    const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, enableShareOption } = endpoints;
 
     useEffect(() => {
         let timer;
@@ -123,12 +123,6 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
       setCustomState({ key: 'shareFlyout', value: { data, show:true} });
   };
 
-  const triggerRequestFlyout = () => {
-      data['link'] = '';
-      onClose();
-      setCustomState({ key: 'requestFlyout', value: { data, show:true} });
-  };
-
     return (
         <Dialog
             onClose={onClose}
@@ -170,17 +164,6 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
                             <ShareIcon width="16" height="16" />
                         </span>
                         <span className="cmp-renewals-actions-menu__item-label">Share</span>
-                    </div>
-                ) : null}
-                {enableRequestQuote && canRequestQuote ? (
-                    <div
-                        className="cmp-renewals-actions-menu__item"
-                        onClick={triggerRequestFlyout}
-                    >
-                        <span className="cmp-renewals-actions-menu__item-icon">
-                            <ShareIcon width="16" height="16" />
-                        </span>
-                        <span className="cmp-renewals-actions-menu__item-label">Request Quote</span>
                     </div>
                 ) : null}
                 {menuOptions?.showDownloadPDFButton ? (
