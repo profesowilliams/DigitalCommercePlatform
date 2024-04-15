@@ -30,10 +30,12 @@ function Report(
 ) {
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [currentValue, setCurrentValue] = useState(selectedKey);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const wrapperRef = useRef(null);
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropDownOpen);
+    setIsTooltipOpen(false);
   };
 
   const handleSelectOption = (option) => {
@@ -41,8 +43,8 @@ function Report(
     setCurrentValue(option.key);
     selectOption(option);
     setLocalStorageData(REPORTS_LOCAL_STORAGE_KEY, option);
+    setIsTooltipOpen(false);
   };
-
   useEffect(() => {
     function handleClickOutside(event) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -69,11 +71,15 @@ function Report(
       placement="top"
       arrow
       disableInteractive={true}
+      open={isTooltipOpen}
+      onClose={() => setIsTooltipOpen(false)}
     >
       <div
         onClick={handleDropdownClick}
         className="cmp-order-tracking-grid__report"
         data-testid="report"
+        onMouseEnter={() => setIsTooltipOpen(true)}
+        onMouseLeave={() => setIsTooltipOpen(false)}
       >
         <Hover
           onHover={<ReportIconFilled fill="#262626" className="icon-hover" />}
