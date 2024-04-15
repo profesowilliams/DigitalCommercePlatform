@@ -1,6 +1,8 @@
 
+const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24;
+
 export const fixCountryCode = (country) => {
-  country == 'UK' ? 'GB' : country;
+  return country === 'UK' ? 'GB' : country;
 };
 
 export const pushDataLayerGoogle = (analyticsData) => {
@@ -128,10 +130,15 @@ export const getHomeAnalyticsGoogle = (rights) => {
   };
 };
 
-export const getOrderDetailsAnalyticsGoogle = (number) => {
+export const getOrderDetailsAnalyticsGoogle = (number, orderDate) => {
+  const today = new Date();
+  const created = new Date(orderDate);
+  const daysDiff = Math.round((today - created) / MILLISECONDS_IN_DAY);
   return {
     event: 'Order tracking - Order Details',
     orderTracking: `Order Details: ${number}`,
+    order_age_in_days: daysDiff,
+    order_date: created,
   };
 };
 
@@ -315,7 +322,7 @@ export const getInvoiceDownloadFailedAnalyticsGoogle = (
 export const getExpandedLineAnalyticsGoogle = (orderId, orderDate) => {
   const today = new Date();
   const created = new Date(orderDate);
-  const daysDiff = Math.round((today - created) / (1000 * 60 * 60 * 24));
+  const daysDiff = Math.round((today - created) / MILLISECONDS_IN_DAY);
   return {
     event: 'Order tracking - Expanded Line View',
     orderTracking: `Expanded Line VIew`,

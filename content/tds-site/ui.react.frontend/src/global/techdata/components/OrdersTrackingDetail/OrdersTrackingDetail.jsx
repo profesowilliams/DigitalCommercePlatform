@@ -15,7 +15,6 @@ import {
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
-import { getOrderDetailsAnalyticsGoogle } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import { endpoints } from '../OrdersTrackingGrid/utils/orderTrackingUtils';
 
@@ -176,9 +175,6 @@ function OrdersTrackingDetail(props) {
             customerID: data[1]?.customers[0],
             industryKey: data[1]?.industryKey,
           })
-        );
-        pushDataLayerGoogle(
-          getOrderDetailsAnalyticsGoogle(content?.orderNumber)
         );
       }
     });

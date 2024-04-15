@@ -281,12 +281,14 @@ function OrdersTrackingGrid(props) {
       .filter((val) => val.sort);
     if (
       sortingEventFilter.length === 1 &&
-      !compareSort(currentSortState, hasSortChanged.current) &&
-      !!hasSortChanged?.current
+      compareSort(currentSortState, hasSortChanged.current)
+    ) {
+      pushDataLayerGoogle(getSortAnalyticsGoogle(sortedModel, 'View'));
+    } else if (
+      sortingEventFilter.length === 1 &&
+      !compareSort(currentSortState, hasSortChanged.current)
     ) {
       pushDataLayerGoogle(getSortAnalyticsGoogle(sortedModel, 'Click'));
-    } else if (sortingEventFilter.length === 1) {
-      pushDataLayerGoogle(getSortAnalyticsGoogle(sortedModel, 'View'));
     }
   };
 
