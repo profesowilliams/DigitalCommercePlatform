@@ -4,11 +4,15 @@ RedirectMatch "^/$" "/us/en.html"
 # robot.txt
 RewriteRule ^/robots.txt$ /content/dam/${CONTENT_FOLDER_NAME_TECHDATA}/seo/robots.txt [PT,L]
 
+RewriteRule ^/my/(.*)$ http://www.mytecd.com/$1 [R=301,L]
+
 RewriteCond %{HTTP_HOST} =uat.dc.tdebusiness.cloud [OR]
 RewriteCond %{HTTP_HOST} =stage.dc.tdebusiness.cloud [OR]
 RewriteCond %{HTTP_HOST} =www.techdata.com [OR]
 RewriteCond %{HTTP_HOST} =techdata.com
 RewriteRule ^/(my)/(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1/$2 [PT,L]
+
+RewriteRule ^/content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/my/(.*)$ http://www.mytecd.com/$1 [R=301,L]
 
 RewriteRule ^/(ar|br|ca|cl|co|ec|mx|pe|us)/sitemap.xml$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/americas/$1/en.sitemap.xml [PT,L]
 RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)/sitemap.xml(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1/en.sitemap.xml [PT,L]
