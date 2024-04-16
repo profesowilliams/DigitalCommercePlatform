@@ -36,7 +36,7 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
         });
       } else {
         updateRequestObject({
-          'cc': selectedEmails
+          'CcEmail': selectedEmails
         });
       }
     } else {
@@ -49,7 +49,7 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
         });
       } else {
         updateRequestObject({
-          'cc': selectedEmails
+          'CcEmail': selectedEmails
         });
       }
     }
