@@ -131,6 +131,7 @@ function OrdersTrackingDetailGrid({
         ...response,
         data: {
           content: {
+            ...response.content,
             items: [
               ...response.data.content.items,
               ...prepareGroupedItems(response.data.content),
