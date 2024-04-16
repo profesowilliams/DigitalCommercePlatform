@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 import MenuActions from '../Header/MenuActions';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
@@ -6,8 +6,15 @@ import {
   getDictionaryValueOrKey,
   addUrlParam,
 } from '../../../../../utils/utils';
+import { getUrlParams } from '../../../../../utils';
+
 import { usGet } from '../../../../../utils/api';
-import { getCopySerialNumbersAnalyticsGoogle, getReturnAnalyticsGoogle, getTrackAndTraceAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import {
+  getCopySerialNumbersAnalyticsGoogle,
+  getReturnAnalyticsGoogle,
+  getTrackAndTraceAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   const iconStyle = {
@@ -45,9 +52,8 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
     (invoice) => invoice.returnUrl && invoice.returnUrl.length > 0
   );
 
-  const id = line.orderNumber;
+  const { id = '' } = getUrlParams();
   const poNumber = line.customerPO;
-  const orderId = id;
   const lineId = line.line;
   const enableLineId = line.line.length === 1;
   const dNoteId = deliveryNotes?.length > 0 ? deliveryNotes[0].id : null;
@@ -104,8 +110,8 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
     setTrackAndTraceCounter(trackAndTraceCounter + 1);
     try {
       const endpointUrl = enableLineId
-        ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`
-        : `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${dNoteId}`;
+        ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${id}/${lineId}/${dNoteId}`
+        : `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${id}/${dNoteId}`;
       const result = await usGet(endpointUrl);
       const { baseUrl, parameters, carrier } = result.data;
       if (baseUrl) {
@@ -122,11 +128,7 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
         }
         window.open(baseUrl + trackAndTraceParams, '_blank');
         pushDataLayerGoogle(
-          getTrackAndTraceAnalyticsGoogle(
-            trackAndTraceCounter,
-            false,
-            carrier
-          )
+          getTrackAndTraceAnalyticsGoogle(trackAndTraceCounter, false, carrier)
         );
       }
     } catch (error) {
@@ -189,7 +191,7 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
       onClick: hasMultipleReturnLinks ? triggerReturnFlyout : handleReturn,
     },
   ];
- 
+
   return (
     <div
       className={`cmp-order-tracking-grid-details__splitLine${
