@@ -3,7 +3,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
   const item = data?.line;
-  const lineIndex = data?.index;
+  const lineIndex = data?.index || 0;
   const {
     line,
     urlProductImage,

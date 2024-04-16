@@ -177,16 +177,16 @@ function ProductReplacementFlyout({
           ? getEolReplacementAnalyticsGoogle(mfrReplacement, mfrSelected)
           : getEolCancelAnalyticsGoogle(mfrReplacement)
       );
+      closeFlyout();
+      const chosenItemIndex = productDtos.findIndex(
+        (product) => product.source.id === selected
+      );
+      addNewItem(productDtos[chosenItemIndex]);
+      rowsToGrayOutTDNameRef.current = [
+        productReplacementConfig?.data?.line?.tdNumber,
+      ];
+      changeRefreshDetailApiState('lineDetails');
     }
-    closeFlyout();
-    const chosenItemIndex = productDtos.findIndex(
-      (product) => product.source.id === selected
-    );
-    addNewItem(productDtos[chosenItemIndex]);
-    rowsToGrayOutTDNameRef.current = [
-      productReplacementConfig?.data?.line?.tdNumber,
-    ];
-    changeRefreshDetailApiState('lineDetails');
   };
 
   const buttonsSection = (
@@ -203,18 +203,21 @@ function ProductReplacementFlyout({
   const options = [
     ...[
       ...(enableReplace
-        ? productDtos.map((product) => ({
+        ? productDtos.map((product, index) => ({
             key: product.source.id,
             label: getDictionaryValueOrKey(labels?.replaceWithSuggestedItem),
             content: (
               <LineItem
                 data={{
-                  ...productReplacementConfig?.data,
-                  urlProductImage: product.image.url,
-                  displayName: product.description,
-                  mfrNumber: product.manufacturerPartNumber,
-                  unitPrice: product.price.bestPrice,
-                  currency: product.price.currency,
+                  line: {
+                    ...(productReplacementConfig?.data?.line || {}),
+                    urlProductImage: product.image.url,
+                    displayName: product.description,
+                    mfrNumber: product.manufacturerPartNumber,
+                    unitPrice: product.price.bestPrice,
+                    currency: product.price.currency,
+                  },
+                  index: index,
                 }}
                 labels={labels}
               />
@@ -245,7 +248,6 @@ function ProductReplacementFlyout({
       }
     }
   }, [productReplacementConfig?.show]);
-
   return (
     <BaseFlyout
       open={productReplacementConfig?.show}
