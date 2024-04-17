@@ -275,21 +275,12 @@ function OrdersTrackingGrid(props) {
       .filter((o) => !!o.sort)
       .map(({ colId, sort }) => ({ colId, sort }));
     hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
-    setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
-    const sortingEventFilter = evt?.columnApi
-      ?.getColumnState()
-      .filter((val) => val.sort);
     if (
-      sortingEventFilter.length === 1 &&
-      compareSort(currentSortState, hasSortChanged.current)
-    ) {
-      pushDataLayerGoogle(getSortAnalyticsGoogle(sortedModel, 'View'));
-    } else if (
-      sortingEventFilter.length === 1 &&
-      !compareSort(currentSortState, hasSortChanged.current)
+      !compareSort(hasSortChanged.current, currentSortState)
     ) {
       pushDataLayerGoogle(getSortAnalyticsGoogle(sortedModel, 'Click'));
     }
+    setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
   };
 
   const onDataLoad = () => {
