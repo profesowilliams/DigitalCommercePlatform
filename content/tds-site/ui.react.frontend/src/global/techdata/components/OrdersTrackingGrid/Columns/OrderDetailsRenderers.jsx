@@ -6,8 +6,6 @@ function OrderDetailsRenderers({
   data,
   config,
   openFilePdf,
-  hasAIORights,
-  hasOrderModificationRights,
   rowsToGrayOutTDNameRef,
   newItem,
 }) {
@@ -21,8 +19,6 @@ function OrderDetailsRenderers({
           data={data}
           aemConfig={config}
           openFilePdf={openFilePdf}
-          hasAIORights={hasAIORights}
-          hasOrderModificationRights={hasOrderModificationRights}
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
           newItem={newItem}
         />

@@ -26,7 +26,6 @@ import OrderStatusModal from '../../OrdersTrackingGrid/Modals/OrderStatusModal';
 function OrdersTrackingDetailGrid({
   gridProps,
   openFilePdf,
-  hasAIORights,
   gridRef,
   rowsToGrayOutTDNameRef,
 }) {
@@ -240,7 +239,6 @@ function OrdersTrackingDetailGrid({
           line={data}
           config={gridProps}
           openFilePdf={openFilePdf}
-          hasAIORights={hasAIORights}
           sortedLineDetails={sortedLineDetails}
         />
       ),

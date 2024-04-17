@@ -482,5 +482,9 @@ export const orderTrackingEffects = (set, get) => {
         orderDetailSubtotalValue: value,
       }));
     },
+    hasRights(right) {
+      const { userData } = get();
+      return userData?.roleList?.some((role) => role.entitlement === right);
+    },
   };
 };

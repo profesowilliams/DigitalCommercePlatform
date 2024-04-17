@@ -18,7 +18,6 @@ function NotShippedTabGrid({
   data,
   orderEditable,
   gridProps,
-  hasOrderModificationRights,
   PONo,
   orderNo,
   shipCompleted,
@@ -43,7 +42,7 @@ function NotShippedTabGrid({
   );
   const effects = useOrderTrackingStore((state) => state.effects);
 
-  const { setCustomState } = effects;
+  const { setCustomState, hasRights } = effects;
 
   const [isTabActive, setIsTabActive] = useState(false);
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
@@ -52,6 +51,7 @@ function NotShippedTabGrid({
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
+  const hasOrderModificationRights = hasRights('OrderModification');
   const isOrderModificationButtonVisible =
     hasOrderModificationRights && orderEditable && orderModificationFlag;
   const isSeeOptionsButtonVisible =

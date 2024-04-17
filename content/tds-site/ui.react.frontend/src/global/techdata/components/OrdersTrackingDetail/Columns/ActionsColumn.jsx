@@ -5,7 +5,6 @@ const ActionsColumn = ({
   line,
   config = {},
   openFilePdf,
-  hasAIORights,
   sortedLineDetails,
 }) => {
   return (
@@ -18,7 +17,6 @@ const ActionsColumn = ({
           index={index}
           config={config}
           openFilePdf={openFilePdf}
-          hasAIORights={hasAIORights}
         />
       ))}
     </div>

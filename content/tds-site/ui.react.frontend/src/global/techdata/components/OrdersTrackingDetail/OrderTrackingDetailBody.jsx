@@ -6,7 +6,6 @@ const OrderTrackingDetailBody = ({
   config,
   content,
   openFilePdf,
-  hasAIORights,
   gridRef,
   rowsToGrayOutTDNameRef,
   newItem,
@@ -39,7 +38,6 @@ const OrderTrackingDetailBody = ({
       <OrdersTrackingDetailGrid
         gridProps={config}
         openFilePdf={openFilePdf}
-        hasAIORights={hasAIORights}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
       />

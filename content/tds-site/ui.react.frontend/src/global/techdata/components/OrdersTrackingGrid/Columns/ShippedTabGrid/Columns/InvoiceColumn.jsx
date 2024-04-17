@@ -1,14 +1,8 @@
 import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../../store/OrderTrackingStore';
-function InvoiceColumn({
-  line,
-  config,
-  id,
-  openFilePdf,
-  hasAIORights,
-  reseller,
-}) {
+
+function InvoiceColumn({ line, config, id, openFilePdf, reseller }) {
   const hasMultiple = line?.invoices?.length > 1;
   const firstInvoice = line?.invoices ? line?.invoices[0] : [];
   const isInvoiceDownloadable = firstInvoice?.canDownloadDocument;

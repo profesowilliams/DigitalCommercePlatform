@@ -10,8 +10,7 @@ import StatusColumn from '../Columns/StatusColumn';
 
 export const ordersTrackingDefinition = (
   { detailUrl, multiple, iconsStatuses, shipToTooltipTemplate },
-  openFilePdf,
-  hasAIORights
+  openFilePdf
 ) => {
   const createColumnComponent = (eventProps, aemDefinition) => {
     const { columnKey } = aemDefinition;
@@ -46,7 +45,6 @@ export const ordersTrackingDefinition = (
           multiple={multiple}
           reseller={data?.customerPO}
           openFilePdf={openFilePdf}
-          hasAIORights={hasAIORights}
         />
       ),
       deliveryNotes: (

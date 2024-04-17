@@ -16,8 +16,6 @@ function DropdownOrderDetails({
   data,
   aemConfig,
   openFilePdf,
-  hasAIORights,
-  hasOrderModificationRights,
   newItem,
   rowsToGrayOutTDNameRef,
 }) {
@@ -56,7 +54,6 @@ function DropdownOrderDetails({
           data={apiResponse?.content?.shipped}
           gridProps={aemConfig}
           openFilePdf={openFilePdf}
-          hasAIORights={hasAIORights}
           reseller={data?.customerPO}
           id={data?.id}
         />
@@ -80,7 +77,6 @@ function DropdownOrderDetails({
           data={apiResponse?.content?.notShipped}
           orderEditable={apiResponse?.content?.orderEditable}
           gridProps={aemConfig}
-          hasOrderModificationRights={hasOrderModificationRights}
           PONo={PONo}
           orderNo={orderNo}
           shipCompleted={shipCompleted}

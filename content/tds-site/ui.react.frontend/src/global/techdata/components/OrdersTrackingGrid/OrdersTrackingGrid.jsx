@@ -95,6 +95,7 @@ function OrdersTrackingGrid(props) {
     setFilterList,
     setCustomFiltersChecked,
     setFeatureFlags,
+    hasRights,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore,
@@ -102,8 +103,6 @@ function OrdersTrackingGrid(props) {
   );
   const userData = useOrderTrackingStore((st) => st.userData);
   const { isGTMReady } = useGTMStatus();
-  const hasRights = (entitlement) =>
-    userData?.roleList?.some((role) => role.entitlement === entitlement);
 
   const [isLoading, setIsLoading] = useState(true);
   const [responseError, setResponseError] = useState(null);
@@ -280,9 +279,7 @@ function OrdersTrackingGrid(props) {
       .filter((o) => !!o.sort)
       .map(({ colId, sort }) => ({ colId, sort }));
     hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
-    if (
-      !compareSort(hasSortChanged.current, currentSortState)
-    ) {
+    if (!compareSort(hasSortChanged.current, currentSortState)) {
       pushDataLayerGoogle(getSortAnalyticsGoogle(sortedModel, 'Click'));
     }
     setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
@@ -452,10 +449,8 @@ function OrdersTrackingGrid(props) {
     });
   }, [isGTMReady]);
 
-  const hasAIORights = hasRights('AIO');
   const hasCanViewOrdersRights = hasRights('CanViewOrders');
   const hasOrderTrackingRights = hasRights('OrderTracking');
-  const hasOrderModificationRights = hasRights('OrderModification');
   const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
   const searchOptions = [
     ...getPredefinedSearchOptionsList(searchLabels),
@@ -521,11 +516,7 @@ function OrdersTrackingGrid(props) {
             componentProp.columnList,
             userData
           )}
-          definitions={ordersTrackingDefinition(
-            componentProp,
-            openFilePdf,
-            hasAIORights
-          )}
+          definitions={ordersTrackingDefinition(componentProp, openFilePdf)}
           config={gridConfig}
           options={options}
           gridConfig={gridConfig}
@@ -543,8 +534,6 @@ function OrdersTrackingGrid(props) {
               openFilePdf={(flyoutType, orderId, selectedId) =>
                 openFilePdf(flyoutType, orderId, selectedId)
               }
-              hasAIORights={hasAIORights}
-              hasOrderModificationRights={hasOrderModificationRights}
               rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
               newItem={newItem}
             />

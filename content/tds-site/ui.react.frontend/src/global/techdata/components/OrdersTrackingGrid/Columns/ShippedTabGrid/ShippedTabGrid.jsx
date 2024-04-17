@@ -10,14 +10,8 @@ import DNoteColumn from './Columns/DNoteColumn';
 import InvoiceColumn from './Columns/InvoiceColumn';
 import DropdownColumn from './Columns/DropdownColumn';
 import ShippedTabGridRenderers from './Columns/ShippedTabGridRenderers';
-function ShippedTabGrid({
-  data,
-  gridProps,
-  openFilePdf,
-  hasAIORights,
-  reseller,
-  id,
-}) {
+
+function ShippedTabGrid({ data, gridProps, openFilePdf, reseller, id }) {
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -71,7 +65,6 @@ function ShippedTabGrid({
           config={config}
           id={id}
           openFilePdf={openFilePdf}
-          hasAIORights={hasAIORights}
           reseller={reseller}
         />
       ),

@@ -11,10 +11,11 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
   const effects = useOrderTrackingStore((state) => state.effects);
-  const { setCustomState } = effects;
+  const { setCustomState, hasRights } = effects;
   const orderModificationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.orderModification
   );
+  const hasOrderModificationRights = hasRights('OrderModification');
 
   const getValidationData = async () => {
     try {
@@ -76,7 +77,7 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
         <WarningTriangle />
         {getDictionaryValueOrKey(config?.itemsLabels?.endOfLife)}
       </span>
-      {orderModificationFlag && (
+      {orderModificationFlag && hasOrderModificationRights && (
         <p className="line-status-link">
           {getDictionaryValueOrKey(config?.itemsLabels?.seeOptions)}
         </p>

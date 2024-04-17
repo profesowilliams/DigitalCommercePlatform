@@ -38,14 +38,10 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const { setUserData } = useOrderTrackingStore((st) => st.effects);
+  const { setUserData, hasRights } = useOrderTrackingStore((st) => st.effects);
   const userData = useOrderTrackingStore((st) => st.userData);
-  const hasAIORights = userData?.roleList?.some(
-    (role) => role.entitlement === 'AIO'
-  );
-  const hasOrderModificationRights = userData?.roleList?.some(
-    (role) => role.entitlement === 'OrderModification'
-  );
+  const hasAIORights = hasRights('AIO');
+  const hasOrderModificationRights = hasRights('OrderModification');
 
   const redirectToMainDashboard = () => {
     let currentUrl = new URL(window.location.href);
@@ -59,7 +55,6 @@ function OrdersTrackingDetail(props) {
   };
 
   const headerRequest = async () => {
-    console.log(endpoints.orderDetail);
     try {
       const apiResponse = await usGet(
         `${config.uiCommerceServiceDomain}${endpoints.orderDetail}/${id}`
@@ -213,7 +208,7 @@ function OrdersTrackingDetail(props) {
               />
               <OrderTrackingDetailBody
                 config={config}
-                hasAIORights={hasAIORights}
+                content={content}
                 openFilePdf={openFilePdf}
                 gridRef={gridRef}
                 rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
