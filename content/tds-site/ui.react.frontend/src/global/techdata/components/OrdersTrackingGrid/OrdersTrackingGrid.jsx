@@ -109,6 +109,10 @@ function OrdersTrackingGrid(props) {
   const [responseError, setResponseError] = useState(null);
   const [sendAnalyticsDataHome, setSendAnalyticsDataHome] = useState(true);
   const [newItem, setNewItem] = useState(null);
+  const [searchParameters, setSearchParameters] = useState({
+    field: '',
+    value: '',
+  });
   const componentProp = JSON.parse(props.componentProp);
 
   const formattedDateRange = setDefaultSearchDateRange(
@@ -205,6 +209,7 @@ function OrdersTrackingGrid(props) {
       filtersRefs,
       isOnSearchAction,
     };
+    setSearchParameters(searchCriteria?.current);
     request.url = addCurrentPageNumber(customPaginationRef, request);
     const ordersReportUrl = new URL(
       componentProp.uiCommerceServiceDomain + endpoints.ordersReport
@@ -494,7 +499,7 @@ function OrdersTrackingGrid(props) {
   const authorizedContent = () => {
     return hasAccess ? (
       <div className="cmp-order-tracking-grid">
-        <Criteria config={gridConfig} />
+        <Criteria config={gridConfig} searchCriteria={searchParameters} />
         <MainGridHeader
           onQueryChanged={onQueryChanged}
           searchLabels={searchLabels}

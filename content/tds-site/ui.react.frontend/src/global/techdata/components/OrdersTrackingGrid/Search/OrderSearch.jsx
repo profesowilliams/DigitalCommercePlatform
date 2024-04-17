@@ -80,6 +80,9 @@ const _OrderSearch = (
   const { setCustomState, closeAndCleanToaster } = useOrderTrackingStore(
     (state) => state.effects
   );
+  const isSearchForTDSynnexId = ['Id', 'InvoiceId', 'DeliveryNote'].includes(
+    ref.current?.field
+  );
 
   useImperativeHandle(
     ref,
@@ -222,11 +225,15 @@ const _OrderSearch = (
     setIsDropdownVisible(false);
     setCustomState({
       key: 'showCriteria',
-      value: inputValue.length !== 10,
+      value: isSearchForTDSynnexId
+        ? inputValue.length !== 10
+        : inputValue.length > 4,
     });
     setCustomState({
       key: 'isPartialSearch',
-      value: inputValue.length < 10,
+      value: isSearchForTDSynnexId
+        ? inputValue.length < 10
+        : inputValue.length < 5,
     });
   };
 
@@ -259,17 +266,25 @@ const _OrderSearch = (
   };
 
   useEffect(() => {
-    if (ref.current.value) {
-      setIsSearchCapsuleVisible(true);
-      setCustomState({
-        key: 'showCriteria',
-        value: ref.current.value.length !== 10,
-      });
-      setCustomState({
-        key: 'isPartialSearch',
-        value: ref.current.value.length < 10,
-      });
-      if (!searchTriggered) setSearchTriggered(true);
+    const valueLength = ref.current.value.length;
+    const isLengthValid = isSearchForTDSynnexId
+      ? valueLength === 10
+      : valueLength > 4;
+
+    setIsSearchCapsuleVisible(!!valueLength);
+
+    setCustomState({
+      key: 'showCriteria',
+      value: isLengthValid,
+    });
+
+    setCustomState({
+      key: 'isPartialSearch',
+      value: isLengthValid && valueLength < (isSearchForTDSynnexId ? 10 : 5),
+    });
+
+    if (!searchTriggered && !!valueLength) {
+      setSearchTriggered(true);
     }
   }, [ref.current.value]);
 

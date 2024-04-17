@@ -27,6 +27,7 @@ export const endpoints = {
 
 export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
   const searchParams = new URLSearchParams(defaultDateRange);
+
   if (defaultDateRange) {
     for (const [key, value] of searchParams.entries()) {
       url.searchParams.set(key, value);
@@ -43,6 +44,51 @@ export const filtersDateGroup = [
   'shippedDateTo',
 ];
 
+const setSearchCriteriaDefaultDateRange = ({
+  searchCriteria,
+  requestUrl,
+  filtersRefs,
+  defaultSearchDateRange,
+}) => {
+  const { field, value } = searchCriteria.current || {};
+  if (field) {
+    requestUrl.searchParams.set(field, value);
+    const isSearchForTDSynnexId = ['Id', 'InvoiceId', 'DeliveryNote'].includes(
+      field
+    );
+    const isSearchForPOId = field === 'CustomerPO';
+    const isSearchForSerialId = field === 'SerialNo';
+    const noFilterApplied =
+      !filtersRefs.current.type && !filtersRefs.current.status;
+    const dateRange = noFilterApplied ? 30 : 90;
+
+    if (isSearchForTDSynnexId) {
+      if (value.length === 10) {
+        requestUrl.searchParams.delete('createdFrom');
+        requestUrl.searchParams.delete('createdTo');
+      } else if (value.length < 10) {
+        addDefaultDateRangeToUrl(
+          requestUrl,
+          setDefaultSearchDateRange(dateRange)
+        );
+      }
+    } else if (isSearchForPOId) {
+      if (value.length > 4) {
+        requestUrl.searchParams.delete('createdFrom');
+        requestUrl.searchParams.delete('createdTo');
+      } else if (value.length < 5) {
+        addDefaultDateRangeToUrl(
+          requestUrl,
+          setDefaultSearchDateRange(dateRange)
+        );
+      }
+    } else if (isSearchForSerialId) {
+      addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
+    }
+  } else {
+    addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
+  }
+};
 export const fetchOrdersCount = async (
   url,
   defaultSearchDateRange,
@@ -57,24 +103,20 @@ export const fetchOrdersCount = async (
 
   if (reportValue) {
     requestUrl.searchParams.set('reportName', reportValue);
-  } else if (searchCriteria.current?.field) {
-    const { field, value } = searchCriteria.current;
-    requestUrl.searchParams.set(field, value);
-    const isSearchForExactId = value.length === 10;
-    if (!isSearchForExactId) {
-      addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
-    }
-  } else {
-    addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
   }
+  setSearchCriteriaDefaultDateRange({
+    searchCriteria,
+    requestUrl,
+    filtersRefs,
+    defaultSearchDateRange,
+  });
+
   if (dateFilters.length > 0) {
     requestUrl.searchParams.delete('createdFrom');
     requestUrl.searchParams.delete('createdTo');
     dateFilters.forEach((filter) =>
       requestUrl.searchParams.set(filter[0], filter[1])
     );
-  } else if (filtersRefs.current.type || filtersRefs.current.status) {
-    addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
   }
   const filtersStatusAndType =
     (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
@@ -147,19 +189,12 @@ export async function fetchData(config) {
   const { url } = request;
   const requestUrl = new URL(url);
   const isFirstAPICall = firstAPICall.current === true;
-
-  if (searchCriteria.current?.field) {
-    const { field, value } = searchCriteria.current;
-    const isSearchForExactId = field === 'Id' && value.length === 10;
-    if (isSearchForExactId) {
-      requestUrl.searchParams.delete('createdFrom');
-      requestUrl.searchParams.delete('createdTo');
-    } else {
-      addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
-    }
-  } else if (defaultSearchDateRange) {
-    addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
-  }
+  setSearchCriteriaDefaultDateRange({
+    searchCriteria,
+    requestUrl,
+    filtersRefs,
+    defaultSearchDateRange,
+  });
   const dateFilters = Object.entries(filtersRefs?.current).filter(
     (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
   );
