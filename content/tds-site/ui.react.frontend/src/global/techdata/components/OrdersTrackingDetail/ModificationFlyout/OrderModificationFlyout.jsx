@@ -33,7 +33,7 @@ function OrderModificationFlyout({
   content,
   gridRef = null,
   rowsToGrayOutTDNameRef = null,
-  setOrderModifyHeaderInfo = false,
+  setOrderModifyHeaderInfo = () => {},
 }) {
   const { id = '' } = getUrlParams();
   const [items, setItems] = useState([]);
