@@ -11,13 +11,10 @@ export const pushDataLayerGoogle = (analyticsData) => {
 };
 
 export const getSortAnalyticsGoogle = (sortedModel, searchTrigger) => {
-  const sortData = sortedModel
-    .map((item) => `${item.colId}: ${item.sort}`)
-    .join();
   return {
     event: 'Order tracking - Grid Sort',
     category: 'Sort',
-    orderTracking: sortData,
+    orderTracking: sortedModel,
     searchTrigger,
   };
 };

@@ -279,8 +279,15 @@ function OrdersTrackingGrid(props) {
       .filter((o) => !!o.sort)
       .map(({ colId, sort }) => ({ colId, sort }));
     hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
-    if (!compareSort(hasSortChanged.current, currentSortState)) {
-      pushDataLayerGoogle(getSortAnalyticsGoogle(sortedModel, 'Click'));
+    if (
+      !compareSort(hasSortChanged.current, currentSortState)
+    ) {
+      const sortData = sortedModel
+        .map((item) => `${item.colId}: ${item.sort}`)
+        .join();
+        if(sortData!==''){
+          pushDataLayerGoogle(getSortAnalyticsGoogle(sortData, 'Click'));
+        }
     }
     setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
   };
