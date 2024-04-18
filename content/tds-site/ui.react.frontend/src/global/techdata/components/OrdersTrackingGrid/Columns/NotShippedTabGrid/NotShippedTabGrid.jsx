@@ -55,7 +55,7 @@ function NotShippedTabGrid({
   const isOrderModificationButtonVisible =
     hasOrderModificationRights && orderEditable && orderModificationFlag;
   const isSeeOptionsButtonVisible =
-    hasOrderModificationRights && orderModificationFlag;
+    orderEditable && hasOrderModificationRights && orderModificationFlag;
   const isReleaseOrderButtonVisible =
     orderModificationFlag &&
     hasOrderModificationRights &&
