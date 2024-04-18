@@ -45,7 +45,7 @@ function ShipToColumn({ data, shipToTooltipTemplate }) {
         arrow
         disableInteractive={true}
       >
-        <span>{data?.name}</span>
+        <span className="status-column-container__text">{data?.name}</span>
       </Tooltip>
     </div>
   ) : (

@@ -13,6 +13,14 @@
 
 .status-column-container {
   display: flex;
+
+  &__text {
+    width: auto;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 .status-span-icon {
   margin-right: 4px;
