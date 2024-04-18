@@ -25,7 +25,7 @@ export const renewalsDefinitions = (componentProp, triggerRequestFlyout) => {
       actions: <RenewalActionColumn eventProps={eventProps} />,
       total: (componentProp.enableRequestQuote && data.canRequestQuote) ? <span className='request-quote' onClick={ () => triggerRequestFlyout(data)}><EnterArrowIcon />Request Quote</span> : <PriceColumn columnValue={data?.renewal?.total} currency={data?.renewal?.currency} />,
       agreementNumber: data?.agreementNumber === 'Multiple' ? componentProp?.productGrid?.multipleLabel : data?.agreementNumber,
-      Id: <DistiQuoteColumn id={data?.source?.id} />,
+      Id: <DistiQuoteColumn id={data?.source?.id} type={data?.source?.type} />,
     };
     const defaultValue = () => (typeof value !== 'object' && value) || '';
     return columnComponents[columnKey] || defaultValue();

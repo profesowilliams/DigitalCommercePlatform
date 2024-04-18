@@ -3,11 +3,12 @@ import Link from '../../Widgets/Link';
 import { useRenewalGridState } from '../store/RenewalsStore';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../../Analytics/analytics';
 
-function DistiQuoteColumn({ id = '' }) {
+function DistiQuoteColumn({ id = '', type = 'renewal' }) {
   const { detailUrl = '' } = useRenewalGridState((state) => state.aemConfig);
   const analyticsCategory = useRenewalGridState((state) => state.analyticsCategory);
+  const orderType = type.toLowerCase();
   const renewalDetailsURL = encodeURI(
-    `${window.location.origin}${detailUrl}.html?id=${id ?? ''}`
+    `${window.location.origin}${detailUrl}.html?id=${id ?? ''}&type=${orderType}`
   );
   let analyticsData = {
     source: { id: id },
