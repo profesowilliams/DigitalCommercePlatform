@@ -25,9 +25,10 @@ const NewlyAddedLineItem = ({
         productId: item.id,
         quantity: quantity,
       });
-      const { price, currency } = result?.data?.content?.priceData || {};
+      const { price, currency, totalPriceFormatted } =
+        result?.data?.content?.priceData || {};
       setCurrency(currency);
-      setPrice(price);
+      setPrice(totalPriceFormatted);
       onChange(index, quantity, price);
     } catch (error) {
       console.error('Error:', error);
@@ -62,7 +63,7 @@ const NewlyAddedLineItem = ({
         <p className="cmp-flyout-list__element__price-bold">
           {getDictionaryValueOrKey(labels.lineTotal)} ({currency}){' '}
         </p>
-        {price && <p>{(item.quantity * price).toFixed(2)}</p>}
+        {price && <p>{price}</p>}
       </div>
     </li>
   );

@@ -8439,6 +8439,7 @@ app.post("/ui-commerce/v2/Price/GetPriceForProduct", function (req, res) {
       priceData: {
         currency: "GBP",
         price: 20,
+        totalPriceFormatted: "232.00",
         endUserPromos: [
           {
             endCustomer: "string",
