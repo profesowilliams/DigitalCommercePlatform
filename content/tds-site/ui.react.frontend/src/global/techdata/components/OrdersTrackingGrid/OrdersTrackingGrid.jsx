@@ -543,6 +543,7 @@ function OrdersTrackingGrid(props) {
               }
               rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
               newItem={newItem}
+              onQueryChanged={onQueryChanged}
             />
           )}
         />

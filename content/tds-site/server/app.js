@@ -6245,155 +6245,76 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
 
 app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
   const response = {
-    content: {
-      notShipped: [
-        {
-          line: "1",
-          urlProductImage:
-            "https://cdn.cs.1worldsync.com/4f/8f/4f8f5c8a-79db-4628-abd7-2ad873287d51.jpg",
-          displayName: "Logitech B100",
-          tdNumber: "2663149",
-          mfrNumber: "910-003357",
-          orderQuantity: 10.0,
-          originalOrderQuantity: 10.0,
-          shippedQuantity: 0.0,
-          openQuantity: 10.0,
-          currency: "EUR",
-          unitPrice: 9.53,
-          unitPriceFormatted: "9,53",
-          isEOL: false,
-          invoices: [],
-          lineDetails: [
+    "content": {
+        "notShipped": [
             {
-              quantity: 10.0,
-              subtotalPrice: 95.3,
-              subtotalPriceFormatted: "95,30",
-              status: "REJECTED",
-              statusText: "Rifiutato",
-              isShipment: false,
+                "line": "10",
+                "urlProductImage": "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+                "tdNumber": "7793984",
+                "mfrNumber": "MP203KN/A",
+                "orderQuantity": 1.0,
+                "originalOrderQuantity": 1.0,
+                "shippedQuantity": 0.0,
+                "openQuantity": 1.0,
+                "currency": "DKK",
+                "unitPrice": 9906.21,
+                "unitPriceFormatted": "9,906.21",
+                "isEOL": false,
+                "invoices": [],
+                "lineDetails": [
+                    {
+                        "quantity": 1.0,
+                        "subtotalPrice": 9906.21,
+                        "subtotalPriceFormatted": "9,906.21",
+                        "shipDate": "04-19-2024",
+                        "shipDateFormatted": "19/04/2024",
+                        "shipDateDetailsTranslated": "Available",
+                        "status": "OPEN",
+                        "statusText": "Open",
+                        "isShipment": false
+                    }
+                ]
             },
-          ],
-        },
-        {
-          line: "2",
-          urlProductImage:
-            "https://cdn.cs.1worldsync.com/4f/8f/4f8f5c8a-79db-4628-abd7-2ad873287d51.jpg",
-          displayName: "Logitech B100",
-          tdNumber: "2663149",
-          mfrNumber: "910-003357",
-          orderQuantity: 3.0,
-          originalOrderQuantity: 3.0,
-          shippedQuantity: 0.0,
-          openQuantity: 3.0,
-          currency: "EUR",
-          unitPrice: 9.53,
-          unitPriceFormatted: "9,53",
-          isEOL: false,
-          invoices: [],
-          lineDetails: [
             {
-              quantity: 3.0,
-              subtotalPrice: 28.59,
-              subtotalPriceFormatted: "28,59",
-              status: "REJECTED",
-              statusText: "Rifiutato",
-              isShipment: false,
-            },
-          ],
-        },
-        {
-          line: "3",
-          urlProductImage:
-            "https://cdn.cs.1worldsync.com/4f/8f/4f8f5c8a-79db-4628-abd7-2ad873287d51.jpg",
-          displayName: "Logitech B100",
-          tdNumber: "2663149",
-          mfrNumber: "910-003357",
-          orderQuantity: 2.0,
-          originalOrderQuantity: 2.0,
-          shippedQuantity: 0.0,
-          openQuantity: 2.0,
-          currency: "EUR",
-          unitPrice: 9.53,
-          unitPriceFormatted: "9,53",
-          isEOL: false,
-          invoices: [],
-          lineDetails: [
-            {
-              quantity: 2.0,
-              subtotalPrice: 19.06,
-              subtotalPriceFormatted: "19,06",
-              status: "REJECTED",
-              statusText: "Rifiutato",
-              isShipment: false,
-            },
-          ],
-        },
-        {
-          line: "4",
-          urlProductImage:
-            "https://cdn.cs.1worldsync.com/4f/8f/4f8f5c8a-79db-4628-abd7-2ad873287d51.jpg",
-          displayName: "Logitech B100",
-          tdNumber: "2663149",
-          mfrNumber: "910-003357",
-          orderQuantity: 1.0,
-          originalOrderQuantity: 1.0,
-          shippedQuantity: 0.0,
-          openQuantity: 1.0,
-          currency: "EUR",
-          unitPrice: 9.53,
-          unitPriceFormatted: "9,53",
-          isEOL: true,
-          invoices: [],
-          lineDetails: [
-            {
-              quantity: 1.0,
-              subtotalPrice: 9.53,
-              subtotalPriceFormatted: "9,53",
-              status: "BLOCKED",
-              statusText: "limite di credito",
-              isShipment: false,
-            },
-          ],
-        },
-        {
-          line: "5",
-          urlProductImage:
-            "https://cdn.cs.1worldsync.com/4f/8f/4f8f5c8a-79db-4628-abd7-2ad873287d51.jpg",
-          displayName: "Logitech B100",
-          tdNumber: "2663149",
-          mfrNumber: "910-003357",
-          orderQuantity: 1.0,
-          originalOrderQuantity: 1.0,
-          shippedQuantity: 0.0,
-          openQuantity: 1.0,
-          currency: "EUR",
-          unitPrice: 9.53,
-          unitPriceFormatted: "9,53",
-          isEOL: true,
-          invoices: [],
-          lineDetails: [
-            {
-              quantity: 1.0,
-              subtotalPrice: 9.53,
-              subtotalPriceFormatted: "9,53",
-              status: "BLOCKED",
-              statusText: "limite di credito",
-              isShipment: false,
-            },
-          ],
-        },
-      ],
-      shipped: [],
-      totalOpenQuantity: 17.0,
-      totalShipQuantity: 0.0,
-      orderEditable: true,
+                "line": "20",
+                "urlProductImage": "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+                "tdNumber": "6388263",
+                "mfrNumber": "MJQK3DK/A",
+                "orderQuantity": 1.0,
+                "originalOrderQuantity": 1.0,
+                "shippedQuantity": 0.0,
+                "openQuantity": 1.0,
+                "currency": "DKK",
+                "unitPrice": 2505.41,
+                "unitPriceFormatted": "2,505.41",
+                "isEOL": false,
+                "invoices": [],
+                "lineDetails": [
+                    {
+                        "quantity": 1.0,
+                        "subtotalPrice": 2505.41,
+                        "subtotalPriceFormatted": "2,505.41",
+                        "shipDate": "04-19-2024",
+                        "shipDateFormatted": "19/04/2024",
+                        "shipDateDetailsTranslated": "In Transit",
+                        "status": "OPEN",
+                        "statusText": "Open",
+                        "isShipment": false
+                    }
+                ]
+            }
+        ],
+        "shipped": [],
+        "totalOpenQuantity": 2.0,
+        "totalShipQuantity": 0.0,
+        "orderEditable": true
     },
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  };
+    "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+    }
+}
   setTimeout(() => {
     return res.status(200).json(response);
   }, 200);

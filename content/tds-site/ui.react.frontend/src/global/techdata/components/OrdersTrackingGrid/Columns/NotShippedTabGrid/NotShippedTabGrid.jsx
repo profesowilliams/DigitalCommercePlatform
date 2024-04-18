@@ -27,6 +27,7 @@ function NotShippedTabGrid({
   gridRef,
   rowsToGrayOutTDNameRef,
   newItem,
+  onQueryChanged,
 }) {
   const config = {
     ...gridProps,
@@ -160,6 +161,9 @@ function NotShippedTabGrid({
         } = response;
         if (changeDelFlag?.isError === false && isError === false) {
           setReleaseSuccess(true);
+          setTimeout(() => {
+            onQueryChanged();
+          }, 5000);
         } else {
           setReleaseSuccess(false);
         }

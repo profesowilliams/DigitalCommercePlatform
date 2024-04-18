@@ -8,6 +8,7 @@ function OrderDetailsRenderers({
   openFilePdf,
   rowsToGrayOutTDNameRef,
   newItem,
+  onQueryChanged
 }) {
   const detailRender = useOrderTrackingStore(
     (state) => state.filter.detailRender
@@ -21,6 +22,7 @@ function OrderDetailsRenderers({
           openFilePdf={openFilePdf}
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
           newItem={newItem}
+          onQueryChanged={onQueryChanged}
         />
       )}
     </>

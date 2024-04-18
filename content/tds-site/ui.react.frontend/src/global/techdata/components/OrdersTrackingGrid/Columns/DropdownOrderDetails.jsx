@@ -18,6 +18,7 @@ function DropdownOrderDetails({
   openFilePdf,
   newItem,
   rowsToGrayOutTDNameRef,
+  onQueryChanged,
 }) {
   const [apiResponse, isLoading, error] = useGet(
     `${aemConfig.uiCommerceServiceDomain}/v3/order/${data?.id}/lines`,
@@ -86,6 +87,7 @@ function DropdownOrderDetails({
           gridRef={gridRef}
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
           newItem={newItem}
+          onQueryChanged={onQueryChanged}
         />
       ) : (
         <LoaderIcon className="loadingIcon-rotate" />
