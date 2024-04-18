@@ -216,6 +216,7 @@ function ProductReplacementFlyout({
                     mfrNumber: product.manufacturerPartNumber,
                     unitPrice: product.price.bestPrice,
                     currency: product.price.currency,
+                    unitPriceFormatted: product.price.bestPrice,
                   },
                   index: index,
                 }}
