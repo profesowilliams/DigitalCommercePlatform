@@ -7,7 +7,6 @@ import { usGet } from '../../../../../utils/api';
 
 function LineStatusColumn({ line, config, sortedLineDetails }) {
   const { id = '' } = getUrlParams();
-
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
   const effects = useOrderTrackingStore((state) => state.effects);
@@ -16,7 +15,8 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
     (state) => state.featureFlags.orderModification
   );
   const hasOrderModificationRights = hasRights('OrderModification');
-
+  const isSeeOptionsEnabled =
+    orderModificationFlag && hasOrderModificationRights && line.orderEditable;
   const getValidationData = async () => {
     try {
       const result = await usGet(
@@ -77,7 +77,7 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
         <WarningTriangle />
         {getDictionaryValueOrKey(config?.itemsLabels?.endOfLife)}
       </span>
-      {orderModificationFlag && hasOrderModificationRights && (
+      {isSeeOptionsEnabled && (
         <p className="line-status-link">
           {getDictionaryValueOrKey(config?.itemsLabels?.seeOptions)}
         </p>
@@ -103,7 +103,7 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
             <span
               className="cmp-order-tracking-grid-details__splitLine__separateLineText"
               onClick={
-                isEOL && orderModificationFlag
+                isEOL && isSeeOptionsEnabled
                   ? () => handleSeeOptionsClick(index)
                   : null
               }

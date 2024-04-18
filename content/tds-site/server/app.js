@@ -6410,7 +6410,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?/lines", (req, res) => {
       orderNumber: "Q001081582",
       customerPO: "TDS - XQ-2148407",
       currency: "GBP",
-      orderEditable: false,
+      orderEditable: true,
       items: [
         {
           line: "10",

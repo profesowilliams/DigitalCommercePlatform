@@ -13,6 +13,7 @@ export const mapServiceData = (response) => {
         customerPO: responseData?.customerPO,
         actions: true,
         currency: responseData?.currency,
+        orderEditable: responseData?.orderEditable,
       }))
     : [];
   const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;

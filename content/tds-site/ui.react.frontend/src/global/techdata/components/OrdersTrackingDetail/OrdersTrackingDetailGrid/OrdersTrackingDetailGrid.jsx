@@ -130,7 +130,7 @@ function OrdersTrackingDetailGrid({
         ...response,
         data: {
           content: {
-            ...response.content,
+            ...response.data.content,
             items: [
               ...response.data.content.items,
               ...prepareGroupedItems(response.data.content),
