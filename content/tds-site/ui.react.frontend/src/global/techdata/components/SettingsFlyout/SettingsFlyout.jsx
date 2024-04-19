@@ -77,6 +77,13 @@ const SettingsFlyout = ({
 
   const handleDataChange = (key, value) => {
     setData((data) => ({ ...data, [key]: value }));
+    if (
+      !data.additionalEmailActive &&
+      key === 'additionalEmail' &&
+      value === ''
+    ) {
+      setData((data) => ({ ...data, emailActive: true }));
+    }
   };
 
   const saveData = async () => {
