@@ -967,7 +967,20 @@ svg {
       justify-content: center;
     }
   }
+
+  &.is-opportunity {
+    .cmp-renewals-actions-menu__item:not(.view-details) {
+      pointer-events: none;
+      color: $brand-text-lightgray;
+
+      svg, path {
+        fill: $brand-text-lightgray;
+      }
+    }
+  }
 }
+
+
 
 $flyout-padding: 1.3rem;
 $flyout-small-height: 780px;

@@ -191,7 +191,7 @@ function _RenewalActionColumn({ eventProps }) {
   return (
     <>
       <div className="cmp-renewal-action-container" style={{position:'relative'}} key={Math.random()}>
-        {isIconEnabled ? (
+        {isIconEnabled && !canRequestQuote ? (
           <Button onClick={handleCartIconClick}
           >
             <span className="cmp-renewals-cart-icon">
@@ -199,11 +199,15 @@ function _RenewalActionColumn({ eventProps }) {
             </span>
           </Button>
         ) : (
-          <CartIcon
-            className="disabled"
-            fill="#bcc0c3"
-            style={{ pointerEvents: 'none' }}
-          />
+        <Button>
+          <span className="cmp-renewals-cart-icon">
+            <CartIcon
+              className="disabled"
+              fill="#bcc0c3"
+              style={{ pointerEvents: 'none' }}
+            />
+          </span>
+          </Button>
         )}
         <PlaceOrderDialog
           key={Math.random()}

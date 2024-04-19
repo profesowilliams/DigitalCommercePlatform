@@ -12,7 +12,7 @@ import { redirectToRenewalDetail } from '../utils/renewalUtils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS, pushDataLayer } from '../../Analytics/analytics';
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from '../../../../../utils/utils';
 
-function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy, canShare, detailUrl }) {
+function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy, canShare, detailUrl, canRequestQuote }) {
     const dialogRef = useRef();
     const { productGrid } = useRenewalGridState(st => st.aemConfig);
     const { setCustomState } = useRenewalGridState(st => st.effects);
@@ -132,9 +132,9 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
             disableScrollLock
             sx={sx}
         >
-            <div className="cmp-renewals-actions-menu">
+            <div className={canRequestQuote ? "cmp-renewals-actions-menu is-opportunity" : "cmp-renewals-actions-menu"}>
                 <div
-                    className="cmp-renewals-actions-menu__item"
+                    className="cmp-renewals-actions-menu__item view-details"
                     onClick={() => redirectToRenewalDetail(detailUrl, data?.source?.id, analyticsData)}
                 >
                     <span className="cmp-renewals-actions-menu__item-icon">
