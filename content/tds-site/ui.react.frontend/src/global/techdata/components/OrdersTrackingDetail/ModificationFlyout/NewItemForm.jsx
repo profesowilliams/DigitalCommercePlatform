@@ -2,7 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button } from '@mui/material';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Autocomplete from '@mui/material/Autocomplete';
+import Paper from '@mui/material/Paper';
 import { usGet } from '../../../../../utils/api';
+
+function CustomPaper({ children }) {
+  return (
+    <Paper
+      sx={{
+        width: '520px',
+        '& .MuiAutocomplete-listbox': {
+          width: '520px',
+          bgcolor: '#fff',
+          "& .MuiAutocomplete-option[aria-selected='true']": {
+            bgcolor: '#fff',
+            '&.Mui-focused': {
+              bgcolor: '#fff',
+            },
+          },
+        },
+        '& .MuiAutocomplete-listbox .MuiAutocomplete-option.Mui-focused': {
+          bgcolor: '#F8F8F8',
+        },
+      }}
+    >
+      {children}
+    </Paper>
+  );
+}
 
 const NewItemForm = ({
   labels = {},
@@ -95,6 +121,7 @@ const NewItemForm = ({
     <div className="new-item-form">
       <Autocomplete
         id="free-solo-demo"
+        PaperComponent={CustomPaper}
         freeSolo
         options={suggestions}
         getOptionLabel={(option) => option.title}
@@ -112,7 +139,9 @@ const NewItemForm = ({
           handleChange('manufacturersPartNumber', event.target.textContent);
           handleChange('item', value);
         }}
-        sx={{ width: 400, fontSize: 12 }}
+        sx={{
+          width: 400,
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
