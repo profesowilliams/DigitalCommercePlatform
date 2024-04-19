@@ -64,7 +64,7 @@ function BaseFlyout({
             {getDictionaryValueOrKey(titleLabel)}
           </h4>
           <div className="cmp-flyout__header-icon" onClick={onClose}>
-            <DismissFilledIcon width="30" height="30" />
+            <DismissFilledIcon width="24" height="24" />
           </div>
         </section>
         {children}

@@ -555,7 +555,7 @@ $flyout-small-height-formax: 779px;
         display: flex;
         align-items: center;
         &.cmp-flyout__footer-button--enabled {
-          background-color: #262626;
+          background-color: $td-dark-blue;
 
           &:hover {
             background-color: $brand-green;

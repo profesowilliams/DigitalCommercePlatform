@@ -4962,7 +4962,6 @@ app.post("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
             "email": "Gbc@test.com",
             "message": "Dont have access to this quote"
           },
-
           {
             "email": null,
             "message": "Internal Server Error"

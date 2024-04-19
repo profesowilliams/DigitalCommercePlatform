@@ -173,26 +173,44 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
         accessObj = response.messages.filter((item) => {
           return item.message?.indexOf('access ') > -1;
         });
+        let errorFlags = {
+          incorrectFlag: 0,
+          accessFlag: 0,
+          serverFlag: 0
+        }
         for(var i = 0; i < response.messages.length; i++) {
-          if (response.messages[i]?.message?.indexOf('Invalid ') > -1) {
-            setErrorFlags({
+          if (response.messages[i]?.message?.indexOf('Invalid') > -1) {
+            errorFlags = {
               ...errorFlags,
-              incorrect: true
-            });
-            break;
-          } else if (response.messages[i]?.message?.indexOf('access ') > -1) {
-            setErrorFlags({
+              incorrectFlag: 1
+            }
+          } else if (response.messages[i]?.message?.indexOf('access') > -1) {
+            errorFlags = {
               ...errorFlags,
-              notFound: true
-            });
-            break;
+              accessFlag: 1
+            }
           } else {
-             setErrorFlags({
+            errorFlags = {
               ...errorFlags,
-              serverError: true
-             });
-             break;
+              serverFlag: 1
+            }
           }
+        }
+        if (errorFlags.incorrectFlag > 0) {
+          setErrorFlags({
+            ...errorFlags,
+            incorrect: true
+           });
+        } else if (errorFlags.accessFlag > 0) {
+          setErrorFlags({
+            ...errorFlags,
+            notFound: true
+          });
+        } else {
+          setErrorFlags({
+            ...errorFlags,
+            serverError: true
+          });
         }
       } else {
         setErrorFlags({
