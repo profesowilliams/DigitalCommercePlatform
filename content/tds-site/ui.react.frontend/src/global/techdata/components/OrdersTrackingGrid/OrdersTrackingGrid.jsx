@@ -273,21 +273,23 @@ function OrdersTrackingGrid(props) {
   };
 
   const onSortChanged = (evt) => {
-    const currentSortState = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     const sortModelList = evt.columnApi.getColumnState();
     const sortedModel = sortModelList
       .filter((o) => !!o.sort)
       .map(({ colId, sort }) => ({ colId, sort }));
-    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
     if (
-      !compareSort(hasSortChanged.current, currentSortState)
+      hasSortChanged.current?.sortData && 
+      !compareSort(hasSortChanged.current.sortData, sortedModel)
     ) {
       const sortData = sortedModel
         .map((item) => `${item.colId}: ${item.sort}`)
         .join();
-        if(sortData!==''){
-          pushDataLayerGoogle(getSortAnalyticsGoogle(sortData, 'Click'));
-        }
+      if (sortData !== '') {
+        pushDataLayerGoogle(getSortAnalyticsGoogle(sortData, 'Click'));
+      }
+    }
+    if(sortedModel){ 
+      hasSortChanged.current = {sortData: sortedModel};
     }
     setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
   };
@@ -443,15 +445,6 @@ function OrdersTrackingGrid(props) {
         );
         pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
 
-        if (sendAnalyticsDataHome) {
-          if (hasAccess) {
-            pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
-            setSendAnalyticsDataHome(false);
-          } else {
-            pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
-            setSendAnalyticsDataHome(false);
-          }
-        }
       }
     });
   }, [isGTMReady]);
@@ -496,6 +489,15 @@ function OrdersTrackingGrid(props) {
         onQueryChanged({ onSearchAction: true });
       }
     });
+    if (sendAnalyticsDataHome) {
+      if (hasAccess) {
+        pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
+        setSendAnalyticsDataHome(false);
+      } else {
+        pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
+        setSendAnalyticsDataHome(false);
+      }
+    }
   }, [userData]);
 
   const authorizedContent = () => {

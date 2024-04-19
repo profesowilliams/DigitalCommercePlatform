@@ -217,10 +217,8 @@ export function urlStrToMapStruc(urlStri = '') {
 }
 
 export const compareSort = (oldSort, newSort) => {
-  return oldSort?.sortData?.length && newSort?.sortData?.length ?
-    oldSort.sortData[0]?.colId === newSort?.sortData[0]?.colId &&
-    oldSort.sortData[0]?.sort === newSort?.sortData[0]?.sort
-  : false;
+  return oldSort[0]?.colId === newSort[0]?.colId &&
+    oldSort[0]?.sort === newSort[0]?.sort;
 };
 
 export function extractSortColAndDirection(sortDataRef = []) {
