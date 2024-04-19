@@ -144,9 +144,6 @@ const SettingsFlyout = ({
 
   useEffect(() => {
     isDataModifiedAndValid() ? setIsSaveEnabled(true) : setIsSaveEnabled(false);
-    if (!data.additionalEmailActive && data.additionalEmail === '') {
-      setData((data) => ({ ...data, emailActive: true }));
-    }
   }, [data]);
 
   useEffect(() => {
