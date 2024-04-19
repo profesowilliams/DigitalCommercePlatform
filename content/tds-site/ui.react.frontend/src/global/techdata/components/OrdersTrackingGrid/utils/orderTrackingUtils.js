@@ -49,6 +49,7 @@ const setSearchCriteriaDefaultDateRange = ({
   requestUrl,
   filtersRefs,
   defaultSearchDateRange,
+  dateFilters,
 }) => {
   const { field, value } = searchCriteria.current || {};
   if (field) {
@@ -88,6 +89,13 @@ const setSearchCriteriaDefaultDateRange = ({
   } else {
     addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
   }
+  if (dateFilters.length > 0) {
+    requestUrl.searchParams.delete('createdFrom');
+    requestUrl.searchParams.delete('createdTo');
+    dateFilters.forEach((filter) =>
+      requestUrl.searchParams.set(filter[0], filter[1])
+    );
+  }
 };
 export const fetchOrdersCount = async (
   url,
@@ -109,6 +117,7 @@ export const fetchOrdersCount = async (
     requestUrl,
     filtersRefs,
     defaultSearchDateRange,
+    dateFilters,
   });
 
   if (dateFilters.length > 0) {
@@ -189,19 +198,18 @@ export async function fetchData(config) {
   const { url } = request;
   const requestUrl = new URL(url);
   const isFirstAPICall = firstAPICall.current === true;
+
+  const dateFilters = Object.entries(filtersRefs?.current).filter(
+    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
+  );
   setSearchCriteriaDefaultDateRange({
     searchCriteria,
     requestUrl,
     filtersRefs,
     defaultSearchDateRange,
+    dateFilters,
   });
-  const dateFilters = Object.entries(filtersRefs?.current).filter(
-    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
-  );
-  if (dateFilters.length !== 0) {
-    requestUrl.searchParams.delete('createdFrom');
-    requestUrl.searchParams.delete('createdTo');
-  }
+
   Object.keys(filtersRefs.current).map((filter) => {
     if (!['status', 'type'].includes(filter)) {
       const filterValue = filtersRefs.current[filter];
@@ -253,12 +261,6 @@ export async function fetchData(config) {
   const isSameFilter = isSameFilterRepeated(previousFilter.current, params);
   if (!isSameFilter) {
     params.PageNumber = 1;
-  }
-  if (
-    dateFilters.length === 0 &&
-    (filtersRefs.current.type || filtersRefs.current.status)
-  ) {
-    addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
   }
 
   const filtersStatusAndType =
