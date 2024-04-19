@@ -5,7 +5,7 @@ import { RadioGroup, FormControlLabel, Radio } from '@mui/material';
 const styleLabel = {
   marginBottom: '20px',
   '&.MuiFormControlLabel-root': {
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   '& .MuiSvgIcon-root': {
     fontSize: '18px',

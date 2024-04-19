@@ -39,7 +39,6 @@ const SettingsFlyout = ({
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
-
   const pushGoogleDataProactiveMessaging = () => {
     const diff = Object.keys(dataCopy).filter(
       (key) => dataCopy[key] !== data[key]
@@ -49,9 +48,7 @@ const SettingsFlyout = ({
         getProActiveSettingsActivactionAnalyticsGoogle(data.active)
       );
     diff.includes('range') &&
-      pushDataLayerGoogle(
-        getProActiveNotificationAnalyticsGoogle(data.range)
-      );
+      pushDataLayerGoogle(getProActiveNotificationAnalyticsGoogle(data.range));
     diff.includes('types') &&
       pushDataLayerGoogle(getProActiveTypesAnalyticsGoogle(data.types.join()));
     diff.includes('emailActive') &&
@@ -140,6 +137,9 @@ const SettingsFlyout = ({
 
   useEffect(() => {
     isDataModifiedAndValid() ? setIsSaveEnabled(true) : setIsSaveEnabled(false);
+    if (!data.additionalEmailActive && data.additionalEmail === '') {
+      setData((data) => ({ ...data, emailActive: true }));
+    }
   }, [data]);
 
   useEffect(() => {
@@ -174,7 +174,7 @@ const SettingsFlyout = ({
       {settingsFlyoutConfig?.data && (
         <SettingsContent
           labels={labels}
-          settingsData={settingsFlyoutConfig.data}
+          settingsData={settings}
           onChange={handleDataChange}
         />
       )}

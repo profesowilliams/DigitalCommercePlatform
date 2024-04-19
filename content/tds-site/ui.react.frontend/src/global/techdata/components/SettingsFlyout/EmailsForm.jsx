@@ -36,6 +36,9 @@ const EmailsForm = ({
   ];
   const [values, setValues] = useState(initialValues);
   const [newAdditionalEmail, setNewAdditionalEmail] = useState(additionalEmail);
+  const isFirstOptionDisabled = !(
+    newAdditionalEmail && isAdditionalEmailEnabled
+  );
 
   const handleChange = (key, activeFlag, newValue) => {
     if (values.includes(key)) {
@@ -102,10 +105,12 @@ const EmailsForm = ({
               control={
                 <Checkbox
                   sx={styleCheckbox}
-                  checked={values.includes(options[0].key)}
+                  checked={
+                    values.includes(options[0].key) || isFirstOptionDisabled
+                  }
                 />
               }
-              disabled={!(newAdditionalEmail && isAdditionalEmailEnabled)}
+              disabled={isFirstOptionDisabled}
               label={email}
               onChange={() => handleChange('email', 'emailActive')}
             />
