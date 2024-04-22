@@ -25,11 +25,12 @@ const Criteria = ({ config, searchCriteria }) => {
     (filterApplied) => 'filterOptionKey' in filterApplied
   );
 
-  const getLabelBasedOnFilters = hasOtherFilters
-    ? config?.last90DaysCriteria
-    : hasDateRangeFilter
-    ? ''
-    : config?.last30DaysCriteria;
+  const getLabelBasedOnFilters =
+    hasOtherFilters && !hasDateRangeFilter
+      ? config?.last90DaysCriteria
+      : hasDateRangeFilter
+      ? ''
+      : config?.last30DaysCriteria;
 
   useEffect(() => {
     let label = config?.last30DaysCriteria;
