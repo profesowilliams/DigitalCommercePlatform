@@ -9,7 +9,8 @@ export default function useResellerHandlers(detailsObj, setStateFunction) {
     );
 
     useEffect(() => {
-        validateEmail(contact[0]?.email?.text);
+      const email = contact[0]?.email?.text || '';
+        validateEmail(email);
     }, [contact]);
 
     const phoneRegex = /^(\d|\ |\)|\(|\+|\-)*$/;

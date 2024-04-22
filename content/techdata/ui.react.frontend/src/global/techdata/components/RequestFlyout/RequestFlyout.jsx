@@ -61,7 +61,7 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference 
       width="768px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey(requestFlyoutContent.requestQuoteHeading) || 'Request Quote'}
+      titleLabel={getDictionaryValueOrKey(requestFlyoutContent.requestQuoteHeading) || 'Request quote'}
       secondaryButton={false}
       classText="share-flyout request-flyout"
       isLoading={isLoading}
