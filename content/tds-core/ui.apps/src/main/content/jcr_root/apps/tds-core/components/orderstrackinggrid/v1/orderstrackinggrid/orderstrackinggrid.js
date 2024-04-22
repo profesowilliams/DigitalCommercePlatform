@@ -233,6 +233,9 @@ use(["../common/utils.js"], function (utils) {
       "newItemInfo",
       "newItemRemove",
       "newItemErrorMessage",
+      "sorry",
+      "thereAreNoItemsAddNew",
+      "thereAreNoItems",
     ];
 
     orderModifyLabelsList.map((property) => {

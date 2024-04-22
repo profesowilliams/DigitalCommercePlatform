@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NewItemForm from './NewItemForm';
 import NewlyAddedLineItem from './NewlyAddedLineItem';
 import LineItem from './LineItem';
+import ErrorMessage from './ErrorMessage';
 import { usGet, usPost } from '../../../../../utils/api';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
@@ -9,7 +10,11 @@ import { useStore } from '../../../../../utils/useStore';
 import { getUrlParams } from '../../../../../utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
-import { getAddLineAnalyticsGoogle, getReduceQuantityAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import {
+  getAddLineAnalyticsGoogle,
+  getReduceQuantityAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../../OrdersTrackingGrid/utils/analyticsUtils';
 import { endpoints } from '../../OrdersTrackingGrid/utils/orderTrackingUtils';
 
 const areItemsListIdentical = (items, itemsCopy) => {
@@ -67,7 +72,7 @@ function OrderModificationFlyout({
   const enableAddLine = orderModificationContent?.addLine === true;
   const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${orderNumber}`;
   const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}${endpoints.orderModify}`;
-
+  const enableErrorMessage = orderModificationResponse?.length === 0;
   const getOrderModificationData = async () => {
     try {
       const result = await usGet(requestURLData);
@@ -316,7 +321,6 @@ function OrderModificationFlyout({
       setOrderModificationResponse(null);
     }
   }, [orderModificationConfig?.show]);
-
   return (
     <BaseFlyout
       open={orderModificationConfig?.show}
@@ -370,9 +374,11 @@ function OrderModificationFlyout({
             </p>
           )}
         </>
-        <p className="edit-quantities">
-          {getDictionaryValueOrKey(labels?.editQuantities)}
-        </p>
+        {!enableErrorMessage && (
+          <p className="edit-quantities">
+            {getDictionaryValueOrKey(labels?.editQuantities)}
+          </p>
+        )}
         <ul className="cmp-flyout-list">
           {orderModificationResponse?.map((item, index) => (
             <LineItem
@@ -384,6 +390,9 @@ function OrderModificationFlyout({
             />
           ))}
         </ul>
+        {enableErrorMessage && (
+          <ErrorMessage labels={labels} enableAddLine={enableAddLine} />
+        )}
       </section>
     </BaseFlyout>
   );

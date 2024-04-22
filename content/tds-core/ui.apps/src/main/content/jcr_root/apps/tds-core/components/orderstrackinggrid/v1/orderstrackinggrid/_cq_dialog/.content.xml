@@ -1065,6 +1065,21 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="New Item Error Message"
 												name="./newItemErrorMessage"/>
+                                            <sorry
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Sorry,"
+												name="./sorry"/>
+                                            <thereAreNoItemsAddNew
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="there are no items eligible to modify, but you can add a new line to your order"
+												name="./thereAreNoItemsAddNew"/>
+                                            <thereAreNoItems
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="there are no items eligible to modify, but you can create a new order"
+												name="./thereAreNoItems"/>
 										</items>
 									</column>
 								</items>

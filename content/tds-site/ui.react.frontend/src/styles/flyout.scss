@@ -323,6 +323,16 @@ $flyout-small-height-formax: 779px;
     color: $brand-charcoal !important;
     font-family: $font-family-arial !important;
   }
+  .error-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $brand-charcoal;
+    font-family: $font-family-arial;
+    &__title {
+      font-size: 24px !important;
+    }
+  }
 }
 
 .cmp-flyout__footer-buttons.order-modification {
