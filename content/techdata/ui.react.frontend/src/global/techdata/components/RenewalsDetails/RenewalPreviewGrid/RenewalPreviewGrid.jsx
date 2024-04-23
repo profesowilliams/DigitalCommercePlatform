@@ -257,7 +257,6 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       headerName: gridProps?.productdescription,
       cellHeight: () => 80,
       cellRenderer: ({ data }) => {
-      console.log(data, 'test');
         return !(data?.id?.includes("Agreement")) ?
         <RenewalProductLinesItemInformation
           line={data}
