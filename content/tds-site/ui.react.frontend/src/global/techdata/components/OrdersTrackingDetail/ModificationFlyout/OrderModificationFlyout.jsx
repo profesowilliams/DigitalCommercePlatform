@@ -374,7 +374,7 @@ function OrderModificationFlyout({
             </p>
           )}
         </>
-        {!enableErrorMessage && (
+        {!enableErrorMessage && orderModificationResponse && (
           <p className="edit-quantities">
             {getDictionaryValueOrKey(labels?.editQuantities)}
           </p>
