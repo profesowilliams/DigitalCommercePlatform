@@ -3,7 +3,7 @@ import { TextField, Button } from '@mui/material';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Autocomplete from '@mui/material/Autocomplete';
 import Paper from '@mui/material/Paper';
-import { usGet } from '../../../../../utils/api';
+import { usPost } from '../../../../../utils/api';
 
 function CustomPaper({ children }) {
   return (
@@ -82,9 +82,9 @@ const NewItemForm = ({
 
   const fetchSuggestions = async (newValue) => {
     try {
-      const result = await usGet(
-        `${domain}/v2/Product/Search?query=${encodeURIComponent(newValue)}`
-      );
+      const result = await usPost(`${domain}/v2/Product/Search`, {
+        query: encodeURIComponent(newValue),
+      });
       return result;
     } catch (error) {
       console.error('Error:', error);
@@ -170,7 +170,7 @@ const NewItemForm = ({
               if (e.key === '*') e.preventDefault();
             }}
             onChange={(event) =>
-              handleAutocompleteInput(event.target.value.replace('*', ''))
+              handleAutocompleteInput(event.target.value.replace(/[*^]/g, ''))
             }
           />
         )}
