@@ -87,8 +87,13 @@ const setSearchCriteriaDefaultDateRange = ({
       addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
     }
   } else {
-    addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
+    if (filtersRefs.current.type || filtersRefs.current.status) {
+      addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
+    } else {
+      addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
+    }
   }
+
   if (dateFilters.length > 0) {
     requestUrl.searchParams.delete('createdFrom');
     requestUrl.searchParams.delete('createdTo');
@@ -120,13 +125,6 @@ export const fetchOrdersCount = async (
     dateFilters,
   });
 
-  if (dateFilters.length > 0) {
-    requestUrl.searchParams.delete('createdFrom');
-    requestUrl.searchParams.delete('createdTo');
-    dateFilters.forEach((filter) =>
-      requestUrl.searchParams.set(filter[0], filter[1])
-    );
-  }
   const filtersStatusAndType =
     (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
   try {

@@ -48,8 +48,10 @@ const Criteria = ({ config, searchCriteria }) => {
         : config?.last30DaysCriteria;
     } else if (isSerialNoField) {
       label = hasDateRangeFilter ? '' : config?.last90DaysCriteria;
+    } else if (hasOtherFilters) {
+      label = hasDateRangeFilter ? '' : config?.last90DaysCriteria;
     }
-    setSelectedLabel(label);
+      setSelectedLabel(label);
   }, [field, value?.length, hasOtherFilters, hasDateRangeFilter]);
 
   return (
