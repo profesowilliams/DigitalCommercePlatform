@@ -1,9 +1,9 @@
 :root {
   --main-datepicker-color: $brand-blue;
   --dark-teal-color: rgba(0, 87, 88, 1);
-  --light-teal-color: rgba(0,87,88,0.2);
+  --light-teal-color: rgba(0, 87, 88, 0.2);
 }
- 
+
 .PresetDateRangePicker_panel {
   padding: 0 22px 11px;
 }
@@ -12,7 +12,7 @@
   height: 100%;
   text-align: center;
   background: 0 0;
-  border: 2px solid ;
+  border: 2px solid;
   color: var(--main-datepicker-color);
   padding: 4px 12px;
   margin-right: 8px;
@@ -29,7 +29,7 @@
 }
 .PresetDateRangePicker_button__selected {
   color: $brand-white;
-  background: var(--main-datepicker-color);;
+  background: var(--main-datepicker-color);
   border-radius: 50%;
   border: none;
 }
@@ -109,7 +109,7 @@
   width: 14px;
   vertical-align: middle;
 }
-.order_datapicker .DateRangePickerInput_calendarIcon_svg  {
+.order_datapicker .DateRangePickerInput_calendarIcon_svg {
   fill: var(--dark-teal-color);
 }
 
@@ -182,15 +182,15 @@
   font-size: 14px;
 }
 
-.order_datapicker .CalendarMonth_table{
+.order_datapicker .CalendarMonth_table {
   border-collapse: separate;
 }
 
-.order_datapicker .DayPickerKeyboardShortcuts_buttonReset{
+.order_datapicker .DayPickerKeyboardShortcuts_buttonReset {
   display: none;
 }
 
-.order_datapicker .CalendarDay__today{
+.order_datapicker .CalendarDay__today {
   border-radius: 50%;
   border: 1px solid var(--dark-teal-color) !important;
   background-color: inherit !important;
@@ -207,7 +207,7 @@
   z-index: 2;
 }
 .DayPickerKeyboardShortcuts_show::before {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
 }
@@ -230,7 +230,7 @@
 }
 .DayPickerKeyboardShortcuts_show__topRight::before {
   border-bottom: 26px solid transparent;
-  border-right: 33px solid var(--main-datepicker-color);;
+  border-right: 33px solid var(--main-datepicker-color);
   top: 0;
   right: 0;
 }
@@ -243,7 +243,7 @@
 }
 .DayPickerKeyboardShortcuts_show__topLeft::before {
   border-bottom: 26px solid transparent;
-  border-left: 33px solid var(--main-datepicker-color);;
+  border-left: 33px solid var(--main-datepicker-color);
   top: 0;
   left: 0;
 }
@@ -377,19 +377,19 @@
   color: $brand-charcoal;
 }
 .CalendarDay__selected_span {
-  background: #E2E7EB;
-  border: 1px double #E2E7EB;
+  background: #e2e7eb;
+  border: 1px double #e2e7eb;
   color: #222;
-  border: none;  
+  border: none;
 }
-.order_datapicker .CalendarDay__default:hover{
+.order_datapicker .CalendarDay__default:hover {
   background: var(--light-teal-color);
 }
 
-.order_datapicker .CalendarDay__selected_span{
-  border: 1px double #E2E7EB;
+.order_datapicker .CalendarDay__selected_span {
+  border: 1px double #e2e7eb;
   background: var(--light-teal-color) !important;
-  border: none; 
+  border: none;
   color: var(--dark-teal-color);
   margin-top: 2px;
   margin-bottom: 2px;
@@ -397,14 +397,14 @@
   margin-left: 5px;
 }
 
-.order_datapicker .CalendarMonth_table .CalendarDay__selected_span{
+.order_datapicker .CalendarMonth_table .CalendarDay__selected_span {
   border-collapse: collapse !important;
 }
 
-.order_datapicker .CalendarDay__firstDayOfWeek{
+.order_datapicker .CalendarDay__firstDayOfWeek {
   color: $brand-text-lightgray;
-} 
-.order_datapicker .CalendarDay__lastDayOfWeek{
+}
+.order_datapicker .CalendarDay__lastDayOfWeek {
   color: $brand-text-lightgray;
 }
 
@@ -440,11 +440,13 @@
   z-index: -1;
   background-color: $light-teal-color;
 }
-.order_datapicker .CalendarDay__selected_start.CalendarDay__selected_end::after {
-  display:none
+.order_datapicker
+  .CalendarDay__selected_start.CalendarDay__selected_end::after {
+  display: none;
 }
-.order_datapicker .CalendarDay__selected_start.CalendarDay__selected_end::before {
-  display:none
+.order_datapicker
+  .CalendarDay__selected_start.CalendarDay__selected_end::before {
+  display: none;
 }
 
 .order_datapicker .CalendarDay__selected_start_no_selected_end::after {
@@ -471,7 +473,7 @@
 .CalendarDay__selected_span:active,
 .CalendarDay__selected_span:hover {
   position: relative;
-  background: $brand-white!important;
+  background: $brand-white !important;
   /* border: 1px double #33dacd; */
   color: #222;
   border: none;
@@ -493,7 +495,7 @@
 .CalendarDay__selected,
 .CalendarDay__selected:active,
 .CalendarDay__selected:hover {
-  background: var(--main-datepicker-color);;
+  background: var(--main-datepicker-color);
   /* border: 1px double var(--main-datepicker-color);; */
   color: $brand-white;
   border-radius: 50%;
@@ -503,16 +505,16 @@
 .CalendarDay__hovered_span:hover {
   // background: #b2f1ec;
   // border: 1px double #80e8e0;
-  color: var(--main-datepicker-color);;
-  background-color: #E2E7EB;
+  color: var(--main-datepicker-color);
+  background-color: #e2e7eb;
 }
 .CalendarDay__hovered_span:active {
   background: #80e8e0;
   border: 1px double #80e8e0;
   // color: #007a87;
-  color: var(--main-datepicker-color);;
+  color: var(--main-datepicker-color);
   // border-radius: 50%;
-  background-color: #E2E7EB
+  background-color: #e2e7eb;
 }
 .CalendarDay__blocked_calendar,
 .CalendarDay__blocked_calendar:active,
@@ -611,7 +613,6 @@
   svg {
     font-weight: bolder;
     width: 16px;
-    
   }
 }
 .DayPickerNavigation__horizontal {
@@ -807,26 +808,26 @@
   overflow: hidden;
   border-radius: 3px;
 }
-.order_datapicker .DayPicker{
+.order_datapicker .DayPicker {
   background-color: transparent;
 }
-.order_datapicker .DateRangePicker_picker{
+.order_datapicker .DateRangePicker_picker {
   background-color: transparent;
   top: -25px !important;
 }
-.order_datapicker .CalendarMonthGrid{
+.order_datapicker .CalendarMonthGrid {
   background-color: transparent;
 }
-.order_datapicker .CalendarMonth{
+.order_datapicker .CalendarMonth {
   background-color: transparent;
 }
-.order_datapicker .CalendarDay__default{
+.order_datapicker .CalendarDay__default {
   background-color: transparent;
 }
-.order_datapicker .DayPicker_transitionContainer{
+.order_datapicker .DayPicker_transitionContainer {
   border-bottom-color: var(--dark-teal-color);
 }
-.order_datapicker .DateInput_fang{
+.order_datapicker .DateInput_fang {
   display: none;
 }
 .order_datapicker .DateRangePickerInput {
@@ -1044,7 +1045,7 @@
     is no property exposed to control the left direction in the API. Overriding via CSS
     using !important.
   */
-  left: 80px !important;
+  left: 50px !important;
 }
 .DateRangePicker_picker__directionRight {
   right: 0;
@@ -1084,11 +1085,11 @@
   width: 15px;
   fill: #cacccd;
 }
-.CalendarDay__selected_span:hover{
+.CalendarDay__selected_span:hover {
   border-radius: 0;
 }
-.datepicker-poc-info{
-  pre{
+.datepicker-poc-info {
+  pre {
     display: inline;
   }
 }
@@ -1117,7 +1118,7 @@
 }
 
 .DateInput {
- display: none
+  display: none;
 }
 
 .start-end-display {
@@ -1125,7 +1126,7 @@
   justify-content: space-between;
   width: 250px;
   margin-top: 200px;
-  margin-left: 80px;
+  margin-left: 50px;
   padding-top: 8px;
   padding-bottom: 16px;
   padding-left: 24px;
@@ -1134,14 +1135,14 @@
   &__start {
     display: flex;
     flex-direction: column;
-    &__label{
+    &__label {
       margin-bottom: 7px;
       color: $brand-text-lightgray;
       font-family: $font-family-arial !important;
       font-size: 14px;
       font-weight: 400;
     }
-    &__date{
+    &__date {
       color: $brand-text-lightgray;
       font-family: $font-family-arial !important;
       font-size: 14px;
@@ -1152,14 +1153,14 @@
     display: flex;
     flex-direction: column;
     align-items: end;
-    &__label{
+    &__label {
       margin-bottom: 7px;
       color: $brand-text-lightgray;
       font-family: $font-family-arial !important;
       font-size: 14px;
       font-weight: 400;
     }
-    &__date{
+    &__date {
       color: $brand-text-lightgray;
       font-family: $font-family-arial !important;
       font-size: 14px;
@@ -1167,20 +1168,18 @@
     }
   }
   &__hyphen {
-    width:11px;
-    height:2px;
+    width: 11px;
+    height: 2px;
     background-color: $brand-text-lightgray;
     align-self: center;
   }
-
 }
 
 .cmp-grid-techdata {
   .filter-modal-content {
-
     .CalendarDay__selected {
       &.CalendarDay__selected_start_no_selected_end {
-        color: #08BED5;
+        color: #08bed5;
       }
       background: #262626;
     }
@@ -1195,6 +1194,5 @@
         outline: #262626 solid 1px;
       }
     }
-
-  } 
+  }
 }

@@ -371,21 +371,21 @@ $flyout-small-height-formax: 779px;
     }
 
     .MuiChip-root {
-       svg {
-         font-size: 15px;
-         color: rgba(0, 0, 0, 0.26);
-       }
-       &.MuiChip-colorError {
-         border-color: rgba(205, 22, 63, 1);
-         .MuiChip-label {
-           color: rgba(205, 22, 63, 1);
-         }
-       }
-       &.MuiChip-colorError svg {
-         color: rgba(205, 22, 63, 1);
-       }
-     }
-     .backdrop {
+      svg {
+        font-size: 15px;
+        color: rgba(0, 0, 0, 0.26);
+      }
+      &.MuiChip-colorError {
+        border-color: rgba(205, 22, 63, 1);
+        .MuiChip-label {
+          color: rgba(205, 22, 63, 1);
+        }
+      }
+      &.MuiChip-colorError svg {
+        color: rgba(205, 22, 63, 1);
+      }
+    }
+    .backdrop {
       position: absolute;
       z-index: 9;
       top: 0;
@@ -455,7 +455,7 @@ $flyout-small-height-formax: 779px;
           margin-left: 6px;
           svg {
             path {
-              fill: rgba(0,0,0, 0.26);
+              fill: rgba(0, 0, 0, 0.26);
             }
           }
         }

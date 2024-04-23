@@ -253,7 +253,7 @@ function ProductReplacementFlyout({
     <BaseFlyout
       open={productReplacementConfig?.show}
       onClose={closeFlyout}
-      width="929px"
+      width="768px"
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(labels?.replacementModifyOrder)}

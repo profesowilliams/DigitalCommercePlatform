@@ -40,8 +40,9 @@ const styleOverrideRadio = {
 };
 const styleOverrideDivider = {
   '&.MuiDivider-root': {
-    margin: '2rem -20px',
-    borderColor: '#E4E5E6',
+    width: '360px',
+    margin: '16px -20px !important',
+    borderColor: '#D9D8D7',
   },
 };
 
@@ -133,8 +134,8 @@ function ExportFlyout({
 
   function getExportAllOrderLines() {
     const url =
-      componentProp?.uiCommerceServiceDomain +
-        endpoints.exportAllOrderLines || 'nourl';
+      componentProp?.uiCommerceServiceDomain + endpoints.exportAllOrderLines ||
+      'nourl';
     urlSearchParams.set('OnlyWithSerialNumbers', false);
     return requestFileBlobWithoutModal(
       url + '?' + urlSearchParams.toString(),
@@ -221,7 +222,7 @@ function ExportFlyout({
     <BaseFlyout
       open={exportFlyoutConfig?.show}
       onClose={closeFlyout}
-      width="425px"
+      width="360px"
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(exportFlyout?.title || 'Export')}
@@ -235,7 +236,7 @@ function ExportFlyout({
         <div className="cmp-flyout__content-description-message">
           {getDictionaryValueOrKey(exportFlyout?.descriptionMessage)}
         </div>
-        <div className="cmp-flyout__content-description">
+        <div className="cmp-flyout__content-description-export">
           {getDictionaryValueOrKey(exportFlyout?.description)}
         </div>
         <FormControl>
@@ -257,7 +258,7 @@ function ExportFlyout({
           </RadioGroup>
         </FormControl>
         <Divider sx={styleOverrideDivider} />
-        <div className="cmp-flyout__content-description">
+        <div className="cmp-flyout__content-description-export">
           {getDictionaryValueOrKey(exportFlyout?.secondaryDescription)}
         </div>
         <FormControl>
@@ -278,7 +279,6 @@ function ExportFlyout({
             ))}
           </RadioGroup>
         </FormControl>
-        <Divider sx={styleOverrideDivider} />
       </section>
     </BaseFlyout>
   );

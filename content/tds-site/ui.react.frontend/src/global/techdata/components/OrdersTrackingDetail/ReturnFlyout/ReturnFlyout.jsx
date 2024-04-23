@@ -26,7 +26,7 @@ function ReturnFlyout({ returnFlyout = {}, subheaderReference, isTDSynnex }) {
     <BaseFlyout
       open={returnFlyoutConfig?.show}
       onClose={closeFlyout}
-      width="425px"
+      width="360px"
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={returnFlyout.titleReturn || 'Return'}

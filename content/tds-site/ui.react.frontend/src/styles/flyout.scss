@@ -1,4 +1,4 @@
-$flyout-padding: 1.3rem;
+$flyout-padding: 20px 16px;
 $flyout-small-height: 780px;
 $flyout-small-height-formax: 779px;
 
@@ -15,25 +15,26 @@ $flyout-small-height-formax: 779px;
     justify-content: space-between;
     padding: $flyout-padding;
     align-items: center;
-    border-bottom: 2px solid $brand-charcoal;
-    padding-bottom: 1rem;
+    height: 60px;
+    border-bottom: 2px solid $brand-cool-gray-1;
     &-title {
       color: $brand-charcoal;
       font-family: $font-family-arial;
       font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 20px;
       line-height: 26px;
     }
     &-icon {
-      height: 30px;
       font-size: 1rem;
+      display: flex;
+      align-items: center;
       cursor: pointer;
     }
   }
   &__content {
-    padding: 0 $flyout-padding $flyout-padding $flyout-padding;
+    padding: 0 16px 20px 16px;
     overflow-y: auto;
-    height: calc(100% - 117px);
+    height: calc(100% - 109px);
     &-description-message {
       margin-top: 24px;
       margin-bottom: 16px;
@@ -58,6 +59,15 @@ $flyout-small-height-formax: 779px;
         width: 100%;
         max-width: 35ch;
       }
+    }
+    &-description-export {
+      margin-top: 16px;
+      margin-bottom: 24px;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 24px;
+      color: $brand-charcoal;
+      font-family: $font-family-arial;
     }
     &__contentGrid {
       display: grid;
@@ -135,7 +145,7 @@ $flyout-small-height-formax: 779px;
   &__content-without-padding {
     padding: 0;
     overflow-y: auto;
-    height: calc(100% - 117px);
+    height: calc(100% - 109px);
   }
   &__footer {
     display: flex;
@@ -337,10 +347,10 @@ $flyout-small-height-formax: 779px;
 
 .cmp-flyout__footer-buttons.order-modification {
   display: block;
-  padding: 16px 30px;
+  padding: 16px;
   border-top: 1px solid $v-divider-gray;
   > button {
-    width: 141px;
+    width: 98px;
     height: 48px;
     float: right;
     background-color: $brand-white;
@@ -357,7 +367,7 @@ $flyout-small-height-formax: 779px;
   .primary {
     color: $brand-white;
     background-color: $brand-green;
-    margin-left: 10px;
+    margin-left: 20px;
   }
   .secondary {
     color: $brand-green;
@@ -368,7 +378,7 @@ $flyout-small-height-formax: 779px;
 .cmp-flyout__content.settings {
   padding: 0;
   .switch-wrapper {
-    display: block;
+    display: flex;
     padding: 20px;
     .switch-label {
       width: 346px;
@@ -458,7 +468,6 @@ $flyout-small-height-formax: 779px;
         }
       }
       .add-email-input-wrapper {
-        width: 385px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -472,6 +481,10 @@ $flyout-small-height-formax: 779px;
         line-height: 150%;
         margin-top: 5px;
         padding-left: 32px;
+      }
+      .MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label {
+        max-width: 237px;
+        word-break: break-word;
       }
     }
   }
@@ -490,7 +503,9 @@ $flyout-small-height-formax: 779px;
   .secondary {
     color: $brand-green;
     background-color: $brand-white;
-    border: 1px solid $brand-green;
+    &:hover {
+      border: 1px solid $brand-green;
+    }
   }
 }
 
@@ -531,7 +546,7 @@ $flyout-small-height-formax: 779px;
     padding: 20px 0;
     border-bottom: 1px solid $v-divider-gray;
     display: grid;
-    grid-template-columns: 36px 110px 627px 106px;
+    grid-template-columns: 36px 110px 484px 106px;
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 0;
     grid-row-gap: 0;
@@ -603,7 +618,7 @@ $flyout-small-height-formax: 779px;
     &.newly-added {
       background-color: $td-neutral-gray;
       margin: 0 18px 6px;
-      grid-template-columns: 15px 110px 627px 106px;
+      grid-template-columns: 15px 110px 484px 106px;
       height: 138px;
     }
   }
@@ -613,7 +628,7 @@ $flyout-small-height-formax: 779px;
   padding: 0;
 
   .cmp-flyout-list {
-    padding: 20px 0;
+    padding: 0;
   }
 
   .replacement-text {
@@ -675,8 +690,10 @@ $flyout-small-height-formax: 779px;
           background-color: $brand-green;
         }
         &.cmp-flyout__footer-button--secondary {
-          border: 1px solid $brand-green;
           color: $brand-green;
+          &:hover {
+            border: 1px solid $brand-green;
+          }
         }
       }
     }
@@ -688,9 +705,9 @@ $flyout-small-height-formax: 779px;
     font-family: $font-family-arial;
     color: $brand-charcoal;
     font-size: 14px;
-    padding: 0 $flyout-padding $flyout-padding $flyout-padding;
+    padding: 0 16px 20px 16px;
     overflow-y: auto;
-    height: calc(100% - 117px);
+    height: calc(100% - 109px);
     & * {
       font-family: inherit;
       font-size: inherit;
@@ -699,7 +716,7 @@ $flyout-small-height-formax: 779px;
     &__contentFlex {
       display: flex;
       flex-direction: row;
-      margin-top: 12px;
+      margin-top: 28px;
     }
     &__detailsLeft {
       width: 80px;
@@ -712,11 +729,12 @@ $flyout-small-height-formax: 779px;
       display: flex;
       flex-direction: column;
       margin-left: 1rem;
+      max-width: 231px;
     }
     &__text {
       display: flex;
       margin-top: 8px;
-      line-height: 21px;
+      line-height: 17px;
     }
     &__bold {
       font-weight: 700;
@@ -724,13 +742,13 @@ $flyout-small-height-formax: 779px;
     }
     &__name {
       display: block;
-      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       width: 100%;
       max-width: 35ch;
       color: $brand-green;
       line-height: 21px;
+      font-size: 16px;
     }
     &__value {
       display: block;
@@ -742,7 +760,7 @@ $flyout-small-height-formax: 779px;
     }
     &__message {
       margin-top: 9px;
-      margin-bottom: 9px;
+      margin-bottom: 32px;
       line-height: 24px;
     }
     &__tableHeader {

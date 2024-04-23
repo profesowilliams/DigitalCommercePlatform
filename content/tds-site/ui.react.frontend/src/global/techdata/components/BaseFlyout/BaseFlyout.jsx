@@ -1,15 +1,18 @@
 import { Drawer } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
-import Button from "../Widgets/Button";
+import React, { useEffect } from 'react';
+import Button from '../Widgets/Button';
 import usePositionBelowSubheader from '../../hooks/usePositionBelowSubheader';
-import { DismissFilledIcon, LoaderIcon} from '../../../../fluentIcons/FluentIcons';
+import {
+  DismissFilledSmallIcon,
+  LoaderIcon,
+} from '../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 function BaseFlyout({
   children,
   open,
   onClose,
-  width = '350px',
+  width = '360px',
   anchor = 'right',
   subheaderReference,
   titleLabel,
@@ -22,13 +25,12 @@ function BaseFlyout({
   selected,
   secondaryButton,
   isTDSynnex,
-  analyticsData,
   analyticsCallback,
   buttonsSection = null,
 }) {
   const BottomContent = () => bottomContent('footer');
   const SecondaryButton = () => secondaryButton(selected, secondaryButtonLabel);
-  const { positioning, calculatePosition } = usePositionBelowSubheader(
+  const { positioning } = usePositionBelowSubheader(
     { unmountedFn: false },
     subheaderReference
   );
@@ -68,7 +70,7 @@ function BaseFlyout({
             {getDictionaryValueOrKey(titleLabel)}
           </h4>
           <div className="cmp-flyout__header-icon" onClick={onClose}>
-            <DismissFilledIcon width="30" height="30" />
+            <DismissFilledSmallIcon />
           </div>
         </section>
         {children}

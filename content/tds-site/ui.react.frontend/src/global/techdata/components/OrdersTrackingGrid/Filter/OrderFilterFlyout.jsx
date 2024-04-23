@@ -150,7 +150,7 @@ const OrderFilterFlyout = ({
     <BaseFlyout
       open={filtersFlyoutConfig?.show}
       onClose={handleClearFilter}
-      width="425px"
+      width="360px"
       anchor="right"
       titleLabel={getDictionaryValueOrKey(filterTitle)}
       buttonLabel={getDictionaryValueOrKey(showResultLabel)}

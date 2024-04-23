@@ -325,7 +325,7 @@ function OrderModificationFlyout({
     <BaseFlyout
       open={orderModificationConfig?.show}
       onClose={closeFlyout}
-      width="929px"
+      width="768px"
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(

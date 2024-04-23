@@ -164,7 +164,7 @@ const SettingsFlyout = ({
     <BaseFlyout
       open={settingsFlyoutConfig?.show}
       onClose={closeFlyout}
-      width="465px"
+      width="360px"
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey('Notifications')}

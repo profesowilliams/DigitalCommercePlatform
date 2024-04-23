@@ -89,7 +89,7 @@ function InvoicesFlyout({
     <BaseFlyout
       open={invoicesFlyoutConfig?.show}
       onClose={closeFlyout}
-      width="425px"
+      width="360px"
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(invoicesFlyout.title)}
