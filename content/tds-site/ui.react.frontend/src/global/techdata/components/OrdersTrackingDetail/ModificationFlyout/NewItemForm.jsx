@@ -11,8 +11,13 @@ function CustomPaper({ children }) {
       sx={{
         width: '520px',
         '& .MuiAutocomplete-listbox': {
-          width: '520px',
           bgcolor: '#fff',
+          '& .MuiAutocomplete-option': {
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            display: 'block',
+          },
           "& .MuiAutocomplete-option[aria-selected='true']": {
             bgcolor: '#fff',
             '&.Mui-focused': {
@@ -68,8 +73,7 @@ const NewItemForm = ({
           product.title =
             findMatchingLabel(product, inputValue) +
             ' - ' +
-            product.description.slice(0, 50) +
-            '...';
+            product.description.slice(0, 60);
           return product;
         })
       );
@@ -141,6 +145,9 @@ const NewItemForm = ({
         }}
         sx={{
           width: 400,
+          '& .MuiAutocomplete-input': {
+            textOverflow: 'clip',
+          },
         }}
         renderInput={(params) => (
           <TextField

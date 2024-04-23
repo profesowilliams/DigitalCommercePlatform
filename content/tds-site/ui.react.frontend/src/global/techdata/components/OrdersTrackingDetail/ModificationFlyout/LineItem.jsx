@@ -6,6 +6,12 @@ import RejectedReasonDropdown from './RejectedReasonDropdown';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import Tooltip from '@mui/material/Tooltip';
 
+const formatToCurrency = (number) =>
+  number
+    .toFixed(2)
+    .replace(/\d(?=(\d{3})+\.)/g, '$&.')
+    .replace(/.([^.]*)$/, ',' + '$1');
+
 const LineItem = ({ item, index, onChange, labels }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
   const [quantityDecreased, setQuantityDecreased] = useState(false);
@@ -96,7 +102,7 @@ const LineItem = ({ item, index, onChange, labels }) => {
         <p className="cmp-flyout-list__element__price-bold">
           {getDictionaryValueOrKey(labels.lineTotal)} ({item.currency})
         </p>
-        <p>{(currentValue * item.unitPrice).toFixed(2)}</p>
+        <p>{formatToCurrency(currentValue * item.unitPrice)}</p>
       </div>
     </li>
   );

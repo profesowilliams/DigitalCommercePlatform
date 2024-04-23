@@ -73,6 +73,7 @@ const SettingsFlyout = ({
       key: 'settingsFlyout',
       value: { data: settings, show: true },
     });
+    effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
   };
 
   const handleDataChange = (key, value) => {
