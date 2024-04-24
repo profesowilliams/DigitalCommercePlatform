@@ -4,7 +4,7 @@
  * @class cmp-techdata-header
  * @classdesc Styles for the cmp-techdata-header component.
  */
- #cmp-techdata-header {
+#cmp-techdata-header {
   /**
    * Styles for the cmp-experiencefragment__header--sticky modifier.
    */
@@ -41,7 +41,7 @@
  */
 .sticky {
   position: fixed;
-  z-index: 9998;
+  z-index: 9999;
   opacity: 1;
   width: 100%;
   top: 0;
@@ -50,4 +50,10 @@
   @include mobile {
     margin-top: 47px;
   }
+}
+
+.sticky--subnav {
+  position: sticky;
+  top: 4.2rem;
+  z-index: 1;
 }
