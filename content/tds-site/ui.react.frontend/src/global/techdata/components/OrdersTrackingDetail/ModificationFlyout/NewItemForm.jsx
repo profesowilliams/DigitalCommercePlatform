@@ -167,7 +167,7 @@ const NewItemForm = ({
               shrink: true,
             }}
             onKeyPress={(e) => {
-              if (e.key === '*') e.preventDefault();
+              if (e.key === '*' || e.key === '^') e.preventDefault();
             }}
             onChange={(event) =>
               handleAutocompleteInput(event.target.value.replace(/[*^]/g, ''))
