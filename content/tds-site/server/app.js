@@ -6245,76 +6245,80 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
 
 app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
   const response = {
-    "content": {
-        "notShipped": [
+    content: {
+      notShipped: [
+        {
+          line: "10",
+          urlProductImage:
+            "https://cdn.cs.1worldsync.com/d8/52/d8523417-dea2-4d9d-aefa-db9e18c1fbd2.jpg",
+          displayName: "Apple iPhone SE (3rd generation)",
+          tdNumber: "7347846",
+          mfrNumber: "MMXL3QL/A",
+          orderQuantity: 1.0,
+          originalOrderQuantity: 1.0,
+          shippedQuantity: 0.0,
+          openQuantity: 1.0,
+          currency: "EUR",
+          unitPrice: 472.3,
+          unitPriceFormatted: "472,30",
+          isEOL: false,
+          invoices: [],
+          lineDetails: [
             {
-                "line": "10",
-                "urlProductImage": "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-                "tdNumber": "7793984",
-                "mfrNumber": "MP203KN/A",
-                "orderQuantity": 1.0,
-                "originalOrderQuantity": 1.0,
-                "shippedQuantity": 0.0,
-                "openQuantity": 1.0,
-                "currency": "DKK",
-                "unitPrice": 9906.21,
-                "unitPriceFormatted": "9,906.21",
-                "isEOL": false,
-                "invoices": [],
-                "lineDetails": [
-                    {
-                        "quantity": 1.0,
-                        "subtotalPrice": 9906.21,
-                        "subtotalPriceFormatted": "9,906.21",
-                        "shipDate": "04-19-2024",
-                        "shipDateFormatted": "19/04/2024",
-                        "shipDateDetailsTranslated": "Available",
-                        "status": "OPEN",
-                        "statusText": "Open",
-                        "isShipment": false
-                    }
-                ]
+              quantity: 1.0,
+              subtotalPrice: 472.3,
+              subtotalPriceFormatted: "472,30",
+              shipDateDetailsTranslated: "In transito",
+              shipDateNotAvailableTranslated: "Non disponibile",
+              status: "OPEN",
+              statusText: "Aperto",
+              isShipment: false,
             },
+          ],
+        },
+        {
+          line: "40",
+          urlProductImage:
+            "https://cdn.cs.1worldsync.com/14/41/14417128-98e3-4bf0-ac18-e8e7a6681127.jpg",
+          displayName: "Microsoft Modern Mobile Mouse",
+          tdNumber: "6180955",
+          mfrNumber: "KTF-00061",
+          orderQuantity: 2.0,
+          originalOrderQuantity: 2.0,
+          shippedQuantity: 0.0,
+          openQuantity: 2.0,
+          currency: "EUR",
+          unitPrice: 21.44,
+          unitPriceFormatted: "21,44",
+          isEOL: true,
+          invoices: [],
+          lineDetails: [
             {
-                "line": "20",
-                "urlProductImage": "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-                "tdNumber": "6388263",
-                "mfrNumber": "MJQK3DK/A",
-                "orderQuantity": 1.0,
-                "originalOrderQuantity": 1.0,
-                "shippedQuantity": 0.0,
-                "openQuantity": 1.0,
-                "currency": "DKK",
-                "unitPrice": 2505.41,
-                "unitPriceFormatted": "2,505.41",
-                "isEOL": false,
-                "invoices": [],
-                "lineDetails": [
-                    {
-                        "quantity": 1.0,
-                        "subtotalPrice": 2505.41,
-                        "subtotalPriceFormatted": "2,505.41",
-                        "shipDate": "04-19-2024",
-                        "shipDateFormatted": "19/04/2024",
-                        "shipDateDetailsTranslated": "In Transit",
-                        "status": "OPEN",
-                        "statusText": "Open",
-                        "isShipment": false
-                    }
-                ]
-            }
-        ],
-        "shipped": [],
-        "totalOpenQuantity": 2.0,
-        "totalShipQuantity": 0.0,
-        "orderEditable": true
+              quantity: 2.0,
+              subtotalPrice: 42.88,
+              subtotalPriceFormatted: "42,88",
+              status: "OPEN",
+              statusText: "Aperto",
+              isShipment: false,
+            },
+          ],
+        },
+      ],
+      shipped: [],
+      totalOpenQuantity: 3.0,
+      totalShipQuantity: 0.0,
+      orderEditable: true,
+      sapOrderMigration: {
+        id: "6082746016",
+        referenceType: "Original",
+      },
     },
-    "error": {
-        "code": 0,
-        "messages": [],
-        "isError": false
-    }
-}
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
   setTimeout(() => {
     return res.status(200).json(response);
   }, 200);
@@ -6328,249 +6332,74 @@ app.get("/ui-commerce/v3/Order/ITOrderXML/:id?", (req, res) => {
 app.get("/ui-commerce/v3/orderdetails/:id?/lines", (req, res) => {
   const response = {
     content: {
-      orderNumber: "Q001081582",
-      customerPO: "TDS - XQ-2148407",
-      currency: "GBP",
+      orderNumber: "6110056045",
+      customerPO: "422RP",
+      currency: "EUR",
       orderEditable: true,
+      sapOrderMigration: {
+        id: "6082746016",
+        referenceType: "Original",
+      },
       items: [
         {
           line: "10",
           urlProductImage:
-            "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-          displayName: "Subscription Not for Resale NX Cloud",
-          tdNumber: "7809129",
-          mfrNumber: "SW-NCI-D-ULT-BA-NR",
+            "https://cdn.cs.1worldsync.com/d8/52/d8523417-dea2-4d9d-aefa-db9e18c1fbd2.jpg",
+          urlProductDetailsPage:
+            "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=7347846",
+          displayName: "Apple iPhone SE (3rd generation)",
+          tdNumber: "7347846",
+          mfrNumber: "MMXL3QL/A",
           originalOrderQuantity: 1.0,
-          unitPrice: 0.0,
-          unitPriceFormatted: "0.00",
+          unitPrice: 472.3,
+          unitPriceFormatted: "472,30",
           lineDetails: [
             {
               quantity: 1.0,
-              subtotalPrice: 0.0,
-              subtotalPriceFormatted: "0.00",
-              shipDateNotAvailableTranslated: "N.A.",
-              status: "REJECTED",
-              statusText: "Rejected",
+              subtotalPrice: 472.3,
+              subtotalPriceFormatted: "472,30",
+              shipDateNotAvailableTranslated: "Non disponibile",
+              shipDateDetailsTranslated: "In transito",
+              status: "OPEN",
+              statusText: "Aperto",
               isShipment: false,
               serialsAny: false,
               canTrackAndTrace: false,
               isEOL: false,
             },
           ],
-          endUser: {
-            // name: "TD Synnex",
-            // firstName: "Carl Hancock",
-            // lastName: "Carl Hancock",
-            email: "carl.hancock@techdataaaaaaaaaaaaaaaaaaa.com",
-            // phone: "01925 287839",
-            // line1: "Maplewood, Crockford Lane",
-            // city: "Basingstoke",
-            // state: "HA",
-            // zip: "RG24 8YB",
-            // country: "GB",
-          },
+          endUser: {},
         },
         {
-          line: "20",
+          line: "40",
           urlProductImage:
-            "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-          displayName: "Subscription Renewal Not for Resale",
-          tdNumber: "9031677",
-          mfrNumber: "RSW-NCM-ULT-BA-NR",
-          originalOrderQuantity: 1.0,
-          unitPrice: 0.0,
-          unitPriceFormatted: "0.00",
+            "https://cdn.cs.1worldsync.com/14/41/14417128-98e3-4bf0-ac18-e8e7a6681127.jpg",
+          urlProductDetailsPage:
+            "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=6180955",
+          displayName: "Microsoft Modern Mobile Mouse",
+          tdNumber: "6180955",
+          mfrNumber: "KTF-00061",
+          originalOrderQuantity: 2.0,
+          unitPrice: 21.44,
+          unitPriceFormatted: "21,44",
           lineDetails: [
             {
-              quantity: 1.0,
-              subtotalPrice: 0.0,
-              subtotalPriceFormatted: "0.00",
-              shipDate: "12-29-2023",
-              shipDateFormatted: "29/12/2023",
-              status: "SHIPPED_WITH_VENDOR",
-              statusText: "Shipped With Vendor",
-              isShipment: true,
-              invoices: [
-                {
-                  returnUrl:
-                    "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=8206638934&Line=20&product=9031677",
-                  id: "8206638934",
-                  date: "12-29-2023",
-                  dateFormatted: "12/29/2023",
-                  canDownloadDocument: true,
-                },
-              ],
+              quantity: 2.0,
+              subtotalPrice: 42.88,
+              subtotalPriceFormatted: "42,88",
+              shipDateNotAvailableTranslated: "Non disponibile",
+              status: "OPEN",
+              statusText: "Aperto",
+              isShipment: false,
               serialsAny: false,
               canTrackAndTrace: false,
               isEOL: true,
             },
           ],
-          endUser: {
-            name: "TD Synnex",
-            firstName: "Carl Hancock",
-            lastName: "Carl Hancock",
-            email: "carl.hancock@techdata.com",
-            phone: "01925 287839",
-            line1: "Maplewood, Crockford Lane",
-            city: "Basingstoke",
-            state: "HA",
-            zip: "RG24 8YB",
-            country: "GB",
-          },
-        },
-        {
-          line: "30",
-          urlProductImage:
-            "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-          displayName: "Subscription Renewal Not for Resale",
-          tdNumber: "9031674",
-          mfrNumber: "RSW-NCI-D-ULT-BA-NR",
-          originalOrderQuantity: 1.0,
-          unitPrice: 0.0,
-          unitPriceFormatted: "0.00",
-          lineDetails: [
-            {
-              quantity: 1.0,
-              subtotalPrice: 0.0,
-              subtotalPriceFormatted: "0.00",
-              shipDate: "12-29-2023",
-              shipDateFormatted: "29/12/2023",
-              status: "SHIPPED_WITH_VENDOR",
-              statusText: "Shipped With Vendor",
-              isShipment: true,
-              invoices: [
-                {
-                  returnUrl:
-                    "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=8206638934&Line=30&product=9031674",
-                  id: "8206638934",
-                  date: "12-29-2023",
-                  dateFormatted: "12/29/2023",
-                  canDownloadDocument: true,
-                },
-              ],
-              serialsAny: false,
-              canTrackAndTrace: false,
-              isEOL: false,
-            },
-          ],
-          endUser: {
-            name: "TD Synnex",
-            firstName: "Carl Hancock",
-            lastName: "Carl Hancock",
-            email: "carl.hancock@techdata.com",
-            phone: "01925 287839",
-            line1: "Maplewood, Crockford Lane",
-            city: "Basingstoke",
-            state: "HA",
-            zip: "RG24 8YB",
-            country: "GB",
-          },
+          endUser: {},
         },
       ],
-      groupedItems: [
-        {
-          manufacturer: "NUTANIX",
-          tdSynnexPO: "3516451743",
-          items: [
-            {
-              line: "20",
-              urlProductImage:
-                "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-              displayName: "Subscription Renewal Not for Resale",
-              tdNumber: "9031677",
-              mfrNumber: "RSW-NCM-ULT-BA-NR",
-              originalOrderQuantity: 1.0,
-              unitPrice: 0.0,
-              unitPriceFormatted: "0.00",
-              lineDetails: [
-                {
-                  quantity: 1.0,
-                  subtotalPrice: 0.0,
-                  subtotalPriceFormatted: "0.00",
-                  shipDate: "12-29-2023",
-                  shipDateFormatted: "29/12/2023",
-                  status: "SHIPPED_WITH_VENDOR",
-                  statusText: "Shipped With Vendor",
-                  isShipment: true,
-                  invoices: [
-                    {
-                      returnUrl:
-                        "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=8206638934&Line=20&product=9031677",
-                      id: "8206638934",
-                      date: "12-29-2023",
-                      dateFormatted: "12/29/2023",
-                      canDownloadDocument: true,
-                    },
-                  ],
-                  serialsAny: false,
-                  canTrackAndTrace: false,
-                  isEOL: false,
-                },
-              ],
-              endUser: {
-                name: "TD Synnex",
-                firstName: "Carl Hancock",
-                lastName: "Carl Hancock",
-                email: "carl.hancock@techdata.com",
-                phone: "01925 287839",
-                line1: "Maplewood, Crockford Lane",
-                city: "Basingstoke",
-                state: "HA",
-                zip: "RG24 8YB",
-                country: "GB",
-              },
-            },
-            {
-              line: "30",
-              urlProductImage:
-                "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-              displayName: "Subscription Renewal Not for Resale",
-              tdNumber: "9031674",
-              mfrNumber: "RSW-NCI-D-ULT-BA-NR",
-              originalOrderQuantity: 1.0,
-              unitPrice: 0.0,
-              unitPriceFormatted: "0.00",
-              lineDetails: [
-                {
-                  quantity: 1.0,
-                  subtotalPrice: 0.0,
-                  subtotalPriceFormatted: "0.00",
-                  shipDate: "12-29-2023",
-                  shipDateFormatted: "29/12/2023",
-                  status: "SHIPPED_WITH_VENDOR",
-                  statusText: "Shipped With Vendor",
-                  isShipment: true,
-                  invoices: [
-                    {
-                      returnUrl:
-                        "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=8206638934&Line=30&product=9031674",
-                      id: "8206638934",
-                      date: "12-29-2023",
-                      dateFormatted: "12/29/2023",
-                      canDownloadDocument: true,
-                    },
-                  ],
-                  serialsAny: false,
-                  canTrackAndTrace: false,
-                  isEOL: false,
-                },
-              ],
-              endUser: {
-                name: "TD Synnex",
-                firstName: "Carl Hancock",
-                lastName: "Carl Hancock",
-                email: "carl.hancock@techdata.com",
-                phone: "01925 287839",
-                line1: "Maplewood, Crockford Lane",
-                city: "Basingstoke",
-                state: "HA",
-                zip: "RG24 8YB",
-                country: "GB",
-              },
-            },
-          ],
-        },
-      ],
+      groupedItems: [],
     },
     error: {
       code: 0,

@@ -43,6 +43,7 @@ function ProductReplacementFlyout({
   config = {},
   rowsToGrayOutTDNameRef,
   addNewItem,
+  setOrderModifyHeaderInfo,
 }) {
   const { id = '' } = getUrlParams();
   const [selected, setSelected] = useState(null);
@@ -186,6 +187,7 @@ function ProductReplacementFlyout({
         productReplacementConfig?.data?.line?.tdNumber,
       ];
       changeRefreshDetailApiState('lineDetails');
+      setOrderModifyHeaderInfo(true);
     }
   };
 

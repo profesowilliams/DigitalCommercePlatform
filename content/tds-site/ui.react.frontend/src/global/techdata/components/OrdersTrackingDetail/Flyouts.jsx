@@ -87,6 +87,7 @@ const Flyouts = ({
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         addNewItem={addNewItem}
+        setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
       />
     </>
   );
