@@ -83,7 +83,7 @@ const NewItemForm = ({
   const fetchSuggestions = async (newValue) => {
     try {
       const result = await usPost(`${domain}/v2/Product/Search`, {
-        query: encodeURIComponent(newValue),
+        query: newValue,
       });
       return result;
     } catch (error) {
