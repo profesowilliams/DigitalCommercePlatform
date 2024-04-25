@@ -56,4 +56,8 @@
   position: sticky;
   top: 4.2rem;
   z-index: 1;
+
+  @include mobile {
+    top: 2.9rem;
+  }
 }
