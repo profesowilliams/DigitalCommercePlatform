@@ -90,7 +90,7 @@ const LineItem = ({ item, index, onChange, labels }) => {
             </p>
           </div>
         )}
-        {quantityDecreased && (
+        {(quantityDecreased && currentValue === 0) && (
           <RejectedReasonDropdown
             labels={labels}
             rejectedReason={rejectedReason}
