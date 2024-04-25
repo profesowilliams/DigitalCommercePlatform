@@ -6332,36 +6332,31 @@ app.get("/ui-commerce/v3/Order/ITOrderXML/:id?", (req, res) => {
 app.get("/ui-commerce/v3/orderdetails/:id?/lines", (req, res) => {
   const response = {
     content: {
-      orderNumber: "6110056045",
-      customerPO: "422RP",
+      orderNumber: "I038889859",
+      customerPO: "enduser",
       currency: "EUR",
-      orderEditable: true,
-      sapOrderMigration: {
-        id: "6082746016",
-        referenceType: "Original",
-      },
+      orderEditable: false,
       items: [
         {
-          line: "10",
+          line: "1",
           urlProductImage:
-            "https://cdn.cs.1worldsync.com/d8/52/d8523417-dea2-4d9d-aefa-db9e18c1fbd2.jpg",
+            "https://cdn.cs.1worldsync.com/34/82/34826f68-1354-4c3e-9df5-7e631260fbd2.jpg",
           urlProductDetailsPage:
-            "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=7347846",
-          displayName: "Apple iPhone SE (3rd generation)",
-          tdNumber: "7347846",
-          mfrNumber: "MMXL3QL/A",
+            "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=4941436",
+          displayName: "Cisco ISR 1100 2 Ports 802.3at POE+",
+          tdNumber: "4941436",
+          mfrNumber: "ISR-1100-POE2=",
           originalOrderQuantity: 1.0,
-          unitPrice: 472.3,
-          unitPriceFormatted: "472,30",
+          unitPrice: 230.29,
+          unitPriceFormatted: "230,29",
           lineDetails: [
             {
               quantity: 1.0,
-              subtotalPrice: 472.3,
-              subtotalPriceFormatted: "472,30",
-              shipDateNotAvailableTranslated: "Non disponibile",
-              shipDateDetailsTranslated: "In transito",
-              status: "OPEN",
-              statusText: "Aperto",
+              subtotalPrice: 230.29,
+              subtotalPriceFormatted: "230,29",
+              shipDateNotAvailableTranslated: "Keine Angabe",
+              status: "REJECTED",
+              statusText: "Storniert",
               isShipment: false,
               serialsAny: false,
               canTrackAndTrace: false,
@@ -6371,35 +6366,218 @@ app.get("/ui-commerce/v3/orderdetails/:id?/lines", (req, res) => {
           endUser: {},
         },
         {
-          line: "40",
+          line: "6",
           urlProductImage:
-            "https://cdn.cs.1worldsync.com/14/41/14417128-98e3-4bf0-ac18-e8e7a6681127.jpg",
+            "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
           urlProductDetailsPage:
-            "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=6180955",
-          displayName: "Microsoft Modern Mobile Mouse",
-          tdNumber: "6180955",
-          mfrNumber: "KTF-00061",
-          originalOrderQuantity: 2.0,
-          unitPrice: 21.44,
-          unitPriceFormatted: "21,44",
+            "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=9045068",
+          displayName: "QuickSteuer 2024",
+          tdNumber: "9045068",
+          mfrNumber: "06810-2015",
+          originalOrderQuantity: 1.0,
+          unitPrice: 12.41,
+          unitPriceFormatted: "12,41",
           lineDetails: [
             {
-              quantity: 2.0,
-              subtotalPrice: 42.88,
-              subtotalPriceFormatted: "42,88",
-              shipDateNotAvailableTranslated: "Non disponibile",
-              status: "OPEN",
-              statusText: "Aperto",
+              quantity: 1.0,
+              subtotalPrice: 12.41,
+              subtotalPriceFormatted: "12,41",
+              shipDateNotAvailableTranslated: "Keine Angabe",
+              status: "REJECTED",
+              statusText: "Storniert",
               isShipment: false,
               serialsAny: false,
               canTrackAndTrace: false,
-              isEOL: true,
+              isEOL: false,
+            },
+          ],
+          endUser: {
+            name: " - ",
+            email: "claudia.jokisch@tdsynnex.com",
+          },
+        },
+        {
+          line: "7",
+          urlProductImage:
+            "https://cdn.cs.1worldsync.com/f3/5f/f35f442b-0ac2-468a-ac49-f24a837f6ed3.jpg",
+          urlProductDetailsPage:
+            "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=7745898",
+          displayName: "Microsoft Surface Laptop 5 for Business",
+          tdNumber: "7745898",
+          mfrNumber: "R1B-00005",
+          originalOrderQuantity: 1.0,
+          unitPrice: 1061.87,
+          unitPriceFormatted: "1.061,87",
+          lineDetails: [
+            {
+              quantity: 1.0,
+              subtotalPrice: 1061.87,
+              subtotalPriceFormatted: "1.061,87",
+              shipDateNotAvailableTranslated: "Keine Angabe",
+              status: "REJECTED",
+              statusText: "Storniert",
+              isShipment: false,
+              serialsAny: false,
+              canTrackAndTrace: false,
+              isEOL: false,
             },
           ],
           endUser: {},
         },
       ],
-      groupedItems: [],
+      groupedItems: [
+        {
+          manufacturer: "HP INC",
+          items: [
+            {
+              line: "2",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/6d/96/6d9609af-ab04-4a03-9a7e-4a70dff366c9.jpg",
+              urlProductDetailsPage:
+                "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=4769928",
+              displayName: "Electronic HP Care Pack Software Technical Support",
+              tdNumber: "4769928",
+              mfrNumber: "UA0H5E",
+              originalOrderQuantity: 1.0,
+              unitPrice: 952.16,
+              unitPriceFormatted: "952,16",
+              lineDetails: [
+                {
+                  quantity: 1.0,
+                  subtotalPrice: 952.16,
+                  subtotalPriceFormatted: "952,16",
+                  shipDateNotAvailableTranslated: "Keine Angabe",
+                  status: "REJECTED",
+                  statusText: "Storniert",
+                  isShipment: false,
+                  serialsAny: false,
+                  canTrackAndTrace: false,
+                  isEOL: false,
+                },
+              ],
+              endUser: {
+                email: "mustermann@mustermann.de",
+              },
+            },
+          ],
+        },
+        {
+          manufacturer: "DELL",
+          items: [
+            {
+              line: "3",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/38/0c/380cf603-8f68-4b26-b999-b84839de9266.jpg",
+              urlProductDetailsPage:
+                "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=6302514",
+              displayName:
+                "Dell Erweiterung von 1 Jahr Basic Onsite auf 3 Jahre ProSupport",
+              tdNumber: "6302514",
+              mfrNumber: "L3SL3_1OS3PS",
+              originalOrderQuantity: 1.0,
+              unitPrice: 64.88,
+              unitPriceFormatted: "64,88",
+              lineDetails: [
+                {
+                  quantity: 1.0,
+                  subtotalPrice: 64.88,
+                  subtotalPriceFormatted: "64,88",
+                  shipDateNotAvailableTranslated: "Keine Angabe",
+                  status: "REJECTED",
+                  statusText: "Storniert",
+                  isShipment: false,
+                  serialsAny: false,
+                  canTrackAndTrace: false,
+                  isEOL: false,
+                },
+              ],
+              endUser: {
+                email: "end@endkunde.de",
+                country: "DE",
+              },
+            },
+          ],
+        },
+        {
+          manufacturer: "LENOVO",
+          items: [
+            {
+              line: "4",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/84/4f/844faef2-38a3-4bf7-82c1-520eb17d88de.jpg",
+              urlProductDetailsPage:
+                "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=4554006",
+              displayName:
+                "Lenovo Committed Service Essential Service + YourDrive YourData",
+              tdNumber: "4554006",
+              mfrNumber: "5PS7A01733",
+              originalOrderQuantity: 1.0,
+              unitPrice: 2133.49,
+              unitPriceFormatted: "2.133,49",
+              lineDetails: [
+                {
+                  quantity: 1.0,
+                  subtotalPrice: 2133.49,
+                  subtotalPriceFormatted: "2.133,49",
+                  shipDateNotAvailableTranslated: "Keine Angabe",
+                  status: "REJECTED",
+                  statusText: "Storniert",
+                  isShipment: false,
+                  serialsAny: false,
+                  canTrackAndTrace: false,
+                  isEOL: false,
+                },
+              ],
+              endUser: {
+                email: "lenovo@test.de",
+              },
+            },
+          ],
+        },
+        {
+          manufacturer: "MICROSOFT",
+          items: [
+            {
+              line: "5",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/23/51/2351a57c-9d9c-4f02-b995-51624223125a.jpg",
+              urlProductDetailsPage:
+                "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=7428602",
+              displayName: "Microsoft Extended Hardware Service Plan Plus",
+              tdNumber: "7428602",
+              mfrNumber: "NRS-00081",
+              originalOrderQuantity: 1.0,
+              unitPrice: 144.88,
+              unitPriceFormatted: "144,88",
+              lineDetails: [
+                {
+                  quantity: 1.0,
+                  subtotalPrice: 144.88,
+                  subtotalPriceFormatted: "144,88",
+                  shipDateNotAvailableTranslated: "Keine Angabe",
+                  status: "REJECTED",
+                  statusText: "Storniert",
+                  isShipment: false,
+                  serialsAny: false,
+                  canTrackAndTrace: false,
+                  isEOL: false,
+                },
+              ],
+              endUser: {
+                name: "Mustermann GmbH",
+                firstName: "Max",
+                lastName: "Mustermann",
+                email: "mustermann@mustermann.de",
+                phone: "089/54785",
+                line1: "Musterstrasse 6",
+                city: "Musterstadt",
+                zip: "12345",
+                country: "DE",
+              },
+            },
+          ],
+        },
+      ],
     },
     error: {
       code: 0,
@@ -6407,7 +6585,6 @@ app.get("/ui-commerce/v3/orderdetails/:id?/lines", (req, res) => {
       isError: false,
     },
   };
-
   setTimeout(() => {
     return res.status(200).json(response);
   }, 200);

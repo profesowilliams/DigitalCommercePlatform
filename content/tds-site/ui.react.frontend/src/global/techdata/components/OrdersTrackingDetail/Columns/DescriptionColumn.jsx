@@ -70,7 +70,7 @@ function DescriptionColumn({ line, config }) {
     pushDataLayerGoogle(getEngUserDataAnalyticsGoogle());
   };
 
-  const renderTemplate = (aemTemplate) => {
+  const renderTemplate = (aemTemplate, isRow) => {
     let replacedTemplate = aemTemplate;
     for (const [placeholder, val] of Object.entries(replacements)) {
       if (val != undefined) {
@@ -80,15 +80,27 @@ function DescriptionColumn({ line, config }) {
       }
     }
     const result = replacedTemplate.split('<br/>');
-
-    return (
+    const nonEmptyResults = result.filter((el) => el.trim() !== '');
+    return isRow ? (
+      <div className="cmp-order-tracking-grid-details__description__user-info-ellipsis">
+        {nonEmptyResults.map((el, idx) => {
+          return (
+            <React.Fragment key={idx}>
+              <span>{el}</span>
+              {idx !== nonEmptyResults.length - 1 && <span>&nbsp;</span>}
+            </React.Fragment>
+          );
+        })}
+      </div>
+    ) : (
       <div>
-        {result.map((el, idx) => {
+        {nonEmptyResults.map((el, idx) => {
           return <div key={idx}>{el}</div>;
         })}
       </div>
     );
   };
+
   return (
     <div className="cmp-order-tracking-grid-details__description-row">
       <div className="cmp-order-tracking-grid-details__description-image">
@@ -181,7 +193,7 @@ function DescriptionColumn({ line, config }) {
               >
                 <PeopleIcon />
                 <div className="cmp-order-tracking-grid-details__description-user-info-link">
-                  {renderTemplate(template)}
+                  {renderTemplate(template, true)}
                 </div>
               </div>
             </Tooltip>
