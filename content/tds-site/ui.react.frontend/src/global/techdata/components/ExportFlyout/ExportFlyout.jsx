@@ -74,7 +74,7 @@ function ExportFlyout({
   );
   const requestUrl = new URL(url);
   let urlSearchParams = requestUrl.searchParams;
-  const { reports, sort, search, filters, dateRange } = searchParams;
+  const { reports, sort, search, filters, dateRange } = searchParams || {};
 
   if (searchParams) {
     const reportValue = reports.current?.value;
