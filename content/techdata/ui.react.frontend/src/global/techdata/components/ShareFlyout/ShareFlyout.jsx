@@ -130,8 +130,10 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
       e.preventDefault();
     }
     closeAlert();
-    handleShareItClick();
-    setAccessErrObj([]);
+    if (toEmailsArr.length > 0) {
+      handleShareItClick();
+      setAccessErrObj([]);
+    }
   };
 
   const handleShareItClick = async (event) => {
