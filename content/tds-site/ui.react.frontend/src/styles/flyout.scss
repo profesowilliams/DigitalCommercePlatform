@@ -305,6 +305,7 @@ $flyout-small-height-formax: 779px;
   }
   .add-new-disabled {
     color: $brand-text-lightgray;
+    cursor: default;
   }
   ul.new-list {
     padding: 0;
