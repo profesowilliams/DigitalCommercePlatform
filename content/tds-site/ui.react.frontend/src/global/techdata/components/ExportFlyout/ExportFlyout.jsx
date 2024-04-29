@@ -18,7 +18,11 @@ import {
   getExportSerialNumbersAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
-import { endpoints } from '../OrdersTrackingGrid/utils/orderTrackingUtils';
+import {
+  endpoints,
+  setSearchCriteriaDefaultDateRange,
+  filtersDateGroup,
+} from '../OrdersTrackingGrid/utils/orderTrackingUtils';
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -55,19 +59,24 @@ function ExportFlyout({
   isTDSynnex,
   exportAnalyticsLabel,
   searchParams,
-  defaultDateRange,
 }) {
   const { id = '' } = getUrlParams();
   const isOrderDetailsPage = window.location.href.includes(
     'order-details.html?id='
   );
+  const url =
+    componentProp?.uiCommerceServiceDomain + endpoints.exportAllOrderLines ||
+    'nourl';
+
   const exportFlyoutConfig = useOrderTrackingStore((st) => st.exportFlyout);
   const exportFlyoutSource = useOrderTrackingStore(
     (state) => state.exportFlyoutSource
   );
-  let urlSearchParams = new URLSearchParams();
+  const requestUrl = new URL(url);
+  let urlSearchParams = requestUrl.searchParams;
+  const { reports, sort, search, filters, dateRange } = searchParams;
+
   if (searchParams) {
-    const { reports, sort, search, filters } = searchParams;
     const reportValue = reports.current?.value;
     if (reportValue) {
       urlSearchParams.set('reportName', reportValue);
@@ -77,18 +86,13 @@ function ExportFlyout({
         urlSearchParams.set('SortDirection', sortValue.sort);
         urlSearchParams.set('SortBy', sortValue.colId);
       }
-      if (defaultDateRange) {
-        urlSearchParams.set(
-          'createdFrom',
-          getDateValue(createdFromDate(defaultDateRange))
-        );
-        urlSearchParams.set('createdTo', getDateValue(new Date()));
-      }
-      const searchValue = search.current;
-      if (searchValue?.field) {
-        urlSearchParams.set(searchValue.field, searchValue.value);
-        urlSearchParams.set('createdFrom', getDateValue(createdFromDate(90)));
-      }
+
+      setSearchCriteriaDefaultDateRange({
+        searchCriteria: search,
+        requestUrl: requestUrl,
+        filtersRefs: filters,
+        defaultSearchDateRange: dateRange,
+      });
 
       filters.current &&
         Object.entries(filters.current).reduce((params, filter) => {
@@ -100,10 +104,6 @@ function ExportFlyout({
               let key = e.split('=');
               urlSearchParams.append(key[0], key[1]);
             });
-            urlSearchParams.set(
-              'createdFrom',
-              filters.current.createdFrom ?? getDateValue(createdFromDate(90))
-            );
           } else if (filter[1]) {
             urlSearchParams.set(filter[0], filter[1]);
           }
@@ -133,9 +133,6 @@ function ExportFlyout({
   };
 
   function getExportAllOrderLines() {
-    const url =
-      componentProp?.uiCommerceServiceDomain + endpoints.exportAllOrderLines ||
-      'nourl';
     urlSearchParams.set('OnlyWithSerialNumbers', false);
     return requestFileBlobWithoutModal(
       url + '?' + urlSearchParams.toString(),
@@ -147,9 +144,6 @@ function ExportFlyout({
   }
 
   function getExportLinesWithSerialNumbersOnly() {
-    const url =
-      componentProp?.uiCommerceServiceDomain + endpoints.exportAllOrderLines ||
-      'nourl';
     urlSearchParams.set('OnlyWithSerialNumbers', true);
     return requestFileBlobWithoutModal(
       url + '?' + urlSearchParams.toString(),

@@ -17,7 +17,6 @@ const MainGridFlyouts = ({
   onQueryChanged,
   userData,
   searchParams,
-  defaultDateRange,
   settings,
   rowsToGrayOutTDNameRef,
   addNewItem,
@@ -67,7 +66,6 @@ const MainGridFlyouts = ({
         isTDSynnex={isTDSynnex}
         exportAnalyticsLabel={analyticsCategories.export}
         searchParams={searchParams}
-        defaultDateRange={defaultDateRange}
       />
       <OrderFilterFlyout
         onQueryChanged={onQueryChanged}

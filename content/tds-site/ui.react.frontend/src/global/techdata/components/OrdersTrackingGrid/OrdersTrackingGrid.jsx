@@ -579,8 +579,8 @@ function OrdersTrackingGrid(props) {
           sort: hasSortChanged,
           search: searchCriteria,
           filters: filtersRefs,
+          dateRange: dateRange,
         }}
-        defaultDateRange={componentProp?.defaultSearchDateRange}
         settings={settingsResponse}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         addNewItem={handleAddNewItem}

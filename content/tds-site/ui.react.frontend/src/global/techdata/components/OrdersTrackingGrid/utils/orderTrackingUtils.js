@@ -44,14 +44,16 @@ export const filtersDateGroup = [
   'shippedDateTo',
 ];
 
-const setSearchCriteriaDefaultDateRange = ({
+export const setSearchCriteriaDefaultDateRange = ({
   searchCriteria,
   requestUrl,
   filtersRefs,
   defaultSearchDateRange,
-  dateFilters,
 }) => {
-  const { field, value } = searchCriteria.current || {};
+  const { field, value } = searchCriteria?.current || {};
+  const dateFilters = Object.entries(filtersRefs?.current).filter(
+    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
+  );
   if (field) {
     requestUrl.searchParams.set(field, value);
     const isSearchForTDSynnexId = ['Id', 'InvoiceId', 'DeliveryNote'].includes(
@@ -60,7 +62,7 @@ const setSearchCriteriaDefaultDateRange = ({
     const isSearchForPOId = field === 'CustomerPO';
     const isSearchForSerialId = field === 'SerialNo';
     const noFilterApplied =
-      !filtersRefs.current.type && !filtersRefs.current.status;
+      !filtersRefs?.current.type && !filtersRefs?.current.status;
     const dateRange = noFilterApplied ? 30 : 90;
 
     if (isSearchForTDSynnexId) {
@@ -87,17 +89,17 @@ const setSearchCriteriaDefaultDateRange = ({
       addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
     }
   } else {
-    if (filtersRefs.current.type || filtersRefs.current.status) {
+    if (filtersRefs?.current.type || filtersRefs?.current.status) {
       addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
     } else {
       addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
     }
   }
 
-  if (dateFilters.length > 0) {
+  if (dateFilters?.length > 0) {
     requestUrl.searchParams.delete('createdFrom');
     requestUrl.searchParams.delete('createdTo');
-    dateFilters.forEach((filter) =>
+    dateFilters?.forEach((filter) =>
       requestUrl.searchParams.set(filter[0], filter[1])
     );
   }
@@ -110,9 +112,6 @@ export const fetchOrdersCount = async (
   searchCriteria
 ) => {
   const requestUrl = new URL(url);
-  const dateFilters = Object.entries(filtersRefs?.current).filter(
-    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
-  );
 
   if (reportValue) {
     requestUrl.searchParams.set('reportName', reportValue);
@@ -122,11 +121,10 @@ export const fetchOrdersCount = async (
     requestUrl,
     filtersRefs,
     defaultSearchDateRange,
-    dateFilters,
   });
 
   const filtersStatusAndType =
-    (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
+    (filtersRefs?.current.type ?? '') + (filtersRefs?.current.status ?? '');
   try {
     const result = await usGet(requestUrl.href + filtersStatusAndType);
     return result;
@@ -197,15 +195,11 @@ export async function fetchData(config) {
   const requestUrl = new URL(url);
   const isFirstAPICall = firstAPICall.current === true;
 
-  const dateFilters = Object.entries(filtersRefs?.current).filter(
-    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
-  );
   setSearchCriteriaDefaultDateRange({
     searchCriteria,
     requestUrl,
     filtersRefs,
     defaultSearchDateRange,
-    dateFilters,
   });
 
   Object.keys(filtersRefs.current).map((filter) => {
