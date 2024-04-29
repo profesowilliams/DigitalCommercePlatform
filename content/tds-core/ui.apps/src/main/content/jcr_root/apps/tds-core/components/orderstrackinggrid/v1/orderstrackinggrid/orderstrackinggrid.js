@@ -223,7 +223,6 @@ use(["../common/utils.js"], function (utils) {
       "rejectionRequiredInfo",
       "cancelNewItem",
       "updateSucessMessage",
-      "modifyErrorMessage",
       "updateErrorMessage",
       "updateErrorListMessage",
       "line",

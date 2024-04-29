@@ -1015,11 +1015,7 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Your order has been successfully updated as requested Label"
 												name="./updateSucessMessage"/>
-                                            <modifyErrorMessage
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="It was not possible to modify your order at this time. Please try again later."
-                                                name="./modifyErrorMessage"/>
+                                         
                                             <updateErrorMessage
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

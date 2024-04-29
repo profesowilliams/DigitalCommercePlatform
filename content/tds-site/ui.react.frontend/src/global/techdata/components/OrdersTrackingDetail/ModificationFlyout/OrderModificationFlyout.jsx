@@ -76,17 +76,6 @@ function OrderModificationFlyout({
   const getOrderModificationData = async () => {
     try {
       const result = await usGet(requestURLData);
-      const resultContent = result.data.content;
-      const orderEditable = resultContent?.orderEditable;
-      const toaster = {
-        isOpen: true,
-        origin: 'fromUpdate',
-        isAutoClose: true,
-        isSuccess: false,
-        message: getDictionaryValueOrKey(labels?.modifyErrorMessage),
-      };
-      !orderEditable &&
-        setCustomState({ key: 'toaster', value: { ...toaster } });
       return result;
     } catch (error) {
       console.error('Error:', error);
