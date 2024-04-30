@@ -8239,6 +8239,7 @@ app.get("/ui-commerce/v3/refinements", function (req, res) {
         ProactiveMessage: true,
         EndUserInformation: true,
         GroupLines: true,
+        AlternativeSearch: true,
       },
     },
     error: {
@@ -8424,4 +8425,35 @@ app.post("/ui-commerce/v2/Price/GetPriceForProduct", function (req, res) {
   setTimeout(() => {
     return res.status(200).json(response);
   }, 200);
+});
+
+app.get("/ui-commerce/v3/lookahead", function (req, res) {
+  const response = {
+    content: {
+      suggestions: [
+        {
+          text: "ala ma kota... in OrderNo",
+          field: "OrderNo",
+          isPrefered: true,
+          sortOrder: 1,
+          matchCount: 1,
+        },
+        {
+          text: "ala ma kota... in CustomerPO",
+          field: "CustomerPO",
+          isPrefered: false,
+          sortOrder: 2,
+          matchCount: 10,
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 100);
 });

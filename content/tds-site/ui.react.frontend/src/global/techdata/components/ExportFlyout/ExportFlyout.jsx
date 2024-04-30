@@ -72,6 +72,9 @@ function ExportFlyout({
   const exportFlyoutSource = useOrderTrackingStore(
     (state) => state.exportFlyoutSource
   );
+  const alternativeSearchFlag = useOrderTrackingStore(
+    (state) => state.featureFlags.alternativeSearch
+  );
   const requestUrl = new URL(url);
   let urlSearchParams = requestUrl.searchParams;
   const { reports, sort, search, filters, dateRange } = searchParams || {};
@@ -86,6 +89,13 @@ function ExportFlyout({
         urlSearchParams.set('SortDirection', sortValue.sort);
         urlSearchParams.set('SortBy', sortValue.colId);
       }
+      if (defaultDateRange && !alternativeSearchFlag) {
+        urlSearchParams.set(
+          'createdFrom',
+          getDateValue(createdFromDate(defaultDateRange))
+        );
+        urlSearchParams.set('createdTo', getDateValue(new Date()));
+      }
 
       setSearchCriteriaDefaultDateRange({
         searchCriteria: search,
@@ -93,6 +103,13 @@ function ExportFlyout({
         filtersRefs: filters,
         defaultSearchDateRange: dateRange,
       });
+      const { field, value } = search.current || {};
+      if (field) {
+        if (alternativeSearchFlag) {
+          urlSearchParams.set('key', field);
+          urlSearchParams.set('value', value);
+        }
+      }
 
       filters.current &&
         Object.entries(filters.current).reduce((params, filter) => {

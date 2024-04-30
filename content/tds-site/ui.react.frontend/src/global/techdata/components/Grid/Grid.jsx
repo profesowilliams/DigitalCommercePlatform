@@ -441,6 +441,7 @@ function Grid(props) {
       defaultSearchDateRange && !omitCreatedQuery
         ? `&${defaultSearchDateRange}`
         : '';
+
     if (gridId.current) {
       // check if there are additional query params in url, append grid specific params
       const url = new URL(config.uiCommerceServiceDomain+endpoints.uiService);

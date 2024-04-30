@@ -3,6 +3,7 @@ import Report from '../Report/Report';
 import Settings from '../Settings/Settings';
 import VerticalSeparator from '../../Widgets/VerticalSeparator';
 import OrderSearch from '../Search/OrderSearch';
+import Search from '../NewSearch/Search';
 import OrderFilter from '../Filter/OrderFilter';
 import OrderExport from '../Export/OrderExport';
 import Pill from '../../Widgets/Pill';
@@ -48,6 +49,9 @@ function MainGridHeader({
 
   const proactiveMessagingFlag = useOrderTrackingStore(
     (state) => state.featureFlags.proactiveMessage
+  );
+  const alternativeSearchFlag = useOrderTrackingStore(
+    (state) => state.featureFlags.alternativeSearch
   );
   const [pill, setPill] = useState(
     getLocalStorageData(REPORTS_LOCAL_STORAGE_KEY) || null
@@ -189,15 +193,28 @@ function MainGridHeader({
           />,
         ]
       : []),
-    <OrderSearch
-      options={searchOptions}
-      onQueryChanged={onSearchChange}
-      ref={searchCriteria}
-      hideLabel={true}
-      gridConfig={gridConfig}
-      searchAnalyticsLabel={analyticsCategories.search}
-      clearReports={clearReports}
-    />,
+    ...(alternativeSearchFlag
+      ? [
+          <Search
+            options={searchOptions}
+            onQueryChanged={onSearchChange}
+            ref={searchCriteria}
+            clearReports={clearReports}
+            gridConfig={gridConfig}
+            filtersRefs={filtersRefs}
+          />,
+        ]
+      : [
+          <OrderSearch
+            options={searchOptions}
+            onQueryChanged={onSearchChange}
+            ref={searchCriteria}
+            hideLabel={true}
+            gridConfig={gridConfig}
+            searchAnalyticsLabel={analyticsCategories.search}
+            clearReports={clearReports}
+          />,
+        ]),
     <VerticalSeparator />,
     <OrderFilter
       clearFilters={clearFilters}

@@ -131,6 +131,7 @@ const INITIAL_STATE = {
     proactiveMessage: false,
     endUserInformation: false,
     groupLines: false,
+    alternativeSearch: false,
   },
   orderDetailSubtotalValue: null,
 };

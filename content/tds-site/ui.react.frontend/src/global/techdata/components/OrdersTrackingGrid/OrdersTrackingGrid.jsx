@@ -87,6 +87,7 @@ function OrdersTrackingGrid(props) {
   const dNoteFailedCounter = useRef(1);
   const invoiceFailedCounter = useRef(1);
   const rowsToGrayOutTDNameRef = useRef([]);
+  const alternativeSearchFlagRef = useRef(null);
 
   const {
     setUserData,
@@ -102,6 +103,9 @@ function OrdersTrackingGrid(props) {
     { resetCallback, shouldGoToFirstPage, isOnSearchAction }
   );
   const userData = useOrderTrackingStore((st) => st.userData);
+  const alternativeSearchFlag = useOrderTrackingStore(
+    (state) => state.featureFlags.alternativeSearch
+  );
   const { isGTMReady } = useGTMStatus();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -204,9 +208,10 @@ function OrdersTrackingGrid(props) {
       previousSortChanged,
       firstAPICall,
       gridApiRef,
-      defaultSearchDateRange: dateRange,
+      // defaultSearchDateRange: dateRange,
       filtersRefs,
       isOnSearchAction,
+      alternativeSearchFlagRef,
     };
     setSearchParameters(searchCriteria?.current);
     request.url = addCurrentPageNumber(customPaginationRef, request);
@@ -227,7 +232,8 @@ function OrdersTrackingGrid(props) {
       dateRange,
       filtersRefs,
       reportFilterValue.current?.value,
-      searchCriteria
+      searchCriteria,
+      alternativeSearchFlagRef
     );
     const response = reportFilterValue.current?.value
       ? await fetchReport(
@@ -278,7 +284,7 @@ function OrdersTrackingGrid(props) {
       .filter((o) => !!o.sort)
       .map(({ colId, sort }) => ({ colId, sort }));
     if (
-      hasSortChanged.current?.sortData && 
+      hasSortChanged.current?.sortData &&
       !compareSort(hasSortChanged.current.sortData, sortedModel)
     ) {
       const sortData = sortedModel
@@ -288,8 +294,8 @@ function OrdersTrackingGrid(props) {
         pushDataLayerGoogle(getSortAnalyticsGoogle(sortData, 'Click'));
       }
     }
-    if(sortedModel){ 
-      hasSortChanged.current = {sortData: sortedModel};
+    if (sortedModel) {
+      hasSortChanged.current = { sortData: sortedModel };
     }
     setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
   };
@@ -444,7 +450,6 @@ function OrdersTrackingGrid(props) {
           })
         );
         pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
-
       }
     });
   }, [isGTMReady]);
@@ -500,10 +505,14 @@ function OrdersTrackingGrid(props) {
     }
   }, [userData]);
 
+  useEffect(() => {
+    alternativeSearchFlagRef.current = alternativeSearchFlag;
+  }, [alternativeSearchFlag]);
+
   const authorizedContent = () => {
     return hasAccess ? (
       <div className="cmp-order-tracking-grid">
-        <Criteria config={gridConfig} searchCriteria={searchParameters} />
+        {/* <Criteria config={gridConfig} searchCriteria={searchParameters} /> */}
         <MainGridHeader
           onQueryChanged={onQueryChanged}
           searchLabels={searchLabels}
@@ -529,7 +538,8 @@ function OrdersTrackingGrid(props) {
           config={gridConfig}
           options={options}
           gridConfig={gridConfig}
-          defaultSearchDateRange={dateRange}
+          // defaultSearchDateRange={dateRange}
+          omitCreatedQuery={true}
           requestInterceptor={customRequestInterceptor}
           mapServiceData={mapServiceData}
           onSortChanged={onSortChanged}

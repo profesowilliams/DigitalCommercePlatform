@@ -34,6 +34,9 @@ export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
     }
   }
 };
+const prepareFilterParams = (filter) => {
+  return filter.replace('&', '').split('=');
+};
 
 export const filtersDateGroup = [
   'createdFrom',
@@ -55,7 +58,7 @@ export const setSearchCriteriaDefaultDateRange = ({
     (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
   );
   if (field) {
-    requestUrl.searchParams.set(field, value);
+    // requestUrl.searchParams.set(field, value);
     const isSearchForTDSynnexId = ['Id', 'InvoiceId', 'DeliveryNote'].includes(
       field
     );
@@ -104,18 +107,21 @@ export const setSearchCriteriaDefaultDateRange = ({
     );
   }
 };
+
 export const fetchOrdersCount = async (
   url,
   defaultSearchDateRange,
   filtersRefs,
   reportValue = null,
-  searchCriteria
+  searchCriteria,
+  alternativeSearchFlagRef
 ) => {
   const requestUrl = new URL(url);
 
   if (reportValue) {
     requestUrl.searchParams.set('reportName', reportValue);
   }
+
   setSearchCriteriaDefaultDateRange({
     searchCriteria,
     requestUrl,
@@ -123,10 +129,29 @@ export const fetchOrdersCount = async (
     defaultSearchDateRange,
   });
 
-  const filtersStatusAndType =
-    (filtersRefs?.current.type ?? '') + (filtersRefs?.current.status ?? '');
+  if (searchCriteria.current?.field) {
+    const { field, value } = searchCriteria.current;
+    if (alternativeSearchFlagRef) {
+      requestUrl.searchParams.set('key', field);
+      requestUrl.searchParams.set('value', value);
+    } else {
+      requestUrl.searchParams.set(field, value);
+    }
+  }
+
+  if (filtersRefs.current.type?.length > 0) {
+    requestUrl.searchParams.set(
+      ...prepareFilterParams(filtersRefs.current.type)
+    );
+  }
+  if (filtersRefs.current.status?.length > 0) {
+    requestUrl.searchParams.set(
+      ...prepareFilterParams(filtersRefs.current.status)
+    );
+  }
+
   try {
-    const result = await usGet(requestUrl.href + filtersStatusAndType);
+    const result = await usGet(requestUrl.href);
     return result;
   } catch (error) {
     console.error('error on orders count >>', error);
@@ -189,6 +214,7 @@ export async function fetchData(config) {
     previousFilter,
     defaultSearchDateRange,
     filtersRefs,
+    alternativeSearchFlagRef,
   } = config;
 
   const { url } = request;
@@ -239,9 +265,15 @@ export async function fetchData(config) {
       if (!isEqual) requestUrl.searchParams.set('PageNumber', 1);
     }
   }
+
   if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
-    requestUrl.searchParams.set(field, value);
+    if (alternativeSearchFlagRef) {
+      requestUrl.searchParams.set('key', field);
+      requestUrl.searchParams.set('value', value);
+    } else {
+      requestUrl.searchParams.set(field, value);
+    }
   }
   if (isOnSearchAction.current) {
     requestUrl.searchParams.set('PageNumber', 1);
@@ -429,7 +461,7 @@ export const getPredefinedSearchOptionsList = (aemData) => {
 
 export const getInitialFiltersDataFromLS = () => {
   const data = getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY);
-  if (!data){
+  if (!data) {
     return {
       createdFrom: null,
       createdTo: null,

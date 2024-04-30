@@ -749,3 +749,13 @@
     float: right;
   }
 }
+
+.search-icon__dark {
+  cursor: pointer;
+  fill: $brand-green;
+  vertical-align: initial;
+  &.disabled {
+    fill: $brand-icon-gray-color;
+    cursor: initial;
+  }
+}
