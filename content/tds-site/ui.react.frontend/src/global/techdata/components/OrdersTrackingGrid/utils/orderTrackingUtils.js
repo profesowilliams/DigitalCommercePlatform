@@ -381,48 +381,6 @@ export const getFilterFlyoutPredefined = (filterLabels, refinements) => {
   ];
 };
 
-export const getFilterFlyoutCustomized = (
-  dateOptionsList,
-  filterListValues,
-  startIndex = 0
-) => {
-  let customizedFilters = [];
-  if (dateOptionsList) {
-    dateOptionsList.map((date, index) =>
-      customizedFilters.push({
-        id: index + startIndex,
-        accordionLabel: date.label,
-        filterField: date.key,
-        group: 'customDate',
-        open: false,
-        startDate: null,
-        endDate: null,
-        dataRangeLabel: null,
-      })
-    );
-  }
-  if (filterListValues) {
-    const customFilterIndex =
-      startIndex + (dateOptionsList ? dateOptionsList.length : 0);
-
-    filterListValues.map((filter, index) =>
-      customizedFilters.push({
-        id: index + customFilterIndex,
-        accordionLabel: filter.accordionLabel,
-        filterField: filter.filterField,
-        group: 'custom',
-        filterOptionList: filter.filterOptionsValues?.map((value, index) => ({
-          id: index,
-          filterOptionLabel: value.filterOptionLabel,
-          filterOptionKey: value.filterOptionKey,
-          checked: false,
-        })),
-      })
-    );
-  }
-  return customizedFilters;
-};
-
 export const getPredefinedSearchOptionsList = (aemData) => {
   const { orderNo, dnoteNo, invoiceNo, poNo, serialNo } = aemData || {};
   return [

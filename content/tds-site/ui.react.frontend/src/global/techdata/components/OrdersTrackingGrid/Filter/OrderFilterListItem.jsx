@@ -4,18 +4,14 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderCount from './OrderCount';
 import OrderFilterDatePicker from './OrderFilterDatapicker';
 import OrderFilterItems from './OrderFilterItems';
-import OrderFilterCustomItem from './OrderFilterCustomItem';
-import OrderFilterCustomDatapicker from './OrderFilterCustomDatapicker';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function OrderFilterListItem({
   id,
   open,
   accordionLabel,
-  filterField,
   group,
   filtersRefs,
-  filterOptionList,
   filterLabels,
   filterDateOptions,
 }) {
@@ -94,26 +90,6 @@ function OrderFilterListItem({
             filtersRefs={filtersRefs}
             filterLabels={filterLabels}
           />
-        );
-      case 'custom':
-        return (
-          <OrderFilterCustomItem
-            filterField={filterField}
-            filterOptionList={filterOptionList}
-            accordionLabel={accordionLabel}
-            filtersRefs={filtersRefs}
-            customFilterId={id}
-          />
-        );
-      case 'customDate':
-        return (
-          <div className="datepicker-wrapper-custom">
-            <OrderFilterCustomDatapicker
-              filtersRefs={filtersRefs}
-              customDateId={id}
-              filterLabels={filterLabels}
-            />
-          </div>
         );
       default:
         return <></>;

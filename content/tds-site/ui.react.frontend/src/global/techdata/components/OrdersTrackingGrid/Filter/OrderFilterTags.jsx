@@ -9,7 +9,6 @@ function OrderFilterTags({ filtersRefs, filterDateOptions }) {
     setOrderTypeFiltersChecked,
     setDateRangeFiltersChecked,
     setCustomState,
-    setCustomFiltersChecked,
     setPredefinedFiltersSelectedAfter,
     setCustomizedFiltersSelectedAfter,
     setFilterClicked,
@@ -91,7 +90,6 @@ function OrderFilterTags({ filtersRefs, filterDateOptions }) {
           element.id === id && (element.checked = false);
         });
     });
-    setCustomFiltersChecked([...newList]);
     setAreThereAnyFiltersSelectedButNotApplied();
     setCustomizedFiltersSelectedAfter(structuredClone(newList));
   };
@@ -106,7 +104,6 @@ function OrderFilterTags({ filtersRefs, filterDateOptions }) {
     newList.map((_filter) => {
       _filter.id === filter.id && clearDate(_filter);
     });
-    setCustomFiltersChecked([...newList]);
     setAreThereAnyFiltersSelectedButNotApplied();
     setCustomizedFiltersSelectedAfter(structuredClone(newList));
   };

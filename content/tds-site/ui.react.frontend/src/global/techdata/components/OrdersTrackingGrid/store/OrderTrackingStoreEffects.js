@@ -189,16 +189,6 @@ export const orderTrackingEffects = (set, get) => {
       }));
       updateOrderFilterCounter();
     },
-    setCustomFiltersChecked(customFiltersChecked) {
-      set((state) => ({
-        ...state,
-        filter: {
-          ...state.filter,
-          customFiltersChecked,
-        },
-      }));
-      updateOrderFilterCounter();
-    },
     setPredefinedFiltersSelectedBefore(predefinedFiltersSelectedBefore) {
       set((state) => ({
         ...state,

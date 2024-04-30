@@ -21,7 +21,6 @@ import {
   fetchOrdersCount,
   fetchReport,
   getFilterFlyoutPredefined,
-  getFilterFlyoutCustomized,
   getInitialFiltersDataFromLS,
   endpoints,
   filtersDateGroup,
@@ -36,7 +35,7 @@ import {
   getSearchNRFAnalyticsGoogle,
   getAdvancedSearchNRFAnalyticsGoogle,
   getReportsNRFAnalyticsGoogle,
-  fixCountryCode
+  fixCountryCode,
 } from './utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import MainGridHeader from './MainGrid/MainGridHeader';
@@ -94,7 +93,6 @@ function OrdersTrackingGrid(props) {
     setCustomState,
     closeAndCleanToaster,
     setFilterList,
-    setCustomFiltersChecked,
     setFeatureFlags,
     hasRights,
   } = useOrderTrackingStore((st) => st.effects);
@@ -127,8 +125,6 @@ function OrdersTrackingGrid(props) {
   const {
     searchOptionsList = [],
     reportPillLabel,
-    filterListValues,
-    dateOptionsList,
     filterLabels,
     noAccessProps,
     analyticsCategories,
@@ -423,13 +419,7 @@ function OrdersTrackingGrid(props) {
     const refinements = await fetchFiltersRefinements();
     setFeatureFlags(refinements?.featureFlags);
     const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
-    const customized = getFilterFlyoutCustomized(
-      dateOptionsList,
-      filterListValues,
-      predefined.length + 1
-    );
-    setFilterList([...predefined, ...customized]);
-    setCustomFiltersChecked(customized);
+    setFilterList([...predefined]);
   }, []);
 
   useEffect(() => {

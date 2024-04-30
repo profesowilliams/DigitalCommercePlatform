@@ -518,56 +518,9 @@ use(["../common/utils.js"], function (utils) {
 
     //Filter Options
 
-    let dateOptionValues = utils.getDataFromMultifield(
-      resourceResolver,
-      "dateOptionsList",
-      function (childResource) {
-        let itemData = {};
-        itemData.label = childResource.properties["label"];
-        itemData.field = childResource.properties["field"];
-        return itemData;
-      }
-    );
-
-    if (dateOptionValues != null) {
-      jsonObject["dateOptionValues"] = dateOptionValues;
-    }
-
     if (properties["defaultSearchDateRange"]) {
       jsonObject["defaultSearchDateRange"] =
         properties["defaultSearchDateRange"];
-    }
-
-    let node = resourceResolver.getResource(
-      currentNode.getPath() + "/filterList"
-    );
-    let filterListValues = [];
-    if (node !== null) {
-      let childrenList = node.getChildren();
-      for (let [key, res] in Iterator(childrenList)) {
-        let itemData = {};
-        itemData.accordionLabel = res.properties["accordionLabel"];
-        itemData.filterField = res.properties["filterField"];
-        itemData.filterOptionsValues = [];
-        let childNode = resourceResolver.getResource(
-          res.getPath() + "/filterOptionsValues"
-        );
-
-        if (childNode != null) {
-          let childNodeList = childNode.getChildren();
-          for (let [childkey, childRes] in Iterator(childNodeList)) {
-            itemData.filterOptionsValues.push({
-              filterOptionLabel: childRes.properties["filterOptionLabel"],
-              filterOptionKey: childRes.properties["filterOptionKey"],
-            });
-          }
-        }
-        filterListValues.push(itemData);
-      }
-    }
-
-    if (filterListValues != null) {
-      jsonObject["filterListValues"] = filterListValues;
     }
 
     const filterLabelsKeys = [
