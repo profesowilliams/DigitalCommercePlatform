@@ -101,7 +101,14 @@ const getInitialKey =
   getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).field || '';
 
 const Search = (
-  { options, onQueryChanged, clearReports, gridConfig, filtersRefs },
+  {
+    options,
+    onQueryChanged,
+    clearReports,
+    gridConfig,
+    filtersRefs,
+    searchAnalyticsLabel
+  },
   ref
 ) => {
   const [open, setOpen] = useState(false);
