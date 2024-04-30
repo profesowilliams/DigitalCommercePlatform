@@ -8433,7 +8433,7 @@ app.get("/ui-commerce/v3/lookahead", function (req, res) {
       suggestions: [
         {
           text: "ala ma kota... in OrderNo",
-          field: "OrderNo",
+          field: "Source_Id",
           isPrefered: true,
           sortOrder: 1,
           matchCount: 1,
@@ -8451,6 +8451,26 @@ app.get("/ui-commerce/v3/lookahead", function (req, res) {
       code: 0,
       messages: [],
       isError: false,
+    },
+  };
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 100);
+});
+
+app.get("/ui-intouch-localize/v1", function (req, res) {
+  const response = {
+    "OrderTracking.FreetextSearchFields": {
+      ShipTo: "Ship to",
+      CustomerPO: "PO №",
+      Items_Product_Manufacturer_Id: "Mfr №",
+      Source_Id: "Order №",
+      Items_Product_Techdata_Manufacturer: "Vendor",
+      Items_DeliveryNote_Id: "D-note №",
+      Items_Invoice_Id: "Invoice №",
+      Items_Product_Techdata_Id: "TDS №",
+      Items_EndUser_Name: "End Customer Name",
+      Items_Serials: "Items_Serials",
     },
   };
   setTimeout(() => {

@@ -467,6 +467,12 @@ export const orderTrackingEffects = (set, get) => {
         },
       }));
     },
+    setFreeTextSearchTranslations(value) {
+      set((state) => ({
+        ...state,
+        freeTextSearchTranslations: value,
+      }));
+    },
     setOrderDetailSubtotalValue(value) {
       set((state) => ({
         ...state,

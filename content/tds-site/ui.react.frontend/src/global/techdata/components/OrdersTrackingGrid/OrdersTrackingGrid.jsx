@@ -94,6 +94,7 @@ function OrdersTrackingGrid(props) {
     closeAndCleanToaster,
     setFilterList,
     setFeatureFlags,
+    setFreeTextSearchTranslations,
     hasRights,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
@@ -398,6 +399,13 @@ function OrdersTrackingGrid(props) {
     return results.data.content;
   };
 
+  const fetchFreeTextSearchTranslations = async () => {
+    const results = await usGet(
+      `${componentProp.uiIntouchLocalizeServiceDomain}/v1?id=OrderTracking.FreetextSearchFields`
+    );
+    return results.data;
+  };
+
   const [settingsResponse] = useGet(
     `${gridConfig.uiProactiveServiceDomain}/v1`,
     'settings'
@@ -418,6 +426,8 @@ function OrdersTrackingGrid(props) {
     redirectedFrom && deleteSearchParam('redirectedFrom');
     const refinements = await fetchFiltersRefinements();
     setFeatureFlags(refinements?.featureFlags);
+    const freeTextSearchTranslations = await fetchFreeTextSearchTranslations();
+    setFreeTextSearchTranslations(freeTextSearchTranslations);
     const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
     setFilterList([...predefined]);
   }, []);

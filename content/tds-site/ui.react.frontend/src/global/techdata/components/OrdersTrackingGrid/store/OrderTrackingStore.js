@@ -133,6 +133,7 @@ const INITIAL_STATE = {
     groupLines: false,
     alternativeSearch: false,
   },
+  freeTextSearchTranslations: {},
   orderDetailSubtotalValue: null,
 };
 

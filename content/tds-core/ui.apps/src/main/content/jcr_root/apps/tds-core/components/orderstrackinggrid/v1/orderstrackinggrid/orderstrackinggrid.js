@@ -285,6 +285,10 @@ use(["../common/utils.js"], function (utils) {
 
     jsonObject["uiProactiveServiceDomain"] =
       this.serviceData.uiServiceDomain + `/ui-proactive`;
+
+    jsonObject["uiIntouchLocalizeServiceDomain"] =
+      this.serviceData.uiServiceDomain + `/ui-intouch-localize`;
+
     const endpoints = [
       "downloadAllInvoicesEndpoint",
     ];

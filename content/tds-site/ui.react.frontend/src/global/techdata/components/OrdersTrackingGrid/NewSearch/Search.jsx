@@ -18,6 +18,7 @@ import Pill from '../../Widgets/Pill';
 import { getLocalStorageData, setLocalStorageData } from '../utils/gridUtils';
 import { ORDER_SEARCH_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
+import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 const debounce = (func, timeout = 300) => {
   let timer;
@@ -48,7 +49,7 @@ function CustomPaper({ children }) {
           },
         },
         '& .MuiAutocomplete-listbox .MuiAutocomplete-option.Mui-focused': {
-          bgcolor: '#F8F8F8',
+          bgcolor: '#E4E5E6',
         },
       }}
     >
@@ -104,6 +105,13 @@ const Search = (
     field: ref.current.field || getInitialKey,
     value: ref.current.value || getInitialValue,
   });
+
+  const freeTextSearchTranslations = useOrderTrackingStore(
+    (state) => state.freeTextSearchTranslations
+  )['OrderTracking.FreetextSearchFields'];
+
+  const getFreeTextTranslations = (key) =>
+    freeTextSearchTranslations?.[key] || key;
 
   useImperativeHandle(ref, () => ({ field: pill.field, value: pill.value }), [
     pill,
@@ -171,6 +179,7 @@ const Search = (
 
   const handleDeletePill = () => {
     setPill({ value: '', field: '' });
+    setSuggestions([]);
     resetLocalStorage();
     onQueryChanged({ onSearchAction: true });
     removeQueryParamsSearch(options);
@@ -192,6 +201,8 @@ const Search = (
       newKey = newValue.field;
     }
     clearReports();
+    ref.current.field = newKey;
+    ref.current.value = value;
     onQueryChanged();
     setFocused(false);
     setPill({ value: value, field: newKey });
@@ -208,11 +219,11 @@ const Search = (
 
   return (
     <>
-      {pill.value && (
+      {pill.value && freeTextSearchTranslations && (
         <Pill
           children={
             <span className="td-capsule__text">
-              {pill.field}: {pill.value}
+              {getFreeTextTranslations(pill.field)}: {pill.value}
             </span>
           }
           closeClick={handleDeletePill}
