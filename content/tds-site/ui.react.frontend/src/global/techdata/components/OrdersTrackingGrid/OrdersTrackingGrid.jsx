@@ -206,7 +206,6 @@ function OrdersTrackingGrid(props) {
       previousSortChanged,
       firstAPICall,
       gridApiRef,
-      // defaultSearchDateRange: dateRange,
       filtersRefs,
       isOnSearchAction,
       alternativeSearchFlagRef,
@@ -227,7 +226,6 @@ function OrdersTrackingGrid(props) {
       reportFilterValue.current?.value
         ? ordersReportCountUrl.href
         : ordersCountUrl.href,
-      dateRange,
       filtersRefs,
       reportFilterValue.current?.value,
       searchCriteria,
@@ -254,9 +252,7 @@ function OrdersTrackingGrid(props) {
       ) {
         sendGTMDataOnError();
       }
-      if (
-        response?.data?.content?.items?.length === 1
-      ) {
+      if (response?.data?.content?.items?.length === 1) {
         gridApiRef?.current?.api.expandAll();
       }
     }
@@ -519,7 +515,7 @@ function OrdersTrackingGrid(props) {
   const authorizedContent = () => {
     return hasAccess ? (
       <div className="cmp-order-tracking-grid">
-        {/* <Criteria config={gridConfig} searchCriteria={searchParameters} /> */}
+        <Criteria config={gridConfig} searchCriteria={searchParameters} />
         <MainGridHeader
           onQueryChanged={onQueryChanged}
           searchLabels={searchLabels}

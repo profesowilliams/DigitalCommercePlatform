@@ -32,6 +32,7 @@ use(["../common/utils.js"], function (utils) {
       "displayCurrencyName",
       "last30DaysCriteria",
       "last90DaysCriteria",
+      "searchPlaceholder",
       "multiple",
       "shipToTooltipTemplate",
       "eolUpdateErrorMessage",

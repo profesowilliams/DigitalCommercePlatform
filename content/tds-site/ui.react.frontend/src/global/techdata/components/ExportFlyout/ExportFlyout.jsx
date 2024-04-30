@@ -6,11 +6,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Divider from '@mui/material/Divider';
-import {
-  requestFileBlobWithoutModal,
-  getDateValue,
-  createdFromDate,
-} from '../../../../utils/utils';
+import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 import { getUrlParams } from '../../../../utils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import {
@@ -21,7 +17,6 @@ import {
 import {
   endpoints,
   setSearchCriteriaDefaultDateRange,
-  filtersDateGroup,
 } from '../OrdersTrackingGrid/utils/orderTrackingUtils';
 
 const styleOverrideFormControlLabel = {
@@ -89,20 +84,13 @@ function ExportFlyout({
         urlSearchParams.set('SortDirection', sortValue.sort);
         urlSearchParams.set('SortBy', sortValue.colId);
       }
-      if (dateRange && !alternativeSearchFlag) {
-        urlSearchParams.set(
-          'createdFrom',
-          getDateValue(createdFromDate(dateRange))
-        );
-        urlSearchParams.set('createdTo', getDateValue(new Date()));
-      }
 
       setSearchCriteriaDefaultDateRange({
         searchCriteria: search,
         requestUrl: requestUrl,
         filtersRefs: filters,
-        defaultSearchDateRange: dateRange,
       });
+
       const { field, value } = search.current || {};
       if (field) {
         if (alternativeSearchFlag) {

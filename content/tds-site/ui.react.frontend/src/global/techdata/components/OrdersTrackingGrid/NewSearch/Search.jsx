@@ -1,5 +1,4 @@
 import React, {
-  useEffect,
   useState,
   useImperativeHandle,
   forwardRef,
@@ -19,6 +18,15 @@ import { getLocalStorageData, setLocalStorageData } from '../utils/gridUtils';
 import { ORDER_SEARCH_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import {
+  ANALYTICS_TYPES,
+  pushEvent,
+} from '../../../../../utils/dataLayerUtils';
+import {
+  getSearchAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../utils/analyticsUtils';
 
 const debounce = (func, timeout = 300) => {
   let timer;
@@ -98,7 +106,6 @@ const Search = (
 ) => {
   const [open, setOpen] = useState(false);
   const [focused, setFocused] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [value, setValue] = useState('');
   const [pill, setPill] = useState({
@@ -156,11 +163,6 @@ const Search = (
       newValue.length >= 2 &&
         fetchSuggestions(newValue).then((result) => {
           setSuggestions(result?.data?.content?.suggestions || []);
-          if (result?.data?.content?.suggestions?.length === 0) {
-            setIsError(true);
-          } else {
-            setIsError(false);
-          }
         });
     },
     [fetchSuggestions]
@@ -168,6 +170,7 @@ const Search = (
 
   const resetSearch = () => {
     setValue('');
+    setSuggestions([]);
   };
 
   const resetLocalStorage = () => {
@@ -190,7 +193,6 @@ const Search = (
     if (newValue === null) {
       setValue('');
       setSuggestions([]);
-      setIsError(false);
     } else if (!newValue.field) {
       if (suggestions.length > 0) {
         newKey = suggestions[0].field;
@@ -210,6 +212,15 @@ const Search = (
       field: newKey,
       value: value,
     });
+    pushEvent(ANALYTICS_TYPES.events.orderSearch, null, {
+      order: {
+        searchTerm: value,
+        searchType: newKey,
+      },
+    });
+    pushDataLayerGoogle(
+      getSearchAnalyticsGoogle(searchAnalyticsLabel, newKey, value)
+    );
     resetSearch();
   };
 
@@ -272,7 +283,7 @@ const Search = (
             value={value}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
-            placeholder={'Type your search term'}
+            placeholder={getDictionaryValueOrKey(gridConfig.searchPlaceholder)}
             inputProps={{
               ...params.inputProps,
               maxLength: 30,

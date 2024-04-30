@@ -51,66 +51,29 @@ export const setSearchCriteriaDefaultDateRange = ({
   searchCriteria,
   requestUrl,
   filtersRefs,
-  defaultSearchDateRange,
 }) => {
   const { field, value } = searchCriteria?.current || {};
   const dateFilters = Object.entries(filtersRefs?.current).filter(
     (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
   );
-  if (field) {
-    // requestUrl.searchParams.set(field, value);
-    const isSearchForTDSynnexId = ['Id', 'InvoiceId', 'DeliveryNote'].includes(
-      field
-    );
-    const isSearchForPOId = field === 'CustomerPO';
-    const isSearchForSerialId = field === 'SerialNo';
-    const noFilterApplied =
-      !filtersRefs?.current.type && !filtersRefs?.current.status;
-    const dateRange = noFilterApplied ? 30 : 90;
-
-    if (isSearchForTDSynnexId) {
-      if (value.length === 10) {
-        requestUrl.searchParams.delete('createdFrom');
-        requestUrl.searchParams.delete('createdTo');
-      } else if (value.length < 10) {
-        addDefaultDateRangeToUrl(
-          requestUrl,
-          setDefaultSearchDateRange(dateRange)
-        );
-      }
-    } else if (isSearchForPOId) {
-      if (value.length > 4) {
-        requestUrl.searchParams.delete('createdFrom');
-        requestUrl.searchParams.delete('createdTo');
-      } else if (value.length < 5) {
-        addDefaultDateRangeToUrl(
-          requestUrl,
-          setDefaultSearchDateRange(dateRange)
-        );
-      }
-    } else if (isSearchForSerialId) {
-      addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
-    }
-  } else {
-    if (filtersRefs?.current.type || filtersRefs?.current.status) {
-      addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
-    } else {
-      addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
-    }
-  }
-
   if (dateFilters?.length > 0) {
     requestUrl.searchParams.delete('createdFrom');
     requestUrl.searchParams.delete('createdTo');
     dateFilters?.forEach((filter) =>
       requestUrl.searchParams.set(filter[0], filter[1])
     );
+  } else if (field) {
+    requestUrl.searchParams.delete('createdFrom');
+    requestUrl.searchParams.delete('createdTo');
+  } else if (filtersRefs?.current.type || filtersRefs?.current.status) {
+    addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
+  } else {
+    addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(30));
   }
 };
 
 export const fetchOrdersCount = async (
   url,
-  defaultSearchDateRange,
   filtersRefs,
   reportValue = null,
   searchCriteria,
@@ -126,7 +89,6 @@ export const fetchOrdersCount = async (
     searchCriteria,
     requestUrl,
     filtersRefs,
-    defaultSearchDateRange,
   });
 
   if (searchCriteria.current?.field) {
@@ -212,7 +174,6 @@ export async function fetchData(config) {
     firstAPICall,
     isOnSearchAction,
     previousFilter,
-    defaultSearchDateRange,
     filtersRefs,
     alternativeSearchFlagRef,
   } = config;
@@ -225,7 +186,6 @@ export async function fetchData(config) {
     searchCriteria,
     requestUrl,
     filtersRefs,
-    defaultSearchDateRange,
   });
 
   Object.keys(filtersRefs.current).map((filter) => {
