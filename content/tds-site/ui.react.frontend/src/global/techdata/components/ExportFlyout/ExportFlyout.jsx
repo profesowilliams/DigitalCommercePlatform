@@ -89,10 +89,10 @@ function ExportFlyout({
         urlSearchParams.set('SortDirection', sortValue.sort);
         urlSearchParams.set('SortBy', sortValue.colId);
       }
-      if (defaultDateRange && !alternativeSearchFlag) {
+      if (dateRange && !alternativeSearchFlag) {
         urlSearchParams.set(
           'createdFrom',
-          getDateValue(createdFromDate(defaultDateRange))
+          getDateValue(createdFromDate(dateRange))
         );
         urlSearchParams.set('createdTo', getDateValue(new Date()));
       }
