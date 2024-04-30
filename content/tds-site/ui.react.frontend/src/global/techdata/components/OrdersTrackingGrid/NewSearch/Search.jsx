@@ -253,7 +253,7 @@ const Search = (
         PaperComponent={CustomPaper}
         freeSolo
         options={suggestions}
-        getOptionLabel={(option) => option.text || suggestions[0].text || ''}
+        getOptionLabel={(option) => option?.text || (suggestions.length > 0 && suggestions[0].text) || ''}
         renderOption={getOptionLabel}
         filterOptions={(x) => x}
         open={open}
