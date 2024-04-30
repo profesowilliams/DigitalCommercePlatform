@@ -19,6 +19,7 @@ function DropdownOrderDetails({
   newItem,
   rowsToGrayOutTDNameRef,
   onQueryChanged,
+  totalCounter
 }) {
   const [apiResponse, isLoading, error] = useGet(
     `${aemConfig.uiCommerceServiceDomain}/v3/order/${data?.id}/lines`,
@@ -26,13 +27,13 @@ function DropdownOrderDetails({
   );
   const gridRef = useRef();
   const [activeTab, setActiveTab] = useState(0);
-
   const infoBoxEnable =
     apiResponse?.content?.sapOrderMigration?.referenceType?.length > 0;
   const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
   const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;
   const noShippedItems = shippedItemsLeft === 0;
   const noNotShippedItems = notShippedItemsLeft === 0;
+  const partiallyShipped = !noShippedItems && !noNotShippedItems;
   const PONo = data.customerPO;
   const orderNo = data.id;
   const shipCompleted = data.shipComplete;
@@ -57,6 +58,7 @@ function DropdownOrderDetails({
           openFilePdf={openFilePdf}
           reseller={data?.customerPO}
           id={data?.id}
+          totalCounter={totalCounter}
         />
       ) : (
         <LoaderIcon className="loadingIcon-rotate" />
@@ -88,6 +90,7 @@ function DropdownOrderDetails({
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
           newItem={newItem}
           onQueryChanged={onQueryChanged}
+          totalCounter={totalCounter}
         />
       ) : (
         <LoaderIcon className="loadingIcon-rotate" />
@@ -102,10 +105,18 @@ function DropdownOrderDetails({
   };
 
   useEffect(() => {
-    if (shippedItemsLeft === 0) {
-      setActiveTab(1);
+    if (totalCounter === 1) {
+      if (!noShippedItems || partiallyShipped) {
+        setActiveTab(0);
+      } else if (!noNotShippedItems) {
+        setActiveTab(1);
+      }
     } else {
-      setActiveTab(0);
+      if (shippedItemsLeft === 0) {
+        setActiveTab(1);
+      } else {
+        setActiveTab(0);
+      }
     }
   }, [shippedItemsLeft]);
 

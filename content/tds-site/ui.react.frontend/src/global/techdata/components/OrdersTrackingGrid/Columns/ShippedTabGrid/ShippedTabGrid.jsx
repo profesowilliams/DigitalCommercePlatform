@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Grid from '../../../Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from './buildColumnDefinitions';
@@ -11,7 +11,14 @@ import InvoiceColumn from './Columns/InvoiceColumn';
 import DropdownColumn from './Columns/DropdownColumn';
 import ShippedTabGridRenderers from './Columns/ShippedTabGridRenderers';
 
-function ShippedTabGrid({ data, gridProps, openFilePdf, reseller, id }) {
+function ShippedTabGrid({
+  data,
+  gridProps,
+  openFilePdf,
+  reseller,
+  id,
+  totalCounter,
+}) {
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -85,6 +92,13 @@ function ShippedTabGrid({ data, gridProps, openFilePdf, reseller, id }) {
       width: gridColumnWidths.track,
     },
   ];
+
+  useEffect(() => {
+    if (totalCounter === 1) {
+      gridRef?.current?.api.expandAll();
+    }
+  }, []);
+
   const myColumnDefs = useMemo(
     () => buildColumnDefinitions(columnDefinitionsOverride),
     []

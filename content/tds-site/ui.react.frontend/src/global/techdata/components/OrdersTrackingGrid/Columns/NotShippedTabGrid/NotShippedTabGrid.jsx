@@ -28,6 +28,7 @@ function NotShippedTabGrid({
   rowsToGrayOutTDNameRef,
   newItem,
   onQueryChanged,
+  totalCounter,
 }) {
   const config = {
     ...gridProps,
@@ -183,6 +184,9 @@ function NotShippedTabGrid({
         id: orderNo,
       },
     });
+    if(totalCounter === 1){
+      gridRef?.current?.api.expandAll();
+    }
   }, []);
 
   useEffect(() => {
