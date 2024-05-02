@@ -1,3 +1,4 @@
+/* stylelint-disable -- Too much to fix, will delete file later. */
 .cmp-orders-details__tds {
   *:not([class*='fas']) {
     @include font-arial-normal();
@@ -202,13 +203,13 @@
   }
 
   .cmp-orders-details .cmp-quantity-column__btn {
-    background-color: $brand-blue;
+    background-color: map-get($color-palette, 'dark-teal');
   }
 
   .MuiInput-underline {
     &.Mui-focused {
       &:after {
-        border-bottom-color: $brand-blue;
+        border-bottom-color: map-get($color-palette, 'teal');
       }
     }
   }

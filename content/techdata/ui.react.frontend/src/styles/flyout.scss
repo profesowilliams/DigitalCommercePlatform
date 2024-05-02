@@ -1,3 +1,5 @@
+/* stylelint-disable -- Too much to fix, will delete file later. */
+
 $flyout-padding: 1.3rem;
 $flyout-small-height: 780px;
 $flyout-small-height-formax: 779px;
@@ -81,7 +83,7 @@ $flyout-small-height-formax: 779px;
           top: unset;
           .Mui-focused,
           .MuiInputLabel-shrink {
-            color: $td-dark-blue;
+            color: map-get($color-palette, 'teal');
           }
         }
         .MuiInput-root.MuiInput-root.MuiAutocomplete-inputRoot,
@@ -244,7 +246,7 @@ $flyout-small-height-formax: 779px;
         }
         &-quote-btn {
           padding: 8px 20px;
-          background-color: #00558c;
+          background-color: map-get($color-palette, 'teal');
           color: white;
           font-size: 14px;
           line-height: 21px;

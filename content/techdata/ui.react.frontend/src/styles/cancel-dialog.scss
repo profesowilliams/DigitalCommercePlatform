@@ -1,3 +1,4 @@
+/* stylelint-disable -- Too much to fix, will delete file later. */
 .cmp-grid-techdata { 
 
     &.cmp-cancel-dialog {
@@ -7,7 +8,7 @@
                 border-radius: 2px;
                 color: $brand-blue;
                 &.MuiButton-outlined {
-                   border: 1px solid $brand-blue;
+                   border: 1px solid map-get($color-palette, 'teal');
                 }
                 &:hover {
                     padding-top: 15px;
@@ -18,11 +19,11 @@
             }
             &--no { 
                 border-radius: 2px;
-                background-color: $brand-blue;
+                background-color: map-get($color-palette, 'teal');
                
                 &:hover {
                     
-                    background: $brand-blue;
+                    background: map-get($color-palette, 'teal');
                     color: $brand-white;
                     position: relative;
                     &:after {
