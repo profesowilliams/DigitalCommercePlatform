@@ -10,7 +10,7 @@ const SOURCE_ROOT = `${__dirname}/src/main/webpack`;
 
 module.exports = {
   resolve: {
-    extensions: ['.js', '.ts'],
+    extensions: ['.js', '.ts', '.tsx'],
     plugins: [
       new TSConfigPathsPlugin({
         configFile: './tsconfig.json',
@@ -24,7 +24,7 @@ module.exports = {
     us: `${SOURCE_ROOT}/international/us/main.ts`,
     global: `${SOURCE_ROOT}/global/main.js`,
     site: `${SOURCE_ROOT}/site/main.ts`,
-    webcomponents: `${SOURCE_ROOT}/webcomponents/main.ts`,
+    webcomponents: `${SOURCE_ROOT}/webcomponents/index.ts`,
   },
   output: {
     filename: (chunkData) => `clientlib-site-${chunkData.chunk.name}/[name].js`, // return chunkData.chunk.name=== 'dependencies' ? 'clientlib-dependencies/[name].js' : 'clientlib-site/[name].js';
@@ -34,7 +34,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
@@ -79,7 +79,14 @@ module.exports = {
       },
       {
         test: /\.(svg|eot|woff|woff2|ttf)$/,
-        use: ['file-loader'],
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              hashType: 'md5',
+            },
+          },
+        ]
       },
     ],
   },

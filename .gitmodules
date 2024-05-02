@@ -1,0 +1,3 @@
+[submodule "content/tds-core/ui.frontend/src/main/webpack/webcomponents"]
+	path = content/tds-core/ui.frontend/src/main/webpack/webcomponents
+	url = ../ReactComponents
