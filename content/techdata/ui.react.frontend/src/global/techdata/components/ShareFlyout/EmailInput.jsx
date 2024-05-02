@@ -27,9 +27,6 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
 
   useEffect(() =>{
     if (selectedEmails?.length) {
-      if (enableShareButton) {
-        enableShareButton(true);
-      }
       if (id === 'to-email') {
         updateRequestObject({
           'ToEmail': selectedEmails
@@ -40,9 +37,6 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
         });
       }
     } else {
-      if (enableShareButton) {
-        enableShareButton(false);
-      }
       if (id === 'to-email') {
         updateRequestObject({
           'ToEmail': selectedEmails

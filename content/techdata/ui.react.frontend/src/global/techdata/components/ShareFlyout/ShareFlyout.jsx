@@ -115,6 +115,14 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
     }
   }, [shareFlyoutConfig]);
 
+  useEffect(() => {
+    if (toEmailsArr?.length > 0) {
+      setEnableShare(true);
+    } else {
+      setEnableShare(false);
+    }
+  }, [toEmailsArr]);
+
   const closeAlert = () => {
     setErrorFlags({
       incorrect: false,
