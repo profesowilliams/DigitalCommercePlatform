@@ -51,8 +51,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <componentGroupName>TDS Core</componentGroupName>
-        <npmVersion>10.2.3</npmVersion>
-        <nodeVersion>v20.10.0</nodeVersion>
+        <npmVersion>9.5.1</npmVersion>
+        <nodeVersion>v18.16.0</nodeVersion>
         <build.environment>:prod-no-lint</build.environment>
     </properties>
 
