@@ -6702,6 +6702,7 @@ app.get("/ui-commerce/v2/Product/Replacement", (req, res) => {
           price: {
             listPrice: 26869.15,
             bestPrice: 16826.88,
+            bestPriceFormatted: 156644.89,
             volumePricing: [
               {
                 price: 16826.88,

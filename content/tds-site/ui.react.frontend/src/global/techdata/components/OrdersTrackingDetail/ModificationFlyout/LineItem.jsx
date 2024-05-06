@@ -33,7 +33,7 @@ const LineItem = ({ item, index, onChange, labels }) => {
       orderQuantity: newValue,
       origQuantity: item.orderQuantity,
     });
-    if (newValue >= item.orderQuantity) {
+    if (newValue > 0) {
       setDoesReasonDropdownHaveEmptyItems(false);
     }
   };

@@ -27,6 +27,7 @@ const RejectedReasonDropdown = ({
           value={rejectedReason}
           onChange={(e) => handleChangeReason(e.target.value)}
           className="decreased-reason-select"
+          variant="standard"
         >
           <MenuItem value={'Z1'}>
             {getDictionaryValueOrKey(rejectionPrice)}
