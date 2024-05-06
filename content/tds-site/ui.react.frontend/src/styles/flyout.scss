@@ -363,6 +363,7 @@ $flyout-small-height-formax: 779px;
     &:disabled {
       background-color: $td-neutral-gray-2;
       color: $brand-text-lightgray;
+      cursor: default;
     }
   }
 
