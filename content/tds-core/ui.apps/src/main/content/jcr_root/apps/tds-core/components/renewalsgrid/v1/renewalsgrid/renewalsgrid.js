@@ -8,7 +8,6 @@ use(['../../../common/utils.js'], function(utils) {
     let noResultsValues = {};
     let copyFlyout = {};
     let shareFlyout = {};
-    let revisionFlyout = {};
     let requestQuote = {};
 
     if (properties && properties["detailUrl"]) {
@@ -541,9 +540,9 @@ use(['../../../common/utils.js'], function(utils) {
         jsonObject["shareFlyout"] = shareFlyout;
     }
 
-    if (requestRevision != null) {
+/*     if (requestRevision != null) {
         jsonObject["revisionFlyout"] = revisionFlyout;
-    }
+    } */
 
     return {
         configJson: JSON.stringify(jsonObject)
