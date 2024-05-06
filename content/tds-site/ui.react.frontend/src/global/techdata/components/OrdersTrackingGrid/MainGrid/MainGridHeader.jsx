@@ -202,6 +202,7 @@ function MainGridHeader({
             clearReports={clearReports}
             gridConfig={gridConfig}
             filtersRefs={filtersRefs}
+            searchAnalyticsLabel={analyticsCategories.search}
           />,
         ]
       : [

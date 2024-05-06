@@ -199,7 +199,6 @@ const Search = (
     let newKey = '';
     if (newValue === null) {
       setValue('');
-      setSuggestions([]);
     } else if (!newValue.field) {
       if (suggestions.length > 0) {
         newKey = suggestions[0].field;
@@ -253,7 +252,7 @@ const Search = (
         PaperComponent={CustomPaper}
         freeSolo
         options={suggestions}
-        getOptionLabel={(option) => option?.text || (suggestions.length > 0 && suggestions[0].text) || ''}
+        getOptionLabel={(option) => option?.text || suggestions[0]?.text || ''}
         renderOption={getOptionLabel}
         filterOptions={(x) => x}
         open={open}
