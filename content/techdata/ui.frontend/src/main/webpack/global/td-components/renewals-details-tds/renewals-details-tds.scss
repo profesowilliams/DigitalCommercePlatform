@@ -104,7 +104,7 @@
     .cmp-renewal-preview__download {
       &--icon {
         display: inline-block;
-        margin-right: 14px;
+        margin-right: 0.5rem;
         vertical-align: middle;
         color: map-get($color-palette, 'teal');
         fill: map-get($color-palette, 'teal');

@@ -317,12 +317,12 @@ $flyout-small-height-formax: 779px;
         display: flex;
         align-items: center;
         &.cmp-flyout__footer-button--enabled {
-          background-color: $brand-button-blue;
+          background-color: map-get($color-palette, 'teal');
         }
       }
     }
     .MuiFilledInput-root:after {
-      border-color: #006fba;
+      border-color: map-get($color-palette, 'teal');
     }
     .MuiAutocomplete-root {
       margin-bottom: 0;
@@ -557,7 +557,7 @@ $flyout-small-height-formax: 779px;
         display: flex;
         align-items: center;
         &.cmp-flyout__footer-button--enabled {
-          background-color: $td-dark-blue;
+          background-color: map-get($color-palette, 'teal');
 
           &:hover {
             background-color: $brand-green;

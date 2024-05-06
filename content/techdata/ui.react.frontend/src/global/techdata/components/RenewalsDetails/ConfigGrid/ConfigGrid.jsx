@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef  } from "react";
 import AgreementInfo from "./AgreementInfo";
 import EndUserInfo from "./EndUser/EndUserInfo";
 import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
-import { CopyIcon, DownloadIcon, ShareIcon, InfoIcon } from "../../../../../fluentIcons/FluentIcons";
+import { CopyIcon, DownloadIcon, ShareIcon, InfoIcon, RevisionIcon, ChevronDownIcon } from "../../../../../fluentIcons/FluentIcons";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import CopyFlyout from "../../CopyFlyout/CopyFlyout";
 import ShareFlyout from "../../ShareFlyout/ShareFlyout";
@@ -97,6 +97,13 @@ function GridHeader({ gridProps, data }) {
     effects.setCustomState({ key: 'shareFlyout', value: { data: flyoutData, show: true } });
   };
 
+  const openRequestFlyout = () => {
+    const flyoutData = {
+      ...data,
+      agreementNumber: data?.items[0]?.contract?.id};
+    effects.setCustomState({ key: 'shareFlyout', value: { data: flyoutData, show: true } });
+  };
+
   function onCloseToaster() {
     effects.closeAndCleanToaster();    
   }
@@ -105,47 +112,98 @@ function GridHeader({ gridProps, data }) {
     <span className="separator">{gridProps.pdf || "Export PDF"}</span>
   </button>
 
+  const [showDropdown, setShowDropdown] = useState(false);
+  const timeoutRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    clearTimeout(timeoutRef.current); // Clears any pending timeout to hide the dropdown
+    setShowDropdown(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setShowDropdown(false);
+    }, 500); // Hides the dropdown after 2 seconds
+  };
+  
+  // Prepare buttons and handle which ones to show directly and which to hide in dropdown
+  const buttons = [];
+  if (data?.canCopy) {
+    buttons.push(
+      <button onClick={openCopyFlyOut} key="copy">
+        <CopyIcon className="cmp-renewal-preview__download--icon" />
+        <span className={(gridProps?.productLines?.showDownloadPDFButton || gridProps?.productLines?.showDownloadXLSButton) ? 'separator' : undefined}>
+          Copy
+        </span>
+      </button>
+    );
+  }
+  if (gridProps.enableShareOption && data?.canShareQuote) {
+    buttons.push(
+      <button onClick={openShareFlyOut} className='share-button' key="share">
+        <ShareIcon className="cmp-renewal-preview__download--icon" />
+        <span className={(gridProps?.productLines?.showDownloadPDFButton || gridProps?.productLines?.showDownloadXLSButton) ? 'separator' : undefined}>
+          Share
+        </span>
+      </button>
+    );
+  }
+  if (data?.canRequestRevision) {
+    buttons.push(
+      <button onClick={openRequestFlyout} key="revision">
+        <RevisionIcon className="cmp-renewal-preview__download--icon" />
+        <span className={(gridProps?.productLines?.showDownloadPDFButton || gridProps?.productLines?.showDownloadXLSButton) ? 'separator' : undefined}>
+          Request revision
+        </span>
+      </button>
+    );
+  }
+  if (gridProps?.productLines?.showDownloadXLSButton) {
+    buttons.push(
+      <button onClick={downloadXLS} key="downloadXLS">
+        <DownloadIcon className="cmp-renewal-preview__download--icon" />
+        <span className={gridProps?.productLines?.showDownloadPDFButton ? 'separator' : undefined}>
+          {getDictionaryValue("button.common.label.downloadXLS", "Download XLS")}
+        </span>
+      </button>
+    );
+  }
+  if (gridProps?.productLines?.showDownloadPDFButton) {
+    buttons.push(
+      <button onClick={downloadPDF} key="downloadPDF">
+        <DownloadIcon className="cmp-renewal-preview__download--icon" />
+        <span>
+          {getDictionaryValue("button.common.label.downloadPDF", "Download PDF")}
+        </span>
+      </button>
+    );
+  }
+
+  // Determine which buttons to show in the dropdown
+  const directlyShownButtons = buttons.slice(0, 3);
+  const dropdownButtons = buttons.slice(3);
+
   return (
-    <div className={isOpportunity ? "cmp-product-lines-grid__header opportunity-quote-disabled" : "cmp-product-lines-grid__header" }>
+    <div className={isOpportunity ? "cmp-product-lines-grid__header opportunity-quote-disabled" : "cmp-product-lines-grid__header"}>
       <span className="cmp-product-lines-grid__header__title">
         {gridProps.lineItemDetailsLabel}
       </span>
       <div className="cmp-renewal-preview__download">
-        {
-            gridProps.enableShareOption && data?.canShareQuote && (
-            <button onClick={openShareFlyOut} className='share-button'>
-              <span className={(gridProps?.productLines?.showDownloadPDFButton || gridProps?.productLines?.showDownloadXLSButton) && 'separator'}>
-                <ShareIcon className="cmp-renewal-preview__download--icon"/>Share
-              </span>
+        {directlyShownButtons}
+        {dropdownButtons.length > 0 && (
+          <>
+            <button className="more-button" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+              <span>More <ChevronDownIcon className="cmp-renewal-preview__download--icon" /></span>
             </button>
-          )}
-        {
-          data?.canCopy && (
-          <button onClick={openCopyFlyOut}>
-            <span className={(gridProps?.productLines?.showDownloadPDFButton || gridProps?.productLines?.showDownloadXLSButton) && 'separator'}>
-              <CopyIcon className="cmp-renewal-preview__download--icon"/>Copy
-            </span>
-          </button>
-        )}
-        {
-          gridProps?.productLines?.showDownloadXLSButton && (
-          <button onClick={downloadXLS}>
-            <span className={gridProps?.productLines?.showDownloadPDFButton && 'separator'}>
-              <DownloadIcon className="cmp-renewal-preview__download--icon"/>
-              {getDictionaryValue("button.common.label.downloadXLS", "Download XLS")}
-            </span>
-          </button>
-        )}
-        {
-          gridProps?.productLines?.showDownloadPDFButton && (
-            <button onClick={downloadPDF}>
-              <span>
-                <DownloadIcon className="cmp-renewal-preview__download--icon"/>
-                {getDictionaryValue("button.common.label.downloadPDF", "Download PDF")}
-              </span>
-          </button>
+            {showDropdown && (
+              <div className="dropdown-content" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                {dropdownButtons}
+              </div>
+            )}
+          </>
         )}
       </div>
+
       <Toaster
         onClose={onCloseToaster}
         store={useRenewalGridState} 

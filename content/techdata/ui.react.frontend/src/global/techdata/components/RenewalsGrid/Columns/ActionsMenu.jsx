@@ -6,13 +6,14 @@ import {
     ShareIcon,
     DownloadIcon,
     EyeLightIcon,
+    RevisionIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { redirectToRenewalDetail } from '../utils/renewalUtils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS, pushDataLayer } from '../../Analytics/analytics';
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from '../../../../../utils/utils';
 
-function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy, canShare, detailUrl, canRequestQuote }) {
+function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy, canShare, canRequestRevision, detailUrl, canRequestQuote }) {
     const dialogRef = useRef();
     const { productGrid } = useRenewalGridState(st => st.aemConfig);
     const { setCustomState } = useRenewalGridState(st => st.effects);
@@ -29,7 +30,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
     };
     
     useOutsideClick(dialogRef, onClose, 'mousedown', [onClose]);
-    const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, enableShareOption } = endpoints;
+    const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, enableShareOption, enableRequestRevisionOption } = endpoints;
 
     useEffect(() => {
         let timer;
@@ -166,6 +167,17 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
                         <span className="cmp-renewals-actions-menu__item-label">Share</span>
                     </div>
                 ) : null}
+                {canRequestRevision ? (
+                    <div
+                        className="cmp-renewals-actions-menu__item"
+                        onClick={triggerShareFlyout}
+                    >
+                        <span className="cmp-renewals-actions-menu__item-icon">
+                            <RevisionIcon width="16" height="16" />
+                        </span>
+                        <span className="cmp-renewals-actions-menu__item-label">Request revision</span>
+                    </div>
+                ) : null}                
                 {menuOptions?.showDownloadPDFButton ? (
                     <div
                         className="cmp-renewals-actions-menu__item"

@@ -8,6 +8,7 @@ use(['../../../common/utils.js'], function(utils) {
     let noResultsValues = {};
     let copyFlyout = {};
     let shareFlyout = {};
+    let revisionFlyout = {};
     let requestQuote = {};
 
     if (properties && properties["detailUrl"]) {
@@ -538,6 +539,10 @@ use(['../../../common/utils.js'], function(utils) {
 
     if (shareFlyout != null) {
         jsonObject["shareFlyout"] = shareFlyout;
+    }
+
+    if (requestRevision != null) {
+        jsonObject["revisionFlyout"] = revisionFlyout;
     }
 
     return {
