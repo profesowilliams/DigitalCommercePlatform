@@ -22,7 +22,8 @@ import { copyToClipboardAction, getContextMenuItems, setLocalStorageData } from 
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import { getDictionaryValue } from "../../../../../utils/utils";
 
-function GridSubTotal({ subtotal, data, gridProps }) {
+function GridSubTotal({ subtotal, data, gridProps, compProps }) {
+  const isRequestQuoteFlag = data?.canRequestQuote && compProps?.enableRequestQuote;
   return (
     <div className="cmp-renewal-preview__subtotal">
       <div className="cmp-renewal-preview__subtotal--note"
@@ -38,10 +39,10 @@ function GridSubTotal({ subtotal, data, gridProps }) {
           <span className="cmp-renewal-preview__subtotal--currency-symbol">
             {gridProps?.quoteSubtotalCurrencySymbol || ''}
           </span>
-          <span>{thousandSeparator(subtotal || data?.price)}</span>
+          <span>{isRequestQuoteFlag ? '-' : thousandSeparator(subtotal || data?.price)}</span>
           {gridProps?.quoteSubtotalCurrency?.length > 0 && (
             <span className="cmp-renewal-preview__subtotal--currency-code">
-              {gridProps.quoteSubtotalCurrency?.replace(
+              {isRequestQuoteFlag ? '' : gridProps.quoteSubtotalCurrency?.replace(
                 '{currency-code}',
                 data?.currency || ''
               )}
@@ -53,8 +54,9 @@ function GridSubTotal({ subtotal, data, gridProps }) {
   );
 }
 
-function Price({ value }) {
-  return <div className="price">{thousandSeparator(value)}</div>;
+function Price({ value }, data, compProps) {
+  const isRequestQuoteFlag = data?.canRequestQuote && compProps?.enableRequestQuote;
+  return <div className="price">{isRequestQuoteFlag ? '-' : thousandSeparator(value)}</div>;
 }
 
 function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compProps }, ref) {
@@ -77,6 +79,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     serverSide: false,
     paginationStyle: "none",
   };
+  const isRequestQuoteFlag = data?.canRequestQuote && compProps?.enableRequestQuote;
   const effects = useRenewalsDetailsStore( state => state.effects);
   const { closeAndCleanToaster } = effects;
   const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
@@ -187,6 +190,15 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         contractGroup[i].dueDateFlag = dueDateFlag === contractGroup.length;
         contractGroup[i].agreementDurationFlag = agreementDurationFlag === contractGroup.length;
         contractGroup[i].usagePeriodFlag = usagePeriodFlag === contractGroup.length;
+        if (isRequestQuoteFlag) {
+          contractGroup[i].totalPrice = '-';
+          contractGroup[i].unitCost = '-';
+          contractGroup[i].unitListPrice = '-';
+          contractGroup[i].unitPrice = '-';
+          if (contractGroup[i]?.discounts) {
+            contractGroup[i].discounts[0].value = '-';
+          }
+        }
       });
       const activeGridData = gridData.filter((data) => {
           return data.contract.id === index;
@@ -210,8 +222,21 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
           id: `Agreement No:  ${index}`
         }
       );
+    } else {
+      contractGroup.forEach((val, i) => {
+        if (isRequestQuoteFlag) {
+          contractGroup[i].totalPrice = '-';
+          contractGroup[i].unitCost = '-';
+          contractGroup[i].unitListPrice = '-';
+          contractGroup[i].unitPrice = '-';
+          if (contractGroup[i]?.discounts) {
+            contractGroup[i].discounts[0].value = '-';
+          }
+        }
+      });
     }
     resultArray.push(...contractGroup);
+    console.log(resultArray, contractGroup, 'result')
   });
   const gridColumnWidths = Object.freeze({
     line: "29px",
@@ -283,7 +308,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         data?.currency || ""
       ),
       cellRenderer: (props) => {
-        return !(props?.data?.id?.includes("Agreement")) ? Price(props) : ""
+        return !(props?.data?.id?.includes("Agreement")) ? Price(props, data, compProps) : ""
       },
       width: gridColumnWidths.listPrice,
     },
@@ -291,7 +316,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       field:'value',
       headerName: gridProps?.percentOffListPrice,
       valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
-      cellRenderer: (props) => !(props?.data?.id?.includes("Agreement")) ? Price(props) : "",
+      cellRenderer: (props) => !(props?.data?.id?.includes("Agreement")) ? Price(props, data, compProps) : "",
       width: gridColumnWidths.percentageOfflist
     },
     {
@@ -323,7 +348,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         data?.currency || ""
       ),
       cellRenderer: (props) =>
-        !(props?.data?.id?.includes("Agreement")) ? Price(props) : ""
+        !(props?.data?.id?.includes("Agreement")) ? Price(props, data, compProps) : ""
       ,
       valueGetter:'data.quantity * data.unitPrice',
       // Use sum aggFunc to also update subtotal value.
@@ -402,7 +427,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
           columnDefs={columnDefs}
 
         /> */}
-        <GridSubTotal data={data} gridProps={gridProps} subtotal={subtotal} />
+        <GridSubTotal data={data} gridProps={gridProps} subtotal={subtotal} compProps={compProps} />
         <div className="place-cmp-order-dialog-container">
         <p className="cmp-place-order-actions">
             <Button

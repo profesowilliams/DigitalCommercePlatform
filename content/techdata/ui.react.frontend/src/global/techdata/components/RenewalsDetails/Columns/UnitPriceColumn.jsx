@@ -88,7 +88,7 @@ function UnitPriceColumn(props) {
 
 
   return !isEditing ? (
-    <div className="cmp-unitprice">{thousandSeparator(value)}</div>
+    <div className="cmp-unitprice">{value === '-' ? value : thousandSeparator(value)}</div>
   ) : (
     <div className="cmp-unitprice-edit">
       <TextField
