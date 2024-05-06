@@ -4,6 +4,7 @@ import React, {
   forwardRef,
   useMemo,
   useCallback,
+  useEffect,
 } from 'react';
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -107,7 +108,7 @@ const Search = (
     clearReports,
     gridConfig,
     filtersRefs,
-    searchAnalyticsLabel
+    searchAnalyticsLabel,
   },
   ref
 ) => {
@@ -119,6 +120,7 @@ const Search = (
     field: ref.current.field || getInitialKey,
     value: ref.current.value || getInitialValue,
   });
+  const loading = open && suggestions.length === 0;
 
   const freeTextSearchTranslations = useOrderTrackingStore(
     (state) => state.freeTextSearchTranslations
@@ -170,6 +172,11 @@ const Search = (
       newValue.length >= 2 &&
         fetchSuggestions(newValue).then((result) => {
           setSuggestions(result?.data?.content?.suggestions || []);
+          if (result?.data?.content?.suggestions?.length === 0) {
+            setOpen(false);
+          } else {
+            setOpen(true);
+          }
         });
     },
     [fetchSuggestions]
@@ -256,17 +263,22 @@ const Search = (
         renderOption={getOptionLabel}
         filterOptions={(x) => x}
         open={open}
+        loading={loading}
         blurOnSelect={true}
         inputValue={value}
+        openOnFocus={true}
         onOpen={() => {
           setOpen(true);
         }}
-        onClose={() => {
-          setOpen(false);
+        onClose={(event, reason) => {
+          if (reason === 'createOption') {
+            triggerSearch({});
+          } else {
+            setOpen(false);
+          }
         }}
         onChange={(event, value) => {
           triggerSearch(value);
-          setFocused(false);
         }}
         disableClearable={true}
         sx={{
