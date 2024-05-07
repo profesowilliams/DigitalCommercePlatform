@@ -45,26 +45,22 @@ function PlaceOrderDialog({
   const { computeClassName } = useComputeBranding(store);
   const handleClose = (isSuccess = false) => onClose(isSuccess); 
 
-  const showEnuserCompanyName = (text) => {
-    if (!!text && text.includes("({enduser-companyname})")) {
-      const splitted = text
-        .split(/\({enduser-companyname}\)/gim)
-      splitted.splice(
-        1,
-        0,
-        <>
-          <span>
-            <b>{endUser?.name}</b>
-          </span>
-        </>
-      );
-      return splitted;
-    }
-    console.log(
-      "⚠ ({enduser-companyname}) placeholder missing on textfield dialog"
+const showEnuserCompanyName = (text) => {
+  if (!!text && text.includes("({enduser-companyname})")) {
+    const splitted = text.split(/\({enduser-companyname}\)/gim);
+    splitted.splice(
+      1,
+      0,
+      <span key="end-user-company-name">
+        <b>{endUser?.name}</b>
+      </span>
     );
-    return null;
-  };
+    return splitted;
+  }
+  console.log("⚠ ({enduser-companyname}) placeholder missing on textfield dialog");
+  return null;
+};
+
 
   const constructTermsCondLink = (text) => {   
     if (!text) return null;
