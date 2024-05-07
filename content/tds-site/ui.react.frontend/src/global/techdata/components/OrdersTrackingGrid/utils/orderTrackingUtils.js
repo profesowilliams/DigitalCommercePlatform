@@ -34,9 +34,6 @@ export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
     }
   }
 };
-const prepareFilterParams = (filter) => {
-  return filter.replace('&', '').split('=');
-};
 
 export const filtersDateGroup = [
   'createdFrom',
@@ -102,14 +99,14 @@ export const fetchOrdersCount = async (
   }
 
   if (filtersRefs.current.type?.length > 0) {
-    requestUrl.searchParams.set(
-      ...prepareFilterParams(filtersRefs.current.type)
-    );
+    filtersRefs.current.type.split('&').forEach((filter) => {
+      filter.length > 0 && requestUrl.searchParams.append(...filter.split('='));
+    });
   }
   if (filtersRefs.current.status?.length > 0) {
-    requestUrl.searchParams.set(
-      ...prepareFilterParams(filtersRefs.current.status)
-    );
+    filtersRefs.current.status.split('&').forEach((filter) => {
+      filter.length > 0 && requestUrl.searchParams.append(...filter.split('='));
+    });
   }
 
   try {
