@@ -4872,6 +4872,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           "canCopy": true,
           "canOrder":false,
           "canShareQuote": true,
+          "canRequestQuote": false,
           "customerPO": {
               "text": "test po",
               "isValid": true,

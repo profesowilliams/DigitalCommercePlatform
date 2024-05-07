@@ -91,7 +91,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   // Get gridApi, save also as ref to be used on imperative handle
   const [gridApi, setGridApi] = useState(null);
   const gridApiRef = useRef(null);
-  const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canOrder, compProps?.orderingFromDashboard?.showOrderingIcon);
+  const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canOrder, compProps?.orderingFromDashboard?.showOrderingIcon) && !isRequestQuoteFlag;
 
   function onAfterGridInit({ api }) {
     setGridApi(api);
