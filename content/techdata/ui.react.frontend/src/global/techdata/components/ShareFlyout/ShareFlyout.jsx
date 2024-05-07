@@ -133,26 +133,30 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
     setAccessErrObj([]);
   };
 
-  const handleTryAgainBtn = (e) => {
+  const handleTryAgainBtn = (e, skipValidation) => {
     if(event) {
       e.preventDefault();
     }
     closeAlert();
     if (toEmailsArr.length > 0) {
-      handleShareItClick();
+      handleShareItClick(null, skipValidation);
       setAccessErrObj([]);
     }
   };
 
-  const handleShareItClick = async (event) => {
+  const handleShareItClick = async (event, skipValidation) => {
     if(event) {
       event.preventDefault();
     }
     setIsLoading(true);
     setEnableShare(false);
     let toaster = null;
+    const dataObj = requestObj;
+    if (skipValidation) {
+      dataObj.SkipQuotAccessValidation = true;
+    }
     const finalRequestObj = {
-      Data: requestObj
+      Data: dataObj
     }
     const response = await shareQuote(
       finalRequestObj,
@@ -492,7 +496,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
                         <a className="cancel-btn" href={`#`}
                         onClick={closeAlert}>{shareFlyoutContent.recipientNotFoundCancelLabel}</a>
                         <a className="try-again-btn" href={`#`}
-                          onClick={handleTryAgainBtn}>{shareFlyoutContent.recipientNotFoundContinueLabel}</a>
+                          onClick={(e) => handleTryAgainBtn(e, true)}>{shareFlyoutContent.recipientNotFoundContinueLabel}</a>
                       </>
                     ) : null
                   }
