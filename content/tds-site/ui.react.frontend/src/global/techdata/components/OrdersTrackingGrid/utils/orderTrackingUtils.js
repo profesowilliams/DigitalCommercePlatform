@@ -48,6 +48,7 @@ export const setSearchCriteriaDefaultDateRange = ({
   searchCriteria,
   requestUrl,
   filtersRefs,
+  reportValue = null,
 }) => {
   const { field, value } = searchCriteria?.current || {};
   const dateFilters = Object.entries(filtersRefs?.current).filter(
@@ -67,6 +68,10 @@ export const setSearchCriteriaDefaultDateRange = ({
   } else {
     addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(30));
   }
+  if (reportValue) {
+    requestUrl.searchParams.delete('createdFrom');
+    requestUrl.searchParams.delete('createdTo');
+  }
 };
 
 export const fetchOrdersCount = async (
@@ -77,7 +82,6 @@ export const fetchOrdersCount = async (
   alternativeSearchFlagRef
 ) => {
   const requestUrl = new URL(url);
-
   if (reportValue) {
     requestUrl.searchParams.set('reportName', reportValue);
   }
@@ -86,6 +90,7 @@ export const fetchOrdersCount = async (
     searchCriteria,
     requestUrl,
     filtersRefs,
+    reportValue,
   });
 
   if (searchCriteria.current?.field) {
@@ -178,7 +183,6 @@ export async function fetchData(config) {
   const { url } = request;
   const requestUrl = new URL(url);
   const isFirstAPICall = firstAPICall.current === true;
-
   setSearchCriteriaDefaultDateRange({
     searchCriteria,
     requestUrl,

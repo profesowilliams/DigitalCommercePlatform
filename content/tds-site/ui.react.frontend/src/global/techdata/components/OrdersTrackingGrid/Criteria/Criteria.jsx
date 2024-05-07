@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 
-const Criteria = ({ config, searchCriteria }) => {
+const Criteria = ({ config, searchCriteria, reportValue }) => {
   const predefinedFiltersApplied = useOrderTrackingStore(
     (state) => state.filter.predefinedFiltersApplied
   );
@@ -21,7 +21,7 @@ const Criteria = ({ config, searchCriteria }) => {
 
   useEffect(() => {
     let label = config?.last30DaysCriteria;
-    if (hasDateRangeFilter || field) {
+    if (hasDateRangeFilter || field || reportValue) {
       label = '';
     } else if (hasOtherFilters) {
       label = config?.last90DaysCriteria;
@@ -29,8 +29,7 @@ const Criteria = ({ config, searchCriteria }) => {
       label = config?.last30DaysCriteria;
     }
     setSelectedLabel(label);
-  }, [field, hasOtherFilters, hasDateRangeFilter]);
-
+  }, [field, hasOtherFilters, hasDateRangeFilter, reportValue]);
   return (
     <div className="cmp-order-tracking-grid__criteria">
       {getDictionaryValueOrKey(selectedLabel)}

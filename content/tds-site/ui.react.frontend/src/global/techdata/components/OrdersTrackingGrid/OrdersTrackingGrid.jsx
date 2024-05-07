@@ -515,7 +515,11 @@ function OrdersTrackingGrid(props) {
   const authorizedContent = () => {
     return hasAccess ? (
       <div className="cmp-order-tracking-grid">
-        <Criteria config={gridConfig} searchCriteria={searchParameters} />
+        <Criteria
+          config={gridConfig}
+          searchCriteria={searchParameters}
+          reportValue={reportFilterValue.current.value}
+        />
         <MainGridHeader
           onQueryChanged={onQueryChanged}
           searchLabels={searchLabels}
