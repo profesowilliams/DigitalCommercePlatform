@@ -95,7 +95,10 @@ function OrderModificationFlyout({
   };
   const reduceLineForGTM = [];
   const reduceLine = itemsCopy.reduce((filtered, item) => {
-    if (item && item?.status === 'Rejected') {
+    if (
+      (item && item?.status === 'Rejected') ||
+      item?.orderQuantity < item?.origQuantity
+    ) {
       const newItem = {
         LineID: item.line,
         Qty: item.orderQuantity,
