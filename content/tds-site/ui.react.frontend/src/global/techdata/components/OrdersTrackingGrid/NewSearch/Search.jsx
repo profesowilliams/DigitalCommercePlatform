@@ -29,16 +29,7 @@ import {
   getSearchAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
-
-const debounce = (func, timeout = 300) => {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func(...args);
-    }, timeout);
-  };
-};
+import { debounce } from '../utils/utils';
 
 function CustomPaper({ children }) {
   return (
@@ -176,15 +167,16 @@ const Search = (
 
   const handleAutocompleteInput = useCallback(
     (newValue) => {
-      newValue.length >= minimalQueryLength &&
-        fetchSuggestions(newValue).then((result) => {
-          setSuggestions(result?.data?.content?.suggestions || []);
-          if (result?.data?.content?.suggestions?.length === 0) {
-            setOpen(false);
-          } else {
-            setOpen(true);
-          }
-        });
+      newValue.length >= minimalQueryLength
+        ? fetchSuggestions(newValue).then((result) => {
+            setSuggestions(result?.data?.content?.suggestions || []);
+            if (result?.data?.content?.suggestions?.length === 0) {
+              setOpen(false);
+            } else {
+              setOpen(true);
+            }
+          })
+        : setSuggestions([]);
     },
     [fetchSuggestions]
   );
@@ -248,15 +240,21 @@ const Search = (
     return debounce(handleAutocompleteInput);
   }, []);
 
-  const tooltipMessage = mainGridTranslations && (
+  const tooltipMessage = mainGridTranslations ? (
     <div>
-      <p>{mainGridTranslations.Search_Input_Tooltip}</p>
-      <ul style={{ listStyle: 'inside' }}>
+      <p style={{ color: '#fff' }}>
+        {mainGridTranslations.Search_Input_Tooltip}
+      </p>
+      <ul style={{ listStyle: 'inside', color: '#fff' }}>
         {Object.values(freeTextSearchTranslations).map((el) => (
-          <li>{el}</li>
+          <li key={el} style={{ color: '#fff' }}>
+            {el}
+          </li>
         ))}
       </ul>
     </div>
+  ) : (
+    ''
   );
 
   return (

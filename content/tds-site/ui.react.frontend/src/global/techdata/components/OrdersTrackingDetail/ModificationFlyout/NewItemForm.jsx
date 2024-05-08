@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { TextField, Button } from '@mui/material';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Autocomplete from '@mui/material/Autocomplete';
 import Paper from '@mui/material/Paper';
 import { usPost } from '../../../../../utils/api';
+import { debounce } from '../../OrdersTrackingGrid/utils/utils';
 
 function CustomPaper({ children }) {
   return (
@@ -50,17 +51,13 @@ const NewItemForm = ({
   const [focused, setFocused] = useState(false);
   const [isError, setIsError] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
-  const loading = open && suggestions.length === 0;
+  const [value, setValue] = useState('');
+  const minimalQueryLength = 3;
 
-  const findMatchingLabel = (product, inputValue) => {
-    let matchingKey = 'manufacturerPartNumber';
-    if (product.id.toLowerCase()?.includes(inputValue.toLowerCase())) {
-      matchingKey = 'id';
-    }
-    return product[matchingKey];
-  };
+  const loading =
+    open && value.length >= minimalQueryLength && suggestions.length === 0;
 
-  const setNewSuggestions = (response, inputValue) => {
+  const setNewSuggestions = (response) => {
     if (response) {
       if (response.products.length === 0) {
         setIsError(true);
@@ -70,17 +67,14 @@ const NewItemForm = ({
       }
       setSuggestions(
         response.products.map((product) => {
-          product.title =
-            findMatchingLabel(product, inputValue) +
-            ' - ' +
-            product.description.slice(0, 60);
+          product.title = product.displayValue.slice(0, 70);
           return product;
         })
       );
     }
   };
 
-  const fetchSuggestions = async (newValue) => {
+  const fetchSuggestions = useCallback(async (newValue) => {
     try {
       const result = await usPost(`${domain}/v2/Product/Search`, {
         query: newValue,
@@ -89,14 +83,22 @@ const NewItemForm = ({
     } catch (error) {
       console.error('Error:', error);
     }
-  };
+  }, []);
 
-  const handleAutocompleteInput = (newValue) => {
-    newValue.length >= 3 &&
-      fetchSuggestions(newValue).then((result) => {
-        setNewSuggestions(result?.data?.content || [], newValue);
-      });
-  };
+  const handleAutocompleteInput = useCallback(
+    (newValue) => {
+      newValue.length >= minimalQueryLength
+        ? fetchSuggestions(newValue).then((result) => {
+            setNewSuggestions(result?.data?.content || []);
+          })
+        : setSuggestions([]);
+    },
+    [fetchSuggestions]
+  );
+
+  const debouncedAutocomplete = useMemo(() => {
+    return debounce(handleAutocompleteInput);
+  }, []);
 
   const handleChange = (key, newValue) => {
     setValues((prevState) => ({ ...prevState, [key]: newValue }));
@@ -169,9 +171,11 @@ const NewItemForm = ({
             onKeyPress={(e) => {
               if (e.key === '*' || e.key === '^') e.preventDefault();
             }}
-            onChange={(event) =>
-              handleAutocompleteInput(event.target.value.replace(/[*^]/g, ''))
-            }
+            onChange={(event) => {
+              const newValue = event.target.value.replace('*', '');
+              debouncedAutocomplete(event.target.value.replace(/[*^]/g, ''));
+              setValue(newValue);
+            }}
           />
         )}
       />

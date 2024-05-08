@@ -8347,7 +8347,7 @@ app.post("/ui-commerce/v2/Product/Search", function (req, res) {
       products: [
         {
           id: "2476043",
-          description:
+          displayValue:
             '2476043 - Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
           manufacturer: "TARGUS",
           manufacturerPartNumber: "CN414EU",
@@ -8356,24 +8356,27 @@ app.post("/ui-commerce/v2/Product/Search", function (req, res) {
         },
         {
           id: "2476043",
-          description:
+          displayValue:
             '2476043 - Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
           manufacturer: "TARGUS",
           manufacturerPartNumber: "CN412345",
+          matchingValue: "24760431",
         },
         {
           id: "2476043",
-          description:
+          displayValue:
             '2476043 - Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
           manufacturer: "TARGUS",
           manufacturerPartNumber: "CN432211",
+          matchingValue: "247604312",
         },
         {
           id: "2476043",
-          description:
+          displayValue:
             '2476043 - Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
           manufacturer: "TARGUS",
           manufacturerPartNumber: "CN412377",
+          matchingValue: "247604312",
         },
       ],
     },
