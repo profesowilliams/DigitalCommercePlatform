@@ -128,13 +128,10 @@ const Search = (
   const translations = useOrderTrackingStore(
     (state) => state.freeTextSearchTranslations
   );
-  const freeTextSearchTranslations = translations?.find(
-    (el) => el.name === 'OrderTracking.FreetextSearchFields'
-  )?.translations;
+  const freeTextSearchTranslations =
+    translations?.['OrderTracking.FreetextSearchFields'];
 
-  const mainGridTranslations = translations?.find(
-    (el) => el.name === 'OrderTracking.MainGrid'
-  )?.translations;
+  const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
 
   const getFreeTextTranslations = (key) =>
     freeTextSearchTranslations?.[key] || key;

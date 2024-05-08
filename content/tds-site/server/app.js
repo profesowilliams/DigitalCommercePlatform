@@ -8348,29 +8348,30 @@ app.post("/ui-commerce/v2/Product/Search", function (req, res) {
         {
           id: "2476043",
           description:
-            'Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
+            '2476043 - Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
           manufacturer: "TARGUS",
           manufacturerPartNumber: "CN414EU",
+          matchingValue: "2476043",
           price: 20.45,
         },
         {
           id: "2476043",
           description:
-            'Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
+            '2476043 - Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
           manufacturer: "TARGUS",
           manufacturerPartNumber: "CN412345",
         },
         {
           id: "2476043",
           description:
-            'Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
+            '2476043 - Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
           manufacturer: "TARGUS",
           manufacturerPartNumber: "CN432211",
         },
         {
           id: "2476043",
           description:
-            'Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
+            '2476043 - Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
           manufacturer: "TARGUS",
           manufacturerPartNumber: "CN412377",
         },
@@ -8460,29 +8461,23 @@ app.get("/ui-commerce/v3/lookahead", function (req, res) {
 });
 
 app.get("/ui-intouch-localize/v1", function (req, res) {
-  const response = [
-    {
-      name: "OrderTracking.FreetextSearchFields",
-      translations: {
-        ShipTo: "Ship to",
-        CustomerPO: "PO №",
-        Items_Product_Manufacturer_Id: "Mfr №",
-        Source_Id: "Order №",
-        Items_Product_Techdata_Manufacturer: "Vendor",
-        Items_DeliveryNote_Id: "D-note №",
-        Items_Invoice_Id: "Invoice №",
-        Items_Product_Techdata_Id: "TDS №",
-        Items_EndUser_Name: "End Customer Name",
-        Items_Serials: "Items_Serials",
-      },
+  const response = {
+    "OrderTracking.FreetextSearchFields": {
+      Items_Product_Techdata_Id: "TDS №",
+      Items_Invoice_Id: "Invoice №",
+      Items_Product_Manufacturer_Id: "Mfr №",
+      Items_DeliveryNote_Id: "D-note №",
+      Items_Serials: "Serial №",
+      Items_EndUser_Name: "End Customer Name",
+      Items_Product_Techdata_Manufacturer: "Vendor",
+      Source_Id: "Order №",
+      CustomerPO: "PO №",
+      ShipTo: "Ship to",
     },
-    {
-      name: "OrderTracking.MainGrid",
-      translations: {
-        Search_Input_Tooltip: "Free text search is available for:",
-      },
+    "OrderTracking.MainGrid": {
+      Search_Input_Tooltip: "Free text search is available for:",
     },
-  ];
+  };
 
   setTimeout(() => {
     return res.status(200).json(response);
