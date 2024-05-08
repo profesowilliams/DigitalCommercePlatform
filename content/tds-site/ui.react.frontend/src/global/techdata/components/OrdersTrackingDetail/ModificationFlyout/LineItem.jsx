@@ -83,14 +83,12 @@ const LineItem = ({ item, index, onChange, labels }) => {
           onChange={handleAmountChange}
         />
         {quantityIncreased && (
-          <div className="full-width">
-            <p>
-              <InfoIcon />
-              {getDictionaryValueOrKey(labels?.additionalQuantityAdded)}
-            </p>
-          </div>
+          <p>
+            <InfoIcon />
+            {getDictionaryValueOrKey(labels?.additionalQuantityAdded)}
+          </p>
         )}
-        {(quantityDecreased && currentValue === 0) && (
+        {quantityDecreased && currentValue === 0 && (
           <RejectedReasonDropdown
             labels={labels}
             rejectedReason={rejectedReason}

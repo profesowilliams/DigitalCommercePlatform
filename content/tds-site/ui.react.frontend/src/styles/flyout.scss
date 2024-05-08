@@ -512,11 +512,6 @@ $flyout-small-height-formax: 779px;
   }
 }
 
-.full-width {
-  clear: both;
-  width: 100%;
-}
-
 .decreased-reason-dropdown {
   margin-left: 120px;
   width: 244px;
@@ -545,12 +540,13 @@ $flyout-small-height-formax: 779px;
   vertical-align: baseline;
 
   &__element {
-    height: 160px;
+    height: auto;
+    min-height: 160px;
     padding: 20px 0;
     border-bottom: 1px solid $v-divider-gray;
     display: grid;
     grid-template-columns: 36px 110px 484px 106px;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: 66px 1fr;
     grid-column-gap: 0;
     grid-row-gap: 0;
     * {
@@ -586,7 +582,8 @@ $flyout-small-height-formax: 779px;
     }
     &__counter {
       grid-area: 2 / 3 / 3 / 4;
-      height: 66px;
+      height: auto;
+      min-height: 66px;
       width: 596px;
       p {
         font-size: 14px;
