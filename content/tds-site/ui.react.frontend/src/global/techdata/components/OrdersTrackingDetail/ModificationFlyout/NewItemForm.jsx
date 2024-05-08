@@ -130,9 +130,10 @@ const NewItemForm = ({
         PaperComponent={CustomPaper}
         freeSolo
         options={suggestions}
-        getOptionLabel={(option) => option.title}
+        getOptionLabel={(option) => option.title || ''}
         filterOptions={(x) => x}
         loading={loading}
+        loadingText={`${getDictionaryValueOrKey('Loading')}...`} //TODO: temporary, fix later with one translation approach or the other
         open={open}
         autoSelect={false}
         onOpen={() => {

@@ -280,6 +280,7 @@ const Search = (
         filterOptions={(x) => x}
         open={open}
         loading={loading}
+        loadingText={`${getDictionaryValueOrKey('Loading')}...`} //TODO: temporary, fix later with one translation approach or the other
         blurOnSelect={true}
         inputValue={value}
         openOnFocus={true}
