@@ -22,6 +22,20 @@ $cmp-popup-button-styles: (
         width: $width; // Set width based on the size specified in the map.
         position: relative;
         top: 25%;
+
+        @include mobile {
+          width: 100%;
+          position: absolute;
+          top: unset;
+          bottom: 0;
+          padding: 0;
+
+          .cmp-image svg {
+            height: 100%!important;
+            width: 12.20588rem!important;
+            overflow: unset;
+          }
+        }
       }
 
       /// Button inside the popup modal.

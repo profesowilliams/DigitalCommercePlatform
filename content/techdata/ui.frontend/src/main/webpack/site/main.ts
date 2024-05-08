@@ -33,6 +33,6 @@ import "../../../../../../tds-core/ui.frontend/src/components/teaser/teaser"
 
 
 //include fortawesome library bundle
-import "fortawesome/js/fontawesome"
-import "fortawesome/css/all.css"
-import "fortawesome/js/all"
+//import "fortawesome/js/fontawesome"
+//import "fortawesome/css/all.css"
+//import "fortawesome/js/all"

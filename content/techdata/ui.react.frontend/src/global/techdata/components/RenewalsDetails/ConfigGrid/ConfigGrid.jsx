@@ -158,6 +158,7 @@ function GridHeader({ gridProps, data }) {
       </button>
     );
   }
+  
   if (gridProps?.productLines?.showDownloadXLSButton) {
     buttons.push(
       <button onClick={downloadXLS} key="downloadXLS">
@@ -180,8 +181,8 @@ function GridHeader({ gridProps, data }) {
   }
 
   // Determine which buttons to show in the dropdown
-  const directlyShownButtons = buttons.slice(0, 3);
-  const dropdownButtons = buttons.slice(3);
+const directlyShownButtons = buttons.length > 3 ? buttons.slice(0, 2) : buttons.slice(0, 3);
+const dropdownButtons = buttons.length > 3 ? buttons.slice(2) : [];
 
   return (
     <div className={isOpportunity ? "cmp-product-lines-grid__header opportunity-quote-disabled" : "cmp-product-lines-grid__header"}>

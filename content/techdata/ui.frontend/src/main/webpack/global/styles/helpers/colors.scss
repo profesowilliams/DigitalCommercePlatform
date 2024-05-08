@@ -34,18 +34,18 @@
     color:  map-get($color-palette, "white") !important;
   }
 
-  &__dark-blue {    
+  &__dark-blue {
     color: get-color(dark-blue) !important;
   }
 
-  &__sky-blue {    
+  &__sky-blue {
     color: get-color(sky-blue) !important;
   }
 
-  &__legacy-grey {    
+  &__legacy-grey {
     color: get-color(legacy-grey) !important;
   }
-  
+
 }
 
 // background colors
@@ -78,16 +78,16 @@
     background-color:  map-get($color-palette, "white") !important;
   }
 
-  &__dark-blue {    
+  &__dark-blue {
     background-color: get-color(dark-blue) !important;
   }
 
-  &__sky-blue {    
+  &__sky-blue {
     background-color: get-color(sky-blue) !important;
   }
 
-  &__legacy-grey {    
+  &__legacy-grey {
     background-color: get-color(legacy-grey) !important;
   }
-  
+
 }

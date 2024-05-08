@@ -46,6 +46,7 @@ function _RenewalActionColumn({ eventProps }) {
 
   const canCopy = data?.canCopy;
   const canShare = data?.canShareQuote;
+  const canRequestRevision = data?.canRequestRevision;
   const canRequestQuote = data?.canRequestQuote;
   data.orderSource = 'Grid';
 
@@ -229,6 +230,7 @@ function _RenewalActionColumn({ eventProps }) {
           menuOptions={productGrid}
           sx={dialogStyling}
           canCopy={canCopy}
+          canRequestRevision={canRequestRevision}
           canShare={canShare}
           canRequestQuote={canRequestQuote}
           detailUrl={detailUrl}

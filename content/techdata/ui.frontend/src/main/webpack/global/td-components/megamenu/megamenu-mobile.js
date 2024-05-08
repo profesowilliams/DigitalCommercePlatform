@@ -1,15 +1,17 @@
 export default class MegamenuMobile {
-    constructor() {
-        this.log('initialized mobile megamenu');
-        const mm = this.mm = document.querySelector('.megamenu');
-        if (!mm) return;
+  constructor() {
+    this.log('initialized mobile megamenu');
+    const mm = (this.mm = document.querySelector('.megamenu'));
+    if (!mm) return;
 
-        this.init(mm);
-        this.showCls = 'active-md';
-        this.hideCls = 'inactive-md';
-        mm.addEventListener('click', (e) => this.handleNavigationClick(e));
-        mm.addEventListener('click', (e) => this.handleBackBtnClick(e, mm));
-    }
+    this.init(mm);
+    this.showCls = 'active-md';
+    this.hideCls = 'inactive-md';
+    mm.addEventListener('click', (e) => this.handleBackBtnClick(e, mm));
+
+    // Add this event listener to handle global link clicks
+    mm.addEventListener('click', (e) => this.handleGlobalLinkClick(e));
+  }
 
     init(el) {
         this.handlePrimary(el);
@@ -135,24 +137,28 @@ export default class MegamenuMobile {
         });
     }
 
-    handleNavigationClick(event) {
-        let isList = event.target.closest('.cmp-navigation__item');
-        const ACTIVE_CLASS = 'active';
+  handleGlobalLinkClick(event) {
+    const target = event.target.closest('a[data-is-global="true"]');
+    if (target) {
+      // Remove 'header-active' and 'mega-menu-hide' classes from the relevant elements
+      const headerElement = document.querySelector('.header-active');
+      const megaMenuElement = document.querySelector('.mega-menu-hide');
 
-        if (!isList) return;
-        if (!isList.classList.contains('cmp-navigation__item')) return;
+      if (headerElement) {
+        headerElement.classList.remove('header-active');
+      }
 
-        const subMenu = isList.querySelector('.cmp-navigation__group');
+      if (megaMenuElement) {
+        megaMenuElement.classList.remove('mega-menu-hide');
+      }
 
-        if (subMenu) {
-            event.preventDefault();
-            if (isList.classList.contains(ACTIVE_CLASS)) {
-                isList.classList.remove(ACTIVE_CLASS);
-                this.toggleClass(subMenu, 'hide');
-            } else {
-                isList.classList.add(ACTIVE_CLASS);
-                this.toggleClass(subMenu, 'show');
-            }
-        }
+      // Find and remove all active classes within the megamenu
+      const activeElements = document.querySelectorAll('.megamenu .active');
+      activeElements.forEach((el) => {
+        el.classList.remove('active');
+      });
+
+      document.dispatchEvent(new CustomEvent('header-closed'));
     }
+  }
 }

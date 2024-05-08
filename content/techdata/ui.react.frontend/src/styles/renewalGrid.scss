@@ -965,6 +965,16 @@ svg {
       display: flex;
       align-items: center;
       justify-content: center;
+
+      svg {
+        width: 1rem;
+      }
+      
+      svg path {
+        fill: map-get($color-palette, "charcoal");
+        color: $brand-icon-gray-color;
+        transition: all 0.5 ease;
+      }
     }
   }
 

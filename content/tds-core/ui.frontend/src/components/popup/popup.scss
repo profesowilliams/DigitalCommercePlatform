@@ -23,7 +23,7 @@ $pop-up-z-index-value: 9999999;
   padding: 0 15px;
   border: 1px solid #888;
   width: 450px;
-  
+
   @include mobile {
     width: 90%;
   }
@@ -33,7 +33,7 @@ $pop-up-z-index-value: 9999999;
     float: right;
     font-size: 28px;
   }
-  
+
   &__close:hover,
   &__close:focus {
     color: #000;
@@ -43,5 +43,17 @@ $pop-up-z-index-value: 9999999;
 
   &>.cmp-container {
     padding: 25px 15px 32px 15px;
+
+    @include mobile {
+      padding: 0;
+
+      & .cmp-container {
+        padding: 0;
+      }
+
+      &> div > div > div  {
+        padding: 1.5rem;
+      }
+    }
   }
 }

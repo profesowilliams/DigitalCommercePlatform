@@ -299,29 +299,38 @@
 
 /* Styles for the dropdown container */
 .dropdown-content {
-  border-top: 2px solid #005758;
+  border-top: 2px solid map-get($color-palette, 'teal');
   display: block;
   position: absolute;
   background-color: #f9f9f9;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
   right: 32px; /* Adjust based on your layout needs */
-  width: 11.3125rem; /* Adjust width as necessary */
+  width: 12rem; /* Adjust width as necessary */
+
+  &:hover button:hover span {
+      text-decoration: underline;
+      text-decoration-color: map-get($color-palette, 'teal');
+      text-underline-offset: 4px;
+    }
 }
 
 .dropdown-content button {
   color: black;
-  padding: 12px 16px;
+  padding: 0.5rem 1rem;
   text-decoration: none;
   display: block;
   width: 100%;
+  padding: 0.5rem 0rem 0.5rem 1rem;
+  text-wrap: nowrap;
+  text-align: left;
 
   svg {
-    height: 1rem !important;
+    width: 1rem;
   }
 
   &:hover {
-    background: var(--Neutral-Gray-2, #e4e5e6);
+    background: var(--Neutral-Gray-2, map-get($color-palette, 'neutral-gray-2'));
   }
 
   &:active {
@@ -329,6 +338,10 @@
 
     span, .separator {
       color: map-get($color-palette, 'white') !important;
+    }
+
+    svg {
+      width: 1rem;
     }
 
     svg path {
