@@ -93,6 +93,7 @@ export const orderTrackingEffects = (set, get) => {
 
   return {
     setCustomState,
+    updateOrderFilterCounter,
     setUserData(data) {
       set({ userData: data });
     },

@@ -96,6 +96,7 @@ function OrdersTrackingGrid(props) {
     setFeatureFlags,
     setFreeTextSearchTranslations,
     hasRights,
+    updateOrderFilterCounter,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore,
@@ -426,6 +427,7 @@ function OrdersTrackingGrid(props) {
     setFreeTextSearchTranslations(freeTextSearchTranslations);
     const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
     setFilterList([...predefined]);
+    updateOrderFilterCounter();
   }, []);
 
   useEffect(() => {
