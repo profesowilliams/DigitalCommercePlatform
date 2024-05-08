@@ -397,7 +397,7 @@ function OrdersTrackingGrid(props) {
 
   const fetchFreeTextSearchTranslations = async () => {
     const results = await usGet(
-      `${componentProp.uiIntouchLocalizeServiceDomain}/v1?id=OrderTracking.FreetextSearchFields`
+      `${componentProp.uiIntouchLocalizeServiceDomain}/v1?id=OrderTracking.FreetextSearchFields&id=OrderTracking.MainGrid`
     );
     return results.data;
   };

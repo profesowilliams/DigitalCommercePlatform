@@ -11,6 +11,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
 import Icon from '@mui/material/Icon';
 import Paper from '@mui/material/Paper';
+import Tooltip from '@mui/material/Tooltip';
 import { usGet } from '../../../../../utils/api';
 import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
 import { filtersDateGroup } from '../utils/orderTrackingUtils';
@@ -120,11 +121,20 @@ const Search = (
     field: ref.current.field || getInitialKey,
     value: ref.current.value || getInitialValue,
   });
-  const loading = open && suggestions.length === 0;
+  const minimalQueryLength = 2;
+  const loading =
+    open && value.length >= minimalQueryLength && suggestions.length === 0;
 
-  const freeTextSearchTranslations = useOrderTrackingStore(
+  const translations = useOrderTrackingStore(
     (state) => state.freeTextSearchTranslations
-  )['OrderTracking.FreetextSearchFields'];
+  );
+  const freeTextSearchTranslations = translations?.find(
+    (el) => el.name === 'OrderTracking.FreetextSearchFields'
+  )?.translations;
+
+  const mainGridTranslations = translations?.find(
+    (el) => el.name === 'OrderTracking.MainGrid'
+  )?.translations;
 
   const getFreeTextTranslations = (key) =>
     freeTextSearchTranslations?.[key] || key;
@@ -169,7 +179,7 @@ const Search = (
 
   const handleAutocompleteInput = useCallback(
     (newValue) => {
-      newValue.length >= 2 &&
+      newValue.length >= minimalQueryLength &&
         fetchSuggestions(newValue).then((result) => {
           setSuggestions(result?.data?.content?.suggestions || []);
           if (result?.data?.content?.suggestions?.length === 0) {
@@ -240,6 +250,17 @@ const Search = (
   const debouncedAutocomplete = useMemo(() => {
     return debounce(handleAutocompleteInput);
   }, []);
+
+  const tooltipMessage = mainGridTranslations && (
+    <div>
+      <p>{mainGridTranslations.Search_Input_Tooltip}</p>
+      <ul style={{ listStyle: 'inside' }}>
+        {Object.values(freeTextSearchTranslations).map((el) => (
+          <li>{el}</li>
+        ))}
+      </ul>
+    </div>
+  );
 
   return (
     <>
@@ -312,14 +333,27 @@ const Search = (
                 <>
                   <InputAdornment position="end">
                     <Icon>
-                      <SearchIcon
-                        onClick={() =>
-                          value.length === 0 ? triggerSearch({}) : null
-                        }
-                        className={`search-icon__dark ${
-                          value.length === 0 ? 'disabled' : ''
-                        }`}
-                      />
+                      <Tooltip
+                        title={tooltipMessage}
+                        placement="top"
+                        arrow
+                        disableInteractive={true}
+                      >
+                        <div>
+                          <SearchIcon
+                            onClick={() =>
+                              value.length >= minimalQueryLength
+                                ? triggerSearch({})
+                                : null
+                            }
+                            className={`search-icon__dark ${
+                              value.length < minimalQueryLength
+                                ? 'disabled'
+                                : ''
+                            }`}
+                          />
+                        </div>
+                      </Tooltip>
                     </Icon>
                   </InputAdornment>
                 </>

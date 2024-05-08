@@ -8460,20 +8460,30 @@ app.get("/ui-commerce/v3/lookahead", function (req, res) {
 });
 
 app.get("/ui-intouch-localize/v1", function (req, res) {
-  const response = {
-    "OrderTracking.FreetextSearchFields": {
-      ShipTo: "Ship to",
-      CustomerPO: "PO №",
-      Items_Product_Manufacturer_Id: "Mfr №",
-      Source_Id: "Order №",
-      Items_Product_Techdata_Manufacturer: "Vendor",
-      Items_DeliveryNote_Id: "D-note №",
-      Items_Invoice_Id: "Invoice №",
-      Items_Product_Techdata_Id: "TDS №",
-      Items_EndUser_Name: "End Customer Name",
-      Items_Serials: "Items_Serials",
+  const response = [
+    {
+      name: "OrderTracking.FreetextSearchFields",
+      translations: {
+        ShipTo: "Ship to",
+        CustomerPO: "PO №",
+        Items_Product_Manufacturer_Id: "Mfr №",
+        Source_Id: "Order №",
+        Items_Product_Techdata_Manufacturer: "Vendor",
+        Items_DeliveryNote_Id: "D-note №",
+        Items_Invoice_Id: "Invoice №",
+        Items_Product_Techdata_Id: "TDS №",
+        Items_EndUser_Name: "End Customer Name",
+        Items_Serials: "Items_Serials",
+      },
     },
-  };
+    {
+      name: "OrderTracking.MainGrid",
+      translations: {
+        Search_Input_Tooltip: "Free text search is available for:",
+      },
+    },
+  ];
+
   setTimeout(() => {
     return res.status(200).json(response);
   }, 100);
