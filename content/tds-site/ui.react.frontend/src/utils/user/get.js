@@ -47,7 +47,7 @@ export async function getSessionInfo() {
   let userData = await getUserData();
 
   // set current language based on user data
-  moment.locale(userData.language);
+  moment.locale(overrideLanguage(userData.country, userData.language));
 
   if (!validateCountryAndLanguage(userData)) {
     try {
@@ -61,6 +61,13 @@ export async function getSessionInfo() {
   isLoggedIn = !!userData;
 
   return [isLoggedIn, userData];
+}
+
+function overrideLanguage(country, language) {
+  if (country == 'BE' && (language == 'fr' || language == 'nl')) {
+    language = 'en';
+  }
+  return language;
 }
 
 async function getUserData() {
