@@ -28,7 +28,7 @@
     "sync": "aemsync -d -p ../ui.apps/src/main/content",
     "watch": "webpack-dev-server --config ./webpack.dev.js --env.writeToDisk & watch 'clientlib' ./dist & aemsync -w ../ui.apps/src/main/content",
     "test": "jest",
-    "prepare": "is-ci || (cd ../../../ && husky install content/techdata/ui.frontend/.husky)"
+    "prepare": "is-ci || (cd ../../../ && husky install content/tds-site/ui.frontend/.husky)"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
