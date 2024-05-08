@@ -138,6 +138,7 @@ function GridHeader({ gridProps, data }) {
       </button>
     );
   }
+  
   if (gridProps.enableShareOption && data?.canShareQuote) {
     buttons.push(
       <button onClick={openShareFlyOut} className='share-button' key="share">
@@ -148,6 +149,7 @@ function GridHeader({ gridProps, data }) {
       </button>
     );
   }
+
   if (data?.canRequestRevision) {
     buttons.push(
       <button onClick={openRequestFlyout} key="revision">
@@ -159,22 +161,23 @@ function GridHeader({ gridProps, data }) {
     );
   }
   
-  if (gridProps?.productLines?.showDownloadXLSButton) {
-    buttons.push(
-      <button onClick={downloadXLS} key="downloadXLS">
-        <DownloadIcon className="cmp-renewal-preview__download--icon" />
-        <span className={gridProps?.productLines?.showDownloadPDFButton ? 'separator' : undefined}>
-          {getDictionaryValue("button.common.label.downloadXLS", "Download XLS")}
-        </span>
-      </button>
-    );
-  }
   if (gridProps?.productLines?.showDownloadPDFButton) {
     buttons.push(
       <button onClick={downloadPDF} key="downloadPDF">
         <DownloadIcon className="cmp-renewal-preview__download--icon" />
         <span>
           {getDictionaryValue("button.common.label.downloadPDF", "Download PDF")}
+        </span>
+      </button>
+    );
+    }
+  
+  if (gridProps?.productLines?.showDownloadXLSButton) {
+    buttons.push(
+      <button onClick={downloadXLS} key="downloadXLS">
+        <DownloadIcon className="cmp-renewal-preview__download--icon" />
+        <span className={gridProps?.productLines?.showDownloadPDFButton ? 'separator' : undefined}>
+          {getDictionaryValue("button.common.label.downloadXLS", "Download XLS")}
         </span>
       </button>
     );
