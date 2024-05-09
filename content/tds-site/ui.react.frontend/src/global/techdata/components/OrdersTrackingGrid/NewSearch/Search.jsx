@@ -202,38 +202,40 @@ const Search = (
   };
 
   const triggerSearch = (newValue) => {
-    let newKey = '';
-    if (newValue === null) {
-      setValue('');
-    } else if (!newValue.field) {
-      if (suggestions.length > 0) {
-        newKey = suggestions[0].field;
+    if (newValue >= minimalQueryLength) {
+      let newKey = '';
+      if (newValue === null) {
+        setValue('');
+      } else if (!newValue.field) {
+        if (suggestions.length > 0) {
+          newKey = suggestions[0].field;
+        } else {
+          newKey = 'CustomerPO';
+        }
       } else {
-        newKey = 'CustomerPO';
+        newKey = newValue.field;
       }
-    } else {
-      newKey = newValue.field;
+      clearReports();
+      ref.current.field = newKey;
+      ref.current.value = value;
+      onQueryChanged();
+      setFocused(false);
+      setPill({ value: value, field: newKey });
+      setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
+        field: newKey,
+        value: value,
+      });
+      pushEvent(ANALYTICS_TYPES.events.orderSearch, null, {
+        order: {
+          searchTerm: value,
+          searchType: newKey,
+        },
+      });
+      pushDataLayerGoogle(
+        getSearchAnalyticsGoogle(searchAnalyticsLabel, newKey, value)
+      );
+      resetSearch();
     }
-    clearReports();
-    ref.current.field = newKey;
-    ref.current.value = value;
-    onQueryChanged();
-    setFocused(false);
-    setPill({ value: value, field: newKey });
-    setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
-      field: newKey,
-      value: value,
-    });
-    pushEvent(ANALYTICS_TYPES.events.orderSearch, null, {
-      order: {
-        searchTerm: value,
-        searchType: newKey,
-      },
-    });
-    pushDataLayerGoogle(
-      getSearchAnalyticsGoogle(searchAnalyticsLabel, newKey, value)
-    );
-    resetSearch();
   };
 
   const debouncedAutocomplete = useMemo(() => {
@@ -246,11 +248,13 @@ const Search = (
         {mainGridTranslations.Search_Input_Tooltip}
       </p>
       <ul style={{ listStyle: 'inside', color: '#fff' }}>
-        {Object.values(freeTextSearchTranslations).map((el) => (
-          <li key={el} style={{ color: '#fff' }}>
-            {el}
-          </li>
-        ))}
+        {Object.values(freeTextSearchTranslations)
+          .sort((a, b) => a.localeCompare(b))
+          .map((el) => (
+            <li key={el} style={{ color: '#fff' }}>
+              {el}
+            </li>
+          ))}
       </ul>
     </div>
   ) : (
@@ -280,7 +284,7 @@ const Search = (
         filterOptions={(x) => x}
         open={open}
         loading={loading}
-        loadingText={`${getDictionaryValueOrKey('Loading')}...`} //TODO: temporary, fix later with one translation approach or the other
+        loadingText={mainGridTranslations?.Search_Input_Loading}
         blurOnSelect={true}
         inputValue={value}
         openOnFocus={true}

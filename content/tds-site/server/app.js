@@ -8478,6 +8478,7 @@ app.get("/ui-intouch-localize/v1", function (req, res) {
     },
     "OrderTracking.MainGrid": {
       Search_Input_Tooltip: "Free text search is available for:",
+      Search_Input_Loading: "Loading...",
     },
   };
 
