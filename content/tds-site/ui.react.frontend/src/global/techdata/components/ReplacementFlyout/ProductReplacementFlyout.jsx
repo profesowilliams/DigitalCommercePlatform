@@ -219,6 +219,7 @@ function ProductReplacementFlyout({
                     unitPrice: product.price.bestPrice,
                     currency: product.price.currency,
                     unitPriceFormatted: product.price.bestPriceFormatted,
+                    totalFormatted: product.price.totalFormatted,
                   },
                   index: index,
                 }}

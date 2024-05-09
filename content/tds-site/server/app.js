@@ -6685,53 +6685,52 @@ app.get("/ui-commerce/v3/invoices", (req, res) => {
 
 app.get("/ui-commerce/v2/Product/Replacement", (req, res) => {
   const response = {
-    content: {
-      productDtos: [
-        {
-          image: {
-            url: "https://cdn.cs.1worldsync.com/55/21/5521e32a-8a93-4074-8206-683e39a09c85.jpg",
-            type: "Product shot",
-            angle: "Front",
-          },
-          authorization: {
-            canOrder: true,
-            canViewPrice: true,
-            customerCanView: true,
-            canViewStock: true,
-          },
-          price: {
-            listPrice: 26869.15,
-            bestPrice: 16826.88,
-            bestPriceFormatted: 156644.89,
-            volumePricing: [
-              {
-                price: 16826.88,
-                minQuantity: 1,
-              },
-            ],
-            bestPriceIncludesWebDiscount: false,
-            taaS: {
-              monthlyPrice: 478.16,
-            },
-            listPriceAvailable: true,
-            currency: "EUR",
-            governmentFees: 0.0,
-          },
-          source: {
-            system: "16",
-            id: "2942329",
-          },
-          description: "ISR 4451 Sec bundle w/SEC Lic",
-          manufacturerPartNumber: "ISR4451-X-SEC/K9",
-        },
-      ],
+    "content": {
+        "productDtos": [
+            {
+                "image": {
+                    "url": "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+                    "type": "Default Image"
+                },
+                "authorization": {
+                    "canOrder": true,
+                    "canViewPrice": true,
+                    "customerCanView": true,
+                    "canViewStock": true
+                },
+                "price": {
+                    "listPrice": 690.00,
+                    "volumePricing": [
+                        {
+                            "price": 631.56,
+                            "minQuantity": 1
+                        }
+                    ],
+                    "bestPriceIncludesWebDiscount": false,
+                    "taaS": {},
+                    "listPriceAvailable": true,
+                    "currency": "EUR",
+                    "governmentFees": 0.0,
+                    "bestPrice": 631.56,
+                    "bestPriceFormatted": "631,56",
+                    "total": 631.56,
+                    "totalFormatted": "631,56"
+                },
+                "source": {
+                    "system": "16",
+                    "id": "8320973"
+                },
+                "description": "HP 250 G10 Notebook - Intel Core i5 1335U / 1.3 GHz - Win 11 Pro - Intel Iris Xe Grafikkarte - 8 GB RAM - 256 GB SSD NVMe - 39.6 cm (15.6\") IPS 1920 x 1080 (Full HD) - 802.11a/b/g/n/ac/ax, Bluetooth 5.3 WLAN-Karte - Turbo Silber - kbd: Deutsch",
+                "manufacturerPartNumber": "816F9EA#ABD"
+            }
+        ]
     },
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  };
+    "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+    }
+}
 
   setTimeout(() => {
     return res.status(200).json(response);

@@ -13,9 +13,9 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
     unitPriceFormatted,
     currency,
     lineDetails,
+    totalFormatted,
   } = item || {};
-  const replaceTotalQuantity =
-    lineDetails[lineIndex]?.quantity * unitPriceFormatted;
+  const replaceTotalQuantity = totalFormatted;
   return (
     <div
       className={`cmp-flyout-list ${toBeReplacedItem ? 'to-be-replaced' : ''} `}
