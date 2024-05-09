@@ -54,7 +54,7 @@ export async function getSessionInfo() {
       document.getElementById("page-container").style.display = "block";
       document.getElementById("page-global-loader").style.display = "none";
     } catch {
-      console.error('MISSING PAGE ELEMENTS!');
+      console.error('Missing page elements page-container or page-global-loader!');
     }
   }
 
@@ -64,10 +64,16 @@ export async function getSessionInfo() {
 }
 
 function overrideLanguage(country, language) {
-  if (country == 'BE' && (language == 'fr' || language == 'nl')) {
-    language = 'en';
+  try {
+    country = country.toUpperCase();
+    language = language.toUpperCase();
+    if (country == 'BE' && (language == 'FR' || language == 'NL')) {
+      language = 'en';
+    }
+    return language;
+  } catch {
+    console.error('Cannot override language, country = [' + country + '], language = [' + language + ']');
   }
-  return language;
 }
 
 async function getUserData() {
