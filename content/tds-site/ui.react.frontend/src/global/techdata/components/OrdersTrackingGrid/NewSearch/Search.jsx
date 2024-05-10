@@ -202,7 +202,7 @@ const Search = (
   };
 
   const triggerSearch = (newValue) => {
-    if (newValue >= minimalQueryLength) {
+    if (newValue.length >= minimalQueryLength) {
       let newKey = '';
       if (newValue === null) {
         setValue('');
