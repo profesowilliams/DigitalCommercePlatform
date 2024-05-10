@@ -45,6 +45,7 @@ function MainGridHeader({
     setPredefinedFiltersApplied,
     setCustomizedFiltersApplied,
     clearCheckedButNotAppliedOrderFilters,
+    setClearFilters,
   } = useOrderTrackingStore((st) => st.effects);
 
   const proactiveMessagingFlag = useOrderTrackingStore(
@@ -109,16 +110,8 @@ function MainGridHeader({
 
   const clearFilters = () => {
     filtersRefs.current = {};
-    clearAllOrderFilters();
-    setFilterClicked(false);
-    setPredefinedFiltersApplied([]);
-    setCustomizedFiltersApplied([]);
-    setLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY, {
-      dates: [],
-      types: [],
-      statuses: [],
-    });
-    clearCheckedButNotAppliedOrderFilters();
+
+    setClearFilters();
     onQueryChanged({ onSearchAction: true });
   };
 

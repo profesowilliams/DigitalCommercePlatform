@@ -97,6 +97,7 @@ function OrdersTrackingGrid(props) {
     setFreeTextSearchTranslations,
     hasRights,
     updateOrderFilterCounter,
+    setClearFilters,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore,
@@ -418,6 +419,7 @@ function OrdersTrackingGrid(props) {
     document.title = getDictionaryValueOrKey(gridConfig?.pageTitle);
     if (!(redirectedFrom === 'detailsPage' || pageAccessedByReload)) {
       resetLocalStorage(searchParamsKeys);
+      setClearFilters();
     }
     filtersRefs.current = getInitialFiltersDataFromLS();
     redirectedFrom && deleteSearchParam('redirectedFrom');
@@ -547,7 +549,6 @@ function OrdersTrackingGrid(props) {
           config={gridConfig}
           options={options}
           gridConfig={gridConfig}
-          // defaultSearchDateRange={dateRange}
           omitCreatedQuery={true}
           requestInterceptor={customRequestInterceptor}
           mapServiceData={mapServiceData}

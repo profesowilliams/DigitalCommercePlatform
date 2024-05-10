@@ -91,9 +91,115 @@ export const orderTrackingEffects = (set, get) => {
     set({ [key]: value });
   }
 
+  function clearAllOrderFilters() {
+    const { customFiltersChecked } = get().filter;
+
+    const clearDate = (custom) => {
+      custom.startDate = null;
+      custom.endDate = null;
+      custom.dataRangeLabel = null;
+    };
+
+    let customFiltersToClear = customFiltersChecked;
+    customFiltersToClear.map((custom) => {
+      custom?.group === 'customDate' && clearDate(custom);
+      custom?.filterOptionList &&
+        custom.filterOptionList.map((element) => {
+          element.checked = false;
+        });
+    });
+    set((state) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        orderStatusFiltersChecked: [],
+        orderTypeFiltersChecked: [],
+        dateRangeFiltersChecked: [],
+        customFiltersChecked: customFiltersToClear,
+      },
+    }));
+    set((state) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        customStartDate: undefined,
+      },
+    }));
+    set((state) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        customEndDate: undefined,
+      },
+    }));
+
+    updateOrderFilterCounter();
+  }
+  function setFilterClicked(filterClicked) {
+    set((state) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        filterClicked,
+      },
+    }));
+  }
+  function setPredefinedFiltersApplied(predefinedFiltersApplied) {
+    set((state) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        predefinedFiltersApplied,
+      },
+    }));
+  }
+  function setCustomizedFiltersApplied(customizedFiltersApplied) {
+    set((state) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        customizedFiltersApplied,
+      },
+    }));
+  }
+  function clearCheckedButNotAppliedOrderFilters() {
+    const { predefinedFiltersApplied, customizedFiltersApplied } = get().filter;
+    const getFromPredefinedFilters = (group) =>
+      predefinedFiltersApplied.filter((filter) => filter.group === group);
+    const typeFilters = getFromPredefinedFilters('type');
+    const statusFilters = getFromPredefinedFilters('status');
+    const dateFilters = getFromPredefinedFilters('date');
+    const customFilters = customizedFiltersApplied;
+    set((state) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        orderTypeFiltersChecked: structuredClone(typeFilters),
+        orderStatusFiltersChecked: structuredClone(statusFilters),
+        dateRangeFiltersChecked: structuredClone(dateFilters),
+        customFiltersChecked: structuredClone(customFilters),
+      },
+    }));
+    if (dateFilters.length === 0) {
+      set((state) => ({
+        ...state,
+        filter: {
+          ...state.filter,
+          currentStartDate: undefined,
+          currentEndDate: undefined,
+        },
+      }));
+    }
+    updateOrderFilterCounter();
+  }
   return {
     setCustomState,
     updateOrderFilterCounter,
+    setFilterClicked,
+    setPredefinedFiltersApplied,
+    setCustomizedFiltersApplied,
+    clearCheckedButNotAppliedOrderFilters,
+    clearAllOrderFilters,
     setUserData(data) {
       set({ userData: data });
     },
@@ -226,24 +332,7 @@ export const orderTrackingEffects = (set, get) => {
         },
       }));
     },
-    setPredefinedFiltersApplied(predefinedFiltersApplied) {
-      set((state) => ({
-        ...state,
-        filter: {
-          ...state.filter,
-          predefinedFiltersApplied,
-        },
-      }));
-    },
-    setCustomizedFiltersApplied(customizedFiltersApplied) {
-      set((state) => ({
-        ...state,
-        filter: {
-          ...state.filter,
-          customizedFiltersApplied,
-        },
-      }));
-    },
+
     setAreThereAnyFiltersSelectedButNotApplied() {
       const {
         predefinedFiltersApplied,
@@ -307,37 +396,7 @@ export const orderTrackingEffects = (set, get) => {
         },
       }));
     },
-    clearCheckedButNotAppliedOrderFilters() {
-      const { predefinedFiltersApplied, customizedFiltersApplied } =
-        get().filter;
-      const getFromPredefinedFilters = (group) =>
-        predefinedFiltersApplied.filter((filter) => filter.group === group);
-      const typeFilters = getFromPredefinedFilters('type');
-      const statusFilters = getFromPredefinedFilters('status');
-      const dateFilters = getFromPredefinedFilters('date');
-      const customFilters = customizedFiltersApplied;
-      set((state) => ({
-        ...state,
-        filter: {
-          ...state.filter,
-          orderTypeFiltersChecked: structuredClone(typeFilters),
-          orderStatusFiltersChecked: structuredClone(statusFilters),
-          dateRangeFiltersChecked: structuredClone(dateFilters),
-          customFiltersChecked: structuredClone(customFilters),
-        },
-      }));
-      if (dateFilters.length === 0) {
-        set((state) => ({
-          ...state,
-          filter: {
-            ...state.filter,
-            currentStartDate: undefined,
-            currentEndDate: undefined,
-          },
-        }));
-      }
-      updateOrderFilterCounter();
-    },
+
     isChangeDetected() {
       const {
         predefinedFiltersSelectedBefore,
@@ -363,59 +422,7 @@ export const orderTrackingEffects = (set, get) => {
       });
       setFilterList(updateList);
     },
-    clearAllOrderFilters() {
-      const { customFiltersChecked } = get().filter;
 
-      const clearDate = (custom) => {
-        custom.startDate = null;
-        custom.endDate = null;
-        custom.dataRangeLabel = null;
-      };
-
-      let customFiltersToClear = customFiltersChecked;
-      customFiltersToClear.map((custom) => {
-        custom?.group === 'customDate' && clearDate(custom);
-        custom?.filterOptionList &&
-          custom.filterOptionList.map((element) => {
-            element.checked = false;
-          });
-      });
-      set((state) => ({
-        ...state,
-        filter: {
-          ...state.filter,
-          orderStatusFiltersChecked: [],
-          orderTypeFiltersChecked: [],
-          dateRangeFiltersChecked: [],
-          customFiltersChecked: customFiltersToClear,
-        },
-      }));
-      set((state) => ({
-        ...state,
-        filter: {
-          ...state.filter,
-          customStartDate: undefined,
-        },
-      }));
-      set((state) => ({
-        ...state,
-        filter: {
-          ...state.filter,
-          customEndDate: undefined,
-        },
-      }));
-
-      updateOrderFilterCounter();
-    },
-    setFilterClicked(filterClicked) {
-      set((state) => ({
-        ...state,
-        filter: {
-          ...state.filter,
-          filterClicked,
-        },
-      }));
-    },
     closeAndCleanToaster() {
       const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
       setCustomState({ key: 'toaster', value: { isOpen: false } }, options);
@@ -483,6 +490,18 @@ export const orderTrackingEffects = (set, get) => {
     hasRights(right) {
       const { userData } = get();
       return userData?.roleList?.some((role) => role.entitlement === right);
+    },
+    setClearFilters() {
+      clearAllOrderFilters();
+      setFilterClicked(false);
+      setPredefinedFiltersApplied([]);
+      setCustomizedFiltersApplied([]);
+      setLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY, {
+        dates: [],
+        types: [],
+        statuses: [],
+      });
+      clearCheckedButNotAppliedOrderFilters();
     },
   };
 };

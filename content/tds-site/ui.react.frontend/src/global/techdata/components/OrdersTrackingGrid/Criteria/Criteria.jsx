@@ -3,14 +3,14 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 
 const Criteria = ({ config, searchCriteria, reportValue }) => {
-  const predefinedFiltersApplied = useOrderTrackingStore(
-    (state) => state.filter.predefinedFiltersApplied
-  );
   const [selectedLabel, setSelectedLabel] = useState(
     config?.last30DaysCriteria
   );
+  const predefinedFiltersApplied = useOrderTrackingStore(
+    (state) => state.filter.predefinedFiltersApplied
+  );
 
-  const { value, field } = searchCriteria || {};
+  const { field } = searchCriteria || {};
 
   const hasDateRangeFilter = predefinedFiltersApplied.some(
     (filterApplied) => 'createdTo' in filterApplied
@@ -18,7 +18,6 @@ const Criteria = ({ config, searchCriteria, reportValue }) => {
   const hasOtherFilters = predefinedFiltersApplied.some(
     (filterApplied) => 'filterOptionKey' in filterApplied
   );
-
   useEffect(() => {
     let label = config?.last30DaysCriteria;
     if (hasDateRangeFilter || field || reportValue) {
