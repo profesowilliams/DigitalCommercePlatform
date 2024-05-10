@@ -35,7 +35,7 @@ function CustomPaper({ children }) {
   return (
     <Paper
       sx={{
-        width: '360px',
+        width: '370px',
         '& .MuiAutocomplete-listbox': {
           bgcolor: '#fff',
           '& .MuiAutocomplete-option': {
@@ -202,7 +202,7 @@ const Search = (
   };
 
   const triggerSearch = (newValue) => {
-    if (newValue.length >= minimalQueryLength) {
+    if (value.length >= minimalQueryLength) {
       let newKey = '';
       if (newValue === null) {
         setValue('');
@@ -303,7 +303,7 @@ const Search = (
         }}
         disableClearable={true}
         sx={{
-          width: 360,
+          width: 370,
           '& .MuiAutocomplete-input': {
             textOverflow: 'clip',
           },

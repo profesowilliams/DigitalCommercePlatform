@@ -44,10 +44,14 @@ const StatusColumn = ({ data, iconsStatuses }) => {
     }
   };
 
-  const noIcon = renderIcon() === null;
   const enableTooltip =
     ['Investigation', 'Rejected', 'Completed'].includes(status) ||
     (status === 'Open' && shipComplete);
+
+  const text =
+    data?.statusText && data.statusText.length > 18
+      ? data.statusText.slice(0, 18) + '...'
+      : data.statusText;
 
   return data && data?.statusText ? (
     <div className="status-column-container">
@@ -66,9 +70,7 @@ const StatusColumn = ({ data, iconsStatuses }) => {
         arrow
         disableInteractive={true}
       >
-        <span className="status-column-container__text">
-          {data?.statusText}
-        </span>
+        <span className="status-column-container__text">{text}</span>
       </Tooltip>
     </div>
   ) : (
