@@ -61,8 +61,9 @@ function ProductReplacementFlyout({
   const enableReplace = productReplacementConfig?.enableReplace;
   const lineId = productReplacementConfig?.data?.line?.line;
   const tdNumber = productReplacementConfig?.data?.line?.tdNumber;
+  const quantity =
+    productReplacementConfig?.data?.line?.lineDetails[0]?.quantity;
   const orderId = productReplacementConfig?.orderId;
-
   const closeFlyout = () => {
     setSelected(null);
     setCustomState({
@@ -244,7 +245,7 @@ function ProductReplacementFlyout({
     if (tdNumber && productReplacementConfig?.show && enableReplace) {
       try {
         const result = await usGet(
-          `${config.uiCommerceServiceDomain}${endpoints.replacementsProducts}?id=${tdNumber}`
+          `${config.uiCommerceServiceDomain}${endpoints.replacementsProducts}?id=${tdNumber}&quantity=${quantity}`
         );
         setProductDtos(result?.data?.content?.productDtos || []);
       } catch (error) {
