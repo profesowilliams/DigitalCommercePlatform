@@ -13,6 +13,7 @@ use(['../../../common/utils.js'], function(utils) {
     var requestQuote = {};
     let copyFlyout = {};
     let shareFlyout = {};
+    let revisionFlyout = {};
     
     if (properties && properties["line"]) {
         productLines["line"] = properties["line"];
@@ -608,6 +609,45 @@ use(['../../../common/utils.js'], function(utils) {
 
     if (this.serviceData && this.serviceData.enableRequestQuote) {
         jsonObject["enableRequestQuote"] = this.serviceData.enableRequestQuote;
+    }
+
+    if (properties && properties["requestRevisionHeading"]) {
+        revisionFlyout.requestRevisionHeading = properties["requestRevisionHeading"];
+    }
+    if (properties && properties["requestRevisionDescription"]) {
+        revisionFlyout.requestRevisionDescription = properties["requestRevisionDescription"];
+    }
+    if (properties && properties["additionalInformationLabel"]) {
+        revisionFlyout.additionalInformationLabel = properties["additionalInformationLabel"];
+    }
+    if (properties && properties["additionalInformationPlaceholderText"]) {
+        revisionFlyout.additionalInformationPlaceholderText = properties["additionalInformationPlaceholderText"];
+    }
+    if (properties && properties["requestRevisionCommentCountText"]) {
+        revisionFlyout.requestRevisionCommentCountText = properties["requestRevisionCommentCountText"];
+    }
+    if (properties && properties["requestRevisionCommentCount"]) {
+        revisionFlyout.requestRevisionCommentCount = properties["requestRevisionCommentCount"];
+    }
+    if (properties && properties["requestRevisionButtonLabel"]) {
+        revisionFlyout.requestRevisionButtonLabel = properties["requestRevisionButtonLabel"];
+    }
+    if (properties && properties["successToastMessage"]) {
+        revisionFlyout.successToastMessage = properties["successToastMessage"];
+    }
+    if (properties && properties["errorToastMessage"]) {
+        revisionFlyout.errorToastMessage = properties["errorToastMessage"];
+    }
+    if (properties && properties["revisionRequestedMessage"]) {
+        revisionFlyout.revisionRequestedMessage = properties["revisionRequestedMessage"];
+    }
+
+    if (revisionFlyout != null) {
+        jsonObject["revisionFlyout"] = revisionFlyout;
+    }
+
+    if (this.serviceData && this.serviceData.enableRequestRevision) {
+        jsonObject["enableRequestRevision"] = this.serviceData.enableRequestRevision;
     }
 
     return {

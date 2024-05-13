@@ -35,6 +35,7 @@ import BaseGridHeader from "../BaseGrid/BaseGridHeader";
 import RenewalSearch from "../BaseGrid/Search/Search";
 import CopyFlyout from "../CopyFlyout/CopyFlyout";
 import ShareFlyout from "../ShareFlyout/ShareFlyout";
+import RevisionFlyout from "../RevisionFlyout/RevisionFlyout";
 import RequestFlyout from "../RequestFlyout/RequestFlyout";
 import BaseGridPagination from "../BaseGrid/Pagination/BaseGridPagination";
 import useExtendGridOperations from "../BaseGrid/Hooks/useExtendGridOperations";
@@ -405,6 +406,10 @@ function RenewalsGrid(props) {
       <ShareFlyout
         store={useRenewalGridState}
         shareFlyoutContent={gridConfig.shareFlyout}
+          subheaderReference={document.querySelector('.subheader > div > div')} />
+      <RevisionFlyout
+        store={useRenewalGridState}
+        shareFlyoutContent={gridConfig.revisionFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')} />
       <RequestFlyout
         store={useRenewalGridState}

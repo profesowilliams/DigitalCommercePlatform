@@ -9,6 +9,7 @@ use(['../../../common/utils.js'], function(utils) {
     let copyFlyout = {};
     let shareFlyout = {};
     let requestQuote = {};
+    let revisionFlyout = {};
 
     if (properties && properties["detailUrl"]) {
       jsonObject["detailUrl"] = utils.transformUrlGivenEnvironment(properties["detailUrl"]);
@@ -524,6 +525,37 @@ use(['../../../common/utils.js'], function(utils) {
             requestQuote.requestQuoteCommentCount = properties["requestQuoteCommentCount"];
         }
 
+    if (properties && properties["requestRevisionHeading"]) {
+        revisionFlyout.requestRevisionHeading = properties["requestRevisionHeading"];
+    }
+    if (properties && properties["requestRevisionDescription"]) {
+        revisionFlyout.requestRevisionDescription = properties["requestRevisionDescription"];
+    }
+    if (properties && properties["additionalInformationLabel"]) {
+        revisionFlyout.additionalInformationLabel = properties["additionalInformationLabel"];
+    }
+    if (properties && properties["additionalInformationPlaceholderText"]) {
+        revisionFlyout.additionalInformationPlaceholderText = properties["additionalInformationPlaceholderText"];
+    }
+    if (properties && properties["requestRevisionCommentCountText"]) {
+        revisionFlyout.requestRevisionCommentCountText = properties["requestRevisionCommentCountText"];
+    }
+    if (properties && properties["requestRevisionCommentCount"]) {
+        revisionFlyout.requestRevisionCommentCount = properties["requestRevisionCommentCount"];
+    }
+    if (properties && properties["requestRevisionButtonLabel"]) {
+        revisionFlyout.requestRevisionButtonLabel = properties["requestRevisionButtonLabel"];
+    }
+    if (properties && properties["successToastMessage"]) {
+        revisionFlyout.successToastMessage = properties["successToastMessage"];
+    }
+    if (properties && properties["errorToastMessage"]) {
+        revisionFlyout.errorToastMessage = properties["errorToastMessage"];
+    }
+    if (properties && properties["revisionRequestedMessage"]) {
+        revisionFlyout.revisionRequestedMessage = properties["revisionRequestedMessage"];
+    }
+
         if (requestQuote != null) {
             jsonObject["requestQuote"] = requestQuote;
         }
@@ -540,9 +572,9 @@ use(['../../../common/utils.js'], function(utils) {
         jsonObject["shareFlyout"] = shareFlyout;
     }
 
-/*     if (requestRevision != null) {
+    if (revisionFlyout != null) {
         jsonObject["revisionFlyout"] = revisionFlyout;
-    } */
+    }
 
     return {
         configJson: JSON.stringify(jsonObject)

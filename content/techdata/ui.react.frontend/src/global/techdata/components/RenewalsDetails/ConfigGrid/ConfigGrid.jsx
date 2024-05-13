@@ -9,6 +9,7 @@ import { CopyIcon, DownloadIcon, ShareIcon, InfoIcon, RevisionIcon, ChevronDownI
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import CopyFlyout from "../../CopyFlyout/CopyFlyout";
 import ShareFlyout from "../../ShareFlyout/ShareFlyout";
+import RevisionFlyout from "../../RevisionFlyout/RevisionFlyout";
 import RequestFlyout from "../../RequestFlyout/RequestFlyout";
 import Toaster from "../../Widgets/Toaster";
 import { getRowAnalytics, ANALYTIC_CONSTANTS, pushDataLayer } from '../../Analytics/analytics';
@@ -97,11 +98,18 @@ function GridHeader({ gridProps, data }) {
     effects.setCustomState({ key: 'shareFlyout', value: { data: flyoutData, show: true } });
   };
 
-  const openRequestFlyout = () => {
+  const openRevisionFlyout = () => {
     const flyoutData = {
       ...data,
       agreementNumber: data?.items[0]?.contract?.id};
-    effects.setCustomState({ key: 'shareFlyout', value: { data: flyoutData, show: true } });
+    effects.setCustomState({ key: 'revisionFlyout', value: { data: flyoutData, show: true } });
+  };
+
+  const openRequestFlyOut = () => {
+    const flyoutData = {
+      ...data,
+      agreementNumber: data?.items[0]?.contract?.id};
+    effects.setCustomState({ key: 'requestFlyout', value: { data: flyoutData, show: true } });
   };
 
   function onCloseToaster() {
@@ -152,7 +160,7 @@ function GridHeader({ gridProps, data }) {
 
   if (data?.canRequestRevision) {
     buttons.push(
-      <button onClick={openRequestFlyout} key="revision">
+      <button onClick={openRevisionFlyout} key="revision">
         <RevisionIcon className="cmp-renewal-preview__download--icon" />
         <span className={(gridProps?.productLines?.showDownloadPDFButton || gridProps?.productLines?.showDownloadXLSButton) ? 'separator' : undefined}>
           Request revision
@@ -221,6 +229,12 @@ const dropdownButtons = buttons.length > 3 ? buttons.slice(2) : [];
        <ShareFlyout
        store={useRenewalGridState}
        shareFlyoutContent={gridProps.shareFlyout}
+       reseller={data.reseller}
+       subheaderReference={document.querySelector('.subheader > div > div')}
+      />
+      <RevisionFlyout
+       store={useRenewalGridState}
+       revisionFlyoutContent={gridProps.revisionFlyout}
        reseller={data.reseller}
        subheaderReference={document.querySelector('.subheader > div > div')}
        />

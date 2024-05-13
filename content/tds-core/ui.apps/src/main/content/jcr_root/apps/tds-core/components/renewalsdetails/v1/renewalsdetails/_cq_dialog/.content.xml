@@ -947,6 +947,78 @@
                                     </columns>
                                 </items>
                             </requestQuote>
+                            <revisionFlyout
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Request Revision"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <columns
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                        margin="{Boolean}true">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <column
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <requestRevisionHeading
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="Request Revision Heading"
+                                                            fieldLabel="Request Revision Heading"
+                                                            name="./requestRevisioneHeading"/>
+                                                    <requestRevisionDescription
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Request Revision Description"
+                                                            name="./requestRevisionDescription"/>
+                                                    <additionalInformationLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Additional Information Label"
+                                                            name="./additionalInformationLabel"/>
+                                                    <additionalInformationPlaceholderText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Additional Information Placeholder Text"
+                                                            name="./additionalInformationPlaceholderText"/>
+                                                    <requestRevisionCommentCountText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Request Revision Flyout Comment Count Text"
+                                                            name="./requestRevisionCommentCountText"/>
+                                                    <requestRevisionCommentCount
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Request Revision Flyout Comment Count"
+                                                            name="./requestRevisionCommentCount"/>
+                                                    <requestRevisionButtonLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Request Revision Button Label"
+                                                            name="./requestRevisionButtonLabel"/>
+                                                    <successToastMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Success Toast Message"
+                                                            name="./successToastMessage"/>
+                                                    <errorToastMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Error Toast Message"
+                                                            name="./errorToastMessage"/>
+                                                    <revisionRequestedMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Revision Requested Message"
+                                                            name="./revisionRequestedMessage"/>
+                                                </items>
+                                            </column>
+                                        </items>
+                                    </columns>
+                                </items>
+                            </revisionFlyout>
                         </items>
                     </tabs>
                 </items>

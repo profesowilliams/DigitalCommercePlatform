@@ -123,6 +123,12 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
       onClose();
       setCustomState({ key: 'shareFlyout', value: { data, show:true} });
   };
+    
+      const triggerRevisionFlyout = () => {
+      data['link'] = '';
+      onClose();
+      setCustomState({ key: 'revisionFlyout', value: { data, show:true} });
+  };
 
     return (
         <Dialog
@@ -170,7 +176,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
                 {canRequestRevision ? (
                     <div
                         className="cmp-renewals-actions-menu__item"
-                        onClick={triggerShareFlyout}
+                        onClick={triggerRevisionFlyout}
                     >
                         <span className="cmp-renewals-actions-menu__item-icon">
                             <RevisionIcon width="16" height="16" />
