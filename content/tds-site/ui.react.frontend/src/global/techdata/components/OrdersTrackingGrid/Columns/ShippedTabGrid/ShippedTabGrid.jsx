@@ -10,14 +10,12 @@ import DNoteColumn from './Columns/DNoteColumn';
 import InvoiceColumn from './Columns/InvoiceColumn';
 import DropdownColumn from './Columns/DropdownColumn';
 import ShippedTabGridRenderers from './Columns/ShippedTabGridRenderers';
-
 function ShippedTabGrid({
   data,
   gridProps,
   openFilePdf,
   reseller,
   id,
-  totalCounter,
 }) {
   const config = {
     ...gridProps,
@@ -92,12 +90,6 @@ function ShippedTabGrid({
       width: gridColumnWidths.track,
     },
   ];
-
-  useEffect(() => {
-    if (totalCounter === 1) {
-      gridRef?.current?.api.expandAll();
-    }
-  }, []);
 
   const myColumnDefs = useMemo(
     () => buildColumnDefinitions(columnDefinitionsOverride),

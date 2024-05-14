@@ -96,6 +96,7 @@ function OrdersTrackingGrid(props) {
     setFeatureFlags,
     setFreeTextSearchTranslations,
     hasRights,
+    setMainGridRowsTotalCounter,
     updateOrderFilterCounter,
     setClearFilters,
   } = useOrderTrackingStore((st) => st.effects);
@@ -123,7 +124,6 @@ function OrdersTrackingGrid(props) {
     componentProp?.defaultSearchDateRange
   );
   const [dateRange, setDateRange] = useState(formattedDateRange);
-  const [totalCounter, setTotalCounter] = useState(null);
 
   const {
     searchOptionsList = [],
@@ -242,7 +242,7 @@ function OrdersTrackingGrid(props) {
           isOnSearchAction.current
         )
       : await fetchData(queryOperations);
-    setTotalCounter(response?.data?.content?.items?.length);
+    setMainGridRowsTotalCounter(response?.data?.content?.items?.length);
     if (ordersCountResponse.error?.isError) {
       setResponseError(true);
       sendGTMDataOnError();
@@ -253,9 +253,6 @@ function OrdersTrackingGrid(props) {
         response?.data?.content?.items?.length === 0
       ) {
         sendGTMDataOnError();
-      }
-      if (response?.data?.content?.items?.length === 1) {
-        gridApiRef?.current?.api.expandAll();
       }
     }
     const mappedResponse = mapServiceData(response);
@@ -566,7 +563,6 @@ function OrdersTrackingGrid(props) {
               rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
               newItem={newItem}
               onQueryChanged={onQueryChanged}
-              totalCounter={totalCounter}
             />
           )}
         />

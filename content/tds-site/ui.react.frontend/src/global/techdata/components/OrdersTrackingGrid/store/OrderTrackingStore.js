@@ -135,6 +135,7 @@ const INITIAL_STATE = {
   },
   freeTextSearchTranslations: {},
   orderDetailSubtotalValue: null,
+  mainGridRowsTotalCounter: null,
 };
 
 const store = (set, get) => ({

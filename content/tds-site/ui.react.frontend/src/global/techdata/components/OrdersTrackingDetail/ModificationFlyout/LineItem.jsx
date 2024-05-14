@@ -25,18 +25,29 @@ const LineItem = ({ item, index, onChange, labels }) => {
   );
 
   const handleAmountChange = (newValue) => {
-    setQuantityIncreased(Boolean(newValue > item.orderQuantity));
-    setQuantityDecreased(Boolean(newValue < item.orderQuantity));
+    const formattedNewValue = Number(newValue);
+    setQuantityIncreased(Boolean(formattedNewValue > item.orderQuantity));
+    setQuantityDecreased(Boolean(formattedNewValue < item.orderQuantity));
     setCurrentValue(newValue);
     onChange(index, {
       ...item,
-      orderQuantity: newValue,
+      orderQuantity: formattedNewValue,
       origQuantity: item.orderQuantity,
     });
-    if (newValue > 0) {
+    if (formattedNewValue > 0) {
       setDoesReasonDropdownHaveEmptyItems(false);
     }
+    if (newValue === '') {
+      setDoesReasonDropdownHaveEmptyItems(true);
+    }
   };
+
+  const handleOnBlur = (newValue) => {
+    if(newValue === ''){
+      setCurrentValue(Number(newValue));
+      setDoesReasonDropdownHaveEmptyItems(true);
+    }
+  }
 
   const handleChangeReason = (val) => {
     const newArray = reasonDropdownValues;
@@ -81,6 +92,7 @@ const LineItem = ({ item, index, onChange, labels }) => {
           minVal={0}
           value={currentValue}
           onChange={handleAmountChange}
+          onBlur={handleOnBlur}
         />
         {quantityIncreased && (
           <p>

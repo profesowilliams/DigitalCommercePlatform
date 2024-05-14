@@ -491,6 +491,12 @@ export const orderTrackingEffects = (set, get) => {
       const { userData } = get();
       return userData?.roleList?.some((role) => role.entitlement === right);
     },
+    setMainGridRowsTotalCounter (value) {
+      set((state) => ({
+        ...state,
+        mainGridRowsTotalCounter: value,
+      }));
+    },
     setClearFilters() {
       clearAllOrderFilters();
       setFilterClicked(false);

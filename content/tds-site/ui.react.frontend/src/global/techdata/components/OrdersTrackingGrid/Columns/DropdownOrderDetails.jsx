@@ -11,6 +11,7 @@ import NotShippedTabGrid from './NotShippedTabGrid/NotShippedTabGrid';
 import useGet from '../../../hooks/useGet';
 import { LoaderIcon } from '../../../../../fluentIcons/FluentIcons';
 import MigrationInfoBox from '../../MigrationInfoBox/MigrationInfoBox';
+import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 function DropdownOrderDetails({
   data,
@@ -18,14 +19,16 @@ function DropdownOrderDetails({
   openFilePdf,
   newItem,
   rowsToGrayOutTDNameRef,
-  onQueryChanged,
-  totalCounter
+  onQueryChanged
 }) {
   const [apiResponse, isLoading, error] = useGet(
     `${aemConfig.uiCommerceServiceDomain}/v3/order/${data?.id}/lines`,
     'lineDetails'
   );
   const gridRef = useRef();
+  const mainGridRowsTotalCounter = useOrderTrackingStore(
+    (state) => state.mainGridRowsTotalCounter
+  );
   const [activeTab, setActiveTab] = useState(0);
   const infoBoxEnable =
     apiResponse?.content?.sapOrderMigration?.referenceType?.length > 0;
@@ -58,7 +61,6 @@ function DropdownOrderDetails({
           openFilePdf={openFilePdf}
           reseller={data?.customerPO}
           id={data?.id}
-          totalCounter={totalCounter}
         />
       ) : (
         <LoaderIcon className="loadingIcon-rotate" />
@@ -90,7 +92,6 @@ function DropdownOrderDetails({
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
           newItem={newItem}
           onQueryChanged={onQueryChanged}
-          totalCounter={totalCounter}
         />
       ) : (
         <LoaderIcon className="loadingIcon-rotate" />
@@ -105,7 +106,7 @@ function DropdownOrderDetails({
   };
 
   useEffect(() => {
-    if (totalCounter === 1) {
+    if (mainGridRowsTotalCounter === 1) {
       if (!noShippedItems || partiallyShipped) {
         setActiveTab(0);
       } else if (!noNotShippedItems) {

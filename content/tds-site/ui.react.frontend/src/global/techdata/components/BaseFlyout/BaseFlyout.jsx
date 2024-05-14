@@ -37,6 +37,7 @@ function BaseFlyout({
   const { top, height } = positioning;
 
   useEffect(() => {
+    document.documentElement.style.setProperty('overflow-y', 'visible');
     let timer;
     if (open) {
       timer = setTimeout(() => (document.body.style.paddingRight = '0px'), 333);

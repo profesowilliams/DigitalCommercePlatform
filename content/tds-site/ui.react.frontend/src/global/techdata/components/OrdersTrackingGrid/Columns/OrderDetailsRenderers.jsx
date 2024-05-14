@@ -9,14 +9,17 @@ function OrderDetailsRenderers({
   rowsToGrayOutTDNameRef,
   newItem,
   onQueryChanged,
-  totalCounter,
 }) {
   const detailRender = useOrderTrackingStore(
     (state) => state.filter.detailRender
   );
+  const mainGridRowsTotalCounter = useOrderTrackingStore(
+    (state) => state.mainGridRowsTotalCounter
+  );
+
   return (
     <>
-      {detailRender === 'primary' && (
+      {(mainGridRowsTotalCounter === 1 || detailRender === 'primary') && (
         <DropdownOrderDetails
           data={data}
           aemConfig={config}
@@ -24,7 +27,6 @@ function OrderDetailsRenderers({
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
           newItem={newItem}
           onQueryChanged={onQueryChanged}
-          totalCounter={totalCounter}
         />
       )}
     </>

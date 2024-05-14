@@ -1,6 +1,12 @@
 import React from 'react';
 
-const Counter = ({ value = 0, onChange, minVal = 0, maxVal = null }) => {
+const Counter = ({
+  value = 0,
+  onChange,
+  minVal = 0,
+  maxVal = null,
+  onBlur,
+}) => {
   const increase = () => {
     if (maxVal === null || value < maxVal) {
       onChange(value + 1);
@@ -23,8 +29,9 @@ const Counter = ({ value = 0, onChange, minVal = 0, maxVal = null }) => {
         min={minVal}
         value={value}
         onChange={(e) => {
-          onChange(Number(e.target.value));
+          onChange(e.target.value);
         }}
+        onBlur={(e) => onBlur(e.target.value)}
       />
       <div className="plus" onClick={increase}>
         +
