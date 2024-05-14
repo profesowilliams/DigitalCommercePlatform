@@ -7,7 +7,8 @@ import {
 } from '../../../../utils/featureFlagUtils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 
-const OrderTrackingDetailFooter = ({ paymentDetails, config }) => {
+const OrderTrackingDetailFooter = ({ content, config }) => {
+  const { paymentDetails, lastDataSource } = content || null;
   const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
     ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA))
     : null;
@@ -20,15 +21,23 @@ const OrderTrackingDetailFooter = ({ paymentDetails, config }) => {
   const activeCustomer = currentUserData?.activeCustomer;
   const defaultCurrency = activeCustomer?.defaultCurrency || '';
   const currency = paymentDetails?.currency;
-
+  const priceLoading = lastDataSource === 'OrderModification';
   return (
     <>
       <div className="footer-container">
         <div className="box-container">
           <div className="box-container__leftPart">
-            <span className="box-container__leftPart-line1">
-              {getDictionaryValueOrKey(config.footerLabels?.line1)}
-            </span>
+            {priceLoading ? (
+              <span className="box-container__leftPart-line1">
+                {getDictionaryValueOrKey(
+                  config.footerLabels?.priceLoadingMessage
+                )}
+              </span>
+            ) : (
+              <span className="box-container__leftPart-line1">
+                {getDictionaryValueOrKey(config.footerLabels?.line1)}
+              </span>
+            )}
             <span className="box-container__leftPart-line2">
               {getDictionaryValueOrKey(config.footerLabels?.line2)}
             </span>
@@ -39,16 +48,20 @@ const OrderTrackingDetailFooter = ({ paymentDetails, config }) => {
               </a>
             </span>
           </div>
-          <div className="box-container__rightPart">
-            <span className="box-container__rightPart-subtotalLabel">
-              {getDictionaryValueOrKey(config.footerLabels?.totalOrderNetPrice)}
-            </span>
-            <span className="box-container__rightPart-subtotalValue">
-              {orderDetailSubtotalValue?.toFixed(2) ||
-                paymentDetails?.subtotalFormatted}{' '}
-              {currency ?? defaultCurrency}
-            </span>
-          </div>
+          {!priceLoading && (
+            <div className="box-container__rightPart">
+              <span className="box-container__rightPart-subtotalLabel">
+                {getDictionaryValueOrKey(
+                  config.footerLabels?.totalOrderNetPrice
+                )}
+              </span>
+              <span className="box-container__rightPart-subtotalValue">
+                {orderDetailSubtotalValue?.toFixed(2) ||
+                  paymentDetails?.subtotalFormatted}{' '}
+                {currency ?? defaultCurrency}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </>

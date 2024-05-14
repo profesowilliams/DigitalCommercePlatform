@@ -214,10 +214,7 @@ function OrdersTrackingDetail(props) {
                 rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
                 newItem={newItem}
               />
-              <OrderTrackingDetailFooter
-                config={config}
-                paymentDetails={content.paymentDetails}
-              />
+              <OrderTrackingDetailFooter config={config} content={content} />
             </>
           )}
         </section>

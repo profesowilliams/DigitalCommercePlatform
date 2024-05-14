@@ -6180,6 +6180,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
     content: {
       shipComplete: false,
       orderNumber: "I038551797",
+      lastDataSource: "OrderModification",
       customerPO: "20240109132822             38551797",
       docTypeText: "InTouch Order",
       shipTo: {

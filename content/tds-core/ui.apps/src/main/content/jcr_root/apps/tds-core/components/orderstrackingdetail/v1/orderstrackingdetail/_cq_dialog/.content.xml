@@ -165,6 +165,13 @@
                                                 fieldLabel="Total Order Net Price Label"
                                                 name="./totalOrderNetPrice"
                                                 required="{Boolean}true"/>		
+											<priceLoadingMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter The recent modifications requested for your order are currently being processed, and will be completed shortly, once completed we will update the final order total Label"
+                                                fieldLabel="The recent modifications requested for your order are currently being processed, and will be completed shortly, once completed we will update the final order total"
+                                                name="./priceLoadingMessage"
+                                                required="{Boolean}true"/>		
 											<line1
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

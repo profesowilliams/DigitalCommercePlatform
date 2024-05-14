@@ -173,6 +173,7 @@ use(["../../../common/utils.js"], function (utils) {
   // FooterLabels
   const footerLabelsList = [
     "totalOrderNetPrice",
+    "priceLoadingMessage",
     "line1",
     "line2",
     "line3",
