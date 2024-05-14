@@ -409,7 +409,7 @@ function RenewalsGrid(props) {
           subheaderReference={document.querySelector('.subheader > div > div')} />
       <RevisionFlyout
         store={useRenewalGridState}
-        shareFlyoutContent={gridConfig.revisionFlyout}
+        revisionFlyoutContent={gridConfig.revisionFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')} />
       <RequestFlyout
         store={useRenewalGridState}

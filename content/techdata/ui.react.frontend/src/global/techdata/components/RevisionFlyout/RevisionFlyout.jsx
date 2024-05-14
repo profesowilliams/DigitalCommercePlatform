@@ -18,7 +18,7 @@ export function RevisionFlyout({ store, revisionFlyoutContent, subheaderReferenc
   const quoteType = getDictionaryValueOrKey('Renewal');
   const effects = store((st) => st.effects);
   const [enableShare, setEnableShare] = useState(false);
-  const [count, setCount] = useState(getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCount)) || 500;
+  const [count, setCount] = useState(getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCount));
   const closeFlyout = () => effects.setCustomState({ key: 'revisionFlyout', value: {show:false} });
   const userData = useStore(state => state.userData);
   const [errorMessage, setErrorMessage] = useState('');
