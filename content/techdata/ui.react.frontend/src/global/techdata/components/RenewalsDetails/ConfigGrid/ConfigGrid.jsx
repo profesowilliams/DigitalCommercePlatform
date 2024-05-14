@@ -5,7 +5,7 @@ import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
-import { CopyIcon, DownloadIcon, ShareIcon, InfoIcon, RevisionIcon, ChevronDownIcon } from "../../../../../fluentIcons/FluentIcons";
+import { CopyIcon, DownloadIcon, ShareIcon, InfoIcon, RevisionIcon, ChevronDownIcon,WarningTriangleIcon, ProhibitedIcon } from "../../../../../fluentIcons/FluentIcons";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import CopyFlyout from "../../CopyFlyout/CopyFlyout";
 import ShareFlyout from "../../ShareFlyout/ShareFlyout";
@@ -16,7 +16,7 @@ import { getRowAnalytics, ANALYTIC_CONSTANTS, pushDataLayer } from '../../Analyt
 
 function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] = useState(false);
-  const effects = useRenewalGridState(state => state.effects);   
+  const effects = useRenewalGridState(state => state.effects);
   const analyticsCategory = useRenewalGridState((state) => state.analyticsCategory);
   const isOpportunity = data.canRequestQuote;
 
@@ -113,7 +113,7 @@ function GridHeader({ gridProps, data }) {
   };
 
   function onCloseToaster() {
-    effects.closeAndCleanToaster();    
+    effects.closeAndCleanToaster();
   }
 
   <button onClick={() => setPDFDownloadableOnDemand(true)}>
@@ -133,7 +133,7 @@ function GridHeader({ gridProps, data }) {
       setShowDropdown(false);
     }, 500); // Hides the dropdown after 2 seconds
   };
-  
+
   // Prepare buttons and handle which ones to show directly and which to hide in dropdown
   const buttons = [];
   if (data?.canCopy) {
@@ -146,7 +146,7 @@ function GridHeader({ gridProps, data }) {
       </button>
     );
   }
-  
+
   if (gridProps.enableShareOption && data?.canShareQuote) {
     buttons.push(
       <button onClick={openShareFlyOut} className='share-button' key="share">
@@ -168,7 +168,7 @@ function GridHeader({ gridProps, data }) {
       </button>
     );
   }
-  
+
   if (gridProps?.productLines?.showDownloadPDFButton) {
     buttons.push(
       <button onClick={downloadPDF} key="downloadPDF">
@@ -179,7 +179,7 @@ function GridHeader({ gridProps, data }) {
       </button>
     );
     }
-  
+
   if (gridProps?.productLines?.showDownloadXLSButton) {
     buttons.push(
       <button onClick={downloadXLS} key="downloadXLS">
@@ -218,10 +218,10 @@ const dropdownButtons = buttons.length > 3 ? buttons.slice(2) : [];
 
       <Toaster
         onClose={onCloseToaster}
-        store={useRenewalGridState} 
-        message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}          
+        store={useRenewalGridState}
+        message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}
         />
-      <CopyFlyout 
+      <CopyFlyout
         store={useRenewalGridState}
         copyFlyout={gridProps.copyFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
@@ -297,6 +297,20 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
             </div>
           )
         }
+         {
+                  data.feedBackMessages && data.feedBackMessages[0] && data.feedBackMessages[0].errorCriticality &&
+                  (data.feedBackMessages[0].errorCriticality === 1 || data.feedBackMessages[0].errorCriticality === 2)
+                  && data.feedBackMessages[0].message && (
+                    <div className={data.feedBackMessages[0].errorCriticality === 1 ?
+                      'renewal-feedback-banner red-banner' : 'renewal-feedback-banner orange-banner'}>
+                      <p>{
+                        data.feedBackMessages[0].errorCriticality === 1 ?
+                        <ProhibitedIcon /> : <WarningTriangleIcon />
+                      }
+                      {data.feedBackMessages[0].message}</p>
+                    </div>
+                  )
+                }
       </div>
       <div className="info-container">
         <ResellerInfo
@@ -325,7 +339,7 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           programName={programName}
           formattedDueDate={formattedDueDate}
           agreementInfo={quotePreview.agreementInfo}
-          contract={items[0].contract}
+          contract={items[0]?.contract}
           formattedExpiry={formattedExpiry}
           vendorReference={vendorReference?.length ? vendorReference[0] : null}
           disableMultipleAgreement={!quotePreview.agreementInfo.disableMultipleAgreement}

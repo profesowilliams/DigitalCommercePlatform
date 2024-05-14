@@ -78,6 +78,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     ...gridProps,
     serverSide: false,
     paginationStyle: "none",
+    searchResultsError: compProps.searchResultsError
   };
   const isRequestQuoteFlag = data?.canRequestQuote && compProps?.enableRequestQuote;
   const effects = useRenewalsDetailsStore( state => state.effects);
@@ -427,19 +428,26 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
           columnDefs={columnDefs}
 
         /> */}
-        <GridSubTotal data={data} gridProps={gridProps} subtotal={subtotal} compProps={compProps} />
-        <div className="place-cmp-order-dialog-container">
-        <p className="cmp-place-order-actions">
-            <Button
-              disabled={!isIconEnabled}
-              className={computeClassName('cmp-detail-order-button')}
-              onClick={onOrderButtonClicked}
-              variant="contained"
-            >
-              { getDictionaryValue("button.common.label.order", "Order") }
-            </Button>
-          </p>
-        </div>
+        {
+          resultArray?.length > 0 ?
+          (
+            <>
+              <GridSubTotal data={data} gridProps={gridProps} subtotal={subtotal} compProps={compProps} />
+              <div className="place-cmp-order-dialog-container">
+                <p className="cmp-place-order-actions">
+                  <Button
+                    disabled={!isIconEnabled}
+                    className={computeClassName('cmp-detail-order-button')}
+                    onClick={onOrderButtonClicked}
+                    variant="contained"
+                  >
+                    { getDictionaryValue("button.common.label.order", "Order") }
+                  </Button>
+                </p>
+              </div>
+            </>
+          ) : null
+        }
       </section>
       {modal && (
         <Modal

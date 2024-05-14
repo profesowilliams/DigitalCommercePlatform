@@ -216,6 +216,68 @@
         margin-right: 20px;
       }
   }
+  .renewal-feedback-banner {
+        padding: 20px;
+        background-color: #EBF3F9;
+        border-left: 4px solid #006FBA;
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        margin-top: 30px;
+        margin-bottom: 15px;
+
+        &.orange-banner {
+          background-color: #FEF9EB;
+          border-left: 4px solid #FF6200;
+        }
+
+        &.red-banner {
+          background-color: #FBECF0;
+          border-color: #CD163F;
+        }
+
+        p {
+          font-size: 16px;
+          line-height: 24px;
+          color: $brand-charcoal;
+          margin: 0;
+          display: flex;
+          gap: 15px;
+          flex: 0 0 80%;
+        }
+
+        button {
+          text-decoration: none;
+          font-size: 16px;
+          line-height: 24px;
+          color: $brand-cobalt;
+          margin-right: 20px;
+        }
+    }
+  }
+
+  .cmp-renewals-details .ag-theme-alpine .ag-root-wrapper .ag-root-wrapper-body .ag-body-viewport,
+  .cmp-renewals-details .ag-theme-alpine .ag-root-wrapper .ag-root-wrapper-body .ag-body-viewport {
+    min-height: 300px;
+  }
+
+  .cmp-renewals-details .cmp-renewal-search-error {
+    img {
+      width: 151px;
+      margin-bottom: 5px;
+    }
+    .cmp-renewal-search-error__title {
+      font-size: 20px;
+      line-height: 26px;
+      color: #262626;
+      font-weight: 500;
+    }
+
+    .cmp-renewal-search-error__description {
+      font-size: 16px;
+      line-height: 24px;
+      color: #262626;
+    }
 }
 
 .cmp-renewals-details__tds .cmp-renewals-qp__config-grid .export-container .opportunity-quote-disabled button {

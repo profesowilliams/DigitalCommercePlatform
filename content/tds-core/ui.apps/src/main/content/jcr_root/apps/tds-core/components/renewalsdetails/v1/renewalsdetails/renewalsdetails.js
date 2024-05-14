@@ -14,6 +14,8 @@ use(['../../../common/utils.js'], function(utils) {
     let copyFlyout = {};
     let shareFlyout = {};
     let revisionFlyout = {};
+    let noResultsValues = {};
+
     
     if (properties && properties["line"]) {
         productLines["line"] = properties["line"];
@@ -649,6 +651,24 @@ use(['../../../common/utils.js'], function(utils) {
     if (this.serviceData && this.serviceData.enableRequestRevision) {
         jsonObject["enableRequestRevision"] = this.serviceData.enableRequestRevision;
     }
+
+
+    if (properties && properties["noDataTitle"]) {
+        noResultsValues.noDataTitle = properties["noDataTitle"];
+    }
+
+    if (properties && properties["noDataDescription"]) {
+        noResultsValues.noDataDescription = properties["noDataDescription"];
+    }
+
+   if (properties && properties["noDataImageFileReference"]) {
+         noResultsValues.noDataImage = properties["noDataImageFileReference"];
+   }
+
+    if (noResultsValues != null) {
+           jsonObject["searchResultsError"] = noResultsValues;
+      }
+
 
     return {
         configJson: JSON.stringify(jsonObject)
