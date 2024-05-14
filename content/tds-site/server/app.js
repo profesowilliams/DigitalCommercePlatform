@@ -8480,8 +8480,17 @@ app.get("/ui-intouch-localize/v1", function (req, res) {
     "OrderTracking.MainGrid": {
       Search_Input_Tooltip: "Free text search is available for:",
       Search_Input_Loading: "Loading...",
+      Search_Input_NoResultFound: "No results found",
     },
   };
+
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 100);
+});
+
+app.get("/ui-commerce/v3/format/currency/:amount", function (req, res) {
+  const response = "1078.00";
 
   setTimeout(() => {
     return res.status(200).json(response);

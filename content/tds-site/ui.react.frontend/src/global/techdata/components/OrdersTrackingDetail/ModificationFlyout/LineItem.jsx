@@ -5,18 +5,16 @@ import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 import RejectedReasonDropdown from './RejectedReasonDropdown';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import Tooltip from '@mui/material/Tooltip';
+import { usGet } from '../../../../../utils/api';
 
-const formatToCurrency = (number) =>
-  number
-    .toFixed(2)
-    .replace(/\d(?=(\d{3})+\.)/g, '$&.')
-    .replace(/.([^.]*)$/, ',' + '$1');
-
-const LineItem = ({ item, index, onChange, labels }) => {
+const LineItem = ({ item, index, onChange, labels, domain }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
   const [quantityDecreased, setQuantityDecreased] = useState(false);
   const [currentValue, setCurrentValue] = useState(item.orderQuantity);
   const [rejectedReason, setRejectedReason] = useState('');
+  const [totalPriceFormatted, setTotalPriceFormatted] = useState(
+    item?.totalPriceFormatted || ''
+  );
 
   const { setReasonDropdownValues, setDoesReasonDropdownHaveEmptyItems } =
     useOrderTrackingStore((st) => st.effects);
@@ -24,7 +22,20 @@ const LineItem = ({ item, index, onChange, labels }) => {
     (st) => st.orderModification.reasonDropdownValues
   );
 
-  const handleAmountChange = (newValue) => {
+  const fetchNewPrice = async (amount) => {
+    try {
+      const result = await usGet(`${domain}/v3/format/currency/${amount}`);
+      return result;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handleAmountChange = async (newValue) => {
+    const newPrice = await fetchNewPrice(
+      (newValue * item.unitPrice).toFixed(2)
+    );
+    setTotalPriceFormatted(newPrice.data);
     const formattedNewValue = Number(newValue);
     setQuantityIncreased(Boolean(formattedNewValue > item.orderQuantity));
     setQuantityDecreased(Boolean(formattedNewValue < item.orderQuantity));
@@ -43,11 +54,11 @@ const LineItem = ({ item, index, onChange, labels }) => {
   };
 
   const handleOnBlur = (newValue) => {
-    if(newValue === ''){
+    if (newValue === '') {
       setCurrentValue(Number(newValue));
       setDoesReasonDropdownHaveEmptyItems(true);
     }
-  }
+  };
 
   const handleChangeReason = (val) => {
     const newArray = reasonDropdownValues;
@@ -112,7 +123,7 @@ const LineItem = ({ item, index, onChange, labels }) => {
         <p className="cmp-flyout-list__element__price-bold">
           {getDictionaryValueOrKey(labels.lineTotal)} ({item.currency})
         </p>
-        <p>{formatToCurrency(currentValue * item.unitPrice)}</p>
+        <p>{totalPriceFormatted}</p>
       </div>
     </li>
   );

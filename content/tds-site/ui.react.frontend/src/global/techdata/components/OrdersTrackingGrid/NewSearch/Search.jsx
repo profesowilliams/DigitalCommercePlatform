@@ -4,7 +4,6 @@ import React, {
   forwardRef,
   useMemo,
   useCallback,
-  useEffect,
 } from 'react';
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -121,8 +120,13 @@ const Search = (
   );
   const freeTextSearchTranslations =
     translations?.['OrderTracking.FreetextSearchFields'];
-
   const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
+
+  const loadingTranslations = {
+    loading: mainGridTranslations?.Search_Input_Loading,
+    noResults: mainGridTranslations?.Search_Input_NoResultFound,
+  };
+  const [loadingText, setLoadingText] = useState('loading');
 
   const getFreeTextTranslations = (key) =>
     freeTextSearchTranslations?.[key] || key;
@@ -171,8 +175,9 @@ const Search = (
         ? fetchSuggestions(newValue).then((result) => {
             setSuggestions(result?.data?.content?.suggestions || []);
             if (result?.data?.content?.suggestions?.length === 0) {
-              setOpen(false);
+              setLoadingText('noResults');
             } else {
+              setLoadingText('loading');
               setOpen(true);
             }
           })
@@ -202,18 +207,17 @@ const Search = (
   };
 
   const triggerSearch = (newValue) => {
-    if (value.length >= minimalQueryLength) {
+    if (value.length >= minimalQueryLength && suggestions.length > 0) {
       let newKey = '';
+      let newGTMKey = '';
       if (newValue === null) {
         setValue('');
       } else if (!newValue.field) {
-        if (suggestions.length > 0) {
-          newKey = suggestions[0].field;
-        } else {
-          newKey = 'CustomerPO';
-        }
+        newKey = suggestions[0].field;
+        newGTMKey = suggestions[0].gtmField;
       } else {
         newKey = newValue.field;
+        newGTMKey = newValue.gtmField;
       }
       clearReports();
       ref.current.field = newKey;
@@ -228,11 +232,11 @@ const Search = (
       pushEvent(ANALYTICS_TYPES.events.orderSearch, null, {
         order: {
           searchTerm: value,
-          searchType: newKey,
+          searchType: newGTMKey,
         },
       });
       pushDataLayerGoogle(
-        getSearchAnalyticsGoogle(searchAnalyticsLabel, newKey, value)
+        getSearchAnalyticsGoogle(searchAnalyticsLabel, newGTMKey, value)
       );
       resetSearch();
     }
@@ -284,7 +288,7 @@ const Search = (
         filterOptions={(x) => x}
         open={open}
         loading={loading}
-        loadingText={mainGridTranslations?.Search_Input_Loading}
+        loadingText={loadingTranslations[loadingText]}
         blurOnSelect={true}
         inputValue={value}
         openOnFocus={true}
@@ -293,7 +297,7 @@ const Search = (
         }}
         onClose={(event, reason) => {
           if (reason === 'createOption') {
-            triggerSearch({});
+            event.preventDefault();
           } else {
             setOpen(false);
           }
@@ -330,33 +334,25 @@ const Search = (
             InputProps={{
               ...params.InputProps,
               endAdornment: (
-                <>
-                  <InputAdornment position="end">
-                    <Icon>
-                      <Tooltip
-                        title={tooltipMessage}
-                        placement="top"
-                        arrow
-                        disableInteractive={true}
-                      >
-                        <div>
-                          <SearchIcon
-                            onClick={() =>
-                              value.length >= minimalQueryLength
-                                ? triggerSearch({})
-                                : null
-                            }
-                            className={`search-icon__dark ${
-                              value.length < minimalQueryLength
-                                ? 'disabled'
-                                : ''
-                            }`}
-                          />
-                        </div>
-                      </Tooltip>
-                    </Icon>
-                  </InputAdornment>
-                </>
+                <InputAdornment position="end">
+                  <Icon>
+                    <Tooltip
+                      title={tooltipMessage}
+                      placement="top"
+                      arrow
+                      disableInteractive={true}
+                    >
+                      <div>
+                        <SearchIcon
+                          onClick={() => triggerSearch({})}
+                          className={`search-icon__dark ${
+                            value.length < minimalQueryLength ? 'disabled' : ''
+                          }`}
+                        />
+                      </div>
+                    </Tooltip>
+                  </Icon>
+                </InputAdornment>
               ),
             }}
             onKeyPress={(e) => {

@@ -379,6 +379,7 @@ function OrderModificationFlyout({
               item={item}
               onChange={handleChange}
               labels={labels}
+              domain={gridConfig.uiCommerceServiceDomain}
             />
           ))}
         </ul>
