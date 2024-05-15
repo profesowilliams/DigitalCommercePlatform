@@ -218,8 +218,8 @@
   }
   .renewal-feedback-banner {
         padding: 20px;
-        background-color: #EBF3F9;
-        border-left: 4px solid #006FBA;
+        background-color: $light-blue;
+        border-left: 4px solid $brand-cobalt;
         display: flex;
         align-items: start;
         justify-content: space-between;
@@ -227,13 +227,13 @@
         margin-bottom: 15px;
 
         &.orange-banner {
-          background-color: #FEF9EB;
-          border-left: 4px solid #FF6200;
+          background-color: banner-orange;
+          border-left: 4px solid $border-orange;
         }
 
-        &.red-banner {
-          background-color: #FBECF0;
-          border-color: #CD163F;
+        &.blue-banner {
+          background-color: $light-blue;
+          border-color:$brand-cobalt;
         }
 
         p {

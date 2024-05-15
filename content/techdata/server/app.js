@@ -4874,12 +4874,12 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           "canShareQuote": true,
           "canRequestQuote": false,
           "feedBackMessages": [
-                                {
-                                  "ruleNumber": 0,
-                                  "errorCriticality": 2,
-                                  "message": "Rules executed"
-                                }
-                              ],
+            {
+              "ruleNumber": 0,
+              "errorCriticality": 3,
+              "message": "Rules executed"
+            }
+          ],
           "customerPO": {
               "text": "test po",
               "isValid": true,

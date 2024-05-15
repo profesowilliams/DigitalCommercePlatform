@@ -299,12 +299,12 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
         }
          {
                   data.feedBackMessages && data.feedBackMessages[0] && data.feedBackMessages[0].errorCriticality &&
-                  (data.feedBackMessages[0].errorCriticality === 1 || data.feedBackMessages[0].errorCriticality === 2)
+                  (data.feedBackMessages[0].errorCriticality === 2 || data.feedBackMessages[0].errorCriticality === 3)
                   && data.feedBackMessages[0].message && (
-                    <div className={data.feedBackMessages[0].errorCriticality === 1 ?
-                      'renewal-feedback-banner red-banner' : 'renewal-feedback-banner orange-banner'}>
+                    <div className={data.feedBackMessages[0].errorCriticality === 3 ?
+                      'renewal-feedback-banner blue-banner' : 'renewal-feedback-banner orange-banner'}>
                       <p>{
-                        data.feedBackMessages[0].errorCriticality === 1 ?
+                        data.feedBackMessages[0].errorCriticality === 3 ?
                         <ProhibitedIcon /> : <WarningTriangleIcon />
                       }
                       {data.feedBackMessages[0].message}</p>
