@@ -243,15 +243,16 @@ const Search = (
   };
 
   const debouncedAutocomplete = useMemo(() => {
-    return debounce(handleAutocompleteInput);
-  }, []);
+    const timeout = (!value || value.length < 3) ? 300 : (value.length < 5) ? 200 : (value.length < 10) ? 100 : 0;
+    return debounce(handleAutocompleteInput, timeout);
+  }, [value]);
 
   const tooltipMessage = mainGridTranslations ? (
-    <div>
-      <p style={{ color: '#fff' }}>
+    <div style={{ padding: '0 5px' }}>
+      <p style={{ color: '#fff', 'margin-bottom': '5px' }}>
         {mainGridTranslations.Search_Input_Tooltip}
       </p>
-      <ul style={{ listStyle: 'inside', color: '#fff' }}>
+      <ul style={{ listStyle: 'inside', color: '#fff', margin: 0, padding: 0 }}>
         {Object.values(freeTextSearchTranslations)
           .sort((a, b) => a.localeCompare(b))
           .map((el) => (
