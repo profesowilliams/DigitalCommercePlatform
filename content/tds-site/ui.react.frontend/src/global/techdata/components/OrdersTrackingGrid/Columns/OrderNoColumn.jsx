@@ -1,11 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { isJavaScriptProtocol } from '../../../../../utils/utils';
 import { getOrderDetailsAnalyticsGoogle } from '../utils/analyticsUtils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
+import { CopyIcon, TickIcon } from '../../../../../fluentIcons/FluentIcons';
+
+import Tooltip from '@mui/material/Tooltip';
 
 function OrderNoColumn({ id, detailUrl }) {
-  const saleslogin = getUrlParamsCaseInsensitive().get("saleslogin");
+  const [copied, setCopied] = useState(false);
+  const saleslogin = getUrlParamsCaseInsensitive().get('saleslogin');
   const salesLoginParam = saleslogin ? `&saleslogin=${saleslogin}` : '';
+
+  const handleTooltipClick = () => {
+    navigator.clipboard.writeText(id);
+    setCopied(true);
+  };
+
+  const tooltipMessage = copied ? ( //TODO: it's just a POC, so translations will be added later
+    <span style={{ textAlign: 'center' }}>
+      <TickIcon
+        fill="green"
+        style={{ verticalAlign: 'middle', marginRight: '5px' }}
+      />
+      Copied to Clipboard
+    </span>
+  ) : (
+    <span
+      style={{ cursor: 'pointer', textAlign: 'center' }}
+      onClick={handleTooltipClick}
+    >
+      <CopyIcon
+        fill="white"
+        style={{ verticalAlign: 'middle', marginRight: '5px' }}
+      />
+      Copy
+    </span>
+  );
 
   return detailUrl && !isJavaScriptProtocol.test(detailUrl) ? (
     <a
@@ -15,10 +45,24 @@ function OrderNoColumn({ id, detailUrl }) {
       )}/order-details.html?id=${id}${salesLoginParam}`}
       onClick={() => getOrderDetailsAnalyticsGoogle(id)}
     >
-      {id}
+      <Tooltip
+        title={tooltipMessage}
+        placement="top-end"
+        disableInteractive={false}
+        leaveDelay={copied ? 1000 : 0}
+        onClose={() => {
+          if (copied) {
+            setTimeout(() => setCopied(false), 1000);
+          }
+        }}
+      >
+        <span>{id}</span>
+      </Tooltip>
     </a>
   ) : (
-    <span>{id}</span>
+    <Tooltip>
+      <span>{id}</span>
+    </Tooltip>
   );
 }
 
