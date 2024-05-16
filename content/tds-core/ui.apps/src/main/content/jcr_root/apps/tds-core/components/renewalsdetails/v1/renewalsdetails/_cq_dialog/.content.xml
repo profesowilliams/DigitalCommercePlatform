@@ -967,7 +967,7 @@
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldDescription="Request Revision Heading"
                                                             fieldLabel="Request Revision Heading"
-                                                            name="./requestRevisioneHeading"/>
+                                                            name="./requestRevisionHeading"/>
                                                     <requestRevisionDescription
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"

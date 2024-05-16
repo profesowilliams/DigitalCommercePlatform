@@ -8,7 +8,7 @@ import { Button, TextField, Autocomplete, Chip } from '@mui/material';
 import Box from '@mui/material/Box';
 import { CustomTextField } from '../Widgets/CustomTextField';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
-import { shareQuote } from './api';
+import { requestRevision } from './api';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
 import {useStore} from '../../../../utils/useStore';
@@ -17,7 +17,7 @@ export function RevisionFlyout({ store, revisionFlyoutContent, subheaderReferenc
   const revisionFlyoutConfig = store((st) => st.revisionFlyout);
   const quoteType = getDictionaryValueOrKey('Renewal');
   const effects = store((st) => st.effects);
-  const [enableShare, setEnableShare] = useState(false);
+  const [enableRevision, setEnableRevision] = useState(false);
   const [count, setCount] = useState(getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCount));
   const closeFlyout = () => effects.setCustomState({ key: 'revisionFlyout', value: {show:false} });
   const userData = useStore(state => state.userData);
