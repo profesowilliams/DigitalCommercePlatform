@@ -3,6 +3,7 @@ import { getDictionaryValueOrKey } from '../../../../../../../utils/utils';
 import { WarningTriangleLarge } from '../../../../../../../fluentIcons/FluentIcons';
 import { useOrderTrackingStore } from '../../../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { usGet } from '../../../../../../../utils/api';
+import { getOrderModificationFailedGoogle, pushDataLayerGoogle } from '../../../utils/analyticsUtils';
 
 function QuantityAndDeliveryEstimateLine({
   line,
@@ -28,6 +29,9 @@ function QuantityAndDeliveryEstimateLine({
           `/v3/ordervalidation/${id}/${line.line}`
         }`
       );
+      if (result?.content?.orderEditable === false) {
+        pushDataLayerGoogle(getOrderModificationFailedGoogle('modify order'));
+      }
       return result;
     } catch (error) {
       console.error(error);

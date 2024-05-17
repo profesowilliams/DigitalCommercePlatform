@@ -297,6 +297,14 @@ export const getEolReplacementAnalyticsGoogle = (sku, addedSku) => {
   };
 };
 
+export const getOrderModificationFailedGoogle = (label) => {
+  return {
+    event: 'Order tracking - Order Modification',
+    orderTracking: 'Order Modification - failed',
+    label,
+  };
+};
+
 export const getDNoteDownloadFailedAnalyticsGoogle = (counter, isMainGrid) => {
   return {
     event: 'Order tracking - D-Note View download failed',

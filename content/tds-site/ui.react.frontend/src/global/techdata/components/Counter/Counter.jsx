@@ -5,17 +5,16 @@ const Counter = ({
   onChange,
   minVal = 0,
   maxVal = null,
-  onBlur,
 }) => {
   const increase = () => {
     if (maxVal === null || value < maxVal) {
-      onChange(value + 1);
+      onChange(Number(value) + 1);
     }
   };
 
   const decrease = () => {
     if (minVal === null || value > minVal) {
-      onChange(value - 1);
+      onChange(Number(value) - 1);
     }
   };
 
@@ -31,7 +30,6 @@ const Counter = ({
         onChange={(e) => {
           onChange(e.target.value);
         }}
-        onBlur={(e) => onBlur(e.target.value)}
       />
       <div className="plus" onClick={increase}>
         +

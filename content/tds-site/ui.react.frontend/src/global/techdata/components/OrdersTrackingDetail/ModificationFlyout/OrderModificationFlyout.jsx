@@ -12,6 +12,7 @@ import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrack
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 import {
   getAddLineAnalyticsGoogle,
+  getOrderModificationFailedGoogle,
   getReduceQuantityAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../../OrdersTrackingGrid/utils/analyticsUtils';
@@ -76,6 +77,9 @@ function OrderModificationFlyout({
   const getOrderModificationData = async () => {
     try {
       const result = await usGet(requestURLData);
+      if (result?.content?.orderEditable === false) {
+        pushDataLayerGoogle(getOrderModificationFailedGoogle('modify order'));
+      }
       return result;
     } catch (error) {
       console.error('Error:', error);

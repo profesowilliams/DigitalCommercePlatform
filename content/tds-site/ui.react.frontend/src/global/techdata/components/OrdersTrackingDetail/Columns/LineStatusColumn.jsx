@@ -4,6 +4,7 @@ import { WarningTriangle } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { getUrlParams } from '../../../../../utils';
 import { usGet } from '../../../../../utils/api';
+import { getOrderModificationFailedGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 function LineStatusColumn({ line, config, sortedLineDetails }) {
   const { id = '' } = getUrlParams();
@@ -25,6 +26,9 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
           `/v3/ordervalidation/${id}/${line.line}`
         }`
       );
+      if (result?.content?.orderEditable === false) {
+        pushDataLayerGoogle(getOrderModificationFailedGoogle('eol'));
+      }
       return result;
     } catch (error) {
       console.error(error);

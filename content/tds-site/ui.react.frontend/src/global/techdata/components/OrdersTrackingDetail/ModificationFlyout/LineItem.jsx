@@ -32,30 +32,24 @@ const LineItem = ({ item, index, onChange, labels, domain }) => {
   };
 
   const handleAmountChange = async (newValue) => {
+    const numeralValue = Number(newValue);
     const newPrice = await fetchNewPrice(
-      (newValue * item.unitPrice).toFixed(2)
+      (numeralValue * item.unitPrice).toFixed(2)
     );
     setTotalPriceFormatted(newPrice.data);
-    const formattedNewValue = Number(newValue);
-    setQuantityIncreased(Boolean(formattedNewValue > item.orderQuantity));
-    setQuantityDecreased(Boolean(formattedNewValue < item.orderQuantity));
-    setCurrentValue(newValue);
+    setQuantityIncreased(Boolean(numeralValue > item.orderQuantity));
+    setQuantityDecreased(Boolean(numeralValue < item.orderQuantity));
+    const displayedValue = newValue === '' ? newValue : numeralValue;
+    setCurrentValue(displayedValue);
     onChange(index, {
       ...item,
-      orderQuantity: formattedNewValue,
+      orderQuantity: displayedValue,
       origQuantity: item.orderQuantity,
     });
-    if (formattedNewValue > 0) {
+    if (numeralValue > 0) {
       setDoesReasonDropdownHaveEmptyItems(false);
     }
     if (newValue === '') {
-      setDoesReasonDropdownHaveEmptyItems(true);
-    }
-  };
-
-  const handleOnBlur = (newValue) => {
-    if (newValue === '') {
-      setCurrentValue(Number(newValue));
       setDoesReasonDropdownHaveEmptyItems(true);
     }
   };
@@ -103,7 +97,6 @@ const LineItem = ({ item, index, onChange, labels, domain }) => {
           minVal={0}
           value={currentValue}
           onChange={handleAmountChange}
-          onBlur={handleOnBlur}
         />
         {quantityIncreased && (
           <p>
