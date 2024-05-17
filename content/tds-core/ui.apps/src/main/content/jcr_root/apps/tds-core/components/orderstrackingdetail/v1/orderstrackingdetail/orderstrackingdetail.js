@@ -24,9 +24,9 @@ use(["../../../common/utils.js"], function (utils) {
   jsonObject["uiCommerceServiceDomain"] = this.uiServiceDomain + `/ui-commerce`;
 
   // Settings
-  if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
+  if (this.uiServiceDomain != null) {
     jsonObject["uiServiceEndPoint"] =
-      this.uiServiceDomain + this.serviceData.orderDetailGridEndpoint;
+      this.uiServiceDomain
   }
   if (properties && properties["ordersUrl"]) {
     jsonObject["ordersUrl"] = properties["ordersUrl"];
@@ -392,27 +392,6 @@ use(["../../../common/utils.js"], function (utils) {
     jsonObject["exportFlyout"] = exportFlyout;
   }
 
-  jsonObject["orderDetailEndpoint"] =
-    this.serviceData.uiServiceDomain + this.serviceData.orderDetailEndpoint ||
-    "";
-
-  jsonObject["exportAllOrderLinesEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.exportAllOrderLinesEndpoint || "";
-
-  jsonObject["exportLinesWithSerialNumbersOnlyEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.exportLinesWithSerialNumbersOnlyEndpoint || "";
-
-  jsonObject["replaceProductEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.replaceProductEndpoint || "";
-
-  jsonObject["replacementsProductsEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.replacementsProductsEndpoint || "";
-
-
   // Product Replacement Flyout
   const productReplacementFlyoutLabels = [
     "replacementModifyOrder",
@@ -508,14 +487,6 @@ use(["../../../common/utils.js"], function (utils) {
   if (Object.keys(statusesLabels).length > 0) {
     jsonObject["statusesLabels"] = statusesLabels;
   }
-
-  jsonObject["orderModifyEndpoint"] =
-    this.serviceData.uiServiceDomain + this.serviceData.orderModifyEndpoint ||
-    "";
-
-  jsonObject["orderModifyChangeEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.orderModifyChangeEndpoint || "";
 
   return {
     configJson: JSON.stringify(jsonObject),
