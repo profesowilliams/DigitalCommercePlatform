@@ -53,6 +53,10 @@ public class CaConfigReader {
 
     private String downloadAllInvoicesEndpoint;
 
+    private String orderDetailEndpoint;
+
+    private String orderDetailGridEndpoint;
+
     private String downloadInvoiceEndpoint;
 
     private String dealsForEndpoint;
@@ -90,6 +94,24 @@ public class CaConfigReader {
     private String quoteDetailEndpoint;
 
     private String orderGridEndpoint;
+
+    private String uiServiceEndPointForDetails;
+
+    private String ordersReportEndpoint;
+
+    private String ordersReportCountEndpoint;
+
+    private String exportAllOrderLinesEndpoint;
+
+    private String exportLinesWithSerialNumbersOnlyEndpoint;
+
+    private String orderModifyEndpoint;
+
+    private String orderModifyChangeEndpoint;
+
+    private String replaceProductEndpoint;
+
+    private String replacementsProductsEndpoint;
 
     private String quotesPreviewEndPoint;
 
@@ -296,6 +318,8 @@ public class CaConfigReader {
         savedCartsEndpoint = serviceEndPointsConfiguration.savedCartsEndpoint();
         quoteGridEndpoint = serviceEndPointsConfiguration.quoteGridEndpoint();
         quoteDetailEndpoint = serviceEndPointsConfiguration.quoteDetailEndpoint();
+        orderDetailEndpoint = serviceEndPointsConfiguration.orderDetailEndpoint();
+        orderDetailGridEndpoint = serviceEndPointsConfiguration.orderDetailGridEndpoint();
         downloadAllInvoicesEndpoint = serviceEndPointsConfiguration.downloadAllInvoicesEndpoint();
         downloadInvoiceEndpoint = serviceEndPointsConfiguration.downloadInvoiceEndpoint();
         dealsForEndpoint = serviceEndPointsConfiguration.dealsForEndpoint();
@@ -303,6 +327,15 @@ public class CaConfigReader {
         setVendorConnectionEndpoint = serviceEndPointsConfiguration.setVendorConnectionEndpoint();
         vendorDisconnectEndpoint = serviceEndPointsConfiguration.vendorDisconnectEndpoint();
         vendorConnectionDataRefreshEndpoint = serviceEndPointsConfiguration.vendorConnectionDataRefreshEndpoint();
+        uiServiceEndPointForDetails = serviceEndPointsConfiguration.uiServiceEndPointForDetails();
+        ordersReportEndpoint = serviceEndPointsConfiguration.ordersReportEndpoint();
+        ordersReportCountEndpoint = serviceEndPointsConfiguration.ordersReportCountEndpoint();
+        exportAllOrderLinesEndpoint = serviceEndPointsConfiguration.exportAllOrderLinesEndpoint();
+        exportLinesWithSerialNumbersOnlyEndpoint = serviceEndPointsConfiguration.exportLinesWithSerialNumbersOnlyEndpoint();
+        orderModifyEndpoint = serviceEndPointsConfiguration.orderModifyEndpoint();
+        orderModifyChangeEndpoint = serviceEndPointsConfiguration.orderModifyChangeEndpoint();
+        replaceProductEndpoint = serviceEndPointsConfiguration.replaceProductEndpoint();
+        replacementsProductsEndpoint = serviceEndPointsConfiguration.replacementsProductsEndpoint();
         orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
         quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
         quickQuoteEndpoint = serviceEndPointsConfiguration.quickQuoteEndpoint();
@@ -524,6 +557,42 @@ public class CaConfigReader {
         return orderGridEndpoint;
     }
 
+    public String getUiServiceEndPointForDetails() {
+        return uiServiceEndPointForDetails;
+    }
+
+    public String getOrdersReportEndpoint() {
+        return ordersReportEndpoint;
+    }
+
+    public String getOrdersReportCountEndpoint() {
+        return ordersReportCountEndpoint;
+    }
+
+    public String getExportAllOrderLinesEndpoint() {
+        return exportAllOrderLinesEndpoint;
+    }
+
+    public String getExportLinesWithSerialNumbersOnlyEndpoint() {
+        return exportLinesWithSerialNumbersOnlyEndpoint;
+    }
+
+    public String getOrderModifyEndpoint() {
+        return orderModifyEndpoint;
+    }
+
+    public String getOrderModifyChangeEndpoint() {
+        return orderModifyChangeEndpoint;
+    }
+
+    public String getReplaceProductEndpoint() {
+        return replaceProductEndpoint;
+    }
+
+    public String getReplacementsProductsEndpoint() {
+        return replacementsProductsEndpoint;
+    }
+
     public String getQuotesPreviewEndPoint() {
         return quotesPreviewEndPoint;
     }
@@ -692,6 +761,10 @@ public class CaConfigReader {
     public String getShopDomainPage() { return shopDomainPage; }
 
     public String getDownloadAllInvoicesEndpoint() { return downloadAllInvoicesEndpoint; }
+
+    public String getOrderDetailEndpoint() { return orderDetailEndpoint;}
+
+    public String getOrderDetailGridEndpoint() { return orderDetailGridEndpoint;}
 
     public String getDownloadInvoiceEndpoint() { return downloadInvoiceEndpoint; }
 

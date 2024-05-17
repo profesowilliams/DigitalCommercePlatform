@@ -127,6 +127,10 @@ use(['../common/utils.js'], function (utils) {
     jsonObject["statusLabelsList"] = statusLabelsListValues;
   }
 
+  jsonObject["uiServiceEndPoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.configurationsEndpoint || "";
+
   if (this.agGridLicenseKey) {
     jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
   }

@@ -25,6 +25,11 @@ use(function () {
         jsonObject["iconDealsExpiring"] = properties["iconDealsExpiring"];
     }
 
+    if (this.uiServiceDomain != null && this.topItemsEndpoint != null) {
+      jsonObject["uiServiceEndPoint"] =
+        this.uiServiceDomain + this.topItemsEndpoint;
+    }
+
     return {
         configJson: JSON.stringify(jsonObject)
     };
