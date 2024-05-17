@@ -236,7 +236,12 @@ const Search = (
         },
       });
       pushDataLayerGoogle(
-        getSearchAnalyticsGoogle(searchAnalyticsLabel, newGTMKey, value, suggestions)
+        getSearchAnalyticsGoogle(
+          searchAnalyticsLabel,
+          newGTMKey,
+          value,
+          suggestions
+        )
       );
       resetSearch();
     }
@@ -297,7 +302,7 @@ const Search = (
         open={open}
         loading={loading}
         loadingText={loadingTranslations[loadingText]}
-        blurOnSelect={true}
+        blurOnSelect={false}
         inputValue={value}
         openOnFocus={true}
         onOpen={() => {
@@ -305,7 +310,7 @@ const Search = (
         }}
         onClose={(event, reason) => {
           if (reason === 'createOption') {
-            event.preventDefault();
+            triggerSearch({});
           } else {
             setOpen(false);
           }

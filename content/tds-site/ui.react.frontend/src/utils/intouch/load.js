@@ -64,7 +64,7 @@ export const loadIntouchHeaderAndFooter = () => {
           renderIntouchHeaderHTML(),
           renderIntouchFooterHTML()
         ]).then(function () {
-          window.td.deferred.$htmlLoaded.resolve();
+          window.td?.deferred?.$htmlLoaded?.resolve();
         })
       } 
     },
