@@ -29,7 +29,7 @@ function useOrderTrackingPaginationState({
   const { totalCounter, currentResultsInPage, pageCount, pageNumber } =
     paginationData;
 
-  useEffect(() => updatePaginationCounter(), [pageNumber]);
+  useEffect(() => updatePaginationCounter(), [pageNumber, totalCounter]);
 
   const { setCustomState, closeAndCleanToaster } = effects;
 
@@ -97,7 +97,7 @@ function useOrderTrackingPaginationState({
     pushDataLayerGoogle(
       getPaginationAnalyticsGoogle(
         ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo,
-        value+1
+        value + 1
       )
     );
     goToSpecificPage(value);
@@ -111,7 +111,7 @@ function useOrderTrackingPaginationState({
       pushDataLayerGoogle(
         getPaginationAnalyticsGoogle(
           ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo,
-          value+1
+          value + 1
         )
       );
       goToSpecificPage(value);

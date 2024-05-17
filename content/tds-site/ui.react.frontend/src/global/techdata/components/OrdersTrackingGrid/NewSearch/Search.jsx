@@ -34,7 +34,7 @@ function CustomPaper({ children }) {
   return (
     <Paper
       sx={{
-        width: '370px',
+        width: '380px',
         '& .MuiAutocomplete-listbox': {
           bgcolor: '#fff',
           '& .MuiAutocomplete-option': {
@@ -222,7 +222,7 @@ const Search = (
       clearReports();
       ref.current.field = newKey;
       ref.current.value = value;
-      onQueryChanged();
+      onQueryChanged({ onSearchAction: true });
       setFocused(false);
       setPill({ value: value, field: newKey });
       setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
@@ -243,7 +243,14 @@ const Search = (
   };
 
   const debouncedAutocomplete = useMemo(() => {
-    const timeout = (!value || value.length < 3) ? 300 : (value.length < 5) ? 200 : (value.length < 10) ? 100 : 0;
+    const timeout =
+      !value || value.length < 3
+        ? 300
+        : value.length < 5
+        ? 200
+        : value.length < 10
+        ? 100
+        : 0;
     return debounce(handleAutocompleteInput, timeout);
   }, [value]);
 
@@ -308,7 +315,7 @@ const Search = (
         }}
         disableClearable={true}
         sx={{
-          width: 370,
+          width: 380,
           '& .MuiAutocomplete-input': {
             textOverflow: 'clip',
           },
