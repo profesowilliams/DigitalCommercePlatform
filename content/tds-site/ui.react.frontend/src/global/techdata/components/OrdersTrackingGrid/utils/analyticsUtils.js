@@ -125,7 +125,7 @@ function getSuggestionsString(obj) {
     return `${item.gtmField}: ${item.matchCount}`;
   });
 
-  return `Suggestions: [${suggestions.join(', ')}]`;
+  return `Suggestions: [${suggestions.join('; ')}]`;
 }
 
 export const getHomeAnalyticsGoogle = (rights) => {
