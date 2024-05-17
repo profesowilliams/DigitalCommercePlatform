@@ -236,7 +236,7 @@ const Search = (
         },
       });
       pushDataLayerGoogle(
-        getSearchAnalyticsGoogle(searchAnalyticsLabel, newGTMKey, value)
+        getSearchAnalyticsGoogle(searchAnalyticsLabel, newGTMKey, value, suggestions)
       );
       resetSearch();
     }

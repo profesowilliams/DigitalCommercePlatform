@@ -110,14 +110,23 @@ export const getExportAnalyticsGoogle = (category, option) => {
 export const getSearchAnalyticsGoogle = (
   category,
   dropdownOption,
-  textInput
+  textInput,
+  suggestions
 ) => {
   return {
     event: 'Order tracking - Search',
     category,
-    orderTracking: `${dropdownOption}: ${textInput}`,
+    orderTracking: `${dropdownOption}: ${textInput} | ${getSuggestionsString(suggestions)}`,
   };
 };
+
+function getSuggestionsString(obj) {
+  const suggestions = obj.map(item => {
+    return `${item.gtmField}: ${item.matchCount}`;
+  });
+
+  return `Suggestions: [${suggestions.join(', ')}]`;
+}
 
 export const getHomeAnalyticsGoogle = (rights) => {
   return {
