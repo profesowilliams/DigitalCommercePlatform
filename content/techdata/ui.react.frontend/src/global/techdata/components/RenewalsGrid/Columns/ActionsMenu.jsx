@@ -30,7 +30,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
     };
     
     useOutsideClick(dialogRef, onClose, 'mousedown', [onClose]);
-    const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, enableShareOption, enableRequestRevisionOption } = endpoints;
+    const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, enableShareOption, enableReviseOption } = endpoints;
 
     useEffect(() => {
         let timer;
@@ -173,7 +173,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
                         <span className="cmp-renewals-actions-menu__item-label">Share</span>
                     </div>
                 ) : null}
-                {canRequestRevision ? (
+                {enableReviseOption && canRequestRevision ? (
                     <div
                         className="cmp-renewals-actions-menu__item"
                         onClick={triggerRevisionFlyout}

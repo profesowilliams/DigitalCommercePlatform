@@ -158,7 +158,7 @@ function GridHeader({ gridProps, data }) {
     );
   }
 
-  if (data?.canRequestRevision) {
+  if (gridProps.enableReviseOption && data?.canRequestRevision) {
     buttons.push(
       <button onClick={openRevisionFlyout} key="revision">
         <RevisionIcon className="cmp-renewal-preview__download--icon" />
