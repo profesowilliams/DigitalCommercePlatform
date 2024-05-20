@@ -6231,6 +6231,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
         referenceType: "Original",
       },
       serialsAny: true,
+      creator: "Loadtest Loadtest",
     },
     error: {
       code: 0,

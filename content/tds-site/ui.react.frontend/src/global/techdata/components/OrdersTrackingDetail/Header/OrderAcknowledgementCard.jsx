@@ -3,7 +3,8 @@ import Card from '@mui/material/Card';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function OrderAcknowledgementCard({ content = {}, config }) {
-  const { reseller, createdFormatted, customerPO, docTypeText } = content;
+  const { reseller, createdFormatted, customerPO, docTypeText, creator } =
+    content;
   return (
     <Card className="card-container" variant="outlined">
       <div className="card-container__title">
@@ -50,6 +51,16 @@ function OrderAcknowledgementCard({ content = {}, config }) {
               )}
             </span>
             <span>{docTypeText}</span>
+          </>
+        )}
+        {creator && (
+          <>
+            <span>
+              {getDictionaryValueOrKey(
+                config?.orderAcknowledgementLabels?.orderCreatedBy
+              )}
+            </span>
+            <span>{creator}</span>
           </>
         )}
       </div>
