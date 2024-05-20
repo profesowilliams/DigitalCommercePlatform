@@ -136,9 +136,18 @@ use(['../../../common/utils.js'], function(utils) {
         jsonObject["enableShareOption"] = this.serviceData.enableShareOption;
     }
 
+    if (this.serviceData && this.serviceData.enableReviseQuote) {
+            jsonObject["enableReviseOption"] = this.serviceData.enableReviseQuote;
+        }
+
     if (this.shareQuoteEndpoint && this.serviceData.uiServiceDomain) {
         shareFlyout.shareQuoteEndpoint = this.serviceData.uiServiceDomain + this.shareQuoteEndpoint;
     }
+
+     if (this.reviseQuoteEndpoint && this.serviceData.uiServiceDomain) {
+            revisionFlyout.reviseQuoteEndpoint = this.serviceData.uiServiceDomain + this.reviseQuoteEndpoint;
+        }
+
 
     if (properties && properties["quotePreviewlabel"]) {
         quotePreview["quotePreviewlabel"] = properties["quotePreviewlabel"];

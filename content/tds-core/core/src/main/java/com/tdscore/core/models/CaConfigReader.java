@@ -235,6 +235,9 @@ public class CaConfigReader {
 
     private String shareQuoteEndpoint;
 
+    private String reviseQuoteEndpoint;
+
+
     private String addressesEndpoint;
 
     private String gtmBodyJSScript;
@@ -262,6 +265,8 @@ public class CaConfigReader {
     private boolean enableShareOption;
 
     private boolean enableRequestQuote;
+
+    private boolean enableReviseQuote;
 
     @PostConstruct
     public void init() {
@@ -327,6 +332,7 @@ public class CaConfigReader {
         checkQuoteExitsforResellerEndpoint = serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint();
         copyQuoteEndpoint = serviceEndPointsConfiguration.copyQuoteEndpoint();
         shareQuoteEndpoint = serviceEndPointsConfiguration.shareQuoteEndpoint();
+        reviseQuoteEndpoint = serviceEndPointsConfiguration.reviseQuoteEndpoint();
         addressesEndpoint = serviceEndPointsConfiguration.addressesEndpoint();
         cartURL = mcConfiguration.cartURL();
         expressCheckoutRedirectUrl = mcConfiguration.expressCheckoutRedirectUrl();
@@ -337,6 +343,8 @@ public class CaConfigReader {
         disableMultipleAgreement = featureFlagsConfiguration.disableMultipleAgreement();
         enableShareOption = featureFlagsConfiguration.enableShareOption();
         enableRequestQuote = featureFlagsConfiguration.enableRequestQuote();
+        enableReviseQuote = featureFlagsConfiguration.enableReviseQuote();
+
 
         buildSearchConfigurations();
 
@@ -745,6 +753,9 @@ public class CaConfigReader {
 
     public String getShareQuoteEndpoint() { return shareQuoteEndpoint; }
 
+    public String getReviseQuoteEndpoint() { return reviseQuoteEndpoint; }
+
+
     public String getAddressesEndpoint() { return addressesEndpoint; }
 
     public String getGtmBodyJSScript() { return gtmBodyJSScript; }
@@ -791,4 +802,7 @@ public class CaConfigReader {
     public boolean getEnableRequestQuote() {
         return enableRequestQuote;
     }
+
+    public boolean getEnableReviseQuote() { return enableReviseQuote;}
+
 }

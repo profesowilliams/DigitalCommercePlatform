@@ -175,4 +175,7 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Share Quote Endpoint", description = "Share Quote Endpoint")
     String shareQuoteEndpoint();
+
+    @Property(label = "Revise Quote Endpoint", description = "Revise Quote Endpoint")
+    String reviseQuoteEndpoint();
 }
