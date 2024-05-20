@@ -1,6 +1,5 @@
 import React from 'react';
 import { ChevronDownIcon } from './../../../../../fluentIcons/FluentIcons';
-import useComputeBranding from './../../../hooks/useComputeBranding';
 import { OrderSearchField } from './OrderSearchFilter';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
@@ -17,8 +16,7 @@ const OrderSearchEditView = ({
   callbackExecuted,
   gridConfig,
 }) => {
-  const { isTDSynnex } = useComputeBranding(useOrderTrackingStore);
-
+  const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   return (
     <>
       <div className="order-search-select-container">

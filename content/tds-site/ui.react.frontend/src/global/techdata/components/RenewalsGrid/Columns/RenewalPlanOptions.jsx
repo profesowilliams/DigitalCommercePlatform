@@ -25,7 +25,8 @@ function RenewalPlanOptions({ labels, data, node }) {
   const { detailUrl = "", exportXLSRenewalsEndpoint = "", exportPDFRenewalsEndpoint = "" } = aemConfig;
   const orderEndpoints = { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint, renewalDetailsEndpoint };
   const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
-  const { computeClassName: computeTDSynnexClass, isTDSynnex } = useComputeBranding(useRenewalGridState);
+  const { computeClassName: computeTDSynnexClass } =
+    useComputeBranding(useRenewalGridState);
   const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canPlaceOrder, orderingFromDashboard?.showOrderingIcon);
   const calculateOptionsWithChecked = () => {
     const localPlanOption = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY);

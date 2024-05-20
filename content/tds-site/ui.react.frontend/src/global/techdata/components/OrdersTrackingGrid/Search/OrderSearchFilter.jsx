@@ -6,6 +6,7 @@ import {
 } from '../../../../../fluentIcons/FluentIcons';
 import useComputeBranding from '../../../hooks/useComputeBranding';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 
 export function OrderSearchField({
   chosenFilter = '',
@@ -23,7 +24,9 @@ export function OrderSearchField({
     `${getDictionaryValueOrKey(
       gridConfig?.searchEnterLabel
     )} ${capitalizeContainedID(searchTermText)}`;
-  const { isTDSynnex, computeClassName } = useComputeBranding(store);
+  const { computeClassName } = useComputeBranding(store);
+  const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
+
   return (
     <div className="order-search-select-container__box-search-field">
       <input

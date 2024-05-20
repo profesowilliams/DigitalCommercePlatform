@@ -13,6 +13,7 @@ import { isHouseAccount } from "../../../../../utils/user/utils";
 import { getDictionaryValue } from "../../../../../utils/utils";
 import { If } from "../../../helpers/If";
 import useComputeBranding from "../../../hooks/useComputeBranding";
+import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import Pill from '../../Widgets/Pill';
 import {
   getLocalStorageData,
@@ -21,22 +22,33 @@ import {
   setLocalStorageData,
 } from '../../RenewalsGrid/utils/renewalUtils';
 import { SearchField } from './SearchField';
-import "../../../../../../src/styles/TopIconsBar.scss";
-import { useStore } from "../../../../../utils/useStore";
-import { pushDataLayer, getSearchAnalytics } from '../../Analytics/analytics'
+import '../../../../../../src/styles/TopIconsBar.scss';
+import { useStore } from '../../../../../utils/useStore';
+import { pushDataLayer, getSearchAnalytics } from '../../Analytics/analytics';
 
 function _GridSearch(
-  { styleProps, options, callback, inputType, filterCounter, onQueryChanged, store, hideLabel=false },
+  {
+    styleProps,
+    options,
+    callback,
+    inputType,
+    filterCounter,
+    onQueryChanged,
+    store,
+    hideLabel = false,
+  },
   ref
 ) {
   const customSearchValues = {
-    dropdown: "",
-    input: "",
+    dropdown: '',
+    input: '',
     option: getInitialFieldState(),
-    label: getInitialLabelState()
-  }
+    label: getInitialLabelState(),
+  };
   const analyticsCategory = store((state) => state.analyticsCategory);
-  const [values, setValues] = useState({ ...customSearchValues }); /** TODO: Get rid of states and move to Zustand for less boilerplate. */
+  const [values, setValues] = useState({
+    ...customSearchValues,
+  }); /** TODO: Get rid of states and move to Zustand for less boilerplate. */
   const [callbackExecuted, setCallbackExecuted] = useState(false);
   const [isDropdownVisible, setSwitchDropdown] = useState(false);
   const [isSearchHovered, setIsSearchHovered] = useState(false);
@@ -45,28 +57,40 @@ function _GridSearch(
   const node = useRef();
   const inputRef = useRef();
   const _initialInputVal = inputRef?.current?.value !== undefined;
-  const [isSearchCapsuleVisible, setIsSearchCapsuleVisible] =
-    useState(hasPreviousSearchTerm());
+  const [isSearchCapsuleVisible, setIsSearchCapsuleVisible] = useState(
+    hasPreviousSearchTerm()
+  );
   const _initialEditViewVal = option.length !== 0;
   const [isEditView, setIsEditView] = useState(false);
   const [searchTerm, setSearchTerm] = useState(getInitialValueState());
-  const [capsuleSearchValue, setCapsuleSearchValue] = useState(getInitialValueState());
+  const [capsuleSearchValue, setCapsuleSearchValue] = useState(
+    getInitialValueState()
+  );
   const [searchTriggered, setSearchTriggered] = useState(false);
   const effects = store((state) => state.effects);
-  const { computeClassName, isTDSynnex } = useComputeBranding(store);
+  const { computeClassName } = useComputeBranding(store);
+  const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   const { closeAndCleanToaster } = effects;
-  const [inputValueState, setInputValueState] = useState(getInitialValueState());
+  const [inputValueState, setInputValueState] = useState(
+    getInitialValueState()
+  );
   const [capsuleValues, setCapsuleValues] = useState({ ...customSearchValues });
-  const userData = useStore(state => state.userData);
+  const userData = useStore((state) => state.userData);
 
   const getOptionGivenQueryString = (options, userData) => {
     let searchTerm = null;
     const urlParams = new URLSearchParams(window.location.search);
 
     for (const [key, value] of urlParams) {
-      const option = options.find((option) => option.searchKey.toLowerCase() === "id" && option.searchKey.toLowerCase() === key.toLowerCase() && (!option?.showIfIsHouseAccount || (option?.showIfIsHouseAccount && isHouseAccount(userData))));
+      const option = options.find(
+        (option) =>
+          option.searchKey.toLowerCase() === 'id' &&
+          option.searchKey.toLowerCase() === key.toLowerCase() &&
+          (!option?.showIfIsHouseAccount ||
+            (option?.showIfIsHouseAccount && isHouseAccount(userData)))
+      );
       if (option) {
-        searchTerm = {value, option};
+        searchTerm = { value, option };
         break;
       }
     }
@@ -89,8 +113,16 @@ function _GridSearch(
       setIsEditView(false);
       setInputValueState(searchTerm.value);
       onQueryChanged({ onSearchAction: true });
-      setValues({ ...values, option: searchTerm.option.searchKey, label: searchTerm.option.searchLabel });
-      setCapsuleValues({ ...customSearchValues, option: searchTerm.option.searchKey, label: searchTerm.option.searchLabel });
+      setValues({
+        ...values,
+        option: searchTerm.option.searchKey,
+        label: searchTerm.option.searchLabel,
+      });
+      setCapsuleValues({
+        ...customSearchValues,
+        option: searchTerm.option.searchKey,
+        label: searchTerm.option.searchLabel,
+      });
     }
   };
 
@@ -100,32 +132,40 @@ function _GridSearch(
     }
   }, [userData]);
 
-
   function getInitialValueState() {
-    if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
+    if (
+      hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) &&
+      isFromRenewalDetailsPage()
+    ) {
       return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.value;
     } else {
-      return "";
+      return '';
     }
   }
 
   function getInitialFieldState() {
-    if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
+    if (
+      hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) &&
+      isFromRenewalDetailsPage()
+    ) {
       return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.field;
     } else {
-      return "";
+      return '';
     }
   }
 
   function getInitialLabelState() {
     if (!hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)) {
-      return "";
+      return '';
     }
 
     if (isFromRenewalDetailsPage())
-      return options.filter(item => item.searchKey === getInitialFieldState())[0]?.searchLabel || "";
+      return (
+        options.filter((item) => item.searchKey === getInitialFieldState())[0]
+          ?.searchLabel || ''
+      );
 
-    return "";
+    return '';
   }
 
   function hasPreviousSearchTerm() {
@@ -151,12 +191,12 @@ function _GridSearch(
         setValues((prevSt) => {
           return {
             ...prevSt,
-            [key]: "",
+            [key]: '',
           };
         });
       }
     }
-    setCapsuleValues(false)
+    setCapsuleValues(false);
   }
 
   const onReset = () => {
@@ -167,8 +207,8 @@ function _GridSearch(
       onQueryChanged({ onSearchAction: true });
     }
     setSearchTriggered(false);
-    setSearchTerm("");
-    setCapsuleSearchValue("");
+    setSearchTerm('');
+    setCapsuleSearchValue('');
     clearValues();
     setLocalStorageData(SEARCH_LOCAL_STORAGE_KEY, {
       field: '',
@@ -188,8 +228,8 @@ function _GridSearch(
   let styles;
   if (!styleProps) {
     styles = {
-      width: "250px",
-      tooltipWidth: "280px",
+      width: '250px',
+      tooltipWidth: '280px',
     };
   }
 
@@ -201,17 +241,17 @@ function _GridSearch(
     }
     setSwitchDropdown(!isDropdownVisible);
     if (!isDropdownVisible) {
-      document.addEventListener("click", handleOutsideClick, false);
+      document.addEventListener('click', handleOutsideClick, false);
     } else {
-      document.removeEventListener("click", handleOutsideClick, false);
+      document.removeEventListener('click', handleOutsideClick, false);
     }
   }, [isDropdownVisible]);
 
   const handleOutsideClick = (e) => {
-    const isComingFromSearch =
-      e.target.closest(".cmp-renewal-search");
+    const isComingFromSearch = e.target.closest('.cmp-renewal-search');
     const isComingFromReset =
-      e.target.closest(".cmp-search-options__reset") || e.target.closest(".cmp-search-options__reset__icon-container");
+      e.target.closest('.cmp-search-options__reset') ||
+      e.target.closest('.cmp-search-options__reset__icon-container');
     if (
       node.current &&
       !isComingFromSearch &&
@@ -250,7 +290,12 @@ function _GridSearch(
       value: inputValue,
     });
     onQueryChanged({ onSearchAction: true });
-    pushDataLayer(getSearchAnalytics(analyticsCategory, { field: option, value: inputValue}));
+    pushDataLayer(
+      getSearchAnalytics(analyticsCategory, {
+        field: option,
+        value: inputValue,
+      })
+    );
     setCapsuleValues({ ...values });
   }
 
@@ -267,7 +312,8 @@ function _GridSearch(
   };
 
   const RenderWithPermissions = ({ option }) => {
-    const hasNotPrivilege = option?.showIfIsHouseAccount && !isHouseAccount(userData);
+    const hasNotPrivilege =
+      option?.showIfIsHouseAccount && !isHouseAccount(userData);
     if (hasNotPrivilege) return <></>;
     return (
       <>
@@ -298,10 +344,10 @@ function _GridSearch(
   }
 
   const handleMouseLeave = (e) => {
-    if (isSearchCapsuleVisible) return
+    if (isSearchCapsuleVisible) return;
     setSwitchDropdown(false);
     onReset();
-  }
+  };
 
   if (option.length && isEditView) {
     const chosenFilter = values.label;
@@ -318,9 +364,10 @@ function _GridSearch(
                 setSearchTerm={setSearchTerm}
                 triggerSearchOnEnter={triggerSearchOnEnter}
                 store={store}
+                isTDSynnex={isTDSynnex}
               />
               <button
-                className={computeClassName("cmp-search-tooltip__button")}
+                className={computeClassName('cmp-search-tooltip__button')}
                 onClick={() => triggerSearch()}
               >
                 <SearchIcon className="search-icon__light" />
@@ -329,7 +376,7 @@ function _GridSearch(
             <If condition={isResetVisible}>
               <div
                 className="cmp-search-options"
-                style={!isTDSynnex ? { padding: "5px 10px" } : {}}
+                style={!isTDSynnex ? { padding: '5px 10px' } : {}}
               >
                 <div className="cmp-search-options__reset">
                   <label style={{ pointerEvents: 'none' }}>
@@ -339,7 +386,10 @@ function _GridSearch(
                       <p>Search by {chosenFilter}</p>
                     )}
                   </label>
-                  <div className="cmp-search-options__reset__icon-container" onClick={onReset}>
+                  <div
+                    className="cmp-search-options__reset__icon-container"
+                    onClick={onReset}
+                  >
                     <ChevronDownIcon onClick={onReset} />
                   </div>
                 </div>
@@ -354,11 +404,11 @@ function _GridSearch(
 
   const handleMouseOverSearch = () => {
     setIsSearchHovered(true);
-  }
+  };
 
   const handleMouseLeaveSearch = () => {
     setIsSearchHovered(false);
-  }
+  };
 
   return (
     <>

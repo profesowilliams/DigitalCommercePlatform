@@ -17,27 +17,22 @@ import { updateQueryString } from "../utils/renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 
 function CustomRenewalPagination({ onQueryChanged }, ref) {
-  const isTDSynnex = useRenewalGridState(state => state.isTDSynnex);
   const paginationData = useRenewalGridState((state) => state.pagination);
-  const {
-    totalCounter,
-    currentResultsInPage,
-    pageCount,
-    pageNumber,
-  } = paginationData;
+  const { totalCounter, currentResultsInPage, pageCount, pageNumber } =
+    paginationData;
 
-  const gridApi = useRenewalGridState( state => state.gridApi);
+  const gridApi = useRenewalGridState((state) => state.gridApi);
   const PAGINATION_LOCAL_STORAGE_KEY = 'paginationLocalStorageData';
-  const effects = useRenewalGridState( state => state.effects);
+  const effects = useRenewalGridState((state) => state.effects);
   const { setCustomState, closeAndCleanToaster } = effects;
-  const {optionFieldsRef, isFilterDataPopulated} = useMultiFilterSelected();
+  const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
   const [paginationCounter, setPaginationCounter] = useState({
     minCounter: 0,
     maxCounter: 0,
   });
 
   const maxPaginationCounter = () =>
-  maxCounterCalculator(currentResultsInPage, pageNumber, paginationData);
+    maxCounterCalculator(currentResultsInPage, pageNumber, paginationData);
 
   const minPaginationCounter = () =>
     minCounterCalculator(currentResultsInPage, pageNumber);
@@ -46,14 +41,14 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     setPaginationCounter({
       minCounter: minPaginationCounter(),
       maxCounter: maxPaginationCounter(),
-    });   
-  };   
-  
+    });
+  };
+
   const pageInputRef = useRef();
 
-  useEffect(()=>updatePaginationCounter(),[pageNumber]);
+  useEffect(() => updatePaginationCounter(), [pageNumber]);
 
-  useImperativeHandle(ref, () => ({pageNumber}), [pageNumber])
+  useImperativeHandle(ref, () => ({ pageNumber }), [pageNumber]);
 
   if (!gridApi) return null;
   if (!Object.keys(gridApi).length) return null;
@@ -61,69 +56,78 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   const paginationGetTotalPages = () =>
     pageCount ?? Math.ceil(currentResultsInPage / totalCounter);
 
-  const sendPagingRequest = (queryString = '') => {    
-    onQueryChanged();    
-  }
+  const sendPagingRequest = (queryString = '') => {
+    onQueryChanged();
+  };
 
   const keepFilteringPayload = (pageNumber) => {
     const postQuery = {
       ...optionFieldsRef.current,
-      PageNumber: pageNumber,     
+      PageNumber: pageNumber,
     };
     const queryString = JSON.stringify(postQuery);
     onQueryChanged();
-  }
+  };
 
   const incrementHandler = () => {
-    if (pageNumber > pageCount - 1) return
-    const value = { ...paginationData, pageNumber:pageNumber+1 };
-    setCustomState({ key: "pagination", value },  {
-      key: PAGINATION_LOCAL_STORAGE_KEY,
-      saveToLocal: true,
-    });
+    if (pageNumber > pageCount - 1) return;
+    const value = { ...paginationData, pageNumber: pageNumber + 1 };
+    setCustomState(
+      { key: 'pagination', value },
+      {
+        key: PAGINATION_LOCAL_STORAGE_KEY,
+        saveToLocal: true,
+      }
+    );
     updateQueryString(value?.pageNumber);
-    if (isFilterDataPopulated.current) {  
-      keepFilteringPayload(pageNumber+1)
-    } else {    
-      sendPagingRequest()
+    if (isFilterDataPopulated.current) {
+      keepFilteringPayload(pageNumber + 1);
+    } else {
+      sendPagingRequest();
     }
     closeAndCleanToaster();
   };
 
-  const decrementHandler = () => {    
-    if (pageNumber-1 <= 0) return
-    const value = { ...paginationData, pageNumber:pageNumber-1 };
-    setCustomState({ key: "pagination", value }, {
-      key: PAGINATION_LOCAL_STORAGE_KEY,
-      saveToLocal: true,
-    });
-    updateQueryString(value?.pageNumber);   
-    if (isFilterDataPopulated.current) {  
-      keepFilteringPayload(pageNumber-1)
-    } else {    
-      sendPagingRequest()
-    }       
+  const decrementHandler = () => {
+    if (pageNumber - 1 <= 0) return;
+    const value = { ...paginationData, pageNumber: pageNumber - 1 };
+    setCustomState(
+      { key: 'pagination', value },
+      {
+        key: PAGINATION_LOCAL_STORAGE_KEY,
+        saveToLocal: true,
+      }
+    );
+    updateQueryString(value?.pageNumber);
+    if (isFilterDataPopulated.current) {
+      keepFilteringPayload(pageNumber - 1);
+    } else {
+      sendPagingRequest();
+    }
     closeAndCleanToaster();
   };
 
   const goToSpecificPage = (specificNumber) => {
-    const value = { ...paginationData, pageNumber:specificNumber+1};
-    setCustomState({ key: "pagination", value }, {
-      key: PAGINATION_LOCAL_STORAGE_KEY,
-      saveToLocal: true,
-    });
-    if (isFilterDataPopulated.current) {  
-      keepFilteringPayload(specificNumber+1)
-    } else {    
-      sendPagingRequest()
-    }  
-  }
+    const value = { ...paginationData, pageNumber: specificNumber + 1 };
+    setCustomState(
+      { key: 'pagination', value },
+      {
+        key: PAGINATION_LOCAL_STORAGE_KEY,
+        saveToLocal: true,
+      }
+    );
+    if (isFilterDataPopulated.current) {
+      keepFilteringPayload(specificNumber + 1);
+    } else {
+      sendPagingRequest();
+    }
+  };
 
   const handleInputBlur = ({ target }) => {
     const value = parseInt(target.value) - 1;
     if (parseInt(target.value) > parseInt(paginationGetTotalPages(), 10))
       return;
-    goToSpecificPage(value);    
+    goToSpecificPage(value);
   };
 
   const goOnTwoDigits = ({ target }) => {
@@ -144,53 +148,52 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     if (event.keyCode === 13) {
       goToSpecificPage(value);
       pageInputRef.current.blur();
-      
     }
   };
 
-  const goToFirstPage = () => goToSpecificPage(0)
+  const goToFirstPage = () => goToSpecificPage(0);
 
-  const gotToLastPage = () =>  goToSpecificPage(pageCount-1)
+  const gotToLastPage = () => goToSpecificPage(pageCount - 1);
 
   const getUpperLimitShownItemsNumber = () => {
-    const upperLimit = paginationCounter.maxCounter > 0
-                        ? paginationCounter.maxCounter
-                        : maxPaginationCounter();
+    const upperLimit =
+      paginationCounter.maxCounter > 0
+        ? paginationCounter.maxCounter
+        : maxPaginationCounter();
     return upperLimit > totalCounter ? totalCounter : upperLimit;
-  }
+  };
 
   const getPaginationMinCounter = () => {
     return paginationCounter.minCounter > 0
-    ? paginationCounter.minCounter
-    : minPaginationCounter();
-  }
+      ? paginationCounter.minCounter
+      : minPaginationCounter();
+  };
 
   const processPaginationString = () => {
-    const dictionaryLabel = getDictionaryValue("grids.common.label.results", "{0}-{1} of {2} results");
-    return dictionaryLabel.replace("{0}", getPaginationMinCounter())?.replace("{1}", getUpperLimitShownItemsNumber())?.replace("{2}", totalCounter || '');
-  }
-  
+    const dictionaryLabel = getDictionaryValue(
+      'grids.common.label.results',
+      '{0}-{1} of {2} results'
+    );
+    return dictionaryLabel
+      .replace('{0}', getPaginationMinCounter())
+      ?.replace('{1}', getUpperLimitShownItemsNumber())
+      ?.replace('{2}', totalCounter || '');
+  };
+
   return (
     <div className="cmp-navigation">
-      <div className="navigation__info">
-        {processPaginationString()}
-      </div>
+      <div className="navigation__info">{processPaginationString()}</div>
       <div className="cmp-navigation__actions">
-        <button
-          disabled={pageNumber === 1}
-          onClick={goToFirstPage }
-        >
-        <ChevronDoubleLeftIcon/>  
-           
+        <button disabled={pageNumber === 1} onClick={goToFirstPage}>
+          <ChevronDoubleLeftIcon />
         </button>
         <button
-          className={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
-          style={{ cursor: pageNumber !== 1 && "pointer" }}
+          className={`move-button${pageNumber === 1 ? '__disabled' : ''}`}
+          style={{ cursor: pageNumber !== 1 && 'pointer' }}
           disabled={pageNumber === 1}
           onClick={decrementHandler}
         >
-        <ChevronLeftIcon/>
-          
+          <ChevronLeftIcon />
         </button>
         <div className="cmp-navigation__actions-labels">
           <input
@@ -203,25 +206,21 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
             defaultValue={pageNumber}
             key={Math.random()}
           />
-          <span>{getDictionaryValue("grids.common.label.of", "of")}</span>
+          <span>{getDictionaryValue('grids.common.label.of', 'of')}</span>
           <span>{pageCount}</span>
-        </div>      
+        </div>
         <button
           className={`move-button${
-            pageNumber === pageCount ? "__disabled" : ""
+            pageNumber === pageCount ? '__disabled' : ''
           }`}
           disabled={pageNumber === pageCount}
           onClick={incrementHandler}
-          style={{ cursor: pageNumber !== pageCount && "pointer" }}
+          style={{ cursor: pageNumber !== pageCount && 'pointer' }}
         >
-       <ChevronRightIcon/>
-          
+          <ChevronRightIcon />
         </button>
-        <button
-          disabled={pageNumber === pageCount}
-          onClick={gotToLastPage}
-        >
-        <ChevronDoubleRightIcon/>
+        <button disabled={pageNumber === pageCount} onClick={gotToLastPage}>
+          <ChevronDoubleRightIcon />
         </button>
       </div>
     </div>

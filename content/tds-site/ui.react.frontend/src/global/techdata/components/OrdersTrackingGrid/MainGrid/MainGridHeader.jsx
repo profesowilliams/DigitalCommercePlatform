@@ -38,15 +38,9 @@ function MainGridHeader({
   filtersRefs,
   settings,
 }) {
-  const {
-    setCustomState,
-    clearAllOrderFilters,
-    setFilterClicked,
-    setPredefinedFiltersApplied,
-    setCustomizedFiltersApplied,
-    clearCheckedButNotAppliedOrderFilters,
-    setClearFilters,
-  } = useOrderTrackingStore((st) => st.effects);
+  const { setCustomState, setClearFilters } = useOrderTrackingStore(
+    (st) => st.effects
+  );
 
   const proactiveMessagingFlag = useOrderTrackingStore(
     (state) => state.featureFlags.proactiveMessage

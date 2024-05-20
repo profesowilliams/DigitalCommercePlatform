@@ -39,7 +39,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
     value && effects.setCustomState({key:'filterList',value});
   },[resetFilter, filterData, appliedFilterCount, isFilterModalOpen])
 
-  const { computeClassName, isTDSynnex } = useComputeBranding(useRenewalGridState); 
+  const { computeClassName } = useComputeBranding(useRenewalGridState); 
 
   const { setAppliedFilter } = useRenewalGridState( (state) => state.effects );
 

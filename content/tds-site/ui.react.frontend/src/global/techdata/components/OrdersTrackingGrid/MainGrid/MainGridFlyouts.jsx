@@ -81,12 +81,14 @@ const MainGridFlyouts = ({
         labels={gridConfig?.orderModifyLabels}
         gridConfig={gridConfig}
         userData={userData}
+        isTDSynnex={isTDSynnex}
       />
       <SettingsFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}
         labels={gridConfig.settingsFlyoutLabels}
         config={gridConfig}
         settings={settings}
+        isTDSynnex={isTDSynnex}
       />
       <ProductReplacementFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}
@@ -97,6 +99,7 @@ const MainGridFlyouts = ({
         config={gridConfig}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         addNewItem={addNewItem}
+        isTDSynnex={isTDSynnex}
       />
     </>
   );

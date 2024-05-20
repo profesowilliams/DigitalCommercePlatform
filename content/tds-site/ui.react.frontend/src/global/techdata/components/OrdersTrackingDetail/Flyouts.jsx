@@ -66,6 +66,7 @@ const Flyouts = ({
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         content={content}
         setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
+        isTDSynnex={isTDSynnex}
       />
       <ExportFlyout
         componentProp={config}
@@ -88,6 +89,7 @@ const Flyouts = ({
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         addNewItem={addNewItem}
         setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
+        isTDSynnex={isTDSynnex}
       />
     </>
   );
