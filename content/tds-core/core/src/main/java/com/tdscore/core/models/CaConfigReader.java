@@ -266,7 +266,7 @@ public class CaConfigReader {
 
     private boolean enableRequestQuote;
 
-    private boolean enableReviseQuote;
+    private boolean enableReviseOption;
 
     @PostConstruct
     public void init() {
@@ -343,7 +343,7 @@ public class CaConfigReader {
         disableMultipleAgreement = featureFlagsConfiguration.disableMultipleAgreement();
         enableShareOption = featureFlagsConfiguration.enableShareOption();
         enableRequestQuote = featureFlagsConfiguration.enableRequestQuote();
-        enableReviseQuote = featureFlagsConfiguration.enableReviseQuote();
+        enableReviseOption = featureFlagsConfiguration.enableReviseOption();
 
 
         buildSearchConfigurations();
@@ -803,6 +803,6 @@ public class CaConfigReader {
         return enableRequestQuote;
     }
 
-    public boolean getEnableReviseQuote() { return enableReviseQuote;}
+    public boolean getEnableReviseOption() { return enableReviseOption;}
 
 }

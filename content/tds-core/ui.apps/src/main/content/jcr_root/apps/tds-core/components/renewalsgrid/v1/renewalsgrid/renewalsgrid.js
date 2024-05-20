@@ -32,6 +32,11 @@ use(['../../../common/utils.js'], function(utils) {
         jsonObject["enableShareOption"] = this.serviceData.enableShareOption;
     }
 
+     if (this.serviceData && this.serviceData.enableReviseOption) {
+     jsonObject["enableReviseOption"] = this.serviceData.enableReviseOption;
+     }
+
+
     if (this.serviceData && this.serviceData.enableRequestQuote) {
         jsonObject["enableRequestQuote"] = this.serviceData.enableRequestQuote;
     }

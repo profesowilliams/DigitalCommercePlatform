@@ -36,6 +36,6 @@ public @interface FeatureFlagsConfiguration {
     boolean enableRequestQuote() default false;
 
     @Property(label = "Enable Revise Quote Option", description = "Helps to enable Revise Quote Option in Renewals grid and Renewals details.")
-    boolean enableReviseQuote() default false;
+    boolean enableReviseOption() default false;
 
 }
