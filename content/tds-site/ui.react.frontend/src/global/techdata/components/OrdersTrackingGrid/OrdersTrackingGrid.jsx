@@ -242,7 +242,10 @@ function OrdersTrackingGrid(props) {
           isOnSearchAction.current
         )
       : await fetchData(queryOperations);
-    setMainGridRowsTotalCounter(response?.data?.content?.items?.length);
+      const isFirstPage = customPaginationRef?.current?.pageNumber === 1;
+      setMainGridRowsTotalCounter(
+        isFirstPage ? response?.data?.content?.items?.length : null
+      );
     if (ordersCountResponse.error?.isError) {
       setResponseError(true);
       sendGTMDataOnError();
