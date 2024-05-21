@@ -1,10 +1,16 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   ChevronRightSmallIcon,
   ChevronDownSmallIcon,
 } from '../../../../../../../fluentIcons/FluentIcons';
-function DropdownColumn({ eventProps }) {
+function DropdownColumn({ eventProps, dataLength }) {
+
   const [isToggled, setIsToggled] = useState(false);
+  useEffect(() => {
+    if (dataLength === 1) {
+      setIsToggled(true);
+    }
+  }, []);
 
   useMemo(() => eventProps?.node.setExpanded(isToggled), [isToggled]);
   const toggleDetails = () => {
