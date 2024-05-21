@@ -91,6 +91,8 @@ public class CaConfigReader {
 
     private String orderGridEndpoint;
 
+    private String uiServiceEndPointForDetails;
+    
     private String quotesPreviewEndPoint;
 
     private String quickQuoteEndpoint;
@@ -308,6 +310,7 @@ public class CaConfigReader {
         setVendorConnectionEndpoint = serviceEndPointsConfiguration.setVendorConnectionEndpoint();
         vendorDisconnectEndpoint = serviceEndPointsConfiguration.vendorDisconnectEndpoint();
         vendorConnectionDataRefreshEndpoint = serviceEndPointsConfiguration.vendorConnectionDataRefreshEndpoint();
+        uiServiceEndPointForDetails = serviceEndPointsConfiguration.uiServiceEndPointForDetails();
         orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
         quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
         quickQuoteEndpoint = serviceEndPointsConfiguration.quickQuoteEndpoint();
@@ -532,6 +535,10 @@ public class CaConfigReader {
         return orderGridEndpoint;
     }
 
+    public String getUiServiceEndPointForDetails() {
+        return uiServiceEndPointForDetails;
+    }
+    
     public String getQuotesPreviewEndPoint() {
         return quotesPreviewEndPoint;
     }

@@ -80,6 +80,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Order Grid Endpoint", description = "Order Grid Endpoint")
     String orderGridEndpoint();
 
+    @Property(label = "Ui Service End Point For Details", description = "Ui Service End Point For Details")
+    String uiServiceEndPointForDetails();
+    
     @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint")
     String quoteDetailEndpoint();
 
