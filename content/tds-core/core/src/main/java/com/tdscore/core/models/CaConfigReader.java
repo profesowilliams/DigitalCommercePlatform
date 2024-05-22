@@ -256,6 +256,10 @@ public class CaConfigReader {
     private String copyQuoteEndpoint;
 
     private String shareQuoteEndpoint;
+
+
+    private String requestQuoteEndpoint;
+
     private String reviseQuoteEndpoint;
 
     private String addressesEndpoint;
@@ -362,6 +366,7 @@ public class CaConfigReader {
         checkQuoteExitsforResellerEndpoint = serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint();
         copyQuoteEndpoint = serviceEndPointsConfiguration.copyQuoteEndpoint();
         shareQuoteEndpoint = serviceEndPointsConfiguration.shareQuoteEndpoint();
+        requestQuoteEndpoint = serviceEndPointsConfiguration.requestQuoteEndpoint();
         reviseQuoteEndpoint = serviceEndPointsConfiguration.reviseQuoteEndpoint();
         addressesEndpoint = serviceEndPointsConfiguration.addressesEndpoint();
         cartURL = mcConfiguration.cartURL();
@@ -374,6 +379,7 @@ public class CaConfigReader {
         enableShareOption = featureFlagsConfiguration.enableShareOption();
         enableRequestQuote = featureFlagsConfiguration.enableRequestQuote();
         enableReviseOption = featureFlagsConfiguration.enableReviseOption();
+
 
         buildSearchConfigurations();
 
@@ -821,7 +827,12 @@ public class CaConfigReader {
     public String getCopyQuoteEndpoint() { return copyQuoteEndpoint; }
 
     public String getShareQuoteEndpoint() { return shareQuoteEndpoint; }
+
+    public String getRequestQuoteEndpoint() { return requestQuoteEndpoint; }
+
+
     public String getReviseQuoteEndpoint() { return reviseQuoteEndpoint; }
+
 
     public String getAddressesEndpoint() { return addressesEndpoint; }
 

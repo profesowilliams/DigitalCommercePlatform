@@ -85,16 +85,16 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Orders Report Endpoint", description = "Orders Report Endpoint")
     String ordersReportEndpoint();
-    
+
     @Property(label = "Orders Report Count Endpoint", description = "Orders Report Count Endpoint")
     String ordersReportCountEndpoint();
 
     @Property(label = "Export All Order Lines Endpoint", description = "Export All Order Lines Endpoint")
     String exportAllOrderLinesEndpoint();
-    
+
     @Property(label = "Export Lines With Serial Numbers Only Endpoint", description = "Export Lines With Serial Numbers Only Endpoint")
     String exportLinesWithSerialNumbersOnlyEndpoint();
-    
+
     @Property(label = "Order Modify Endpoint", description = "Order Modify Endpoint")
     String orderModifyEndpoint();
 
@@ -151,7 +151,7 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Order Detail Grid Endpoint", description = "Order Detail Grid Endpoint")
     String orderDetailGridEndpoint();
-    
+
     @Property(label = "Download All Invoices Endpoint", description = "Download All Invoices Endpoint")
     String downloadAllInvoicesEndpoint();
 
@@ -208,6 +208,9 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Share Quote Endpoint", description = "Share Quote Endpoint")
     String shareQuoteEndpoint();
+
+    @Property(label = "Request Quote Endpoint", description = "Request Quote Endpoint")
+    String requestQuoteEndpoint();
 
     @Property(label = "Revise Quote Endpoint", description = "Revise Quote Endpoint")
     String reviseQuoteEndpoint();

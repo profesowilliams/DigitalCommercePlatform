@@ -144,6 +144,10 @@ use(['../../../common/utils.js'], function(utils) {
         shareFlyout.shareQuoteEndpoint = this.serviceData.uiServiceDomain + this.shareQuoteEndpoint;
     }
 
+     if (this.requestQuoteEndpoint && this.serviceData.uiServiceDomain) {
+            requestQuote.requestQuoteEndpoint = this.serviceData.uiServiceDomain + this.requestQuoteEndpoint;
+        }
+
      if (this.reviseQuoteEndpoint && this.serviceData.uiServiceDomain) {
             revisionFlyout.reviseQuoteEndpoint = this.serviceData.uiServiceDomain + this.reviseQuoteEndpoint;
         }
@@ -597,9 +601,6 @@ use(['../../../common/utils.js'], function(utils) {
     }
     if (properties && properties["requestQuoteCommentCountText"]) {
         requestQuote.requestQuoteCommentCountText = properties["requestQuoteCommentCountText"];
-    }
-    if (properties && properties["requestQuoteCommentCount"]) {
-        requestQuote.requestQuoteCommentCount = properties["requestQuoteCommentCount"];
     }
     if (properties && properties["requestQuoteButtonLabel"]) {
         requestQuote.requestQuoteButtonLabel = properties["requestQuoteButtonLabel"];

@@ -1364,11 +1364,6 @@
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Request Flyout Comment Count Text"
 															name="./requestQuoteCommentCountText"/>
-													<requestQuoteCommentCount
-															jcr:primaryType="nt:unstructured"
-															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-															fieldLabel="Request Flyout Comment Count"
-															name="./requestQuoteCommentCount"/>
 													<errorToastMessage
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"

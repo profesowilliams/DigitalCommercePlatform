@@ -4945,6 +4945,37 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
   res.json(response);
 });
 
+app.post("/ui-renewal/v1/RequestQuoteEmail", function (req, res) {
+
+  const success = {
+      "content": {
+          "success": true
+      },
+      "error": {
+          "code": 0,
+          "messages": [],
+          "isError": false
+      }
+  }
+
+   const error = {
+         "content": {
+             "success": false
+         },
+         "error": {
+             "code": 0,
+             "messages": [],
+             "isError": true
+         }
+     }
+
+    //mockResponses.failedResponse
+
+    setTimeout(() => {
+      return res.status(200).json(success);
+    }, 1000);
+});
+
 app.post("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
 
   const success = {
@@ -4958,28 +4989,16 @@ app.post("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
        }
    }
 
-    const notFound = {
-      "error": {
-        "code": 400,
-        "messages": [
-          {
-            "email": null,
-            "message": "Internal Server Error"
-          }
-        ],
-        "isError": true
-      }
-   }
-
    const error = {
-    "error": {
-      "code": 500,
-      "messages": [
-        "userID"
-      ],
-      "isError": true
+     "content": {
+         "success": false
+     },
+     "error": {
+         "code": 0,
+         "messages": [],
+         "isError": true
+     }
     }
-   }
 
     //mockResponses.failedResponse
 
