@@ -3,7 +3,10 @@ import OrderFilterList from './OrderFilterList';
 import OrderFilterTags from './OrderFilterTags';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import {
+  getDictionaryValueOrKey,
+  getDictionaryValue,
+} from '../../../../../utils/utils';
 import {
   getEnglishFiltersLabel,
   getFilterAnalyticsGoogle,
@@ -69,13 +72,39 @@ const OrderFilterFlyout = ({
   const { dateRange, orderStatus, orderType, filterTitle, showResultLabel } =
     filterLabels;
 
-  const orderDate = getDictionaryValueOrKey(filterLabels.orderDateLabel);
-  const shipDate = getDictionaryValueOrKey(filterLabels.shipDateLabel);
-  const invoiceDate = getDictionaryValueOrKey(filterLabels.invoiceDateLabel);
+  const orderDate = (
+    <span className="filter-dateType">
+      {getDictionaryValueOrKey(filterLabels.orderDateLabel)}
+    </span>
+  );
+  const shipDate = (
+    <span className="filter-dateType">
+      {getDictionaryValueOrKey(filterLabels.shipDateLabel)}
+    </span>
+  );
+  const etaDate = (
+    <div>
+      <span className="filter-dateType">
+        {getDictionaryValue(filterLabels.etaDate, 'ETA Date')}{' '}
+      </span>
+      <span className="filter-dateType-description">
+        {getDictionaryValue(
+          filterLabels.futureDateRange,
+          '(Future date range)'
+        )}
+      </span>
+    </div>
+  );
+  const invoiceDate = (
+    <span className="filter-dateType">
+      {getDictionaryValueOrKey(filterLabels.invoiceDateLabel)}
+    </span>
+  );
 
   const filterDateOptions = [
     { key: 'orderDate', label: orderDate },
     { key: 'shipDate', label: shipDate },
+    { key: 'etaDate', label: etaDate },
     { key: 'invoiceDate', label: invoiceDate },
   ];
 

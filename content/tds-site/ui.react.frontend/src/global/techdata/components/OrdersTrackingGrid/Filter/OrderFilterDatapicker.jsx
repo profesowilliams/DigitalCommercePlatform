@@ -79,6 +79,8 @@ export default function OrderFilterDatePicker({
     filtersRefs.current.createdTo = undefined;
     filtersRefs.current.shippedDateFrom = undefined;
     filtersRefs.current.shippedDateTo = undefined;
+    filtersRefs.current.etaDateFrom = undefined;
+    filtersRefs.current.etaDateTo = undefined;
     filtersRefs.current.invoiceDateFrom = undefined;
     filtersRefs.current.invoiceDateTo = undefined;
   };
@@ -93,6 +95,10 @@ export default function OrderFilterDatePicker({
       filtersRefs.current.shippedDateFrom = startDateFormatted;
       filtersRefs.current.shippedDateTo = endDateFormatted;
     } else if (typeOfDate === filterDateOptions[2].key) {
+      resetFilters();
+      filtersRefs.current.etaDateFrom = startDateFormatted;
+      filtersRefs.current.etaDateTo = endDateFormatted;
+    } else if (typeOfDate === filterDateOptions[3].key) {
       resetFilters();
       filtersRefs.current.invoiceDateFrom = startDateFormatted;
       filtersRefs.current.invoiceDateTo = endDateFormatted;

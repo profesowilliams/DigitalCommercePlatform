@@ -561,6 +561,8 @@ use(["../common/utils.js"], function (utils) {
       "streamOne",
       "orderDateLabel",
       "shipDateLabel",
+      "etaDate",
+      "futureDateRange",
       "invoiceDateLabel",
       "datePlaceholder",
       "dateFormat",

@@ -591,6 +591,18 @@
                                                 fieldLabel="Add Ship Date Label"
                                                 name="./shipDateLabel"
                                             />
+                                            <etaDate
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="filter.etaDate"
+                                                name="./etaDate"
+                                            />
+                                            <futureDateRange
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="filter.futureDateRange"
+                                                name="./futureDateRange"
+                                            />
                                             <invoiceDateLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

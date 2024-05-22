@@ -38,6 +38,8 @@ export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
 export const filtersDateGroup = [
   'createdFrom',
   'createdTo',
+  'etaDateFrom',
+  'etaDateTo',
   'invoiceDateFrom',
   'invoiceDateTo',
   'shippedDateFrom',
@@ -386,6 +388,8 @@ export const getInitialFiltersDataFromLS = () => {
       createdTo: null,
       shippedDateFrom: null,
       shippedDateTo: null,
+      etaDateFrom: null,
+      etaDateTo: null,
       invoiceDateFrom: null,
       invoiceDateTo: null,
       type: null,
@@ -400,6 +404,8 @@ export const getInitialFiltersDataFromLS = () => {
     shippedDateFrom:
       dateType === 'shipDate' ? data.dates[0]?.createdFrom : null,
     shippedDateTo: dateType === 'shipDate' ? data.dates[0]?.createdTo : null,
+    etaDateFrom: dateType === 'etaDate' ? data.dates[0]?.createdFrom : null,
+    etaDateTo: dateType === 'etaDate' ? data.dates[0]?.createdTo : null,
     invoiceDateFrom:
       dateType === 'invoiceDate' ? data.dates[0]?.createdFrom : null,
     invoiceDateTo: dateType === 'invoiceDate' ? data.dates[0]?.createdTo : null,

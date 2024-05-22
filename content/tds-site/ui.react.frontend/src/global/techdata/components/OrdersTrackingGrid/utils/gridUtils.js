@@ -133,6 +133,8 @@ export const secondLevelOptions = {
 export const filtersDateGroup = [
   'createdFrom',
   'createdTo',
+  'etaDateFrom',
+  'etaDateTo',
   'invoiceDateFrom',
   'invoiceDateTo',
   'shippedDateFrom',
