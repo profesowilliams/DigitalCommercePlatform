@@ -91,5 +91,5 @@
     </cq:inplaceEditing>
 	<cq:listeners
 	jcr:primaryType="cq:EditListenersConfig"
-	afteredit="REFRESH_PAGE"/>
+	afteredit="REFRESH_SELF"/>
 </jcr:root>
