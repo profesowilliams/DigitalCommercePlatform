@@ -82,7 +82,31 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Ui Service End Point For Details", description = "Ui Service End Point For Details")
     String uiServiceEndPointForDetails();
+
+    @Property(label = "Orders Report Endpoint", description = "Orders Report Endpoint")
+    String ordersReportEndpoint();
     
+    @Property(label = "Orders Report Count Endpoint", description = "Orders Report Count Endpoint")
+    String ordersReportCountEndpoint();
+
+    @Property(label = "Export All Order Lines Endpoint", description = "Export All Order Lines Endpoint")
+    String exportAllOrderLinesEndpoint();
+    
+    @Property(label = "Export Lines With Serial Numbers Only Endpoint", description = "Export Lines With Serial Numbers Only Endpoint")
+    String exportLinesWithSerialNumbersOnlyEndpoint();
+    
+    @Property(label = "Order Modify Endpoint", description = "Order Modify Endpoint")
+    String orderModifyEndpoint();
+
+    @Property(label = "Order Modify Change Endpoint", description = "Order Modify Change Endpoint")
+    String orderModifyChangeEndpoint();
+
+    @Property(label = "Replace Product Endpoint", description = "Replace Product Endpoint")
+    String replaceProductEndpoint();
+
+    @Property(label = "Replacements Products Endpoint", description = "Replacement Products Endpoint")
+    String replacementsProductsEndpoint();
+
     @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint")
     String quoteDetailEndpoint();
 
@@ -122,6 +146,12 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Environment Http Request Header", description = "Environment Http Request Header")
     String environmentRequestHeader();
 
+    @Property(label = "Order Detail Endpoint", description = "Order Detail Endpoint")
+    String orderDetailEndpoint();
+
+    @Property(label = "Order Detail Grid Endpoint", description = "Order Detail Grid Endpoint")
+    String orderDetailGridEndpoint();
+    
     @Property(label = "Download All Invoices Endpoint", description = "Download All Invoices Endpoint")
     String downloadAllInvoicesEndpoint();
 

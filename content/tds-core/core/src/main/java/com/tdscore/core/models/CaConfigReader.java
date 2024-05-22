@@ -53,6 +53,10 @@ public class CaConfigReader {
 
     private String downloadAllInvoicesEndpoint;
 
+    private String orderDetailEndpoint;
+
+    private String orderDetailGridEndpoint;
+
     private String downloadInvoiceEndpoint;
 
     private String dealsForEndpoint;
@@ -92,7 +96,23 @@ public class CaConfigReader {
     private String orderGridEndpoint;
 
     private String uiServiceEndPointForDetails;
-    
+
+    private String ordersReportEndpoint;
+
+    private String ordersReportCountEndpoint;
+
+    private String exportAllOrderLinesEndpoint;
+
+    private String exportLinesWithSerialNumbersOnlyEndpoint;
+
+    private String orderModifyEndpoint;
+
+    private String orderModifyChangeEndpoint;
+
+    private String replaceProductEndpoint;
+
+    private String replacementsProductsEndpoint;
+
     private String quotesPreviewEndPoint;
 
     private String quickQuoteEndpoint;
@@ -236,9 +256,7 @@ public class CaConfigReader {
     private String copyQuoteEndpoint;
 
     private String shareQuoteEndpoint;
-
     private String reviseQuoteEndpoint;
-
 
     private String addressesEndpoint;
 
@@ -267,7 +285,6 @@ public class CaConfigReader {
     private boolean enableShareOption;
 
     private boolean enableRequestQuote;
-
     private boolean enableReviseOption;
 
     @PostConstruct
@@ -303,6 +320,8 @@ public class CaConfigReader {
         savedCartsEndpoint = serviceEndPointsConfiguration.savedCartsEndpoint();
         quoteGridEndpoint = serviceEndPointsConfiguration.quoteGridEndpoint();
         quoteDetailEndpoint = serviceEndPointsConfiguration.quoteDetailEndpoint();
+        orderDetailEndpoint = serviceEndPointsConfiguration.orderDetailEndpoint();
+        orderDetailGridEndpoint = serviceEndPointsConfiguration.orderDetailGridEndpoint();
         downloadAllInvoicesEndpoint = serviceEndPointsConfiguration.downloadAllInvoicesEndpoint();
         downloadInvoiceEndpoint = serviceEndPointsConfiguration.downloadInvoiceEndpoint();
         dealsForEndpoint = serviceEndPointsConfiguration.dealsForEndpoint();
@@ -311,6 +330,14 @@ public class CaConfigReader {
         vendorDisconnectEndpoint = serviceEndPointsConfiguration.vendorDisconnectEndpoint();
         vendorConnectionDataRefreshEndpoint = serviceEndPointsConfiguration.vendorConnectionDataRefreshEndpoint();
         uiServiceEndPointForDetails = serviceEndPointsConfiguration.uiServiceEndPointForDetails();
+        ordersReportEndpoint = serviceEndPointsConfiguration.ordersReportEndpoint();
+        ordersReportCountEndpoint = serviceEndPointsConfiguration.ordersReportCountEndpoint();
+        exportAllOrderLinesEndpoint = serviceEndPointsConfiguration.exportAllOrderLinesEndpoint();
+        exportLinesWithSerialNumbersOnlyEndpoint = serviceEndPointsConfiguration.exportLinesWithSerialNumbersOnlyEndpoint();
+        orderModifyEndpoint = serviceEndPointsConfiguration.orderModifyEndpoint();
+        orderModifyChangeEndpoint = serviceEndPointsConfiguration.orderModifyChangeEndpoint();
+        replaceProductEndpoint = serviceEndPointsConfiguration.replaceProductEndpoint();
+        replacementsProductsEndpoint = serviceEndPointsConfiguration.replacementsProductsEndpoint();
         orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
         quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
         quickQuoteEndpoint = serviceEndPointsConfiguration.quickQuoteEndpoint();
@@ -347,7 +374,6 @@ public class CaConfigReader {
         enableShareOption = featureFlagsConfiguration.enableShareOption();
         enableRequestQuote = featureFlagsConfiguration.enableRequestQuote();
         enableReviseOption = featureFlagsConfiguration.enableReviseOption();
-
 
         buildSearchConfigurations();
 
@@ -538,7 +564,39 @@ public class CaConfigReader {
     public String getUiServiceEndPointForDetails() {
         return uiServiceEndPointForDetails;
     }
-    
+
+    public String getOrdersReportEndpoint() {
+        return ordersReportEndpoint;
+    }
+
+    public String getOrdersReportCountEndpoint() {
+        return ordersReportCountEndpoint;
+    }
+
+    public String getExportAllOrderLinesEndpoint() {
+        return exportAllOrderLinesEndpoint;
+    }
+
+    public String getExportLinesWithSerialNumbersOnlyEndpoint() {
+        return exportLinesWithSerialNumbersOnlyEndpoint;
+    }
+
+    public String getOrderModifyEndpoint() {
+        return orderModifyEndpoint;
+    }
+
+    public String getOrderModifyChangeEndpoint() {
+        return orderModifyChangeEndpoint;
+    }
+
+    public String getReplaceProductEndpoint() {
+        return replaceProductEndpoint;
+    }
+
+    public String getReplacementsProductsEndpoint() {
+        return replacementsProductsEndpoint;
+    }
+
     public String getQuotesPreviewEndPoint() {
         return quotesPreviewEndPoint;
     }
@@ -708,6 +766,10 @@ public class CaConfigReader {
 
     public String getDownloadAllInvoicesEndpoint() { return downloadAllInvoicesEndpoint; }
 
+    public String getOrderDetailEndpoint() { return orderDetailEndpoint;}
+
+    public String getOrderDetailGridEndpoint() { return orderDetailGridEndpoint;}
+
     public String getDownloadInvoiceEndpoint() { return downloadInvoiceEndpoint; }
 
     public String getDealsForEndpoint() { return dealsForEndpoint; }
@@ -759,9 +821,7 @@ public class CaConfigReader {
     public String getCopyQuoteEndpoint() { return copyQuoteEndpoint; }
 
     public String getShareQuoteEndpoint() { return shareQuoteEndpoint; }
-
     public String getReviseQuoteEndpoint() { return reviseQuoteEndpoint; }
-
 
     public String getAddressesEndpoint() { return addressesEndpoint; }
 
@@ -809,7 +869,5 @@ public class CaConfigReader {
     public boolean getEnableRequestQuote() {
         return enableRequestQuote;
     }
-
     public boolean getEnableReviseOption() { return enableReviseOption;}
-
 }

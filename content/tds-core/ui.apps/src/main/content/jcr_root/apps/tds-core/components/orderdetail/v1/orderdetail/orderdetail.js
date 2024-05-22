@@ -270,11 +270,16 @@ use(function () {
     }
 
     if (this.uiServiceDomain != null && this.downloadIndividualInvoiceEndpoint != null) {
-        jsonObject["downloadInvoicesEndpoint"] = this.uiServiceDomain+this.downloadIndividualInvoiceEndpoint;
+        jsonObject["downloadInvoicesEndpoint"] = this.uiServiceDomain + this.downloadIndividualInvoiceEndpoint;
+    }
+
+    if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
+        jsonObject["uiServiceEndPoint"] =
+            this.uiServiceDomain + this.orderDetailEndpoint;
     }
 
     if (this.uiServiceDomain != null && this.downloadOrderDetailsEndpoint != null) {
-        jsonObject["downloadOrderDetailsEndpoint"] = this.uiServiceDomain+this.downloadOrderDetailsEndpoint;
+        jsonObject["downloadOrderDetailsEndpoint"] = this.uiServiceDomain + this.downloadOrderDetailsEndpoint;
     }
 
     if (searchByDropDown != null) {
@@ -302,7 +307,7 @@ use(function () {
         }
     }
 
-    
+
     if (exportColumnListValues != null) {
         exportColumnListTab["columnList"] = exportColumnListValues;
     }
@@ -313,8 +318,7 @@ use(function () {
 
     var trackingConfigTrackingLogos = resourceResolver.getResource(currentNode.getPath() + "/trackingIcons");
 
-    function populateTrackingConfigJson(trackingConfigTrackingLogos)
-    {
+    function populateTrackingConfigJson(trackingConfigTrackingLogos) {
         var trackingJson = {};
         var trackingIconArray = [];
 
