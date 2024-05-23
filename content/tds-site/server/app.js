@@ -8440,6 +8440,7 @@ app.get("/ui-commerce/v3/lookahead", function (req, res) {
         {
           text: "Maplewood, crockford lane... in End Custom...",
           field: "Source_Id",
+          gtmField: "Source_Id",
           isPrefered: true,
           sortOrder: 1,
           matchCount: 2,
@@ -8447,6 +8448,7 @@ app.get("/ui-commerce/v3/lookahead", function (req, res) {
         {
           text: "ala ma kota... in CustomerPO",
           field: "CustomerPO",
+          gtmField: "CustomerPO",
           isPrefered: false,
           sortOrder: 2,
           matchCount: 10,

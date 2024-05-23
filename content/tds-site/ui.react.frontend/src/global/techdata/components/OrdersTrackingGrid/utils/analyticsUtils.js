@@ -116,12 +116,14 @@ export const getSearchAnalyticsGoogle = (
   return {
     event: 'Order tracking - Search',
     category,
-    orderTracking: `${dropdownOption}: ${textInput} | ${getSuggestionsString(suggestions)}`,
+    orderTracking: `${dropdownOption}: ${textInput} | ${getSuggestionsString(
+      suggestions
+    )}`,
   };
 };
 
 function getSuggestionsString(obj) {
-  const suggestions = obj.map(item => {
+  const suggestions = obj.map((item) => {
     return `${item.gtmField}: ${item.matchCount}`;
   });
 

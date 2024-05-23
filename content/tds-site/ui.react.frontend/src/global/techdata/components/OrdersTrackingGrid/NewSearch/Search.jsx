@@ -206,6 +206,30 @@ const Search = (
     removeQueryParamsSearch(options);
   };
 
+  const pushToGTM = useCallback(
+    (newGTMKey, currentValue, currentSuggestions) => {
+      pushEvent(ANALYTICS_TYPES.events.orderSearch, null, {
+        order: {
+          searchTerm: currentValue,
+          searchType: newGTMKey,
+        },
+      });
+      pushDataLayerGoogle(
+        getSearchAnalyticsGoogle(
+          searchAnalyticsLabel,
+          newGTMKey,
+          currentValue,
+          currentSuggestions
+        )
+      );
+    },
+    []
+  );
+
+  const pushDataToGTMAutocomplete = useMemo(() => {
+    return debounce(pushToGTM, 300);
+  }, []);
+
   const triggerSearch = (newValue) => {
     if (value.length >= minimalQueryLength && suggestions.length > 0) {
       let newKey = '';
@@ -229,20 +253,7 @@ const Search = (
         field: newKey,
         value: value,
       });
-      pushEvent(ANALYTICS_TYPES.events.orderSearch, null, {
-        order: {
-          searchTerm: value,
-          searchType: newGTMKey,
-        },
-      });
-      pushDataLayerGoogle(
-        getSearchAnalyticsGoogle(
-          searchAnalyticsLabel,
-          newGTMKey,
-          value,
-          suggestions
-        )
-      );
+      pushDataToGTMAutocomplete(newGTMKey, value, suggestions);
       resetSearch();
     }
   };
