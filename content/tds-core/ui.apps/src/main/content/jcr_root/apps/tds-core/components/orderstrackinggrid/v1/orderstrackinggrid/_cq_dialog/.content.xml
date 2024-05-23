@@ -588,8 +588,14 @@
                                             <shipDateLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add Ship Date Label"
+                                                fieldLabel="filter.shipDate"
                                                 name="./shipDateLabel"
+                                            />
+                                            <pastDateRange
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="filter.pastDateRange"
+                                                name="./pastDateRange"
                                             />
                                             <etaDate
                                                 jcr:primaryType="nt:unstructured"

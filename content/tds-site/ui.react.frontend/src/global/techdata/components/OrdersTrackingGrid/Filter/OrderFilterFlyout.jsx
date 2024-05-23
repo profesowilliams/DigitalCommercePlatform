@@ -78,9 +78,14 @@ const OrderFilterFlyout = ({
     </span>
   );
   const shipDate = (
-    <span className="filter-dateType">
-      {getDictionaryValueOrKey(filterLabels.shipDateLabel)}
-    </span>
+    <div>
+      <span className="filter-dateType">
+        {getDictionaryValue(filterLabels.shipDateLabel)}{' '}
+      </span>
+      <span className="filter-dateType-description">
+        {getDictionaryValue(filterLabels.pastDateRange, '(Past date range)')}
+      </span>
+    </div>
   );
   const etaDate = (
     <div>
