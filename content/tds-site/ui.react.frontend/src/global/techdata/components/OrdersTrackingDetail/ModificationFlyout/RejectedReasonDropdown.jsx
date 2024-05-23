@@ -22,12 +22,10 @@ const RejectedReasonDropdown = ({
   return (
     <div className="decreased-reason-dropdown">
       <FormControl fullWidth>
+        <InputLabel className={'decreased-reason-label'}>
+          {getDictionaryValueOrKey(selectReasonLabel)}
+        </InputLabel>
         <Select
-          label={
-            <InputLabel>
-              {getDictionaryValueOrKey(selectReasonLabel)}
-            </InputLabel>
-          }
           value={rejectedReason}
           onChange={(e) => handleChangeReason(e.target.value)}
           className="decreased-reason-select"

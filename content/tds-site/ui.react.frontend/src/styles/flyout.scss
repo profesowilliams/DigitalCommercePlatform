@@ -533,6 +533,13 @@ $flyout-small-height-formax: 779px;
   }
 }
 
+.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-outlined.MuiFormLabel-root.MuiFormLabel-colorPrimary.decreased-reason-label{
+  &.MuiFormLabel-filled,
+  &.Mui-focused {
+    left: -13px;
+  }
+}
+
 .cmp-flyout-list {
   padding: 20px 30px;
   margin: 0;
