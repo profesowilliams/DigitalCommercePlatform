@@ -11,6 +11,8 @@ function SoldToCard({ shipTo = {}, config }) {
     line1,
     line2,
     line3,
+    lineName3,
+    lineName4,
     city,
     state,
     zip,
@@ -19,7 +21,7 @@ function SoldToCard({ shipTo = {}, config }) {
     email,
   } = shipTo;
   const shipToTemplateDefault =
-    '{companyName}<br/>{line1}<br/>{line2}<br/>{line3}<br/>{city} {state} {zip} {country}<br/>{phoneNumber}<br/>{email}';
+    '{companyName}<br/>{line1}<br/>{line2}<br/>{line3}<br/>{lineName3}<br/>{lineName4}<br/>{city} {state} {zip} {country}<br/>{phoneNumber}<br/>{email}';
   const template = getDictionaryValue(
     config?.soldToLabels?.shipToTemplate,
     shipToTemplateDefault
@@ -29,6 +31,8 @@ function SoldToCard({ shipTo = {}, config }) {
     '{line1}': line1,
     '{line2}': line2,
     '{line3}': line3,
+    '{lineName3}': lineName3,
+    '{lineName4 }': lineName4,
     '{city}': city,
     '{state}': state,
     '{zip}': zip,
