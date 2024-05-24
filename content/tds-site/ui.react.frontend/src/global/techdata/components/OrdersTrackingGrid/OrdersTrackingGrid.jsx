@@ -50,6 +50,7 @@ import {
   hasLocalStorageData,
   resetLocalStorage,
   pageAccessedByReload,
+  buildQueryString,
 } from './utils/gridUtils';
 import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
@@ -69,6 +70,26 @@ const searchParamsKeys = [
   SORT_LOCAL_STORAGE_KEY,
   ORDER_FILTER_LOCAL_STORAGE_KEY,
   REPORTS_LOCAL_STORAGE_KEY,
+];
+
+const translationDictionaries = [
+  "OrderTracking.FreetextSearchFields",
+  "OrderTracking.MainGrid",
+  "OrderTracking.MainGrid.Items",
+  "OrderTracking.MainGrid.OrderLineDropdown",
+  "OrderTracking.MainGrid.Filters",
+  "OrderTracking.MainGrid.Reports",
+  "OrderTracking.MainGrid.Search",
+  "OrderTracking.MainGrid.ExportFlyout",
+  "OrderTracking.MainGrid.OrderModify",
+  "OrderTracking.MainGrid.SettingsFlyout",
+  "OrderTracking.MainGrid.InvoicesFlyout",
+  "OrderTracking.MainGrid.DnoteFlyout",
+  "OrderTracking.MainGrid.NoAccessScreen",
+  "OrderTracking.MainGrid.PagginationLabels",
+  "OrderTracking.MainGrid.SearchNoResult",
+  "OrderTracking.MainGrid.ProductReplacmentFlyout",
+  "OrderTracking.MainGrid.OrderStatuses"
 ];
 
 function OrdersTrackingGrid(props) {
@@ -94,7 +115,7 @@ function OrdersTrackingGrid(props) {
     closeAndCleanToaster,
     setFilterList,
     setFeatureFlags,
-    setFreeTextSearchTranslations,
+    setTranslations,
     hasRights,
     setMainGridRowsTotalCounter,
     updateOrderFilterCounter,
@@ -397,9 +418,10 @@ function OrdersTrackingGrid(props) {
     return results.data.content;
   };
 
-  const fetchFreeTextSearchTranslations = async () => {
+  const fetchUITranslations = async () => {
     const results = await usGet(
-      `${componentProp.uiIntouchLocalizeServiceDomain}/v1?id=OrderTracking.FreetextSearchFields&id=OrderTracking.MainGrid`
+      // TODO: cacheInSec - cache value should be configurable? or hardcoded 3600?
+      `${componentProp.uiIntouchLocalizeServiceDomain}/v1` + buildQueryString(translationDictionaries) + `&cacheInSec=300` 
     );
     return results.data;
   };
@@ -408,6 +430,7 @@ function OrdersTrackingGrid(props) {
     `${gridConfig.uiProactiveServiceDomain}/v1`,
     'settings'
   );
+
   const triggerSettingsFlyout = (settings) => {
     setCustomState({
       key: 'settingsFlyout',
@@ -425,8 +448,8 @@ function OrdersTrackingGrid(props) {
     redirectedFrom && deleteSearchParam('redirectedFrom');
     const refinements = await fetchFiltersRefinements();
     setFeatureFlags(refinements?.featureFlags);
-    const freeTextSearchTranslations = await fetchFreeTextSearchTranslations();
-    setFreeTextSearchTranslations(freeTextSearchTranslations);
+    const uiTranslations = await fetchUITranslations();
+    setTranslations(uiTranslations);
     const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
     setFilterList([...predefined]);
     updateOrderFilterCounter();

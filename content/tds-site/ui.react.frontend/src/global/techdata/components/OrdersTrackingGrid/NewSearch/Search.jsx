@@ -116,7 +116,7 @@ const Search = (
     open && value.length >= minimalQueryLength && suggestions.length === 0;
 
   const translations = useOrderTrackingStore(
-    (state) => state.freeTextSearchTranslations
+    (state) => state.uiTranslations
   );
   const freeTextSearchTranslations =
     translations?.['OrderTracking.FreetextSearchFields'];

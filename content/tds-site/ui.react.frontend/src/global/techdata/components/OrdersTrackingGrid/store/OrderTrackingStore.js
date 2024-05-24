@@ -133,7 +133,7 @@ const INITIAL_STATE = {
     groupLines: false,
     alternativeSearch: false,
   },
-  freeTextSearchTranslations: {},
+  uiTranslations: {},
   orderDetailSubtotalValue: null,
   mainGridRowsTotalCounter: null,
 };

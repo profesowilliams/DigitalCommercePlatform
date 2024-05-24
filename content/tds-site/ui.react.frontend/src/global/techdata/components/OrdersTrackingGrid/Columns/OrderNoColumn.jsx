@@ -3,6 +3,7 @@ import { isJavaScriptProtocol } from '../../../../../utils/utils';
 import { getOrderDetailsAnalyticsGoogle } from '../utils/analyticsUtils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 import { CopyIcon, TickIcon } from '../../../../../fluentIcons/FluentIcons';
+import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 import Tooltip from '@mui/material/Tooltip';
 
@@ -16,13 +17,20 @@ function OrderNoColumn({ id, detailUrl }) {
     setCopied(true);
   };
 
-  const tooltipMessage = copied ? ( //TODO: it's just a POC, so translations will be added later
+  const translations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+
+  const mainGridTranslations =
+    translations?.['OrderTracking.MainGrid'];
+
+  const tooltipMessage = copied ? (
     <span style={{ textAlign: 'center' }}>
       <TickIcon
         fill="green"
         style={{ verticalAlign: 'middle', marginRight: '5px' }}
       />
-      Copied to Clipboard
+      { mainGridTranslations?.Tooltip_Copied }
     </span>
   ) : (
     <span
@@ -33,7 +41,7 @@ function OrderNoColumn({ id, detailUrl }) {
         fill="white"
         style={{ verticalAlign: 'middle', marginRight: '5px' }}
       />
-      Copy
+      { mainGridTranslations?.Tooltip_Copy }
     </span>
   );
 
