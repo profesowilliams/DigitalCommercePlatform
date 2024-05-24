@@ -46,7 +46,6 @@ function ShippedTabGrid({
           <DropdownColumn
             eventProps={eventProps}
             orderId={id}
-            dataLength={data?.length}
           />
         </section>
       ),

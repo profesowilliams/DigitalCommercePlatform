@@ -3,11 +3,18 @@ import {
   ChevronRightSmallIcon,
   ChevronDownSmallIcon,
 } from '../../../../../../../fluentIcons/FluentIcons';
-function DropdownColumn({ eventProps, dataLength }) {
+import { useOrderTrackingStore } from '../../../store/OrderTrackingStore';
+
+function DropdownColumn({ eventProps }) {
 
   const [isToggled, setIsToggled] = useState(false);
+
+  const mainGridRowsTotalCounter = useOrderTrackingStore(
+    (state) => state.mainGridRowsTotalCounter
+  );
+
   useEffect(() => {
-    if (dataLength === 1) {
+    if (mainGridRowsTotalCounter === 1) {
       setIsToggled(true);
     }
   }, []);

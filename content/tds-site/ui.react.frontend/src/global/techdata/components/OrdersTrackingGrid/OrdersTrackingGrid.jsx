@@ -132,6 +132,7 @@ function OrdersTrackingGrid(props) {
   const { isGTMReady } = useGTMStatus();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [reloadAddedToGTM, setReloadAddedToGTM] = useState(false);
   const [responseError, setResponseError] = useState(null);
   const [sendAnalyticsDataHome, setSendAnalyticsDataHome] = useState(true);
   const [newItem, setNewItem] = useState(null);
@@ -479,6 +480,7 @@ function OrdersTrackingGrid(props) {
             industryKey: data[1]?.industryKey,
           })
         );
+        setReloadAddedToGTM(true);
         pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
       }
     });
@@ -491,6 +493,18 @@ function OrdersTrackingGrid(props) {
     ...getPredefinedSearchOptionsList(searchLabels),
     ...searchOptionsList,
   ];
+
+  useEffect(() => {
+    if (sendAnalyticsDataHome && reloadAddedToGTM) {
+      if (hasAccess) {
+        pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
+        setSendAnalyticsDataHome(false);
+      } else {
+        pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
+        setSendAnalyticsDataHome(false);
+      }
+    }
+  }, [userData, isGTMReady, reloadAddedToGTM]);
 
   useEffect(() => {
     if (!userData) {
@@ -524,15 +538,6 @@ function OrdersTrackingGrid(props) {
         onQueryChanged({ onSearchAction: true });
       }
     });
-    if (sendAnalyticsDataHome) {
-      if (hasAccess) {
-        pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
-        setSendAnalyticsDataHome(false);
-      } else {
-        pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
-        setSendAnalyticsDataHome(false);
-      }
-    }
   }, [userData]);
 
   useEffect(() => {
