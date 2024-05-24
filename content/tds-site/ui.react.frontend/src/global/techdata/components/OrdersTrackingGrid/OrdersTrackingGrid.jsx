@@ -421,7 +421,7 @@ function OrdersTrackingGrid(props) {
   const fetchUITranslations = async () => {
     const results = await usGet(
       // TODO: cacheInSec - cache value should be configurable? or hardcoded 3600?
-      `${componentProp.uiIntouchLocalizeServiceDomain}/v1` + buildQueryString(translationDictionaries) + `&cacheInSec=300` 
+      `${componentProp.uiLocalizeServiceDomain}/v1` + buildQueryString(translationDictionaries) + `&cacheInSec=300` 
     );
     return results.data;
   };
