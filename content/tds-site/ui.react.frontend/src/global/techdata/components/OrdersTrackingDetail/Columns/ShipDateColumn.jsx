@@ -8,8 +8,8 @@ function ShipDateColumn({ line, sortedLineDetails, rowsToGrayOutTDNameRef }) {
   const shipDateText = (el) => (
     <>
       {el.shipDateFormatted && <span>{el.shipDateFormatted}</span>}
-      <br />
-      {el.shipDateFormatted && <span>{el.shipDateDetailsTranslated}</span>}
+      {el.shipDateFormatted && <br />}
+      {el.shipDateDetailsTranslated && <span>{el.shipDateDetailsTranslated}</span>}
     </>
   );
 
