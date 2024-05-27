@@ -100,6 +100,7 @@ const MainGridFlyouts = ({
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         addNewItem={addNewItem}
         isTDSynnex={isTDSynnex}
+        onQueryChanged={onQueryChanged}
       />
     </>
   );

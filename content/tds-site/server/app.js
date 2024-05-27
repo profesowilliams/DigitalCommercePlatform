@@ -5275,6 +5275,7 @@ app.get("/ui-commerce/v3/orders", (req, res) => {
       items: [
         {
           id: "I038841736",
+          lastDataSource: "OrderModification",
           vendor: [],
           created: "11-07-2023",
           createdFormatted: "07/11/2023",
@@ -5324,6 +5325,7 @@ app.get("/ui-commerce/v3/orders", (req, res) => {
         },
         {
           id: "6082654565",
+          lastDataSource: "OrderModification",
           vendor: [],
           created: "11-03-2023",
           createdFormatted: "03/11/2023",
