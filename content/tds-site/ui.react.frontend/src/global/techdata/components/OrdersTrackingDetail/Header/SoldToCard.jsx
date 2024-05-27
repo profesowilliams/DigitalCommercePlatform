@@ -32,7 +32,7 @@ function SoldToCard({ shipTo = {}, config }) {
     '{line2}': line2,
     '{line3}': line3,
     '{lineName3}': lineName3,
-    '{lineName4 }': lineName4,
+    '{lineName4}': lineName4,
     '{city}': city,
     '{state}': state,
     '{zip}': zip,

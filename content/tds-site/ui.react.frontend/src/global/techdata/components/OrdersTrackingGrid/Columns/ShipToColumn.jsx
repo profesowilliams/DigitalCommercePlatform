@@ -28,7 +28,7 @@ function ShipToColumn({ data, shipToTooltipTemplate }) {
     '{address.line2}': line2,
     '{address.line3}': line3,
     '{address.lineName3}': lineName3,
-    '{address.lineName4 }': lineName4,
+    '{address.lineName4}': lineName4,
     '{address.city}': city,
     '{address.state}': state,
     '{address.zip}': zip,
