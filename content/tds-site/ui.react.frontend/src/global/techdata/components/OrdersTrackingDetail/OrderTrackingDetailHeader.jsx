@@ -5,6 +5,7 @@ import MenuActions from './Header/MenuActions';
 import OrderTrackingDetailTitle from './Header/OrderTrackingDetailTitle';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import {
+  XMLMessageAnalyticsGoogle,
   getDNoteViewAnalyticsGoogle,
   getInvoiceViewAnalyticsGoogle,
   pushDataLayerGoogle,
@@ -153,8 +154,10 @@ const OrderTrackingDetailHeader = ({
           const urlXML = URL.createObjectURL(xmlContent);
           window.open(urlXML, '_blank');
           URL.revokeObjectURL(urlXML);
+          pushDataLayerGoogle(XMLMessageAnalyticsGoogle('success'));
         } else {
           setOpenXMLAlert(true);
+          pushDataLayerGoogle(XMLMessageAnalyticsGoogle('fail'));
         }
       })
       .finally(() => {

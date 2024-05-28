@@ -411,6 +411,14 @@ export const pushFailedDownloadGoogleAnalytics = (
   }
 };
 
+export const XMLMessageAnalyticsGoogle = (label) => {
+  return {
+    event: 'Order tracking - XML Message',
+    orderTracking: 'Order Details',
+    label,
+  };
+}
+
 export const ANALYTIC_CONSTANTS = {
   Grid: {
     Category: ['Order Tracking'],
