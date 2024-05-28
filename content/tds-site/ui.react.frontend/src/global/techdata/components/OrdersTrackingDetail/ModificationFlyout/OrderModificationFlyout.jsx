@@ -40,6 +40,7 @@ function OrderModificationFlyout({
   gridRef = null,
   rowsToGrayOutTDNameRef = null,
   setOrderModifyHeaderInfo = () => {},
+  onQueryChanged,
 }) {
   const { id = '' } = getUrlParams();
   const [items, setItems] = useState([]);
@@ -243,7 +244,9 @@ function OrderModificationFlyout({
     } finally {
       greyOutRows([]);
       setOrderDetailSubtotalValue(null);
-      setOrderModifyHeaderInfo(true);
+      onQueryChanged
+        ? onQueryChanged({ onSearchAction: true })
+        : setOrderModifyHeaderInfo(true);
     }
   };
 

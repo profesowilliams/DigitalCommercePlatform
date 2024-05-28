@@ -82,6 +82,7 @@ const MainGridFlyouts = ({
         gridConfig={gridConfig}
         userData={userData}
         isTDSynnex={isTDSynnex}
+        onQueryChanged={onQueryChanged}
       />
       <SettingsFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}

@@ -189,8 +189,9 @@ function ProductReplacementFlyout({
         productReplacementConfig?.data?.line?.tdNumber,
       ];
       changeRefreshDetailApiState('lineDetails');
-      onQueryChanged({ onSearchAction: true });
-      setOrderModifyHeaderInfo(true);
+      onQueryChanged
+        ? onQueryChanged({ onSearchAction: true })
+        : setOrderModifyHeaderInfo(true);
     }
   };
 
