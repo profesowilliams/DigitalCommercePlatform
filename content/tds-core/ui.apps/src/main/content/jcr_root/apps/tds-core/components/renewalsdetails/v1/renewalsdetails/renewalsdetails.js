@@ -379,7 +379,7 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties) {
         const orderingFromDashboard = utils.fillFieldsDialogProperties(orderingProperties);
         if (!!orderingFromDashboard) {
-            orderingFromDashboard.termsAndConditionsLink = utils.transformUrlGivenEnvironment(orderingFromDashboard.termsAndConditionsLink);
+            orderingFromDashboard.termsAndConditionsLink = utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(orderingFromDashboard.termsAndConditionsLink));
 
             jsonObject['orderingFromDashboard'] = orderingFromDashboard
         };
