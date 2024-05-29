@@ -8486,6 +8486,8 @@ app.get("/ui-intouch-localize/v1", function (req, res) {
       Search_Input_Tooltip: "Free text search is available for:",
       Search_Input_Loading: "Loading...",
       Search_Input_NoResultFound: "No results found",
+      Tooltip_Copy: "Copy",
+      Tooltip_Copied: "Copied to clipboard",
     },
   };
 

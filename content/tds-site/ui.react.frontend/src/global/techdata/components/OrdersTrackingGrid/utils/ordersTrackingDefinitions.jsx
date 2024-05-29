@@ -10,7 +10,8 @@ import StatusColumn from '../Columns/StatusColumn';
 
 export const ordersTrackingDefinition = (
   { detailUrl, multiple, iconsStatuses, shipToTooltipTemplate },
-  openFilePdf
+  openFilePdf,
+  isInternalUser
 ) => {
   const createColumnComponent = (eventProps, aemDefinition) => {
     const { columnKey } = aemDefinition;
@@ -35,7 +36,13 @@ export const ordersTrackingDefinition = (
       ),
       statusText: <StatusColumn data={data} iconsStatuses={iconsStatuses} />,
       created: data?.createdFormatted ?? data?.created,
-      id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
+      id: (
+        <OrderNoColumn
+          id={data?.id}
+          detailUrl={detailUrl}
+          isInternalUser={isInternalUser}
+        />
+      ),
       customerPO: <ResellerColumn data={data?.customerPO} />,
       priceFormatted: <TotalColumn data={data} />,
       invoices: (
@@ -45,6 +52,7 @@ export const ordersTrackingDefinition = (
           multiple={multiple}
           reseller={data?.customerPO}
           openFilePdf={openFilePdf}
+          isInternalUser={isInternalUser}
         />
       ),
       deliveryNotes: (
@@ -54,6 +62,7 @@ export const ordersTrackingDefinition = (
           multiple={multiple}
           reseller={data?.customerPO}
           openFilePdf={openFilePdf}
+          isInternalUser={isInternalUser}
         />
       ),
     };

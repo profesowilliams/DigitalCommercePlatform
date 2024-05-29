@@ -15,6 +15,7 @@ function DeliveryNotesColumn({
   id,
   reseller,
   openFilePdf,
+  isInternalUser,
 }) {
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const [copied, setCopied] = useState(false);
@@ -60,40 +61,43 @@ function DeliveryNotesColumn({
 
   const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
 
-  const tooltipMessage = copied ? (
-    <span className="tooltip-span">
-      <TickIcon fill="green" className="copy-icon" />
-      {mainGridTranslations?.Tooltip_Copied}
-    </span>
-  ) : (
-    <span className="tooltip-span" onClick={handleTooltipClick}>
-      <CopyIcon fill="white" className="copy-icon" />
-      {mainGridTranslations?.Tooltip_Copy}
-    </span>
-  );
+  const tooltipMessage =
+      copied ? (
+      <span className="tooltip-span">
+        <TickIcon fill="green" className="copy-icon" />
+        {mainGridTranslations?.Tooltip_Copied}
+      </span>
+    ) : (
+      <span className="tooltip-span" onClick={handleTooltipClick}>
+        <CopyIcon fill="white" className="copy-icon" />
+        {mainGridTranslations?.Tooltip_Copy}
+      </span>
+    );
 
   const renderContent = () => {
-    return (
-      <Tooltip
-        title={tooltipMessage}
-        placement="top-end"
-        disableInteractive={false}
-        leaveDelay={copied ? 1000 : 0}
-        onClose={handleTooltip}
-      >
-        {!isDeliveryNoteDownloadable ? (
-          <div>{firstDeliveryNote?.id}</div>
-        ) : (
-          <div onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}>
-            <a>
-              {hasMultiple
-                ? getDictionaryValueOrKey(multiple)
-                : firstDeliveryNote?.id}
-            </a>
-          </div>
-        )}
-      </Tooltip>
+    const contentTooltip = !isDeliveryNoteDownloadable ? (
+      <div>{firstDeliveryNote?.id}</div>
+    ) : (
+      <div onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}>
+        <a>
+          {hasMultiple
+            ? getDictionaryValueOrKey(multiple)
+            : firstDeliveryNote?.id}
+        </a>
+      </div>
     );
+    return (
+      isInternalUser ? 
+        <Tooltip
+          title={tooltipMessage}
+          placement="top-end"
+          disableInteractive={false}
+          leaveDelay={copied ? 1000 : 0}
+          onClose={handleTooltip}
+        >
+          {contentTooltip}
+        </Tooltip>
+      : contentTooltip);
   };
 
   return deliveryNotes?.length === 0 ? '-' : renderContent();

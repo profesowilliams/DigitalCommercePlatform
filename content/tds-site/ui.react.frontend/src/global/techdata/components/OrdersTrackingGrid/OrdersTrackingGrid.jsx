@@ -449,11 +449,11 @@ function OrdersTrackingGrid(props) {
     redirectedFrom && deleteSearchParam('redirectedFrom');
     const refinements = await fetchFiltersRefinements();
     setFeatureFlags(refinements?.featureFlags);
-    const uiTranslations = await fetchUITranslations();
-    setTranslations(uiTranslations);
     const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
     setFilterList([...predefined]);
     updateOrderFilterCounter();
+    const uiTranslations = await fetchUITranslations();
+    setTranslations(uiTranslations);
   }, []);
 
   useEffect(() => {
@@ -573,7 +573,11 @@ function OrdersTrackingGrid(props) {
             componentProp.columnList,
             userData
           )}
-          definitions={ordersTrackingDefinition(componentProp, openFilePdf)}
+          definitions={ordersTrackingDefinition(
+            componentProp,
+            openFilePdf,
+            userData?.isInternalUser
+          )}
           config={gridConfig}
           options={options}
           gridConfig={gridConfig}
