@@ -5,6 +5,9 @@ import {
   getDNoteViewAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
+import Tooltip from '@mui/material/Tooltip';
+import { CopyIcon, TickIcon } from '../../../../../fluentIcons/FluentIcons';
+import { useState } from 'react';
 
 function DeliveryNotesColumn({
   deliveryNotes = [],
@@ -14,6 +17,7 @@ function DeliveryNotesColumn({
   openFilePdf,
 }) {
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
+  const [copied, setCopied] = useState(false);
   const hasMultiple = deliveryNotes?.length > 1;
   const firstDeliveryNote = deliveryNotes ? deliveryNotes[0] : [];
   const isDeliveryNoteDownloadable = firstDeliveryNote?.canDownloadDocument;
@@ -39,17 +43,56 @@ function DeliveryNotesColumn({
     }
   };
 
+  const handleTooltipClick = () => {
+    navigator.clipboard.writeText(
+      hasMultiple ? getDictionaryValueOrKey(multiple) : firstDeliveryNote?.id
+    );
+    setCopied(true);
+  };
+
+  const handleTooltip = () => {
+    if (copied) {
+      setTimeout(() => setCopied(false), 1000);
+    }
+  }
+
+  const translations = useOrderTrackingStore((state) => state.uiTranslations);
+
+  const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
+
+  const tooltipMessage = copied ? (
+    <span className="tooltip-span">
+      <TickIcon fill="green" className="copy-icon" />
+      {mainGridTranslations?.Tooltip_Copied}
+    </span>
+  ) : (
+    <span className="tooltip-span" onClick={handleTooltipClick}>
+      <CopyIcon fill="white" className="copy-icon" />
+      {mainGridTranslations?.Tooltip_Copy}
+    </span>
+  );
+
   const renderContent = () => {
-    return !isDeliveryNoteDownloadable ? (
-      firstDeliveryNote?.id
-    ) : (
-      <div onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}>
-        <a>
-          {hasMultiple
-            ? getDictionaryValueOrKey(multiple)
-            : firstDeliveryNote?.id}
-        </a>
-      </div>
+    return (
+      <Tooltip
+        title={tooltipMessage}
+        placement="top-end"
+        disableInteractive={false}
+        leaveDelay={copied ? 1000 : 0}
+        onClose={handleTooltip}
+      >
+        {!isDeliveryNoteDownloadable ? (
+          <div>{firstDeliveryNote?.id}</div>
+        ) : (
+          <div onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}>
+            <a>
+              {hasMultiple
+                ? getDictionaryValueOrKey(multiple)
+                : firstDeliveryNote?.id}
+            </a>
+          </div>
+        )}
+      </Tooltip>
     );
   };
 

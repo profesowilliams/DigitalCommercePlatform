@@ -225,6 +225,16 @@
   }
 }
 
+.copy-icon {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.tooltip-span {
+  cursor: pointer;
+  text-align: center;
+}
+
 // Styles for Order Tracking Grid dropdown
 .loadingIcon-rotate {
   animation: rotate 2s linear infinite;
