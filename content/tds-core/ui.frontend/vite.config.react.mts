@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import fs from 'fs';
 
 // Define the base path for the js.txt file and output directory
-const basePath = path.resolve(__dirname, '../ui.apps/src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-web-components');
+const basePath = path.resolve(__dirname, '../ui.apps/src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-react-components');
 
 // Plugin to update js.txt
 function updateJsTxtPlugin() {
