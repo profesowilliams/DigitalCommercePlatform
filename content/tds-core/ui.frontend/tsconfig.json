@@ -7,6 +7,7 @@
     "outDir": "dist",
     "strict": true,
     "moduleResolution": "node",
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -40,6 +41,10 @@
     "coverage",
     "config",
     "dist",
-    "node_modules/**"
+    "node_modules/**",
+    "src/**/*.stories.tsx",
+    "src/**/*.test.tsx",
+    "src/main/webpack/webcomponents/components/Lit/**/*",
+    "src/main/webpack/webcomponents/components/React/**/*",
   ]
 }

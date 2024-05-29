@@ -2,5 +2,6 @@ src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-site
 src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-dependencies
 src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-site-global
 src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-site-us
-src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-react
 src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-site-webcomponents
+src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-react-components
+src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-web-components

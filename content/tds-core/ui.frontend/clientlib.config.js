@@ -92,18 +92,37 @@ module.exports = {
     },
     {
       ...libsBaseConfig,
-      name: 'clientlib-site-webcomponents',
-      categories: ['tds-core.webcomponents'],
+      name: 'clientlib-web-components',
+      categories: ['tds-core.web.components'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories
         js: {
-          cwd: 'clientlib-site-webcomponents',
+          cwd: 'clientlib-web-components',
           files: ['**/*.js'],
           flatten: false,
         },
         css: {
-          cwd: 'clientlib-site-webcomponents/css',
+          cwd: 'clientlib-web-components/css',
+          files: ['**/*.css'],
+          flatten: false,
+        },
+      },
+    },
+    {
+      ...libsBaseConfig,
+      name: 'clientlib-react-components',
+      categories: ['tds-core.react.components'],
+      assets: {
+        // Copy entrypoint scripts and stylesheets into the respective ClientLib
+        // directories
+        js: {
+          cwd: 'clientlib-react-components',
+          files: ['**/*.js'],
+          flatten: false,
+        },
+        css: {
+          cwd: 'clientlib-react-components/css',
           files: ['**/*.css'],
           flatten: false,
         },

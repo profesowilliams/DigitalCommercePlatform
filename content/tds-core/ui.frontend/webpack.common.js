@@ -24,7 +24,6 @@ module.exports = {
     us: `${SOURCE_ROOT}/international/us/main.ts`,
     global: `${SOURCE_ROOT}/global/main.js`,
     site: `${SOURCE_ROOT}/site/main.ts`,
-    webcomponents: `${SOURCE_ROOT}/webcomponents/index.ts`,
   },
   output: {
     filename: (chunkData) => `clientlib-site-${chunkData.chunk.name}/[name].js`, // return chunkData.chunk.name=== 'dependencies' ? 'clientlib-dependencies/[name].js' : 'clientlib-site/[name].js';
@@ -35,10 +34,10 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|js)x?$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /webcomponents/],
         loader: 'babel-loader',
         options: {
-          presets: ['@babel/preset-env', '@babel/preset-typescript'],
+          presets: ['@babel/preset-env', '@babel/preset-typescript', ],
         },
       },
       {
