@@ -1,48 +1,47 @@
 div.access-permissions__wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-top: 90px;
-        margin-bottom: 138px;
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 90px;
+  margin-bottom: 138px;
+}
 h2.access-permissions__header {
-    font-family: 'Arial' !important;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 32px;
-    line-height: 40px;
-    color: $brand-charcoal;
-    margin: auto;
-    max-width: 456px;
+  font-family: 'Arial' !important;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  color: $brand-charcoal;
+  margin: auto;
 }
 div.access-permissions__content {
-    display: flex;
-    flex-direction: column;
-    text-align: center !important;
-    justify-content: center;
-    text-align: center;
-    max-width: 431px;
+  display: flex;
+  flex-direction: column;
+  text-align: center !important;
+  justify-content: center;
+  text-align: center;
+  max-width: 431px;
 }
 p.access-permissions__message {
-    display: contents !important;
-    align-items: center;
-    max-width: 431px;
-    font-family: 'Arial' !important;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: $brand-charcoal;
+  display: contents !important;
+  align-items: center;
+  max-width: 431px;
+  font-family: 'Arial' !important;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: $brand-charcoal;
 }
 p.access-permissions__link {
-    display: contents !important;
-    align-items: center;
-    max-width: 431px;
-    margin-top: 24px;
-    font-family: 'Arial' !important;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
+  display: contents !important;
+  align-items: center;
+  max-width: 431px;
+  margin-top: 24px;
+  font-family: 'Arial' !important;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
 }
