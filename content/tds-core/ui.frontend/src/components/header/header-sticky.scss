@@ -40,6 +40,7 @@
  * Styles for the sticky class.
  */
 .sticky {
+  z-index: auto;
   position: fixed;
   z-index: 9999;
   opacity: 1;
