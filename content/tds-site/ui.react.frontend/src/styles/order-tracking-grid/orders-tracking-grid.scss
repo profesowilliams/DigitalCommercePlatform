@@ -769,3 +769,12 @@
     cursor: initial;
   }
 }
+
+div.link-underline-column>a {
+  cursor: pointer;
+}
+
+div.link-underline-column:hover>a {
+  text-decoration-line: underline !important;
+  text-decoration-color: $light-teal-color !important;
+}

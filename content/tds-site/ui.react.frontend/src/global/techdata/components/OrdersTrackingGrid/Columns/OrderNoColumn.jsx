@@ -35,27 +35,29 @@ function OrderNoColumn({ id, detailUrl, isInternalUser}) {
 
   return isInternalUser ? (
     detailUrl && !isJavaScriptProtocol.test(detailUrl) ? (
-      <a
-        href={`${location.href.substring(
-          0,
-          location.href.lastIndexOf('.')
-        )}/order-details.html?id=${id}${salesLoginParam}`}
-        onClick={() => getOrderDetailsAnalyticsGoogle(id)}
-      >
-        <Tooltip
-          title={tooltipMessage}
-          placement="top-end"
-          disableInteractive={false}
-          leaveDelay={copied ? 1000 : 0}
-          onClose={() => {
-            if (copied) {
-              setTimeout(() => setCopied(false), 1000);
-            }
-          }}
+      <div className="link-underline-column">
+        <a
+          href={`${location.href.substring(
+            0,
+            location.href.lastIndexOf('.')
+          )}/order-details.html?id=${id}${salesLoginParam}`}
+          onClick={() => getOrderDetailsAnalyticsGoogle(id)}
         >
-          <span>{id}</span>
-        </Tooltip>
-      </a>
+          <Tooltip
+            title={tooltipMessage}
+            placement="top-end"
+            disableInteractive={false}
+            leaveDelay={copied ? 1000 : 0}
+            onClose={() => {
+              if (copied) {
+                setTimeout(() => setCopied(false), 1000);
+              }
+            }}
+          >
+            <span>{id}</span>
+          </Tooltip>
+        </a>
+      </div>
     ) : (
       <Tooltip>
         <span>{id}</span>

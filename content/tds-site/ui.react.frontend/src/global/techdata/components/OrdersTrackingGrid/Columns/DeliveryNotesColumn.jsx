@@ -78,7 +78,10 @@ function DeliveryNotesColumn({
     const contentTooltip = !isDeliveryNoteDownloadable ? (
       <div>{firstDeliveryNote?.id}</div>
     ) : (
-      <div onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}>
+      <div
+        onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}
+        className="link-underline-column"
+      >
         <a>
           {hasMultiple
             ? getDictionaryValueOrKey(multiple)

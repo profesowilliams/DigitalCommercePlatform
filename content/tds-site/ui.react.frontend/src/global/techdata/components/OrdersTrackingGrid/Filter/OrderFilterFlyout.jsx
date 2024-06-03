@@ -132,7 +132,9 @@ const OrderFilterFlyout = ({
       dateRangeFiltersChecked.length > 0 &&
         checkedFilters.push(
           `${dateRange}: ${dateRangeFiltersChecked
-            .map((filter) => filter.filterOptionLabel)
+            .map(
+              (filter) => `${filter.createdFrom || ''} ${filter.createdTo || ''}`
+            )
             .join()}`
         );
       pushDataLayerGoogle(

@@ -77,11 +77,12 @@ function InvoiceColumn({
     const contentTooltip = !isInvoiceDownloadable ? (
       <div>{firstInvoice?.id}</div>
     ) : (
-      <div onClick={hasMultiple ? triggerInvoicesFlyout : handleDownload}>
+      <div
+        onClick={hasMultiple ? triggerInvoicesFlyout : handleDownload}
+        className="link-underline-column"
+      >
         <a>
-          {hasMultiple
-            ? getDictionaryValueOrKey(multiple)
-            : firstInvoice?.id}
+          {hasMultiple ? getDictionaryValueOrKey(multiple) : firstInvoice?.id}
         </a>
       </div>
     );
