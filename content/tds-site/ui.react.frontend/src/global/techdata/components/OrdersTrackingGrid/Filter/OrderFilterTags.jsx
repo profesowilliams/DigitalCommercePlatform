@@ -134,7 +134,8 @@ function OrderFilterTags({ filtersRefs, filterDateOptions }) {
       />
     );
   const dateTypeLabel = dateType
-    ? filterDateOptions.find((option) => option.key === dateType)?.label
+    ? filterDateOptions.find((option) => option.key === dateType)?.label?.props
+        ?.children
     : '';
 
   return (
