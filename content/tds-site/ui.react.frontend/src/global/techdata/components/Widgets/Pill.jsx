@@ -12,7 +12,11 @@ const Pill = ({
 }) => (
   <div className="td-capsule">
     {children}
-    {hasCloseButton && <CloseIcon onClick={closeClick} />}
+    {hasCloseButton && (
+      <span lassName="td-capsule__close-icon">
+        <CloseIcon onClick={closeClick} />
+      </span>
+    )}
   </div>
 );
 

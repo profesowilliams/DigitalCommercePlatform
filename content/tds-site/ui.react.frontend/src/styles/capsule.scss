@@ -4,6 +4,8 @@
   border-radius: 20px;
   padding: 0 17px 0 17px;
   height: 29px;
+  display: flex;
+  align-items: center;
 
   &__text {
     color: $brand-white;
@@ -12,12 +14,15 @@
     letter-spacing: -0.07px;
     line-height: 29px;
     text-align: center;
+    text-wrap: nowrap;
   }
-  & > svg {
+  &__close-icon {
+    color: $brand-white;
+  }
+  & * svg {
     fill: $brand-white;
     margin-left: 14px;
     cursor: pointer;
-    vertical-align: middle;
   }
 }
 
