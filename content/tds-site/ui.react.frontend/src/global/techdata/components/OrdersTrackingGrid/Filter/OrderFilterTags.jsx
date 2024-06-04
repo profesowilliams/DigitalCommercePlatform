@@ -133,9 +133,11 @@ function OrderFilterTags({ filtersRefs, filterDateOptions }) {
         key={filter.id}
       />
     );
+  const dateTypeKeyName = filterDateOptions.find(
+    (option) => option.key === dateType
+  )?.label?.props?.children;
   const dateTypeLabel = dateType
-    ? filterDateOptions.find((option) => option.key === dateType)?.label?.props
-        ?.children
+    ? dateTypeKeyName[0]?.props?.children[0] || dateTypeKeyName
     : '';
 
   return (
