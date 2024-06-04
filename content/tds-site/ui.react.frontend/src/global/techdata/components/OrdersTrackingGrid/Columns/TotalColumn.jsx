@@ -5,7 +5,7 @@ function TotalColumn({ data }) {
   const priceLoading = lastDataSource === 'OrderModification';
   return (
     <div className="cmp-order-tracking-grid__total-column">
-      {!priceLoading ? `${data?.priceFormatted}` : '-'}
+      {!priceLoading ? `${data?.priceFormatted} ${data.currency}` : '-'}
     </div>
   );
 }

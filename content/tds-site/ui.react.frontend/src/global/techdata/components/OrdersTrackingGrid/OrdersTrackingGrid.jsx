@@ -40,7 +40,6 @@ import {
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import MainGridHeader from './MainGrid/MainGridHeader';
 import {
-  addCurrencyToTotalColumn,
   getPaginationValue,
   setLocalStorageData,
   updateQueryString,
@@ -73,23 +72,23 @@ const searchParamsKeys = [
 ];
 
 const translationDictionaries = [
-  "OrderTracking.FreetextSearchFields",
-  "OrderTracking.MainGrid",
-  "OrderTracking.MainGrid.Items",
-  "OrderTracking.MainGrid.OrderLineDropdown",
-  "OrderTracking.MainGrid.Filters",
-  "OrderTracking.MainGrid.Reports",
-  "OrderTracking.MainGrid.Search",
-  "OrderTracking.MainGrid.ExportFlyout",
-  "OrderTracking.MainGrid.OrderModify",
-  "OrderTracking.MainGrid.SettingsFlyout",
-  "OrderTracking.MainGrid.InvoicesFlyout",
-  "OrderTracking.MainGrid.DnoteFlyout",
-  "OrderTracking.MainGrid.NoAccessScreen",
-  "OrderTracking.MainGrid.PagginationLabels",
-  "OrderTracking.MainGrid.SearchNoResult",
-  "OrderTracking.MainGrid.ProductReplacmentFlyout",
-  "OrderTracking.MainGrid.OrderStatuses"
+  'OrderTracking.FreetextSearchFields',
+  'OrderTracking.MainGrid',
+  'OrderTracking.MainGrid.Items',
+  'OrderTracking.MainGrid.OrderLineDropdown',
+  'OrderTracking.MainGrid.Filters',
+  'OrderTracking.MainGrid.Reports',
+  'OrderTracking.MainGrid.Search',
+  'OrderTracking.MainGrid.ExportFlyout',
+  'OrderTracking.MainGrid.OrderModify',
+  'OrderTracking.MainGrid.SettingsFlyout',
+  'OrderTracking.MainGrid.InvoicesFlyout',
+  'OrderTracking.MainGrid.DnoteFlyout',
+  'OrderTracking.MainGrid.NoAccessScreen',
+  'OrderTracking.MainGrid.PagginationLabels',
+  'OrderTracking.MainGrid.SearchNoResult',
+  'OrderTracking.MainGrid.ProductReplacmentFlyout',
+  'OrderTracking.MainGrid.OrderStatuses',
 ];
 
 function OrdersTrackingGrid(props) {
@@ -264,10 +263,10 @@ function OrdersTrackingGrid(props) {
           isOnSearchAction.current
         )
       : await fetchData(queryOperations);
-      const isFirstPage = customPaginationRef?.current?.pageNumber === 1;
-      setMainGridRowsTotalCounter(
-        isFirstPage ? response?.data?.content?.items?.length : null
-      );
+    const isFirstPage = customPaginationRef?.current?.pageNumber === 1;
+    setMainGridRowsTotalCounter(
+      isFirstPage ? response?.data?.content?.items?.length : null
+    );
     if (ordersCountResponse.error?.isError) {
       setResponseError(true);
       sendGTMDataOnError();
@@ -422,7 +421,9 @@ function OrdersTrackingGrid(props) {
   const fetchUITranslations = async () => {
     const results = await usGet(
       // TODO: cacheInSec - cache value should be configurable? or hardcoded 3600?
-      `${componentProp.uiLocalizeServiceDomain}/v1` + buildQueryString(translationDictionaries) + `&cacheInSec=300` 
+      `${componentProp.uiLocalizeServiceDomain}/v1` +
+        buildQueryString(translationDictionaries) +
+        `&cacheInSec=300`
     );
     return results.data;
   };
@@ -569,10 +570,7 @@ function OrdersTrackingGrid(props) {
           settings={settingsResponse}
         />
         <BaseGrid
-          columnList={addCurrencyToTotalColumn(
-            componentProp.columnList,
-            userData
-          )}
+          columnList={componentProp.columnList}
           definitions={ordersTrackingDefinition(
             componentProp,
             openFilePdf,

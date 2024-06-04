@@ -99,25 +99,6 @@ export function buildQueryString(elements)
   return queryString;
 }
 
-export const addCurrencyToTotalColumn = (list, userData) => {
-  const activeCustomer = userData?.activeCustomer;
-  const defaultCurrency = activeCustomer?.defaultCurrency || '';
-
-  return list.map((column) => {
-    if (column.columnKey === 'priceFormatted') {
-      column.columnLabel = `${getDictionaryValueOrKey(
-        'Total'
-      )} (${defaultCurrency})`;
-      return column;
-    }
-    if (column.columnKey === 'status') {
-      column.sortable = false;
-    }
-    column.columnLabel = getDictionaryValueOrKey(column.columnLabel);
-    return column;
-  });
-};
-
 export const getPaginationValue = (
   response,
   ordersCountResponse,
