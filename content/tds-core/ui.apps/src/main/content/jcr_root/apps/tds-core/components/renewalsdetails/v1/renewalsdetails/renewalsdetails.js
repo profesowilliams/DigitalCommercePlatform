@@ -202,7 +202,8 @@ use(['../../../common/utils.js'], function(utils) {
         reseller["vendorAccountNoResLabel"] = properties["vendorAccountNoResLabel"];
     }
     if (properties && properties["previousPurchaseOrderNoEndLabel"]) {
-        reseller["previousPurchaseOrderNoEndLabel"] = properties["previousPurchaseOrderNoEndLabel"];
+      reseller["previousPurchaseOrderNoEndLabel"] =
+        properties["previousPurchaseOrderNoEndLabel"];
     }
     if (properties && properties["previousOrderNoLabel"]) {
         reseller["previousOrderNoLabel"] = properties["previousOrderNoLabel"];

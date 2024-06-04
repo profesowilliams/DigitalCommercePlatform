@@ -11,34 +11,40 @@ import { useRenewalsDetailsStore } from "../../store/RenewalsDetailsStore";
 import { extractDetailResellerData } from "../../../RenewalsGrid/Orders/orderingRequests"
 import { getDictionaryValue } from "../../../../../../utils/utils";
 
-function ResellerInfo({ 
+function ResellerInfo({
   reseller,
   resellerLabels,
   updateDetails,
   shipTo,
   addressesEndpoint,
+  previousResellerPO,
 }) {
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
   const [resellerDetails, setResellerDetails] = useState(reseller);
   const [shipToDetails, setShipToDetails] = useState(shipTo);
 
-  const effects = useRenewalsDetailsStore(state => state.effects);
-  const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
-  const branding = useRenewalsDetailsStore(state => state.branding || '');
+  const effects = useRenewalsDetailsStore((state) => state.effects);
+  const isEditingDetails = useRenewalsDetailsStore(
+    (state) => state.isEditingDetails
+  );
+  const branding = useRenewalsDetailsStore((state) => state.branding || '');
 
   // Changes reseller check to vendorAccountNumber
   const resellerResponseAsObj = isObject(reseller.vendorAccountNumber);
   const resellerData = getModifiedResellerData(resellerResponseAsObj, reseller);
 
   const paymentTerms = reseller.paymentTerms || '';
-  
+
   const { canEdit, isValid } = reseller;
   const showEditButton = canEdit && !saving;
   const showError = !isValid && !saving;
-  
+
   // Hook to create form handlers as object to be passed, also exposes email validation flag.
-  const [editHandlers, isEmailValid] = useResellerHandlers(resellerDetails, setResellerDetails);
+  const [editHandlers, isEmailValid] = useResellerHandlers(
+    resellerDetails,
+    setResellerDetails
+  );
 
   const setLockedEdit = (flag) => {
     setEditMode(flag);
@@ -51,13 +57,13 @@ function ResellerInfo({
 
   const handleShipToOnChange = (newShipTo) => {
     setShipToDetails(newShipTo);
-  }
+  };
 
   const saveHandler = () => {
     setSaving(true);
     updateDetails(null, resellerDetails, shipToDetails)
       .then((result) => {
-        if(result) {
+        if (result) {
           setLockedEdit(false);
           effects.clearReseller();
         }
@@ -66,32 +72,46 @@ function ResellerInfo({
   };
 
   const cancelHandler = () => {
-    effects.clearEndUser()
+    effects.clearEndUser();
     effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
-    setResellerDetails(({...reseller}));
-    setShipToDetails(({...shipTo}));
+    setResellerDetails({ ...reseller });
+    setShipToDetails({ ...shipTo });
   };
 
   useEffect(() => {
-    if(isEditingDetails) { 
-      effects.setCustomState({ key: 'reseller', value: extractDetailResellerData(resellerDetails) });
+    if (isEditingDetails) {
+      effects.setCustomState({
+        key: 'reseller',
+        value: extractDetailResellerData(resellerDetails),
+      });
     } else {
       effects.clearReseller();
     }
-  }, [resellerDetails])
-  
+  }, [resellerDetails]);
+
   return (
-    <div className={`cmp-renewals-qp__reseller-info ${showError && `error-feedback`}`}>
+    <div
+      className={`cmp-renewals-qp__reseller-info ${
+        showError && `error-feedback`
+      }`}
+    >
       <span className="cmp-renewals-qp__reseller-info--title">
-        {getDictionaryValue("details.renewal.label.reseller", "Reseller")}
+        {getDictionaryValue('details.renewal.label.reseller', 'Reseller')}
       </span>
-      {showError && <MissingInfo>{ getDictionaryValue( "details.renewal.label.resellerMissingInfo", "Reseller missing information")}</MissingInfo>}
+      {showError && (
+        <MissingInfo>
+          {getDictionaryValue(
+            'details.renewal.label.resellerMissingInfo',
+            'Reseller missing information'
+          )}
+        </MissingInfo>
+      )}
       {showEditButton && (
         <EditFlow
           disabled={!editMode && isEditingDetails}
-          editValue={editMode} 
-          setEdit={setLockedEdit} 
-          saveHandler={saveHandler} 
+          editValue={editMode}
+          setEdit={setLockedEdit}
+          saveHandler={saveHandler}
           cancelHandler={cancelHandler}
           customClass={'cancel-save__absolute'}
         />
@@ -101,7 +121,7 @@ function ResellerInfo({
         <ResellerEdit
           branding={branding}
           addressesEndpoint={addressesEndpoint}
-          resellerDetails={resellerDetails} 
+          resellerDetails={resellerDetails}
           resellerLabels={resellerLabels}
           isEmailValid={isEmailValid}
           handlers={editHandlers}
@@ -109,11 +129,12 @@ function ResellerInfo({
           shipToOnChange={handleShipToOnChange}
         />
       ) : (
-        <ResellerReadOnly 
+        <ResellerReadOnly
           resellerData={resellerData}
-          resellerLabels={resellerLabels} 
+          resellerLabels={resellerLabels}
           shipToData={shipTo}
           paymentTermsVal={paymentTerms}
+          previousResellerPO={previousResellerPO}
         />
       )}
     </div>

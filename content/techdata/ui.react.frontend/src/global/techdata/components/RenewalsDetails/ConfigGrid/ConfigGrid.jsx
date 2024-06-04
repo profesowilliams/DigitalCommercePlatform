@@ -248,26 +248,51 @@ const dropdownButtons = buttons.length > 3 ? buttons.slice(2) : [];
 }
 
 function ConfigGrid({ data, gridProps, updateDetails }) {
-  const { reseller, endUser, items, programName, formattedDueDate, endUserType, source, formattedExpiry, vendorLogo, EANumber, vendorReference, shipTo, agreementDuration, quoteSupportLevel, renewedDuration, agreementNumber } = data;
+  const {
+    reseller,
+    endUser,
+    items,
+    previousResellerPO,
+    programName,
+    formattedDueDate,
+    endUserType,
+    source,
+    formattedExpiry,
+    vendorLogo,
+    EANumber,
+    vendorReference,
+    shipTo,
+    agreementDuration,
+    quoteSupportLevel,
+    renewedDuration,
+    agreementNumber,
+  } = data;
   const { quotePreview } = gridProps;
-  const effects = useRenewalGridState(state => state.effects);
-  Object.keys(quotePreview).forEach(key => {
+  const effects = useRenewalGridState((state) => state.effects);
+  Object.keys(quotePreview).forEach((key) => {
     if (typeof quotePreview[key] === 'string') {
-      quotePreview[key] = quotePreview[key].replace(/ No:/g,' \u2116:');
-    } else if (typeof  quotePreview[key] === 'object') {
-      Object.keys(quotePreview[key]).forEach(subkey => {
-        if (typeof (quotePreview[key][subkey]) === 'string') {
-          quotePreview[key][subkey] = quotePreview[key][subkey].replace(/ No:/g,' \u2116:');
+      quotePreview[key] = quotePreview[key].replace(/ No:/g, ' \u2116:');
+    } else if (typeof quotePreview[key] === 'object') {
+      Object.keys(quotePreview[key]).forEach((subkey) => {
+        if (typeof quotePreview[key][subkey] === 'string') {
+          quotePreview[key][subkey] = quotePreview[key][subkey].replace(
+            / No:/g,
+            ' \u2116:'
+          );
         }
       });
     }
   });
   const openRequestFlyOut = () => {
-      const flyoutData = {
-        ...data,
-        agreementNumber: data?.items[0]?.contract?.id};
-      effects.setCustomState({ key: 'requestFlyout', value: { data: flyoutData, show: true } });
+    const flyoutData = {
+      ...data,
+      agreementNumber: data?.items[0]?.contract?.id,
     };
+    effects.setCustomState({
+      key: 'requestFlyout',
+      value: { data: flyoutData, show: true },
+    });
+  };
 
   return (
     <div className="cmp-renewals-qp__config-grid">
@@ -275,42 +300,57 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
         <div className="image-container">
           <Link
             variant="back-to-renewal"
-            href={quotePreview.renewalsUrl || "#"}
+            href={quotePreview.renewalsUrl || '#'}
             underline="none"
           >
             <i className="fas fa-chevron-left"></i>
-            { getDictionaryValue("details.renewal.label.backTo", "Back to all Renewals") }
+            {getDictionaryValue(
+              'details.renewal.label.backTo',
+              'Back to all Renewals'
+            )}
           </Link>
           <img className="vendorLogo" src={vendorLogo} alt="vendor logo" />
         </div>
         <div className="export-container">
           <span className="quote-preview">
-            { getDictionaryValue("details.renewal.label.title", "Quote Preview") }
+            {getDictionaryValue('details.renewal.label.title', 'Quote Preview')}
           </span>
           <GridHeader data={data} gridProps={gridProps} />
         </div>
-        {
-          gridProps.enableRequestQuote && data.canRequestQuote && (
-            <div className='opportunity-quote'>
-              <p><InfoIcon />{gridProps.quotePreview.quoteOpportunityText}</p>
-              <button onClick={openRequestFlyOut}>{gridProps.quotePreview.quoteOpportunityRequestLabel}</button>
+        {gridProps.enableRequestQuote && data.canRequestQuote && (
+          <div className="opportunity-quote">
+            <p>
+              <InfoIcon />
+              {gridProps.quotePreview.quoteOpportunityText}
+            </p>
+            <button onClick={openRequestFlyOut}>
+              {gridProps.quotePreview.quoteOpportunityRequestLabel}
+            </button>
+          </div>
+        )}
+        {data.feedBackMessages &&
+          data.feedBackMessages[0] &&
+          data.feedBackMessages[0].errorCriticality &&
+          (data.feedBackMessages[0].errorCriticality === 2 ||
+            data.feedBackMessages[0].errorCriticality === 3) &&
+          data.feedBackMessages[0].message && (
+            <div
+              className={
+                data.feedBackMessages[0].errorCriticality === 3
+                  ? 'renewal-feedback-banner blue-banner'
+                  : 'renewal-feedback-banner orange-banner'
+              }
+            >
+              <p>
+                {data.feedBackMessages[0].errorCriticality === 3 ? (
+                  <ProhibitedIcon />
+                ) : (
+                  <WarningTriangleIcon />
+                )}
+                {data.feedBackMessages[0].message}
+              </p>
             </div>
-          )
-        }
-         {
-                  data.feedBackMessages && data.feedBackMessages[0] && data.feedBackMessages[0].errorCriticality &&
-                  (data.feedBackMessages[0].errorCriticality === 2 || data.feedBackMessages[0].errorCriticality === 3)
-                  && data.feedBackMessages[0].message && (
-                    <div className={data.feedBackMessages[0].errorCriticality === 3 ?
-                      'renewal-feedback-banner blue-banner' : 'renewal-feedback-banner orange-banner'}>
-                      <p>{
-                        data.feedBackMessages[0].errorCriticality === 3 ?
-                        <ProhibitedIcon /> : <WarningTriangleIcon />
-                      }
-                      {data.feedBackMessages[0].message}</p>
-                    </div>
-                  )
-                }
+          )}
       </div>
       <div className="info-container">
         <ResellerInfo
@@ -319,6 +359,7 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           reseller={reseller}
           updateDetails={updateDetails}
           shipTo={shipTo}
+          previousResellerPO={previousResellerPO}
         />
         <EndUserInfo
           productLines={quotePreview.productLines}
@@ -342,7 +383,9 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           contract={items[0]?.contract}
           formattedExpiry={formattedExpiry}
           vendorReference={vendorReference?.length ? vendorReference[0] : null}
-          disableMultipleAgreement={!quotePreview.agreementInfo.disableMultipleAgreement}
+          disableMultipleAgreement={
+            !quotePreview.agreementInfo.disableMultipleAgreement
+          }
         />
       </div>
     </div>
