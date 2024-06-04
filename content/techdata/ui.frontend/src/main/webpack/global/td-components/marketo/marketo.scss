@@ -5,11 +5,12 @@
 }
 
 .mktoForm {
-  background-color: #fff;
+  background: var(--White, #fff) !important;
   height: -webkit-max-content;
   height: max-content;
-  padding-bottom: 16px;
-  width: 100% !important;
+  width: 600px !important;
+  padding: 2.5rem 6rem;
+  margin: 0 auto;
 }
 
 .mktoFieldWrap {
@@ -24,11 +25,11 @@
 }
 
 .mktoFieldWrap:not(:has(textarea)):not(:has(input[type='checkbox'])):hover::before {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.87);
+  border-bottom: 2px solid map-get($color-palette, 'teal');
 }
 
 .mktoFieldWrap:not(:has(textarea)):not(:has(input[type='checkbox']))::before {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+  border-bottom: 1px solid map-get($color-palette, 'teal');
   left: 0px;
   bottom: 0px;
   content: ' ';
@@ -39,7 +40,7 @@
 }
 
 .mktoFieldWrap::after {
-  border-bottom: 2px solid rgb(12, 22, 44);
+  border-bottom: 2px solid map-get($color-palette, 'teal');
   left: 0px;
   bottom: 0px;
   content: '';
@@ -98,4 +99,68 @@
   padding: 0.3em;
   float: left;
   width: 100% !important;
+}
+
+.mktoForm textarea.mktoField {
+  border: 1px solid var(--Cool-Gray-9, #727679);
+  width: 25rem !important;
+}
+
+.mktoFieldWrap {
+  display: inline-flex !important;
+  flex-flow: nowrap !important;
+}
+
+.mktoAsterix {
+  color: var(--Cool-Gray-9, #727679) !important;
+}
+
+.mktoFieldDescriptor {
+  padding-bottom: 1.75rem !important;
+  margin-bottom: 0 !important;
+}
+
+.mktoButtonRow {
+  padding-top: 1.75rem !important;
+}
+
+.mktoForm .mktoButtonWrap.mktoSimple .mktoButton {
+  border: none !important;
+  color: var(--White, #fff);
+  text-align: center;
+  /* H5 - Arial */
+  font-family: Arial;
+  font-size: 1rem !important;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem; /* 150% */
+
+  display: flex;
+  width: 25rem;
+  height: 3rem;
+  padding: 0.75rem 1.25rem !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+
+  background-color: none !important;
+  border-radius: 0.125rem;
+  background: map-get($color-palette, 'teal') !important;
+  background-image: none !important;
+
+  &:hover {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), map-get($color-palette, 'teal') !important;
+  }
+
+  &:focus {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), map-get($color-palette, 'teal') !important;
+  }
+}
+
+#marketo-contact-us-form {
+  background-color: var(--Neutral-Gray-1, #f8f8f8); /* Default background color */
+  text-align: center;
+  text-align: -webkit-center;
+  padding: 4rem;
 }
