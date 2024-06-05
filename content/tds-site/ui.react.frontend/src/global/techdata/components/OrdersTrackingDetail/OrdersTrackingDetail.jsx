@@ -18,6 +18,8 @@ import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import { endpoints } from '../OrdersTrackingGrid/utils/orderTrackingUtils';
 
+const translationDictionaries = ['OrderTracking.Details'];
+
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
   const gridRef = useRef();
@@ -38,7 +40,9 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const { setUserData, hasRights } = useOrderTrackingStore((st) => st.effects);
+  const { setUserData, hasRights, setTranslations } = useOrderTrackingStore(
+    (st) => st.effects
+  );
   const userData = useOrderTrackingStore((st) => st.userData);
   const hasAIORights = hasRights('AIO');
   const hasOrderModificationRights = hasRights('OrderModification');
@@ -156,6 +160,15 @@ function OrdersTrackingDetail(props) {
     setNewItem(item);
   };
 
+  const fetchUITranslations = async () => {
+    const results = await usGet(
+      `${componentProps.uiLocalizeServiceDomain}/v1` +
+        buildQueryString(translationDictionaries) +
+        `&cacheInSec=300`
+    );
+    return results.data;
+  };
+
   useEffect(() => {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
@@ -177,6 +190,8 @@ function OrdersTrackingDetail(props) {
 
   useEffect(async () => {
     headerRequest();
+    const uiTranslations = await fetchUITranslations();
+    setTranslations(uiTranslations);
   }, []);
 
   useEffect(() => {

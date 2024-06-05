@@ -4,13 +4,18 @@ import { getOrderDetailsAnalyticsGoogle } from '../utils/analyticsUtils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 import { CopyIcon, TickIcon } from '../../../../../fluentIcons/FluentIcons';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
-
+import { getLocalStorageData } from '../utils/gridUtils';
 import Tooltip from '@mui/material/Tooltip';
+import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 
-function OrderNoColumn({ id, detailUrl, isInternalUser}) {
+function OrderNoColumn({ id, detailUrl, isInternalUser }) {
   const [copied, setCopied] = useState(false);
   const saleslogin = getUrlParamsCaseInsensitive().get('saleslogin');
   const salesLoginParam = saleslogin ? `&saleslogin=${saleslogin}` : '';
+  const queryCacheKey = getLocalStorageData(
+    ORDER_PAGINATION_LOCAL_STORAGE_KEY
+  )?.queryCacheKey;
+  const queryCacheKeyParam = queryCacheKey ? `&q=${queryCacheKey}` : '';
 
   const handleTooltipClick = () => {
     navigator.clipboard.writeText(id);
@@ -40,7 +45,7 @@ function OrderNoColumn({ id, detailUrl, isInternalUser}) {
           href={`${location.href.substring(
             0,
             location.href.lastIndexOf('.')
-          )}/order-details.html?id=${id}${salesLoginParam}`}
+          )}/order-details.html?id=${id}${queryCacheKeyParam}${salesLoginParam}`}
           onClick={() => getOrderDetailsAnalyticsGoogle(id)}
         >
           <Tooltip

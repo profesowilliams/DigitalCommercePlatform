@@ -1,5 +1,4 @@
 import { setPaginationData } from './orderTrackingUtils';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 export const isLocalDevelopment = window.origin === 'http://localhost:8080';
 
@@ -35,7 +34,7 @@ export const mapServiceData = (response) => {
   const pageCount = mappedResponse?.data?.content?.pageCount ?? 1;
   const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;
   const refinementGroups = mappedResponse?.data?.content?.refinementGroups;
-
+  const queryCacheKey = mappedResponse?.data?.content?.queryCacheKey;
   if (mappedResponse.status !== 200 && !mappedResponse.data) {
     return {
       data: {
@@ -45,6 +44,7 @@ export const mapServiceData = (response) => {
           pageCount,
           pageNumber,
           refinementGroups,
+          queryCacheKey,
         },
       },
     };
@@ -56,6 +56,7 @@ export const mapServiceData = (response) => {
     pageCount,
     pageNumber,
     refinementGroups,
+    queryCacheKey,
   };
   return mappedResponse;
 };
@@ -79,8 +80,7 @@ export function updateQueryString(pageNumber) {
  * @param {Array} elements - Array of elements to be included in the query string
  * @returns {string} - The constructed query string
  */
-export function buildQueryString(elements)
-{
+export function buildQueryString(elements) {
   // Check if the input array is empty, return an empty string if true
   if (elements.length === 0) {
     return '';
@@ -106,7 +106,7 @@ export const getPaginationValue = (
 ) => {
   const paginationValue = setPaginationData(
     ordersCountResponse?.data?.content,
-    response?.data?.content?.pageNumber,
+    response?.data?.content,
     gridConfig.itemsPerPage
   );
   return paginationValue;
@@ -228,8 +228,10 @@ export function urlStrToMapStruc(urlStri = '') {
 }
 
 export const compareSort = (oldSort, newSort) => {
-  return oldSort[0]?.colId === newSort[0]?.colId &&
-    oldSort[0]?.sort === newSort[0]?.sort;
+  return (
+    oldSort[0]?.colId === newSort[0]?.colId &&
+    oldSort[0]?.sort === newSort[0]?.sort
+  );
 };
 
 export function extractSortColAndDirection(sortDataRef = []) {

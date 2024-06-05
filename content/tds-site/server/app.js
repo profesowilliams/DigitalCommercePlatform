@@ -6163,6 +6163,7 @@ app.get("/ui-commerce/v3/orders", (req, res) => {
       ],
       pageNumber: 5,
       pageSize: 25,
+      queryCacheKey: "Q3xzFBs",
     },
     error: {
       code: 0,
@@ -6689,52 +6690,53 @@ app.get("/ui-commerce/v3/invoices", (req, res) => {
 
 app.get("/ui-commerce/v2/Product/Replacement", (req, res) => {
   const response = {
-    "content": {
-        "productDtos": [
-            {
-                "image": {
-                    "url": "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-                    "type": "Default Image"
-                },
-                "authorization": {
-                    "canOrder": true,
-                    "canViewPrice": true,
-                    "customerCanView": true,
-                    "canViewStock": true
-                },
-                "price": {
-                    "listPrice": 690.00,
-                    "volumePricing": [
-                        {
-                            "price": 631.56,
-                            "minQuantity": 1
-                        }
-                    ],
-                    "bestPriceIncludesWebDiscount": false,
-                    "taaS": {},
-                    "listPriceAvailable": true,
-                    "currency": "EUR",
-                    "governmentFees": 0.0,
-                    "bestPrice": 631.56,
-                    "bestPriceFormatted": "631,56",
-                    "total": 631.56,
-                    "totalFormatted": "631,56"
-                },
-                "source": {
-                    "system": "16",
-                    "id": "8320973"
-                },
-                "description": "HP 250 G10 Notebook - Intel Core i5 1335U / 1.3 GHz - Win 11 Pro - Intel Iris Xe Grafikkarte - 8 GB RAM - 256 GB SSD NVMe - 39.6 cm (15.6\") IPS 1920 x 1080 (Full HD) - 802.11a/b/g/n/ac/ax, Bluetooth 5.3 WLAN-Karte - Turbo Silber - kbd: Deutsch",
-                "manufacturerPartNumber": "816F9EA#ABD"
-            }
-        ]
+    content: {
+      productDtos: [
+        {
+          image: {
+            url: "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+            type: "Default Image",
+          },
+          authorization: {
+            canOrder: true,
+            canViewPrice: true,
+            customerCanView: true,
+            canViewStock: true,
+          },
+          price: {
+            listPrice: 690.0,
+            volumePricing: [
+              {
+                price: 631.56,
+                minQuantity: 1,
+              },
+            ],
+            bestPriceIncludesWebDiscount: false,
+            taaS: {},
+            listPriceAvailable: true,
+            currency: "EUR",
+            governmentFees: 0.0,
+            bestPrice: 631.56,
+            bestPriceFormatted: "631,56",
+            total: 631.56,
+            totalFormatted: "631,56",
+          },
+          source: {
+            system: "16",
+            id: "8320973",
+          },
+          description:
+            'HP 250 G10 Notebook - Intel Core i5 1335U / 1.3 GHz - Win 11 Pro - Intel Iris Xe Grafikkarte - 8 GB RAM - 256 GB SSD NVMe - 39.6 cm (15.6") IPS 1920 x 1080 (Full HD) - 802.11a/b/g/n/ac/ax, Bluetooth 5.3 WLAN-Karte - Turbo Silber - kbd: Deutsch',
+          manufacturerPartNumber: "816F9EA#ABD",
+        },
+      ],
     },
-    "error": {
-        "code": 0,
-        "messages": [],
-        "isError": false
-    }
-}
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
 
   setTimeout(() => {
     return res.status(200).json(response);
@@ -7927,6 +7929,7 @@ app.get("/ui-commerce/v3/OrderReport", function (req, res) {
       ],
       pageNumber: 1,
       pageSize: 25,
+      queryCacheKey: "H0iIBlr",
     },
     error: {
       code: 0,
@@ -8468,7 +8471,7 @@ app.get("/ui-commerce/v3/lookahead", function (req, res) {
   }, 100);
 });
 
-app.get("/ui-intouch-localize/v1", function (req, res) {
+app.get("/ui-localize/v1", function (req, res) {
   const response = {
     "OrderTracking.FreetextSearchFields": {
       Items_Product_Techdata_Id: "TDS №",
@@ -8489,6 +8492,12 @@ app.get("/ui-intouch-localize/v1", function (req, res) {
       Tooltip_Copy: "Copy",
       Tooltip_Copied: "Copied to clipboard",
     },
+    "OrderTracking.Details": {
+      Button_Prev: "Previous order",
+      Button_Next: "Next order",
+      Button_BackToAll: "All orders",
+      Button_BackToSearchResults: "Search Results",
+    },
   };
 
   setTimeout(() => {
@@ -8498,6 +8507,24 @@ app.get("/ui-intouch-localize/v1", function (req, res) {
 
 app.get("/ui-commerce/v3/format/currency/:amount", function (req, res) {
   const response = "1078.00";
+
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 100);
+});
+
+app.get("/ui-commerce/v3/cache/:q/order/:id", function (req, res) {
+  const response = {
+    content: {
+      prevOrder: "I038841736",
+      nextOrder: "I123456789",
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
 
   setTimeout(() => {
     return res.status(200).json(response);

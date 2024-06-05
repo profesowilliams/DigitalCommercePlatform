@@ -15,12 +15,16 @@ import SoldToCard from './Header/SoldToCard';
 import OrderAcknowledgementCard from './Header/OrderAcknowledgementCard';
 import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
-import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
+import {
+  ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+  ORDER_SEARCH_LOCAL_STORAGE_KEY,
+} from '../../../../utils/constants';
 import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
 import { usGet, usPost } from '../../../../utils/api';
 import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAlertModal';
 import XMLMessageModal from '../OrdersTrackingGrid/Modals/XMLMessageModal';
 import MigrationInfoBox from '../MigrationInfoBox/MigrationInfoBox';
+import { ArrowLeftIcon } from '../../../../fluentIcons/FluentIcons';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -33,15 +37,20 @@ const OrderTrackingDetailHeader = ({
   setOrderModifyHeaderInfo,
 }) => {
   const saleslogin = getUrlParamsCaseInsensitive().get('saleslogin');
+  const queryCacheKeyParam = getUrlParamsCaseInsensitive().get('q');
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [openXMLAlert, setOpenXMLAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
+  const [previousOrder, setPreviousOrder] = useState(null);
+  const [nextOrder, setNextOrder] = useState(null);
   const effects = useOrderTrackingStore((state) => state.effects);
   const orderModificationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.orderModification
   );
+  const translations = useOrderTrackingStore((state) => state.uiTranslations);
+  const detailsTranslations = translations?.['OrderTracking.Details'];
   const { setCustomState, setFeatureFlags, setExportFlyoutSource } = effects;
   const orderEditable = content?.orderEditable === true;
   const infoBoxEnable = content?.sapOrderMigration?.referenceType?.length > 0;
@@ -259,9 +268,58 @@ const OrderTrackingDetailHeader = ({
     return results.data.content;
   };
 
+  const fetchNavigationData = async () => {
+    const results = await usGet(
+      `${componentProps.uiCommerceServiceDomain}/v3/cache/${queryCacheKeyParam}/order/${id}`
+    );
+    return results.data.content;
+  };
+
+  const renderBackButton = () => {
+    const isSearchActive =
+      getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.field?.length > 0;
+
+    return isSearchActive
+      ? detailsTranslations?.Button_BackToSearchResults || 'Search Results' // TODO: delete default strings after BE translations are working
+      : detailsTranslations?.Button_BackToAll || 'All orders';
+  };
+
+  const renderRightSideOfNavigation = () => {
+    return (
+      <div className="navigation-container--right">
+        {previousOrder && (
+          <Link
+            variant="previous"
+            href={window.location.href.replace(id, previousOrder)}
+            underline="underline-none"
+          >
+            <i className="fas fa-chevron-left"></i>
+            {detailsTranslations?.Button_Prev || 'Previous order'}
+          </Link>
+        )}
+        {nextOrder && (
+          <Link
+            variant="next"
+            href={window.location.href.replace(id, nextOrder)}
+            underline="underline-none"
+          >
+            {detailsTranslations?.Button_Next || 'Next order'}
+            <i className="fas fa-chevron-right"></i>
+          </Link>
+        )}
+      </div>
+    );
+  };
+
   useEffect(async () => {
     const refinements = await fetchFiltersRefinements();
     setFeatureFlags(refinements?.featureFlags);
+
+    const navigationData = queryCacheKeyParam && (await fetchNavigationData());
+    if (navigationData) {
+      setPreviousOrder(navigationData.prevOrder || null);
+      setNextOrder(navigationData.nextOrder || null);
+    }
   }, []);
 
   return (
@@ -273,9 +331,10 @@ const OrderTrackingDetailHeader = ({
             href={createBackUrl()}
             underline="underline-none"
           >
-            <i className="fas fa-chevron-left"></i>
-            {getDictionaryValueOrKey(config?.labels?.back)}
+            <ArrowLeftIcon className="arrow-left" />
+            {renderBackButton()}
           </Link>
+          {renderRightSideOfNavigation()}
         </div>
         <div className="title-container">
           <OrderTrackingDetailTitle content={content} labels={config?.labels} />

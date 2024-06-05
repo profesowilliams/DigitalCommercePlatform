@@ -266,14 +266,14 @@ export async function fetchData(config) {
   }
 }
 
-export function setPaginationData(response, pageNumber, pageSize = 25) {
+export function setPaginationData(response, responseContent, pageSize = 25) {
   const pageCount = Math.ceil(response?.totalItems / pageSize);
-
   return {
     currentResultsInPage: pageSize,
     totalCounter: response?.totalItems,
     pageCount,
-    pageNumber: parseInt(pageNumber) || 1,
+    pageNumber: parseInt(responseContent?.pageNumber) || 1,
+    queryCacheKey: responseContent?.queryCacheKey,
   };
 }
 

@@ -18,6 +18,9 @@ function DeliveryNotesColumn({
   isInternalUser,
 }) {
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
+  const translations = useOrderTrackingStore((state) => state.uiTranslations);
+  const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
+  
   const [copied, setCopied] = useState(false);
   const hasMultiple = deliveryNotes?.length > 1;
   const firstDeliveryNote = deliveryNotes ? deliveryNotes[0] : [];
@@ -56,10 +59,6 @@ function DeliveryNotesColumn({
       setTimeout(() => setCopied(false), 1000);
     }
   }
-
-  const translations = useOrderTrackingStore((state) => state.uiTranslations);
-
-  const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
 
   const tooltipMessage =
       copied ? (

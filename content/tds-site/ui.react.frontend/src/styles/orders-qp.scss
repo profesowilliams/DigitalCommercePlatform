@@ -68,14 +68,34 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px 0 13px 3px;
-      .back-to-orders {
+      border-bottom: 1px solid $brand-cool-gray-1;
+      margin-bottom: 17px;
+      color: $brand-green;
+
+      &--right {
+        .next {
+          margin-left: 20px;
+        }
+      }
+      .back-to-orders,
+      .next,
+      .previous {
         color: $brand-green;
         font-size: 14px;
+        .arrow-left {
+          vertical-align: bottom;
+          margin-right: 8px;
+        }
         .fa-chevron-left {
           font-size: 14px;
           margin-right: 5px;
         }
+        .fa-chevron-right {
+          font-size: 14px;
+          margin-left: 5px;
+        }
       }
+
       img {
         width: 160px;
         height: 70.5px;
