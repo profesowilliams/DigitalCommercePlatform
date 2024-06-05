@@ -64,9 +64,6 @@
                             <artifactId>core.wcm.components.config</artifactId>
                         </dependency>
                     </dependencies>
-                    <filters>
-                        <filter><root>/apps/wcm</root></filter>
-                    </filters>
                 </configuration>
             </plugin>
             <plugin>
