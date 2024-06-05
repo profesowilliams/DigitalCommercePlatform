@@ -192,9 +192,14 @@ function _RenewalActionColumn({ eventProps }) {
   return (
     <>
       <div className="cmp-renewal-action-container" style={{position:'relative'}} key={Math.random()}>
-        {isIconEnabled && !canRequestQuote ? (
-          <Button onClick={handleCartIconClick}
-          >
+        {isIconEnabled && !canRequestQuote || data.vendor.name === 'Adobe' ? (
+          <Button onClick={() => {
+              if (data.vendor.name === 'Adobe') {
+                   redirectToRenewalDetail(detailUrl, data?.source?.id);
+              } else {
+                  handleCartIconClick();
+              }
+          }}>
             <span className="cmp-renewals-cart-icon">
               <CartIcon />
             </span>
