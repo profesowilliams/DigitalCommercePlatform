@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
-    languages="[en,cs,da,de,hu,nl,no,es,fr,fi,it,pl,pt,ro,sk,sv,pt-br,zh-cn,zh-tw,ja,ko-kr,be-nl,be-fr,ch-en,ch-it,be-en,nl-en,fi-se,fi-en,se-se,dk-dk,pl-en,cz-cz,at-de,ch-de,ch-fr,nl-be,fr-be,en-ch,it-ch,de-ch,fr-ch,de-at,en-pl,en-fi,se-fi,en-nl,en-be]"/>
+    languages="[en,cs,da,de,hu,nl,no,es,fr,fi,it,pl,pt,ro,sk,sv,pt-br,zh-cn,zh-tw,ja,ko-kr,be-nl,be-fr,ch-en,ch-it,be-en,nl-en,fi-se,fi-en,se-se,dk-dk,pl-en,cz-cz,at-de,ch-de,ch-fr,nl-be,fr-be,en-ch,it-ch,de-ch,fr-ch,de-at,en-pl,en-fi,sv-fi,en-nl,en-be]"/>
