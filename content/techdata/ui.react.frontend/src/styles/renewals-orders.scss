@@ -38,11 +38,84 @@
     }
   }
 }
+.place-cmp-adobe-order-dialog-container {
+  padding: 24px;
+  padding-top: 2.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 360px !important;
+  height: auto;
+  &__closeIcon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 24px 24px 0 24px;
+    cursor: pointer;
+  }
+  .cmp-order-purchase-order-number {
+    label,
+    p {
+      color: $brand-icon-gray-color;
+    }
+    label.Mui-error {
+      color: #a6aaab !important;
+    }
+  }
+  .cmp-place-order-main-title {
+    font-family: 'Arial';
+    color: $brand-charcoal;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 35px;
+  }
+  .cmp-place-order-title {
+    font-family: 'Arial';
+    color: $brand-charcoal;
+    span b {
+      font-family: 'Arial';
+    }
+  }
+
+  .cmp-place-order-content {
+    .cmp-order-purchase-order-number {
+      .MuiInputLabel-root,
+      .MuiInput-root .MuiInput-input,
+      .MuiFormHelperText-root.MuiFormHelperText-root {
+        font-family: 'Arial';
+      }
+    }
+  }
+}
 
 .cmp-place-order-actions {
   display: flex;
   flex-direction: row-reverse;
   margin: 1rem 0;
+  button.cmp-order-button-component {
+    font-family: 'Arial';
+    text-transform: none;
+    &.td-synnex {
+      background-color: $brand-green;
+      &.Mui-disabled {
+        background-color: #0000001f;
+      }
+    }
+    &.cmp-grid-techdata {
+      background-color: map-get($color-palette, 'deep-teal');
+      &.Mui-disabled {
+        background-color: #0000001f;
+      }
+    }
+    .cmp-progress-icon {
+      animation: loading-icon 1.3s linear infinite;
+    }
+  }
+}
+
+.cmp-place-adobe-order-actions {
+  display: flex;
+  flex-direction: row-reverse;
   button.cmp-order-button-component {
     font-family: 'Arial';
     text-transform: none;

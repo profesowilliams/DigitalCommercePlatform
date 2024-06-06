@@ -4894,6 +4894,11 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           formattedCreated: "27-04-2023",
           formattedUpdated: "27-04-2023",
           formattedExpiry: "23-12-2023",
+          vendor: {
+            id: "3",
+            name: "Adobe",
+            vendorsTDName: "Adobe",
+          },
           revision: 1,
           subRevision: 0,
           description: null,
