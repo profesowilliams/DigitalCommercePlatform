@@ -272,7 +272,7 @@ const Search = (
 
   const tooltipMessage = mainGridTranslations ? (
     <div style={{ padding: '0 5px' }}>
-      <p style={{ color: '#fff', 'margin-bottom': '5px' }}>
+      <p style={{ color: '#fff', marginBottom: '5px' }}>
         {mainGridTranslations.Search_Input_Tooltip}
       </p>
       <ul style={{ listStyle: 'inside', color: '#fff', margin: 0, padding: 0 }}>

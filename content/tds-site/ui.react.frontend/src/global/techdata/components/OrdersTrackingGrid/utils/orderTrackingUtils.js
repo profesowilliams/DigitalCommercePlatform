@@ -132,13 +132,19 @@ export async function fetchReport(
   reportName,
   pagination,
   sort,
-  isOnSearchAction
+  isOnSearchAction,
+  isOnPageChange,
+  queryCacheKey
 ) {
   const mapUrl = urlStrToMapStruc(reportUrl + '?ReportName=' + reportName);
   mapUrl.set('PageNumber', pagination.current.pageNumber);
 
   if (isOnSearchAction) {
     mapUrl.set('PageNumber', 1);
+  }
+
+  if (isOnPageChange) {
+    mapUrl.set('q', queryCacheKey);
   }
 
   if (sort?.current?.sortData?.[0]) {
@@ -177,6 +183,8 @@ export async function fetchData(config) {
     previousSortChanged,
     firstAPICall,
     isOnSearchAction,
+    isOnPageChange,
+    queryCacheKey,
     previousFilter,
     filtersRefs,
     alternativeSearchFlagRef,
@@ -240,6 +248,9 @@ export async function fetchData(config) {
   }
   if (isOnSearchAction.current) {
     requestUrl.searchParams.set('PageNumber', 1);
+  }
+  if (isOnPageChange.current) {
+    requestUrl.searchParams.set('q', queryCacheKey.current);
   }
   const { sortData } = hasSortChanged.current || {};
   const sortBy = sortData?.map((c) => `${sortSwap(c.colId)}:${c.sort ?? ''}`);

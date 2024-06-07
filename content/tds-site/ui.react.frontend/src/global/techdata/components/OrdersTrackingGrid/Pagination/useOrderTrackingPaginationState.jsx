@@ -49,7 +49,8 @@ function useOrderTrackingPaginationState({
   const paginationGetTotalPages = () =>
     pageCount ?? Math.ceil(currentResultsInPage / totalCounter);
 
-  const sendPagingRequest = () => onQueryChanged();
+  const sendPagingRequest = (onPageChange = false) =>
+    onQueryChanged({ onPageChange });
 
   const goToFirstPage = () => goToSpecificPage(0);
 
@@ -67,7 +68,7 @@ function useOrderTrackingPaginationState({
         saveToLocal: true,
       }
     );
-    sendPagingRequest();
+    sendPagingRequest({ onPageChange: pageNumber !== value.pageNumber });
     updateQueryString(value?.pageNumber);
     closeAndCleanToaster && closeAndCleanToaster();
   }

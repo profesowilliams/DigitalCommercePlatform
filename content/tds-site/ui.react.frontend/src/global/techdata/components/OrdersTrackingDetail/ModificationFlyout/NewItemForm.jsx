@@ -173,7 +173,7 @@ const NewItemForm = ({
               if (e.key === '*' || e.key === '^') e.preventDefault();
             }}
             onChange={(event) => {
-              const newValue = event.target.value.replace('*', '');
+              const newValue = event.target.value.replace('*', '').trim();
               debouncedAutocomplete(event.target.value.replace(/[*^]/g, ''));
               setValue(newValue);
             }}

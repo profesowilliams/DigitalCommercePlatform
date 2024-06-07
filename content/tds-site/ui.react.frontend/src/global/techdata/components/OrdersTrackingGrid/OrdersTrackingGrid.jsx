@@ -103,6 +103,8 @@ function OrdersTrackingGrid(props) {
   const resetCallback = useRef(null);
   const shouldGoToFirstPage = useRef(false);
   const isOnSearchAction = useRef(false);
+  const isOnPageChange = useRef(false);
+  const queryCacheKey = useRef(null);
   const dNoteFailedCounter = useRef(1);
   const invoiceFailedCounter = useRef(1);
   const rowsToGrayOutTDNameRef = useRef([]);
@@ -122,9 +124,10 @@ function OrdersTrackingGrid(props) {
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore,
-    { resetCallback, shouldGoToFirstPage, isOnSearchAction }
+    { resetCallback, shouldGoToFirstPage, isOnSearchAction, isOnPageChange }
   );
   const userData = useOrderTrackingStore((st) => st.userData);
+  const paginationData = useOrderTrackingStore((st) => st.pagination);
   const alternativeSearchFlag = useOrderTrackingStore(
     (state) => state.featureFlags.alternativeSearch
   );
@@ -231,6 +234,8 @@ function OrdersTrackingGrid(props) {
       gridApiRef,
       filtersRefs,
       isOnSearchAction,
+      isOnPageChange,
+      queryCacheKey,
       alternativeSearchFlagRef,
     };
     setSearchParameters(searchCriteria?.current);
@@ -260,10 +265,12 @@ function OrdersTrackingGrid(props) {
           reportFilterValue.current.value,
           customPaginationRef,
           hasSortChanged,
-          isOnSearchAction.current
+          isOnSearchAction.current,
+          isOnPageChange.current,
+          queryCacheKey.current
         )
       : await fetchData(queryOperations);
-    const isFirstPage = customPaginationRef?.current?.pageNumber === 1;
+    const isFirstPage = customPaginationRef?.current?.pageNumber == 1;
     setMainGridRowsTotalCounter(
       isFirstPage ? response?.data?.content?.items?.length : null
     );
@@ -544,6 +551,12 @@ function OrdersTrackingGrid(props) {
   useEffect(() => {
     alternativeSearchFlagRef.current = alternativeSearchFlag;
   }, [alternativeSearchFlag]);
+
+  useEffect(() => {
+    if (paginationData?.queryCacheKey) {
+      queryCacheKey.current = paginationData.queryCacheKey;
+    }
+  }, [paginationData]);
 
   const authorizedContent = () => {
     return hasAccess ? (

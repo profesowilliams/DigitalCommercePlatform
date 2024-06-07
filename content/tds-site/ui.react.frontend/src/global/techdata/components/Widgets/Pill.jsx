@@ -13,7 +13,7 @@ const Pill = ({
   <div className="td-capsule">
     {children}
     {hasCloseButton && (
-      <span lassName="td-capsule__close-icon">
+      <span className="td-capsule__close-icon">
         <CloseIcon onClick={closeClick} />
       </span>
     )}

@@ -3,7 +3,12 @@
  * A microstore, such as renewalsGrid, renewalDetails, or ordertrackinggrid, can be utilized for each individual grid module.
  */
 export default function useExtendGridOperations(store, refs) {
-  const { resetCallback, shouldGoToFirstPage, isOnSearchAction } = refs;
+  const {
+    resetCallback,
+    shouldGoToFirstPage,
+    isOnSearchAction,
+    isOnPageChange,
+  } = refs;
   const defaultConfig = { goToFirstPage: false, onSearchAction: false };
   const effects = store((state) => state.effects);
 
@@ -18,9 +23,11 @@ export default function useExtendGridOperations(store, refs) {
   }
 
   function onQueryChanged(config) {
-    const { goToFirstPage, onSearchAction } = config || defaultConfig;
+    const { goToFirstPage, onSearchAction, onPageChange } =
+      config || defaultConfig;
     if (goToFirstPage) shouldGoToFirstPage.current = true;
     isOnSearchAction.current = onSearchAction;
+    if (isOnPageChange) isOnPageChange.current = onPageChange;
     if (resetCallback.current) resetCallback.current();
   }
 

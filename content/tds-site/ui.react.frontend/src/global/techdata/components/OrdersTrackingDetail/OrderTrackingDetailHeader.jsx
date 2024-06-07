@@ -18,6 +18,8 @@ import { getUrlParamsCaseInsensitive } from '../../../../utils';
 import {
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
   ORDER_SEARCH_LOCAL_STORAGE_KEY,
+  ORDER_FILTER_LOCAL_STORAGE_KEY,
+  REPORTS_LOCAL_STORAGE_KEY,
 } from '../../../../utils/constants';
 import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
 import { usGet, usPost } from '../../../../utils/api';
@@ -278,8 +280,13 @@ const OrderTrackingDetailHeader = ({
   const renderBackButton = () => {
     const isSearchActive =
       getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.field?.length > 0;
-
-    return isSearchActive
+    const areFiltersActive = Object.values(
+      getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY) || {}
+    ).some((filtersArray) => filtersArray.length !== 0);
+    const areReportsActive = getLocalStorageData(
+      REPORTS_LOCAL_STORAGE_KEY
+    )?.key;
+    return isSearchActive || areFiltersActive || areReportsActive
       ? detailsTranslations?.Button_BackToSearchResults || 'Search Results' // TODO: delete default strings after BE translations are working
       : detailsTranslations?.Button_BackToAll || 'All orders';
   };
