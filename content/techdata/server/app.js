@@ -4524,7 +4524,7 @@ app.get("/ui-account/v1/topActions", function (req, res) {
 });
 app.get("/ui-renewal/v1/Details", function (req, res) {
   const { id } = req.query;
-  const response = {
+  /* const response = {
     content: {
       details: [
         {
@@ -4945,7 +4945,382 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
       messages: [],
       isError: false,
     },
-  };
+  }; */
+
+  const response = {
+                       "content": {
+                           "details": [
+                               {
+                                   "source": {
+                                       "salesOrg": "VN91",
+                                       "targetSystem": "R3",
+                                       "key": "U100000005722",
+                                       "system": "RQEu",
+                                       "id": "U100000005722"
+                                   },
+                                   "published": "2024-06-06T11:47:58.084Z",
+                                   "reseller": {
+                                       "id": "2000760",
+                                       "isValid": true,
+                                       "canEdit": false,
+                                       "incumbent": false,
+                                       "vendorAccountNumber": {
+                                           "text": "P1000053200",
+                                           "isValid": true,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 100000
+                                       },
+                                       "name": "Tech Data House Account for renewal",
+                                       "nameUpper": "TECH DATA HOUSE ACCOUNT FOR RENEWAL",
+                                       "contact": [
+                                           {
+                                               "name": {
+                                                   "text": "Test1 Test3",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": false,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               },
+                                               "email": {
+                                                   "text": "",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": false,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               },
+                                               "phone": {
+                                                   "text": "",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": false,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               }
+                                           }
+                                       ],
+                                       "address": {
+                                           "line1": "A 301, 3rd Floor, Supreme Business Park ",
+                                           "city": "Mumbai",
+                                           "state": "13",
+                                           "postalCode": "400076",
+                                           "country": "IN"
+                                       }
+                                   },
+                                   "endUser": {
+                                       "isValid": true,
+                                       "canEdit": false,
+                                       "name": {
+                                           "text": "Gringotts",
+                                           "isValid": true,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 100000
+                                       },
+                                       "nameUpper": "GRINGOTTS",
+                                       "eaNumber": {
+                                           "text": "P1005105990",
+                                           "isValid": true,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 100000
+                                       },
+                                       "contact": [
+                                           {
+                                               "name": {
+                                                   "text": "Anne Lopez",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": false,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               },
+                                               "email": {
+                                                   "text": "Anne.Lopez@Gringotts.com",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": false,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               },
+                                               "phone": {
+                                                   "text": "",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": false,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               }
+                                           }
+                                       ],
+                                       "address": {
+                                           "line1": {
+                                               "text": "Arkham Street",
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": false,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "line2": {
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": false,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "line3": {
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": false,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "city": {
+                                               "text": "Ho Chi Minh",
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": false,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "postalCode": {
+                                               "text": "00700",
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": false,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "country": {
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": false,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "countryCode": {
+                                               "text": "VN",
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": false,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           }
+                                       },
+                                       "preferredLanguage": "en-US"
+                                   },
+                                   "shipTo": {
+                                       "id": {
+                                           "isValid": true,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 100000
+                                       },
+                                       "nameUpper": "",
+                                       "contact": [],
+                                       "address": {}
+                                   },
+                                   "items": [
+                                       {
+                                           "id": "1",
+                                           "product": [
+                                               {
+                                                   "type": "TECHDATA",
+                                                   "id": "ADB65304470CA01A12",
+                                                   "name": "-",
+                                                   "family": "Acrobat Pro for teams"
+                                               },
+                                               {
+                                                   "type": "MANUFACTURER",
+                                                   "id": "65304470CA01A12",
+                                                   "name": "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
+                                                   "manufacturer": "Adobe",
+                                                   "manufacturerId": "3",
+                                                   "family": "Acrobat Pro for teams"
+                                               }
+                                           ],
+                                           "quantity": 10.0,
+                                           "confirmedQuantity": 0.0,
+                                           "references": [],
+                                           "updated": "0001-01-01T00:00:00",
+                                           "unitCost": 0.0,
+                                           "unitPriceCurrency": "NA",
+                                           "unitCostCurrency": "NA",
+                                           "unitListPriceCurrency": "NA",
+                                           "extendedListPrice": 0.0,
+                                           "requested": "0001-01-01T00:00:00",
+                                           "femAmount": 0.0,
+                                           "pomAmount": 0.0,
+                                           "samAmount": 0.0,
+                                           "nsmAmount": 0.0,
+                                           "femPercentage": 0.0,
+                                           "pomPercentage": 0.0,
+                                           "samPercentage": 0.0,
+                                           "nsmPercentage": 0.0,
+                                           "agreements": [],
+                                           "attributes": [],
+                                           "serialNumbers": [
+                                               null
+                                           ],
+                                           "discounts": [
+                                               {
+                                                   "type": "Standard",
+                                                   "value": "0.0"
+                                               }
+                                           ],
+                                           "contract": {
+                                               "id": "P1005105990",
+                                               "renewedDuration": "1 Year",
+                                               "endDate": "2024-05-30T00:00:00Z",
+                                               "newAgreementStartDate": "2024-05-31T00:00:00Z",
+                                               "newAgreementEndDate": "2025-05-30T00:00:00Z",
+                                               "formattedEndDate": "30/05/2024",
+                                               "formattedNewAgreementStartDate": "31/05/2024",
+                                               "formattedNewAgreementEndDate": "30/05/2025",
+                                               "hasMultipleSupportLevelForThisAgreement": false,
+                                               "hasMultipleDueDateForThisAgreement": false,
+                                               "hasMultipleDurationForThisAgreement": false,
+                                               "agreementDuration": "31/05/2024 - 30/05/2025",
+                                               "autoRenew": false
+                                           },
+                                           "subscriptionId": "4526842c7f4fbcba04475eb509f772NA"
+                                       }
+                                   ],
+                                   "attributes": [],
+                                   "programName": "VIP MP Commercial",
+                                   "quoteCurrent": false,
+                                   "firstAvailableOrderDate": "0001-01-01T00:00:00",
+                                   "lastOrderDate": "0001-01-01T00:00:00",
+                                   "amountSaved": 0.0,
+                                   "linkedRenewals": [],
+                                   "dueDate": "0001-01-02T00:00:00Z",
+                                   "endUserType": "Commercial",
+                                   "previousEndUserPO": "Gringotts",
+                                   "previousResellerPO": "ResellerPOPreviousTransactionTest",
+                                   "isValid": true,
+                                   "canOrder": false,
+                                   "canEditQty": true,
+                                   "canEditResellerPrice": true,
+                                   "canEditLines": true,
+                                   "canCopy": false,
+                                   "customerPO": {
+                                       "text": "P1005105990",
+                                       "isValid": true,
+                                       "isMandatory": false,
+                                       "isDisplay": true,
+                                       "canEdit": true,
+                                       "allowedLength": 25
+                                   },
+                                   "formattedPublished": "06/06/2024",
+                                   "formattedDueDate": "02/01/0001",
+                                   "formattedCreated": "06/06/2024",
+                                   "formattedUpdated": "06/06/2024",
+                                   "formattedExpiry": "30/05/2024",
+                                   "vendor": {
+                                       "id": "3",
+                                       "name": "Adobe",
+                                       "vendorsTDName": "Adobe"
+                                   },
+                                   "hasMultipleSupportLevel": false,
+                                   "hasMultipleAgreements": false,
+                                   "hasMultipleRenewedDuration": false,
+                                   "hasMultipleDueDates": false,
+                                   "agreementNumber": "P1005105990",
+                                   "renewedDuration": "1 Year",
+                                   "agreementDuration": "31/05/2024 - 30/05/2025",
+                                   "hasMultipleAgreementDuration": false,
+                                   "canDownloadExcel": true,
+                                   "canShareQuote": false,
+                                   "canRequestQuote": false,
+                                   "canRequestRevision": false,
+                                   "feedBackMessages": [],
+                                   "itemsActive": [
+                                       {
+                                           "id": "1",
+                                           "product": [
+                                               {
+                                                   "type": "TECHDATA active",
+                                                   "id": "ADB65304470CA01A12 active",
+                                                   "family": "Acrobat Pro for teams active"
+                                               },
+                                               {
+                                                   "type": "MANUFACTURER active",
+                                                   "id": "65304470CA01A12 active",
+                                                   "name": "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New active",
+                                                   "manufacturer": "Adobe active",
+                                                   "manufacturerId": "3 active",
+                                                   "family": "Acrobat Pro for teams active"
+                                               }
+                                           ],
+                                           "quantity": 10.0,
+                                           "subscriptionId": "4526842c7f4fbcba04475eb509f772NA active"
+                                       },
+                                       {
+                                          "id": "2",
+                                          "product": [
+                                              {
+                                                  "type": "TECHDATA active",
+                                                  "id": "ADB65304470CA01A12 active",
+                                                  "family": "Acrobat Pro for teams active"
+                                              },
+                                              {
+                                                  "type": "MANUFACTURER active",
+                                                  "id": "65304470CA01A12 active",
+                                                  "name": "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New active",
+                                                  "manufacturer": "Adobe active",
+                                                  "manufacturerId": "3 active",
+                                                  "family": "Acrobat Pro for teams active"
+                                              }
+                                          ],
+                                          "quantity": 10.0,
+                                          "subscriptionId": "4526842c7f4fbcba04475eb509f772NA active"
+                                      }
+                                   ],
+                                   "additionalInfo": [
+                                       {},
+                                       {}
+                                   ],
+                                   "revision": 1.0,
+                                   "subRevision": 0.0,
+                                   "activeFlag": "Y",
+                                   "price": 0.0,
+                                   "currency": "NA",
+                                   "quoteType": "AutoRenew",
+                                   "created": "2024-06-06T11:47:58.084Z",
+                                   "updated": "2024-06-06T11:47:58.084Z",
+                                   "expiry": "2024-05-30T00:00:00Z",
+                                   "status": "Active",
+                                   "orders": [],
+                                   "vendorReference": [
+                                       {
+                                           "type": "QuoteId",
+                                           "value": "P1005105990"
+                                       }
+                                   ],
+                                   "femAmount": 0.0,
+                                   "pomAmount": 0.0,
+                                   "samAmount": 0.0,
+                                   "nsmAmount": 0.0,
+                                   "femPercentage": 0.0,
+                                   "pomPercentage": 0.0,
+                                   "samPercentage": 0.0,
+                                   "nsmPercentage": 0.0
+                               }
+                           ]
+                       },
+                       "error": {
+                           "code": 0,
+                           "messages": [],
+                           "isError": false
+                       }
+                   }
   res.json(response);
 });
 

@@ -88,7 +88,7 @@ function Price({ value }, data, compProps) {
 }
 
 function RenewalPreviewGrid(
-  { data, gridProps, shopDomainPage, isEditing, compProps },
+  { data, gridProps, shopDomainPage, isEditing, compProps ,isActiveLicense},
   ref
 ) {
   const [modal, setModal] = useState(null);
@@ -105,7 +105,7 @@ function RenewalPreviewGrid(
   const [orderButtonLabel, setOrderButtonLabel] = useState(
     gridProps?.orderButtonLabel
   );
-  const gridData = data.items ?? [];
+  const gridData = isActiveLicense ? data.itemsActive : data.items;
   const adobeVendor = data?.vendor?.name === 'Adobe';
   const orignalGridData = JSON.parse(JSON.stringify(gridData));
   const dataObj = data;
@@ -212,14 +212,16 @@ function RenewalPreviewGrid(
     [gridSavedItems]
   );
   const contractMap = new Map();
-  const sortedGridData = gridData.sort((a, b) => {
-    const contractIdA = a.contract.id;
-    const contractIdB = b.contract.id;
-
-    return contractIdA - contractIdB;
+  let sortedGridData = gridData;
+  if (gridData?.contract?.id) {
+      sortedGridData = gridData.sort((a, b) => {
+      const contractIdA = a.contract.id;
+      const contractIdB = b.contract.id;
+      return contractIdA - contractIdB;
   });
+  }
   JSON.parse(JSON.stringify(sortedGridData))?.forEach((item) => {
-    const contractId = item.contract.id;
+    const contractId = item?.contract?.id;
     if (!contractMap.has(contractId)) {
       contractMap.set(contractId, []);
     }
@@ -432,21 +434,21 @@ function RenewalPreviewGrid(
     },
     {
       field: 'mfrNumber',
-      headerName: gridProps?.vendorPartNo,
+      headerName: isActiveLicense ? "" : gridProps?.vendorPartNo,
       cellRenderer: (props) =>
-        !props?.data?.id?.includes('Agreement')
+        !props?.data?.id?.includes('Agreement')  && !isActiveLicense
           ? RenewalManufacturer(props)
           : '',
       width: gridColumnWidths.vendorPartNo,
     },
     {
       field: 'unitListPrice',
-      headerName: gridProps.listPrice?.replace(
+      headerName:  isActiveLicense ? "" : gridProps.listPrice?.replace(
         '{currency-code}',
         data?.currency || ''
       ),
       cellRenderer: (props) => {
-        return !props?.data?.id?.includes('Agreement')
+        return !props?.data?.id?.includes('Agreement')  && !isActiveLicense
           ? Price(props, data, compProps)
           : '';
       },
@@ -454,24 +456,24 @@ function RenewalPreviewGrid(
     },
     {
       field: 'value',
-      headerName: gridProps?.percentOffListPrice,
+      headerName: isActiveLicense ? "" : gridProps?.percentOffListPrice,
       valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
       cellRenderer: (props) =>
-        !props?.data?.id?.includes('Agreement')
+        !props?.data?.id?.includes('Agreement') && !isActiveLicense
           ? Price(props, data, compProps)
           : '',
       width: gridColumnWidths.percentageOfflist,
     },
     {
       field: 'unitPrice',
-      headerName: gridProps.unitPrice?.replace(
+      headerName: isActiveLicense ? "" : gridProps.unitPrice?.replace(
         '{currency-code}',
         data?.currency || ''
       ),
       suppressKeyboardEvent: (params) => suppressNavigation(params),
       cellRenderer: (props) => {
         const isEditing = isEditingRef.current && data?.canEditResellerPrice;
-        return !props?.data?.id?.includes('Agreement')
+        return !props?.data?.id?.includes('Agreement')  && !isActiveLicense
           ? UnitPriceColumn({ ...props, isEditing })
           : '';
       },
@@ -490,12 +492,12 @@ function RenewalPreviewGrid(
     },
     {
       field: 'totalPrice',
-      headerName: gridProps.totalPrice?.replace(
+      headerName: isActiveLicense ? "" : gridProps.totalPrice?.replace(
         '{currency-code}',
         data?.currency || ''
       ),
       cellRenderer: (props) =>
-        !props?.data?.id?.includes('Agreement')
+        !props?.data?.id?.includes('Agreement')  && !isActiveLicense
           ? Price(props, data, compProps)
           : '',
       valueGetter: 'data.quantity * data.unitPrice',
@@ -587,7 +589,7 @@ function RenewalPreviewGrid(
           columnDefs={columnDefs}
 
         /> */}
-        {resultArray?.length > 0 ? (
+        {!isActiveLicense && resultArray?.length > 0 ? (
           <>
             <GridSubTotal
               data={data}

@@ -33,6 +33,13 @@
                                                 fieldLabel="Line Item Details Label"
                                                 name="./lineItemDetailsLabel"
                                                 required="{Boolean}true"/>
+                                            <lineActiveLicenceLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Line Active Licence Label"
+                                                    fieldLabel="Line Active Licence Label"
+                                                    name="./lineActiveLicenceLabel"
+                                                    required="{Boolean}true"/>
                                             <shopURL
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -340,6 +347,13 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                     fieldLabel="Quote text for file name"
                                                     name="./quoteTextForFileName"/>
+                                            <enableActiveLicence
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    text="Enable Active Licence"
+                                                    uncheckedValue="false"
+                                                    value="{Boolean}true"
+                                                    name="./enableActiveLicence"/>
                                         </items>
                                     </column>
                                 </items>
@@ -874,6 +888,12 @@
                                                             fieldDescription="Usage Period"
                                                             fieldLabel="Usage Period"
                                                             name="./lineItemUsagePeriodLabel"/>
+                                                    <subscriptionId
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="Subscription Id"
+                                                            fieldLabel="Subscription Id"
+                                                            name="./activeSubscriptionId"/>
                                                 </items>
                                             </column>
                                         </items>

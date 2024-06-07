@@ -25,6 +25,10 @@ use(['../../../common/utils.js'], function(utils) {
         productLines["lineItemDetailsLabel"] = properties["lineItemDetailsLabel"];
     }
 
+     if (properties && properties["lineActiveLicenceLabel"]) {
+        productLines["lineActiveLicenceLabel"] = properties["lineActiveLicenceLabel"];
+    }
+
     if (properties && properties["downloadPDFLabel"]) {
         productLines["downloadPDFLabel"] = properties["downloadPDFLabel"];
     }
@@ -54,6 +58,10 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["disableProductDetailsLink"]) {
         productLines["disableProductDetailsLink"] = properties["disableProductDetailsLink"];
     }
+     if (properties && properties["enableActiveLicence"]) {
+        productLines["enableActiveLicence"] = properties["enableActiveLicence"];
+    }
+
     if (properties && properties["vendorPartNo"]) {
         productLines["vendorPartNo"] = properties["vendorPartNo"];
     }
@@ -84,6 +92,7 @@ use(['../../../common/utils.js'], function(utils) {
      if (properties && properties["quoteTextForFileName"]) {
             productLines["quoteTextForFileName"] = properties["quoteTextForFileName"];
         }
+
     if (properties && properties["note"]) {
         productLines["note"] = properties["note"];
     }
@@ -484,6 +493,9 @@ use(['../../../common/utils.js'], function(utils) {
 
     if (properties && properties["lineItemUsagePeriodLabel"]) {
          lineItemDetailLabels.usagePeriodLabel = properties["lineItemUsagePeriodLabel"];
+    }
+    if (properties && properties["activeSubscriptionId"]) {
+         lineItemDetailLabels.subscriptionId = properties["activeSubscriptionId"];
     }
 
     if (lineItemDetailLabels != null) {

@@ -24,6 +24,7 @@ Instance:${line.instance}`
 
 function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="false", disableMultipleAgreement, shopDomainPage = "", invokeModal, lineDetailsLabels }) {
   const description =  formatDetailsShortDescription(line);
+  const subscriptionId = line?.subscriptionId;
   const serialHasValue = hasSerialNumbers(line);
   const formatShopDomainUrl = useCallback(() => {
     if (shopDomainPage.length > 1 && line.product) {
@@ -110,6 +111,10 @@ function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="fal
                     ? line.serialCellNotFoundMessage
                     : "N/A"
               )}
+            </span>}
+            {line.subscriptionId && <span>
+              <b>{lineDetailsLabels?.subscriptionId}</b>
+              {line.subscriptionId}
             </span>}
             {line.instance && <span>
               <b>{lineDetailsLabels?.instanceLabel}</b>

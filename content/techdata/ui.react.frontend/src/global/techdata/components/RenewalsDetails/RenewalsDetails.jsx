@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import ConfigGrid from "./ConfigGrid/ConfigGrid";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import RenewalPreviewGrid from "./RenewalPreviewGrid/RenewalPreviewGrid";
 import useGet from "../../hooks/useGet";
 import Loader from "../Widgets/Loader";
@@ -238,7 +241,8 @@ function RenewalsDetails(props) {
 
   const isEditable = ({ canEditLines }) => canEditLines && !saving;
   return (
-    <div className="cmp-quote-preview cmp-renewal-preview" ref={renewalsRef}>
+    <div className={componentProp.productLines.enableActiveLicence === 'true' ?
+        "cmp-quote-preview cmp-renewal-preview cmp-renewal-preview-active" : "cmp-quote-preview cmp-renewal-preview"} ref={renewalsRef}>
       {authenticated && renewalsDetails ? (
         <section>
           <ConfigGrid
@@ -249,31 +253,93 @@ function RenewalsDetails(props) {
               excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
             }}
           />
-          <div className="details-container">
-            <span className="details-preview">{componentProp?.productLines?.lineItemDetailsLabel || "Details"}<span className="details-price-level">{renewalsDetails.renewalLevel}</span></span>
-            {isEditable(renewalsDetails) && (
-            <EditFlow
-              disabled={!editMode && isEditingDetails}
-              editValue={editMode}
-              setEdit={setLockedEdit}
-              saveHandler={handleSave}
-              cancelHandler={handleCancel}
-            />
-            )}
-            {saving && <Saving />}
-          </div>
-          <RenewalPreviewGrid
-            ref={gridRef}
-            data={renewalsDetails}
-            compProps={componentProp}
-            gridProps={{
-              ...componentProp.productLines,
-              ...componentProp.quoteEditing,
-              excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
-            }}
-            isEditing={!toggleEdit}
-            shopDomainPage={componentProp.shopDomainPage}
-          />
+          {
+            componentProp?.productLines?.enableActiveLicence === 'true' ? (
+                <>
+                    <Accordion defaultExpanded>
+                      <AccordionSummary>
+                          <div className="details-container">
+                              <span className="details-preview">{componentProp?.productLines?.lineActiveLicenceLabel || "Details"}<span className="details-price-level">{renewalsDetails.renewalLevel}</span></span>
+                          </div>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                          <RenewalPreviewGrid
+                            ref={gridRef}
+                            data={renewalsDetails}
+                            compProps={componentProp}
+                            gridProps={{
+                              ...componentProp.productLines,
+                              ...componentProp.quoteEditing,
+                              excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
+                            }}
+                            isEditing={false}
+                            shopDomainPage={componentProp.shopDomainPage}
+                            isActiveLicense={true}
+                          />
+                      </AccordionDetails>
+                    </Accordion>
+                     <Accordion defaultExpanded>
+                        <AccordionSummary>
+                            <div className="details-container">
+                              <span className="details-preview">{componentProp?.productLines?.lineItemDetailsLabel || "Details"}<span className="details-price-level">{renewalsDetails.renewalLevel}</span></span>
+                              {isEditable(renewalsDetails) && (
+                              <EditFlow
+                                disabled={!editMode && isEditingDetails}
+                                editValue={editMode}
+                                setEdit={setLockedEdit}
+                                saveHandler={handleSave}
+                                cancelHandler={handleCancel}
+                              />
+                              )}
+                              {saving && <Saving />}
+                            </div>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <RenewalPreviewGrid
+                              ref={gridRef}
+                              data={renewalsDetails}
+                              compProps={componentProp}
+                              gridProps={{
+                                ...componentProp.productLines,
+                                ...componentProp.quoteEditing,
+                                excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
+                              }}
+                              isEditing={!toggleEdit}
+                              shopDomainPage={componentProp.shopDomainPage}
+                            />
+                        </AccordionDetails>
+                      </Accordion>
+                </>
+            ) : (
+                <>
+                    <div className="details-container">
+                        <span className="details-preview">{componentProp?.productLines?.lineItemDetailsLabel || "Details"}<span className="details-price-level">{renewalsDetails.renewalLevel}</span></span>
+                        {isEditable(renewalsDetails) && (
+                        <EditFlow
+                          disabled={!editMode && isEditingDetails}
+                          editValue={editMode}
+                          setEdit={setLockedEdit}
+                          saveHandler={handleSave}
+                          cancelHandler={handleCancel}
+                        />
+                        )}
+                        {saving && <Saving />}
+                      </div>
+                      <RenewalPreviewGrid
+                        ref={gridRef}
+                        data={renewalsDetails}
+                        compProps={componentProp}
+                        gridProps={{
+                          ...componentProp.productLines,
+                          ...componentProp.quoteEditing,
+                          excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
+                        }}
+                        isEditing={!toggleEdit}
+                        shopDomainPage={componentProp.shopDomainPage}
+                      />
+                  </>
+            )
+          }
         </section>
       ) : (
         isLoading && <Loader visible={isLoading} />
