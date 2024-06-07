@@ -12,8 +12,9 @@ const NewlyAddedLineItem = ({
   domain,
 }) => {
   const [price, setPrice] = useState(null);
-  const [currency, setCurrency] = useState('');
   const [quantity, setQuantity] = useState(item.quantity);
+  const userData = useOrderTrackingStore((state) => state.userData);
+  const userDataCurrency = userData?.activeCustomer?.defaultCurrency;
 
   const handleAmountChange = (newValue) => {
     setQuantity(newValue);
@@ -24,10 +25,10 @@ const NewlyAddedLineItem = ({
       const result = await usPost(`${domain}/v2/Price/GetPriceForProduct`, {
         productId: item.id,
         quantity: quantity,
+        currency: userDataCurrency,
       });
-      const { price, currency, totalPriceFormatted } =
+      const { price, totalPriceFormatted } =
         result?.data?.content?.priceData || {};
-      setCurrency(currency);
       setPrice(totalPriceFormatted);
       onChange(index, quantity, price);
     } catch (error) {
@@ -61,7 +62,7 @@ const NewlyAddedLineItem = ({
       </div>
       <div className="cmp-flyout-list__element__price">
         <p className="cmp-flyout-list__element__price-bold">
-          {getDictionaryValueOrKey(labels.lineTotal)} ({currency}){' '}
+          {getDictionaryValueOrKey(labels.lineTotal)} ({userDataCurrency}){' '}
         </p>
         {price && <p>{price}</p>}
       </div>

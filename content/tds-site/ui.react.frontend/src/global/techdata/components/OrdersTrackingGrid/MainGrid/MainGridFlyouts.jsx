@@ -80,7 +80,6 @@ const MainGridFlyouts = ({
         subheaderReference={document.querySelector('.subheader > div > div')}
         labels={gridConfig?.orderModifyLabels}
         gridConfig={gridConfig}
-        userData={userData}
         isTDSynnex={isTDSynnex}
         onQueryChanged={onQueryChanged}
       />

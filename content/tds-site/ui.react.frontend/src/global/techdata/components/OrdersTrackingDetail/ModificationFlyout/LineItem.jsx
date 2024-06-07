@@ -15,6 +15,8 @@ const LineItem = ({ item, index, onChange, labels, domain }) => {
   const [totalPriceFormatted, setTotalPriceFormatted] = useState(
     item?.totalPriceFormatted || ''
   );
+  const userData = useOrderTrackingStore((state) => state.userData);
+  const currency = userData?.activeCustomer?.defaultCurrency;
 
   const { setReasonDropdownValues, setDoesReasonDropdownHaveEmptyItems } =
     useOrderTrackingStore((st) => st.effects);
@@ -114,7 +116,7 @@ const LineItem = ({ item, index, onChange, labels, domain }) => {
       </div>
       <div className="cmp-flyout-list__element__price">
         <p className="cmp-flyout-list__element__price-bold">
-          {getDictionaryValueOrKey(labels.lineTotal)} ({item.currency})
+          {getDictionaryValueOrKey(labels.lineTotal)} ({currency})
         </p>
         <p>{totalPriceFormatted}</p>
       </div>

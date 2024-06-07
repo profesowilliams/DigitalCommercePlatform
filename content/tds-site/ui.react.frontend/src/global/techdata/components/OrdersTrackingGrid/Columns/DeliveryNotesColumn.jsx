@@ -88,18 +88,19 @@ function DeliveryNotesColumn({
         </a>
       </div>
     );
-    return (
-      isInternalUser ? 
-        <Tooltip
-          title={tooltipMessage}
-          placement="top-end"
-          disableInteractive={false}
-          leaveDelay={copied ? 1000 : 0}
-          onClose={handleTooltip}
-        >
-          {contentTooltip}
-        </Tooltip>
-      : contentTooltip);
+    return isInternalUser && !hasMultiple ? (
+      <Tooltip
+        title={tooltipMessage}
+        placement="top-end"
+        disableInteractive={false}
+        leaveDelay={copied ? 1000 : 0}
+        onClose={handleTooltip}
+      >
+        {contentTooltip}
+      </Tooltip>
+    ) : (
+      contentTooltip
+    );
   };
 
   return deliveryNotes?.length === 0 ? '-' : renderContent();

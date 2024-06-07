@@ -87,7 +87,7 @@ function InvoiceColumn({
       </div>
     );
 
-    return isInternalUser ? (
+    return isInternalUser && !hasMultiple ? (
       <Tooltip
         title={tooltipMessage}
         placement="top-end"
@@ -97,7 +97,9 @@ function InvoiceColumn({
       >
         {contentTooltip}
       </Tooltip>
-    ) : contentTooltip;
+    ) : (
+      contentTooltip
+    );
   };
 
   return invoices?.length === 0 ? '-' : renderContent();
