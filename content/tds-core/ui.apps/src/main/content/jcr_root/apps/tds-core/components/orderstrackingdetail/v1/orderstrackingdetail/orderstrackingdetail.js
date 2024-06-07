@@ -147,6 +147,7 @@ use(["../../../common/utils.js"], function (utils) {
     "orderDate",
     "purchaseOrderNo",
     "orderType",
+    "orderCreatedBy",
   ];
 
   properties &&
