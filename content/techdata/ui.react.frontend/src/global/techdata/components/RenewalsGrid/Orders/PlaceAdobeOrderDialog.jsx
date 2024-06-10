@@ -91,7 +91,7 @@ function PlaceAdobeOrderDialog({
         >
           Country Specific Terms & Conditions
         </a>
-        <span> & </span>
+        <span> & the </span>
         <a
           href={termsAndConditionsLink}
           target="_blank"

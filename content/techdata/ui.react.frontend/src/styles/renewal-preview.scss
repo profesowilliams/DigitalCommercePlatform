@@ -227,6 +227,11 @@
     margin-top: 30px;
     margin-bottom: 15px;
 
+    &.red-banner {
+      background-color: $banner-cherry;
+      border-left: 4px solid $brand-cherry;
+    }
+
     &.orange-banner {
       background-color: $banner-orange;
       border-left: 4px solid $border-orange;
@@ -306,64 +311,62 @@
 }
 
 .cmp-renewal-preview-active {
+  &.cmp-renewal-preview {
+    .details-preview {
+      position: relative;
 
-    &.cmp-renewal-preview {
-        .details-preview {
-            position: relative;
-
-            &::before {
-                content: '';
-                position: absolute;
-                left: 0;
-                border: solid $brand-charcoal;
-                border-width: 0 2px 2px 0;
-                display: inline-block;
-                padding: 5px;
-                transform: rotate(-135deg) translateY(20%);
-                top: 50%;
-            }
-        }
-
-        .Mui-expanded .details-preview:before {
-            transform: rotate(45deg) translateY(20%);
-            top: 0;
-        }
-
-        .MuiAccordionSummary-content {
-            margin: 20px 0;
-        }
-
-        .MuiAccordionDetails-root,
-        .MuiAccordionSummary-root {
-            padding: 0;
-            min-height: unset;
-        }
-
-        .MuiPaper-root {
-            box-shadow: none;
-        }
-
-        .details-container {
-            padding-left: 2px;
-            width: 100%;
-        }
-
-
-        .ag-header-row {
-            background-color: white !important
-        }
-        .ag-header-viewport {
-            border-top: 3px solid $brand-charcoal;
-            border-bottom: 2px solid $brand-charcoal;
-        }
-
-        .details-preview {
-            padding-left: 30px;
-            color: $brand-charcoal !important;
-        }
-
-        .ag-root-wrapper-body {
-            margin-top: 0 !important;
-        }
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        border: solid $brand-charcoal;
+        border-width: 0 2px 2px 0;
+        display: inline-block;
+        padding: 5px;
+        transform: rotate(-135deg) translateY(20%);
+        top: 50%;
+      }
     }
+
+    .Mui-expanded .details-preview:before {
+      transform: rotate(45deg) translateY(20%);
+      top: 0;
+    }
+
+    .MuiAccordionSummary-content {
+      margin: 20px 0;
+    }
+
+    .MuiAccordionDetails-root,
+    .MuiAccordionSummary-root {
+      padding: 0;
+      min-height: unset;
+    }
+
+    .MuiPaper-root {
+      box-shadow: none;
+    }
+
+    .details-container {
+      padding-left: 2px;
+      width: 100%;
+    }
+
+    .ag-header-row {
+      background-color: white !important;
+    }
+    .ag-header-viewport {
+      border-top: 3px solid $brand-charcoal;
+      border-bottom: 2px solid $brand-charcoal;
+    }
+
+    .details-preview {
+      padding-left: 30px;
+      color: $brand-charcoal !important;
+    }
+
+    .ag-root-wrapper-body {
+      margin-top: 0 !important;
+    }
+  }
 }
