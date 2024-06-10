@@ -9,21 +9,21 @@
 }
 
 .cmp-renewal-preview {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 
   .details-container {
     display: flex;
     padding: 27px 15 0 15px;
     justify-content: space-between;
     .details-preview {
-        color: rgba(0, 12, 33, 1);
-        font-size: 24px;
-        font-weight: 600;
-        letter-spacing: 0;
-        line-height: 33px;
+      color: rgba(0, 12, 33, 1);
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 33px;
     }
     .details-price-level {
-      color: map-get($color-palette, "cool-gray-10");
+      color: map-get($color-palette, 'cool-gray-10');
       font-family: inherit;
       padding-left: 1.25rem;
       font-size: 0.875rem;
@@ -66,7 +66,7 @@
         text-underline-offset: 3px;
       }
       &:disabled {
-        color: #D9D8D7;
+        color: #d9d8d7;
         text-decoration: none;
         cursor: default;
       }
@@ -117,6 +117,7 @@
       &--note {
         font-size: 16px;
         line-height: 27px;
+        max-width: 695px;
       }
       &--currency-code {
         margin-left: 7px;
@@ -124,15 +125,15 @@
       &--currency-symbol {
         margin-right: 2px;
       }
-    }    
+    }
   }
 
-  .cmp-unitprice{
+  .cmp-unitprice {
     width: 100%;
     margin: 0 auto;
   }
-  .cmp-unitprice-edit{
-    #formatted-uniteprice-input{
+  .cmp-unitprice-edit {
+    #formatted-uniteprice-input {
       text-align: right;
       color: #555555;
     }
@@ -179,108 +180,120 @@
       border: none;
     }
   }
-  
+
   .right-aligned {
     text-align: right;
   }
-  
+
   .center-aligned {
     text-align: center;
   }
 
   .opportunity-quote {
-      padding: 20px;
-      background-color: #EBF3F9;
-      border-left: 4px solid #006FBA;
-      display: flex;
-      align-items: start;
-      justify-content: space-between;
-      margin-top: 30px;
-      margin-bottom: 15px;
+    padding: 20px;
+    background-color: #ebf3f9;
+    border-left: 4px solid #006fba;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 15px;
 
-      p {
-        font-size: 16px;
-        line-height: 24px;
-        color: $brand-charcoal;
-        margin: 0;
-        display: flex;
-        gap: 15px;
-        flex: 0 0 80%;
-      }
-
-      button {
-        text-decoration: none;
-        font-size: 16px;
-        line-height: 24px;
-        color: $brand-cobalt;
-        margin-right: 20px;
-      }
-  }
-  .renewal-feedback-banner {
-        padding: 20px;
-        background-color: $light-blue;
-        border-left: 4px solid $brand-cobalt;
-        display: flex;
-        align-items: start;
-        justify-content: space-between;
-        margin-top: 30px;
-        margin-bottom: 15px;
-
-        &.orange-banner {
-          background-color: $banner-orange;
-          border-left: 4px solid $border-orange;
-        }
-
-        &.blue-banner {
-          background-color: $light-blue;
-          border-color:$brand-cobalt;
-        }
-
-        p {
-          font-size: 16px;
-          line-height: 24px;
-          color: $brand-charcoal;
-          margin: 0;
-          display: flex;
-          gap: 15px;
-          flex: 0 0 80%;
-        }
-
-        button {
-          text-decoration: none;
-          font-size: 16px;
-          line-height: 24px;
-          color: $brand-cobalt;
-          margin-right: 20px;
-        }
-    }
-  }
-
-  .cmp-renewals-details .ag-theme-alpine .ag-root-wrapper .ag-root-wrapper-body .ag-body-viewport,
-  .cmp-renewals-details .ag-theme-alpine .ag-root-wrapper .ag-root-wrapper-body .ag-body-viewport {
-    min-height: 300px;
-  }
-
-  .cmp-renewals-details .cmp-renewal-search-error {
-    img {
-      width: 151px;
-      margin-bottom: 5px;
-    }
-    .cmp-renewal-search-error__title {
-      font-size: 20px;
-      line-height: 26px;
-      color: #262626;
-      font-weight: 500;
-    }
-
-    .cmp-renewal-search-error__description {
+    p {
       font-size: 16px;
       line-height: 24px;
-      color: #262626;
+      color: $brand-charcoal;
+      margin: 0;
+      display: flex;
+      gap: 15px;
+      flex: 0 0 80%;
     }
+
+    button {
+      text-decoration: none;
+      font-size: 16px;
+      line-height: 24px;
+      color: $brand-cobalt;
+      margin-right: 20px;
+    }
+  }
+  .renewal-feedback-banner {
+    padding: 20px;
+    background-color: $light-blue;
+    border-left: 4px solid $brand-cobalt;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 15px;
+
+    &.orange-banner {
+      background-color: $banner-orange;
+      border-left: 4px solid $border-orange;
+    }
+
+    &.blue-banner {
+      background-color: $light-blue;
+      border-color: $brand-cobalt;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      color: $brand-charcoal;
+      margin: 0;
+      display: flex;
+      gap: 15px;
+      flex: 0 0 80%;
+    }
+
+    button {
+      text-decoration: none;
+      font-size: 16px;
+      line-height: 24px;
+      color: $brand-cobalt;
+      margin-right: 20px;
+    }
+  }
 }
 
-.cmp-renewals-details__tds .cmp-renewals-qp__config-grid .export-container .opportunity-quote-disabled button {
+.cmp-renewals-details
+  .ag-theme-alpine
+  .ag-root-wrapper
+  .ag-root-wrapper-body
+  .ag-body-viewport,
+.cmp-renewals-details
+  .ag-theme-alpine
+  .ag-root-wrapper
+  .ag-root-wrapper-body
+  .ag-body-viewport {
+  min-height: 300px;
+}
+
+.cmp-renewals-details .cmp-renewal-search-error {
+  img {
+    width: 151px;
+    margin-bottom: 5px;
+  }
+  .cmp-renewal-search-error__title {
+    font-size: 20px;
+    line-height: 26px;
+    color: #262626;
+    font-weight: 500;
+  }
+
+  .cmp-renewal-search-error__description {
+    font-size: 16px;
+    line-height: 24px;
+    color: #262626;
+  }
+}
+
+.cmp-renewals-details__tds
+  .cmp-renewals-qp__config-grid
+  .export-container
+  .opportunity-quote-disabled
+  button {
   pointer-events: none;
   svg {
     path {

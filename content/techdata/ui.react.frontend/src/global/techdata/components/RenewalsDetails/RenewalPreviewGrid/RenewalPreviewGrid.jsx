@@ -1,6 +1,13 @@
-import React, { useState, useEffect, useRef, useMemo, useImperativeHandle, forwardRef } from "react";
-import {Button} from "@mui/material";
-import { teal } from "@mui/material/colors";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
+import { Button } from '@mui/material';
+import { teal } from '@mui/material/colors';
 import sanitizeHtml from 'sanitize-html';
 import PlaceOrderDialog from '../../RenewalsGrid/Orders/PlaceOrderDialog';
 import PlaceAdobeOrderDialog from '../../RenewalsGrid/Orders/PlaceAdobeOrderDialog';
@@ -34,17 +41,26 @@ import {
 import useComputeBranding from '../../../hooks/useComputeBranding';
 import { getDictionaryValue } from '../../../../../utils/utils';
 
-function GridSubTotal({ subtotal, data, gridProps, compProps }) {
+function GridSubTotal({ subtotal, data, gridProps, compProps, adobeVendor }) {
   const isRequestQuoteFlag =
     data?.canRequestQuote && compProps?.enableRequestQuote;
   return (
     <div className="cmp-renewal-preview__subtotal">
-      <div
-        className="cmp-renewal-preview__subtotal--note"
-        dangerouslySetInnerHTML={{
-          __html: sanitizeHtml(gridProps?.note),
-        }}
-      ></div>
+      {adobeVendor ? (
+        <div className="cmp-renewal-preview__subtotal--note">
+          Please note that pricing is subject to change and is only valid in the
+          same calendar month that this quote has been supplied. The vendor
+          retains rights to implement pricing changes at the start of each
+          month.
+        </div>
+      ) : (
+        <div
+          className="cmp-renewal-preview__subtotal--note"
+          dangerouslySetInnerHTML={{
+            __html: sanitizeHtml(gridProps?.note),
+          }}
+        ></div>
+      )}
       <div className="cmp-renewal-preview__subtotal--price-note">
         <b className="cmp-renewal-preview__subtotal--description">
           {getDictionaryValue(
@@ -596,6 +612,7 @@ function RenewalPreviewGrid(
               gridProps={gridProps}
               subtotal={subtotal}
               compProps={compProps}
+              adobeVendor={adobeVendor}
             />
             <div className="place-cmp-order-dialog-container">
               <p className="cmp-place-order-actions">
@@ -663,4 +680,3 @@ function RenewalPreviewGrid(
 }
 
 export default forwardRef(RenewalPreviewGrid);
-
