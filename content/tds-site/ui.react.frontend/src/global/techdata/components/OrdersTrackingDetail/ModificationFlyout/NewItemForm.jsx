@@ -174,7 +174,9 @@ const NewItemForm = ({
             }}
             onChange={(event) => {
               const newValue = event.target.value.replace('*', '').trim();
-              debouncedAutocomplete(event.target.value.replace(/[*^]/g, ''));
+              debouncedAutocomplete(
+                event.target.value.replace(/[*^]/g, '').trim()
+              );
               setValue(newValue);
             }}
           />
