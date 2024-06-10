@@ -373,15 +373,16 @@ use(["../common/utils.js"], function (utils) {
     }
 
     // No Access Screen
-    if (properties["noAccessTitle"]) {
-      noAccessProps.noAccessTitle = properties["noAccessTitle"];
-    }
-    if (properties["noAccessMessage"]) {
-      noAccessProps.noAccessMessage = properties["noAccessMessage"];
-    }
-    if (properties["noAccessBack"]) {
-      noAccessProps.noAccessBack = properties["noAccessBack"];
-    }
+    const noAccessLabelList = [
+      "noAccessTitle",
+      "noAccessMessage",
+      "noAccessBack",
+      "noAccessLink",
+    ];
+    noAccessLabelList.map((label) => {
+      noAccessProps[label] = properties[label];
+    });
+
     if (noAccessProps != null) {
       jsonObject["noAccessProps"] = noAccessProps;
     }

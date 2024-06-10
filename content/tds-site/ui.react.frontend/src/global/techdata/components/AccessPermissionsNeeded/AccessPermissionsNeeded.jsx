@@ -3,7 +3,8 @@ import { AccessPermisionsNeededIcon } from './../../../../fluentIcons/FluentIcon
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 const AccessPermissionsNeeded = ({ noAccessProps }) => {
-  const { noAccessTitle, noAccessMessage, noAccessBack } = noAccessProps;
+  const { noAccessTitle, noAccessMessage, noAccessBack, noAccessLink } =
+    noAccessProps;
   return (
     <div className="access-permissions__wrapper">
       <AccessPermisionsNeededIcon />
@@ -15,7 +16,7 @@ const AccessPermissionsNeeded = ({ noAccessProps }) => {
           {getDictionaryValueOrKey(noAccessMessage)}
         </p>
         <p className="access-permissions__link">
-          <a href="https://intouch.staging.tdsynnex.eu/InTouch/MVC/MicroSite/Private?corpregionid=14&categorypageid=10612&msmenuid=11579">
+          <a href={getDictionaryValueOrKey(noAccessLink)}>
             {getDictionaryValueOrKey(noAccessBack)}
           </a>
         </p>

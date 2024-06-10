@@ -1189,21 +1189,26 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <title
+                                            <noAccessTitle
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="No Access Title"
                                                 name="./noAccessTitle" />
-                                            <message
+                                            <noAccessMessage
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="No Access Message"
                                                 name="./noAccessMessage" />
-                                            <back
+                                            <noAccessBack
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="No Access Back"
                                                 name="./noAccessBack" />
+                                            <noAccessLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="No Access Link"
+                                                name="./noAccessLink" />
                                         </items>
                                     </column>
                                 </items>
