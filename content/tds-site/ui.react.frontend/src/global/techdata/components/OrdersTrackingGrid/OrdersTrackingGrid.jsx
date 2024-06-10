@@ -79,7 +79,7 @@ const translationDictionaries = [
   'OrderTracking.MainGrid.Filters',
   'OrderTracking.MainGrid.Reports',
   'OrderTracking.MainGrid.Search',
-  'OrderTracking.MainGrid.ExportFlyout',
+  'OrderTracking.MainGrid.Export',
   'OrderTracking.MainGrid.OrderModify',
   'OrderTracking.MainGrid.SettingsFlyout',
   'OrderTracking.MainGrid.InvoicesFlyout',
@@ -430,7 +430,7 @@ function OrdersTrackingGrid(props) {
       // TODO: cacheInSec - cache value should be configurable? or hardcoded 3600?
       `${componentProp.uiLocalizeServiceDomain}/v1` +
         buildQueryString(translationDictionaries) +
-        `&cacheInSec=300`
+        `&cacheInSec=900`
     );
     return results.data;
   };
@@ -571,15 +571,19 @@ function OrdersTrackingGrid(props) {
           searchLabels={searchLabels}
           searchOptionsList={searchOptionsList}
           reportPillLabel={reportPillLabel}
-          setDateRange={setDateRange}
           analyticsCategories={analyticsCategories}
           paginationLabels={paginationLabels}
           customPaginationRef={customPaginationRef}
           isLoading={isLoading}
-          searchCriteria={searchCriteria}
+          searchParams={{
+            reports: reportFilterValue,
+            sort: hasSortChanged,
+            search: searchCriteria,
+            filtersRefs: filtersRefs
+          }}
+          setDateRange={setDateRange}
           gridConfig={gridConfig}
           reportFilterValue={reportFilterValue}
-          filtersRefs={filtersRefs}
           settings={settingsResponse}
         />
         <BaseGrid

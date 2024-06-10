@@ -27,6 +27,7 @@ import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAle
 import XMLMessageModal from '../OrdersTrackingGrid/Modals/XMLMessageModal';
 import MigrationInfoBox from '../MigrationInfoBox/MigrationInfoBox';
 import { ArrowLeftIcon } from '../../../../fluentIcons/FluentIcons';
+import { handleDownloadExcelExport } from './utils/orderTrackingExportUtils';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -53,9 +54,13 @@ const OrderTrackingDetailHeader = ({
   );
   const translations = useOrderTrackingStore((state) => state.uiTranslations);
   const detailsTranslations = translations?.['OrderTracking.Details'];
-  const { setCustomState, setFeatureFlags, setExportFlyoutSource } = effects;
+  const { setCustomState, setFeatureFlags } = effects;
   const orderEditable = content?.orderEditable === true;
   const infoBoxEnable = content?.sapOrderMigration?.referenceType?.length > 0;
+  const uiTranslations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+  const exportTranslations = uiTranslations?.['OrderTracking.MainGrid.Export'];
 
   const handleActionMouseOver = () => {
     setActionsDropdownVisible(true);
@@ -148,12 +153,8 @@ const OrderTrackingDetailHeader = ({
     );
   };
 
-  const triggerExportFlyout = () => {
-    setCustomState({
-      key: 'exportFlyout',
-      value: { data: config.exportFlyout, show: true, id },
-    });
-    setExportFlyoutSource('Details');
+  const triggerExport = () => {
+    handleDownloadExcelExport({ translations: exportTranslations, config, effects });
   };
 
   const triggerXMLMessage = async () => {
@@ -208,7 +209,7 @@ const OrderTrackingDetailHeader = ({
     {
       condition: areSerialNumbersAvailable,
       label: labels?.exportSerialNumbers,
-      onClick: triggerExportFlyout,
+      onClick: triggerExport,
     },
   ];
 

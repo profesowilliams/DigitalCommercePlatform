@@ -16,7 +16,6 @@ use(["../../../common/utils.js"], function (utils) {
   const returnFlyout = {};
   const dNotesFlyout = {};
   const invoicesFlyout = {};
-  const exportFlyout = {};
   const productReplacementFlyout = {};
   const statusesLabels = {};
 
@@ -28,6 +27,9 @@ use(["../../../common/utils.js"], function (utils) {
     jsonObject["uiServiceEndPoint"] =
       this.uiServiceDomain + this.serviceData.orderDetailGridEndpoint;
   }
+
+  jsonObject["uiLocalizeServiceDomain"] = this.uiServiceDomain + `/ui-localize`;
+
   if (properties && properties["ordersUrl"]) {
     jsonObject["ordersUrl"] = properties["ordersUrl"];
   }
@@ -373,24 +375,6 @@ use(["../../../common/utils.js"], function (utils) {
 
   if (exportSecondaryOptionsList != null) {
     jsonObject["exportSecondaryOptionsList"] = exportSecondaryOptionsList;
-  }
-
-  const exportFlyoutLabels = [
-    { key: "title", name: "exportFlyoutTitle" },
-    { key: "description", name: "exportFlyoutDescription" },
-    { key: "secondaryDescription", name: "exportFlyoutSecondaryDescription" },
-    { key: "button", name: "exportFlyoutButton" },
-    { key: "exportSuccessMessage", name: "exportSuccessMessage" },
-    { key: "exportFailedMessage", name: "exportFailedMessage" },
-  ];
-
-  properties &&
-    exportFlyoutLabels.map((label) => {
-      exportFlyout[label.key] = properties[label.name];
-    });
-
-  if (exportFlyout != null) {
-    jsonObject["exportFlyout"] = exportFlyout;
   }
 
   jsonObject["orderDetailEndpoint"] =

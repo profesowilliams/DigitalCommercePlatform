@@ -2,7 +2,6 @@ import React from 'react';
 import TrackingFlyout from './TrackingFlyout/TrackingFlyout';
 import ReturnFlyout from './ReturnFlyout/ReturnFlyout';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
-import ExportFlyout from '../ExportFlyout/ExportFlyout';
 import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import OrderModificationFlyout from './ModificationFlyout/OrderModificationFlyout';
@@ -67,16 +66,6 @@ const Flyouts = ({
         content={content}
         setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
         isTDSynnex={isTDSynnex}
-      />
-      <ExportFlyout
-        componentProp={config}
-        exportFlyout={config?.exportFlyout}
-        exportOptionsList={config?.exportOptionsList}
-        exportSecondaryOptionsList={config?.exportSecondaryOptionsList}
-        subheaderReference={document.querySelector('.subheader > div > div')}
-        isTDSynnex={isTDSynnex}
-        exportAnalyticsLabel={''}
-        searchParams={null}
       />
       <ProductReplacementFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}

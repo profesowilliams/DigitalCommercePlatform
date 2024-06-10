@@ -1,6 +1,5 @@
 import React from 'react';
 import DNotesFlyout from '../../DNotesFlyout/DNotesFlyout';
-import ExportFlyout from '../../ExportFlyout/ExportFlyout';
 import InvoicesFlyout from '../../InvoicesFlyout/InvoicesFlyout';
 import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
 import OrderModificationFlyout from '../../OrdersTrackingDetail/ModificationFlyout/OrderModificationFlyout';
@@ -55,17 +54,6 @@ const MainGridFlyouts = ({
         openFilePdf={(flyoutType, orderId, selectedId) =>
           openFilePdf(flyoutType, orderId, selectedId)
         }
-      />
-      <ExportFlyout
-        store={useOrderTrackingStore}
-        componentProp={gridConfig}
-        exportFlyout={gridConfig.exportFlyout}
-        exportOptionsList={gridConfig.exportOptionsList}
-        exportSecondaryOptionsList={gridConfig.exportSecondaryOptionsList}
-        subheaderReference={document.querySelector('.subheader > div > div')}
-        isTDSynnex={isTDSynnex}
-        exportAnalyticsLabel={analyticsCategories.export}
-        searchParams={searchParams}
       />
       <OrderFilterFlyout
         onQueryChanged={onQueryChanged}

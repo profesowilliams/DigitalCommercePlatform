@@ -17,8 +17,12 @@ import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTracking
 import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import { endpoints } from '../OrdersTrackingGrid/utils/orderTrackingUtils';
+import { buildQueryString } from '../OrdersTrackingGrid/utils/gridUtils';
 
-const translationDictionaries = ['OrderTracking.Details'];
+const translationDictionaries = [
+  'OrderTracking.Details',
+  'OrderTracking.MainGrid.Export'
+];
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
@@ -164,7 +168,7 @@ function OrdersTrackingDetail(props) {
     const results = await usGet(
       `${componentProps.uiLocalizeServiceDomain}/v1` +
         buildQueryString(translationDictionaries) +
-        `&cacheInSec=300`
+        `&cacheInSec=900`
     );
     return results.data;
   };

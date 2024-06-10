@@ -32,10 +32,9 @@ function MainGridHeader({
   paginationLabels,
   customPaginationRef,
   isLoading,
-  searchCriteria,
+  searchParams,
   gridConfig,
   reportFilterValue,
-  filtersRefs,
   settings,
 }) {
   const { setCustomState, setClearFilters } = useOrderTrackingStore(
@@ -103,7 +102,7 @@ function MainGridHeader({
   ];
 
   const clearFilters = () => {
-    filtersRefs.current = {};
+    searchParams.filtersRefs.current = {};
 
     setClearFilters();
     onQueryChanged({ onSearchAction: true });
@@ -130,8 +129,8 @@ function MainGridHeader({
       value: '',
     });
     removeLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY);
-    searchCriteria.current = { field: '', value: '' };
-    filtersRefs.current = {};
+    searchParams.search.current = { field: '', value: '' };
+    searchParams.filtersRefs.current = {};
     setPill({ key: option.key, label: option.label });
     removeDefaultDateRange();
     onQueryChanged({ onSearchAction: true });
@@ -185,10 +184,10 @@ function MainGridHeader({
           <Search
             options={searchOptions}
             onQueryChanged={onSearchChange}
-            ref={searchCriteria}
+            ref={searchParams.search}
             clearReports={clearReports}
             gridConfig={gridConfig}
-            filtersRefs={filtersRefs}
+            filtersRefs={searchParams.filtersRefs}
             searchAnalyticsLabel={analyticsCategories.search}
           />,
         ]
@@ -196,7 +195,7 @@ function MainGridHeader({
           <OrderSearch
             options={searchOptions}
             onQueryChanged={onSearchChange}
-            ref={searchCriteria}
+            ref={searchParams.search}
             hideLabel={true}
             gridConfig={gridConfig}
             searchAnalyticsLabel={analyticsCategories.search}
@@ -225,7 +224,11 @@ function MainGridHeader({
           <VerticalSeparator />,
         ]
       : []),
-    <OrderExport gridConfig={gridConfig} />,
+    <OrderExport
+      gridConfig={gridConfig}
+      searchParams={searchParams}
+      exportAnalyticsLabel={analyticsCategories.export}
+    />,
   ];
   const leftComponents = [
     <OrderTrackingGridPagination

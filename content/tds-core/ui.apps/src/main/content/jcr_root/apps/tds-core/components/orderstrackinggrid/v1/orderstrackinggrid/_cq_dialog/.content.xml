@@ -863,24 +863,6 @@
                                     </column>
                                 </items>
                             </search>
-                            <exportFlyout
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Export Flyout"
-                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
-                                margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <exportFlyout
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/include"
-                                                path="tds-core/components/orderstrackinggrid/v1/orderstrackinggrid/export-flyout"/>
-                                        </items>
-                                    </column>
-                                </items>
-                            </exportFlyout>
                             <orderModify
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Order Modify"

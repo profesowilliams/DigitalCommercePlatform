@@ -16,7 +16,6 @@ use(["../common/utils.js"], function (utils) {
   const orderModifyLabels = {};
   const settingsFlyoutLabels = {};
   const invoicesFlyout = {};
-  const exportFlyout = {};
   const orderLineDetails = {};
   const noAccessProps = {};
   const analyticsCategories = {};
@@ -120,24 +119,6 @@ use(["../common/utils.js"], function (utils) {
 
     if (exportSecondaryOptionsList != null) {
       jsonObject["exportSecondaryOptionsList"] = exportSecondaryOptionsList;
-    }
-
-    const exportFlyoutLabels = [
-      { key: "title", name: "exportFlyoutTitle" },
-      { key: "descriptionMessage", name: "exportFlyoutDescriptionMessage" },
-      { key: "description", name: "exportFlyoutDescription" },
-      { key: "secondaryDescription", name: "exportFlyoutSecondaryDescription" },
-      { key: "button", name: "exportFlyoutButton" },
-      { key: "exportSuccessMessage", name: "exportSuccessMessage" },
-      { key: "exportFailedMessage", name: "exportFailedMessage" },
-    ];
-
-    exportFlyoutLabels.map((label) => {
-      exportFlyout[label.key] = properties[label.name];
-    });
-
-    if (exportFlyout != null) {
-      jsonObject["exportFlyout"] = exportFlyout;
     }
 
     // Order Details Tab
