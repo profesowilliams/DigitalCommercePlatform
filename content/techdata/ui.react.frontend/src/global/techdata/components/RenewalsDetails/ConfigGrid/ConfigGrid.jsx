@@ -387,8 +387,8 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
     }
   });
 
-  const errorCriticality = data.feedBackMessages[0].errorCriticality;
-  const errorMessage = data.feedBackMessages[0].message;
+  const errorCriticality = data.feedBackMessages[0]?.errorCriticality;
+  const errorMessage = data.feedBackMessages[0]?.message;
   const blueBanner = errorCriticality === 3;
   const orangeBanner = errorCriticality === 2;
   const redBanner = errorCriticality === 1;
