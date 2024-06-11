@@ -14,10 +14,10 @@ function ShipToColumn({ data, shipToTooltipTemplate }) {
     state,
     zip,
     country,
+    housenumber,
   } = address || {};
-
   const shipToTooltipTemplateDefault =
-    '{name}<br/>{address.line1}<br/>{address.line2}<br/>{address.line3}<br/>{address.lineName3}<br/>{address.lineName4}<br/>{address.city} {address.state} {address.zip} {address.country}';
+    '{name}<br/>{address.line1}<br/>{address.line2} {address.housenumber}<br/>{address.line3}<br/>{address.lineName3}<br/>{address.lineName4}<br/>{address.city} {address.state} {address.zip} {address.country}';
   const template = getDictionaryValue(
     shipToTooltipTemplate,
     shipToTooltipTemplateDefault
@@ -33,6 +33,7 @@ function ShipToColumn({ data, shipToTooltipTemplate }) {
     '{address.state}': state,
     '{address.zip}': zip,
     '{address.country}': country,
+    '{address.housenumber}': housenumber,
   };
   const renderTemplate = (aemTemplate) => {
     let replacedTemplate = aemTemplate;

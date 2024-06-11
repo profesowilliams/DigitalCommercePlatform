@@ -6131,6 +6131,7 @@ app.get("/ui-commerce/v3/orders", (req, res) => {
               state: "HA",
               zip: "RG24 8YB",
               country: "GB",
+              housenumber: "7Z",
             },
             contact: {
               phone: "01256 788 000",
@@ -6146,6 +6147,7 @@ app.get("/ui-commerce/v3/orders", (req, res) => {
               state: "HA",
               zip: "RG24 8YB",
               country: "GB",
+              housenumber: "4A",
             },
             contact: {
               name: "Ballinger, Dawn",
@@ -6195,6 +6197,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
         country: "GB",
         phoneNumber: "01256 847777",
         email: "johndoe@gmail.com",
+        housenumber: "123G",
       },
       reseller: {
         id: "325009",
@@ -6207,6 +6210,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
         zip: "RG24 8YB",
         country: "GB",
         phoneNumber: "01256 788 000",
+        housenumber: "6D",
       },
       created: "01-10-2024",
       createdFormatted: "10/01/2024",
@@ -6992,6 +6996,7 @@ app.get("/ui-commerce/v3/OrderReport", function (req, res) {
               state: "HA",
               zip: "RG24 8YB",
               country: "GB",
+              housenumber: "7Z",
             },
             contact: {
               phone: "01256 788 000",
@@ -7007,6 +7012,7 @@ app.get("/ui-commerce/v3/OrderReport", function (req, res) {
               state: "HA",
               zip: "RG24 8YB",
               country: "GB",
+              housenumber: "7Z",
             },
             contact: {
               name: "Aggarwal, Megha",

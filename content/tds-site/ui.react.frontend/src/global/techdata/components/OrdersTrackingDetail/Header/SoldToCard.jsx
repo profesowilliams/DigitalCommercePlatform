@@ -19,9 +19,10 @@ function SoldToCard({ shipTo = {}, config }) {
     country,
     phoneNumber,
     email,
+    housenumber,
   } = shipTo;
   const shipToTemplateDefault =
-    '{companyName}<br/>{line1}<br/>{line2}<br/>{line3}<br/>{lineName3}<br/>{lineName4}<br/>{city} {state} {zip} {country}<br/>{phoneNumber}<br/>{email}';
+    '{companyName}<br/>{line1}<br/>{line2} {housenumber}<br/>{line3}<br/>{lineName3}<br/>{lineName4}<br/>{city} {state} {zip} {country}<br/>{phoneNumber}<br/>{email}';
   const template = getDictionaryValue(
     config?.soldToLabels?.shipToTemplate,
     shipToTemplateDefault
@@ -39,6 +40,7 @@ function SoldToCard({ shipTo = {}, config }) {
     '{country}': country,
     '{phoneNumber}': phoneNumber,
     '{email}': email,
+    '{housenumber}': housenumber,
   };
   const renderElement = (el, idx) => {
     if (el === phoneNumber || el === email) {
