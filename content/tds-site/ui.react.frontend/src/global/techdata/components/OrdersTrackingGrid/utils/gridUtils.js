@@ -99,6 +99,13 @@ export function buildQueryString(elements) {
   return queryString;
 }
 
+export const addCurrencyToTotalColumn = (list, userData) => {
+  return list.map((column) => {
+    column.columnLabel = getDictionaryValueOrKey(column.columnLabel);
+    return column;
+  });
+};
+
 export const getPaginationValue = (
   response,
   ordersCountResponse,

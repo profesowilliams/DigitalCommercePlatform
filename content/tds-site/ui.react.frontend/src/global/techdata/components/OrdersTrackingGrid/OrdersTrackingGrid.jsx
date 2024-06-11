@@ -40,6 +40,7 @@ import {
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import MainGridHeader from './MainGrid/MainGridHeader';
 import {
+  addCurrencyToTotalColumn,
   getPaginationValue,
   setLocalStorageData,
   updateQueryString,
@@ -587,7 +588,10 @@ function OrdersTrackingGrid(props) {
           settings={settingsResponse}
         />
         <BaseGrid
-          columnList={componentProp.columnList}
+          columnList={addCurrencyToTotalColumn(
+            componentProp.columnList,
+            userData
+          )}
           definitions={ordersTrackingDefinition(
             componentProp,
             openFilePdf,
