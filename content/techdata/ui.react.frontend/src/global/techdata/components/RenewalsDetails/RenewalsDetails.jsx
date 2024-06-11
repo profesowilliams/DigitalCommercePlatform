@@ -241,7 +241,7 @@ function RenewalsDetails(props) {
 
   const isEditable = ({ canEditLines }) => canEditLines && !saving;
   return (
-    <div className={componentProp.productLines.enableActiveLicence === 'true' ?
+    <div className={componentProp.productLines.enableActiveLicence === 'true' && renewalsDetails?.quoteType == 'AutoRenew' ?
         "cmp-quote-preview cmp-renewal-preview cmp-renewal-preview-active" : "cmp-quote-preview cmp-renewal-preview"} ref={renewalsRef}>
       {authenticated && renewalsDetails ? (
         <section>
@@ -254,7 +254,7 @@ function RenewalsDetails(props) {
             }}
           />
           {
-            componentProp?.productLines?.enableActiveLicence === 'true' ? (
+            componentProp?.productLines?.enableActiveLicence === 'true' && renewalsDetails?.quoteType == 'AutoRenew' ? (
                 <>
                     <Accordion defaultExpanded>
                       <AccordionSummary>
