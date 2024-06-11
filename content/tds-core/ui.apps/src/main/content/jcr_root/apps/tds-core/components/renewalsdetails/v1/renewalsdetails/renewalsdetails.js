@@ -29,6 +29,10 @@ use(['../../../common/utils.js'], function(utils) {
         productLines["lineActiveLicenceLabel"] = properties["lineActiveLicenceLabel"];
     }
 
+     if (properties && properties["lineRenewalDetailsLabel"]) {
+            productLines["lineRenewalDetailsLabel"] = properties["lineRenewalDetailsLabel"];
+        }
+
     if (properties && properties["downloadPDFLabel"]) {
         productLines["downloadPDFLabel"] = properties["downloadPDFLabel"];
     }

@@ -241,7 +241,7 @@ function RenewalsDetails(props) {
 
   const isEditable = ({ canEditLines }) => canEditLines && !saving;
   return (
-    <div className={componentProp.productLines.enableActiveLicence === 'true' && renewalsDetails?.quoteType == 'AutoRenew' ?
+    <div className={componentProp.productLines.enableActiveLicence === 'true' && renewalsDetails?.itemsActive?.length > 0 ?
         "cmp-quote-preview cmp-renewal-preview cmp-renewal-preview-active" : "cmp-quote-preview cmp-renewal-preview"} ref={renewalsRef}>
       {authenticated && renewalsDetails ? (
         <section>
@@ -254,7 +254,7 @@ function RenewalsDetails(props) {
             }}
           />
           {
-            componentProp?.productLines?.enableActiveLicence === 'true' && renewalsDetails?.quoteType == 'AutoRenew' ? (
+            componentProp?.productLines?.enableActiveLicence === 'true' && renewalsDetails?.itemsActive?.length > 0 ? (
                 <>
                     <Accordion defaultExpanded>
                       <AccordionSummary>
@@ -281,7 +281,7 @@ function RenewalsDetails(props) {
                      <Accordion defaultExpanded>
                         <AccordionSummary>
                             <div className="details-container">
-                              <span className="details-preview">{componentProp?.productLines?.lineItemDetailsLabel || "Details"}<span className="details-price-level">{renewalsDetails.renewalLevel}</span></span>
+                              <span className="details-preview">{componentProp?.productLines?.lineRenewalDetailsLabel || "Details"}<span className="details-price-level">{renewalsDetails.renewalLevel}</span></span>
                               {isEditable(renewalsDetails) && (
                               <EditFlow
                                 disabled={!editMode && isEditingDetails}
