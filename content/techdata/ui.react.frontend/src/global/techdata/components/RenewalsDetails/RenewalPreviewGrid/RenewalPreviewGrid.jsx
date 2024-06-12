@@ -41,31 +41,17 @@ import {
 import useComputeBranding from '../../../hooks/useComputeBranding';
 import { getDictionaryValue } from '../../../../../utils/utils';
 
-function GridSubTotal({
-  subtotal,
-  data,
-  gridProps,
-  compProps,
-  adobeVendor,
-  migrationQuoteType,
-}) {
+function GridSubTotal({ subtotal, data, gridProps, compProps, adobeVendor }) {
   const isRequestQuoteFlag =
     data?.canRequestQuote && compProps?.enableRequestQuote;
   return (
     <div className="cmp-renewal-preview__subtotal">
-      {migrationQuoteType ? (
+      {adobeVendor ? (
         <div className="cmp-renewal-preview__subtotal--note">
-          {getDictionaryValue(
-            'details.renewal.label.migrationNote',
-            'Note: Pricing displayed is subject to vendor price changes and exchange rate fluctuations. Adobe: price displayed in migration quotes is for reference purpose only. VIP and VIP MP Renewals pricing will differ.'
-          )}
-        </div>
-      ) : adobeVendor ? (
-        <div className="cmp-renewal-preview__subtotal--note">
-          {getDictionaryValue(
-            'details.renewal.label.adobeNote',
-            'Please note that pricing is subject to change and is only valid in the same calendar month that this quote has been supplied. The vendor retains rights to implement pricing changes at the start of each month.'
-          )}
+          Please note that pricing is subject to change and is only valid in the
+          same calendar month that this quote has been supplied. The vendor
+          retains rights to implement pricing changes at the start of each
+          month.
         </div>
       ) : (
         <div
@@ -118,15 +104,7 @@ function Price({ value }, data, compProps) {
 }
 
 function RenewalPreviewGrid(
-  {
-    data,
-    gridProps,
-    shopDomainPage,
-    isEditing,
-    compProps,
-    isActiveLicense,
-    migrationQuoteType,
-  },
+  { data, gridProps, shopDomainPage, isEditing, compProps ,isActiveLicense},
   ref
 ) {
   const [modal, setModal] = useState(null);
@@ -252,11 +230,11 @@ function RenewalPreviewGrid(
   const contractMap = new Map();
   let sortedGridData = gridData;
   if (gridData?.contract?.id) {
-    sortedGridData = gridData.sort((a, b) => {
+      sortedGridData = gridData.sort((a, b) => {
       const contractIdA = a.contract.id;
       const contractIdB = b.contract.id;
       return contractIdA - contractIdB;
-    });
+  });
   }
   JSON.parse(JSON.stringify(sortedGridData))?.forEach((item) => {
     const contractId = item?.contract?.id;
@@ -472,20 +450,21 @@ function RenewalPreviewGrid(
     },
     {
       field: 'mfrNumber',
-      headerName: isActiveLicense ? '' : gridProps?.vendorPartNo,
+      headerName: isActiveLicense ? "" : gridProps?.vendorPartNo,
       cellRenderer: (props) =>
-        !props?.data?.id?.includes('Agreement') && !isActiveLicense
+        !props?.data?.id?.includes('Agreement')  && !isActiveLicense
           ? RenewalManufacturer(props)
           : '',
       width: gridColumnWidths.vendorPartNo,
     },
     {
       field: 'unitListPrice',
-      headerName: isActiveLicense
-        ? ''
-        : gridProps.listPrice?.replace('{currency-code}', data?.currency || ''),
+      headerName:  isActiveLicense ? "" : gridProps.listPrice?.replace(
+        '{currency-code}',
+        data?.currency || ''
+      ),
       cellRenderer: (props) => {
-        return !props?.data?.id?.includes('Agreement') && !isActiveLicense
+        return !props?.data?.id?.includes('Agreement')  && !isActiveLicense
           ? Price(props, data, compProps)
           : '';
       },
@@ -493,7 +472,7 @@ function RenewalPreviewGrid(
     },
     {
       field: 'value',
-      headerName: isActiveLicense ? '' : gridProps?.percentOffListPrice,
+      headerName: isActiveLicense ? "" : gridProps?.percentOffListPrice,
       valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
       cellRenderer: (props) =>
         !props?.data?.id?.includes('Agreement') && !isActiveLicense
@@ -503,13 +482,14 @@ function RenewalPreviewGrid(
     },
     {
       field: 'unitPrice',
-      headerName: isActiveLicense
-        ? ''
-        : gridProps.unitPrice?.replace('{currency-code}', data?.currency || ''),
+      headerName: isActiveLicense ? "" : gridProps.unitPrice?.replace(
+        '{currency-code}',
+        data?.currency || ''
+      ),
       suppressKeyboardEvent: (params) => suppressNavigation(params),
       cellRenderer: (props) => {
         const isEditing = isEditingRef.current && data?.canEditResellerPrice;
-        return !props?.data?.id?.includes('Agreement') && !isActiveLicense
+        return !props?.data?.id?.includes('Agreement')  && !isActiveLicense
           ? UnitPriceColumn({ ...props, isEditing })
           : '';
       },
@@ -528,14 +508,12 @@ function RenewalPreviewGrid(
     },
     {
       field: 'totalPrice',
-      headerName: isActiveLicense
-        ? ''
-        : gridProps.totalPrice?.replace(
-            '{currency-code}',
-            data?.currency || ''
-          ),
+      headerName: isActiveLicense ? "" : gridProps.totalPrice?.replace(
+        '{currency-code}',
+        data?.currency || ''
+      ),
       cellRenderer: (props) =>
-        !props?.data?.id?.includes('Agreement') && !isActiveLicense
+        !props?.data?.id?.includes('Agreement')  && !isActiveLicense
           ? Price(props, data, compProps)
           : '',
       valueGetter: 'data.quantity * data.unitPrice',
@@ -635,7 +613,6 @@ function RenewalPreviewGrid(
               subtotal={subtotal}
               compProps={compProps}
               adobeVendor={adobeVendor}
-              migrationQuoteType={migrationQuoteType}
             />
             <div className="place-cmp-order-dialog-container">
               <p className="cmp-place-order-actions">
