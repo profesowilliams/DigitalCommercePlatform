@@ -38,16 +38,16 @@ function OrderNoColumn({ id, detailUrl, isInternalUser }) {
     </span>
   );
 
-  return isInternalUser ? (
-    detailUrl && !isJavaScriptProtocol.test(detailUrl) ? (
-      <div className="link-underline-column">
-        <a
-          href={`${location.href.substring(
-            0,
-            location.href.lastIndexOf('.')
-          )}/order-details.html?id=${id}${queryCacheKeyParam}${salesLoginParam}`}
-          onClick={() => getOrderDetailsAnalyticsGoogle(id)}
-        >
+  return detailUrl && !isJavaScriptProtocol.test(detailUrl) ? (
+    <div className="link-underline-column">
+      <a
+        href={`${location.href.substring(
+          0,
+          location.href.lastIndexOf('.')
+        )}/order-details.html?id=${id}${queryCacheKeyParam}${salesLoginParam}`}
+        onClick={() => getOrderDetailsAnalyticsGoogle(id)}
+      >
+        {isInternalUser ? (
           <Tooltip
             title={tooltipMessage}
             placement="top-end"
@@ -61,15 +61,14 @@ function OrderNoColumn({ id, detailUrl, isInternalUser }) {
           >
             <span>{id}</span>
           </Tooltip>
-        </a>
-      </div>
-    ) : (
-      <Tooltip>
-        <span>{id}</span>
-      </Tooltip>
-    )
+        )
+        : (<span>{id}</span>)}
+      </a>
+    </div>
   ) : (
-    <span>{id}</span>
+    <Tooltip>
+      <span>{id}</span>
+    </Tooltip>
   );
 }
 
