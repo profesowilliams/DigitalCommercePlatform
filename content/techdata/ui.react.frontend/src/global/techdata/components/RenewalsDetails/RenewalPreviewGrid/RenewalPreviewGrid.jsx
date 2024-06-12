@@ -450,9 +450,9 @@ function RenewalPreviewGrid(
     },
     {
       field: 'mfrNumber',
-      headerName: isActiveLicense ? "" : gridProps?.vendorPartNo,
+      headerName: gridProps?.vendorPartNo,
       cellRenderer: (props) =>
-        !props?.data?.id?.includes('Agreement')  && !isActiveLicense
+        !props?.data?.id?.includes('Agreement')
           ? RenewalManufacturer(props)
           : '',
       width: gridColumnWidths.vendorPartNo,
