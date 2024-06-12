@@ -6,7 +6,7 @@ import {
   getDictionaryValueOrKey,
   addUrlParam,
 } from '../../../../../utils/utils';
-import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import {
   getTrackAndTraceAnalyticsGoogle,
   pushDataLayerGoogle,

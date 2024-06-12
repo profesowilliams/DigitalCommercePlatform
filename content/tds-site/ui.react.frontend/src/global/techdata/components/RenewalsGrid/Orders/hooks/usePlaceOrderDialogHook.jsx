@@ -18,7 +18,7 @@ import {
   getRowAnalytics,
   ANALYTIC_CONSTANTS,
 } from '../../../Analytics/analytics.js';
-import { useOrderTrackingStore } from '../../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const CustomOrderButton =
   (properties) =>

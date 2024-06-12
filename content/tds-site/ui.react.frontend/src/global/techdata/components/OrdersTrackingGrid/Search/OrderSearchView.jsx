@@ -3,7 +3,7 @@ import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import OrderRenderWithPermissions from './OrderRenderWithPermissions';
 import useComputeBranding from './../../../hooks/useComputeBranding';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const OrderSearchView = ({
   handleMouseLeave,

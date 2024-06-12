@@ -4,7 +4,7 @@ import {
   ChevronDownIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 import { getExpandedLineAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 function SelectColumn({ eventProps, orderId, created }) {
   const [isToggled, setIsToggled] = useState(false);
   const mainGridRowsTotalCounter = useOrderTrackingStore(

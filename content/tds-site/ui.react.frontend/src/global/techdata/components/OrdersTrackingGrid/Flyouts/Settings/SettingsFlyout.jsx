@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import BaseFlyout from '../BaseFlyout/BaseFlyout';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import BaseFlyout from '../../../BaseFlyout/BaseFlyout';
+import { useOrderTrackingStore } from '../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import SettingsContent from './SettingsContent';
-import { useStore } from '../../../../utils/useStore';
-import { usPut } from '../../../../utils/api';
-import { getProActiveMailAnalyticsGoogle, getProActiveNotificationAnalyticsGoogle, getProActiveSettingsActivactionAnalyticsGoogle, getProActiveTypesAnalyticsGoogle, pushDataLayerGoogle } from '../OrdersTrackingGrid/utils/analyticsUtils';
+import { useStore } from '../../../../../../utils/useStore';
+import { usPut } from '../../../../../../utils/api';
+import {
+  getProActiveMailAnalyticsGoogle,
+  getProActiveNotificationAnalyticsGoogle,
+  getProActiveSettingsActivactionAnalyticsGoogle,
+  getProActiveTypesAnalyticsGoogle,
+  pushDataLayerGoogle
+} from '../../../OrdersTrackingGrid/utils/analyticsUtils';
 
 const settingsKeys = [
   'active',
@@ -36,9 +41,15 @@ const SettingsFlyout = ({
   const [data, setData] = useState({});
   const [isSaveEnabled, setIsSaveEnabled] = useState(false);
   const [dataCopy, setDataCopy] = useState({});
+  const uiTranslations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+  const translations = uiTranslations?.['OrderTracking.MainGrid.SettingsFlyout'];
+
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
+
   const pushGoogleDataProactiveMessaging = () => {
     const diff = Object.keys(dataCopy).filter(
       (key) => dataCopy[key] !== data[key]
@@ -95,10 +106,10 @@ const SettingsFlyout = ({
         origin: 'fromUpdate',
         isAutoClose: true,
         isSuccess: true,
-        message: getDictionaryValueOrKey(labels?.settingsSuccessMessage),
+        message: translations?.Message_Success,
         Child: (
           <a onClick={openFlyout}>
-            {getDictionaryValueOrKey(labels?.adjustSettings)}
+            {translations?.Adjust_Settings}
           </a>
         ),
       };
@@ -109,7 +120,7 @@ const SettingsFlyout = ({
         origin: 'fromUpdate',
         isAutoClose: true,
         isSuccess: false,
-        message: getDictionaryValueOrKey(labels?.settingsErrorMessage),
+        message: translations?.Message_Error,
         Child: null,
       };
       effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });
@@ -135,10 +146,10 @@ const SettingsFlyout = ({
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons settings">
       <button className="secondary" onClick={closeFlyout}>
-        {getDictionaryValueOrKey(labels?.cancelSettingsChange)}
+        {translations?.Button_Cancel}
       </button>
       <button disabled={!isSaveEnabled} className="primary" onClick={saveData}>
-        {getDictionaryValueOrKey(labels?.save)}
+        {translations?.Button_Save}
       </button>
     </div>
   );
@@ -168,7 +179,7 @@ const SettingsFlyout = ({
       width="360px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey('Notifications')}
+      titleLabel={translations?.Title}
       disabledButton={true}
       secondaryButton={null}
       isTDSynnex={isTDSynnex}

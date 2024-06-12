@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOrderTrackingStore } from '../../../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import DropdownOrderShippedTabGridDetails from './DropdownOrderShippedTabGridDetails';
 function ShippedTabGridRenderers(props) {
   const detailRender = useOrderTrackingStore(

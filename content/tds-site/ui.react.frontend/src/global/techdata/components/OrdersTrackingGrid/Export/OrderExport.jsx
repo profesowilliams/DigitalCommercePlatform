@@ -4,7 +4,7 @@ import {
   ArrowExitIconFilled,
 } from '../../../../../fluentIcons/FluentIcons';
 import '../../../../../../src/styles/TopIconsBar.scss';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import Tooltip from '@mui/material/Tooltip';
 import Hover from '../../Hover/Hover';
 import {

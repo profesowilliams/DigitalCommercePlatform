@@ -2,7 +2,7 @@ import React from 'react';
 import { ChevronDownIcon } from './../../../../../fluentIcons/FluentIcons';
 import { OrderSearchField } from './OrderSearchFilter';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const OrderSearchEditView = ({
   inputRef,

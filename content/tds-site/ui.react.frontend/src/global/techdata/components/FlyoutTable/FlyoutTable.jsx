@@ -7,8 +7,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
-
 export default function FlyoutTable({
   dataTable,
   selected,
@@ -18,7 +16,9 @@ export default function FlyoutTable({
   handleSelectAllClick,
   headCells,
   checkboxEnabled,
+  translations
 }) {
+
   const rows = dataTable;
   const isSelected = (row) => {
     return selected.indexOf(row.id) !== -1;
@@ -57,7 +57,7 @@ export default function FlyoutTable({
               align={'left'}
               padding={'normal'}
             >
-              {getDictionaryValueOrKey(headCell.label)}
+              {translations?.[headCell.label]}
             </TableCell>
           ))}
         </TableRow>

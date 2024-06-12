@@ -7,7 +7,7 @@ import LineColumn from './Columns/LineColumn';
 import ItemColumn from './Columns/ItemColumn';
 import QuantityAndDeliveryEstimateColumn from './Columns/QuantityAndDeliveryEstimateColumn';
 import PnSkuColumn from './Columns/PnSkuColumn';
-import { useOrderTrackingStore } from '../../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import OrderReleaseModal from '../../Modals/OrderReleaseModal';
 import { usPost } from '../../../../../../utils/api';
 import OrderReleaseAlertModal from '../../Modals/OrderReleaseAlertModal';

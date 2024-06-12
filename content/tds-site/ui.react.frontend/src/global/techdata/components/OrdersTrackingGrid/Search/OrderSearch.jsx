@@ -23,7 +23,7 @@ import OrderSearchCapsule from './OrderSearchCapsule';
 import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import OrderRenderWithPermissions from './OrderRenderWithPermissions';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const getInitialFieldState = () =>
   getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).field || '';

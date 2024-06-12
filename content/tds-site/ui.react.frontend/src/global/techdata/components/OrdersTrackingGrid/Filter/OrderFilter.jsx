@@ -4,7 +4,7 @@ import {
   OptionsIconFilled,
 } from '../../../../../fluentIcons/FluentIcons';
 import '../../../../../../src/styles/TopIconsBar.scss';
-import { useOrderTrackingStore } from './../store/OrderTrackingStore';
+import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import OrderCountClear from './OrderCountClear';
 import Tooltip from '@mui/material/Tooltip';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';

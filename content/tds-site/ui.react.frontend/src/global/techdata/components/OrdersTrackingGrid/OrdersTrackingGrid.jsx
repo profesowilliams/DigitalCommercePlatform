@@ -9,7 +9,7 @@ import {
 import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
-import { useOrderTrackingStore } from './store/OrderTrackingStore';
+import { useOrderTrackingStore } from './../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
@@ -57,12 +57,12 @@ import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 import { getSessionInfo } from '../../../../utils/user/get';
 import { usGet } from '../../../../utils/api';
 import useGet from '../../hooks/useGet';
-
 import { getUrlParams, deleteSearchParam } from '../../../../utils';
 import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getPredefinedSearchOptionsList } from './utils/orderTrackingUtils';
+import { getHeaderInfo } from '../../../../utils/headers/get';
 
 const searchParamsKeys = [
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
@@ -152,7 +152,6 @@ function OrdersTrackingGrid(props) {
 
   const {
     searchOptionsList = [],
-    reportPillLabel,
     filterLabels,
     noAccessProps,
     analyticsCategories,
@@ -430,8 +429,8 @@ function OrdersTrackingGrid(props) {
     const results = await usGet(
       // TODO: cacheInSec - cache value should be configurable? or hardcoded 3600?
       `${componentProp.uiLocalizeServiceDomain}/v1` +
-        buildQueryString(translationDictionaries) +
-        `&cacheInSec=900`
+      buildQueryString(translationDictionaries) +
+      `&cacheInSec=900&country=` + getHeaderInfo().acceptLanguage
     );
     return results.data;
   };
@@ -526,9 +525,7 @@ function OrdersTrackingGrid(props) {
       reportFilterValue.current.value = 'EOLOrders';
       setLocalStorageData(REPORTS_LOCAL_STORAGE_KEY, {
         key: 'EOLOrders',
-        label: getDictionaryValueOrKey(
-          gridConfig?.reportLabels?.eolReportLabel
-        ),
+        label: translations?.EOLOrders,
       });
       setCustomState({
         key: 'showCriteria',
@@ -571,7 +568,6 @@ function OrdersTrackingGrid(props) {
           onQueryChanged={onQueryChanged}
           searchLabels={searchLabels}
           searchOptionsList={searchOptionsList}
-          reportPillLabel={reportPillLabel}
           analyticsCategories={analyticsCategories}
           paginationLabels={paginationLabels}
           customPaginationRef={customPaginationRef}

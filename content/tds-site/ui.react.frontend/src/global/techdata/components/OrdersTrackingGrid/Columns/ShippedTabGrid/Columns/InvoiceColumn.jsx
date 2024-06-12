@@ -1,6 +1,6 @@
 import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../../../utils/utils';
-import { useOrderTrackingStore } from '../../../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 function InvoiceColumn({ line, config, id, openFilePdf, reseller }) {
   const hasMultiple = line?.invoices?.length > 1;

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Checkbox } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import { DeleteElement } from '../../../../fluentIcons/FluentIcons';
+import { DeleteElement } from '../../../../../../fluentIcons/FluentIcons';
 import AdditionalEmailForm from './AdditionalEmailForm';
+import { useOrderTrackingStore } from '../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const styleForm = {
   width: '100%',
@@ -39,6 +39,10 @@ const EmailsForm = ({
   const isFirstOptionDisabled = !(
     newAdditionalEmail && isAdditionalEmailEnabled
   );
+  const uiTranslations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+  const translations = uiTranslations?.['OrderTracking.MainGrid.SettingsFlyout'];
 
   const handleChange = (key, activeFlag, newValue) => {
     if (values.includes(key)) {
@@ -83,7 +87,7 @@ const EmailsForm = ({
         <div>
           {values.length === 0 && (
             <p className="error-message">
-              {getDictionaryValueOrKey(labels?.emailsErrorMessage)}
+              {translations?.Message_EmailError}
             </p>
           )}
         </div>
@@ -115,7 +119,7 @@ const EmailsForm = ({
               onChange={() => handleChange('email', 'emailActive')}
             />
             <p className="default-email">
-              {getDictionaryValueOrKey(labels.defaultEmailAddress)}
+              {translations?.Default_Email_Address}
             </p>
             {isAdditionalEmailEnabled ? additionalSection() : null}
           </>

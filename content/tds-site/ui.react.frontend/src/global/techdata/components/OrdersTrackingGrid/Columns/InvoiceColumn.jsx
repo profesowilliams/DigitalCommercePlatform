@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import {
   getInvoiceViewAnalyticsGoogle,
   pushDataLayerGoogle,

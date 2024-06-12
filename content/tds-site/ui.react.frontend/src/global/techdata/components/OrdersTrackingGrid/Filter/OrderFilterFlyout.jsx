@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import OrderFilterList from './OrderFilterList';
 import OrderFilterTags from './OrderFilterTags';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import {
   getDictionaryValueOrKey,

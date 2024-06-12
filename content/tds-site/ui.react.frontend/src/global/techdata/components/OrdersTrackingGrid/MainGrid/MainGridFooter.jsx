@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import Toaster from '../../Widgets/Toaster';
 import ToolTip from '../../BaseGrid/ToolTip';
 import OrderTrackingGridPagination from '../Pagination/OrderTrackingGridPagination';

@@ -2,7 +2,7 @@ import {
   ORDER_FILTER_LOCAL_STORAGE_KEY,
   TOASTER_LOCAL_STORAGE_KEY,
 } from '../../../../../utils/constants';
-import { setLocalStorageData } from '../utils/gridUtils';
+import { setLocalStorageData } from '../../OrdersTrackingGrid/utils/gridUtils';
 import { getLocalValueOrDefault } from './../../BaseGrid/store/GridStore';
 import { differenceWith, isEqual, isEmpty } from 'lodash';
 import _ from 'lodash/set';

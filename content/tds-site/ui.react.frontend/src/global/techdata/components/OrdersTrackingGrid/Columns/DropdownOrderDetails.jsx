@@ -11,7 +11,7 @@ import NotShippedTabGrid from './NotShippedTabGrid/NotShippedTabGrid';
 import useGet from '../../../hooks/useGet';
 import { LoaderIcon } from '../../../../../fluentIcons/FluentIcons';
 import MigrationInfoBox from '../../MigrationInfoBox/MigrationInfoBox';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 function DropdownOrderDetails({
   data,

@@ -3,7 +3,7 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Counter from '../../Counter/Counter';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 import RejectedReasonDropdown from './RejectedReasonDropdown';
-import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import Tooltip from '@mui/material/Tooltip';
 import { usGet } from '../../../../../utils/api';
 

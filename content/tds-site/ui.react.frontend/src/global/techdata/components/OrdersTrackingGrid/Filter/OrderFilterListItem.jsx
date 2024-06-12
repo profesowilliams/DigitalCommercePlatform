@@ -1,6 +1,6 @@
 import React from 'react';
 import useComputeBranding from './../../../hooks/useComputeBranding';
-import { useOrderTrackingStore } from './../store/OrderTrackingStore';
+import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import OrderCount from './OrderCount';
 import OrderFilterDatePicker from './OrderFilterDatapicker';
 import OrderFilterItems from './OrderFilterItems';

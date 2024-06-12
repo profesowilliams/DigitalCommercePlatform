@@ -3,7 +3,7 @@ import Link from './../Widgets/Link';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import MenuActions from './Header/MenuActions';
 import OrderTrackingDetailTitle from './Header/OrderTrackingDetailTitle';
-import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
 import {
   XMLMessageAnalyticsGoogle,
   getDNoteViewAnalyticsGoogle,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { WarningTriangle } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { getUrlParams } from '../../../../../utils';

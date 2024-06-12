@@ -10,7 +10,7 @@ import ShipDateColumn from '../Columns/ShipDateColumn';
 import TotalColumn from '../Columns/TotalColumn';
 import UnitCostColumn from '../Columns/UnitCostColumn';
 import Toaster from '../../Widgets/Toaster';
-import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import {
   isLocalDevelopment,

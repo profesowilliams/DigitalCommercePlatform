@@ -6,7 +6,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from '../../../../../fluentIcons/FluentIcons';
-import { useOrderTrackingStore } from './../store/OrderTrackingStore';
+import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import OrderFilterDateType from './OrderFilterDateType';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';

@@ -1,6 +1,6 @@
 import React from 'react';
 import OrderFilterListItem from './OrderFilterListItem';
-import { useOrderTrackingStore } from './../store/OrderTrackingStore';
+import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 function OrderFilterList({ filtersRefs, filterLabels, filterDateOptions }) {
   const filterList = useOrderTrackingStore((state) => state.filter.filterList);

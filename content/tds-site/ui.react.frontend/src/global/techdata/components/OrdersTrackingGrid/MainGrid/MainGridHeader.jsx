@@ -9,7 +9,7 @@ import OrderExport from '../Export/OrderExport';
 import Pill from '../../Widgets/Pill';
 import { getPredefinedSearchOptionsList } from '../utils/orderTrackingUtils';
 import OrderTrackingGridPagination from '../Pagination/OrderTrackingGridPagination';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import {
   ORDER_SEARCH_LOCAL_STORAGE_KEY,
   ORDER_FILTER_LOCAL_STORAGE_KEY,
@@ -20,13 +20,11 @@ import {
   removeLocalStorageData,
   getLocalStorageData,
 } from '../utils/gridUtils';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function MainGridHeader({
   onQueryChanged,
   searchLabels,
   searchOptionsList,
-  reportPillLabel,
   setDateRange,
   analyticsCategories,
   paginationLabels,
@@ -50,54 +48,48 @@ function MainGridHeader({
   const [pill, setPill] = useState(
     getLocalStorageData(REPORTS_LOCAL_STORAGE_KEY) || null
   );
+  const uiTranslations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+  const translations = uiTranslations?.['OrderTracking.MainGrid.Reports'];
 
   const searchOptions = [
     ...getPredefinedSearchOptionsList(searchLabels),
     ...searchOptionsList,
   ];
-  const {
-    openOrdersLabel,
-    newBacklogLabel,
-    eolReportLabel,
-    todaysShipmentsDeliveriesLabel,
-    last7DaysOrdersLabel,
-    last30DaysOrdersLabel,
-    last7DaysShipmentsLabel,
-    last30DaysShipmentsLabel,
-  } = gridConfig?.reportLabels;
 
   const reportOptions = [
     {
       key: 'OpenOrders',
-      label: getDictionaryValueOrKey(openOrdersLabel),
+      label: translations?.OpenOrders,
     },
     {
       key: 'NewBacklog',
-      label: getDictionaryValueOrKey(newBacklogLabel),
+      label: translations?.NewBacklog,
     },
     {
       key: 'TodaysShipmentsDeliveries',
-      label: getDictionaryValueOrKey(todaysShipmentsDeliveriesLabel),
+      label: translations?.TodaysShipmentsDeliveries,
     },
     {
       key: 'Last7DaysOrders',
-      label: getDictionaryValueOrKey(last7DaysOrdersLabel),
+      label: translations?.Last7DaysOrders,
     },
     {
       key: 'Last30DaysOrders',
-      label: getDictionaryValueOrKey(last30DaysOrdersLabel),
+      label: translations?.Last30DaysOrders,
     },
     {
       key: 'Last7DaysShipments',
-      label: getDictionaryValueOrKey(last7DaysShipmentsLabel),
+      label: translations?.Last7DaysShipments,
     },
     {
       key: 'Last30DaysShipments',
-      label: getDictionaryValueOrKey(last30DaysShipmentsLabel),
+      label: translations?.Last30DaysShipments,
     },
     {
       key: 'EOLOrders',
-      label: getDictionaryValueOrKey(eolReportLabel),
+      label: translations?.EOLOrders,
     },
   ];
 
@@ -171,7 +163,7 @@ function MainGridHeader({
           <Pill
             children={
               <span className="td-capsule__text">
-                {getDictionaryValueOrKey(reportPillLabel)}: {pill.label}
+                {translations?.PillLabel}: {pill.label}
               </span>
             }
             closeClick={handleDeletePill}
@@ -215,7 +207,6 @@ function MainGridHeader({
       selectedKey={pill?.key}
       reportAnalyticsLabel={analyticsCategories.report}
       reportOptions={reportOptions}
-      gridConfig={gridConfig}
     />,
     <VerticalSeparator />,
     ...(settings && proactiveMessagingFlag

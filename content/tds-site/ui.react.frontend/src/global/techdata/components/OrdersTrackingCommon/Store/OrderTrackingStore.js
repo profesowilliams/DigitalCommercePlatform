@@ -10,7 +10,7 @@ import {
   getLocalValueOrDefault,
 } from '../../BaseGrid/store/GridStore';
 import { orderTrackingEffects } from './OrderTrackingStoreEffects';
-import { getLocalStorageData } from '../utils/gridUtils';
+import { getLocalStorageData } from '../../OrdersTrackingGrid/utils/gridUtils';
 
 const getInitialPredefinedFilters = () => {
   const filtersFromLS = getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getUrlParams } from '../../../../utils';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
 import LineItem from './LineItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';

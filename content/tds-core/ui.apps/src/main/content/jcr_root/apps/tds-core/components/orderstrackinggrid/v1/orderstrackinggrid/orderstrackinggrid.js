@@ -348,30 +348,6 @@ use(["../common/utils.js"], function (utils) {
       jsonObject["dNotesFlyout"] = dNotesFlyout;
     }
 
-    // Reports
-    const reportLabelsList = [
-      "openOrdersLabel",
-      "newBacklogLabel",
-      "eolReportLabel",
-      "todaysShipmentsDeliveriesLabel",
-      "last7DaysOrdersLabel",
-      "last30DaysOrdersLabel",
-      "last7DaysShipmentsLabel",
-      "last30DaysShipmentsLabel",
-    ];
-
-    reportLabelsList.map((label) => {
-      reportLabels[label] = properties[label];
-    });
-
-    if (reportLabels != null) {
-      jsonObject["reportLabels"] = reportLabels;
-    }
-
-    if (properties["reportPillLabel"]) {
-      jsonObject["reportPillLabel"] = properties["reportPillLabel"];
-    }
-
     // No Access Screen
     const noAccessLabelList = [
       "noAccessTitle",
@@ -409,10 +385,6 @@ use(["../common/utils.js"], function (utils) {
     }
     if (analyticsCategories != null) {
       jsonObject["analyticsCategories"] = analyticsCategories;
-    }
-
-    if (properties["reportPillLabel"]) {
-      jsonObject["reportPillLabel"] = properties["reportPillLabel"];
     }
 
     //Pagination Labels

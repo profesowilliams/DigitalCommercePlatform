@@ -1,9 +1,9 @@
 import React from 'react';
 import TrackingFlyout from './TrackingFlyout/TrackingFlyout';
 import ReturnFlyout from './ReturnFlyout/ReturnFlyout';
-import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
-import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
-import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import DNotesFlyout from '../OrdersTrackingCommon/Flyouts/DNotes/DNotesFlyout';
+import InvoicesFlyout from '../OrdersTrackingCommon/Flyouts/Invoices/InvoicesFlyout';
+import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
 import OrderModificationFlyout from './ModificationFlyout/OrderModificationFlyout';
 import ProductReplacementFlyout from '../ReplacementFlyout/ProductReplacementFlyout';
 

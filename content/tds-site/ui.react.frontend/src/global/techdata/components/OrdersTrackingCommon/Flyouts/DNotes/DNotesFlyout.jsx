@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import BaseFlyout from '../BaseFlyout/BaseFlyout';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import FlyoutTable from '../FlyoutTable/FlyoutTable';
-import useTableFlyout from '../../hooks/useTableFlyout';
-import { usGet } from '../../../../utils/api';
-import ToolTip from '../BaseGrid/ToolTip';
-import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import BaseFlyout from '../../../BaseFlyout/BaseFlyout';
+import FlyoutTable from '../../../FlyoutTable/FlyoutTable';
+import useTableFlyout from '../../../../hooks/useTableFlyout';
+import { usGet } from '../../../../../../utils/api';
+import ToolTip from '../../../BaseGrid/ToolTip';
+import { useOrderTrackingStore } from '../../Store/OrderTrackingStore';
 
-function InvoicesFlyout({
+function DNotesFlyout({
   gridConfig,
-  invoicesFlyout = {},
-  invoicesColumnList: columnList,
+  dNoteColumnList: columnList,
   subheaderReference,
   isTDSynnex,
   downloadAllFile,
   openFilePdf,
 }) {
-  const invoicesFlyoutConfig = useOrderTrackingStore((st) => st.invoicesFlyout);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const dNoteFlyoutConfig = useOrderTrackingStore((st) => st.dNotesFlyout);
   const effects = useOrderTrackingStore((st) => st.effects);
+  const [showTooltip, setShowTooltip] = useState(false);
   const [selected, setSelected] = useState([]);
-  const [invoicesResponse, setInvoicesResponse] = useState(null);
+  const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
+  const uiTranslations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+  const translations = uiTranslations?.['OrderTracking.MainGrid.DnoteFlyout'];
+
   const closeFlyout = () => {
     effects.setCustomState({
-      key: 'invoicesFlyout',
+      key: 'dNotesFlyout',
       value: { data: null, show: false },
     });
     setSelected([]);
   };
+
   const config = {
-    ...invoicesFlyoutConfig,
-    data: invoicesFlyoutConfig?.data || invoicesResponse,
+    ...dNoteFlyoutConfig,
+    data: dNoteFlyoutConfig?.data || deliveryNotesResponse,
   };
 
   const {
@@ -40,10 +44,11 @@ function InvoicesFlyout({
     handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
-  const getInvoices = async () => {
+
+  const getDeliveryNotes = async () => {
     try {
       const result = await usGet(
-        `${gridConfig.uiCommerceServiceDomain}/v3/order/${invoicesFlyoutConfig?.id}/invoices`
+        `${gridConfig.uiCommerceServiceDomain}/v3/order/${dNoteFlyoutConfig?.id}/deliverynotes`
       );
       return result;
     } catch (error) {
@@ -54,14 +59,14 @@ function InvoicesFlyout({
   const handleDownload = () => {
     closeFlyout();
     if (selected.length === 1) {
-      return openFilePdf('Invoice', config?.id, selected);
+      return openFilePdf('DNote', config?.id, selected);
     } else if (selected.length > 1) {
-      return downloadAllFile('Invoice', config?.id, selected);
+      return downloadAllFile('DNote', config?.id, selected);
     }
   };
 
   const handleSingleDownload = (clickedId) => {
-    openFilePdf('Invoice', config?.id, clickedId);
+    openFilePdf('DNote', config?.id, clickedId);
   };
 
   const handleCheckboxEnabled = (row) => {
@@ -73,30 +78,28 @@ function InvoicesFlyout({
   };
 
   useEffect(() => {
-    setInvoicesResponse(null);
-    !invoicesFlyoutConfig?.data &&
-      invoicesFlyoutConfig?.id &&
-      getInvoices()
+    setDeliveryNotesResponse(null);
+    !dNoteFlyoutConfig?.data &&
+      dNoteFlyoutConfig?.id &&
+      getDeliveryNotes()
         .then((result) => {
-          setInvoicesResponse(result?.data?.content);
+          setDeliveryNotesResponse(result?.data?.content);
         })
         .catch((error) => {
           console.error('Error:', error);
         });
-  }, [invoicesFlyoutConfig?.id]);
+  }, [dNoteFlyoutConfig?.id]);
 
   return (
     <BaseFlyout
-      open={invoicesFlyoutConfig?.show}
+      open={dNoteFlyoutConfig?.show}
       onClose={closeFlyout}
       width="360px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey(invoicesFlyout.title)}
-      buttonLabel={getDictionaryValueOrKey(invoicesFlyout.button)}
-      secondaryButtonLabel={getDictionaryValueOrKey(
-        invoicesFlyout.clearAllButton
-      )}
+      titleLabel={translations?.Title}
+      buttonLabel={translations?.Button_Download}
+      secondaryButtonLabel={translations?.Button_ClearAll}
       disabledButton={selected.length === 0}
       selected={selected}
       secondaryButton={SecondaryButton}
@@ -107,10 +110,10 @@ function InvoicesFlyout({
         <div className="cmp-flyout__content-description">
           <div className="cmp-flyout__content__contentGrid">
             <span className="cmp-flyout__content-bold">
-              {getDictionaryValueOrKey(invoicesFlyout.orderNo)}
+              {translations?.Description_OrderNo}
               {'  '}
             </span>
-            <span>{invoicesFlyoutConfig?.id}</span>
+            <span>{dNoteFlyoutConfig?.id}</span>
           </div>
           <div
             className="cmp-flyout__content__contentGrid"
@@ -118,35 +121,36 @@ function InvoicesFlyout({
             onMouseLeave={() => setShowTooltip(false)}
           >
             <span className="cmp-flyout__content-bold">
-              {getDictionaryValueOrKey(invoicesFlyout.poNo)}
+              {translations?.Description_PONo}
               {'  '}
             </span>
             <span className="cmp-flyout__content-description--ellipsis">
-              {invoicesFlyoutConfig?.reseller}
+              {dNoteFlyoutConfig?.reseller}
             </span>
           </div>
-          <ToolTip
-            toolTipData={{
-              show: showTooltip,
-              y: null,
-              x: null,
-              value: invoicesFlyoutConfig?.reseller,
-            }}
-          />
         </div>
+        <ToolTip
+          toolTipData={{
+            show: showTooltip,
+            y: null,
+            x: null,
+            value: dNoteFlyoutConfig?.reseller,
+          }}
+        />
         <div className="cmp-flyout__content-description">
-          {getDictionaryValueOrKey(invoicesFlyout.description)}
+          {translations?.Description}
         </div>
         {columnList && (
           <FlyoutTable
             dataTable={rows}
             selected={selected}
-            handleSingleDownload={handleSingleDownload}
             handleClick={handleClick}
             handleCheckboxEnabled={handleCheckboxEnabled}
+            handleSingleDownload={handleSingleDownload}
             handleSelectAllClick={handleSelectAllClick}
             headCells={headCells}
             checkboxEnabled={checkboxEnabled}
+            translations={translations}
           />
         )}
       </section>
@@ -154,4 +158,4 @@ function InvoicesFlyout({
   );
 }
 
-export default InvoicesFlyout;
+export default DNotesFlyout;

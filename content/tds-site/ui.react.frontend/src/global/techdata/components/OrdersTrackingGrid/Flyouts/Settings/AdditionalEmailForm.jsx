@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import {
   AddElement,
   AddElementDisabled,
-} from '../../../../fluentIcons/FluentIcons';
+} from '../../../../../../fluentIcons/FluentIcons';
+import { useOrderTrackingStore } from '../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const validateEmail = (email) => {
   return String(email)
@@ -18,6 +18,10 @@ const AdditionalEmailForm = ({ labels, onChange }) => {
   const [newEmailInputOpen, setNewEmailInputOpen] = useState(false);
   const [newEmail, setNewEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const uiTranslations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+  const translations = uiTranslations?.['OrderTracking.MainGrid.SettingsFlyout'];
 
   const handleInputChange = (e) => {
     setNewEmail(e.target.value);
@@ -60,11 +64,11 @@ const AdditionalEmailForm = ({ labels, onChange }) => {
         </div>
       ) : (
         <p className="add-email" onClick={openNewEmailInput}>
-          {getDictionaryValueOrKey(labels.addAnotherEmail)}
+            {translations?.Add_Another_Email}
         </p>
       )}
       <p className="internal-use-info">
-        {getDictionaryValueOrKey(labels.forInternalUseOnly)}
+        {translations?.For_Internal_Use_Only}
       </p>
     </>
   );

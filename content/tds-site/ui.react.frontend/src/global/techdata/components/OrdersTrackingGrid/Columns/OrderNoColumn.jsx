@@ -3,7 +3,7 @@ import { isJavaScriptProtocol } from '../../../../../utils/utils';
 import { getOrderDetailsAnalyticsGoogle } from '../utils/analyticsUtils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 import { CopyIcon, TickIcon } from '../../../../../fluentIcons/FluentIcons';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { getLocalStorageData } from '../utils/gridUtils';
 import Tooltip from '@mui/material/Tooltip';
 import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';

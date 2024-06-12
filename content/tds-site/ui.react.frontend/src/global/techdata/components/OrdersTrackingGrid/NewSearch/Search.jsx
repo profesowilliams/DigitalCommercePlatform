@@ -18,7 +18,7 @@ import Pill from '../../Widgets/Pill';
 import { getLocalStorageData, setLocalStorageData } from '../utils/gridUtils';
 import { ORDER_SEARCH_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import {
   ANALYTICS_TYPES,

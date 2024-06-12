@@ -15,8 +15,8 @@ import {
 import { setLocalStorageData } from '../utils/gridUtils';
 import { REPORTS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import Tooltip from '@mui/material/Tooltip';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Hover from '../../Hover/Hover';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 function Report(
   {
@@ -24,7 +24,6 @@ function Report(
     selectedKey,
     reportAnalyticsLabel,
     reportOptions,
-    gridConfig,
   },
   ref
 ) {
@@ -32,6 +31,10 @@ function Report(
   const [currentValue, setCurrentValue] = useState(selectedKey);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const wrapperRef = useRef(null);
+  const uiTranslations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+  const translations = uiTranslations?.['OrderTracking.MainGrid.Reports'];
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropDownOpen);
@@ -67,7 +70,7 @@ function Report(
 
   return (
     <Tooltip
-      title={getDictionaryValueOrKey(gridConfig?.reportTooltip)}
+      title={translations?.Tooltip}
       placement="top"
       arrow
       disableInteractive={true}

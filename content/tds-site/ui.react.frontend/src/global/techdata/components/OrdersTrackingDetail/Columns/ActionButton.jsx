@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 import MenuActions from '../Header/MenuActions';
-import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import {
   getDictionaryValueOrKey,
   addUrlParam,

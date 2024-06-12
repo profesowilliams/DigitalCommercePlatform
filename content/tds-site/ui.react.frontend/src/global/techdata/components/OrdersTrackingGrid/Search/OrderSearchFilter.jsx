@@ -6,7 +6,7 @@ import {
 } from '../../../../../fluentIcons/FluentIcons';
 import useComputeBranding from '../../../hooks/useComputeBranding';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 export function OrderSearchField({
   chosenFilter = '',

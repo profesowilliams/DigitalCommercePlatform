@@ -5,7 +5,7 @@ import {
   isExtraReloadDisabled,
   isHttpOnlyEnabled,
 } from '../../../../utils/featureFlagUtils';
-import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const OrderTrackingDetailFooter = ({ content, config }) => {
   const { paymentDetails, lastDataSource } = content || null;

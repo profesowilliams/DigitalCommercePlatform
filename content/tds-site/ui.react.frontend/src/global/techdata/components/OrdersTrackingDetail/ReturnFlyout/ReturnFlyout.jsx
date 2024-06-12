@@ -2,7 +2,7 @@ import React from 'react';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import FlyoutTableWithRedirectLinks from '../FlyoutTableWithRedirectLinks/FlyoutTableWithRedirectLinks';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 function ReturnFlyout({ returnFlyout = {}, subheaderReference, isTDSynnex }) {
   const returnFlyoutConfig = useOrderTrackingStore((st) => st.returnFlyout);

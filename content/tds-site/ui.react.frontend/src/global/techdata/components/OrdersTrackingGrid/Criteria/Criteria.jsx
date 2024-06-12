@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { useOrderTrackingStore } from './../store/OrderTrackingStore';
+import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const Criteria = ({ config, searchCriteria, reportValue }) => {
   const [selectedLabel, setSelectedLabel] = useState(

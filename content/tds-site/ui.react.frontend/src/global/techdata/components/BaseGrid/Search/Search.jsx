@@ -13,7 +13,7 @@ import { isHouseAccount } from "../../../../../utils/user/utils";
 import { getDictionaryValue } from "../../../../../utils/utils";
 import { If } from "../../../helpers/If";
 import useComputeBranding from "../../../hooks/useComputeBranding";
-import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import Pill from '../../Widgets/Pill';
 import {
   getLocalStorageData,

@@ -1,11 +1,11 @@
 import React from 'react';
-import DNotesFlyout from '../../DNotesFlyout/DNotesFlyout';
-import InvoicesFlyout from '../../InvoicesFlyout/InvoicesFlyout';
+import DNotesFlyout from '../../OrdersTrackingCommon/Flyouts/DNotes/DNotesFlyout';
+import InvoicesFlyout from '../../OrdersTrackingCommon/Flyouts/Invoices/InvoicesFlyout';
 import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
 import OrderModificationFlyout from '../../OrdersTrackingDetail/ModificationFlyout/OrderModificationFlyout';
-import SettingsFlyout from '../../SettingsFlyout/SettingsFlyout';
+import SettingsFlyout from '../Flyouts/Settings/SettingsFlyout';
 import ProductReplacementFlyout from '../../ReplacementFlyout/ProductReplacementFlyout';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const MainGridFlyouts = ({
   gridConfig,

@@ -3,7 +3,7 @@ import {
   ChevronRightSmallIcon,
   ChevronDownSmallIcon,
 } from '../../../../../../../fluentIcons/FluentIcons';
-import { useOrderTrackingStore } from '../../../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 function DropdownColumn({ eventProps }) {
 

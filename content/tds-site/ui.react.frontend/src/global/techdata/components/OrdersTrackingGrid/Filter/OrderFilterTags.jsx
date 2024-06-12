@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOrderTrackingStore } from './../store/OrderTrackingStore';
+import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import OrderFilterTag from './OrderFilterTag';
 import { filtersDateGroup } from '../utils/gridUtils';
 

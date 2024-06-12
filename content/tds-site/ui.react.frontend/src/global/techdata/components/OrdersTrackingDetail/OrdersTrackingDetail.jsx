@@ -13,11 +13,12 @@ import {
   pushFailedDownloadGoogleAnalytics,
   fixCountryCode
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
-import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import { endpoints } from '../OrdersTrackingGrid/utils/orderTrackingUtils';
 import { buildQueryString } from '../OrdersTrackingGrid/utils/gridUtils';
+import { getHeaderInfo } from '../../../../utils/headers/get';
 
 const translationDictionaries = [
   'OrderTracking.Details',
@@ -167,8 +168,8 @@ function OrdersTrackingDetail(props) {
   const fetchUITranslations = async () => {
     const results = await usGet(
       `${componentProps.uiLocalizeServiceDomain}/v1` +
-        buildQueryString(translationDictionaries) +
-        `&cacheInSec=900`
+      buildQueryString(translationDictionaries) +
+      `&cacheInSec=900&country=` + getHeaderInfo().acceptLanguage
     );
     return results.data;
   };

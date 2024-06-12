@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import CollapsibleSection from './CollapsibleSection';
 import MessagesForm from './MessagesForm';
 import TypesForm from './TypesForm';
 import EmailsForm from './EmailsForm';
 import CustomSwitch from './CustomSwitch';
-import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const SettingsContent = ({ labels, settingsData, onChange }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(settingsData.active);
   const userData = useOrderTrackingStore((st) => st.userData);
+  const uiTranslations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+  const translations = uiTranslations?.['OrderTracking.MainGrid.SettingsFlyout'];
 
   const hasRights = (entitlement) =>
     userData?.roleList?.some((role) => role.entitlement === entitlement);
@@ -23,23 +26,17 @@ const SettingsContent = ({ labels, settingsData, onChange }) => {
   };
 
   const messageOptions = [
-    { key: 'Intouch', label: getDictionaryValueOrKey(labels.rangeIntouchOnly) },
+    { key: 'Intouch', label: translations?.Range_IntouchOnly },
     ...(settingsData.rangeAllEnabled
-      ? [{ key: 'All', label: getDictionaryValueOrKey(labels.rangeTdSynnex) }]
+      ? [{ key: 'All', label: translations?.Range_All }]
       : []),
   ];
 
   const typeOptions = [
-    {
-      key: 'TDPACK',
-      label: getDictionaryValueOrKey(labels.shippedFromTDSWarehouse),
-    },
-    { key: 'OFD', label: getDictionaryValueOrKey(labels.outForDelivery) },
-    { key: 'DELIVERED', label: getDictionaryValueOrKey(labels.delivered) },
-    {
-      key: 'EXCEPTION',
-      label: getDictionaryValueOrKey(labels.deliveryException),
-    },
+    { key: 'TDPACK', label: translations?.Type_ShippedFromWarehouse, },
+    { key: 'OFD', label: translations?.Type_OutForDelivery },
+    { key: 'DELIVERED', label: translations?.Type_Delivered },
+    { key: 'EXCEPTION', label: translations?.Type_DeliveryException, },
   ];
 
   const emailOptions = [
@@ -64,7 +61,7 @@ const SettingsContent = ({ labels, settingsData, onChange }) => {
 
   const collapsibleSections = [
     {
-      title: getDictionaryValueOrKey(labels.notificationMessages),
+      title: translations?.Sections_NotificationMessages,
       content: (
         <MessagesForm
           value={range}
@@ -75,7 +72,7 @@ const SettingsContent = ({ labels, settingsData, onChange }) => {
       expanded: true,
     },
     {
-      title: getDictionaryValueOrKey(labels.notificationTypes),
+      title: translations?.Sections_NotificationTypes,
       content: (
         <TypesForm
           value={types}
@@ -86,7 +83,7 @@ const SettingsContent = ({ labels, settingsData, onChange }) => {
       expanded: true,
     },
     {
-      title: getDictionaryValueOrKey(labels.notificationEmails),
+      title: translations?.Sections_NotificationEmails,
       content: (
         <EmailsForm
           value={{
@@ -109,7 +106,7 @@ const SettingsContent = ({ labels, settingsData, onChange }) => {
     <section className="cmp-flyout__content settings">
       <div className="switch-wrapper">
         <p className="switch-label">
-          {getDictionaryValueOrKey(labels?.switchLabel)}
+          {translations?.Switch_Label}
         </p>
         <div className="switch-icon-wrapper">
           <CustomSwitch checked={isSwitchOn} onChange={handleSwitchChange} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import DropdownOrderDetails from './DropdownOrderDetails';
 
 function OrderDetailsRenderers({

@@ -8,7 +8,7 @@ import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useStore } from '../../../../../utils/useStore';
 import { getUrlParams } from '../../../../../utils';
-import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 import {
   getAddLineAnalyticsGoogle,

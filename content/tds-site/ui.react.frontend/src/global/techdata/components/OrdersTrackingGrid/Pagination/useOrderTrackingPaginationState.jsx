@@ -11,7 +11,7 @@ import {
   getPaginationAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 function useOrderTrackingPaginationState({
   onQueryChanged,

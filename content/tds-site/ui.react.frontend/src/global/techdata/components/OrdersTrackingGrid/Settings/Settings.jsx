@@ -4,13 +4,16 @@ import {
   SettingsIconFilled,
 } from '../../../../../fluentIcons/FluentIcons';
 import '../../../../../../src/styles/TopIconsBar.scss';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import Tooltip from '@mui/material/Tooltip';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Hover from '../../Hover/Hover';
 
-const Settings = ({ settings, gridConfig }) => {
+const Settings = ({ settings }) => {
   const { setCustomState } = useOrderTrackingStore((state) => state.effects);
+  const uiTranslations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+  const translations = uiTranslations?.['OrderTracking.MainGrid.SettingsFlyout'];
 
   const triggerSettingsFlyout = () => {
     setCustomState({
@@ -21,7 +24,7 @@ const Settings = ({ settings, gridConfig }) => {
 
   return (
     <Tooltip
-      title={getDictionaryValueOrKey(gridConfig?.settingsTooltip)}
+      title={translations?.Tooltip}
       placement="top"
       arrow
       disableInteractive={true}
