@@ -96,7 +96,12 @@ use(['../../../common/utils.js'], function(utils) {
      if (properties && properties["quoteTextForFileName"]) {
             productLines["quoteTextForFileName"] = properties["quoteTextForFileName"];
         }
-
+    if (properties && properties["migrationNote"]) {
+      productLines["migrationNote"] = properties["migrationNote"];
+    }
+    if (properties && properties["adobeNote"]) {
+      productLines["adobeNote"] = properties["adobeNote"];
+    }
     if (properties && properties["note"]) {
         productLines["note"] = properties["note"];
     }

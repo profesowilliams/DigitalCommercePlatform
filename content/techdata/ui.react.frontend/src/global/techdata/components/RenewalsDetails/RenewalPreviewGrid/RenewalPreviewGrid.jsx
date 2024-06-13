@@ -42,16 +42,24 @@ import useComputeBranding from '../../../hooks/useComputeBranding';
 import { getDictionaryValue } from '../../../../../utils/utils';
 
 function GridSubTotal({ subtotal, data, gridProps, compProps, adobeVendor }) {
+  const migrationQuoteType = data?.quoteType === 'Migration';
   const isRequestQuoteFlag =
     data?.canRequestQuote && compProps?.enableRequestQuote;
   return (
     <div className="cmp-renewal-preview__subtotal">
-      {adobeVendor ? (
+      {migrationQuoteType ? (
         <div className="cmp-renewal-preview__subtotal--note">
-          Please note that pricing is subject to change and is only valid in the
-          same calendar month that this quote has been supplied. The vendor
-          retains rights to implement pricing changes at the start of each
-          month.
+          {getDictionaryValue(
+            'details.renewal.label.migrationNote',
+            'Note: Pricing displayed is subject to vendor price changes and exchange rate fluctuations. Adobe: price displayed in migration quotes is for reference purpose only. VIP and VIP MP Renewals pricing will differ.'
+          )}
+        </div>
+      ) : adobeVendor ? (
+        <div className="cmp-renewal-preview__subtotal--note">
+          {getDictionaryValue(
+            'details.renewal.label.adobeNote',
+            'Please note that pricing is subject to change and is only valid in the same calendar month that this quote has been supplied. The vendor retains rights to implement pricing changes at the start of each month.'
+          )}
         </div>
       ) : (
         <div
