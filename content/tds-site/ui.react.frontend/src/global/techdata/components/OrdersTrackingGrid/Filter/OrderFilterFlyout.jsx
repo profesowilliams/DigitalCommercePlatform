@@ -27,6 +27,8 @@ const OrderFilterFlyout = ({
   subheaderReference,
   analyticsCategories,
 }) => {
+  const userData = useOrderTrackingStore((state) => state.userData);
+
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.filter.orderFilterCounter
   );
@@ -161,6 +163,7 @@ const OrderFilterFlyout = ({
       dates: dateRangeFiltersChecked,
       types: orderTypeFiltersChecked,
       statuses: orderStatusFiltersChecked,
+      customerNumber: userData?.activeCustomer?.customerNumber
     });
     onQueryChanged({ onSearchAction: true });
     setAreThereAnyFiltersSelectedButNotApplied();

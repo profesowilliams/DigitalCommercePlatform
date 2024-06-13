@@ -454,6 +454,18 @@ function OrdersTrackingGrid(props) {
       setClearFilters();
     }
     filtersRefs.current = getInitialFiltersDataFromLS();
+    const customerNumberFromFilterLS = getLocalStorageData(
+      ORDER_FILTER_LOCAL_STORAGE_KEY
+    )?.customerNumber;
+    const customerNumberFromUD = userData?.activeCustomer?.customerNumber;
+    if (
+      customerNumberFromUD &&
+      customerNumberFromFilterLS &&
+      customerNumberFromUD !== customerNumberFromFilterLS
+    ) {
+      filtersRefs.current = null;
+      resetLocalStorage([ORDER_FILTER_LOCAL_STORAGE_KEY]);
+    } 
     redirectedFrom && deleteSearchParam('redirectedFrom');
     const refinements = await fetchFiltersRefinements();
     setFeatureFlags(refinements?.featureFlags);
