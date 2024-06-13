@@ -259,7 +259,7 @@ function RenewalsDetails(props) {
                     <Accordion defaultExpanded>
                       <AccordionSummary>
                           <div className="details-container">
-                              <span className="details-preview">{componentProp?.productLines?.lineActiveLicenceLabel || "Details"}<span className="details-price-level">{renewalsDetails.renewalLevel}</span></span>
+                              <span className="details-preview">{componentProp?.productLines?.lineActiveLicenceLabel || "Details"}<span className="details-price-level">{renewalsDetails.renewalLevelActive}</span></span>
                           </div>
                       </AccordionSummary>
                       <AccordionDetails>

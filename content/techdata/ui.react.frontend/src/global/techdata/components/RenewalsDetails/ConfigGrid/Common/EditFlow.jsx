@@ -16,17 +16,20 @@ function EditFlow({
   const effects = useRenewalsDetailsStore( state => state.effects);
   const { closeAndCleanToaster } = effects;
 
-  const handleIconEditClick = () => {   
+  const handleIconEditClick = (e) => {
+    e.stopPropagation();
     closeAndCleanToaster();
     setEdit(true);
   };
 
-  const handleIconCancelClick = () => {
+  const handleIconCancelClick = (e) => {
+  e.stopPropagation();
     setEdit(false);
     cancelHandler();
   };
 
-  const handleIconSaveClick = () => {
+  const handleIconSaveClick = (e) => {
+  e.stopPropagation();
     saveHandler();
   };
 
