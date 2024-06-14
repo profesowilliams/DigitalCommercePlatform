@@ -305,7 +305,8 @@
   background-color: #f9f9f9;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
-  right: 32px; /* Adjust based on your layout needs */
+  top: 230px; /* Adjust based on your layout needs */
+  right: 47px; /* Adjust based on your layout needs */
   width: 12rem; /* Adjust width as necessary */
 
   &:hover button:hover span {
@@ -353,4 +354,12 @@
 .more-link:hover + .dropdown-content,
 .dropdown-content:hover {
   display: block;
+}
+
+.more-button span {
+  padding: 0 !important;
+
+  .cmp-renewal-preview__download--icon {
+    margin: 0 !important;
+  }
 }
