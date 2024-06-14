@@ -74,7 +74,7 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   const isInvoiceDownloadable = invoices?.some(
     (invoice) => invoice.canDownloadDocument
   );
-
+  const activateHereAvailable = element.activateHere;
   const trackAndTraceAvailable =
     line?.lineDetails?.length > index ? element.canTrackAndTrace : false;
   const areDeliveryNotesAvailable =
@@ -165,7 +165,7 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   const menuActionsItems = [
     {
       condition: trackAndTraceAvailable,
-      label: labels?.track,
+      label: activateHereAvailable ? labels?.activateHere : labels?.track,
       onClick: handleTrackAndTrace,
     },
     {

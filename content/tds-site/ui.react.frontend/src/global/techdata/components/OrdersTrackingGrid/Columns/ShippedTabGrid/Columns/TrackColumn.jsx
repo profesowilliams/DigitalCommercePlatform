@@ -5,12 +5,15 @@ import { getTrackAndTraceAnalyticsGoogle, pushDataLayerGoogle } from '../../../u
 import { useOrderTrackingStore } from '../../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 function TrackColumn({ line, config, id }) {
+  const activateHereAvailable = line?.activateHere;
   const trackAndTraceAvailable = line?.canTrackAndTrace;
-  const trackAndTraceCounter = useOrderTrackingStore((state) => state.trackAndTraceCounter);
+  const trackAndTraceCounter = useOrderTrackingStore(
+    (state) => state.trackAndTraceCounter
+  );
   const { setTrackAndTraceCounter } = useOrderTrackingStore((st) => st.effects);
 
   const handleTrackAndTrace = async () => {
-    setTrackAndTraceCounter(trackAndTraceCounter+1);
+    setTrackAndTraceCounter(trackAndTraceCounter + 1);
     try {
       const enableLineId = line?.items?.length === 1;
       const orderId = id;
@@ -25,17 +28,18 @@ function TrackColumn({ line, config, id }) {
       if (baseUrl) {
         let trackAndTraceParams = '';
         if (parameters) {
-          Object.entries(parameters).forEach((entry) =>
-            trackAndTraceParams = addUrlParam(trackAndTraceParams, entry[0], entry[1])
+          Object.entries(parameters).forEach(
+            (entry) =>
+              (trackAndTraceParams = addUrlParam(
+                trackAndTraceParams,
+                entry[0],
+                entry[1]
+              ))
           );
         }
         window.open(baseUrl + trackAndTraceParams, '_blank');
         pushDataLayerGoogle(
-          getTrackAndTraceAnalyticsGoogle(
-            trackAndTraceCounter,
-            false,
-            carrier
-          )
+          getTrackAndTraceAnalyticsGoogle(trackAndTraceCounter, false, carrier)
         );
       }
     } catch (error) {
@@ -49,8 +53,11 @@ function TrackColumn({ line, config, id }) {
       onClick={trackAndTraceAvailable ? handleTrackAndTrace : null}
     >
       {trackAndTraceAvailable
-        ? getDictionaryValueOrKey(config?.orderLineDetails?.trackLabel) ||
-          'Track'
+        ? activateHereAvailable
+          ? getDictionaryValueOrKey(config?.orderLineDetails?.activateHere) ||
+            'Activate Here'
+          : getDictionaryValueOrKey(config?.orderLineDetails?.trackLabel) ||
+            'Track'
         : ''}
     </div>
   );

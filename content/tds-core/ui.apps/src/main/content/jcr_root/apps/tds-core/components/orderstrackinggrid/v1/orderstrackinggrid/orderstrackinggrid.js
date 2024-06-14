@@ -130,6 +130,7 @@ use(["../common/utils.js"], function (utils) {
       "notShippedLabel",
       "itemsLabel",
       "trackLabel",
+      "activateHere",
       "modifyEligibleItemsLabel",
       "titleReleaseModal",
       "orderNoString",

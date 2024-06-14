@@ -459,6 +459,13 @@
                                                 fieldLabel="Track"
                                                 name="./track"
                                                 required="{Boolean}true"/>  
+                                            <activateHere
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Activate Here"
+                                                fieldLabel="Activate Here"
+                                                name="./activateHere"
+                                                required="{Boolean}true"/>  
 
                                             <toasterCopySerialNumbersMessage
                                                 jcr:primaryType="nt:unstructured"

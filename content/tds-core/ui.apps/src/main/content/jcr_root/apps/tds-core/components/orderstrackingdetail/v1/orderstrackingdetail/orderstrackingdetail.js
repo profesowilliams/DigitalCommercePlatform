@@ -101,6 +101,7 @@ use(["../../../common/utils.js"], function (utils) {
     "xmlMessageLabel",
     "xmlMessageAlertLabel",
     "track",
+    "activateHere",
     "toasterCopySerialNumbersMessage",
     "copySerialNumber",
     "return",
