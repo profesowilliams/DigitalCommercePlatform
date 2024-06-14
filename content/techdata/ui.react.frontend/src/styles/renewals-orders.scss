@@ -148,6 +148,13 @@
 }
 
 .cmp-place-order-terms {
+  display: flex;
+
+  .cmp-place-order-checkbox {
+    align-self: start;
+    padding-top: 0;
+  }
+
   a.cmp-place-order-link {
     color: #00558c;
     cursor: pointer;
