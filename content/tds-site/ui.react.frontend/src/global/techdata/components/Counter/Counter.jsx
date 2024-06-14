@@ -5,10 +5,17 @@ const Counter = ({
   onChange,
   minVal = 0,
   maxVal = null,
+  enableAddLine,
+  originalQuantity,
 }) => {
+  const disableButton = value >= originalQuantity;
+  const disableChangeQuantity = enableAddLine === false;
+
   const increase = () => {
-    if (maxVal === null || value < maxVal) {
-      onChange(Number(value) + 1);
+    if ((disableChangeQuantity && !disableButton) || !disableChangeQuantity) {
+      if (maxVal === null || value < maxVal) {
+        onChange(Number(value) + 1);
+      }
     }
   };
 
@@ -30,8 +37,14 @@ const Counter = ({
         onChange={(e) => {
           onChange(e.target.value);
         }}
+        disabled={disableChangeQuantity}
       />
-      <div className="plus" onClick={increase}>
+      <div
+        className={`plus ${
+          disableChangeQuantity && disableButton && 'disabled'
+        }`}
+        onClick={increase}
+      >
         +
       </div>
     </div>

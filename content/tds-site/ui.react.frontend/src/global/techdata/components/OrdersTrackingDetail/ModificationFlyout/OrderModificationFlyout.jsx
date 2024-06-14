@@ -387,6 +387,7 @@ function OrderModificationFlyout({
               onChange={handleChange}
               labels={labels}
               domain={gridConfig.uiCommerceServiceDomain}
+              enableAddLine={enableAddLine}
             />
           ))}
         </ul>
