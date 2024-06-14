@@ -178,7 +178,7 @@ function RenewalsDetails(props) {
           setLockedEdit(false);
           setToggleEdit(true);
           effects.clearItems();
-          if (componentProp?.productLines?.enableActiveLicence === 'true') {
+          if (componentProp?.productLines?.enableActiveLicence === 'true' && renewalsDetails?.itemsActive?.length > 0) {
             window.location.reload();
           }
         }
