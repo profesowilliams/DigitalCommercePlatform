@@ -7,7 +7,6 @@ import React, {
   forwardRef,
 } from 'react';
 import { Button } from '@mui/material';
-import { teal } from '@mui/material/colors';
 import sanitizeHtml from 'sanitize-html';
 import PlaceOrderDialog from '../../RenewalsGrid/Orders/PlaceOrderDialog';
 import PlaceAdobeOrderDialog from '../../RenewalsGrid/Orders/PlaceAdobeOrderDialog';
@@ -112,13 +111,15 @@ function Price({ value }, data, compProps) {
 }
 
 function RenewalPreviewGrid(
-  { data, gridProps, shopDomainPage, isEditing, compProps ,isActiveLicense},
+  { data, gridProps, shopDomainPage, isEditing, compProps, isActiveLicense },
   ref
 ) {
   const [modal, setModal] = useState(null);
   const [multipleFlag, setMultipleFlag] = useState(false);
   const [isPODialogOpen, setIsPODialogOpen] = useState(false);
   const [isPAODialogOpen, setIsPAODialogOpen] = useState(false);
+  const [PONumber, setPONumber] = useState('');
+
   const orderEndpoints = {
     updateRenewalOrderEndpoint: compProps.updateRenewalOrderEndpoint,
     getStatusEndpoint: compProps.getStatusEndpoint,
@@ -139,6 +140,7 @@ function RenewalPreviewGrid(
     paginationStyle: 'none',
     searchResultsError: compProps.searchResultsError,
   };
+
   const isRequestQuoteFlag =
     data?.canRequestQuote && compProps?.enableRequestQuote;
   const effects = useRenewalsDetailsStore((state) => state.effects);
@@ -238,11 +240,11 @@ function RenewalPreviewGrid(
   const contractMap = new Map();
   let sortedGridData = gridData;
   if (gridData?.contract?.id) {
-      sortedGridData = gridData.sort((a, b) => {
+    sortedGridData = gridData.sort((a, b) => {
       const contractIdA = a.contract.id;
       const contractIdB = b.contract.id;
       return contractIdA - contractIdB;
-  });
+    });
   }
   JSON.parse(JSON.stringify(sortedGridData))?.forEach((item) => {
     const contractId = item?.contract?.id;
@@ -467,12 +469,11 @@ function RenewalPreviewGrid(
     },
     {
       field: 'unitListPrice',
-      headerName:  isActiveLicense ? "" : gridProps.listPrice?.replace(
-        '{currency-code}',
-        data?.currency || ''
-      ),
+      headerName: isActiveLicense
+        ? ''
+        : gridProps.listPrice?.replace('{currency-code}', data?.currency || ''),
       cellRenderer: (props) => {
-        return !props?.data?.id?.includes('Agreement')  && !isActiveLicense
+        return !props?.data?.id?.includes('Agreement') && !isActiveLicense
           ? Price(props, data, compProps)
           : '';
       },
@@ -480,7 +481,7 @@ function RenewalPreviewGrid(
     },
     {
       field: 'value',
-      headerName: isActiveLicense ? "" : gridProps?.percentOffListPrice,
+      headerName: isActiveLicense ? '' : gridProps?.percentOffListPrice,
       valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
       cellRenderer: (props) =>
         !props?.data?.id?.includes('Agreement') && !isActiveLicense
@@ -490,14 +491,13 @@ function RenewalPreviewGrid(
     },
     {
       field: 'unitPrice',
-      headerName: isActiveLicense ? "" : gridProps.unitPrice?.replace(
-        '{currency-code}',
-        data?.currency || ''
-      ),
+      headerName: isActiveLicense
+        ? ''
+        : gridProps.unitPrice?.replace('{currency-code}', data?.currency || ''),
       suppressKeyboardEvent: (params) => suppressNavigation(params),
       cellRenderer: (props) => {
         const isEditing = isEditingRef.current && data?.canEditResellerPrice;
-        return !props?.data?.id?.includes('Agreement')  && !isActiveLicense
+        return !props?.data?.id?.includes('Agreement') && !isActiveLicense
           ? UnitPriceColumn({ ...props, isEditing })
           : '';
       },
@@ -516,12 +516,14 @@ function RenewalPreviewGrid(
     },
     {
       field: 'totalPrice',
-      headerName: isActiveLicense ? "" : gridProps.totalPrice?.replace(
-        '{currency-code}',
-        data?.currency || ''
-      ),
+      headerName: isActiveLicense
+        ? ''
+        : gridProps.totalPrice?.replace(
+            '{currency-code}',
+            data?.currency || ''
+          ),
       cellRenderer: (props) =>
-        !props?.data?.id?.includes('Agreement')  && !isActiveLicense
+        !props?.data?.id?.includes('Agreement') && !isActiveLicense
           ? Price(props, data, compProps)
           : '',
       valueGetter: 'data.quantity * data.unitPrice',
@@ -558,6 +560,19 @@ function RenewalPreviewGrid(
     setIsPAODialogOpen(true);
   };
 
+  const successToaster = {
+    isOpen: true,
+    origin: 'fromUpdate',
+    isAutoClose: true,
+    isSuccess: true,
+    message: `${getDictionaryValue(
+      'details.renewal.label.yourOrderFor',
+      'Your order for'
+    )} ${PONumber} ${getDictionaryValue(
+      'details.renewal.label.hasBeenSuccessfullySubmittedForProcessing',
+      'has been successfully submitted for processing.'
+    )}`,
+  };
   const onCloseOrderDialog = (options = {}) => {
     const { isSuccess = false, toaster } = options || {
       isSuccess: false,
@@ -567,8 +582,16 @@ function RenewalPreviewGrid(
     setIsPAODialogOpen(false);
     if (!isSuccess) return;
     if (isSuccess) {
-      setLocalStorageData(TOASTER_LOCAL_STORAGE_KEY, toaster);
-      location.href = compProps.quotePreview.renewalsUrl;
+      if (adobeVendor) {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...successToaster },
+        });
+        setTimeout(() => (location.href = window.location.href), 6000);
+      } else {
+        setLocalStorageData(TOASTER_LOCAL_STORAGE_KEY, toaster);
+        location.href = compProps.quotePreview.renewalsUrl;
+      }
     }
   };
 
@@ -659,6 +682,7 @@ function RenewalPreviewGrid(
           renewalData={mapRenewalForUpdateDetails(data)}
           store={useRenewalsDetailsStore}
           isDetails={true}
+          setPONumber={setPONumber}
         />
       ) : (
         <PlaceOrderDialog
@@ -682,6 +706,7 @@ function RenewalPreviewGrid(
           successSubmission: 'successSubmission',
           failedSubmission: 'failedSubmission',
         }}
+        closeEnabled
       />
     </div>
   );

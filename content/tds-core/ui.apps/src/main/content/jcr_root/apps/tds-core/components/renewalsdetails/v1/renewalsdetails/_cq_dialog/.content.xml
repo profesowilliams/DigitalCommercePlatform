@@ -366,6 +366,18 @@
                                                     fieldDescription="Enter details.renewal.label.adobeNote Key"
                                                     fieldLabel="Please note that pricing is subject to change and is only valid in the same calendar month that this quote has been supplied. The vendor retains rights to implement pricing changes at the start of each month. Label"
                                                     name="./adobeNote"/>
+                                            <yourOrderFor
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter details.renewal.label.yourOrderFor Key"
+                                                    fieldLabel="Your order for Label"
+                                                    name="./yourOrderFor"/>
+                                            <hasBeenSuccessfullySubmittedForProcessing
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter details.renewal.label.hasBeenSuccessfullySubmittedForProcessing Key"
+                                                    fieldLabel="has been successfully submitted for processing. Label"
+                                                    name="./hasBeenSuccessfullySubmittedForProcessing"/>
                                             <enableActiveLicence
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"

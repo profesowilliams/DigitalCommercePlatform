@@ -1,7 +1,7 @@
 import { Checkbox } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Dismiss } from '../../../../../fluentIcons/FluentIcons';
 import { PlaceOrderMaterialUi } from './PlacerOrderMaterialUi';
 import usePlaceOrderDialogHook from './hooks/usePlaceOrderDialogHook';
@@ -17,6 +17,7 @@ function PlaceAdobeOrderDialog({
   orderEndpoints,
   isDetails = false,
   store,
+  setPONumber,
 }) {
   const { endUser, POAllowedLength } = renewalData;
   const {
@@ -116,7 +117,9 @@ function PlaceAdobeOrderDialog({
         : '',
     [POAllowedLength]
   );
-
+  useEffect(() => {
+    setPONumber(purchaseOrderNumber);
+  }, [purchaseOrderNumber]);
   return (
     <>
       <Dialog

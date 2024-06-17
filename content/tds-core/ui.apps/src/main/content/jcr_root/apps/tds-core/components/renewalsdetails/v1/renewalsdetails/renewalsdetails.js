@@ -102,6 +102,13 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["adobeNote"]) {
       productLines["adobeNote"] = properties["adobeNote"];
     }
+    if (properties && properties["yourOrderFor"]) {
+      productLines["yourOrderFor"] = properties["yourOrderFor"];
+    }
+    if (properties && properties["hasBeenSuccessfullySubmittedForProcessing"]) {
+      productLines["hasBeenSuccessfullySubmittedForProcessing"] =
+        properties["hasBeenSuccessfullySubmittedForProcessing"];
+    }
     if (properties && properties["note"]) {
         productLines["note"] = properties["note"];
     }
