@@ -15,11 +15,6 @@ const AccessPermissionsNeeded = ({ noAccessProps }) => {
         <p className="access-permissions__message">
           {getDictionaryValueOrKey(noAccessMessage)}
         </p>
-        <p className="access-permissions__link">
-          <a href={getDictionaryValueOrKey(noAccessLink)}>
-            {getDictionaryValueOrKey(noAccessBack)}
-          </a>
-        </p>
       </div>
     </div>
   );
