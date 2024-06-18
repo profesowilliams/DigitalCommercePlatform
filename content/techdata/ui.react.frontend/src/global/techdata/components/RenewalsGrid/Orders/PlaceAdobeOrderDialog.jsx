@@ -36,7 +36,7 @@ function PlaceAdobeOrderDialog({
     termsServiceChecked,
     submitted,
     setTermsServiceChecked,
-    OrderButtonComponent,
+    SimpleOrderButtonComponent,
     resetDialogStates,
   } = usePlaceOrderDialogHook({
     successSubmission,
@@ -49,7 +49,6 @@ function PlaceAdobeOrderDialog({
     store,
     POAllowedLength,
   });
-
   const { computeClassName } = useComputeBranding(store);
   const handleClose = (isSuccess = false) => onClose(isSuccess);
 
@@ -164,11 +163,7 @@ function PlaceAdobeOrderDialog({
             </label>
           </div>
           <div className="cmp-place-adobe-order-actions">
-            {submitted ? (
-              <OrderButtonComponent> Submitting </OrderButtonComponent>
-            ) : (
-              <OrderButtonComponent> Continue </OrderButtonComponent>
-            )}
+            <SimpleOrderButtonComponent> Continue </SimpleOrderButtonComponent>
           </div>
         </div>
       </Dialog>
