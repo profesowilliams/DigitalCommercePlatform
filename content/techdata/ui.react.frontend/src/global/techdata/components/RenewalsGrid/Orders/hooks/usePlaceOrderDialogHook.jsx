@@ -153,7 +153,11 @@ function usePlaceOrderDialogHook({
       });
 
   const SimpleOrderButtonComponent = CustomOrderButton({
-    className: computeClassName('cmp-order-button-component'),
+    className: computeClassName(
+      `cmp-order-button-component ${
+        checkButtonDisabled() ? 'disabledAdobeVNButton' : ''
+      }`
+    ),
     disabled: checkButtonDisabled(),
     onClick: () => {
       processOrder();

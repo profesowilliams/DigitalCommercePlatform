@@ -119,7 +119,9 @@
   button.cmp-order-button-component {
     font-family: 'Arial';
     text-transform: none;
-    color: $brand-text-lightgray;
+    background-color: $brand-green;
+    color: $brand-white;
+    height: 48px;
     &.td-synnex {
       background-color: $brand-green;
       &.Mui-disabled {
@@ -135,6 +137,10 @@
     .cmp-progress-icon {
       animation: loading-icon 1.3s linear infinite;
     }
+  }
+  .disabledAdobeVNButton {
+    background-color: $td-neutral-gray-2 !important;
+    color: $brand-text-lightgray !important;
   }
 }
 
