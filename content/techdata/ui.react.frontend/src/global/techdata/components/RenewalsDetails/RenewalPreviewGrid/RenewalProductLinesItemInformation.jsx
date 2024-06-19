@@ -22,7 +22,7 @@ Instance:${line.instance}`
 }
 
 
-function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="false", disableMultipleAgreement, shopDomainPage = "", invokeModal, lineDetailsLabels }) {
+function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="false", disableMultipleAgreement, shopDomainPage = "", invokeModal, lineDetailsLabels, isActiveLicense }) {
   const description =  formatDetailsShortDescription(line);
   const subscriptionId = line?.subscriptionId;
   const serialHasValue = hasSerialNumbers(line);
@@ -72,7 +72,7 @@ function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="fal
         className="cmp-product-lines-grid__item-information"
         style={{width:'100%', gridTemplateColumns:'100% 86%'}}
       >
-        <div className="cmp-product-lines-grid__item-information__box-text">
+        <div className={isActiveLicense ? "cmp-product-lines-grid__item-information__box-text active-license" : "cmp-product-lines-grid__item-information__box-text"}>
           <div className={`cmp-renewal-preview__prod-details ${!isLinkDisabled ? "" : "no-link"}`}>
             <a
               href={!isLinkDisabled ? formatShopDomainUrl() : null}

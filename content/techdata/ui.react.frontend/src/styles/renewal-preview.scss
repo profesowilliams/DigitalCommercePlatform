@@ -371,3 +371,9 @@
     }
   }
 }
+
+.cmp-product-lines-grid__item-information__box-text.active-license {
+    span {
+        color: $brand-charcoal !important;
+    }
+}

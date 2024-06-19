@@ -451,6 +451,7 @@ function RenewalPreviewGrid(
             isLinkDisabled={gridProps.disableProductDetailsLink}
             shopDomainPage={shopDomainPage}
             invokeModal={invokeModal}
+            isActiveLicense={isActiveLicense}
           />
         ) : (
           ''

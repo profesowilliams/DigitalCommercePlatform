@@ -158,7 +158,11 @@
 
   .cmp-place-order-checkbox {
     align-self: start;
-    padding-top: 0;
+    padding-top: 2px;
+
+    svg {
+        fill: $brand-green;
+    }
   }
 
   a.cmp-place-order-link {
@@ -189,4 +193,13 @@
 
 .cmp-place-order-terms label {
   cursor: pointer;
+}
+
+.cmp-place-order-terms {
+    a,
+    span {
+        font-size: 14px;
+        line-height: 21px;
+        font-weight: 400;
+    }
 }
