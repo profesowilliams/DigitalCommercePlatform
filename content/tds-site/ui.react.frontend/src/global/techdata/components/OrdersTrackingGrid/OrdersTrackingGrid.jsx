@@ -5,6 +5,7 @@ import {
   SORT_LOCAL_STORAGE_KEY,
   ORDER_FILTER_LOCAL_STORAGE_KEY,
   REPORTS_LOCAL_STORAGE_KEY,
+  SEARCH_LOCAL_STORAGE_KEY,
 } from '../../../../utils/constants';
 import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import BaseGrid from '../BaseGrid/BaseGrid';
@@ -454,17 +455,40 @@ function OrdersTrackingGrid(props) {
       setClearFilters();
     }
     filtersRefs.current = getInitialFiltersDataFromLS();
-    const customerNumberFromFilterLS = getLocalStorageData(
-      ORDER_FILTER_LOCAL_STORAGE_KEY
-    )?.customerNumber;
-    const customerNumberFromUD = userData?.activeCustomer?.customerNumber;
-    if (
-      customerNumberFromUD &&
-      customerNumberFromFilterLS &&
-      customerNumberFromUD !== customerNumberFromFilterLS
-    ) {
+
+    const shouldResetStoredFilters = () => {
+      const customerNumberFromUD = userData?.activeCustomer?.customerNumber;
+      const customerNumberFromSearchLS = getLocalStorageData(
+        SEARCH_LOCAL_STORAGE_KEY
+      )?.customerNumber;
+      const customerNumberFromOrderSearchLS = getLocalStorageData(
+        ORDER_SEARCH_LOCAL_STORAGE_KEY
+      )?.customerNumber;
+      const customerNumberFromReportLS = getLocalStorageData(
+        REPORTS_LOCAL_STORAGE_KEY
+      )?.customerNumber;
+      const customerNumberFromFilterLS = getLocalStorageData(
+        ORDER_FILTER_LOCAL_STORAGE_KEY
+      )?.customerNumber;
+
+      const areFilterDataDifferent = customerNumberFromFilterLS &&
+        customerNumberFromUD !== customerNumberFromFilterLS;
+      const areReportDataDifferent = customerNumberFromReportLS &&
+        customerNumberFromUD !== customerNumberFromReportLS;
+      const areSearchDataDifferent = customerNumberFromSearchLS && 
+        customerNumberFromUD !== customerNumberFromSearchLS;
+      const areOrderSearchDataDifferent = customerNumberFromOrderSearchLS && 
+        customerNumberFromUD !== customerNumberFromOrderSearchLS;
+      return customerNumberFromUD && (areFilterDataDifferent || areReportDataDifferent || areSearchDataDifferent || areOrderSearchDataDifferent);
+    }
+    if (shouldResetStoredFilters()) {
       filtersRefs.current = null;
-      resetLocalStorage([ORDER_FILTER_LOCAL_STORAGE_KEY]);
+      resetLocalStorage([
+        ORDER_FILTER_LOCAL_STORAGE_KEY,
+        REPORTS_LOCAL_STORAGE_KEY,
+        SEARCH_LOCAL_STORAGE_KEY,
+        ORDER_SEARCH_LOCAL_STORAGE_KEY,
+      ]);
     } 
     redirectedFrom && deleteSearchParam('redirectedFrom');
     const refinements = await fetchFiltersRefinements();
@@ -538,6 +562,7 @@ function OrdersTrackingGrid(props) {
       setLocalStorageData(REPORTS_LOCAL_STORAGE_KEY, {
         key: 'EOLOrders',
         label: translations?.EOLOrders,
+        customerNumber: userData?.activeCustomer?.customerNumber,
       });
       setCustomState({
         key: 'showCriteria',
@@ -552,6 +577,7 @@ function OrdersTrackingGrid(props) {
         setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
           field: el.searchKey,
           value: params.get(el.param),
+          customerNumber: userData?.activeCustomer?.customerNumber,
         });
         onQueryChanged({ onSearchAction: true });
       }

@@ -111,6 +111,7 @@ const Search = (
     field: ref.current.field || getInitialKey,
     value: ref.current.value || getInitialValue,
   });
+  const userData = useOrderTrackingStore((state) => state.userData);
   const minimalQueryLength = 2;
   const loading =
     open && value.length >= minimalQueryLength && suggestions.length === 0;
@@ -252,6 +253,7 @@ const Search = (
       setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
         field: newKey,
         value: value,
+        customerNumber: userData?.activeCustomer?.customerNumber,
       });
       pushDataToGTMAutocomplete(newGTMKey, value, suggestions);
       resetSearch();

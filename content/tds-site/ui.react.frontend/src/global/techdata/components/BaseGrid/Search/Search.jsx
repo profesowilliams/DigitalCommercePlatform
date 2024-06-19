@@ -105,6 +105,7 @@ function _GridSearch(
       setLocalStorageData(SEARCH_LOCAL_STORAGE_KEY, {
         field: searchTerm.option.searchKey,
         value: searchTerm.value,
+        customerNumber: userData?.activeCustomer?.customerNumber,
       });
       setSwitchDropdown(false);
       setIsSearchCapsuleVisible(true);
