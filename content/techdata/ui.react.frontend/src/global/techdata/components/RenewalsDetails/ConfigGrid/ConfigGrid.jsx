@@ -468,6 +468,13 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
                 )}
                 {errorMessage}
               </p>
+              {
+                redBanner && data.feedBackMessages?.[0]?.jsonUrlMessage && (
+                    <a href={`${data.feedBackMessages?.[0]?.jsonUrl}refId=${data.feedBackMessages?.[0]?.refId}&type=${data.feedBackMessages?.[0]?.type}`}
+                        target="_blank">
+                    {data.feedBackMessages?.[0]?.jsonUrlMessage}</a>
+                )
+              }
             </div>
           )}
       </div>
