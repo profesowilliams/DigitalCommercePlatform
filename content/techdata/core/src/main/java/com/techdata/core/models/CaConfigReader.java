@@ -226,6 +226,8 @@ public class CaConfigReader {
 
     private String gtmBodyJSScript;
 
+    private String languageVersion;
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -355,6 +357,7 @@ public class CaConfigReader {
         allowedFileExtensions = String.join(",", Arrays.asList(formConfigurations.allowedFileExtensions()));
         fileThresholdInMB = String.valueOf(formConfigurations.fileThresholdInMB());
         textFieldRegexString = formConfigurations.textFieldRegexString();
+        languageVersion = commonConfigurations.languageVersion();
     }
 
     public String getUiServiceDomain() {
@@ -742,5 +745,9 @@ public class CaConfigReader {
 
     public String getGtmBodyJSScript() {
         return gtmBodyJSScript;
+    }
+
+    public String getLanguageVersion() {
+        return  languageVersion;
     }
 }

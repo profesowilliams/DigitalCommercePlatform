@@ -17,4 +17,6 @@ public @interface CommonConfigurations {
     @Property(label = "Enable Qualtrics Code", description = "Check to enable Qualtrics code.")
     boolean enableQualtricsCode() default false;
 
+    @Property(label = "Language version", description = "Language version.")
+    String languageVersion() default "1";
 }

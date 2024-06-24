@@ -33,7 +33,8 @@
         data-disable-entitlements-list="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableEntitlementsList}"
         data-consumer-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].consumerRequestHeader}"
         data-sly-attribute.data-environment-request-header="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].environmentEnabled ? caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].environmentRequestHeader : ''}"
-        data-disable-impersonation-header="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableImpersonateAccountRequestHeader}">
+        data-disable-impersonation-header="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableImpersonateAccountRequestHeader}"
+        data-language-version="${caconfig['com.tdscore.core.slingcaconfig.CommonConfigurations'].languageVersion}">
     <script data-sly-test.dataLayerEnabled="${page.dataJson}">
       window.adobeDataLayer = window.adobeDataLayer || [];
       adobeDataLayer.push({

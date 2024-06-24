@@ -147,6 +147,8 @@ class CaConfigReaderTest {
         when(ecommerceAuthenticationConfiguration.getUserEndpoint()).thenReturn("getUserEndpoint");
         when(ecommerceAuthenticationConfiguration.loginEndpoint()).thenReturn("loginEndpoint");
 
+        when(commonConfigurations.languageVersion()).thenReturn("languageVersion");
+
 
         underTest.init();
         assertEquals("uiServiceDomain", underTest.getUiServiceDomain());
@@ -211,5 +213,7 @@ class CaConfigReaderTest {
 
         assertEquals("getUserEndpoint", underTest.getUserEndpoint());
         assertEquals("loginEndpoint", underTest.getEcommerceAuthenticationLoginEndpoint());
+
+        assertEquals("languageVersion", underTest.getLanguageVersion());
     }
 }

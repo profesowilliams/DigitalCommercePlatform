@@ -138,6 +138,8 @@ class CaConfigReaderTest {
         when(commonConfigurations.agGridLicenseKey()).thenReturn("agGridLicenseKey");
         when(formConfigurations.allowedFileExtensions()).thenReturn(new String[]{".pdf", ".zip"});
 
+        when(commonConfigurations.languageVersion()).thenReturn("languageVersion");
+
 
         underTest.init();
         assertEquals("uiServiceDomain", underTest.getUiServiceDomain());
@@ -200,5 +202,7 @@ class CaConfigReaderTest {
         assertEquals("productEmptyImageUrl", underTest.getProductEmptyImageUrl());
         assertEquals("agGridLicenseKey", underTest.getAgGridLicenseKey());
         assertEquals("exportPDFRenewalsEndpoint", underTest.getExportPDFRenewalsEndpoint());
+
+        assertEquals("languageVersion", underTest.getLanguageVersion());
     }
 }

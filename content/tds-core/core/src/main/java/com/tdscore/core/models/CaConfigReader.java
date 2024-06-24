@@ -291,6 +291,8 @@ public class CaConfigReader {
     private boolean enableRequestQuote;
     private boolean enableReviseOption;
 
+    private String languageVersion;
+
     @PostConstruct
     public void init() {
 
@@ -461,6 +463,7 @@ public class CaConfigReader {
         allowedFileExtensions = String.join(",", Arrays.asList(formConfigurations.allowedFileExtensions()));
         fileThresholdInMB = String.valueOf(formConfigurations.fileThresholdInMB());
         textFieldRegexString = formConfigurations.textFieldRegexString();
+        languageVersion = commonConfigurations.languageVersion();
     }
 
     public String getUiServiceDomain() {
@@ -881,4 +884,8 @@ public class CaConfigReader {
         return enableRequestQuote;
     }
     public boolean getEnableReviseOption() { return enableReviseOption;}
+
+    public String getLanguageVersion() {
+        return  languageVersion;
+    }
 }
