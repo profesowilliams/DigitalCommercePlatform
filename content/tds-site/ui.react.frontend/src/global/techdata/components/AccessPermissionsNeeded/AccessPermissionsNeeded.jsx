@@ -3,7 +3,7 @@ import { AccessPermisionsNeededIcon } from './../../../../fluentIcons/FluentIcon
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 const AccessPermissionsNeeded = ({ noAccessProps }) => {
-  const { noAccessTitle, noAccessMessage, noAccessBack, noAccessLink } =
+  const { noAccessTitle, noAccessMessage } =
     noAccessProps;
   return (
     <div className="access-permissions__wrapper">

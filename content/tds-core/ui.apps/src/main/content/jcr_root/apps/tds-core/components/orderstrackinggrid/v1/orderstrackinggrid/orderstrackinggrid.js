@@ -355,6 +355,8 @@ use(["../common/utils.js"], function (utils) {
       "noAccessMessage",
       "noAccessBack",
       "noAccessLink",
+      "unavailableTitle",
+      "unavailableText",
     ];
     noAccessLabelList.map((label) => {
       noAccessProps[label] = properties[label];

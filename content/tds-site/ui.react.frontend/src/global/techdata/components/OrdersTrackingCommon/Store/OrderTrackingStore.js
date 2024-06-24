@@ -40,6 +40,7 @@ const INITIAL_STATE = {
 
   branding: '',
   userData: null,
+  isAvailable: true,
   toolTipData: {
     value: '',
     x: 0,

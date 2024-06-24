@@ -6192,6 +6192,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
         companyName: "Intouch Delivery Address 2",
         name: "Intouch Delivery Address 2",
         line1: "Hampshire House",
+        line2: "Street Name",
         city: "London",
         zip: "SW10",
         country: "GB",

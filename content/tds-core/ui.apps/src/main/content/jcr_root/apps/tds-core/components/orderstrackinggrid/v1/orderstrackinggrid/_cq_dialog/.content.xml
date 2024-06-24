@@ -1209,6 +1209,16 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="No Access Link"
                                                 name="./noAccessLink" />
+                                            <unavailableTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Unavailable Title"
+                                                name="./unavailableTitle" />
+                                            <unavailableText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Unavailable Text"
+                                                name="./unavailableText" />
                                         </items>
                                     </column>
                                 </items>

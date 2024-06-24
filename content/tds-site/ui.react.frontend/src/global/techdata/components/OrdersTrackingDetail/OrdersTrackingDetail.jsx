@@ -158,6 +158,7 @@ function OrdersTrackingDetail(props) {
       } else if (flyoutType === 'Invoice') {
         invoiceFailCounter.current++;
       }
+      setIsAvailable(false);
     }
   }
 

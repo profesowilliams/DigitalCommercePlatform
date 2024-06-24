@@ -64,6 +64,7 @@ import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getPredefinedSearchOptionsList } from './utils/orderTrackingUtils';
 import { getHeaderInfo } from '../../../../utils/headers/get';
+import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
 
 const searchParamsKeys = [
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
@@ -123,6 +124,7 @@ function OrdersTrackingGrid(props) {
     setMainGridRowsTotalCounter,
     updateOrderFilterCounter,
     setClearFilters,
+    setIsAvailable,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore,
@@ -130,6 +132,7 @@ function OrdersTrackingGrid(props) {
   );
   const userData = useOrderTrackingStore((st) => st.userData);
   const paginationData = useOrderTrackingStore((st) => st.pagination);
+  const isAvailable = useOrderTrackingStore((st) => st.isAvailable);
   const alternativeSearchFlag = useOrderTrackingStore(
     (state) => state.featureFlags.alternativeSearch
   );
@@ -412,6 +415,7 @@ function OrdersTrackingGrid(props) {
         invoiceFailedCounter.current++;
       }
       console.error('Error', error);
+      setIsAvailable(false);
     }
   };
 
@@ -596,73 +600,77 @@ function OrdersTrackingGrid(props) {
 
   const authorizedContent = () => {
     return hasAccess ? (
-      <div className="cmp-order-tracking-grid">
-        <Criteria
-          config={gridConfig}
-          searchCriteria={searchParameters}
-          reportValue={reportFilterValue.current.value}
-        />
-        <MainGridHeader
-          onQueryChanged={onQueryChanged}
-          searchLabels={searchLabels}
-          searchOptionsList={searchOptionsList}
-          analyticsCategories={analyticsCategories}
-          paginationLabels={paginationLabels}
-          customPaginationRef={customPaginationRef}
-          isLoading={isLoading}
-          searchParams={{
-            reports: reportFilterValue,
-            sort: hasSortChanged,
-            search: searchCriteria,
-            filtersRefs: filtersRefs
-          }}
-          setDateRange={setDateRange}
-          gridConfig={gridConfig}
-          reportFilterValue={reportFilterValue}
-          settings={settingsResponse}
-        />
-        <BaseGrid
-          columnList={addCurrencyToTotalColumn(
-            componentProp.columnList,
-            userData
-          )}
-          definitions={ordersTrackingDefinition(
-            componentProp,
-            openFilePdf,
-            userData?.isInternalUser
-          )}
-          config={gridConfig}
-          options={options}
-          gridConfig={gridConfig}
-          omitCreatedQuery={true}
-          requestInterceptor={customRequestInterceptor}
-          mapServiceData={mapServiceData}
-          onSortChanged={onSortChanged}
-          onAfterGridInit={_onAfterGridInit}
-          onDataLoad={onDataLoad}
-          responseError={responseError}
-          DetailRenderers={(props) => (
-            <OrderDetailsRenderers
-              {...props}
-              config={gridConfig}
-              openFilePdf={(flyoutType, orderId, selectedId) =>
-                openFilePdf(flyoutType, orderId, selectedId)
-              }
-              rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-              newItem={newItem}
-              onQueryChanged={onQueryChanged}
-            />
-          )}
-        />
-        <MainGridFooter
-          analyticsCategories={analyticsCategories}
-          onQueryChanged={onQueryChanged}
-          onCloseToaster={onCloseToaster}
-          customPaginationRef={customPaginationRef}
-          isLoading={isLoading}
-          paginationLabels={paginationLabels}
-        />
-      </div>
+      isAvailable ? (
+        <div className="cmp-order-tracking-grid">
+          <Criteria
+            config={gridConfig}
+            searchCriteria={searchParameters}
+            reportValue={reportFilterValue.current.value}
+          />
+          <MainGridHeader
+            onQueryChanged={onQueryChanged}
+            searchLabels={searchLabels}
+            searchOptionsList={searchOptionsList}
+            analyticsCategories={analyticsCategories}
+            paginationLabels={paginationLabels}
+            customPaginationRef={customPaginationRef}
+            isLoading={isLoading}
+            searchParams={{
+              reports: reportFilterValue,
+              sort: hasSortChanged,
+              search: searchCriteria,
+              filtersRefs: filtersRefs,
+            }}
+            setDateRange={setDateRange}
+            gridConfig={gridConfig}
+            reportFilterValue={reportFilterValue}
+            settings={settingsResponse}
+          />
+          <BaseGrid
+            columnList={addCurrencyToTotalColumn(
+              componentProp.columnList,
+              userData
+            )}
+            definitions={ordersTrackingDefinition(
+              componentProp,
+              openFilePdf,
+              userData?.isInternalUser
+            )}
+            config={gridConfig}
+            options={options}
+            gridConfig={gridConfig}
+            omitCreatedQuery={true}
+            requestInterceptor={customRequestInterceptor}
+            mapServiceData={mapServiceData}
+            onSortChanged={onSortChanged}
+            onAfterGridInit={_onAfterGridInit}
+            onDataLoad={onDataLoad}
+            responseError={responseError}
+            DetailRenderers={(props) => (
+              <OrderDetailsRenderers
+                {...props}
+                config={gridConfig}
+                openFilePdf={(flyoutType, orderId, selectedId) =>
+                  openFilePdf(flyoutType, orderId, selectedId)
+                }
+                rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+                newItem={newItem}
+                onQueryChanged={onQueryChanged}
+              />
+            )}
+          />
+          <MainGridFooter
+            analyticsCategories={analyticsCategories}
+            onQueryChanged={onQueryChanged}
+            onCloseToaster={onCloseToaster}
+            customPaginationRef={customPaginationRef}
+            isLoading={isLoading}
+            paginationLabels={paginationLabels}
+          />
+        </div>
+      ) : (
+        <TemporarilyUnavailable noAccessProps={noAccessProps} />
+      )
     ) : (
       <AccessPermissionsNeeded noAccessProps={noAccessProps} />
     );

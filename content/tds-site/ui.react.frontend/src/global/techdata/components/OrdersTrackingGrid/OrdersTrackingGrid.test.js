@@ -109,6 +109,9 @@ const mockedProps = {
     noAccessMessage:
       "Looks like your credentials don't include this area. If you feel this is a mistake, please contact your administrator to request a change.",
     noAccessBack: 'Go back',
+    unavailableTitle: 'Temporarily unavailable',
+    unavailableText:
+      'It has not been possible to download the document at this time. Please try again later',
   },
   searchOptionsList: [
     {

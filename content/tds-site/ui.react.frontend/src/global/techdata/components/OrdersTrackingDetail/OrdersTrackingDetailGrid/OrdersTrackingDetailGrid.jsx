@@ -22,6 +22,7 @@ import useExtendGridOperations from '../../BaseGrid/Hooks/useExtendGridOperation
 import { useStore } from '../../../../../utils/useStore';
 import { GreenInfoIcon } from '../../../../../fluentIcons/FluentIcons';
 import OrderStatusModal from '../../OrdersTrackingGrid/Modals/OrderStatusModal';
+import AccessPermissionsNeeded from '../../AccessPermissionsNeeded/AccessPermissionsNeeded';
 
 function OrdersTrackingDetailGrid({
   gridProps,
