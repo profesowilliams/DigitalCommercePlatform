@@ -25,6 +25,7 @@ import OrderStatusModal from '../../OrdersTrackingGrid/Modals/OrderStatusModal';
 import AccessPermissionsNeeded from '../../AccessPermissionsNeeded/AccessPermissionsNeeded';
 
 function OrdersTrackingDetailGrid({
+  data,
   gridProps,
   openFilePdf,
   gridRef,
@@ -202,7 +203,9 @@ function OrdersTrackingDetailGrid({
     },
     {
       field: 'unitPriceFormatted',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.unitPrice),
+      headerName: getDictionaryValueOrKey(
+        config?.itemsLabels?.unitPrice
+      )?.replace('{currency-code}', data?.paymentDetails?.currency),
       cellRenderer: ({ data }) => (
         <UnitCostColumn line={data} sortedLineDetails={sortedLineDetails} />
       ),
@@ -222,7 +225,9 @@ function OrdersTrackingDetailGrid({
     },
     {
       field: 'totalPriceFormatted',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineTotalPrice),
+      headerName: getDictionaryValueOrKey(
+        config?.itemsLabels?.lineTotalPrice
+      )?.replace('{currency-code}', data?.paymentDetails?.currency),
       cellRenderer: ({ data }) => (
         <TotalColumn
           line={data}

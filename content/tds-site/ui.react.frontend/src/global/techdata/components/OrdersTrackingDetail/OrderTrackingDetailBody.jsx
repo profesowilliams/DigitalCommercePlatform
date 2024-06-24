@@ -36,6 +36,7 @@ const OrderTrackingDetailBody = ({
     <div className="cmp-orders-qp__grid cmp-order-preview">
       <OrderTrackingContainer config={config} />
       <OrdersTrackingDetailGrid
+        data={content}
         gridProps={config}
         openFilePdf={openFilePdf}
         gridRef={gridRef}
