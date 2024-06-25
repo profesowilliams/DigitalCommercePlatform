@@ -143,6 +143,21 @@ use(["../../../common/utils.js"], function (utils) {
     jsonObject["soldToLabels"] = soldToLabels;
   }
 
+  // No Access Screen
+  const noAccessLabelList = [
+    "noAccessTitle",
+    "noAccessMessage",
+    "unavailableTitle",
+    "unavailableText",
+  ];
+  noAccessLabelList.map((label) => {
+    noAccessProps[label] = properties[label];
+  });
+
+  if (noAccessProps != null) {
+    jsonObject["noAccessProps"] = noAccessProps;
+  }
+
   // OrderAcknowledgementLabels
   const orderAcknowledgementLabelsList = [
     "orderAcknowledgement",
@@ -384,20 +399,19 @@ use(["../../../common/utils.js"], function (utils) {
 
   jsonObject["exportAllOrderLinesEndpoint"] =
     this.serviceData.uiServiceDomain +
-    this.serviceData.exportAllOrderLinesEndpoint || "";
+      this.serviceData.exportAllOrderLinesEndpoint || "";
 
   jsonObject["exportLinesWithSerialNumbersOnlyEndpoint"] =
     this.serviceData.uiServiceDomain +
-    this.serviceData.exportLinesWithSerialNumbersOnlyEndpoint || "";
+      this.serviceData.exportLinesWithSerialNumbersOnlyEndpoint || "";
 
   jsonObject["replaceProductEndpoint"] =
     this.serviceData.uiServiceDomain +
-    this.serviceData.replaceProductEndpoint || "";
+      this.serviceData.replaceProductEndpoint || "";
 
   jsonObject["replacementsProductsEndpoint"] =
     this.serviceData.uiServiceDomain +
-    this.serviceData.replacementsProductsEndpoint || "";
-
+      this.serviceData.replacementsProductsEndpoint || "";
 
   // Product Replacement Flyout
   const productReplacementFlyoutLabels = [
@@ -501,7 +515,7 @@ use(["../../../common/utils.js"], function (utils) {
 
   jsonObject["orderModifyChangeEndpoint"] =
     this.serviceData.uiServiceDomain +
-    this.serviceData.orderModifyChangeEndpoint || "";
+      this.serviceData.orderModifyChangeEndpoint || "";
 
   return {
     configJson: JSON.stringify(jsonObject),

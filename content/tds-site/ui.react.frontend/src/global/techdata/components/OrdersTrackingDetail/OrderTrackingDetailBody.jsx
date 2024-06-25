@@ -9,6 +9,7 @@ const OrderTrackingDetailBody = ({
   gridRef,
   rowsToGrayOutTDNameRef,
   newItem,
+  componentProps,
 }) => {
   useEffect(() => {
     if (newItem && content && content.items) {
@@ -40,6 +41,7 @@ const OrderTrackingDetailBody = ({
         gridProps={config}
         openFilePdf={openFilePdf}
         gridRef={gridRef}
+        componentProps={componentProps}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
       />
     </div>

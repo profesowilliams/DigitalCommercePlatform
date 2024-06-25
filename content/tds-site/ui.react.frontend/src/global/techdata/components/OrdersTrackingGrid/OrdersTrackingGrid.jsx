@@ -364,6 +364,7 @@ function OrdersTrackingGrid(props) {
         } else if (flyoutType === 'Invoice') {
           invoiceFailedCounter.current++;
         }
+        setIsAvailable(false);
       }
     } catch (error) {
       pushFailedDownloadGoogleAnalytics(
@@ -377,6 +378,7 @@ function OrdersTrackingGrid(props) {
       } else if (flyoutType === 'Invoice') {
         invoiceFailedCounter.current++;
       }
+      setIsAvailable(false);
       console.error('Error', error);
     }
   };
@@ -401,6 +403,7 @@ function OrdersTrackingGrid(props) {
         } else if (flyoutType === 'Invoice') {
           invoiceFailedCounter.current++;
         }
+        setIsAvailable(false);
       }
     } catch (error) {
       pushFailedDownloadGoogleAnalytics(
@@ -414,8 +417,8 @@ function OrdersTrackingGrid(props) {
       } else if (flyoutType === 'Invoice') {
         invoiceFailedCounter.current++;
       }
-      console.error('Error', error);
       setIsAvailable(false);
+      console.error('Error', error);
     }
   };
 

@@ -45,9 +45,8 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const { setUserData, hasRights, setTranslations } = useOrderTrackingStore(
-    (st) => st.effects
-  );
+  const { setUserData, hasRights, setTranslations, setIsAvailable } =
+    useOrderTrackingStore((st) => st.effects);
   const userData = useOrderTrackingStore((st) => st.userData);
   const hasAIORights = hasRights('AIO');
   const hasOrderModificationRights = hasRights('OrderModification');
@@ -103,6 +102,7 @@ function OrdersTrackingDetail(props) {
         } else if (flyoutType === 'Invoice') {
           invoiceFailCounter.current++;
         }
+        setIsAvailable(false);
       }
     } catch (error) {
       pushFailedDownloadGoogleAnalytics(
@@ -116,6 +116,7 @@ function OrdersTrackingDetail(props) {
       } else if (flyoutType === 'Invoice') {
         invoiceFailCounter.current++;
       }
+      setIsAvailable(false);
       console.error('Error', error);
     }
   };
@@ -145,6 +146,7 @@ function OrdersTrackingDetail(props) {
         } else if (flyoutType === 'Invoice') {
           invoiceFailCounter.current++;
         }
+        setIsAvailable(false);
       }
     } catch (error) {
       pushFailedDownloadGoogleAnalytics(
@@ -232,6 +234,7 @@ function OrdersTrackingDetail(props) {
                 content={content}
                 openFilePdf={openFilePdf}
                 gridRef={gridRef}
+                componentProps={componentProps}
                 rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
                 newItem={newItem}
               />

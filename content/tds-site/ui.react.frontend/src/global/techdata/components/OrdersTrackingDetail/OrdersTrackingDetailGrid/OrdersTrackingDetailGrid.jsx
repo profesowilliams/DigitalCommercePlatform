@@ -23,6 +23,7 @@ import { useStore } from '../../../../../utils/useStore';
 import { GreenInfoIcon } from '../../../../../fluentIcons/FluentIcons';
 import OrderStatusModal from '../../OrdersTrackingGrid/Modals/OrderStatusModal';
 import AccessPermissionsNeeded from '../../AccessPermissionsNeeded/AccessPermissionsNeeded';
+import TemporarilyUnavailable from '../../TemporarilyUnavailable/TemporarilyUnavailable';
 
 function OrdersTrackingDetailGrid({
   data,
@@ -30,6 +31,7 @@ function OrdersTrackingDetailGrid({
   openFilePdf,
   gridRef,
   rowsToGrayOutTDNameRef,
+  componentProps,
 }) {
   const [responseError, setResponseError] = useState(null);
   const [response, setResponse] = useState(null);
@@ -38,6 +40,7 @@ function OrdersTrackingDetailGrid({
     (state) => state.refreshOrderTrackingDetailApi
   );
   const userData = useOrderTrackingStore((st) => st.userData);
+  const isAvailable = useOrderTrackingStore((st) => st.isAvailable);
   const resetCallback = useRef(null);
   const shouldGoToFirstPage = useRef(false);
   const isOnSearchAction = useRef(false);
@@ -294,40 +297,51 @@ function OrdersTrackingDetailGrid({
       {(userData?.activeCustomer || isLocalDevelopment) && (
         <>
           {hasAccess ? (
-            <div className="cmp-order-tracking-details-grid">
-              <Grid
-                columnDefinition={addCurrencyToColumns(myColumnDefs, userData)}
-                config={config}
-                gridConfig={config}
-                requestInterceptor={customRequestInterceptor}
-                mapServiceData={mapServiceData}
-                onAfterGridInit={_onAfterGridInit}
-                loadingCellRenderer={loadingCellRenderer}
-                rowClassRules={rowClassRules}
-                gridRef={gridRef}
-                responseError={responseError}
+            isAvailable ? (
+              <div className="cmp-order-tracking-details-grid">
+                <Grid
+                  columnDefinition={addCurrencyToColumns(
+                    myColumnDefs,
+                    userData
+                  )}
+                  config={config}
+                  gridConfig={config}
+                  requestInterceptor={customRequestInterceptor}
+                  mapServiceData={mapServiceData}
+                  onAfterGridInit={_onAfterGridInit}
+                  loadingCellRenderer={loadingCellRenderer}
+                  rowClassRules={rowClassRules}
+                  gridRef={gridRef}
+                  responseError={responseError}
+                />
+                <Toaster
+                  classname="toaster-modal-otg"
+                  onClose={onCloseToaster}
+                  closeEnabled
+                  store={useOrderTrackingStore}
+                  message={{
+                    successSubmission: 'successSubmission',
+                    failedSubmission: 'failedSubmission',
+                  }}
+                />
+                <OrderStatusModal
+                  open={openStatusesModal}
+                  handleClose={() => {
+                    setOpenStatusesModal(false);
+                  }}
+                  labels={config?.statusesLabels}
+                />
+              </div>
+            ) : (
+              <TemporarilyUnavailable
+                noAccessProps={componentProps?.noAccessProps}
               />
-              <Toaster
-                classname="toaster-modal-otg"
-                onClose={onCloseToaster}
-                closeEnabled
-                store={useOrderTrackingStore}
-                message={{
-                  successSubmission: 'successSubmission',
-                  failedSubmission: 'failedSubmission',
-                }}
-              />
-              <OrderStatusModal
-                open={openStatusesModal}
-                handleClose={() => {
-                  setOpenStatusesModal(false);
-                }}
-                labels={config?.statusesLabels}
-              />
-            </div>
+            )
           ) : (
             <>
-              <AccessPermissionsNeeded noAccessProps={noAccessProps} />
+              <AccessPermissionsNeeded
+                noAccessProps={componentProps?.noAccessProps}
+              />
             </>
           )}
         </>
