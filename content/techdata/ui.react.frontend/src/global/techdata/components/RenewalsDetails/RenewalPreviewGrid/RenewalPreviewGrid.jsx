@@ -111,7 +111,7 @@ function Price({ value }, data, compProps) {
 }
 
 function RenewalPreviewGrid(
-  { data, gridProps, shopDomainPage, isEditing, compProps, isActiveLicense },
+  { data, gridProps, shopDomainPage, isEditing, compProps, isActiveLicense, activeLicenseEdit },
   ref
 ) {
   const [modal, setModal] = useState(null);
@@ -509,8 +509,9 @@ function RenewalPreviewGrid(
       headerName: gridProps?.quantity,
       cellRenderer: (props) => {
         const isEditing = isEditingRef.current && data?.canEditQty;
+        const dataObj = data;
         return !props?.data?.id?.includes('Agreement')
-          ? QuantityColumn({ ...props, isEditing })
+          ? QuantityColumn({ ...props, isEditing, activeLicenseEdit, dataObj })
           : '';
       },
       width: gridColumnWidths.quantity,

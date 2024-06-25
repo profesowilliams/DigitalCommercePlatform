@@ -84,13 +84,6 @@ function PlaceAdobeOrderDialog({
           {terms}
         </a>
         <span>, applicable </span>
-        <a
-          href={termsAndConditionsLink}
-          target="_blank"
-          className="cmp-place-order-link"
-        >
-          Country Specific Terms & Conditions
-        </a>
         <span> & the </span>
         <a
           href={termsAndConditionsLink}

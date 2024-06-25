@@ -309,6 +309,7 @@ function RenewalsDetails(props) {
                               }}
                               isEditing={!toggleEdit}
                               shopDomainPage={componentProp.shopDomainPage}
+                              activeLicenseEdit={renewalsDetails?.itemsActive?.length > 0}
                             />
                         </AccordionDetails>
                       </Accordion>
