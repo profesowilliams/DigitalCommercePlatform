@@ -18,6 +18,7 @@ use(["../../../common/utils.js"], function (utils) {
   const invoicesFlyout = {};
   const productReplacementFlyout = {};
   const statusesLabels = {};
+  const noAccessProps = {};
 
   jsonObject["uiServiceDomain"] = this.uiServiceDomain;
   jsonObject["uiCommerceServiceDomain"] = this.uiServiceDomain + `/ui-commerce`;
