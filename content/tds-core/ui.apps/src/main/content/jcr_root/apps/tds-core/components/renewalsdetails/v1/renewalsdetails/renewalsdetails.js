@@ -186,7 +186,7 @@ use(['../../../common/utils.js'], function(utils) {
         quotePreview["renewalsUrlLabel"] = properties["renewalsUrlLabel"];
     }
     if (properties && properties["renewalsUrl"]) {
-        quotePreview["renewalsUrl"] = properties["renewalsUrl"];
+        quotePreview["renewalsUrl"] = utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["renewalsUrl"]));
     }
      if (properties && properties["quoteOpportunityText"]) {
             quotePreview["quoteOpportunityText"] = properties["quoteOpportunityText"];

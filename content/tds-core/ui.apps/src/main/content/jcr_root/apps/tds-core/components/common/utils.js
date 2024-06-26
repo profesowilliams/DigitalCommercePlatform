@@ -1,5 +1,7 @@
 'use strict';
 use(function () {
+    const PARENT_FOLDER_LEVEL = 4;
+    const FOLDER_SEPARATOR = "/";
     function getDataFromMultifield (resourceResolver, multifieldPropertyName, populateFieldsCallback) {
         var columnListValues = null;
 
@@ -69,7 +71,8 @@ use(function () {
 
         let isEnvWithDispatcher =
             !(runModes.contains("sit") || runModes.contains("dit"));
-        let currentPageParentPath = currentPage.getParent(4).getPath();
+
+        let currentPageParentPath = currentPage.getPath().split(FOLDER_SEPARATOR).slice(0, PARENT_FOLDER_LEVEL).join(FOLDER_SEPARATOR);
 
         let detailUrl = url;
 
