@@ -246,9 +246,11 @@ export async function fetchRenewalsFilterByPost(config) {
             });
         }
 
-        // Remove DueDateTo if its value is 'null'
-        if (params.DueDateTo === null || params.DueDateTo === 'null') {
+        // Remove DueDateTo if its value is 'null' or null
+        if (params.DueDateTo == null || params.DueDateTo === 'null') {
             delete params.DueDateTo;
+        } else {
+            params.DueDateTo = new Date(params.DueDateTo).toISOString();
         }
 
         // Set DueDateFrom if dateSelected is not empty
@@ -644,6 +646,7 @@ const mapVendorWithProgramName = (params) => {
 };
 
 const mapDueDateFormatted = (params) => {
+    console.log("🚀 ~ file: renewalUtils.js ~ line 0 ~ mapDueDateFormatted ~ params", params?.node?.data?.formattedDueDate);
     return stringifyValue(params?.node?.data?.formattedDueDate);
 };
 
