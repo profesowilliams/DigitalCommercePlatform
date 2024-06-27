@@ -42,18 +42,20 @@ import { getDictionaryValue } from '../../../../../utils/utils';
 
 function GridSubTotal({ subtotal, data, gridProps, compProps, adobeVendor }) {
   const migrationQuoteType = data?.quoteType === 'Migration';
+  const renewalQuoteType = data?.quoteType === 'Renewal';
+  const autoRenewQuoteType = data?.quoteType === 'AutoRenew';
   const isRequestQuoteFlag =
     data?.canRequestQuote && compProps?.enableRequestQuote;
   return (
     <div className="cmp-renewal-preview__subtotal">
-      {migrationQuoteType ? (
+      {migrationQuoteType && adobeVendor ? (
         <div className="cmp-renewal-preview__subtotal--note">
           {getDictionaryValue(
             'details.renewal.label.migrationNote',
             'Note: Pricing displayed is subject to vendor price changes and exchange rate fluctuations. Adobe: price displayed in migration quotes is for reference purpose only. VIP and VIP MP Renewals pricing will differ.'
           )}
         </div>
-      ) : adobeVendor ? (
+      ) : (renewalQuoteType || autoRenewQuoteType) && adobeVendor ? (
         <div className="cmp-renewal-preview__subtotal--note">
           {getDictionaryValue(
             'details.renewal.label.adobeNote',
