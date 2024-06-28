@@ -72,4 +72,4 @@ RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
 RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1$2 [PT,L]
 
 # Google Site Verification
-RewriteRule ^/google(.*).html$ /content/dam/${CONTENT_FOLDER_NAME_TECHDATA}/site-root-files/google$1.html [NC, PT]
+RewriteRule ^/google(.*).html$ /content/dam/${CONTENT_FOLDER_NAME_TECHDATA}/site-root-files/google$1.html [PT,L]
