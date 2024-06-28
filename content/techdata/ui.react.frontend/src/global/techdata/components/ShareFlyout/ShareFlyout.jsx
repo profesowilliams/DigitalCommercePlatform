@@ -347,18 +347,29 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
       width="768px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutTitle) || 'Share'}
+      titleLabel={
+        getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutTitle) || 'Share'
+      }
       secondaryButton={false}
       classText="share-flyout"
       isLoading={isLoading}
       onClickButton={handleShareItClick}
-      buttonLabel={getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutButtonLabel) || 'Share'}
+      buttonLabel={
+        getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutButtonLabel) ||
+        'Share'
+      }
       disabledButton={!enableShare}
       isShareFlyout={true}
-      loadingButtonLabel={getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutButtonSharingLabel) || 'Sharing'}
+      loadingButtonLabel={
+        getDictionaryValueOrKey(
+          shareFlyoutContent.shareFlyoutButtonSharingLabel
+        ) || 'Sharing'
+      }
     >
       <section className="cmp-flyout__content">
-        <p>{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutDescription)}</p>
+        <p className="cmp-flyout__content__description">
+          {getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutDescription)}
+        </p>
         <Box
           className="cmp-flyout__share-form"
           component="form"
@@ -375,136 +386,168 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
             updatedEmailArr={updatedEmailArr}
             emailsArr={toEmailsArr}
             resetDataFlag={resetDataFlag}
-            requiredText={getDictionaryValueOrKey(shareFlyoutContent.requiredText)}/>
+            requiredText={getDictionaryValueOrKey(
+              shareFlyoutContent.requiredText
+            )}
+          />
           <EmailInput
-           id="cc-email"
-           updateRequestObject={updateRequestObject}
-           label={getDictionaryValueOrKey(shareFlyoutContent.emailCCLabel)}
-           updatedEmailArr={updatedEmailArr}
-           resetDataFlag={resetDataFlag}
-           emailsArr={ccEmailsArr}/>
+            id="cc-email"
+            updateRequestObject={updateRequestObject}
+            label={getDictionaryValueOrKey(shareFlyoutContent.emailCCLabel)}
+            updatedEmailArr={updatedEmailArr}
+            resetDataFlag={resetDataFlag}
+            emailsArr={ccEmailsArr}
+          />
           <div className="email-preview-section">
-            <h3 className="email-preview-section-title">{getDictionaryValueOrKey(shareFlyoutContent.emailPreviewDescription)}:</h3>
-            <p className="email-preview-section-product">{vendorName} {quoteType} for {endUserName} - {activeAgreementID}</p>
-            <p className="email-preview-section-desc">{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteDescription)}</p>
-            <a className="email-preview-section-quote-btn" href={`#`}>{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteButtonLabel)}</a>
+            <h3 className="email-preview-section-title">
+              {getDictionaryValueOrKey(
+                shareFlyoutContent.emailPreviewDescription
+              )}
+              :
+            </h3>
+            <p className="email-preview-section-product">
+              {vendorName} {quoteType} for {endUserName} - {activeAgreementID}
+            </p>
+            <p className="email-preview-section-desc">
+              {getDictionaryValueOrKey(
+                shareFlyoutContent.shareFlyoutQuoteDescription
+              )}
+            </p>
+            <a className="email-preview-section-quote-btn" href={`#`}>
+              {getDictionaryValueOrKey(
+                shareFlyoutContent.shareFlyoutQuoteButtonLabel
+              )}
+            </a>
           </div>
           <div>
-            <textarea type="text"
-              placeholder={getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentsLabel)}
+            <textarea
+              type="text"
+              placeholder={getDictionaryValueOrKey(
+                shareFlyoutContent.shareFlyoutCommentsLabel
+              )}
               className="comments"
-              maxLength={getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount)}
-              onChange={(e) => handleCommentChange(e)}/>
-            <span className="char-count">{count} {getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCountText)}</span>
+              maxLength={getDictionaryValueOrKey(
+                shareFlyoutContent.shareFlyoutCommentCount
+              )}
+              onChange={(e) => handleCommentChange(e)}
+            />
+            <span className="char-count">
+              {count}{' '}
+              {getDictionaryValueOrKey(
+                shareFlyoutContent.shareFlyoutCommentCountText
+              )}
+            </span>
           </div>
         </Box>
         <div className="email-signature">
-          <p>{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutSignatureLabel)}</p>
-          <p>{userData?.firstName} {userData?.lastName}</p>
+          <p>
+            {getDictionaryValueOrKey(
+              shareFlyoutContent.shareFlyoutSignatureLabel
+            )}
+          </p>
+          <p>
+            {userData?.firstName} {userData?.lastName}
+          </p>
         </div>
-        {
-          apiResponseFlag ? (
-            <>
-              <div className="backdrop" onClick={closeAlert}></div>
-              <div className="api-failed-section">
-                <div className="content-section">
-                  {
-                    errorFlags.serverError ?
-                    (
-                      <>
-                        <WarningTriangleIcon />
-                        <div className="error-message-section">
-                          <h3>{shareFlyoutContent.shareFailedLabel}</h3>
-                          <p>{shareFlyoutContent.shareFailedDescription}</p>
-                        </div>
-                      </>
-                    ) : null
-                  }
-                  {
-                    errorFlags.incorrect ?
-                    (
-                      <>
-                        <ProhibitedIcon />
-                        <div className="error-message-section">
-                          <h3>{shareFlyoutContent.incorrectEmailLabel}</h3>
-                          <p>{shareFlyoutContent.incorrectEmailDescription}</p>
-                          {
-                            errorObj?.map((item) => {
-                              if (item.email && item.message.indexOf('Invalid') > -1) {
-                                return (
-                                  <span className="email-pills">{item.email}</span>
-                                )
-                              }
-                            })
-                          }
-                        </div>
-                      </>
-                    ) : null
-                  }
-                  {
-                    errorFlags.notFound ?
-                    (
-                      <>
-                        <WarningTriangleIcon />
-                        <div className="error-message-section">
-                          <h3>{shareFlyoutContent.recipientNotFoundLabel}</h3>
-                          <p>{shareFlyoutContent.recipientNotFoundDescription}</p>
-                          {
-                            accessErrObj?.map((item, i) => {
-                              if (item.email && item.message.indexOf('access') > -1) {
-                                return (
-                                  <ErrorModelEmailPill
-                                    key={item.email}
-                                    item={item}
-                                    accessErrObj={accessErrObj}
-                                    updateAccessErrObject={updateAccessErrObject}
-                                  />
-                                )
-                              }
-                            })
-                          }
-                        </div>
-                      </>
-                    ) : null
-                  }
-                </div>
-                <div className="button-section">
-                  {
-                    errorFlags.serverError ?
-                    (
-                      <>
-                        <a className="cancel-btn" href={`#`}
-                          onClick={closeAlert}>{shareFlyoutContent.shareFailedCancelLabel}</a>
-                        <a className="try-again-btn" href={`#`}
-                          onClick={handleTryAgainBtn}>{shareFlyoutContent.shareFailedTryAgainLabel}</a>
-                      </>
-                    ) : null
-                  }
-                  {
-                    errorFlags.incorrect ?
-                    (
-                      <>
-                        <a className="try-again-btn" href={`#`}
-                        onClick={closeAlert}>{shareFlyoutContent.incorrectEmailTryAgainLabel}</a>
-                      </>
-                    ) : null
-                  }
-                  {
-                    errorFlags.notFound ?
-                    (
-                      <>
-                        <a className="cancel-btn" href={`#`}
-                        onClick={closeAlert}>{shareFlyoutContent.recipientNotFoundCancelLabel}</a>
-                        <a className="try-again-btn" href={`#`}
-                          onClick={(e) => handleTryAgainBtn(e, true)}>{shareFlyoutContent.recipientNotFoundContinueLabel}</a>
-                      </>
-                    ) : null
-                  }
-                </div>
+        {apiResponseFlag ? (
+          <>
+            <div className="backdrop" onClick={closeAlert}></div>
+            <div className="api-failed-section">
+              <div className="content-section">
+                {errorFlags.serverError ? (
+                  <>
+                    <WarningTriangleIcon />
+                    <div className="error-message-section">
+                      <h3>{shareFlyoutContent.shareFailedLabel}</h3>
+                      <p>{shareFlyoutContent.shareFailedDescription}</p>
+                    </div>
+                  </>
+                ) : null}
+                {errorFlags.incorrect ? (
+                  <>
+                    <ProhibitedIcon />
+                    <div className="error-message-section">
+                      <h3>{shareFlyoutContent.incorrectEmailLabel}</h3>
+                      <p>{shareFlyoutContent.incorrectEmailDescription}</p>
+                      {errorObj?.map((item) => {
+                        if (
+                          item.email &&
+                          item.message.indexOf('Invalid') > -1
+                        ) {
+                          return (
+                            <span className="email-pills">{item.email}</span>
+                          );
+                        }
+                      })}
+                    </div>
+                  </>
+                ) : null}
+                {errorFlags.notFound ? (
+                  <>
+                    <WarningTriangleIcon />
+                    <div className="error-message-section">
+                      <h3>{shareFlyoutContent.recipientNotFoundLabel}</h3>
+                      <p>{shareFlyoutContent.recipientNotFoundDescription}</p>
+                      {accessErrObj?.map((item, i) => {
+                        if (item.email && item.message.indexOf('access') > -1) {
+                          return (
+                            <ErrorModelEmailPill
+                              key={item.email}
+                              item={item}
+                              accessErrObj={accessErrObj}
+                              updateAccessErrObject={updateAccessErrObject}
+                            />
+                          );
+                        }
+                      })}
+                    </div>
+                  </>
+                ) : null}
               </div>
-            </>
-          ) : null
-        }
+              <div className="button-section">
+                {errorFlags.serverError ? (
+                  <>
+                    <a className="cancel-btn" href={`#`} onClick={closeAlert}>
+                      {shareFlyoutContent.shareFailedCancelLabel}
+                    </a>
+                    <a
+                      className="try-again-btn"
+                      href={`#`}
+                      onClick={handleTryAgainBtn}
+                    >
+                      {shareFlyoutContent.shareFailedTryAgainLabel}
+                    </a>
+                  </>
+                ) : null}
+                {errorFlags.incorrect ? (
+                  <>
+                    <a
+                      className="try-again-btn"
+                      href={`#`}
+                      onClick={closeAlert}
+                    >
+                      {shareFlyoutContent.incorrectEmailTryAgainLabel}
+                    </a>
+                  </>
+                ) : null}
+                {errorFlags.notFound ? (
+                  <>
+                    <a className="cancel-btn" href={`#`} onClick={closeAlert}>
+                      {shareFlyoutContent.recipientNotFoundCancelLabel}
+                    </a>
+                    <a
+                      className="try-again-btn"
+                      href={`#`}
+                      onClick={(e) => handleTryAgainBtn(e, true)}
+                    >
+                      {shareFlyoutContent.recipientNotFoundContinueLabel}
+                    </a>
+                  </>
+                ) : null}
+              </div>
+            </div>
+          </>
+        ) : null}
       </section>
     </BaseFlyout>
   );

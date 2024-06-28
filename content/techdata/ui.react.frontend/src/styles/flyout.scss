@@ -1,14 +1,8 @@
 /* stylelint-disable -- Too much to fix, will delete file later. */
 
-$flyout-padding: 1.3rem;
+$flyout-padding: 16px;
 $flyout-small-height: 780px;
 $flyout-small-height-formax: 779px;
-
-.MuiDrawer-modal,
-.MuiDrawer-paper,
-.MuiAutocomplete-popper {
-  z-index: 12000 !important;
-}
 
 .cmp-flyout {
   font-family: $font-family-arial;
@@ -21,7 +15,7 @@ $flyout-small-height-formax: 779px;
   &__header {
     display: flex;
     justify-content: space-between;
-    padding: $flyout-padding;
+    padding: 20px 16px;
     align-items: center;
     border-bottom: 2px solid $brand-charcoal;
     padding-bottom: 1rem;
@@ -214,6 +208,9 @@ $flyout-small-height-formax: 779px;
 
   &.share-flyout {
     .cmp-flyout__content {
+      &__description {
+        margin-top: 20px;
+      }
       > p {
         font-size: 16px;
         line-height: 24px;
@@ -285,9 +282,8 @@ $flyout-small-height-formax: 779px;
       }
     }
     .cmp-flyout__header {
-      padding: 18px;
+      padding: 20px 16px;
       border-color: #d9d8d7;
-      margin-bottom: 15px;
       &-title {
         font-size: 20px;
         line-height: 30px;
@@ -301,7 +297,7 @@ $flyout-small-height-formax: 779px;
       }
     }
     .cmp-flyout__footer {
-      padding: 10px 0;
+      padding: 16px;
       border-top: 1px solid lightgrey;
 
       &-buttons {
@@ -310,7 +306,6 @@ $flyout-small-height-formax: 779px;
 
       &-button {
         width: auto;
-        margin-right: 20px;
         height: auto;
         padding: 12px 20px 12px 20px;
         border-radius: 2px;
@@ -676,10 +671,9 @@ li[id^='combo-box-demo-option-']:active {
 
 .cmp-flyout__footer-buttons.order-modification {
   display: block;
-  padding: 16px 30px;
-  border-top: 1px solid $v-divider-gray;
   > button {
-    width: 141px;
+    width: auto;
+    min-width: 98px;
     height: 48px;
     float: right;
     background-color: $brand-white;
@@ -687,11 +681,17 @@ li[id^='combo-box-demo-option-']:active {
     font-size: 14px;
     border-radius: 2px;
     cursor: pointer;
+    &:disabled {
+      background-color: $td-neutral-gray-2;
+      color: $brand-text-lightgray;
+      cursor: default;
+    }
   }
 
   .primary {
     color: $brand-white;
     background-color: $brand-green;
+    margin-left: 20px;
   }
   .secondary {
     color: $brand-green;
@@ -757,6 +757,60 @@ li[id^='combo-box-demo-option-']:active {
           color: $brand-green;
         }
       }
+    }
+  }
+}
+
+.cmp-flyout-newPurchase {
+  display: flex;
+  flex-direction: column;
+  &__banner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 64px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: $light-blue;
+    border-left: 4px solid $brand-cobalt;
+
+    &__icon {
+      margin-left: 22px;
+    }
+    &__text {
+      padding: 22px;
+    }
+  }
+
+  &__description {
+    &__title {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 27px;
+      margin-bottom: 10px;
+    }
+    &__subtext {
+      margin-top: 20px;
+      color: $brand-text-lightgray;
+      font-size: 14px;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+
+    &__container {
+      width: 360px;
+      margin-top: 30px;
+      margin-bottom: 18px;
+      place-self: center;
+    }
+
+    &__input-container {
+      width: 100%;
+      margin-top: 16px !important;
     }
   }
 }

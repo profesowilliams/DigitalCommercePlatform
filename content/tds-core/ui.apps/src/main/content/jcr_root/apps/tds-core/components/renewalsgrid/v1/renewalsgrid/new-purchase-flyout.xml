@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    sling:resourceType="granite/ui/components/coral/foundation/container">
+    <items jcr:primaryType="nt:unstructured">
+        <newPyrchaseFlyoutGroup
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/well">
+            <items jcr:primaryType="nt:unstructured">
+                <resellerAccountNumber
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.resellerAccountNumber"
+                    fieldLabel="* Reseller account number"
+                    name="./resellerAccountNumber"/>
+                <search
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.search"
+                    fieldLabel="Search"
+                    name="./search"/>
+                <required
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.required"
+                    fieldLabel="Required"
+                    name="./required"/>
+                <exceeds35CharacterLimit
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.exceeds35CharacterLimit"
+                    fieldLabel="Exceeds character limit of 35"
+                    name="./exceeds35CharacterLimit"/>
+                <invalidEmail
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.invalidEmail"
+                    fieldLabel="Invalid email address"
+                    name="./invalidEmail"/>
+                <exceeds40CharacterLimit
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.exceeds40CharacterLimit"
+                    fieldLabel="Exceeds character limit of 40"
+                    name="./exceeds40CharacterLimit"/>
+                <exceeds10CharacterLimit
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.exceeds10CharacterLimit"
+                    fieldLabel="Exceeds character limit of 10"
+                    name="./exceeds10CharacterLimit"/>
+                <next
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.next"
+                    fieldLabel="Next"
+                    name="./next"/>
+                <cancel
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.cancel"
+                    fieldLabel="Cancel"
+                    name="./cancel"/>
+                <newPurchase
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.newPurchase"
+                    fieldLabel="New purchase"
+                    name="./newPurchase"/>
+                <newPurchaseBanner
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.newPurchaseBanner"
+                    fieldLabel="At this time new purchase is for Adobe products only."
+                    name="./newPurchaseBanner"/>
+                <agreementDetails
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.agreementDetails"
+                    fieldLabel="Agreement details"
+                    name="./agreementDetails"/>
+                <description
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.description"
+                    fieldLabel="Lorem ipsum dolor sit amet consectetur. Et scelerisque tempor sed rhoncus proin. In scelerisque pellentesque lectus cras donec egestas."
+                    name="./description"/>
+                <indicatedRequiredField
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.indicatedRequiredField"
+                    fieldLabel="* indicated required field"
+                    name="./indicatedRequiredField"/>
+                <resellerContact
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.resellerContact"
+                    fieldLabel="Reseller contact"
+                    name="./resellerContact"/>
+                <contactFirstName
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.contactFirstName"
+                    fieldLabel="* Contact first name"
+                    name="./contactFirstName"/>
+                <contactLastName
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.contactLastName"
+                    fieldLabel="* Contact last name"
+                    name="./contactLastName"/>
+                <contactEmail
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.contactEmail"
+                    fieldLabel="* Contact email"
+                    name="./contactEmail"/>
+                <endUserContact
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserContact"
+                    fieldLabel="End user contact"
+                    name="./endUserContact"/>
+                <endUserCompanyName
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserCompanyName"
+                    fieldLabel="* Company name"
+                    name="./endUserCompanyName"/>
+                <endUserContactFirstName
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserContactFirstName"
+                    fieldLabel="* Contact first name"
+                    name="./endUserContactFirstName"/>
+                <endUserContactLastName
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserContactLastName"
+                    fieldLabel="* Contact last name"
+                    name="./endUserContactLastName"/>
+                <endUserEmail
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserEmail"
+                    fieldLabel="* Contact email"
+                    name="./endUserEmail"/>
+                <endUserType
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserType"
+                    fieldLabel="* End user type"
+                    name="./endUserType"/>
+                <endUserTypeComercial
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserTypeComercial"
+                    fieldLabel="Comercial"
+                    name="./endUserTypeComercial"/>
+                <endUserTypeEducation
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserTypeEducation"
+                    fieldLabel="Education"
+                    name="./endUserTypeEducation"/>
+                <endUserTypeGovernment
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserTypeGovernment"
+                    fieldLabel="Government"
+                    name="./endUserTypeGovernment"/>
+                <endUserAddress
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserAddress"
+                    fieldLabel="End user address"
+                    name="./endUserAddress"/>
+                <endUserAdress1
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserAdress1"
+                    fieldLabel="* Adress 1"
+                    name="./endUserAdress1"/>
+                <endUserAdress2
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserAdress2"
+                    fieldLabel="Adress 2"
+                    name="./endUserAdress2"/>
+                <endUserCity
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserCity"
+                    fieldLabel="* City"
+                    name="./endUserCity"/>
+                <endUserAreaCode
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserAreaCode"
+                    fieldLabel="* Area code"
+                    name="./endUserAreaCode"/>
+                <endUserCountry
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserCountry"
+                    fieldLabel="* Country"
+                    name="./endUserCountry"/>
+                <endUserVietnam
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserVietnam"
+                    fieldLabel="Vietnam"
+                    name="./endUserVietnam"/>
+                <endUserCambodia
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserCambodia"
+                    fieldLabel="Cambodia"
+                    name="./endUserCambodia"/>
+                <endUserLaos
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserLaos"
+                    fieldLabel="Laos"
+                    name="./endUserLaos"/>
+            </items>
+        </newPyrchaseFlyoutGroup>
+    </items>
+</jcr:root>

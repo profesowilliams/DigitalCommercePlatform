@@ -1,3 +1,5 @@
+/** @format */
+
 const express = require("express");
 const app = require("./server/server");
 
@@ -1541,12 +1543,12 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
           phoneNumber: "7328688854",
         },
         source: {
-          "salesOrg": "IN96",
-          "targetSystem": "R3",
-          "key": "U100000001953",
-          "system": "RQ",
-          "type": null,
-          "id": "U100000001953"
+          salesOrg: "IN96",
+          targetSystem: "R3",
+          key: "U100000001953",
+          system: "RQ",
+          type: null,
+          id: "U100000001953",
         },
         notes: null,
         items: getRenewalItems(6),
@@ -1871,85 +1873,85 @@ app.get("/ui-account/v1/getAddress", (req, res) => {
 app.get("/ui-renewal/v1/getAddresses", function (req, res) {
   const { id } = req.query;
   const response = {
-    "content": [
-        {
-            "line1": "GODREJ WATERSIDE TOWER II,UNIT NO ",
-            "line2": "706 &707 7TH FLOOR,PLOT NO-5 BLOCK-",
-            "line3": null,
-            "city": "DP SECTOR-V SALTLAKE CITY KOLKATA",
-            "state": "25",
-            "stateName": "West Bengal",
-            "postalCode": "700091",
-            "country": null,
-            "county": null,
-            "countryCode": "IN",
-            "name": "PRIMETALS TECHNOLOGIES",
-            "id": "0000175776"
-        },
-        {
-            "line1": "C/O RASHTRIYA ISPAT NIGAM LTD VISAKHAPATNAM ",
-            "line2": "Project Office, D-Block,",
-            "line3": null,
-            "city": "Andhra Pradesh",
-            "state": "01",
-            "stateName": "Andra Pradesh",
-            "postalCode": "530031",
-            "country": null,
-            "county": null,
-            "countryCode": "IN",
-            "name": "Primetalsï¿½Technologies India",
-            "id": "0000179854"
-        },
-        {
-            "line1": "C/O  DY GENERAL MANAGER STEEL AND POWER SAIL ",
-            "line2": "BOKARO",
-            "line3": null,
-            "city": "JHARKHAND",
-            "state": null,
-            "stateName": null,
-            "postalCode": "827001",
-            "country": null,
-            "county": null,
-            "countryCode": "IN",
-            "name": "Primetalsï¿½Technologies India",
-            "id": "0000179866"
-        },
-        {
-            "line1": "C/O General Manager(P)I/C(Projects-Steel Zone Authority of ",
-            "line2": "Kursipar Gate BHILAI",
-            "line3": null,
-            "city": "Durg Chhattisgarh",
-            "state": "33",
-            "stateName": "Chhaattisgarh",
-            "postalCode": "490001",
-            "country": null,
-            "county": null,
-            "countryCode": "IN",
-            "name": "Primetalsï¿½Technologies India",
-            "id": "0000179871"
-        },
-        {
-            "line1": "Stage II, Qtr No M/54, Durgapur Foothill Housing Project ",
-            "line2": null,
-            "line3": null,
-            "city": "Odisha",
-            "state": "18",
-            "stateName": "Odisha",
-            "postalCode": "769012",
-            "country": null,
-            "county": null,
-            "countryCode": "IN",
-            "name": "Primetals Technologies India",
-            "id": "0000181643"
-        }
+    content: [
+      {
+        line1: "GODREJ WATERSIDE TOWER II,UNIT NO ",
+        line2: "706 &707 7TH FLOOR,PLOT NO-5 BLOCK-",
+        line3: null,
+        city: "DP SECTOR-V SALTLAKE CITY KOLKATA",
+        state: "25",
+        stateName: "West Bengal",
+        postalCode: "700091",
+        country: null,
+        county: null,
+        countryCode: "IN",
+        name: "PRIMETALS TECHNOLOGIES",
+        id: "0000175776",
+      },
+      {
+        line1: "C/O RASHTRIYA ISPAT NIGAM LTD VISAKHAPATNAM ",
+        line2: "Project Office, D-Block,",
+        line3: null,
+        city: "Andhra Pradesh",
+        state: "01",
+        stateName: "Andra Pradesh",
+        postalCode: "530031",
+        country: null,
+        county: null,
+        countryCode: "IN",
+        name: "Primetalsï¿½Technologies India",
+        id: "0000179854",
+      },
+      {
+        line1: "C/O  DY GENERAL MANAGER STEEL AND POWER SAIL ",
+        line2: "BOKARO",
+        line3: null,
+        city: "JHARKHAND",
+        state: null,
+        stateName: null,
+        postalCode: "827001",
+        country: null,
+        county: null,
+        countryCode: "IN",
+        name: "Primetalsï¿½Technologies India",
+        id: "0000179866",
+      },
+      {
+        line1: "C/O General Manager(P)I/C(Projects-Steel Zone Authority of ",
+        line2: "Kursipar Gate BHILAI",
+        line3: null,
+        city: "Durg Chhattisgarh",
+        state: "33",
+        stateName: "Chhaattisgarh",
+        postalCode: "490001",
+        country: null,
+        county: null,
+        countryCode: "IN",
+        name: "Primetalsï¿½Technologies India",
+        id: "0000179871",
+      },
+      {
+        line1: "Stage II, Qtr No M/54, Durgapur Foothill Housing Project ",
+        line2: null,
+        line3: null,
+        city: "Odisha",
+        state: "18",
+        stateName: "Odisha",
+        postalCode: "769012",
+        country: null,
+        county: null,
+        countryCode: "IN",
+        name: "Primetals Technologies India",
+        id: "0000181643",
+      },
     ],
-    "error": {
-        "code": 0,
-        "messages": [],
-        "isError": false
-    }
-};
-  
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+
   setTimeout(() => {
     res.json(response);
   }, 1000);
@@ -4526,511 +4528,508 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
   const { id } = req.query;
 
   const response = {
-    "content": {
-        "details": [
+    content: {
+      details: [
+        {
+          source: {
+            salesOrg: "VN91",
+            targetSystem: "R3",
+            key: "U100000005954",
+            system: "RQEu",
+            id: "U100000005954",
+          },
+          published: "2024-06-14T13:00:17.5Z",
+          reseller: {
+            id: "160233",
+            isValid: true,
+            canEdit: false,
+            incumbent: false,
+            vendorAccountNumber: {
+              isValid: true,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 100000,
+            },
+            paymentTerms: "Payable on receipt",
+            name: "TSG SERVICE AND TRADING LIMITED COMPANY",
+            nameUpper: "TSG SERVICE AND TRADING LIMITED COMPANY",
+            contact: [
+              {
+                name: {
+                  text: "UserA LastNameA",
+                  isValid: true,
+                  isMandatory: false,
+                  isDisplay: false,
+                  canEdit: false,
+                  allowedLength: 100000,
+                },
+                email: {
+                  text: "Auser.lastname@resellerA.com",
+                  isValid: true,
+                  isMandatory: false,
+                  isDisplay: false,
+                  canEdit: false,
+                  allowedLength: 100000,
+                },
+                phone: {
+                  text: "",
+                  isValid: true,
+                  isMandatory: false,
+                  isDisplay: false,
+                  canEdit: false,
+                  allowedLength: 100000,
+                },
+              },
+            ],
+            address: {
+              line1: "218C Ngô Quyền, Rạch Giá",
+              city: "Kiên Giang",
+              postalCode: "920000",
+              country: "VN",
+              countryCode: "VN",
+            },
+          },
+          endUser: {
+            isValid: true,
+            canEdit: false,
+            name: {
+              text: "TravelAbroad",
+              isValid: true,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 100000,
+            },
+            nameUpper: "TRAVELABROAD",
+            eaNumber: {
+              text: "P1005106687",
+              isValid: true,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 100000,
+            },
+            contact: [
+              {
+                name: {
+                  text: "Default FirstName Default LastName",
+                  isValid: true,
+                  isMandatory: false,
+                  isDisplay: false,
+                  canEdit: false,
+                  allowedLength: 100000,
+                },
+                email: {
+                  text: "cme527-sandbox-contact+1717674493154@adobe.com",
+                  isValid: true,
+                  isMandatory: false,
+                  isDisplay: false,
+                  canEdit: false,
+                  allowedLength: 100000,
+                },
+                phone: {
+                  text: "",
+                  isValid: true,
+                  isMandatory: false,
+                  isDisplay: false,
+                  canEdit: false,
+                  allowedLength: 100000,
+                },
+              },
+            ],
+            address: {
+              line1: {
+                text: "Tuoi Tre Tower, No. 60A,",
+                isValid: true,
+                isMandatory: false,
+                isDisplay: false,
+                canEdit: false,
+                allowedLength: 100000,
+              },
+              line2: {
+                text: "Hoang Van Thu Street, Ward 9, Phu Nhuan ",
+                isValid: true,
+                isMandatory: false,
+                isDisplay: false,
+                canEdit: false,
+                allowedLength: 100000,
+              },
+              line3: {
+                isValid: true,
+                isMandatory: false,
+                isDisplay: false,
+                canEdit: false,
+                allowedLength: 100000,
+              },
+              city: {
+                text: "Ho Chi Minh City",
+                isValid: true,
+                isMandatory: false,
+                isDisplay: false,
+                canEdit: false,
+                allowedLength: 100000,
+              },
+              postalCode: {
+                text: "700000",
+                isValid: true,
+                isMandatory: false,
+                isDisplay: false,
+                canEdit: false,
+                allowedLength: 100000,
+              },
+              country: {
+                text: "VN",
+                isValid: true,
+                isMandatory: false,
+                isDisplay: false,
+                canEdit: false,
+                allowedLength: 100000,
+              },
+              countryCode: {
+                text: "VN",
+                isValid: true,
+                isMandatory: false,
+                isDisplay: false,
+                canEdit: false,
+                allowedLength: 100000,
+              },
+            },
+            preferredLanguage: "en-US",
+          },
+          shipTo: {
+            id: {
+              isValid: true,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 100000,
+            },
+            nameUpper: "",
+            contact: [],
+            address: {},
+          },
+          items: [
             {
-                "source": {
-                    "salesOrg": "VN91",
-                    "targetSystem": "R3",
-                    "key": "U100000005954",
-                    "system": "RQEu",
-                    "id": "U100000005954"
+              id: "1",
+              product: [
+                {
+                  type: "TECHDATA",
+                  id: "ADB65304480CA02A12",
+                  name: "-",
+                  family: "Adobe Audition for teams",
                 },
-                "published": "2024-06-14T13:00:17.5Z",
-                "reseller": {
-                    "id": "160233",
-                    "isValid": true,
-                    "canEdit": false,
-                    "incumbent": false,
-                    "vendorAccountNumber": {
-                        "isValid": true,
-                        "isMandatory": false,
-                        "isDisplay": false,
-                        "canEdit": false,
-                        "allowedLength": 100000
-                    },
-                    "paymentTerms": "Payable on receipt",
-                    "name": "TSG SERVICE AND TRADING LIMITED COMPANY",
-                    "nameUpper": "TSG SERVICE AND TRADING LIMITED COMPANY",
-                    "contact": [
-                        {
-                            "name": {
-                                "text": "UserA LastNameA",
-                                "isValid": true,
-                                "isMandatory": false,
-                                "isDisplay": false,
-                                "canEdit": false,
-                                "allowedLength": 100000
-                            },
-                            "email": {
-                                "text": "Auser.lastname@resellerA.com",
-                                "isValid": true,
-                                "isMandatory": false,
-                                "isDisplay": false,
-                                "canEdit": false,
-                                "allowedLength": 100000
-                            },
-                            "phone": {
-                                "text": "",
-                                "isValid": true,
-                                "isMandatory": false,
-                                "isDisplay": false,
-                                "canEdit": false,
-                                "allowedLength": 100000
-                            }
-                        }
-                    ],
-                    "address": {
-                        "line1": "218C Ngô Quyền, Rạch Giá",
-                        "city": "Kiên Giang",
-                        "postalCode": "920000",
-                        "country": "VN",
-                        "countryCode": "VN"
-                    }
+                {
+                  type: "MANUFACTURER",
+                  id: "65304480CA02A12",
+                  name: "Adobe Audition for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
+                  manufacturer: "Adobe",
+                  manufacturerId: "3",
+                  family: "Adobe Audition for teams",
                 },
-                "endUser": {
-                    "isValid": true,
-                    "canEdit": false,
-                    "name": {
-                        "text": "TravelAbroad",
-                        "isValid": true,
-                        "isMandatory": false,
-                        "isDisplay": false,
-                        "canEdit": false,
-                        "allowedLength": 100000
-                    },
-                    "nameUpper": "TRAVELABROAD",
-                    "eaNumber": {
-                        "text": "P1005106687",
-                        "isValid": true,
-                        "isMandatory": false,
-                        "isDisplay": false,
-                        "canEdit": false,
-                        "allowedLength": 100000
-                    },
-                    "contact": [
-                        {
-                            "name": {
-                                "text": "Default FirstName Default LastName",
-                                "isValid": true,
-                                "isMandatory": false,
-                                "isDisplay": false,
-                                "canEdit": false,
-                                "allowedLength": 100000
-                            },
-                            "email": {
-                                "text": "cme527-sandbox-contact+1717674493154@adobe.com",
-                                "isValid": true,
-                                "isMandatory": false,
-                                "isDisplay": false,
-                                "canEdit": false,
-                                "allowedLength": 100000
-                            },
-                            "phone": {
-                                "text": "",
-                                "isValid": true,
-                                "isMandatory": false,
-                                "isDisplay": false,
-                                "canEdit": false,
-                                "allowedLength": 100000
-                            }
-                        }
-                    ],
-                    "address": {
-                        "line1": {
-                            "text": "Tuoi Tre Tower, No. 60A,",
-                            "isValid": true,
-                            "isMandatory": false,
-                            "isDisplay": false,
-                            "canEdit": false,
-                            "allowedLength": 100000
-                        },
-                        "line2": {
-                            "text": "Hoang Van Thu Street, Ward 9, Phu Nhuan ",
-                            "isValid": true,
-                            "isMandatory": false,
-                            "isDisplay": false,
-                            "canEdit": false,
-                            "allowedLength": 100000
-                        },
-                        "line3": {
-                            "isValid": true,
-                            "isMandatory": false,
-                            "isDisplay": false,
-                            "canEdit": false,
-                            "allowedLength": 100000
-                        },
-                        "city": {
-                            "text": "Ho Chi Minh City",
-                            "isValid": true,
-                            "isMandatory": false,
-                            "isDisplay": false,
-                            "canEdit": false,
-                            "allowedLength": 100000
-                        },
-                        "postalCode": {
-                            "text": "700000",
-                            "isValid": true,
-                            "isMandatory": false,
-                            "isDisplay": false,
-                            "canEdit": false,
-                            "allowedLength": 100000
-                        },
-                        "country": {
-                            "text": "VN",
-                            "isValid": true,
-                            "isMandatory": false,
-                            "isDisplay": false,
-                            "canEdit": false,
-                            "allowedLength": 100000
-                        },
-                        "countryCode": {
-                            "text": "VN",
-                            "isValid": true,
-                            "isMandatory": false,
-                            "isDisplay": false,
-                            "canEdit": false,
-                            "allowedLength": 100000
-                        }
-                    },
-                    "preferredLanguage": "en-US"
+              ],
+              quantity: 15.0,
+              confirmedQuantity: 0.0,
+              references: [],
+              updated: "0001-01-01T00:00:00",
+              unitPrice: 10754000.0,
+              unitCost: 397.32,
+              totalPrice: 161310000.0,
+              unitListPrice: 10988000.0,
+              unitPriceCurrency: "VND",
+              unitCostCurrency: "USD",
+              unitListPriceCurrency: "VND",
+              extendedListPrice: 0.0,
+              requested: "0001-01-01T00:00:00",
+              femAmount: 0.0,
+              pomAmount: 0.0,
+              samAmount: 0.0,
+              nsmAmount: 0.0,
+              femPercentage: 0.0,
+              pomPercentage: 0.0,
+              samPercentage: 0.0,
+              nsmPercentage: 0.0,
+              agreements: [],
+              attributes: [],
+              serialNumbers: [null],
+              discounts: [
+                {
+                  type: "Standard",
+                  value: "2.13",
                 },
-                "shipTo": {
-                    "id": {
-                        "isValid": true,
-                        "isMandatory": false,
-                        "isDisplay": false,
-                        "canEdit": false,
-                        "allowedLength": 100000
-                    },
-                    "nameUpper": "",
-                    "contact": [],
-                    "address": {}
+              ],
+              contract: {
+                id: "P1005106687",
+                endDate: "2024-07-05T00:00:00Z",
+                newAgreementStartDate: "2024-07-06T00:00:00Z",
+                newAgreementEndDate: "2025-07-05T00:00:00Z",
+                formattedEndDate: "05/07/2024",
+                formattedNewAgreementStartDate: "06/07/2024",
+                formattedNewAgreementEndDate: "05/07/2025",
+                dueDate: "2024-07-05T00:00:00Z",
+                hasMultipleSupportLevelForThisAgreement: false,
+                hasMultipleDueDateForThisAgreement: false,
+                hasMultipleDurationForThisAgreement: false,
+                agreementDuration: "06/07/2024 - 05/07/2025",
+                formattedDueDate: "05/07/2024",
+                autoRenew: false,
+              },
+              subscriptionId: "f35f7d71114afdb962deb45aad0f29NA",
+              agency: "CreateOrder",
+            },
+            {
+              id: "2",
+              product: [
+                {
+                  type: "TECHDATA",
+                  id: "ADB65304470CA02A12",
+                  name: "-",
+                  family: "Acrobat Pro for teams",
                 },
-                "items": [
-                    {
-                        "id": "1",
-                        "product": [
-                            {
-                                "type": "TECHDATA",
-                                "id": "ADB65304480CA02A12",
-                                "name": "-",
-                                "family": "Adobe Audition for teams"
-                            },
-                            {
-                                "type": "MANUFACTURER",
-                                "id": "65304480CA02A12",
-                                "name": "Adobe Audition for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                                "manufacturer": "Adobe",
-                                "manufacturerId": "3",
-                                "family": "Adobe Audition for teams"
-                            }
-                        ],
-                        "quantity": 15.0,
-                        "confirmedQuantity": 0.0,
-                        "references": [],
-                        "updated": "0001-01-01T00:00:00",
-                        "unitPrice": 10754000.0,
-                        "unitCost": 397.32,
-                        "totalPrice": 161310000.0,
-                        "unitListPrice": 10988000.0,
-                        "unitPriceCurrency": "VND",
-                        "unitCostCurrency": "USD",
-                        "unitListPriceCurrency": "VND",
-                        "extendedListPrice": 0.0,
-                        "requested": "0001-01-01T00:00:00",
-                        "femAmount": 0.0,
-                        "pomAmount": 0.0,
-                        "samAmount": 0.0,
-                        "nsmAmount": 0.0,
-                        "femPercentage": 0.0,
-                        "pomPercentage": 0.0,
-                        "samPercentage": 0.0,
-                        "nsmPercentage": 0.0,
-                        "agreements": [],
-                        "attributes": [],
-                        "serialNumbers": [
-                            null
-                        ],
-                        "discounts": [
-                            {
-                                "type": "Standard",
-                                "value": "2.13"
-                            }
-                        ],
-                        "contract": {
-                            "id": "P1005106687",
-                            "endDate": "2024-07-05T00:00:00Z",
-                            "newAgreementStartDate": "2024-07-06T00:00:00Z",
-                            "newAgreementEndDate": "2025-07-05T00:00:00Z",
-                            "formattedEndDate": "05/07/2024",
-                            "formattedNewAgreementStartDate": "06/07/2024",
-                            "formattedNewAgreementEndDate": "05/07/2025",
-                            "dueDate": "2024-07-05T00:00:00Z",
-                            "hasMultipleSupportLevelForThisAgreement": false,
-                            "hasMultipleDueDateForThisAgreement": false,
-                            "hasMultipleDurationForThisAgreement": false,
-                            "agreementDuration": "06/07/2024 - 05/07/2025",
-                            "formattedDueDate": "05/07/2024",
-                            "autoRenew": false
-                        },
-                        "subscriptionId": "f35f7d71114afdb962deb45aad0f29NA",
-                        "agency": "CreateOrder"
-                    },
-                    {
-                        "id": "2",
-                        "product": [
-                            {
-                                "type": "TECHDATA",
-                                "id": "ADB65304470CA02A12",
-                                "name": "-",
-                                "family": "Acrobat Pro for teams"
-                            },
-                            {
-                                "type": "MANUFACTURER",
-                                "id": "65304470CA02A12",
-                                "name": "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                                "manufacturer": "Adobe",
-                                "manufacturerId": "3",
-                                "family": "Acrobat Pro for teams"
-                            }
-                        ],
-                        "quantity": 18.0,
-                        "confirmedQuantity": 0.0,
-                        "references": [],
-                        "updated": "0001-01-01T00:00:00",
-                        "unitPrice": 6545000.0,
-                        "unitCost": 241.80,
-                        "totalPrice": 117810000.0,
-                        "unitListPrice": 7325000.0,
-                        "unitPriceCurrency": "VND",
-                        "unitCostCurrency": "USD",
-                        "unitListPriceCurrency": "VND",
-                        "extendedListPrice": 0.0,
-                        "requested": "0001-01-01T00:00:00",
-                        "femAmount": 0.0,
-                        "pomAmount": 0.0,
-                        "samAmount": 0.0,
-                        "nsmAmount": 0.0,
-                        "femPercentage": 0.0,
-                        "pomPercentage": 0.0,
-                        "samPercentage": 0.0,
-                        "nsmPercentage": 0.0,
-                        "agreements": [],
-                        "attributes": [],
-                        "serialNumbers": [
-                            null
-                        ],
-                        "discounts": [
-                            {
-                                "type": "Standard",
-                                "value": "10.65"
-                            }
-                        ],
-                        "contract": {
-                            "id": "P1005106687",
-                            "endDate": "2024-07-05T00:00:00Z",
-                            "newAgreementStartDate": "2024-07-06T00:00:00Z",
-                            "newAgreementEndDate": "2025-07-05T00:00:00Z",
-                            "formattedEndDate": "05/07/2024",
-                            "formattedNewAgreementStartDate": "06/07/2024",
-                            "formattedNewAgreementEndDate": "05/07/2025",
-                            "dueDate": "2024-07-05T00:00:00Z",
-                            "hasMultipleSupportLevelForThisAgreement": false,
-                            "hasMultipleDueDateForThisAgreement": false,
-                            "hasMultipleDurationForThisAgreement": false,
-                            "agreementDuration": "06/07/2024 - 05/07/2025",
-                            "formattedDueDate": "05/07/2024",
-                            "autoRenew": false
-                        },
-                        "subscriptionId": "2d4afb5aab413c8efc9c6bdbf5f36fNA",
-                        "agency": "CreateOrder"
-                    }
-                ],
-                "attributes": [],
-                "programName": "VIP MP Commercial",
-                "quoteCurrent": false,
-                "firstAvailableOrderDate": "2024-06-05T00:00:00Z",
-                "lastOrderDate": "0001-01-01T00:00:00",
-                "amountSaved": 0.0,
-                "linkedRenewals": [],
-                "dueDate": "2024-07-05T00:00:00Z",
-                "vendorLogo": "https://sit.dc.tdebusiness.cloud/content/dam/core-components-examples/library/Adobe.png",
-                "vendorLogoPdf": "https://sit.dc.tdebusiness.cloud/content/dam/core-components-examples/library/Adobe.png",
-                "isValid": true,
-                "canOrder": true,
-                "canEditQty": false,
-                "canEditResellerPrice": false,
-                "canEditLines": false,
-                "canCopy": false,
-                "customerPO": {
-                    "text": "TineTestII",
-                    "isValid": true,
-                    "isMandatory": false,
-                    "isDisplay": true,
-                    "canEdit": true,
-                    "allowedLength": 25
+                {
+                  type: "MANUFACTURER",
+                  id: "65304470CA02A12",
+                  name: "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
+                  manufacturer: "Adobe",
+                  manufacturerId: "3",
+                  family: "Acrobat Pro for teams",
                 },
-                "formattedPublished": "14/06/2024",
-                "formattedFirstAvailableOrderDate": "05/06/2024",
-                "formattedDueDate": "05/07/2024",
-                "formattedCreated": "14/06/2024",
-                "formattedUpdated": "14/06/2024",
-                "formattedExpiry": "05/07/2024",
-                "vendor": {
-                    "id": "3",
-                    "name": "Adobe"
+              ],
+              quantity: 18.0,
+              confirmedQuantity: 0.0,
+              references: [],
+              updated: "0001-01-01T00:00:00",
+              unitPrice: 6545000.0,
+              unitCost: 241.8,
+              totalPrice: 117810000.0,
+              unitListPrice: 7325000.0,
+              unitPriceCurrency: "VND",
+              unitCostCurrency: "USD",
+              unitListPriceCurrency: "VND",
+              extendedListPrice: 0.0,
+              requested: "0001-01-01T00:00:00",
+              femAmount: 0.0,
+              pomAmount: 0.0,
+              samAmount: 0.0,
+              nsmAmount: 0.0,
+              femPercentage: 0.0,
+              pomPercentage: 0.0,
+              samPercentage: 0.0,
+              nsmPercentage: 0.0,
+              agreements: [],
+              attributes: [],
+              serialNumbers: [null],
+              discounts: [
+                {
+                  type: "Standard",
+                  value: "10.65",
                 },
-                "renewalLevel": "Level 2 10 - 49",
-                "hasMultipleSupportLevel": false,
-                "hasMultipleAgreements": false,
-                "hasMultipleRenewedDuration": false,
-                "hasMultipleDueDates": false,
-                "agreementNumber": "P1005106687",
-                "agreementDuration": "06/07/2024 - 05/07/2025",
-                "hasMultipleAgreementDuration": false,
-                "canDownloadExcel": true,
-                "canShareQuote": false,
-                "canRequestQuote": false,
-                "canRequestRevision": false,
-                "feedBackMessages": [
-                    {
-                        "ruleNumber": 102,
-                        "errorCriticality": 1,
-                        "message": "We have experienced an unexpected error processing your order for TineTestII. Contact your Account Manager for more information.",
-                        "refId": "P1005106687",
-                        "type": "Preview Order",
-                        "jsonUrl": "UI-Renewal/v1/GetAdobeRenewalAuditLogs?",
-                        "jsonUrlMessage": "View error details"
-                    }
-                ],
-                "itemsActive": [
-                    {
-                        "id": "1",
-                        "product": [
-                            {
-                                "type": "TECHDATA",
-                                "id": "ADB65304480CA01A12",
-                                "family": "Adobe Audition for teams"
-                            },
-                            {
-                                "type": "MANUFACTURER",
-                                "id": "65304480CA01A12",
-                                "name": "Adobe Audition for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                                "manufacturer": "Adobe",
-                                "manufacturerId": "3",
-                                "family": "Adobe Audition for teams"
-                            }
-                        ],
-                        "quantity": 15.0,
-                        "subscriptionId": "f35f7d71114afdb962deb45aad0f29NA"
-                    }
-                ],
-                "additionalInfo": [
-                    {
-                        "key": "SubStatus",
-                        "value": "PreviewFailed"
-                    },
-                    {}
-                ],
-                "renewalLevelActive": "Level 1 1 - 9",
-                "revision": 1.0,
-                "subRevision": 0.0,
-                "activeFlag": "Y",
-                "price": 279120000.0,
-                "currency": "VND",
-                "quoteType": "AutoRenew",
-                "created": "2024-06-14T13:00:17.5Z",
-                "updated": "2024-06-14T13:00:17.5Z",
-                "expiry": "2024-07-05T00:00:00Z",
-                "status": "Active",
-                "orders": [],
-                "vendorReference": [
-                    {
-                        "type": "QuoteId",
-                        "value": "P1005106687"
-                    }
-                ],
-                "femAmount": 0.0,
-                "pomAmount": 0.0,
-                "samAmount": 0.0,
-                "nsmAmount": 0.0,
-                "femPercentage": 0.0,
-                "pomPercentage": 0.0,
-                "samPercentage": 0.0,
-                "nsmPercentage": 0.0
-            }
-        ]
+              ],
+              contract: {
+                id: "P1005106687",
+                endDate: "2024-07-05T00:00:00Z",
+                newAgreementStartDate: "2024-07-06T00:00:00Z",
+                newAgreementEndDate: "2025-07-05T00:00:00Z",
+                formattedEndDate: "05/07/2024",
+                formattedNewAgreementStartDate: "06/07/2024",
+                formattedNewAgreementEndDate: "05/07/2025",
+                dueDate: "2024-07-05T00:00:00Z",
+                hasMultipleSupportLevelForThisAgreement: false,
+                hasMultipleDueDateForThisAgreement: false,
+                hasMultipleDurationForThisAgreement: false,
+                agreementDuration: "06/07/2024 - 05/07/2025",
+                formattedDueDate: "05/07/2024",
+                autoRenew: false,
+              },
+              subscriptionId: "2d4afb5aab413c8efc9c6bdbf5f36fNA",
+              agency: "CreateOrder",
+            },
+          ],
+          attributes: [],
+          programName: "VIP MP Commercial",
+          quoteCurrent: false,
+          firstAvailableOrderDate: "2024-06-05T00:00:00Z",
+          lastOrderDate: "0001-01-01T00:00:00",
+          amountSaved: 0.0,
+          linkedRenewals: [],
+          dueDate: "2024-07-05T00:00:00Z",
+          vendorLogo:
+            "https://sit.dc.tdebusiness.cloud/content/dam/core-components-examples/library/Adobe.png",
+          vendorLogoPdf:
+            "https://sit.dc.tdebusiness.cloud/content/dam/core-components-examples/library/Adobe.png",
+          isValid: true,
+          canOrder: true,
+          canEditQty: false,
+          canEditResellerPrice: false,
+          canEditLines: false,
+          canCopy: false,
+          customerPO: {
+            text: "TineTestII",
+            isValid: true,
+            isMandatory: false,
+            isDisplay: true,
+            canEdit: true,
+            allowedLength: 25,
+          },
+          formattedPublished: "14/06/2024",
+          formattedFirstAvailableOrderDate: "05/06/2024",
+          formattedDueDate: "05/07/2024",
+          formattedCreated: "14/06/2024",
+          formattedUpdated: "14/06/2024",
+          formattedExpiry: "05/07/2024",
+          vendor: {
+            id: "3",
+            name: "Adobe",
+          },
+          renewalLevel: "Level 2 10 - 49",
+          hasMultipleSupportLevel: false,
+          hasMultipleAgreements: false,
+          hasMultipleRenewedDuration: false,
+          hasMultipleDueDates: false,
+          agreementNumber: "P1005106687",
+          agreementDuration: "06/07/2024 - 05/07/2025",
+          hasMultipleAgreementDuration: false,
+          canDownloadExcel: true,
+          canShareQuote: false,
+          canRequestQuote: false,
+          canRequestRevision: false,
+          feedBackMessages: [
+            {
+              ruleNumber: 102,
+              errorCriticality: 1,
+              message:
+                "We have experienced an unexpected error processing your order for TineTestII. Contact your Account Manager for more information.",
+              refId: "P1005106687",
+              type: "Preview Order",
+              jsonUrl: "UI-Renewal/v1/GetAdobeRenewalAuditLogs?",
+              jsonUrlMessage: "View error details",
+            },
+          ],
+          itemsActive: [
+            {
+              id: "1",
+              product: [
+                {
+                  type: "TECHDATA",
+                  id: "ADB65304480CA01A12",
+                  family: "Adobe Audition for teams",
+                },
+                {
+                  type: "MANUFACTURER",
+                  id: "65304480CA01A12",
+                  name: "Adobe Audition for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
+                  manufacturer: "Adobe",
+                  manufacturerId: "3",
+                  family: "Adobe Audition for teams",
+                },
+              ],
+              quantity: 15.0,
+              subscriptionId: "f35f7d71114afdb962deb45aad0f29NA",
+            },
+          ],
+          additionalInfo: [
+            {
+              key: "SubStatus",
+              value: "PreviewFailed",
+            },
+            {},
+          ],
+          renewalLevelActive: "Level 1 1 - 9",
+          revision: 1.0,
+          subRevision: 0.0,
+          activeFlag: "Y",
+          price: 279120000.0,
+          currency: "VND",
+          quoteType: "AutoRenew",
+          created: "2024-06-14T13:00:17.5Z",
+          updated: "2024-06-14T13:00:17.5Z",
+          expiry: "2024-07-05T00:00:00Z",
+          status: "Active",
+          orders: [],
+          vendorReference: [
+            {
+              type: "QuoteId",
+              value: "P1005106687",
+            },
+          ],
+          femAmount: 0.0,
+          pomAmount: 0.0,
+          samAmount: 0.0,
+          nsmAmount: 0.0,
+          femPercentage: 0.0,
+          pomPercentage: 0.0,
+          samPercentage: 0.0,
+          nsmPercentage: 0.0,
+        },
+      ],
     },
-    "error": {
-        "code": 0,
-        "messages": [],
-        "isError": false
-    }
-}
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
   res.json(response);
 });
 
 app.post("/ui-renewal/v1/RequestQuoteEmail", function (req, res) {
-
   const success = {
-      "content": {
-          "success": true
-      },
-      "error": {
-          "code": 0,
-          "messages": [],
-          "isError": false
-      }
-  }
+    content: {
+      success: true,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
 
-   const error = {
-         "content": {
-             "success": false
-         },
-         "error": {
-             "code": 0,
-             "messages": [],
-             "isError": true
-         }
-     }
+  const error = {
+    content: {
+      success: false,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: true,
+    },
+  };
 
-    //mockResponses.failedResponse
+  //mockResponses.failedResponse
 
-    setTimeout(() => {
-      return res.status(200).json(success);
-    }, 1000);
+  setTimeout(() => {
+    return res.status(200).json(success);
+  }, 1000);
 });
 
 app.post("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
-
   const success = {
-       "content": {
-           "success": true
-       },
-       "error": {
-           "code": 0,
-           "messages": [],
-           "isError": false
-       }
-   }
+    content: {
+      success: true,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
 
-   const error = {
-     "content": {
-         "success": false
-     },
-     "error": {
-         "code": 0,
-         "messages": [],
-         "isError": true
-     }
-    }
+  const error = {
+    content: {
+      success: false,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: true,
+    },
+  };
 
-    //mockResponses.failedResponse
+  //mockResponses.failedResponse
 
-    setTimeout(() => {
-      return res.status(200).json(notFound);
-    }, 1000);
+  setTimeout(() => {
+    return res.status(200).json(notFound);
+  }, 1000);
 });
 
 app.get("/libs/cq/i18n/dictionary", function (req, res) {
@@ -5115,6 +5114,67 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "grids.common.label.filterSearch": "Show results",
     "grids.common.label.filterDate": "Date",
 
+    "mainDashboard.renewal.newPurchaseFlyout.label.resellerAccountNumber":
+      "* Reseller account number",
+    "mainDashboard.renewal.newPurchaseFlyout.label.search": "Search",
+    "mainDashboard.renewal.newPurchaseFlyout.label.required": "Required",
+    "mainDashboard.renewal.newPurchaseFlyout.label.exceeds35CharacterLimit":
+      "Exceeds character limit of 35",
+    "mainDashboard.renewal.newPurchaseFlyout.label.invalidEmail":
+      "Invalid email address",
+    "mainDashboard.renewal.newPurchaseFlyout.label.exceeds40CharacterLimit":
+      "Exceeds character limit of 40",
+    "mainDashboard.renewal.newPurchaseFlyout.label.exceeds10CharacterLimit":
+      "Exceeds character limit of 10",
+    "mainDashboard.renewal.newPurchaseFlyout.label.next": "Next",
+    "mainDashboard.renewal.newPurchaseFlyout.label.cancel": "Cancel",
+    "mainDashboard.renewal.newPurchaseFlyout.label.newPurchase": "New purchase",
+    "mainDashboard.renewal.newPurchaseFlyout.label.newPurchaseBanner":
+      "At this time new purchase is for Adobe products only.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.agreementDetails":
+      "Agreement details",
+    "mainDashboard.renewal.newPurchaseFlyout.label.description":
+      "Lorem ipsum dolor sit amet consectetur. Et scelerisque tempor sed rhoncus proin. In scelerisque pellentesque lectus cras donec egestas.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.indicatedRequiredField":
+      "* indicated required field",
+    "mainDashboard.renewal.newPurchaseFlyout.label.resellerContact":
+      "Reseller contact",
+    "mainDashboard.renewal.newPurchaseFlyout.label.contactFirstName":
+      "* Contact first name",
+    "mainDashboard.renewal.newPurchaseFlyout.label.contactLastName":
+      "* Contact last name",
+    "mainDashboard.renewal.newPurchaseFlyout.label.contactEmail":
+      "* Contact email",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserContact":
+      "End user contact",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserCompanyName":
+      "* Company name",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserContactFirstName":
+      "* Contact first name",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserContactLastName":
+      "* Contact last name",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserEmail":
+      "* Contact email",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserType":
+      "* End user type",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserTypeComercial":
+      "Comercial",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserTypeEducation":
+      "Education",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserTypeGovernment":
+      "Government",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserAddress":
+      "End user address",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserAdress1":
+      "* Adress 1",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserAdress2": "Adress 2",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserCity": "* City",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserAreaCode":
+      "* Area code",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserCountry": "* Country",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserVietnam": "Vietnam",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserCambodia": "Cambodia",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserLaos": "Laos",
     "details.renewal.orders.label.adobeTermsAndConditionsLink":
       "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions.html",
     "details.renewal.orders.label.adobeResellerTermsAndConditionsLink":
@@ -12556,7 +12616,7 @@ app.get("/ui-commerce/v2/ReportOrders", function (req, res) {
 app.get("/ui-commerce/v2/ReportOrdersCount", function (req, res) {
   const response = {
     content: {
-      totalItems: 1
+      totalItems: 1,
     },
     error: {
       code: 0,
