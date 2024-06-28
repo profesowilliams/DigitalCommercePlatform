@@ -6,8 +6,10 @@ function QuantityColumn(props) {
     const { value, setValue, isEditing, rowIndex, data, activeLicenseEdit, dataObj } = props;
     const refInput = useRef();
     const MIN_VAL = 1;
-    const MAX_VAL = activeLicenseEdit ? dataObj?.items?.[props.rowIndex].quantity : 999998;
-    const MAX_DIGITS = MAX_VAL.toString().length;
+    const MAX_VAL = activeLicenseEdit
+      ? dataObj?.items?.[props.rowIndex]?.quantity
+      : 999998;
+    const MAX_DIGITS = MAX_VAL?.toString()?.length;
 
     // Return simple render label when edit flag is false
     if (!isEditing) return <>{value}</>;
