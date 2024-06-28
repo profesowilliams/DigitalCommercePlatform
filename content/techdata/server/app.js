@@ -5114,6 +5114,11 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "grids.common.label.filterCustom": "Custom date range",
     "grids.common.label.filterSearch": "Show results",
     "grids.common.label.filterDate": "Date",
+
+    "details.renewal.orders.label.adobeTermsAndConditionsLink":
+      "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions.html",
+    "details.renewal.orders.label.adobeResellerTermsAndConditionsLink":
+      "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions/vendor-pass-through-terms.html",
   });
 });
 

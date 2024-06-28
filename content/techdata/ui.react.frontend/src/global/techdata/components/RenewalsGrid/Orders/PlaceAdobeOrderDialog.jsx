@@ -7,6 +7,7 @@ import { PlaceOrderMaterialUi } from './PlacerOrderMaterialUi';
 import usePlaceOrderDialogHook from './hooks/usePlaceOrderDialogHook';
 import { thousandSeparator } from '../../../helpers/formatting';
 import useComputeBranding from '../../../hooks/useComputeBranding';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function PlaceAdobeOrderDialog({
   orderingFromDashboard,
@@ -23,11 +24,12 @@ function PlaceAdobeOrderDialog({
   const {
     placeOrderDialogTitle,
     termsAndConditions,
-    termsAndConditionsLink,
+    adobeTermsAndConditionsLink,
+    adobeResellerTermsAndConditionsLink,
     successSubmission,
     failedSubmission,
     noResponseMessage,
-  } = orderingFromDashboard;
+  } = orderingFromDashboard || {};
 
   const {
     max30Characters,
@@ -73,20 +75,20 @@ function PlaceAdobeOrderDialog({
   const constructTermsCondLink = (text) => {
     if (!text) return null;
     const [label, terms = ''] = text.split(/\b(?=terms .+ conditions)/gi);
+    const adobeLink = getDictionaryValueOrKey(adobeTermsAndConditionsLink);
+    const adobeResellerLink = getDictionaryValueOrKey(
+      adobeTermsAndConditionsLink
+    );
     return (
       <>
         <span>{label}</span>
-        <a
-          href={termsAndConditionsLink}
-          target="_blank"
-          className="cmp-place-order-link"
-        >
+        <a href={adobeLink} target="_blank" className="cmp-place-order-link">
           {terms}
         </a>
         <span>, applicable </span>
         <span> & the </span>
         <a
-          href={termsAndConditionsLink}
+          href={adobeResellerLink}
           target="_blank"
           className="cmp-place-order-link"
         >

@@ -400,15 +400,30 @@ use(['../../../common/utils.js'], function(utils) {
         copyFlyout["copyQuoteEndpoint"] = this.serviceData.uiServiceDomain + this.copyQuoteEndpoint;
     }
 
-    const orderingProperties = ["showOrderingIcon","placeOrderDialogTitle","termsAndConditions","termsAndConditionsLink","successSubmission","failedSubmission", "noResponseMessage"]
+    const orderingProperties = [
+      "showOrderingIcon",
+      "placeOrderDialogTitle",
+      "termsAndConditions",
+      "termsAndConditionsLink",
+      "adobeTermsAndConditionsLink",
+      "adobeResellerTermsAndConditionsLink",
+      "successSubmission",
+      "failedSubmission",
+      "noResponseMessage",
+    ];
 
     if (properties) {
-        const orderingFromDashboard = utils.fillFieldsDialogProperties(orderingProperties);
-        if (!!orderingFromDashboard) {
-            orderingFromDashboard.termsAndConditionsLink = utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(orderingFromDashboard.termsAndConditionsLink));
+      const orderingFromDashboard =
+        utils.fillFieldsDialogProperties(orderingProperties);
+      if (!!orderingFromDashboard) {
+        orderingFromDashboard.termsAndConditionsLink = utils.addHtmlIfNeeded(
+          utils.transformUrlGivenEnvironment(
+            orderingFromDashboard.termsAndConditionsLink
+          )
+        );
 
-            jsonObject['orderingFromDashboard'] = orderingFromDashboard
-        };
+        jsonObject["orderingFromDashboard"] = orderingFromDashboard;
+      }
     }
 
     if (properties && properties["hideCopyHeaderOption"]) {
