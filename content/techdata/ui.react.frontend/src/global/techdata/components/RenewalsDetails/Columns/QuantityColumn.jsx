@@ -5,7 +5,7 @@ import { AddIcon, SubtractIcon } from "../../../../../fluentIcons/FluentIcons";
 function QuantityColumn(props) {
     const { value, setValue, isEditing, rowIndex, data, activeLicenseEdit, dataObj } = props;
     const refInput = useRef();
-    const MIN_VAL = 1;
+    const MIN_VAL = 0;
     const MAX_VAL = activeLicenseEdit
       ? dataObj?.items?.[props.rowIndex]?.quantity
       : 999998;
