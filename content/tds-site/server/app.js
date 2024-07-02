@@ -6691,9 +6691,11 @@ app.get("/ui-commerce/v3/orders/count", (req, res) => {
   }, 200);
 });
 
-app.get("/ui-commerce/v2/DownloadDocuments", function (req, res) {
+app.get("/ui-commerce/v3/orders/downloaddocuments", function (req, res) {
   try {
     const { selectedId } = req.query;
+    res.header("Ga-Download-Documents-Success", 1);
+    res.header("Ga-Download-Documents-Fail", 0);
     if (res.status(200)) {
       if (selectedId && selectedId.length === 1) {
         return res.download("file.pdf");

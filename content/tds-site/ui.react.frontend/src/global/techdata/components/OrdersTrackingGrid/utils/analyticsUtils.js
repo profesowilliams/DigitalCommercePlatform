@@ -316,21 +316,23 @@ export const getOrderModificationFailedGoogle = (label) => {
   };
 };
 
-export const getDNoteDownloadFailedAnalyticsGoogle = (counter, isMainGrid) => {
+export const getDNoteDownloadFailedAnalyticsGoogle = (counter, isMainGrid, orderId, documentId) => {
   return {
     event: 'Order tracking - D-Note View download failed',
-    orderTracking: `D-Note View download failed: ${counter}`,
+    orderTracking: `D-Note View download failed: ${counter} ${orderId} ${documentId}`,
     label: isMainGrid ? 'Main Grid' : 'Order Details',
   };
 };
 
 export const getInvoiceDownloadFailedAnalyticsGoogle = (
   counter,
-  isMainGrid
+  isMainGrid,
+  orderId,
+  documentId
 ) => {
   return {
     event: 'Order tracking - Invoice View download failed',
-    orderTracking: `Invoice View download failed: ${counter}`,
+    orderTracking: `Invoice View download failed: ${counter} ${orderId} ${documentId}`,
     label: isMainGrid ? 'Main Grid' : 'Order Details',
   };
 };
@@ -391,21 +393,26 @@ export const getReportsNRFAnalyticsGoogle = (reportName) => {
 export const pushFailedDownloadGoogleAnalytics = (
   flyoutType,
   isMainGrid,
-  dNoteDownloadFailedCounter,
-  invoiceDownloadFailedCounter,
+  counter,
+  orderId,
+  documentId
 ) => {
   if (flyoutType === 'DNote') {
     pushDataLayerGoogle(
       getDNoteDownloadFailedAnalyticsGoogle(
-        dNoteDownloadFailedCounter,
-        isMainGrid
+        counter,
+        isMainGrid,
+        orderId,
+        documentId
       )
     );
   } else if (flyoutType === 'Invoice') {
     pushDataLayerGoogle(
       getInvoiceDownloadFailedAnalyticsGoogle(
-        invoiceDownloadFailedCounter,
-        isMainGrid
+        counter,
+        isMainGrid,
+        orderId,
+        documentId
       )
     );
   }

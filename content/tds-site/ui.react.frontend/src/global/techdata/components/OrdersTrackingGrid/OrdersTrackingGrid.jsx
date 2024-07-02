@@ -353,26 +353,18 @@ function OrdersTrackingGrid(props) {
         }
       );
       if (response?.status === 204) {
+        const failCounter = response?.headers['Ga-Download-Documents-Fail'];
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
           true,
-          dNoteFailedCounter.current,
-          invoiceFailedCounter.current
+          failCounter,
+          orderId,
+          mapIds
         );
-        if (flyoutType === 'DNote') {
-          dNoteFailedCounter.current++;
-        } else if (flyoutType === 'Invoice') {
-          invoiceFailedCounter.current++;
-        }
         setIsAvailable(false);
       }
     } catch (error) {
-      pushFailedDownloadGoogleAnalytics(
-        flyoutType,
-        true,
-        dNoteFailedCounter.current,
-        invoiceFailedCounter.current
-      );
+      pushFailedDownloadGoogleAnalytics(flyoutType, true, 1, orderId, mapIds);
       if (flyoutType === 'DNote') {
         dNoteFailedCounter.current++;
       } else if (flyoutType === 'Invoice') {
@@ -392,25 +384,23 @@ function OrdersTrackingGrid(props) {
         redirect: true,
       });
       if (response?.status === 204) {
+        const failCounter = response?.headers['Ga-Download-Documents-Fail'];
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
           true,
-          dNoteFailedCounter.current,
-          invoiceFailedCounter.current
+          failCounter,
+          orderId,
+          selectedId
         );
-        if (flyoutType === 'DNote') {
-          dNoteFailedCounter.current++;
-        } else if (flyoutType === 'Invoice') {
-          invoiceFailedCounter.current++;
-        }
         setIsAvailable(false);
       }
     } catch (error) {
       pushFailedDownloadGoogleAnalytics(
         flyoutType,
         true,
-        dNoteFailedCounter.current,
-        invoiceFailedCounter.current
+        1,
+        orderId,
+        selectedId
       );
       if (flyoutType === 'DNote') {
         dNoteFailedCounter.current++;
