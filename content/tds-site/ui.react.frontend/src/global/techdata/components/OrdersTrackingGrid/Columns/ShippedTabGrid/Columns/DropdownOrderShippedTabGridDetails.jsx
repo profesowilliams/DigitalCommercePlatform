@@ -18,6 +18,7 @@ function DropdownOrderShippedTabGridDetails({ data }) {
           const {
             line,
             urlProductImage,
+            urlProductDetailsPage,
             displayName,
             mfrNumber,
             tdNumber,
@@ -58,12 +59,23 @@ function DropdownOrderShippedTabGridDetails({ data }) {
                   style={{ width: defaultWidth.item }}
                   className="order-line-details__content__innerTable__column"
                 >
-                  <span
-                    style={{ maxWidth: defaultWidth.item }}
-                    className="order-line-details__content__innerTable__text"
-                  >
-                    {displayName}
-                  </span>
+                  {urlProductDetailsPage ? (
+                    <a href={urlProductDetailsPage} target="_blank">
+                      <span
+                        style={{ maxWidth: defaultWidth.item }}
+                        className="order-line-details__content__displayNameLinked"
+                      >
+                        {displayName}
+                      </span>
+                    </a>
+                  ) : (
+                    <span
+                      style={{ maxWidth: defaultWidth.item }}
+                      className="order-line-details__content__innerTable__text"
+                    >
+                      {displayName}
+                    </span>
+                  )}
                 </div>
               </Tooltip>
               <div

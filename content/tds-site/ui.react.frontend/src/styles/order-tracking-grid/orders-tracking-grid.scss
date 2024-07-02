@@ -476,6 +476,20 @@
         font-size: 16px !important;
       }
     }
+    &__displayNameLinked {
+      padding-left: 30px;
+      color: $brand-green;
+      cursor: pointer;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 14px !important;
+    }
+
+    &__displayNameLinked:hover {
+      text-decoration: underline;
+    }
     &__innerTable {
       margin-left: 48px;
       &__line {
@@ -536,6 +550,17 @@
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 425px;
+      }
+      &__displayNameLinked {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 425px;
+        color: $brand-green;
+        cursor: pointer;
+      }
+      &__displayNameLinked:hover {
+        text-decoration: underline;
       }
       &__separateLine,
       &__separateLineMultiple {

@@ -6261,6 +6261,8 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
           line: "10",
           urlProductImage:
             "https://cdn.cs.1worldsync.com/d8/52/d8523417-dea2-4d9d-aefa-db9e18c1fbd2.jpg",
+          urlProductDetailsPage:
+            "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=4941436",
           displayName: "Apple iPhone SE (3rd generation)",
           tdNumber: "7347846",
           mfrNumber: "MMXL3QL/A",
@@ -6335,6 +6337,8 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
               line: "100",
               urlProductImage:
                 "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+              urlProductDetailsPage:
+                "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=4941436",
               displayName: "Act Key/ABC Test",
               tdNumber: "9824844",
               mfrNumber: "ABC-77777",
@@ -6370,6 +6374,8 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
               line: "100",
               urlProductImage:
                 "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+              urlProductDetailsPage:
+                "https://intouch.quality.tdsynnex.eu/InTouch/MVC/Product/ProductDetails?productId=4941436",
               displayName: "Act Key/ABC Test",
               tdNumber: "9824844",
               mfrNumber: "ABC-77777",
