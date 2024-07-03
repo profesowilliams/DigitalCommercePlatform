@@ -1,7 +1,7 @@
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { isObject } from ".";
-import { usPost } from "./api";
+import { usPost, get } from "./api";
 import { dateToString } from "../global/techdata/helpers/formatting";
 import { getHeaderInfoFromUrl } from "./index";
 import { intouchHeaderAPIUrl, intouchFooterAPIUrl, intouchUserCheckAPIUrl } from "./featureFlagUtils";
@@ -130,6 +130,13 @@ const validateBlobResponseWithoutModal = async (response) => {
         // Not a json so is a BLOB and sucecss response
         return true;
     }
+};
+
+export const errorDetails = async (endpoint, data) => {
+  const response = await get(
+    `${endpoint}refId=${data.feedBackMessages?.[0]?.refId}&type=${data.feedBackMessages?.[0]?.type}`
+  );
+  return response.data;
 };
 
 /**

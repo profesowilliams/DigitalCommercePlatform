@@ -4,7 +4,7 @@ import EndUserInfo from "./EndUser/EndUserInfo";
 import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
-import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
+import { errorDetails, fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
 import {
   CopyIcon,
   DownloadIcon,
@@ -21,6 +21,7 @@ import CopyFlyout from '../../CopyFlyout/CopyFlyout';
 import ShareFlyout from '../../ShareFlyout/ShareFlyout';
 import RevisionFlyout from '../../RevisionFlyout/RevisionFlyout';
 import RequestFlyout from '../../RequestFlyout/RequestFlyout';
+import ErrorFlyout from '../../ErrorFlyout/ErrorFlyout';
 import Toaster from '../../Widgets/Toaster';
 import {
   getRowAnalytics,
@@ -346,6 +347,10 @@ function GridHeader({ gridProps, data }) {
         requestFlyoutContent={gridProps.requestQuote}
         subheaderReference={document.querySelector('.subheader > div > div')}
       />
+      <ErrorFlyout
+          store={useRenewalGridState}
+          subheaderReference={document.querySelector('.subheader > div > div')}
+        />
     </div>
   );
 }
@@ -403,6 +408,23 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
       key: 'requestFlyout',
       value: { data: flyoutData, show: true },
     });
+  };
+
+  const openErrorFlyOut = async (e) => {
+    e.preventDefault();
+
+    const response = await errorDetails(
+        `${gridProps.uiServiceDomain}/${data.feedBackMessages?.[0]?.jsonUrl}`,
+        data
+      );
+
+      const flyoutData = {
+       details: response?.details,
+      };
+      effects.setCustomState({
+        key: 'errorFlyout',
+        value: { data: flyoutData, show: true },
+      });
   };
 
   return (
@@ -470,8 +492,9 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
               </p>
               {
                 redBanner && data.feedBackMessages?.[0]?.jsonUrlMessage && (
-                    <a href={`${window.location.origin}/${data.feedBackMessages?.[0]?.jsonUrl}refId=${data.feedBackMessages?.[0]?.refId}&type=${data.feedBackMessages?.[0]?.type}`}
-                        target="_blank">
+                    <a href='#error'
+                        target="_blank"
+                        onClick={openErrorFlyOut}>
                     {data.feedBackMessages?.[0]?.jsonUrlMessage}</a>
                 )
               }

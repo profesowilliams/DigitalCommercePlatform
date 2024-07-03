@@ -20,6 +20,7 @@ function BaseFlyout({
   bottomContent,
   selected,
   secondaryButton,
+  primaryButton,
   isTDSynnex,
   analyticsData,
   analyticsCallback,
@@ -73,23 +74,26 @@ function BaseFlyout({
           {buttonsSection || (
             <div className="cmp-flyout__footer-buttons">
               {!disabledButton && secondaryButton && <SecondaryButton />}
-              <Button
-                btnClass={`cmp-flyout__footer-button ${
-                  !disabledButton && 'cmp-flyout__footer-button--enabled'
-                }`}
-                disabled={disabledButton}
-                onClick={onClickButton}
-                analyticsCallback={analyticsCallback}
-              >
-                {
-                  (isLoading && isShareFlyout) ? (
-                    <>
-                      <SyncIcon />{getDictionaryValueOrKey(loadingButtonLabel)}
-                    </>
-                  ) : getDictionaryValueOrKey(buttonLabel)
-                }
-                {isLoading && !isShareFlyout && <LoaderIcon />}
-              </Button>
+              {
+                primaryButton &&
+                   <Button
+                     btnClass={`cmp-flyout__footer-button ${
+                       !disabledButton && 'cmp-flyout__footer-button--enabled'
+                     }`}
+                     disabled={disabledButton}
+                     onClick={onClickButton}
+                     analyticsCallback={analyticsCallback}
+                   >
+                     {
+                       (isLoading && isShareFlyout) ? (
+                         <>
+                           <SyncIcon />{getDictionaryValueOrKey(loadingButtonLabel)}
+                         </>
+                       ) : getDictionaryValueOrKey(buttonLabel)
+                     }
+                     {isLoading && !isShareFlyout && <LoaderIcon />}
+                   </Button>
+              }
             </div>
           )}
         </section>

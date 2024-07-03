@@ -4972,6 +4972,24 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
   res.json(response);
 });
 
+app.get("/UI-Renewal/v1/GetAdobeRenewalAuditLogs", function (req, res) {
+
+    const success = {
+        "id": "66570ab96359e5d1ad1db1ca",
+        "refId": "P1005108534",
+        "type": "Preview Order",
+        "name": "AdobeRenewalPipeline",
+        "userId": "System",
+        "customerNo": "2000760",
+        "date": "2024-05-29T11:00:09.247Z",
+        "details": "{\"SystemHeaderId\":\"240529105729011349\",\"TdSynnexQuoteRef\":\"P1005103933\",\"VendorId\":\"3\",\"VendorName\":\"Adobe\",\"VendorProgramId\":\"ADBVIPMPC\",\"VendorProgramName\":null,\"ActionDetail\":\"ApjRegionSkuAndQtyCheck;;Error connecting to http://app-renewal/v1. Reported an error: BadGateway.;\"}",
+        "salesOrg": "VN91"
+    }
+
+    res.json(success);
+});
+
+
 app.post("/ui-renewal/v1/RequestQuoteEmail", function (req, res) {
   const success = {
     content: {

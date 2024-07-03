@@ -204,6 +204,18 @@ $flyout-small-height-formax: 779px;
       }
     }
   }
+
+  &.error-flyout {
+    .cmp-flyout__content  {
+        padding-top: 16px;
+
+        & > p {
+            word-break: break-word;
+        }
+    }
+  }
+
+
   // share flyout styles
 
   &.share-flyout {
