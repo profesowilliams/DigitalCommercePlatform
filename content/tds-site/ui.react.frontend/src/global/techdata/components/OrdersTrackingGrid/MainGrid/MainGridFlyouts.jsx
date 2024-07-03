@@ -14,7 +14,6 @@ const MainGridFlyouts = ({
   downloadFileBlob,
   analyticsCategories,
   onQueryChanged,
-  userData,
   searchParams,
   settings,
   rowsToGrayOutTDNameRef,

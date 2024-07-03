@@ -679,7 +679,6 @@ function OrdersTrackingGrid(props) {
         openFilePdf={openFilePdf}
         analyticsCategories={analyticsCategories}
         onQueryChanged={onQueryChanged}
-        userData={userData}
         searchParams={{
           reports: reportFilterValue,
           sort: hasSortChanged,

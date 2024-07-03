@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Grid from '../../../Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from '../NotShippedTabGrid/buildColumnDefinitions';
@@ -13,6 +13,7 @@ import { usPost } from '../../../../../../utils/api';
 import OrderReleaseAlertModal from '../../Modals/OrderReleaseAlertModal';
 import OrderStatusModal from '../../Modals/OrderStatusModal';
 import { GreenInfoIcon } from '../../../../../../fluentIcons/FluentIcons';
+import { fetchOrderLinesData } from '../../../OrdersTrackingDetail/OrdersTrackingDetailGrid/utils/orderTrackingUtils';
 
 function NotShippedTabGrid({
   data,
@@ -50,6 +51,7 @@ function NotShippedTabGrid({
   const [openAlert, setOpenAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
+  const [currency, setCurrency] = useState(null);
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const hasOrderModificationRights = hasRights('OrderModification');
@@ -122,7 +124,8 @@ function NotShippedTabGrid({
   );
 
   const handleOrderModification = () => {
-    orderEditable &&
+    currency &&
+      orderEditable &&
       setCustomState({
         key: 'orderModificationFlyout',
         value: {
@@ -131,6 +134,7 @@ function NotShippedTabGrid({
           show: true,
           gridRef,
           rowsToGrayOutTDNameRef,
+          currency,
         },
       });
   };
@@ -176,11 +180,14 @@ function NotShippedTabGrid({
       });
   };
 
-  useEffect(() => {
+  useEffect(async () => {
+    const response = await fetchOrderLinesData(config, orderNo);
+    setCurrency(response?.data?.content?.notShipped[0]?.currency);
     setCustomState({
       key: 'orderModificationFlyout',
       value: {
         id: orderNo,
+        currency: response?.data?.content?.notShipped[0]?.currency,
       },
     });
   }, []);
@@ -213,68 +220,70 @@ function NotShippedTabGrid({
     }
   }, [newItem]);
   return (
-    <section>
-      <div className="order-line-details__content__title">
-        <span className="order-line-details__content__title-text">
-          {getDictionaryValueOrKey(config?.orderLineDetails?.notShippedLabel)}
-        </span>
-        <span>
-          {isReleaseOrderButtonVisible && (
-            <button
-              className="order-line-details__content__release-button"
-              onClick={() => setReleaseOrderShow(true)}
-            >
-              {getDictionaryValueOrKey(
-                config?.orderLineDetails?.releaseButtonLabel
-              )}
-            </button>
-          )}
-          {isOrderModificationButtonVisible && (
-            <button
-              className="order-line-details__content__title-button"
-              onClick={handleOrderModification}
-            >
-              {getDictionaryValueOrKey(
-                config?.orderLineDetails?.modifyEligibleItemsLabel
-              )}
-            </button>
-          )}
-        </span>
-      </div>
-      {isTabActive && (
-        <Grid
-          columnDefinition={myColumnDefs}
-          config={config}
-          data={data}
-          rowClassRules={rowClassRules}
-          gridRef={gridRef}
-          customErrorMessage={true}
+    currency && (
+      <section>
+        <div className="order-line-details__content__title">
+          <span className="order-line-details__content__title-text">
+            {getDictionaryValueOrKey(config?.orderLineDetails?.notShippedLabel)}
+          </span>
+          <span>
+            {isReleaseOrderButtonVisible && (
+              <button
+                className="order-line-details__content__release-button"
+                onClick={() => setReleaseOrderShow(true)}
+              >
+                {getDictionaryValueOrKey(
+                  config?.orderLineDetails?.releaseButtonLabel
+                )}
+              </button>
+            )}
+            {isOrderModificationButtonVisible && (
+              <button
+                className="order-line-details__content__title-button"
+                onClick={handleOrderModification}
+              >
+                {getDictionaryValueOrKey(
+                  config?.orderLineDetails?.modifyEligibleItemsLabel
+                )}
+              </button>
+            )}
+          </span>
+        </div>
+        {isTabActive && (
+          <Grid
+            columnDefinition={myColumnDefs}
+            config={config}
+            data={data}
+            rowClassRules={rowClassRules}
+            gridRef={gridRef}
+            customErrorMessage={true}
+          />
+        )}
+        <OrderReleaseModal
+          open={releaseOrderShow}
+          handleClose={() => setReleaseOrderShow(false)}
+          handleReleaseOrder={handleReleaseOrder}
+          orderLineDetails={config?.orderLineDetails}
+          orderNo={orderNo}
+          PONo={PONo}
         />
-      )}
-      <OrderReleaseModal
-        open={releaseOrderShow}
-        handleClose={() => setReleaseOrderShow(false)}
-        handleReleaseOrder={handleReleaseOrder}
-        orderLineDetails={config?.orderLineDetails}
-        orderNo={orderNo}
-        PONo={PONo}
-      />
-      <OrderReleaseAlertModal
-        open={openAlert}
-        handleClose={() => {
-          setOpenAlert(false);
-        }}
-        orderLineDetails={config?.orderLineDetails}
-        releaseSuccess={releaseSuccess}
-      />
-      <OrderStatusModal
-        open={openStatusesModal}
-        handleClose={() => {
-          setOpenStatusesModal(false);
-        }}
-        labels={config?.statusesLabels}
-      />
-    </section>
+        <OrderReleaseAlertModal
+          open={openAlert}
+          handleClose={() => {
+            setOpenAlert(false);
+          }}
+          orderLineDetails={config?.orderLineDetails}
+          releaseSuccess={releaseSuccess}
+        />
+        <OrderStatusModal
+          open={openStatusesModal}
+          handleClose={() => {
+            setOpenStatusesModal(false);
+          }}
+          labels={config?.statusesLabels}
+        />
+      </section>
+    )
   );
 }
 export default NotShippedTabGrid;

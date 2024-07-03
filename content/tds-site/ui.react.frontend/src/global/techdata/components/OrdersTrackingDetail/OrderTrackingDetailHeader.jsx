@@ -28,6 +28,7 @@ import XMLMessageModal from '../OrdersTrackingGrid/Modals/XMLMessageModal';
 import MigrationInfoBox from '../MigrationInfoBox/MigrationInfoBox';
 import { ArrowLeftIcon } from '../../../../fluentIcons/FluentIcons';
 import { handleDownloadExcelExport } from './utils/orderTrackingExportUtils';
+import { fetchOrderDetailsData } from './OrdersTrackingDetailGrid/utils/orderTrackingUtils';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -48,6 +49,7 @@ const OrderTrackingDetailHeader = ({
   const [releaseSuccess, setReleaseSuccess] = useState(false);
   const [previousOrder, setPreviousOrder] = useState(null);
   const [nextOrder, setNextOrder] = useState(null);
+  const [currency, setCurrency] = useState(null);
   const effects = useOrderTrackingStore((state) => state.effects);
   const orderModificationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.orderModification
@@ -71,13 +73,14 @@ const OrderTrackingDetailHeader = ({
   };
 
   const handleOrderModification = () => {
-    orderEditable &&
+    currency && orderEditable &&
       setCustomState({
         key: 'orderModificationFlyout',
         value: {
           data: null,
           id,
           show: true,
+          currency,
         },
       });
   };
@@ -323,6 +326,8 @@ const OrderTrackingDetailHeader = ({
     const refinements = await fetchFiltersRefinements();
     setFeatureFlags(refinements?.featureFlags);
 
+    const response = await fetchOrderDetailsData(config);
+    setCurrency(response?.data?.content?.paymentDetails?.currency);
     const navigationData = queryCacheKeyParam && (await fetchNavigationData());
     if (navigationData) {
       setPreviousOrder(navigationData.prevOrder || null);
@@ -331,71 +336,76 @@ const OrderTrackingDetailHeader = ({
   }, []);
 
   return (
-    <div className="cmp-orders-qp__config-grid">
-      <div className="header-container">
-        <div className="navigation-container">
-          <Link
-            variant="back-to-orders"
-            href={createBackUrl()}
-            underline="underline-none"
-          >
-            <ArrowLeftIcon className="arrow-left" />
-            {renderBackButton()}
-          </Link>
-          {renderRightSideOfNavigation()}
-        </div>
-        <div className="title-container">
-          <OrderTrackingDetailTitle content={content} labels={config?.labels} />
-          <div
-            className="actions-container"
-            onMouseOver={handleActionMouseOver}
-            onMouseLeave={handleActionMouseLeave}
-          >
-            <span className="quote-actions">
-              {getDictionaryValueOrKey(config.labels?.actions)}
-            </span>
-            {actionsDropdownVisible && (
-              <div className="actions-dropdown">
-                <MenuActions items={menuActionsItems} />
-              </div>
-            )}
+    currency && (
+      <div className="cmp-orders-qp__config-grid">
+        <div className="header-container">
+          <div className="navigation-container">
+            <Link
+              variant="back-to-orders"
+              href={createBackUrl()}
+              underline="underline-none"
+            >
+              <ArrowLeftIcon className="arrow-left" />
+              {renderBackButton()}
+            </Link>
+            {renderRightSideOfNavigation()}
+          </div>
+          <div className="title-container">
+            <OrderTrackingDetailTitle
+              content={content}
+              labels={config?.labels}
+            />
+            <div
+              className="actions-container"
+              onMouseOver={handleActionMouseOver}
+              onMouseLeave={handleActionMouseLeave}
+            >
+              <span className="quote-actions">
+                {getDictionaryValueOrKey(config.labels?.actions)}
+              </span>
+              {actionsDropdownVisible && (
+                <div className="actions-dropdown">
+                  <MenuActions items={menuActionsItems} />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      {infoBoxEnable && (
-        <MigrationInfoBox
-          config={config?.labels}
-          id={content?.sapOrderMigration?.id}
-          referenceType={content?.sapOrderMigration?.referenceType}
+        {infoBoxEnable && (
+          <MigrationInfoBox
+            config={config?.labels}
+            id={content?.sapOrderMigration?.id}
+            referenceType={content?.sapOrderMigration?.referenceType}
+          />
+        )}
+        <div className="info-container">
+          <SoldToCard shipTo={content.shipTo} config={config} />
+          <OrderAcknowledgementCard content={content} config={config} />
+          <ContactCard content={content} config={config} />
+        </div>
+        <OrderReleaseModal
+          open={releaseOrderShow}
+          handleClose={() => setReleaseOrderShow(false)}
+          handleReleaseOrder={handleReleaseOrder}
+          orderLineDetails={config.actionLabels}
+          orderNo={id}
+          PONo={poNumber}
         />
-      )}
-      <div className="info-container">
-        <SoldToCard shipTo={content.shipTo} config={config} />
-        <OrderAcknowledgementCard content={content} config={config} />
-        <ContactCard content={content} config={config} />
+        <OrderReleaseAlertModal
+          open={openAlert}
+          handleClose={() => {
+            setOpenAlert(false);
+          }}
+          orderLineDetails={config.actionLabels}
+          releaseSuccess={releaseSuccess}
+        />
+        <XMLMessageModal
+          open={openXMLAlert}
+          handleClose={() => setOpenXMLAlert(false)}
+          message={labels?.xmlMessageAlertLabel}
+        />
       </div>
-      <OrderReleaseModal
-        open={releaseOrderShow}
-        handleClose={() => setReleaseOrderShow(false)}
-        handleReleaseOrder={handleReleaseOrder}
-        orderLineDetails={config.actionLabels}
-        orderNo={id}
-        PONo={poNumber}
-      />
-      <OrderReleaseAlertModal
-        open={openAlert}
-        handleClose={() => {
-          setOpenAlert(false);
-        }}
-        orderLineDetails={config.actionLabels}
-        releaseSuccess={releaseSuccess}
-      />
-      <XMLMessageModal
-        open={openXMLAlert}
-        handleClose={() => setOpenXMLAlert(false)}
-        message={labels?.xmlMessageAlertLabel}
-      />
-    </div>
+    )
   );
 };
 export default OrderTrackingDetailHeader;

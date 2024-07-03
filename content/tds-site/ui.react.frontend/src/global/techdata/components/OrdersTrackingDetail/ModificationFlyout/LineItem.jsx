@@ -7,7 +7,7 @@ import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTra
 import Tooltip from '@mui/material/Tooltip';
 import { usGet } from '../../../../../utils/api';
 
-const LineItem = ({ item, index, onChange, labels, domain, enableAddLine }) => {
+const LineItem = ({ item, index, onChange, labels, domain, enableAddLine, currency }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
   const [quantityDecreased, setQuantityDecreased] = useState(false);
   const [currentValue, setCurrentValue] = useState(item.orderQuantity);
@@ -15,9 +15,6 @@ const LineItem = ({ item, index, onChange, labels, domain, enableAddLine }) => {
   const [totalPriceFormatted, setTotalPriceFormatted] = useState(
     item?.totalPriceFormatted || ''
   );
-  const userData = useOrderTrackingStore((state) => state.userData);
-  const currency = userData?.activeCustomer?.defaultCurrency;
-  const disableChangeQuantity = enableAddLine === false;
 
   const { setReasonDropdownValues, setDoesReasonDropdownHaveEmptyItems } =
     useOrderTrackingStore((st) => st.effects);

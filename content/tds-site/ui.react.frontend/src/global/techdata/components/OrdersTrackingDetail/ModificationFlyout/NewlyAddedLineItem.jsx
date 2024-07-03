@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Counter from '../../Counter/Counter';
 import { usPost } from '../../../../../utils/api';
-import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const NewlyAddedLineItem = ({
   item = {},
@@ -11,11 +10,10 @@ const NewlyAddedLineItem = ({
   removeElement,
   labels,
   domain,
+  currency,
 }) => {
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(item.quantity);
-  const userData = useOrderTrackingStore((state) => state.userData);
-  const userDataCurrency = userData?.activeCustomer?.defaultCurrency;
 
   const handleAmountChange = (newValue) => {
     setQuantity(newValue);
@@ -26,7 +24,7 @@ const NewlyAddedLineItem = ({
       const result = await usPost(`${domain}/v2/Price/GetPriceForProduct`, {
         productId: item.id,
         quantity: quantity,
-        currency: userDataCurrency,
+        currency,
       });
       const { price, totalPriceFormatted } =
         result?.data?.content?.priceData || {};
@@ -63,7 +61,7 @@ const NewlyAddedLineItem = ({
       </div>
       <div className="cmp-flyout-list__element__price">
         <p className="cmp-flyout-list__element__price-bold">
-          {getDictionaryValueOrKey(labels.lineTotal)} ({userDataCurrency}){' '}
+          {getDictionaryValueOrKey(labels.lineTotal)} ({currency}){' '}
         </p>
         {price && <p>{price}</p>}
       </div>
