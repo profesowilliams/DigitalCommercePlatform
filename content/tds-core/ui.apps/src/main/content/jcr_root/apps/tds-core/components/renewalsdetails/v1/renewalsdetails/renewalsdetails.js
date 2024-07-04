@@ -149,6 +149,8 @@ use(['../../../common/utils.js'], function(utils) {
         jsonObject["shopDomainPage"] = this.shopDomainPage;
     }
 
+
+
     if (this.serviceData.renewalDetailLineItemEndpoint) {
         jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.renewalDetailLineItemEndpoint || '';
     }
@@ -371,6 +373,11 @@ use(['../../../common/utils.js'], function(utils) {
     if (this.renewalDetailsEndpoint && this.serviceData.uiServiceDomain) {
         jsonObject["renewalDetailsEndpoint"] = this.serviceData.uiServiceDomain + this.renewalDetailsEndpoint;
     }
+
+    if ( this.uiServiceDomain){
+        jsonObject["uiServiceDomain"] = this.uiServiceDomain;
+    }
+
 
     if (this.updateRenewalOrderEndpoint != null && this.serviceData.uiServiceDomain) {
         jsonObject["updateRenewalOrderEndpoint"] = this.serviceData.uiServiceDomain + this.updateRenewalOrderEndpoint;
