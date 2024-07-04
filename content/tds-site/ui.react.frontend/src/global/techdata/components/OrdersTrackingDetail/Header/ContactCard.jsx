@@ -22,7 +22,11 @@ function ContactCard({ content, config }) {
               <span>{phoneNumber}</span>
             </div>
           )}
-          {email && <span className="card-container__email">{email}</span>}
+          {email && (
+            <span>
+              <a href={`mailto:${email}`} className="card-container__email">{email}</a>
+            </span>
+          )}
         </div>
       </div>
     </Card>
