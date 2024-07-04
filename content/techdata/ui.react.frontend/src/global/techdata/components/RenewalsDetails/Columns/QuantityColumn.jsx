@@ -7,7 +7,7 @@ function QuantityColumn(props) {
     const refInput = useRef();
     const MIN_VAL = 0;
     const MAX_VAL = activeLicenseEdit
-      ? dataObj?.items?.[props.rowIndex]?.quantity
+      ? dataObj?.itemsActive?.[props.rowIndex]?.quantity
       : 999998;
     const MAX_DIGITS = MAX_VAL?.toString()?.length;
 
