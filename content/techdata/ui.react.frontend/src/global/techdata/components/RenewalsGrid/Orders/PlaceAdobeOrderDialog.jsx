@@ -77,7 +77,7 @@ function PlaceAdobeOrderDialog({
     const [label, terms = ''] = text.split(/\b(?=terms .+ conditions)/gi);
     const adobeLink = getDictionaryValueOrKey(adobeTermsAndConditionsLink);
     const adobeResellerLink = getDictionaryValueOrKey(
-      adobeTermsAndConditionsLink
+      adobeResellerTermsAndConditionsLink
     );
     return (
       <>
