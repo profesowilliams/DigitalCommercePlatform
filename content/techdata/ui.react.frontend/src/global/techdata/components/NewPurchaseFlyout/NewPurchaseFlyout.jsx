@@ -24,11 +24,10 @@ function NewPurchaseFlyout({
   newPurchaseFlyout,
   subheaderReference,
   resetGrid,
+  userData,
 }) {
   const effects = store((state) => state.effects);
   const newPurchaseFlyoutConfig = store((state) => state.newPurchaseFlyout);
-  const userData = store((state) => state.userData);
-
   const { pathname, search } = window.location;
 
   const closeFlyout = () => {
