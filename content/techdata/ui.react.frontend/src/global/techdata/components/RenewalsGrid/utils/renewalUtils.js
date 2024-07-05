@@ -54,7 +54,7 @@ export function mapServiceData(response) {
         : [];
     const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;
     const pageCount = mappedResponse?.data?.content?.pageCount ?? 1;
-    const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 1;
+    const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;
     const refinementGroups = mappedResponse?.data?.content?.refinementGroups;
 
     if (mappedResponse.status !== 200 && !mappedResponse.data) {
@@ -115,10 +115,12 @@ export function urlStrToMapStruc(urlStr = "") {
     const urlParams = new URLSearchParams(url.search);
     const result = [];
 
-    result.push({ key: url.origin + url.pathname + "?", value: "" });
+    result.push({ key: url.origin + url.pathname + "?", value: '' });
 
     urlParams.forEach((value, key) => {
-        result.push({ key, value });
+        if (value !== "") {
+            result.push({ key, value });
+        }
     });
 
     return result;
@@ -256,6 +258,10 @@ export async function fetchRenewalsFilterByPost(config) {
         // Set DueDateFrom if dateSelected is not empty
         if (filterLocalStorage.dateSelected) {
             params.DueDateFrom = filterLocalStorage.optionFields.DueDateFrom;
+        }
+
+        if (params.DueDateFrom == null || params.DueDateFrom === 'null') {
+            delete params.DueDateFrom;
         }
 
         // Convert arrays to individual key-value pairs for the query parameters
