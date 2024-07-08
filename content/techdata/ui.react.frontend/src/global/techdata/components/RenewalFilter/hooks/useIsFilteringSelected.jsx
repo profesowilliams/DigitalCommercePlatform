@@ -21,23 +21,58 @@ export default function useFilteringSelected(){
       return noChildIds.some((filter) => filter.checked || filter.applied) || isDateSelectedOrApplied();
     }
 
-    const hasDateFilterChangeAvailable = () => {
-      const localFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
-      const hasCustomSelected = dateSelected === 'custom';
-      const hasLocalDateApplied = localFilters?.dateSelected;  
-      const hasValidCustomRange = hasCustomSelected && !!(customStartDate && customEndDate);          
-      let hasDateChangeToApply = dateSelected && hasLocalDateApplied !== dateSelected;
-      // removing applied date
-      hasDateChangeToApply = hasLocalDateApplied && !dateSelected ? true : hasDateChangeToApply;
-      // changing start date range      
-      hasDateChangeToApply = hasCustomSelected && customStartDate !== localFilters?.customStartDate? true : hasDateChangeToApply;
-      // changing end date range      
-      hasDateChangeToApply = hasCustomSelected && customEndDate !== localFilters?.customEndDate? true : hasDateChangeToApply;
-      // custom range valid
-      hasDateChangeToApply = hasCustomSelected && !hasValidCustomRange ? false : hasDateChangeToApply;
+/**
+ * Checks if there is a change in the date filter that needs to be applied.
+ *
+ * @returns {boolean|null} - Returns true if a date change needs to be applied, false if custom dates are selected without valid range, and null if no change is needed.
+ */
+const hasDateFilterChangeAvailable = () => {
+    // Retrieve local filters from local storage
+    const localFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
+    const { dateSelected: hasLocalDateApplied, customStartDate: localStartDate, customEndDate: localEndDate } = localFilters || {};
 
-      return hasDateChangeToApply;
+    // Check if the custom date is selected
+    const hasCustomSelected = dateSelected === 'custom';
+
+    // Check if a valid custom date range is provided
+    const hasValidCustomRange = hasCustomSelected && !!(customStartDate && customEndDate);
+
+    // Early return if custom date is selected but no start and end dates are provided
+    if (hasCustomSelected && !(customStartDate && customEndDate)) {
+        return false;
     }
+
+    // Return true if no date is selected but a local date is applied
+    if (dateSelected === null && hasLocalDateApplied) {
+      return true;
+    }
+
+    // Early return if the date selected is the same as the local date applied or if dateSelected is null
+    if (dateSelected === hasLocalDateApplied || dateSelected === null) {
+        return null;
+    }
+
+    // Initialize the variable to check if a date change needs to be applied
+    let hasDateChangeToApply = false;
+
+    // Check if the date selected is different from the local date applied
+    if (dateSelected && hasLocalDateApplied !== dateSelected) {
+        hasDateChangeToApply = true;
+    } else if (hasLocalDateApplied && !dateSelected) {
+        hasDateChangeToApply = true;
+    } else if (hasCustomSelected) {
+        // Check if custom date range is different from the local date range
+        if (customStartDate !== localStartDate || customEndDate !== localEndDate) {
+            hasDateChangeToApply = true;
+        }
+        // Ensure the custom date range is valid
+        if (!hasValidCustomRange) {
+            hasDateChangeToApply = false;
+        }
+    }
+
+    return hasDateChangeToApply;
+};
 
     /**
      * Checks if there is any change available in the filter list or date filter.

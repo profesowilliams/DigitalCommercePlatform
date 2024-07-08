@@ -111,12 +111,33 @@ function useBasePaginationState({ store, onQueryChanged }) {
     }
   };
 
-  const getUpperLimitShownItemsNumber = () => {
-    const upperLimit = paginationCounter.maxCounter > 0
-                        ? paginationCounter.maxCounter
-                        : maxPaginationCounter();                    
-    return totalCounter ? upperLimit : 0
+/**
+ * Get the upper limit of items shown based on pagination counters and total count.
+ * 
+ * @returns {number} The upper limit of items to be shown, or 0 if there are no items.
+ */
+const getUpperLimitShownItemsNumber = () => {
+  // Retrieve the maximum possible pagination counter value
+  const maxCounter = maxPaginationCounter();
+  let upperLimit;
+
+  // Determine the upper limit based on the current pagination counter
+  if (paginationCounter.maxCounter > 0 && paginationCounter.maxCounter < maxCounter) {
+    // If the current pagination counter is positive but less than the maximum, use the maximum
+    upperLimit = maxCounter;
+  } else {
+    // Otherwise, use the current pagination counter if positive, or the maximum counter
+    upperLimit = paginationCounter.maxCounter > 0 ? paginationCounter.maxCounter : maxCounter;
   }
+
+  // Ensure the upper limit does not exceed the total number of items
+  if (upperLimit > totalCounter) {
+    upperLimit = totalCounter;
+  }
+
+  // Return the upper limit if there are items to display, otherwise return 0
+  return totalCounter ? upperLimit : 0;
+}
 
   const getPaginationMinCounter = () => {
     return paginationCounter.minCounter > 0

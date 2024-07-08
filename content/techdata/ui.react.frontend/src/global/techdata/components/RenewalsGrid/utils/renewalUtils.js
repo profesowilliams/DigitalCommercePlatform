@@ -155,10 +155,7 @@ export function addCurrentPageNumber(customPaginationRef, request) {
 }
 
 export function isFilterPostRequest(hasSortChanged, isFilterDataPopulated) {
-    if (hasSortChanged.current && isFilterDataPopulated.current) {
-        return true;
-    }
-    return false;
+    return hasSortChanged?.current && isFilterDataPopulated?.current;
 }
 
 function compareMaps(map1, map2) {
@@ -218,15 +215,52 @@ export async function fetchRenewalsFilterByPost(config) {
         if (customPaginationRef.current?.pageNumber !== 1) {
             params.PageNumber = customPaginationRef.current?.pageNumber;
         }
+
         if (searchCriteria.current?.field && searchCriteria.current?.value) {
             const { field, value } = searchCriteria.current;
             params[field] = value;
         }
 
+        // Remove DueDateTo if its value is 'null' or null
+        if (params.DueDateTo == null || params.DueDateTo === 'null') {
+            delete params.DueDateTo;
+        } else {
+            params.DueDateTo = new Date(params.DueDateTo).toISOString();
+        }
+
+        // Set DueDateFrom if dateSelected is not empty
+        if (filterLocalStorage.dateSelected) {
+            params.DueDateFrom = filterLocalStorage.optionFields.DueDateFrom;
+        }
+
+        if (params.DueDateFrom == null || params.DueDateFrom === 'null') {
+            delete params.DueDateFrom;
+        } else {
+            params.DueDateFrom = new Date(params.DueDateFrom).toISOString();
+        }
+
         const isSameFilter =
             isSameFilterRepeated(previousFilter.current, params) ||
             isFromRenewalDetailsPage();
-        if (!isSameFilter) params.PageNumber = 1;
+        
+        if (isSameFilter && previousFilter.current?.PageNumber > 1 && params.PageNumber > 1) {
+            delete params.PageNumber;
+        } else if (isSameFilter && previousFilter.current?.PageNumber === undefined && params.PageNumber === undefined) {
+            delete params.PageNumber;
+        } else if (isSameFilter && previousFilter.current?.PageNumber === undefined && params.PageNumber > 1) {
+            // delete params.PageNumber;
+        } else if (!isSameFilter && previousFilter.current?.PageNumber > 1 && params.PageNumber > 1) {
+            delete params.PageNumber;
+        } else if (!isSameFilter && previousFilter.current?.PageNumber === undefined && params.PageNumber > 1) {
+            previousFilter.current.PageNumber = 1;
+            params.PageNumber = 1;
+         } else if (!isSameFilter && previousFilter.current?.PageNumber === undefined && params.PageNumber === undefined) {
+            previousFilter.current.PageNumber = 1; 
+            params.PageNumber = 1;
+        } else if (!isSameFilter && previousFilter.current?.PageNumber === 1 && params.PageNumber === undefined) {
+            previousFilter.current.PageNumber === undefined;
+            // params.PageNumber = 1;
+        };
 
         // Add logic to parse filterLocalStorage and build query parameters based on checked childIds
         if (filterLocalStorage && filterLocalStorage.filterList) {
@@ -248,20 +282,16 @@ export async function fetchRenewalsFilterByPost(config) {
             });
         }
 
-        // Remove DueDateTo if its value is 'null' or null
-        if (params.DueDateTo == null || params.DueDateTo === 'null') {
-            delete params.DueDateTo;
-        } else {
-            params.DueDateTo = new Date(params.DueDateTo).toISOString();
-        }
+        if (params.Type === undefined) {
+            const urlObj = new URL(config.componentProp.uiServiceEndPoint);
 
-        // Set DueDateFrom if dateSelected is not empty
-        if (filterLocalStorage.dateSelected) {
-            params.DueDateFrom = filterLocalStorage.optionFields.DueDateFrom;
-        }
+            // Get the search parameters from the URL
+            const searchParams = new URLSearchParams(urlObj.search);
 
-        if (params.DueDateFrom == null || params.DueDateFrom === 'null') {
-            delete params.DueDateFrom;
+            // Get all values for the 'Type' query parameter
+            const typeValues = searchParams.getAll('Type');
+
+            params.Type = typeValues;
         }
 
         // Convert arrays to individual key-value pairs for the query parameters
@@ -287,7 +317,6 @@ export async function fetchRenewalsFilterByPost(config) {
 
         // Construct the final URL
         const url = `${baseUrl}?${queryParams.toString()}`;
-
         try {
             const result = await usGet(url);
             previousFilter.current = { ...params };
@@ -532,14 +561,21 @@ export function updateQueryString(pageNumber) {
 }
 
 export async function handleFetchDataStrategy(renewalOperations) {
-    const { hasSortChanged, isFilterDataPopulated } = renewalOperations;
-    const shouldFetchByPost = isFilterPostRequest(
-        hasSortChanged,
-        isFilterDataPopulated
-    );
-    return shouldFetchByPost
-        ? fetchRenewalsFilterByPost({ ...renewalOperations })
-        : fetchRenewalsByGet({ ...renewalOperations });
+    const { hasSortChanged = false, isFilterDataPopulated = false } = renewalOperations;
+    const shouldFetchByPost = shouldUsePostRequest(hasSortChanged, isFilterDataPopulated);
+
+    try {
+        return shouldFetchByPost
+            ? await fetchRenewalsFilterByPost({ ...renewalOperations })
+            : await fetchRenewalsByGet({ ...renewalOperations });
+    } catch (error) {
+        console.error('Error fetching renewal data:', error);
+        throw error;  // Rethrow the error after logging it
+    }
+}
+
+function shouldUsePostRequest(hasSortChanged, isFilterDataPopulated) {
+    return isFilterPostRequest(hasSortChanged, isFilterDataPopulated);
 }
 
 export const analyticsColumnDataToPush = (name) => ({
