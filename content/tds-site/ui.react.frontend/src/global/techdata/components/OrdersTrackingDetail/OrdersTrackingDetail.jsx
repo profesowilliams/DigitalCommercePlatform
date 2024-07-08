@@ -11,6 +11,7 @@ import {
   getPageReloadAnalyticsGoogle,
   pushDataLayerGoogle,
   pushFailedDownloadGoogleAnalytics,
+  pushSuccessDownloadGoogleAnalytics,
   fixCountryCode
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
@@ -90,11 +91,21 @@ function OrdersTrackingDetail(props) {
           redirect: false,
         }
       );
-      if (response?.status === 204) {
+      if (response?.status === 200) {
+        const successCounter =
+          response?.headers['Ga-Download-Documents-Success'];
+        pushSuccessDownloadGoogleAnalytics(
+          flyoutType,
+          false,
+          successCounter,
+          orderId,
+          mapIds
+        );
+      } else if (response?.status === 204) {
         const failCounter = response?.headers['Ga-Download-Documents-Fail'];
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
-          true,
+          false,
           failCounter,
           orderId,
           mapIds
@@ -126,11 +137,20 @@ function OrdersTrackingDetail(props) {
       response = await requestFileBlobWithoutModal(singleDownloadUrl, null, {
         redirect: true,
       });
-      if (response?.status === 204) {
+      if (response?.status === 200) {
+        const successCounter = response?.headers['Ga-Download-Documents-Success'];
+        pushSuccessDownloadGoogleAnalytics(
+          flyoutType,
+          false,
+          successCounter,
+          orderId,
+          selectedId
+        );
+      } else if (response?.status === 204) {
         const failCounter = response?.headers['Ga-Download-Documents-Fail'];
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
-          true,
+          false,
           failCounter,
           orderId,
           selectedId

@@ -6,8 +6,6 @@ import OrderTrackingDetailTitle from './Header/OrderTrackingDetailTitle';
 import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
 import {
   XMLMessageAnalyticsGoogle,
-  getDNoteViewAnalyticsGoogle,
-  getInvoiceViewAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import { getLocalStorageData } from '../OrdersTrackingGrid/utils/gridUtils';
@@ -117,14 +115,12 @@ const OrderTrackingDetailHeader = ({
   const handleDownloadDNote = () => {
     if (isDeliveryNoteDownloadable) {
       openFilePdf('DNote', id, content?.deliveryNotes[0]?.id);
-      pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Order Details'));
     }
   };
 
   const handleDownloadInvoice = () => {
     if (isInvoiceDownloadable) {
       openFilePdf('Invoice', id, content?.invoices[0]?.id);
-      pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Order Details'));
     }
   };
 
@@ -138,12 +134,6 @@ const OrderTrackingDetailHeader = ({
         reseller: poNumber,
       },
     });
-    pushDataLayerGoogle(
-      getDNoteViewAnalyticsGoogle(
-        content?.deliveryNotes?.length,
-        'Order Details'
-      )
-    );
   };
 
   const triggerInvoicesFlyout = () => {
@@ -151,9 +141,6 @@ const OrderTrackingDetailHeader = ({
       key: 'invoicesFlyout',
       value: { data: content?.invoices, show: true, id, reseller: poNumber },
     });
-    pushDataLayerGoogle(
-      getInvoiceViewAnalyticsGoogle(content?.invoices?.length, 'Order Details')
-    );
   };
 
   const triggerExport = () => {

@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
-import {
-  getInvoiceViewAnalyticsGoogle,
-  pushDataLayerGoogle,
-} from '../utils/analyticsUtils';
 import Tooltip from '@mui/material/Tooltip';
 import { CopyIcon, TickIcon } from '../../../../../fluentIcons/FluentIcons';
 
@@ -31,9 +27,6 @@ function InvoiceColumn({
         reseller: reseller ? reseller : '-',
       },
     });
-    pushDataLayerGoogle(
-      getInvoiceViewAnalyticsGoogle(invoices?.length, 'Main Grid')
-    );
   };
 
   const handleTooltipClick = () => {
@@ -69,7 +62,6 @@ function InvoiceColumn({
   const handleDownload = () => {
     if (isInvoiceDownloadable) {
       openFilePdf('Invoice', id, firstInvoice?.id);
-      pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Main Grid'));
     }
   };
 

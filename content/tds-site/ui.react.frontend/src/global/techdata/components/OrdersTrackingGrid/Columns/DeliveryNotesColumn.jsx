@@ -1,10 +1,6 @@
 import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
-import {
-  getDNoteViewAnalyticsGoogle,
-  pushDataLayerGoogle,
-} from '../utils/analyticsUtils';
 import Tooltip from '@mui/material/Tooltip';
 import { CopyIcon, TickIcon } from '../../../../../fluentIcons/FluentIcons';
 import { useState } from 'react';
@@ -35,15 +31,11 @@ function DeliveryNotesColumn({
         reseller: reseller ? reseller : '-',
       },
     });
-    pushDataLayerGoogle(
-      getDNoteViewAnalyticsGoogle(deliveryNotes?.length, 'Main Grid')
-    );
   };
 
   const handleDownload = () => {
     if (isDeliveryNoteDownloadable) {
       openFilePdf('DNote', id, firstDeliveryNote?.id);
-      pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Main Grid'));
     }
   };
 

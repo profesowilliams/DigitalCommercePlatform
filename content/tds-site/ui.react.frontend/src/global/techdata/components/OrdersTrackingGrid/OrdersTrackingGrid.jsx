@@ -37,6 +37,7 @@ import {
   getAdvancedSearchNRFAnalyticsGoogle,
   getReportsNRFAnalyticsGoogle,
   fixCountryCode,
+  pushSuccessDownloadGoogleAnalytics,
 } from './utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import MainGridHeader from './MainGrid/MainGridHeader';
@@ -352,7 +353,17 @@ function OrdersTrackingGrid(props) {
           redirect: false,
         }
       );
-      if (response?.status === 204) {
+      if (response?.status === 200) {
+        const successCounter =
+          response?.headers['Ga-Download-Documents-Success'];
+        pushSuccessDownloadGoogleAnalytics(
+          flyoutType,
+          true,
+          successCounter,
+          orderId,
+          mapIds
+        );
+      } else if (response?.status === 204) {
         const failCounter = response?.headers['Ga-Download-Documents-Fail'];
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
@@ -383,7 +394,17 @@ function OrdersTrackingGrid(props) {
       response = await requestFileBlobWithoutModal(singleDownloadUrl, null, {
         redirect: true,
       });
-      if (response?.status === 204) {
+      if (response?.status === 200) {
+        const successCounter =
+          response?.headers['Ga-Download-Documents-Success'];
+        pushSuccessDownloadGoogleAnalytics(
+          flyoutType,
+          true,
+          successCounter,
+          orderId,
+          selectedId
+        );
+      } else if (response?.status === 204) {
         const failCounter = response?.headers['Ga-Download-Documents-Fail'];
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
