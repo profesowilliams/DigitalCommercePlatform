@@ -206,15 +206,14 @@ $flyout-small-height-formax: 779px;
   }
 
   &.error-flyout {
-    .cmp-flyout__content  {
-        padding-top: 16px;
+    .cmp-flyout__content {
+      padding-top: 16px;
 
-        & > p {
-            word-break: break-word;
-        }
+      & > p {
+        word-break: break-word;
+      }
     }
   }
-
 
   // share flyout styles
 
@@ -708,6 +707,8 @@ li[id^='combo-box-demo-option-']:active {
   .secondary {
     color: $brand-green;
     background-color: $brand-white;
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -823,6 +824,100 @@ li[id^='combo-box-demo-option-']:active {
     &__input-container {
       width: 100%;
       margin-top: 16px !important;
+    }
+  }
+
+  &__form-details {
+    display: flex;
+    flex-direction: column;
+    &__title {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 27px;
+    }
+    &__card {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: $td-neutral-gray;
+      display: flex;
+      justify-content: space-between;
+    }
+    &__card-section {
+      max-width: 200px;
+      display: flex;
+      flex-direction: column;
+    }
+    &__card-title {
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 21px;
+      color: $brand-icon-gray-color;
+    }
+    &__card-text {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+    }
+    &__description {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+    &__description-title {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 27px;
+    }
+    &__description-text {
+      margin-top: 10px;
+      line-height: 24px;
+    }
+  }
+
+  &__form-search {
+    max-width: 328px;
+
+    .cmp-autocomplete__button-section,
+    .MuiInput-root {
+      padding-right: 0 !important;
+      .cmp-button__autocomplete-search {
+        height: 24px;
+        padding-left: 0;
+        padding-right: 0;
+        min-width: 24px;
+      }
+    }
+  }
+  &__form-date {
+    display: flex;
+    margin-top: 28px;
+    &__display-column {
+      display: flex;
+      flex-direction: column;
+      margin-right: 10px;
+    }
+    &__display-column--wide {
+      display: flex;
+      flex-direction: column;
+      margin-right: 40px;
+    }
+    &__hyphen {
+      height: 1px;
+      width: 11px;
+      margin-top: 28px;
+      margin-right: 10px;
+      background-color: $brand-blue;
+    }
+    &__title {
+      font-size: 12px !important;
+      line-height: 18px;
+      color: $brand-icon-gray-color !important;
+    }
+    &__text {
+      color: $brand-charcoal !important;
+      line-height: 24px;
     }
   }
 }

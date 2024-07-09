@@ -5224,10 +5224,30 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "mainDashboard.renewal.newPurchaseFlyout.label.endUserVietnam": "Vietnam",
     "mainDashboard.renewal.newPurchaseFlyout.label.endUserCambodia": "Cambodia",
     "mainDashboard.renewal.newPurchaseFlyout.label.endUserLaos": "Laos",
+    "mainDashboard.renewal.newPurchaseFlyout.label.back": "Back",
+    "mainDashboard.renewal.newPurchaseFlyout.label.placeOrder": "Place order",
+    "mainDashboard.renewal.newPurchaseFlyout.label.orderDetails":
+      "Order details",
+    "mainDashboard.renewal.newPurchaseFlyout.label.resellerDetails":
+      "Reseller details",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserDetails":
+      "End user details",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endUserAddress":
+      "End user address",
+    "mainDashboard.renewal.newPurchaseFlyout.label.addProducts": "Add products",
+    "mainDashboard.renewal.newPurchaseFlyout.label.searchForAdditionalSoftware":
+      "Search for additional software products you would like to add to your quote. Enter the Vendor part № followed by the desired quantity.",
     "details.renewal.orders.label.adobeTermsAndConditionsLink":
       "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions.html",
     "details.renewal.orders.label.adobeResellerTermsAndConditionsLink":
       "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions/vendor-pass-through-terms.html",
+    "mainDashboard.renewal.newPurchaseFlyout.label.searchVendorPartNo":
+      "Search Vendor part  Nº",
+    "mainDashboard.renewal.newPurchaseFlyout.label.startDate": "Start date",
+    "mainDashboard.renewal.newPurchaseFlyout.label.endDate": "End date",
+    "mainDashboard.renewal.newPurchaseFlyout.label.duration": "Duration",
+    "mainDashboard.renewal.newPurchaseFlyout.label.licensePriceLevel":
+      "License/price level",
   });
 });
 
