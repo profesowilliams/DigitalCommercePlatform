@@ -96,41 +96,6 @@
     > ol {
       margin: 0;
       padding: 0;
-      width: 100%;
-      display: flex;
-      justify-content: end;
-      & span {
-        & a {
-          font-weight: 400 !important;
-        }
-      }
-      &:last-child {
-        & span {
-          & a {
-            position: relative;
-            &::before,
-            &::after {
-              content: '';
-              position: absolute;
-              background-color: get-color(brand-white);
-            }
-            &::before {
-              width: 17.5px;
-              height: 2px;
-              left: -25.5px;
-              top: 50%;
-              transform: translateY(-50%);
-            }
-            &::after {
-              width: 2px;
-              height: 17.5px;
-              left: -17.5px;
-              top: 50%;
-              transform: translateY(-50%);
-            }
-          }
-        }
-      }
 
       &.cmp-tabs__tablist li {
         &:first-child,
