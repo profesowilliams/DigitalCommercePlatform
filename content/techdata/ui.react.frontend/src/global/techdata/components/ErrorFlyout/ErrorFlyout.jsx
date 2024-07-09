@@ -28,7 +28,7 @@ export function ErrorFlyout({ store, subheaderReference }) {
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey('Error details')}
       secondaryButton={false}
-      primaryButton={false}
+      hidePrimaryButton={true}
       classText="share-flyout error-flyout"
       isLoading={false}
     >

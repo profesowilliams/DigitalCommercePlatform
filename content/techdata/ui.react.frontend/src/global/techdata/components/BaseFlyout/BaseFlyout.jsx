@@ -20,7 +20,7 @@ function BaseFlyout({
   bottomContent,
   selected,
   secondaryButton,
-  primaryButton,
+  hidePrimaryButton,
   isTDSynnex,
   analyticsData,
   analyticsCallback,
@@ -75,7 +75,7 @@ function BaseFlyout({
             <div className="cmp-flyout__footer-buttons">
               {!disabledButton && secondaryButton && <SecondaryButton />}
               {
-                primaryButton &&
+                !hidePrimaryButton &&
                    <Button
                      btnClass={`cmp-flyout__footer-button ${
                        !disabledButton && 'cmp-flyout__footer-button--enabled'
