@@ -301,6 +301,7 @@ const Search = (
         renderOption={getOptionLabel}
         filterOptions={(x) => x}
         open={open}
+        className="search-autocomplete-input"
         loading={loading}
         loadingText={loadingTranslations[loadingText]}
         blurOnSelect={false}
@@ -326,9 +327,9 @@ const Search = (
             textOverflow: 'clip',
           },
           '& .MuiInput-root.MuiInputBase-adornedEnd.MuiAutocomplete-inputRoot':
-          {
-            justifyContent: 'space-between',
-          },
+            {
+              justifyContent: 'space-between',
+            },
         }}
         renderTags={() => null}
         renderInput={(params) => (
@@ -359,8 +360,9 @@ const Search = (
                       <div>
                         <SearchIcon
                           onClick={() => triggerSearch({})}
-                          className={`search-icon__dark ${value.length < minimalQueryLength ? 'disabled' : ''
-                            }`}
+                          className={`search-icon__dark ${
+                            value.length < minimalQueryLength ? 'disabled' : ''
+                          }`}
                         />
                       </div>
                     </Tooltip>

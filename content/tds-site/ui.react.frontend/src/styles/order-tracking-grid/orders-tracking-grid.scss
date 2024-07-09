@@ -803,3 +803,7 @@ div.link-underline-column:hover>a {
   text-decoration-line: underline !important;
   text-decoration-color: $brand-green !important;
 }
+
+.search-autocomplete-input {
+  max-width: 330px;
+}
