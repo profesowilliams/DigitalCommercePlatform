@@ -1,7 +1,6 @@
 import React from 'react';
 import DNotesFlyout from '../../OrdersTrackingCommon/Flyouts/DNotes/DNotesFlyout';
 import InvoicesFlyout from '../../OrdersTrackingCommon/Flyouts/Invoices/InvoicesFlyout';
-import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
 import OrderModificationFlyout from '../../OrdersTrackingDetail/ModificationFlyout/OrderModificationFlyout';
 import SettingsFlyout from '../Flyouts/Settings/SettingsFlyout';
 import ProductReplacementFlyout from '../../ReplacementFlyout/ProductReplacementFlyout';
@@ -10,11 +9,8 @@ import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTra
 const MainGridFlyouts = ({
   gridConfig,
   openFilePdf,
-  filterLabels,
   downloadFileBlob,
-  analyticsCategories,
   onQueryChanged,
-  searchParams,
   settings,
   rowsToGrayOutTDNameRef,
   addNewItem,
@@ -53,14 +49,6 @@ const MainGridFlyouts = ({
         openFilePdf={(flyoutType, orderId, selectedId) =>
           openFilePdf(flyoutType, orderId, selectedId)
         }
-      />
-      <OrderFilterFlyout
-        onQueryChanged={onQueryChanged}
-        filtersRefs={searchParams.filters}
-        isTDSynnex={isTDSynnex}
-        filterLabels={filterLabels}
-        analyticsCategories={analyticsCategories}
-        subheaderReference={document.querySelector('.subheader > div > div')}
       />
       <OrderModificationFlyout
         store={useOrderTrackingStore}

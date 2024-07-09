@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useImperativeHandle,
-  forwardRef,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { useState, useMemo, useCallback, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -14,21 +8,12 @@ import Tooltip from '@mui/material/Tooltip';
 import { usGet } from '../../../../../utils/api';
 import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
 import { filtersDateGroup } from '../utils/orderTrackingUtils';
-import Pill from '../../Widgets/Pill';
-import { getLocalStorageData, setLocalStorageData } from '../utils/gridUtils';
-import { ORDER_SEARCH_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
-import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import {
-  ANALYTICS_TYPES,
-  pushEvent,
-} from '../../../../../utils/dataLayerUtils';
-import {
-  getSearchAnalyticsGoogle,
-  pushDataLayerGoogle,
-} from '../utils/analyticsUtils';
+import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils';
+import { getSearchAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
 import { debounce } from '../utils/utils';
+import { getUrlParamsCaseInsensitive, removeDisallowedParams, removeSpecificParams } from '../../../../../utils/index';
 
 function CustomPaper({ children }) {
   return (
@@ -73,54 +58,30 @@ const prepareFiltersParams = (filtersRefs) => {
   return filterDateParams + filtersStatusAndType;
 };
 
-const removeQueryParamsSearch = (options) => {
-  const params = getUrlParamsCaseInsensitive();
-  options.forEach((el) => {
-    if (params.has(el.param)) {
-      params.delete(el.param);
-    }
-  });
-  const queryString = params.toString();
-  const finalUrl =
-    window.location.pathname + (queryString ? `?${queryString}` : '');
-  window.history.pushState({}, document.title, finalUrl);
-};
-
-const getInitialValue =
-  getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).value || '';
-
-const getInitialKey =
-  getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).field || '';
-
 const Search = (
   {
-    options,
-    onQueryChanged,
-    clearReports,
+    onChange,
     gridConfig,
     filtersRefs,
-    searchAnalyticsLabel,
-  },
-  ref
+    analyticsLabel,
+  }, ref
 ) => {
   const [open, setOpen] = useState(false);
   const [focused, setFocused] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [value, setValue] = useState('');
-  const [pill, setPill] = useState({
-    field: ref.current.field || getInitialKey,
-    value: ref.current.value || getInitialValue,
-  });
-  const userData = useOrderTrackingStore((state) => state.userData);
+  const params = getUrlParamsCaseInsensitive();
+  const getInitial = {
+    field: params.get('field'),
+    gtmField: params.get('gtmfield'),
+    value: params.get('value')
+  };
   const minimalQueryLength = 2;
   const loading =
     open && value.length >= minimalQueryLength && suggestions.length === 0;
 
-  const translations = useOrderTrackingStore(
-    (state) => state.uiTranslations
-  );
-  const freeTextSearchTranslations =
-    translations?.['OrderTracking.FreetextSearchFields'];
+  const translations = useOrderTrackingStore((state) => state.uiTranslations);
+  const freeTextSearchTranslations = translations?.['OrderTracking.FreetextSearchFields'];
   const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
 
   const loadingTranslations = {
@@ -128,13 +89,6 @@ const Search = (
     noResults: mainGridTranslations?.Search_Input_NoResultFound,
   };
   const [loadingText, setLoadingText] = useState('loading');
-
-  const getFreeTextTranslations = (key) =>
-    freeTextSearchTranslations?.[key] || key;
-
-  useImperativeHandle(ref, () => ({ field: pill.field, value: pill.value }), [
-    pill,
-  ]);
 
   const getOptionLabel = (props, option) => {
     const chosenOption = option || suggestions[0] || {};
@@ -158,8 +112,7 @@ const Search = (
     const filterParams = prepareFiltersParams(filtersRefs);
     try {
       const result = await usGet(
-        `${
-          gridConfig.uiCommerceServiceDomain
+        `${gridConfig.uiCommerceServiceDomain
         }/v3/lookahead?searchtext=${encodeURIComponent(
           newValue
         )}${filterParams}`
@@ -174,14 +127,14 @@ const Search = (
     (newValue) => {
       newValue.length >= minimalQueryLength
         ? fetchSuggestions(newValue).then((result) => {
-            setSuggestions(result?.data?.content?.suggestions || []);
-            if (result?.data?.content?.suggestions?.length === 0) {
-              setLoadingText('noResults');
-            } else {
-              setLoadingText('loading');
-              setOpen(true);
-            }
-          })
+          setSuggestions(result?.data?.content?.suggestions || []);
+          if (result?.data?.content?.suggestions?.length === 0) {
+            setLoadingText('noResults');
+          } else {
+            setLoadingText('loading');
+            setOpen(true);
+          }
+        })
         : setSuggestions([]);
     },
     [fetchSuggestions]
@@ -190,21 +143,6 @@ const Search = (
   const resetSearch = () => {
     setValue('');
     setSuggestions([]);
-  };
-
-  const resetLocalStorage = () => {
-    setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
-      field: '',
-      value: '',
-    });
-  };
-
-  const handleDeletePill = () => {
-    setPill({ value: '', field: '' });
-    setSuggestions([]);
-    resetLocalStorage();
-    onQueryChanged({ onSearchAction: true });
-    removeQueryParamsSearch(options);
   };
 
   const pushToGTM = useCallback(
@@ -217,7 +155,7 @@ const Search = (
       });
       pushDataLayerGoogle(
         getSearchAnalyticsGoogle(
-          searchAnalyticsLabel,
+          analyticsLabel,
           newGTMKey,
           currentValue,
           currentSuggestions
@@ -232,43 +170,105 @@ const Search = (
   }, []);
 
   const triggerSearch = (newValue) => {
+    console.log('Search::triggerSearch');
     if (value.length >= minimalQueryLength && suggestions.length > 0) {
-      let newKey = '';
+      let field = '';
       let newGTMKey = '';
       if (newValue === null) {
         setValue('');
       } else if (!newValue.field) {
-        newKey = suggestions[0].field;
+        field = suggestions[0].field;
         newGTMKey = suggestions[0].gtmField;
       } else {
-        newKey = newValue.field;
+        field = newValue.field;
         newGTMKey = newValue.gtmField;
       }
-      clearReports();
-      ref.current.field = newKey;
-      ref.current.value = value;
-      onQueryChanged({ onSearchAction: true });
-      setFocused(false);
-      setPill({ value: value, field: newKey });
-      setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
-        field: newKey,
-        value: value,
-        customerNumber: userData?.activeCustomer?.customerNumber,
-      });
-      pushDataToGTMAutocomplete(newGTMKey, value, suggestions);
-      resetSearch();
+      handleSearch(field, value, newGTMKey);
     }
   };
+
+  const handleSearch = (field, value, gtmField) => {
+    console.log('Search::handleSearch');
+    onChange({
+      key: field,
+      field: freeTextSearchTranslations?.[field],
+      value: value,
+      gtmField: gtmField
+    });
+    setFocused(false);
+    updateUrl({
+      field: field,
+      gtmField: gtmField, 
+      value: value
+    });
+    pushDataToGTMAutocomplete(gtmField, value, suggestions);
+    resetSearch();
+  };
+
+  /**
+   * Updates the URL based on the selected filter
+   * @param {Object} filter - The selected filter
+   */
+  const updateUrl = (filter) => {
+    console.log('Search::updateUrl');
+
+    // Get the current URL
+    const currentUrl = new URL(window.location.href);
+
+    // Declare a variable to hold the updated URL
+    let url;
+
+    if (filter) {
+      // List of allowed parameters
+      const allowedParameters = ['status', 'type', 'datetype', 'datefrom', 'dateto', 'page', 'sortby', 'sortdirection'];
+
+      // Remove disallowed parameters from the current URL, keeping only specified ones
+      url = removeDisallowedParams(new URL(window.location.href), allowedParameters);
+      url.searchParams.set('field', filter.field);
+      url.searchParams.set('gtmfield', filter.gtmField);
+      url.searchParams.set('value', filter.value);
+    } else {
+      // List of parameters which should be removed
+      const parametersToRemove = ['field', 'gtmfield', 'value'];
+
+      // Remove specific parameters from the URL
+      url = removeSpecificParams(new URL(window.location.href), parametersToRemove);
+    }
+
+    // If the URL has changed, update the browser history
+    if (url.toString() !== currentUrl.toString())
+      window.history.pushState(null, '', url.toString());
+    // history.push(url.href.replace(url.origin, ''));
+  };
+
+  /**
+   * Exposes methods to the parent component using a ref
+   */
+  useImperativeHandle(ref, () => ({
+    cleanUp() {
+      console.log('Search::cleanUp');
+
+      // Call the updateUrl function with undefined to clear specific parameters from the URL
+      updateUrl(undefined);
+    }
+  }));
+
+  useEffect(() => {
+    console.log('Search::Translations ready trigger handleSearch');
+    if (getInitial.field && getInitial.value && getInitial.gtmField) {
+      handleSearch(getInitial.field, getInitial.value, getInitial.gtmField);
+    }
+  }, [freeTextSearchTranslations]);
 
   const debouncedAutocomplete = useMemo(() => {
     const timeout =
       !value || value.length < 3
         ? 300
         : value.length < 5
-        ? 200
-        : value.length < 10
-        ? 100
-        : 0;
+          ? 200
+          : value.length < 10
+            ? 100
+            : 0;
     return debounce(handleAutocompleteInput, timeout);
   }, [value]);
 
@@ -293,19 +293,7 @@ const Search = (
 
   return (
     <>
-      {pill.value && freeTextSearchTranslations && (
-        <Pill
-          children={
-            <span className="td-capsule__text">
-              {getFreeTextTranslations(pill.field)}: {pill.value}
-            </span>
-          }
-          closeClick={handleDeletePill}
-          hasCloseButton
-        />
-      )}
       <Autocomplete
-        id="free-solo-demo"
         PaperComponent={CustomPaper}
         freeSolo
         options={suggestions}
@@ -338,9 +326,9 @@ const Search = (
             textOverflow: 'clip',
           },
           '& .MuiInput-root.MuiInputBase-adornedEnd.MuiAutocomplete-inputRoot':
-            {
-              justifyContent: 'space-between',
-            },
+          {
+            justifyContent: 'space-between',
+          },
         }}
         renderTags={() => null}
         renderInput={(params) => (
@@ -371,9 +359,8 @@ const Search = (
                       <div>
                         <SearchIcon
                           onClick={() => triggerSearch({})}
-                          className={`search-icon__dark ${
-                            value.length < minimalQueryLength ? 'disabled' : ''
-                          }`}
+                          className={`search-icon__dark ${value.length < minimalQueryLength ? 'disabled' : ''
+                            }`}
                         />
                       </div>
                     </Tooltip>

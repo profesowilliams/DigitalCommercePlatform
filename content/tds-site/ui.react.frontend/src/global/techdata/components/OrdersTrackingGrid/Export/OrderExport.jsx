@@ -36,10 +36,9 @@ function OrderExport({
   const { reports, sort, search, filtersRefs } = searchParams || {};
 
   if (searchParams) {
-    const sortValue = sort.current?.sortData?.[0];
-    if (sortValue) {
-      urlSearchParams.set('SortDirection', sortValue.sort);
-      urlSearchParams.set('SortBy', sortValue.colId);
+    if (searchParams.sort) {
+      urlSearchParams.set('SortDirection', searchParams.sort.sortDirection);
+      urlSearchParams.set('SortBy', searchParams.sort.sortBy);
     }
 
     const reportValue = reports.current?.value;

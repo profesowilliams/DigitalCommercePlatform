@@ -4,47 +4,64 @@ import { getOrderDetailsAnalyticsGoogle } from '../utils/analyticsUtils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 import { CopyIcon, TickIcon } from '../../../../../fluentIcons/FluentIcons';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
-import { getLocalStorageData } from '../utils/gridUtils';
 import Tooltip from '@mui/material/Tooltip';
-import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 
 function OrderNoColumn({ id, detailUrl, isInternalUser }) {
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const translations = uiTranslations?.['OrderTracking.MainGrid'];
   const [copied, setCopied] = useState(false);
-  const saleslogin = getUrlParamsCaseInsensitive().get('saleslogin');
-  const salesLoginParam = saleslogin ? `&saleslogin=${saleslogin}` : '';
-  const queryCacheKey = getLocalStorageData(
-    ORDER_PAGINATION_LOCAL_STORAGE_KEY
-  )?.queryCacheKey;
-  const queryCacheKeyParam = queryCacheKey ? `&q=${queryCacheKey}` : '';
+
+  // Get the current URL parameters
+  const params = getUrlParamsCaseInsensitive();
+  const saleslogin = params.get('saleslogin');
+  const queryCacheKey = params.get('q');
 
   const handleTooltipClick = () => {
     navigator.clipboard.writeText(id);
     setCopied(true);
   };
 
-  const translations = useOrderTrackingStore((state) => state.uiTranslations);
+  const buildOrderDetailsUrl = (id) => {
+    // Build the base URL up to the last period (.)
+    const currentUrl = new URL(window.location.href);
+    const baseUrl = `${currentUrl.origin}${currentUrl.pathname.substring(
+      0,
+      currentUrl.pathname.lastIndexOf('.')
+    )}/order-details.html`;
 
-  const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
+    // Create a new URL object for the order details URL
+    const orderDetailsUrl = new URL(baseUrl);
+
+    // Set the required id parameter
+    orderDetailsUrl.searchParams.set('id', id);
+
+    // Set optional parameters if they exist
+    if (saleslogin) {
+      orderDetailsUrl.searchParams.set('saleslogin', saleslogin);
+    }
+    if (queryCacheKey) {
+      orderDetailsUrl.searchParams.set('q', queryCacheKey);
+    }
+
+    return orderDetailsUrl.toString();
+  }
 
   const tooltipMessage = copied ? (
     <span className="tooltip-span">
       <TickIcon fill="green" className="copy-icon" />
-      {mainGridTranslations?.Tooltip_Copied}
+      {translations?.Tooltip_Copied}
     </span>
   ) : (
     <span onClick={handleTooltipClick} className="tooltip-span">
       <CopyIcon fill="white" className="copy-icon" />
-      {mainGridTranslations?.Tooltip_Copy}
+        {translations?.Tooltip_Copy}
     </span>
   );
 
   return detailUrl && !isJavaScriptProtocol.test(detailUrl) ? (
     <div className="link-underline-column">
       <a
-        href={`${location.href.substring(
-          0,
-          location.href.lastIndexOf('.')
-        )}/order-details.html?id=${id}${queryCacheKeyParam}${salesLoginParam}`}
+        href={buildOrderDetailsUrl(id)}
         onClick={() => getOrderDetailsAnalyticsGoogle(id)}
       >
         {isInternalUser ? (

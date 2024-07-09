@@ -1,41 +1,31 @@
 import React from 'react';
-import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
-import Toaster from '../../Widgets/Toaster';
-import ToolTip from '../../BaseGrid/ToolTip';
 import OrderTrackingGridPagination from '../Pagination/OrderTrackingGridPagination';
 
 const MainGridFooter = ({
-  analyticsCategories,
   onQueryChanged,
-  onCloseToaster,
-  customPaginationRef,
   isLoading,
-  paginationLabels,
+  searchParams,
+  paginationData
 }) => {
-  const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
+  const onPageChange = (data) => {
+    console.log("MainGridFooter::onPageChange");
+
+    searchParams.paginationAndSorting.current.pageNumber = data.pageNumber;
+
+    onQueryChanged({ onSearchAction: true });
+  }
 
   return (
     <>
-      <Toaster
-        classname="toaster-modal-otg"
-        onClose={onCloseToaster}
-        store={useOrderTrackingStore}
-        message={{
-          successSubmission: 'successSubmission',
-          failedSubmission: 'failedSubmission',
-        }}
-        closeEnabled={true}
-      />
-      <ToolTip toolTipData={toolTipData} />
       <div className="grid-subheader-pagination-right">
         <OrderTrackingGridPagination
-          ref={customPaginationRef}
-          onQueryChanged={onQueryChanged}
+          onPageChange={onPageChange}
           disabled={isLoading}
-          paginationLabels={paginationLabels}
+          paginationData={paginationData}
         />
       </div>
     </>
   );
 };
+
 export default MainGridFooter;

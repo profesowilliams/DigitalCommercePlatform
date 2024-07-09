@@ -2,13 +2,13 @@ export const pageCalculator = (totalItems, step) =>
   parseInt(Math.floor(totalItems / step), 10);
 
 const isTotalCounterLessThanCurrentResultsInPage = (paginationData) => {
-  const {currentResultsInPage, totalCounter, pageNumber} = paginationData;
+  const { currentResultsInPage, totalCounter, pageNumber } = paginationData;
   return parseInt(currentResultsInPage * pageNumber) > totalCounter;
 }
 
-export const maxCounterCalculator = (currentResultsInPage, getCurrentPage, paginationData) => { 
+export const maxCounterCalculator = (currentResultsInPage, getCurrentPage, paginationData) => {
   if (isTotalCounterLessThanCurrentResultsInPage(paginationData)) return paginationData.totalCounter;
-  return  (currentResultsInPage * getCurrentPage)
+  return (currentResultsInPage * getCurrentPage)
 };
 
 export const minCounterCalculator = (currentResultsInPage, getCurrentPage) => {
@@ -23,5 +23,5 @@ export const minCounterCalculator = (currentResultsInPage, getCurrentPage) => {
    */
   if (getCurrentPage === 0) return 0;
 
-  return getCurrentPage === 1 ? getCurrentPage : ((currentResultsInPage * (getCurrentPage - 1)) +1)
+  return getCurrentPage === 1 ? getCurrentPage : ((currentResultsInPage * (getCurrentPage - 1)) + 1)
 };

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const Criteria = ({ config, searchCriteria, reportValue }) => {
@@ -9,6 +8,10 @@ const Criteria = ({ config, searchCriteria, reportValue }) => {
   const predefinedFiltersApplied = useOrderTrackingStore(
     (state) => state.filter.predefinedFiltersApplied
   );
+  const uiTranslations = useOrderTrackingStore(
+    (state) => state.uiTranslations
+  );
+  const translations = uiTranslations?.['OrderTracking.MainGrid.Reports'];
 
   const { field } = searchCriteria || {};
 
@@ -31,7 +34,7 @@ const Criteria = ({ config, searchCriteria, reportValue }) => {
   }, [field, hasOtherFilters, hasDateRangeFilter, reportValue]);
   return (
     <div className="cmp-order-tracking-grid__criteria">
-      {getDictionaryValueOrKey(selectedLabel)}
+      {translations?.[selectedLabel]}
     </div>
   );
 };

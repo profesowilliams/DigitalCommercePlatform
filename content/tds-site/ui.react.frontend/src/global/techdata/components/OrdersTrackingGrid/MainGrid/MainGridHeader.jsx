@@ -1,219 +1,223 @@
-import React, { cloneElement, useState, useEffect } from 'react';
+import React, { cloneElement, useState, useRef } from 'react';
 import Report from '../Report/Report';
 import Settings from '../Settings/Settings';
 import VerticalSeparator from '../../Widgets/VerticalSeparator';
-import OrderSearch from '../Search/OrderSearch';
 import Search from '../NewSearch/Search';
 import OrderFilter from '../Filter/OrderFilter';
 import OrderExport from '../Export/OrderExport';
 import Pill from '../../Widgets/Pill';
-import { getPredefinedSearchOptionsList } from '../utils/orderTrackingUtils';
 import OrderTrackingGridPagination from '../Pagination/OrderTrackingGridPagination';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
-import {
-  ORDER_SEARCH_LOCAL_STORAGE_KEY,
-  ORDER_FILTER_LOCAL_STORAGE_KEY,
-  REPORTS_LOCAL_STORAGE_KEY,
-} from '../../../../../utils/constants';
-import {
-  setLocalStorageData,
-  removeLocalStorageData,
-  getLocalStorageData,
-} from '../utils/gridUtils';
 
 function MainGridHeader({
   onQueryChanged,
-  searchLabels,
-  searchOptionsList,
-  setDateRange,
   analyticsCategories,
-  paginationLabels,
-  customPaginationRef,
   isLoading,
   searchParams,
   gridConfig,
-  reportFilterValue,
   settings,
+  paginationData
 }) {
-  const { setCustomState, setClearFilters } = useOrderTrackingStore(
-    (st) => st.effects
-  );
+  const proactiveMessagingFlag = useOrderTrackingStore((state) => state.featureFlags.proactiveMessage);
+  const [pill, setPill] = useState();
+  const reportRef = useRef();
+  const searchRef = useRef();
+  const filterRef = useRef();
 
-  const proactiveMessagingFlag = useOrderTrackingStore(
-    (state) => state.featureFlags.proactiveMessage
-  );
-  const alternativeSearchFlag = useOrderTrackingStore(
-    (state) => state.featureFlags.alternativeSearch
-  );
-  const [pill, setPill] = useState(
-    getLocalStorageData(REPORTS_LOCAL_STORAGE_KEY) || null
-  );
-  const uiTranslations = useOrderTrackingStore(
-    (state) => state.uiTranslations
-  );
-  const translations = uiTranslations?.['OrderTracking.MainGrid.Reports'];
-
-  const searchOptions = [
-    ...getPredefinedSearchOptionsList(searchLabels),
-    ...searchOptionsList,
-  ];
-
-  const reportOptions = [
-    {
-      key: 'OpenOrders',
-      label: translations?.OpenOrders,
-    },
-    {
-      key: 'NewBacklog',
-      label: translations?.NewBacklog,
-    },
-    {
-      key: 'TodaysShipmentsDeliveries',
-      label: translations?.TodaysShipmentsDeliveries,
-    },
-    {
-      key: 'Last7DaysOrders',
-      label: translations?.Last7DaysOrders,
-    },
-    {
-      key: 'Last30DaysOrders',
-      label: translations?.Last30DaysOrders,
-    },
-    {
-      key: 'Last7DaysShipments',
-      label: translations?.Last7DaysShipments,
-    },
-    {
-      key: 'Last30DaysShipments',
-      label: translations?.Last30DaysShipments,
-    },
-    {
-      key: 'EOLOrders',
-      label: translations?.EOLOrders,
-    },
-  ];
-
+  /**
+   * Function to clear filters if any filters are applied
+   */
   const clearFilters = () => {
-    searchParams.filtersRefs.current = {};
+    // Check if any date filters or type/status filters are applied
+    if (
+      searchParams.filtersRefs.current?.data?.type
+      || searchParams.filtersRefs.current?.data?.from
+      || searchParams.filtersRefs.current?.data?.to
+      || searchParams.filtersRefs.current?.statuses?.length > 0
+      || searchParams.filtersRefs.current?.types?.length > 0
+    ) {
+      console.log('MainGridHeader::clearFilters');
 
-    setClearFilters();
-    onQueryChanged({ onSearchAction: true });
+      // Clean up the filters using the filterRef
+      filterRef.current.cleanUp();
+      // Clear the current filter references
+      searchParams.filtersRefs.current = {};
+
+      // Trigger query change indicating a search action
+      onQueryChanged({ onSearchAction: true });
+    } else {
+      console.log('MainGridHeader::clearFilters::not required');
+    }
   };
 
+  /**
+   * Function to clear report filters if any report filters are applied
+   */
   const clearReports = () => {
-    removeQueryParamsReport();
-    setPill();
-    removeLocalStorageData(REPORTS_LOCAL_STORAGE_KEY);
-    setCustomState({
-      key: 'showCriteria',
-      value: true,
-    });
+    // Check if there is any report filter applied
+    if (searchParams.reports.current?.value) {
+      console.log('MainGridHeader::clearReports');
+
+      // Hide pill
+      onPillChanged();
+
+      // Clean up the report filters using the reportRef
+      reportRef.current.cleanUp();
+      // Clear the current report filter references
+      searchParams.reports.current = {};
+
+      // Set the custom state to show the criteria
+      //setCustomState({ key: 'showCriteria', value: true });
+    } else {
+      console.log('MainGridHeader::clearReports::not required');
+    }
   };
 
-  const removeDefaultDateRange = () => {
-    setDateRange(null);
-  };
+  /**
+   * Function to clear search filters if any search filters are applied
+   */
+  const clearSearch = () => {
+    // Check if there is any search filter applied
+    if (searchParams.search.current?.value) {
+      console.log('MainGridHeader::clearSearch');
 
-  const onReportChange = (option) => {
-    clearFilters();
-    setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
-      field: '',
-      value: '',
-    });
-    removeLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY);
-    searchParams.search.current = { field: '', value: '' };
-    searchParams.filtersRefs.current = {};
-    setPill({ key: option.key, label: option.label });
-    removeDefaultDateRange();
-    onQueryChanged({ onSearchAction: true });
-    setCustomState({
-      key: 'showCriteria',
-      value: false,
-    });
-  };
+      // Hide pill
+      onPillChanged();
 
-  const removeQueryParamsReport = () => {
-    const params = new URLSearchParams(window.location.search);
-    params.forEach((value, key) => {
-      if (key === 'report') {
-        params.delete(key);
-      }
-    });
-    window.history.pushState(
-      {},
-      document.title,
-      `${window.location.pathname}?${params}`
-    );
+      // Clean up the search filters using the searchRef
+      searchRef.current.cleanUp();
+      // Clear the current search filter references
+      searchParams.search.current = {};
+
+      // Set the custom state to show the criteria
+      //setCustomState({ key: 'showCriteria', value: true });
+    } else {
+      console.log('MainGridHeader::clearSearch::not required');
+    }
   };
 
   const handleDeletePill = () => {
+    console.log('MainGridHeader::handleDeletePill');
+
     clearReports();
+    clearSearch();
+
+    onPillChanged();
     onQueryChanged();
   };
 
-  const onSearchChange = () => {
-    setPill();
-    removeDefaultDateRange();
+  const onReportChange = (filters) => {
+    console.log('MainGridHeader::onReportChange');
+
+    // clear search criteria
+    clearFilters();
+    clearSearch();
+
+    onPillChanged({
+      field: filters.field,
+      label: filters.label
+    });
+
+    searchParams.reports.current.value = filters.key;
+
     onQueryChanged({ onSearchAction: true });
   };
 
+  const onSearchChange = (filters) => {
+    console.log('MainGridHeader::onSearchChange');
+
+    clearReports();
+
+    onPillChanged({
+      field: filters.field,
+      label: filters.value
+    });
+
+    searchParams.search.current.field = filters.key;
+    searchParams.search.current.value = filters.value;
+    searchParams.search.current.gtmField = filters.gtmField;
+
+    onQueryChanged({ onSearchAction: true });
+  };
+
+  const onFilterChange = (filters) => {
+    console.log('MainGridHeader::onFilterChange');
+
+    clearReports();
+
+    searchParams.filtersRefs.current = {
+      date: filters?.date,
+      statuses: filters?.statuses,
+      types: filters?.types
+    };
+
+    onQueryChanged({ onSearchAction: true });
+  };
+
+  const onPageChange = (data) => {
+    console.log("MainGridHeader::onPageChange");
+
+    searchParams.paginationAndSorting.current.pageNumber = data.pageNumber;
+
+    onQueryChanged({ onSearchAction: true });
+  }
+
+  const onPillChanged = (data) => {
+    console.log("MainGridHeader::onPillChanged");
+    if (data) {
+      setPill({ key: data.key, field: data.field, label: data.label });
+    } else {
+      setPill(null);
+    }
+  }
+
+  const leftComponents = [
+    <OrderTrackingGridPagination
+      onPageChange={onPageChange}
+      disabled={isLoading}
+      paginationData={paginationData}
+    />,
+  ];
+
   const rightComponents = [
-    ...(pill
+    ...(pill && pill.field && pill.label
       ? [
-          <Pill
-            children={
-              <span className="td-capsule__text">
-                {translations?.PillLabel}: {pill.label}
-              </span>
-            }
-            closeClick={handleDeletePill}
-            hasCloseButton
-          />,
-        ]
+        <Pill
+          children={
+            <span className="td-capsule__text">
+              {pill.field}: {pill.label}
+            </span>
+          }
+          closeClick={handleDeletePill}
+          hasCloseButton
+        />,
+      ]
       : []),
-    ...(alternativeSearchFlag
-      ? [
-          <Search
-            options={searchOptions}
-            onQueryChanged={onSearchChange}
-            ref={searchParams.search}
-            clearReports={clearReports}
-            gridConfig={gridConfig}
-            filtersRefs={searchParams.filtersRefs}
-            searchAnalyticsLabel={analyticsCategories.search}
-          />,
-        ]
-      : [
-          <OrderSearch
-            options={searchOptions}
-            onQueryChanged={onSearchChange}
-            ref={searchParams.search}
-            hideLabel={true}
-            gridConfig={gridConfig}
-            searchAnalyticsLabel={analyticsCategories.search}
-            clearReports={clearReports}
-          />,
-        ]),
+    <Search
+      ref={searchRef}
+      onChange={onSearchChange}
+      gridConfig={gridConfig}
+      filtersRefs={searchParams.filtersRefs}
+      analyticsLabel={analyticsCategories.search}
+    />,
     <VerticalSeparator />,
     <OrderFilter
-      clearFilters={clearFilters}
-      gridConfig={gridConfig}
-      clearReports={clearReports}
+      ref={filterRef}
+      onChange={onFilterChange}
+      filtersRefs={searchParams.filtersRefs}
     />,
     <VerticalSeparator />,
     <Report
-      selectOption={onReportChange}
-      ref={reportFilterValue}
-      selectedKey={pill?.key}
-      reportAnalyticsLabel={analyticsCategories.report}
-      reportOptions={reportOptions}
+      ref={reportRef}
+      onChange={onReportChange}
+      analyticsLabel={analyticsCategories.report}
     />,
     <VerticalSeparator />,
     ...(settings && proactiveMessagingFlag
       ? [
-          <Settings settings={settings} gridConfig={gridConfig} />,
-          <VerticalSeparator />,
-        ]
+        <Settings settings={settings} gridConfig={gridConfig} />,
+        <VerticalSeparator />,
+      ]
       : []),
     <OrderExport
       gridConfig={gridConfig}
@@ -221,33 +225,6 @@ function MainGridHeader({
       exportAnalyticsLabel={analyticsCategories.export}
     />,
   ];
-  const leftComponents = [
-    <OrderTrackingGridPagination
-      ref={customPaginationRef}
-      onQueryChanged={onQueryChanged}
-      disabled={isLoading}
-      paginationLabels={paginationLabels}
-    />,
-  ];
-
-  useEffect(() => {
-    if (reportFilterValue.current.value) {
-      const selectedReport = reportOptions.find(
-        (option) => option.key === reportFilterValue.current.value
-      );
-
-      if (selectedReport) {
-        setPill({
-          key: selectedReport.key,
-          label: selectedReport.label,
-        });
-      } else {
-        setPill(null);
-      }
-    } else {
-      setPill(null);
-    }
-  }, [reportFilterValue.current.value]);
 
   return (
     <div className="grid-subheader-pagination">

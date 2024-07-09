@@ -8,17 +8,17 @@ import {
   XMLMessageAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
-import { getLocalStorageData } from '../OrdersTrackingGrid/utils/gridUtils';
+//import { getLocalStorageData } from '../OrdersTrackingGrid/utils/gridUtils';
 import SoldToCard from './Header/SoldToCard';
 import OrderAcknowledgementCard from './Header/OrderAcknowledgementCard';
 import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
-import {
-  ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-  ORDER_SEARCH_LOCAL_STORAGE_KEY,
-  ORDER_FILTER_LOCAL_STORAGE_KEY,
-  REPORTS_LOCAL_STORAGE_KEY,
-} from '../../../../utils/constants';
+//import {
+//  ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+//  ORDER_SEARCH_LOCAL_STORAGE_KEY,
+//  ORDER_FILTER_LOCAL_STORAGE_KEY,
+//  REPORTS_LOCAL_STORAGE_KEY,
+//} from '../../../../utils/constants';
 import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
 import { usGet, usPost } from '../../../../utils/api';
 import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAlertModal';
@@ -38,8 +38,10 @@ const OrderTrackingDetailHeader = ({
   userData,
   setOrderModifyHeaderInfo,
 }) => {
-  const saleslogin = getUrlParamsCaseInsensitive().get('saleslogin');
-  const queryCacheKeyParam = getUrlParamsCaseInsensitive().get('q');
+  const params = getUrlParamsCaseInsensitive();
+  const saleslogin = params.get('saleslogin');
+  const queryCacheKeyParam = params.get('q');
+
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -47,19 +49,18 @@ const OrderTrackingDetailHeader = ({
   const [releaseSuccess, setReleaseSuccess] = useState(false);
   const [previousOrder, setPreviousOrder] = useState(null);
   const [nextOrder, setNextOrder] = useState(null);
+  const [backUrl, setBackUrl] = useState(null);
+  const [backButton, setBackButton] = useState(null);
   const [currency, setCurrency] = useState(null);
   const effects = useOrderTrackingStore((state) => state.effects);
   const orderModificationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.orderModification
   );
-  const translations = useOrderTrackingStore((state) => state.uiTranslations);
-  const detailsTranslations = translations?.['OrderTracking.Details'];
   const { setCustomState, setFeatureFlags } = effects;
   const orderEditable = content?.orderEditable === true;
   const infoBoxEnable = content?.sapOrderMigration?.referenceType?.length > 0;
-  const uiTranslations = useOrderTrackingStore(
-    (state) => state.uiTranslations
-  );
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const detailsTranslations = uiTranslations?.['OrderTracking.Details'];
   const exportTranslations = uiTranslations?.['OrderTracking.MainGrid.Export'];
 
   const handleActionMouseOver = () => {
@@ -184,17 +185,17 @@ const OrderTrackingDetailHeader = ({
     },
     ...(orderModificationFlag
       ? [
-          {
-            condition: isReleaseTheOrderAvailable,
-            label: labels?.releaseTheOrder,
-            onClick: () => setReleaseOrderShow(true),
-          },
-          {
-            condition: isModifiable,
-            label: labels?.actionModifyOrder,
-            onClick: handleOrderModification,
-          },
-        ]
+        {
+          condition: isReleaseTheOrderAvailable,
+          label: labels?.releaseTheOrder,
+          onClick: () => setReleaseOrderShow(true),
+        },
+        {
+          condition: isModifiable,
+          label: labels?.actionModifyOrder,
+          onClick: handleOrderModification,
+        },
+      ]
       : []),
     {
       condition: areSerialNumbersAvailable,
@@ -211,19 +212,71 @@ const OrderTrackingDetailHeader = ({
 
   areXMLMessageAvailable && menuActionsItems.push(XMLelement);
 
-  const createBackUrl = () => {
-    const backParams = new URLSearchParams();
-    backParams.set('redirectedFrom', 'detailsPage');
-    backParams.set(
-      'page',
-      getLocalStorageData(ORDER_PAGINATION_LOCAL_STORAGE_KEY)?.pageNumber || 1
-    );
-    if (saleslogin) backParams.set('saleslogin', saleslogin);
-    return (
-      location.href.substring(0, location.href.lastIndexOf('/')) +
-      '.html?' +
-      backParams.toString()
-    );
+  const createBackUrl = (data) => {
+    console.log('OrderTrackingDetailHeader::createBackUrl');
+
+    const url = new URL(location.href.substring(0, location.href.lastIndexOf('/')) + '.html');
+    if (saleslogin) url.searchParams.set('saleslogin', saleslogin);
+
+    if (data?.criteria) {
+      url.searchParams.set('sortby', data.criteria.sortBy.toLowerCase());
+      url.searchParams.set('sortdirection', data.criteria.sortAscending ? 'asc' : 'desc');
+      url.searchParams.set('page', data.criteria.pageNumber);
+
+      if (data.criteria?.createdFrom && data.criteria?.createdTo) {
+        url.searchParams.set('datetype', 'orderDate');
+        url.searchParams.set('datefrom', data.criteria?.createdFrom);
+        url.searchParams.set('dateto', data.criteria?.createdTo);
+      }
+
+      if (data.criteria?.shippedDateFrom && data.criteria?.shippedDateTo) {
+        url.searchParams.set('datetype', 'shipDate');
+        url.searchParams.set('datefrom', data.criteria?.shippedDateFrom);
+        url.searchParams.set('dateto', data.criteria?.shippedDateTo);
+      }
+
+      if (data.criteria?.invoiceDateFrom && data.criteria?.invoiceDateTo) {
+        url.searchParams.set('datetype', 'invoiceDate');
+        url.searchParams.set('datefrom', data.criteria?.invoiceDateFrom);
+        url.searchParams.set('dateto', data.criteria?.invoiceDateTo);
+      }
+
+      if (data.criteria?.etaDateFrom && data.criteria?.etaDateTo) {
+        url.searchParams.set('datetype', 'etaDate');
+        url.searchParams.set('datefrom', data.criteria?.etaDateFrom);
+        url.searchParams.set('dateto', data.criteria?.etaDateTo);
+      }
+
+      if (data.criteria?.type) {
+        data.criteria.type.forEach(type => {
+          url.searchParams.append('type', type);
+        });
+      }
+
+      if (data.criteria?.status) {
+        data.criteria.status.forEach(status => {
+          url.searchParams.append('status', status);
+        });
+      }
+
+      if (data.criteria?.freetextSearch) {
+        url.searchParams.append('value', data.criteria.freetextSearch);
+      }
+
+      if (data.criteria?.freetextSearchKey) {
+        url.searchParams.append('field', data.criteria.freetextSearchKey);
+      }
+
+      if (data.criteria?.gtmfield) {
+        url.searchParams.append('gtmfield', data.criteria.gtmfield);
+      }
+
+      if (data.criteria?.reportName) {
+        url.searchParams.append('report', data.criteria.reportName);
+      }
+    }
+
+    return url.toString();
   };
 
   const handleReleaseOrder = async () => {
@@ -262,23 +315,38 @@ const OrderTrackingDetailHeader = ({
   };
 
   const fetchNavigationData = async () => {
-    const results = await usGet(
-      `${componentProps.uiCommerceServiceDomain}/v3/cache/${queryCacheKeyParam}/order/${id}`
-    );
-    return results.data.content;
+    try {
+      if (!queryCacheKeyParam || !id) return null;
+      const results = await usGet(
+        `${componentProps.uiCommerceServiceDomain}/v3/cache/${queryCacheKeyParam}/order/${id}`
+      );
+      return results.data.content;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   };
 
-  const renderBackButton = () => {
-    const isSearchActive =
-      getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.field?.length > 0;
-    const areFiltersActive = Object.values(
-      getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY) || {}
-    ).some((filtersArray) => filtersArray.length !== 0);
-    const areReportsActive = getLocalStorageData(
-      REPORTS_LOCAL_STORAGE_KEY
-    )?.key;
+  const fetchCriteriaData = async () => {
+    try {
+      if (!queryCacheKeyParam) return null;
+      const results = await usGet(
+        `${componentProps.uiCommerceServiceDomain}/v3/cache/${queryCacheKeyParam}/criteria`
+      );
+      return results.data.content;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
+  const renderBackButton = (criteria) => {
+    const isSearchActive = criteria?.freetextSearch || criteria?.freetextSearchKey;
+    const areFiltersActive = criteria?.type || criteria?.status;
+    const areReportsActive = criteria?.reportName;
+
     return isSearchActive || areFiltersActive || areReportsActive
-      ? detailsTranslations?.Button_BackToSearchResults || 'Search Results' // TODO: delete default strings after BE translations are working
+      ? detailsTranslations?.Button_BackToSearchResults || 'Search Results'
       : detailsTranslations?.Button_BackToAll || 'All orders';
   };
 
@@ -320,6 +388,10 @@ const OrderTrackingDetailHeader = ({
       setPreviousOrder(navigationData.prevOrder || null);
       setNextOrder(navigationData.nextOrder || null);
     }
+
+    const criteriaData = queryCacheKeyParam && (await fetchCriteriaData());
+    setBackUrl(createBackUrl(criteriaData));
+    setBackButton(renderBackButton(criteriaData));
   }, []);
 
   return (
@@ -327,14 +399,14 @@ const OrderTrackingDetailHeader = ({
       <div className="cmp-orders-qp__config-grid">
         <div className="header-container">
           <div className="navigation-container">
-            <Link
+            {backUrl && (<Link
               variant="back-to-orders"
-              href={createBackUrl()}
+              href={backUrl}
               underline="underline-none"
             >
               <ArrowLeftIcon className="arrow-left" />
-              {renderBackButton()}
-            </Link>
+              {backButton}
+            </Link>)}
             {renderRightSideOfNavigation()}
           </div>
           <div className="title-container">

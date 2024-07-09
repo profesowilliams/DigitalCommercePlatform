@@ -342,7 +342,11 @@
 }
 
 .activated {
-  height: 83px;
+  height: 41px;
+}
+
+.activated span.order-filter-tags-more {
+  margin-bottom: 35px;
 }
 
 .order-filter-tags-container {
@@ -352,7 +356,6 @@
   justify-content: flex-start;
   width: 100%;
   padding: 0 20px;
-  margin-bottom: 10px;
   background-color: $brand-white;
 
   .filter-tags {

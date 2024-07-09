@@ -1,31 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-  ORDER_SEARCH_LOCAL_STORAGE_KEY,
-  SORT_LOCAL_STORAGE_KEY,
-  ORDER_FILTER_LOCAL_STORAGE_KEY,
-  REPORTS_LOCAL_STORAGE_KEY,
-  SEARCH_LOCAL_STORAGE_KEY,
-} from '../../../../utils/constants';
-import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
 import { useOrderTrackingStore } from './../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
-import { getUrlParamsCaseInsensitive } from '../../../../utils';
+import { getUrlParamsCaseInsensitive } from '../../../../utils/index';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
-import {
-  addCurrentPageNumber,
-  compareSort,
-  fetchData,
-  fetchOrdersCount,
-  fetchReport,
-  getFilterFlyoutPredefined,
-  getInitialFiltersDataFromLS,
-  endpoints,
-  filtersDateGroup,
-} from './utils/orderTrackingUtils';
+import { fetchData, fetchOrdersCount, fetchReport, filtersDateGroup, } from './utils/orderTrackingUtils';
 import {
   getHomeAnalyticsGoogle,
   getMainDashboardAnalyticsGoogle,
@@ -41,19 +22,7 @@ import {
 } from './utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import MainGridHeader from './MainGrid/MainGridHeader';
-import {
-  addCurrencyToTotalColumn,
-  getPaginationValue,
-  setLocalStorageData,
-  updateQueryString,
-  mapServiceData,
-  isFirstTimeSortParameters,
-  getLocalStorageData,
-  hasLocalStorageData,
-  resetLocalStorage,
-  pageAccessedByReload,
-  buildQueryString,
-} from './utils/gridUtils';
+import { addCurrencyToTotalColumn, updateQueryString, mapServiceData, buildQueryString, } from './utils/gridUtils';
 import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 import { getSessionInfo } from '../../../../utils/user/get';
@@ -63,17 +32,8 @@ import { getUrlParams, deleteSearchParam } from '../../../../utils';
 import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import { getPredefinedSearchOptionsList } from './utils/orderTrackingUtils';
 import { getHeaderInfo } from '../../../../utils/headers/get';
 import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
-
-const searchParamsKeys = [
-  ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-  ORDER_SEARCH_LOCAL_STORAGE_KEY,
-  SORT_LOCAL_STORAGE_KEY,
-  ORDER_FILTER_LOCAL_STORAGE_KEY,
-  REPORTS_LOCAL_STORAGE_KEY,
-];
 
 const translationDictionaries = [
   'OrderTracking.FreetextSearchFields',
@@ -89,42 +49,41 @@ const translationDictionaries = [
   'OrderTracking.MainGrid.InvoicesFlyout',
   'OrderTracking.MainGrid.DnoteFlyout',
   'OrderTracking.MainGrid.NoAccessScreen',
-  'OrderTracking.MainGrid.PagginationLabels',
+  'OrderTracking.MainGrid.Pagination',
   'OrderTracking.MainGrid.SearchNoResult',
   'OrderTracking.MainGrid.ProductReplacmentFlyout',
   'OrderTracking.MainGrid.OrderStatuses',
 ];
 
 function OrdersTrackingGrid(props) {
+  console.log('OrdersTrackingGrid::init');
+
+  const params = getUrlParamsCaseInsensitive();
+
   const { redirectedFrom = '' } = getUrlParams();
-  const previousFilter = useRef(false);
-  const hasSortChanged = useRef(false);
-  const previousSortChanged = useRef(false);
   const searchCriteria = useRef({ field: '', value: '' });
+  const paginationAndSorting = useRef({
+    pageNumber: params.get('page') || 1,
+    sortBy: params.get('sortby') || 'created',
+    sortDirection: params.get('sortdirection') || 'desc'
+  });
   const reportFilterValue = useRef({ value: '' });
-  const customPaginationRef = useRef();
   const filtersRefs = useRef({});
   const resetCallback = useRef(null);
   const shouldGoToFirstPage = useRef(false);
   const isOnSearchAction = useRef(false);
   const isOnPageChange = useRef(false);
-  const queryCacheKey = useRef(null);
   const dNoteFailedCounter = useRef(1);
   const invoiceFailedCounter = useRef(1);
   const rowsToGrayOutTDNameRef = useRef([]);
-  const alternativeSearchFlagRef = useRef(null);
 
   const {
     setUserData,
     setCustomState,
-    closeAndCleanToaster,
-    setFilterList,
+    setRefinements,
     setFeatureFlags,
     setTranslations,
     hasRights,
-    setMainGridRowsTotalCounter,
-    updateOrderFilterCounter,
-    setClearFilters,
     setIsAvailable,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
@@ -132,12 +91,14 @@ function OrdersTrackingGrid(props) {
     { resetCallback, shouldGoToFirstPage, isOnSearchAction, isOnPageChange }
   );
   const userData = useOrderTrackingStore((st) => st.userData);
-  const paginationData = useOrderTrackingStore((st) => st.pagination);
   const isAvailable = useOrderTrackingStore((st) => st.isAvailable);
-  const alternativeSearchFlag = useOrderTrackingStore(
-    (state) => state.featureFlags.alternativeSearch
-  );
   const { isGTMReady } = useGTMStatus();
+
+  const [paginationData, setPaginationData] = useState({
+    totalCounter: null,
+    pageCount: null,
+    pageNumber: null
+  });
 
   const [isLoading, setIsLoading] = useState(true);
   const [reloadAddedToGTM, setReloadAddedToGTM] = useState(false);
@@ -149,22 +110,15 @@ function OrdersTrackingGrid(props) {
     value: '',
   });
   const componentProp = JSON.parse(props.componentProp);
-
-  const formattedDateRange = setDefaultSearchDateRange(
-    componentProp?.defaultSearchDateRange
-  );
-  const [dateRange, setDateRange] = useState(formattedDateRange);
+  const gridPageSize = 25;
 
   const {
-    searchOptionsList = [],
-    filterLabels,
     noAccessProps,
     analyticsCategories,
-    paginationLabels,
-    searchLabels,
   } = componentProp;
+
   const gridApiRef = useRef();
-  const firstAPICall = useRef(true);
+
   const gridConfig = {
     ...componentProp,
     paginationStyle: 'custom',
@@ -175,34 +129,27 @@ function OrdersTrackingGrid(props) {
     ensureDomOrder: true,
   };
 
-  const dueDateKey = componentProp.options.defaultSortingColumnKey;
-  const dueDateDir = componentProp.options.defaultSortingDirection;
-  const options = {
-    defaultSortingColumnKey: 'created',
-    defaultSortingDirection: 'desc',
-  };
   const handleAddNewItem = (item) => {
     setNewItem(item);
   };
 
   const _onAfterGridInit = (config) => {
+    console.log('OrdersTrackingGrid::_onAfterGridInit');
+
     onAfterGridInit(config);
     gridApiRef.current = config;
-    const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current);
     const columnState = {
-      state: isDefaultSort
-        ? [
-            {
-              colId: dueDateKey,
-              sort: dueDateDir,
-            },
-          ]
-        : [...hasSortChanged.current.sortData],
+      state: [
+        {
+          colId: paginationAndSorting.current.sortBy,
+          sort: paginationAndSorting.current.sortDirection,
+        },
+      ],
       defaultState: { sort: null },
     };
+
     config.columnApi.applyColumnState({ ...columnState });
   };
-  const params = getUrlParamsCaseInsensitive();
 
   const sendGTMDataOnError = () => {
     if (reportFilterValue?.current?.value) {
@@ -225,60 +172,40 @@ function OrdersTrackingGrid(props) {
     }
   };
 
-  const customRequestInterceptor = async (request) => {
-    const gridApi = gridApiRef?.current?.api;
-    const queryOperations = {
-      hasSortChanged,
-      customPaginationRef,
-      componentProp,
-      searchCriteria,
-      previousFilter,
-      request,
-      previousSortChanged,
-      firstAPICall,
-      gridApiRef,
-      filtersRefs,
-      isOnSearchAction,
-      isOnPageChange,
-      queryCacheKey,
-      alternativeSearchFlagRef,
-    };
-    setSearchParameters(searchCriteria?.current);
-    request.url = addCurrentPageNumber(customPaginationRef, request);
-    const ordersReportUrl = new URL(
-      componentProp.uiCommerceServiceDomain + endpoints.ordersReport
-    );
-    const ordersReportCountUrl = new URL(
-      componentProp.uiCommerceServiceDomain + endpoints.ordersReportCount
-    );
+  const verifyIfPageNumberIsNotOutsideLimit = (ordersCountResponseContent) => {
+    console.log('OrdersTrackingGrid::verifyIfPageNumberIsNotOutsideLimit');
+    var correctPageNumber = Math.ceil(ordersCountResponseContent?.totalItems / gridPageSize);
+    if (correctPageNumber < paginationAndSorting.current.pageNumber) {
+      console.log('OrdersTrackingGrid::verifyIfPageNumberIsNotOutsideLimit::page number needs to be corrected');
+      paginationAndSorting.current.pageNumber = correctPageNumber;
+      updateUrl(paginationAndSorting, true);
+    }
+  }
 
-    const ordersCountUrl = new URL(
-      `${componentProp.uiCommerceServiceDomain}/v3/orders/count`
-    );
+  const storeQueryCacheKeyParameter = (queryCacheKey) => {
+    console.log('OrdersTrackingGrid::storeQueryCacheKeyParameter');
+    paginationAndSorting.current.queryCacheKey = queryCacheKey;
+    updateUrl(paginationAndSorting, true);
+  }
+
+  const customRequestInterceptor = async () => {
+    console.log('OrdersTrackingGrid::customRequestInterceptor');
+    const gridApi = gridApiRef?.current?.api;
+
+    setSearchParameters(searchCriteria?.current);
+    gridApi.paginationSetPageSize(gridPageSize);
+
+    const baseUrl = componentProp.uiCommerceServiceDomain;
+
+    console.log('OrdersTrackingGrid::fetchOrdersCount');
     const ordersCountResponse = await fetchOrdersCount(
-      reportFilterValue.current?.value
-        ? ordersReportCountUrl.href
-        : ordersCountUrl.href,
+      baseUrl,
       filtersRefs,
       reportFilterValue.current?.value,
-      searchCriteria,
-      alternativeSearchFlagRef
+      searchCriteria
     );
-    const response = reportFilterValue.current?.value
-      ? await fetchReport(
-          ordersReportUrl,
-          reportFilterValue.current.value,
-          customPaginationRef,
-          hasSortChanged,
-          isOnSearchAction.current,
-          isOnPageChange.current,
-          queryCacheKey.current
-        )
-      : await fetchData(queryOperations);
-    const isFirstPage = customPaginationRef?.current?.pageNumber == 1;
-    setMainGridRowsTotalCounter(
-      isFirstPage ? response?.data?.content?.items?.length : null
-    );
+
+    //TODOOOOOOOOOOOOOOOOOOOOOOOOOOO
     if (ordersCountResponse.error?.isError) {
       setResponseError(true);
       sendGTMDataOnError();
@@ -291,48 +218,127 @@ function OrdersTrackingGrid(props) {
         sendGTMDataOnError();
       }
     }
-    const mappedResponse = mapServiceData(response);
-    const paginationValue = getPaginationValue(
-      mappedResponse,
-      ordersCountResponse,
-      gridConfig
-    );
+    ////////////////////////////////////////
 
+    const ordersCountResponseContent = ordersCountResponse?.data?.content;
+
+    verifyIfPageNumberIsNotOutsideLimit(ordersCountResponseContent);
+
+    console.log('OrdersTrackingGrid::fetchData|fetchReport');
+    const response = reportFilterValue.current?.value
+      ? await fetchReport(
+        baseUrl,
+        paginationAndSorting,
+        reportFilterValue.current.value,
+      )
+      : await fetchData(
+        baseUrl,
+        paginationAndSorting,
+        searchCriteria,
+        filtersRefs
+      );
     const responseContent = response?.data?.content;
-    const pageNumber = responseContent?.pageNumber;
-    if (responseContent?.pageCount === pageNumber)
-      gridApi.paginationSetPageSize(responseContent?.items?.length);
-    updateQueryString(pageNumber);
-    setCustomState(
-      { key: 'pagination', value: paginationValue },
-      {
-        key: ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-        saveToLocal: true,
-      }
-    );
-    return mappedResponse;
+
+    storeQueryCacheKeyParameter(responseContent?.queryCacheKey);
+
+    console.log('OrdersTrackingGrid::customRequestInterceptor::paginationValue');
+    setPaginationData({
+      totalCounter: ordersCountResponseContent?.totalItems,
+      pageCount: Math.ceil(ordersCountResponseContent?.totalItems / gridPageSize),
+      pageNumber: parseInt(responseContent?.pageNumber) || 1,
+      queryCacheKey: responseContent?.queryCacheKey,
+    });
+
+    return mapServiceData(response);
   };
 
+  /**
+   * Handler for sorting changes in the grid.
+   * @param {Object} evt - The event object containing the grid state.
+   */
   const onSortChanged = (evt) => {
+    console.log('OrdersTrackingGrid::onSortChanged');
+
+    // Retrieve the current state of all columns from the grid API
     const sortModelList = evt.columnApi.getColumnState();
+
+    // Filter and map the columns that have a sorting direction specified
     const sortedModel = sortModelList
-      .filter((o) => !!o.sort)
-      .map(({ colId, sort }) => ({ colId, sort }));
-    if (
-      hasSortChanged.current?.sortData &&
-      !compareSort(hasSortChanged.current.sortData, sortedModel)
-    ) {
-      const sortData = sortedModel
-        .map((item) => `${item.colId}: ${item.sort}`)
-        .join();
-      if (sortData !== '') {
-        pushDataLayerGoogle(getSortAnalyticsGoogle(sortData, 'Click'));
+      .filter((o) => !!o.sort) // Keep only the columns that have a sort direction
+      .map(({ colId, sort }) => ({ sortBy: colId, sortDirection: sort }))[0]; // Map the relevant properties to an object with sortBy and sortDirection
+
+    // Check if there's a sorted model
+    if (sortedModel) {
+      // Get the current sortBy and sortDirection from paginationAndSorting
+      const currentSortBy = paginationAndSorting.current.sortBy;
+      const currentSortDirection = paginationAndSorting.current.sortDirection;
+
+      // Check if the sort direction or column has changed
+      if (currentSortBy !== sortedModel.sortBy ||
+        currentSortDirection !== sortedModel.sortDirection) {
+        // Update the paginationAndSorting object with the new sorting info
+        paginationAndSorting.current.sortBy = sortedModel.sortBy;
+        paginationAndSorting.current.sortDirection = sortedModel.sortDirection;
+
+        // Update the URL to reflect the new sorting state
+        updateUrl(paginationAndSorting);
+
+        // Push the sorting information to Google Analytics
+        pushDataLayerGoogle(getSortAnalyticsGoogle(`${sortedModel.sortDirection}: ${sortedModel.sortBy}`, 'Click'));
       }
     }
-    if (sortedModel) {
-      hasSortChanged.current = { sortData: sortedModel };
+  };
+
+  /**
+ * Updates the URL with pagination and sorting parameters.
+ * If the URL changes, it updates the browser history.
+ * 
+ * @param {Object} paginationAndSorting - Contains pagination and sorting information.
+ * @param {Object} paginationAndSorting.current - The current pagination and sorting state.
+ * @param {string} [paginationAndSorting.current.sortBy] - The field to sort by.
+ * @param {string} [paginationAndSorting.current.sortDirection] - The direction to sort (e.g., 'asc', 'desc').
+ * @param {number} [paginationAndSorting.current.page] - The current page number.
+ * @param {boolean} [replaceState=false] - Whether to replace the current history state (default is false).
+ */
+  const updateUrl = (paginationAndSorting, replaceState = false) => {
+    console.log('OrderTrackingGrid::updateUrl');
+
+    // Get the current URL
+    const currentUrl = new URL(window.location.href);
+
+    // Declare a variable to hold the updated URL
+    let url = new URL(window.location.href);
+
+    // If a sorting parameter is provided, set it in the URL
+    if (paginationAndSorting?.current?.sortBy) {
+      url.searchParams.set('sortby', paginationAndSorting.current.sortBy);
     }
-    setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
+
+    // If a sorting direction is provided, set it in the URL
+    if (paginationAndSorting?.current?.sortDirection) {
+      url.searchParams.set('sortdirection', paginationAndSorting.current.sortDirection);
+    }
+
+    // If a page number is provided, set it in the URL
+    if (paginationAndSorting?.current?.page) {
+      url.searchParams.set('page', paginationAndSorting.current.page);
+    }
+
+    // If a query cache key is provided, set it in the URL
+    if (paginationAndSorting?.current?.queryCacheKey) {
+      url.searchParams.set('q', paginationAndSorting.current.queryCacheKey);
+    }
+
+    // If the URL has changed, update the browser history
+    if (url.toString() !== currentUrl.toString()) {
+      if (replaceState) {
+        // Use pushState to add a new entry to the browser history
+        window.history.pushState(null, '', url.toString());
+      } else {
+        // Use replaceState to modify the current entry in the browser history
+        window.history.replaceState(null, '', url.toString());
+      }
+    }
   };
 
   const onDataLoad = () => {
@@ -385,6 +391,7 @@ function OrdersTrackingGrid(props) {
       console.error('Error', error);
     }
   };
+
   const openFilePdf = async (flyoutType, orderId, selectedId) => {
     const url = `${componentProp.uiCommerceServiceDomain}/v3/orders/downloaddocuments`;
     const singleDownloadUrl =
@@ -433,9 +440,9 @@ function OrdersTrackingGrid(props) {
     }
   };
 
-  const onCloseToaster = () => {
-    closeAndCleanToaster();
-  };
+  //const onCloseToaster = () => {
+  //  closeAndCleanToaster();
+  //};
 
   const fetchFiltersRefinements = async () => {
     const results = await usGet(
@@ -468,54 +475,16 @@ function OrdersTrackingGrid(props) {
 
   useEffect(async () => {
     document.title = getDictionaryValueOrKey(gridConfig?.pageTitle);
-    if (!(redirectedFrom === 'detailsPage' || pageAccessedByReload)) {
-      resetLocalStorage(searchParamsKeys);
-      setClearFilters();
-    }
-    filtersRefs.current = getInitialFiltersDataFromLS();
-
-    const shouldResetStoredFilters = () => {
-      const customerNumberFromUD = userData?.activeCustomer?.customerNumber;
-      const customerNumberFromSearchLS = getLocalStorageData(
-        SEARCH_LOCAL_STORAGE_KEY
-      )?.customerNumber;
-      const customerNumberFromOrderSearchLS = getLocalStorageData(
-        ORDER_SEARCH_LOCAL_STORAGE_KEY
-      )?.customerNumber;
-      const customerNumberFromReportLS = getLocalStorageData(
-        REPORTS_LOCAL_STORAGE_KEY
-      )?.customerNumber;
-      const customerNumberFromFilterLS = getLocalStorageData(
-        ORDER_FILTER_LOCAL_STORAGE_KEY
-      )?.customerNumber;
-
-      const areFilterDataDifferent = customerNumberFromFilterLS &&
-        customerNumberFromUD !== customerNumberFromFilterLS;
-      const areReportDataDifferent = customerNumberFromReportLS &&
-        customerNumberFromUD !== customerNumberFromReportLS;
-      const areSearchDataDifferent = customerNumberFromSearchLS && 
-        customerNumberFromUD !== customerNumberFromSearchLS;
-      const areOrderSearchDataDifferent = customerNumberFromOrderSearchLS && 
-        customerNumberFromUD !== customerNumberFromOrderSearchLS;
-      return customerNumberFromUD && (areFilterDataDifferent || areReportDataDifferent || areSearchDataDifferent || areOrderSearchDataDifferent);
-    }
-    if (shouldResetStoredFilters()) {
-      filtersRefs.current = null;
-      resetLocalStorage([
-        ORDER_FILTER_LOCAL_STORAGE_KEY,
-        REPORTS_LOCAL_STORAGE_KEY,
-        SEARCH_LOCAL_STORAGE_KEY,
-        ORDER_SEARCH_LOCAL_STORAGE_KEY,
-      ]);
-    } 
     redirectedFrom && deleteSearchParam('redirectedFrom');
     const refinements = await fetchFiltersRefinements();
+    setRefinements(refinements);
     setFeatureFlags(refinements?.featureFlags);
-    const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
-    setFilterList([...predefined]);
-    updateOrderFilterCounter();
     const uiTranslations = await fetchUITranslations();
     setTranslations(uiTranslations);
+
+    //if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
+    //  hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
+    //}
   }, []);
 
   useEffect(() => {
@@ -525,9 +494,9 @@ function OrdersTrackingGrid(props) {
   }, [settingsResponse]);
 
   useEffect(() => {
-    if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
-      hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
-    }
+    //if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
+    //  hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
+    //}
     getSessionInfo().then((data) => {
       setUserData(data[1]);
       if (isGTMReady) {
@@ -551,10 +520,6 @@ function OrdersTrackingGrid(props) {
   const hasCanViewOrdersRights = hasRights('CanViewOrders');
   const hasOrderTrackingRights = hasRights('OrderTracking');
   const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
-  const searchOptions = [
-    ...getPredefinedSearchOptionsList(searchLabels),
-    ...searchOptionsList,
-  ];
 
   useEffect(() => {
     if (sendAnalyticsDataHome && reloadAddedToGTM) {
@@ -568,145 +533,83 @@ function OrdersTrackingGrid(props) {
     }
   }, [userData, isGTMReady, reloadAddedToGTM]);
 
-  useEffect(() => {
-    if (!userData) {
-      return;
-    }
-    if (
-      params.get('report') &&
-      params.get('report').toLowerCase() === 'EOL'.toLowerCase()
-    ) {
-      reportFilterValue.current.value = 'EOLOrders';
-      setLocalStorageData(REPORTS_LOCAL_STORAGE_KEY, {
-        key: 'EOLOrders',
-        label: translations?.EOLOrders,
-        customerNumber: userData?.activeCustomer?.customerNumber,
-      });
-      setCustomState({
-        key: 'showCriteria',
-        value: false,
-      });
-      onQueryChanged();
-    }
-    searchOptions.forEach((el) => {
-      if (params.has(el.param)) {
-        searchCriteria.current.field = el.searchKey;
-        searchCriteria.current.value = params.get(el.param);
-        setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
-          field: el.searchKey,
-          value: params.get(el.param),
-          customerNumber: userData?.activeCustomer?.customerNumber,
-        });
-        onQueryChanged({ onSearchAction: true });
-      }
-    });
-  }, [userData]);
+  if (!hasAccess || !userData?.activeCustomer) {
+    return (<AccessPermissionsNeeded noAccessProps={noAccessProps} />);
+  }
 
-  useEffect(() => {
-    alternativeSearchFlagRef.current = alternativeSearchFlag;
-  }, [alternativeSearchFlag]);
-
-  useEffect(() => {
-    if (paginationData?.queryCacheKey) {
-      queryCacheKey.current = paginationData.queryCacheKey;
-    }
-  }, [paginationData]);
-
-  const authorizedContent = () => {
-    return hasAccess ? (
-      isAvailable ? (
-        <div className="cmp-order-tracking-grid">
-          <Criteria
-            config={gridConfig}
-            searchCriteria={searchParameters}
-            reportValue={reportFilterValue.current.value}
-          />
-          <MainGridHeader
-            onQueryChanged={onQueryChanged}
-            searchLabels={searchLabels}
-            searchOptionsList={searchOptionsList}
-            analyticsCategories={analyticsCategories}
-            paginationLabels={paginationLabels}
-            customPaginationRef={customPaginationRef}
-            isLoading={isLoading}
-            searchParams={{
-              reports: reportFilterValue,
-              sort: hasSortChanged,
-              search: searchCriteria,
-              filtersRefs: filtersRefs,
-            }}
-            setDateRange={setDateRange}
-            gridConfig={gridConfig}
-            reportFilterValue={reportFilterValue}
-            settings={settingsResponse}
-          />
-          <BaseGrid
-            columnList={addCurrencyToTotalColumn(
-              componentProp.columnList,
-              userData
-            )}
-            definitions={ordersTrackingDefinition(
-              componentProp,
-              openFilePdf,
-              userData?.isInternalUser
-            )}
-            config={gridConfig}
-            options={options}
-            gridConfig={gridConfig}
-            omitCreatedQuery={true}
-            requestInterceptor={customRequestInterceptor}
-            mapServiceData={mapServiceData}
-            onSortChanged={onSortChanged}
-            onAfterGridInit={_onAfterGridInit}
-            onDataLoad={onDataLoad}
-            responseError={responseError}
-            DetailRenderers={(props) => (
-              <OrderDetailsRenderers
-                {...props}
-                config={gridConfig}
-                openFilePdf={(flyoutType, orderId, selectedId) =>
-                  openFilePdf(flyoutType, orderId, selectedId)
-                }
-                rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-                newItem={newItem}
-                onQueryChanged={onQueryChanged}
-              />
-            )}
-          />
-          <MainGridFooter
-            analyticsCategories={analyticsCategories}
-            onQueryChanged={onQueryChanged}
-            onCloseToaster={onCloseToaster}
-            customPaginationRef={customPaginationRef}
-            isLoading={isLoading}
-            paginationLabels={paginationLabels}
-          />
-        </div>
-      ) : (
-        <TemporarilyUnavailable noAccessProps={noAccessProps} />
-      )
-    ) : (
-      <AccessPermissionsNeeded noAccessProps={noAccessProps} />
-    );
-  };
+  if (!isAvailable) {
+    return (<TemporarilyUnavailable noAccessProps={noAccessProps} />);
+  }
 
   return (
     <>
-      {userData?.activeCustomer && authorizedContent()}
+      <div className="cmp-order-tracking-grid">
+        <Criteria
+          config={gridConfig}
+          searchCriteria={searchParameters}
+          reportValue={reportFilterValue.current.value}
+        />
+        <MainGridHeader
+          onQueryChanged={onQueryChanged}
+          analyticsCategories={analyticsCategories}
+          isLoading={isLoading}
+          searchParams={{
+            reports: reportFilterValue,
+            paginationAndSorting: paginationAndSorting,
+            search: searchCriteria,
+            filtersRefs: filtersRefs
+          }}
+          gridConfig={gridConfig}
+          settings={settingsResponse}
+          paginationData={paginationData}
+        />
+        <BaseGrid
+          columnList={addCurrencyToTotalColumn(componentProp.columnList)}
+          definitions={ordersTrackingDefinition(
+            componentProp,
+            openFilePdf,
+            userData?.isInternalUser
+          )}
+          config={gridConfig}
+          suppressMultiSort={true}
+          gridConfig={gridConfig}
+          omitCreatedQuery={true}
+          requestInterceptor={customRequestInterceptor}
+          mapServiceData={mapServiceData}
+          onSortChanged={onSortChanged}
+          onAfterGridInit={_onAfterGridInit}
+          onDataLoad={onDataLoad}
+          responseError={responseError}
+          DetailRenderers={(props) => (
+            <OrderDetailsRenderers
+              {...props}
+              config={gridConfig}
+              openFilePdf={(flyoutType, orderId, selectedId) =>
+                openFilePdf(flyoutType, orderId, selectedId)
+              }
+              rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+              newItem={newItem}
+              onQueryChanged={onQueryChanged}
+            />
+          )}
+        />
+        <MainGridFooter
+          onQueryChanged={onQueryChanged}
+          isLoading={isLoading}
+          searchParams={{
+            reports: reportFilterValue,
+            paginationAndSorting: paginationAndSorting,
+            search: searchCriteria,
+            filtersRefs: filtersRefs
+          }}
+          paginationData={paginationData}
+        />
+      </div>
       <MainGridFlyouts
         downloadFileBlob={downloadFileBlob}
-        filterLabels={filterLabels}
         gridConfig={gridConfig}
         openFilePdf={openFilePdf}
-        analyticsCategories={analyticsCategories}
         onQueryChanged={onQueryChanged}
-        searchParams={{
-          reports: reportFilterValue,
-          sort: hasSortChanged,
-          search: searchCriteria,
-          filters: filtersRefs,
-          dateRange: dateRange,
-        }}
         settings={settingsResponse}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         addNewItem={handleAddNewItem}
@@ -714,4 +617,5 @@ function OrdersTrackingGrid(props) {
     </>
   );
 }
+
 export default OrdersTrackingGrid;

@@ -30,26 +30,25 @@ const OrderFilterDateType = ({ onChangeRadio, options, dateType }) => {
   };
 
   return (
-    <div className="check-order-wrapper">
-      <FormControl>
-        <RadioGroup
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="controlled-radio-buttons-group"
-          value={value}
-          onChange={handleChange}
-        >
-          {options?.map((option) => (
-            <FormControlLabel
-              sx={styleLabel}
-              key={option.key}
-              value={option.key}
-              control={<Radio sx={styleRadio} />}
-              label={option.label}
-            />
-          ))}
-        </RadioGroup>
-      </FormControl>
-    </div>
+    <FormControl>
+      <RadioGroup
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        value={value}
+        onChange={handleChange}
+      >
+        {options?.map((option) => (
+          <FormControlLabel
+            sx={styleLabel}
+            key={option.key}
+            value={option.key}
+            control={<Radio sx={styleRadio} />}
+            label={option.label}
+          />
+        ))}
+      </RadioGroup>
+    </FormControl>
   );
 };
+
 export default OrderFilterDateType;

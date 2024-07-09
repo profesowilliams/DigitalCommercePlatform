@@ -109,6 +109,7 @@ export const ordersTrackingDefinition = (
 
   const columnOverrides = (aemDefinition) => {
     return {
+      sortingOrder: ["asc", "desc"],
       hoverable: hoverableList.includes(aemDefinition?.columnKey),
       ...(aemDefinition?.type === 'plainText' ? { cellHeight: () => 45 } : {}),
       minWidth: columnsMinWidth[aemDefinition?.columnKey] || null,

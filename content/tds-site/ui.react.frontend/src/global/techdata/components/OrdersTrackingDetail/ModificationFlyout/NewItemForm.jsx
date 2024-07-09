@@ -126,7 +126,6 @@ const NewItemForm = ({
   return (
     <div className="new-item-form">
       <Autocomplete
-        id="free-solo-demo"
         PaperComponent={CustomPaper}
         freeSolo
         options={suggestions}

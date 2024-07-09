@@ -51,6 +51,7 @@ function Grid(props) {
     rowClassRules,
     gridRef,
     customErrorMessage = null,
+    suppressMultiSort = false,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = '1.3.0';
@@ -309,6 +310,7 @@ function Grid(props) {
       getRowId={getRowId}
       rowClassRules={rowClassRules}
       ref={gridRef}
+      suppressMultiSort={suppressMultiSort}
     >
       {filteredColumns.map((column) => {
         return (
@@ -444,7 +446,7 @@ function Grid(props) {
 
     if (gridId.current) {
       // check if there are additional query params in url, append grid specific params
-      const url = new URL(config.uiCommerceServiceDomain+endpoints.uiService);
+      const url = new URL(config.uiCommerceServiceDomain+endpoints.orders);
       const pages =
         pageSize && pageNumber
           ? `PageSize=${pageSize}&PageNumber=${pageNumber}`

@@ -463,6 +463,12 @@ export const orderTrackingEffects = (set, get) => {
         exportFlyoutSource: value,
       }));
     },
+    setRefinements(value) {
+      set((state) => ({
+        ...state,
+        refinements: value,
+      }));
+    },
     setFeatureFlags(value) {
       set((state) => ({
         ...state,

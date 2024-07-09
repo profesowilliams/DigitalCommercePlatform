@@ -126,6 +126,72 @@ export const getUrlParamsCaseInsensitive = () => {
   return newParams;
 }
 
+/**
+ * Removes all URL parameters except those specified in the allowed list, case-insensitively
+ * @param {URL} url - The URL object from which parameters are to be removed
+ * @param {string[]} allowedParams - The list of allowed parameters
+ * @returns {URL} - A new URL object with disallowed parameters removed
+ */
+export const removeDisallowedParams = (url, allowedParams) => {
+  // Convert all allowed parameters to lowercase for case-insensitive comparison
+  const allowedParamsLowerCase = allowedParams.map(param => param.toLowerCase());
+
+  // Create a new URL object to avoid modifying the original URL
+  let tempUrl = new URL(url.toString());
+
+  // Create a URLSearchParams object from the URL's search parameters
+  const params = new URLSearchParams(tempUrl.search);
+
+  // Collect parameters to delete
+  const paramsToDelete = [];
+  for (const param of params.keys()) {
+    // Check if the parameter should be deleted
+    if (!allowedParamsLowerCase.includes(param.toLowerCase())) {
+      paramsToDelete.push(param);
+    }
+  }
+
+  // Delete the collected parameters
+  paramsToDelete.forEach(param => params.delete(param));
+
+  // Update the URL object with the new set of parameters
+  tempUrl.search = params.toString();
+  return tempUrl;
+};
+
+/**
+ * Removes specified URL parameters from the URL object, case-insensitively
+ * @param {URL} url - The URL object from which parameters are to be removed
+ * @param {string[]} paramsToRemove - The list of parameters to be removed
+ * @returns {URL} - A new URL object with the specified parameters removed
+ */
+export const removeSpecificParams = (url, paramsToRemove) => {
+  // Convert all parameters to remove to lowercase for case-insensitive comparison
+  const paramsToRemoveLowerCase = paramsToRemove.map(param => param.toLowerCase());
+
+  // Create a new URL object to avoid modifying the original URL
+  let tempUrl = new URL(url.toString());
+
+  // Create a URLSearchParams object from the URL's search parameters
+  const params = new URLSearchParams(tempUrl.search);
+
+  // Collect parameters to delete
+  const paramsToDelete = [];
+  for (const param of params.keys()) {
+    // Check if the parameter should be deleted
+    if (paramsToRemoveLowerCase.includes(param.toLowerCase())) {
+      paramsToDelete.push(param);
+    }
+  }
+
+  // Delete the collected parameters
+  paramsToDelete.forEach(param => params.delete(param));
+
+  // Update the URL object with the new set of parameters
+  tempUrl.search = params.toString();
+  return tempUrl;
+};
+
 export const isObject = (val) =>
   typeof val === "object" && !Array.isArray(val) && val !== null;
 

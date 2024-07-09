@@ -5,12 +5,16 @@ import { Checkbox } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
 
 const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
+  const params = getUrlParamsCaseInsensitive();
+  const orderStatusFiltersChecked = params.getAll('status');
+
   const filterList = useOrderTrackingStore((state) => state.filter.filterList);
-  const orderStatusFiltersChecked = useOrderTrackingStore(
-    (state) => state.filter.orderStatusFiltersChecked
-  );
+  //const orderStatusFiltersChecked = useOrderTrackingStore(
+  //  (state) => state.filter.orderStatusFiltersChecked
+  //);
   const orderTypeFiltersChecked = useOrderTrackingStore(
     (state) => state.filter.orderTypeFiltersChecked
   );
@@ -46,27 +50,29 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
   };
 
   const onChangeStatusFilter = (id) => {
+    console.log('onChangeStatusFilter');
     const newList = isStatusFilterChecked(id)
-      ? orderStatusFiltersChecked.filter((status) => status.id !== id)
+      ? orderStatusFiltersChecked.filter((status) => status !== id)
       : [
           ...orderStatusFiltersChecked,
-          ...orderStatusFilters.filter((status) => status.id === id),
+          ...orderStatusFilters.filter((status) => status.id === id).map((element) => element.id),
         ];
-        filtersRefs.current.status = newList
-          .map((element) => '&status=' + element.filterOptionKey)
-          .join('');
+    //    filtersRefs.current.status = newList
+    //      .map((element) => '&status=' + element.filterOptionKey)
+    //      .join('');
     setOrderStatusFiltersChecked(newList);
-    setPredefinedFiltersSelectedAfter([
-      ...newList,
-      ...orderTypeFiltersChecked,
-      ...dateRangeFiltersChecked,
-    ]);
+    //setPredefinedFiltersSelectedAfter([
+    //  ...newList,
+    //  ...orderTypeFiltersChecked,
+    //  ...dateRangeFiltersChecked,
+    //]);
     setFilterClicked(true);
     setAreThereAnyFiltersSelectedButNotApplied();
   };
 
   const isStatusFilterChecked = (id) => {
-    return orderStatusFiltersChecked.some((status) => status.id === id);
+    console.log('isStatusFilterChecked');
+    return orderStatusFiltersChecked.some((status) => status === id);
   };
 
   const onChangeTypeFilter = (id) => {
