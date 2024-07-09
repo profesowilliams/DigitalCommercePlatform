@@ -244,29 +244,15 @@ export async function fetchRenewalsFilterByPost(config) {
             isFromRenewalDetailsPage();
 
         if (isSameFilter && previousFilter.current?.PageNumber > 1 && params.PageNumber > 1) {
-            delete params.PageNumber;
+            if (previousFilter.current?.PageNumber === params.PageNumber) {
+                delete params.PageNumber
+            } else {
+                previousFilter.current.PageNumber = params.PageNumber - 1;
+            }
         } else if (isSameFilter && previousFilter.current?.PageNumber === undefined && params.PageNumber === undefined) {
             delete params.PageNumber;
         } else if (isSameFilter && previousFilter.current?.PageNumber === undefined && params.PageNumber > 1) {
-            delete params.PageNumber;
-        } else if (!isSameFilter && previousFilter.current?.PageNumber === params.PageNumber) {
-            delete params.PageNumber;
-        } else if (!isSameFilter && previousFilter.current?.PageNumber > 1 && params.PageNumber > 1 && params.pageCount > 1) {
-            previousFilter.current.PageNumber === undefined;
-            delete params.PageNumber;
-        } else if (!isSameFilter && previousFilter.current?.PageNumber === undefined && params.PageNumber > 1) {
-            if (previousFilter.current && params.PageNumber > 1) {
-                previousFilter.current.PageNumber === params.PageNumber - 1;
-            } else if (!previousFilter.current && params.PageNumber > 1) {
-                previousFilter.current.PageNumber === undefined;
-                delete params.PageNumber;
-            };
-        } else if (!isSameFilter && previousFilter.current?.PageNumber === undefined && params.PageNumber === undefined) {
-            previousFilter.current.PageNumber === 1;
-            params.PageNumber = 1;
-        } else if (!isSameFilter && previousFilter.current?.PageNumber === 1 && params.PageNumber === undefined) {
-            previousFilter.current.PageNumber === undefined;
-            params.PageNumber = 1;
+            previousFilter.current.PageNumber === params.PageNumber - 1;
         };
 
         // Add logic to parse filterLocalStorage and build query parameters based on checked childIds
