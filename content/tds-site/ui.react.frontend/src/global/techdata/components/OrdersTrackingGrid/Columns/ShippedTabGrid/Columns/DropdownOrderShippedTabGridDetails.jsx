@@ -24,7 +24,7 @@ function DropdownOrderShippedTabGridDetails({ data }) {
             tdNumber,
             shipQuantity,
             orderQuantity,
-          } = item;
+          } = item || {};
           return (
             <div
               key={index}

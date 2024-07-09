@@ -3,10 +3,10 @@ function PnSkuColumn({ line }) {
   return (
     <div className="order-line-details__content__innerTableNotShipped__item-column">
       <span className="order-line-details__content__innerTableNotShipped__text">
-        {line?.mfrNumber}
+        {line?.mfrNumber || ''}
       </span>
       <span className="order-line-details__content__innerTableNotShipped__text">
-        {line?.tdNumber}
+        {line?.tdNumber || ''}
       </span>
     </div>
   );

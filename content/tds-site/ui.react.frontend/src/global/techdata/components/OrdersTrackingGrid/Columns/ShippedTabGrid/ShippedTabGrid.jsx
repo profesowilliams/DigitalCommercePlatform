@@ -27,7 +27,7 @@ function ShippedTabGrid({
     ensureDomOrder: true,
   };
   const { shipDate, dnote, invoice, qty } =
-    config?.orderLineDetailsShippedColumnLabels;
+    config?.orderLineDetailsShippedColumnLabels || {};
   const gridColumnWidths = Object.freeze({
     dropdownArrow: '50px',
     shipDate: '185px',
