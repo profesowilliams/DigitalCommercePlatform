@@ -8,7 +8,9 @@ import {useStore} from '../../../../utils/useStore';
 export function ErrorFlyout({ store, subheaderReference }) {
   const errorFlyoutConfig = store((st) => st.errorFlyout);
   const effects = store((st) => st.effects);
-  const errorFlyoutData = errorFlyoutConfig?.data?.details || '';
+  let errorFlyoutData = errorFlyoutConfig?.data?.details ?
+    JSON.parse(errorFlyoutConfig?.data?.details) : '';
+  errorFlyoutData = JSON.stringify(errorFlyoutData, undefined, 2);
   const [commentInput , setCommentInput] = useState('');
   const closeFlyout = () => effects.setCustomState({ key: 'errorFlyout', value: {show:false} });
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +35,7 @@ export function ErrorFlyout({ store, subheaderReference }) {
       isLoading={false}
     >
       <section className="cmp-flyout__content">
-        <p>{getDictionaryValueOrKey(errorFlyoutData)}</p>
+        <pre>{getDictionaryValueOrKey(errorFlyoutData)}</pre>
       </section>
     </BaseFlyout>
   );
