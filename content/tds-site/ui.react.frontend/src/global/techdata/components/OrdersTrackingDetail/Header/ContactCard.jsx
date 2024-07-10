@@ -23,8 +23,8 @@ function ContactCard({ content, config }) {
             </div>
           )}
           {email && (
-            <span>
-              <a href={`mailto:${email}`} className="card-container__email">{email}</a>
+            <span className="card-container__email">
+              {email}
             </span>
           )}
         </div>
