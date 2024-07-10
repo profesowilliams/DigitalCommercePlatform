@@ -174,15 +174,12 @@ function RenewalsDetails(props) {
     updateDetails()
       .then((result) => {
         if(result) {
-          effects.setCustomState({ key: 'savedItems', value: gridItems });
+          effects.setCustomState({key: 'savedItems', value: gridItems});
           setLockedEdit(false);
           setToggleEdit(true);
           effects.clearItems();
-          if (
-            componentProp?.productLines?.enableActiveLicence === 'true' &&
-            renewalsDetails?.itemsActive?.length > 0
-          ) {
-            changeRefreshDetailApiState();
+          if (componentProp?.productLines?.enableActiveLicence === 'true' && renewalsDetails?.itemsActive?.length > 0) {
+            window.location.reload();
           }
         }
       })
