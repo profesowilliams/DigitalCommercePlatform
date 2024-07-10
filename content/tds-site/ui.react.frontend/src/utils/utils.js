@@ -133,17 +133,19 @@ const validateBlobResponseWithoutModal = async (response) => {
     validation = true;
     if (response.status !== 200) {
       validation = false;
-      if (response.status === 204) {
-        const url = window.location.href;
-        const regex = /\/dcp\/.*/;
-        const newUrl = url.replace(regex, '/errors/204.html');
-        window.open(newUrl, '_blank');
+      if (
+        response.status === 204 ||
+        (response.status > 500 &&
+        response.status <= 599)
+      ) {
+        let url = new URL(window.location.href);
+        url.searchParams.set('unavailable', 1);
+        window.open(url, '_blank');
       }
     }
   } else {
     validation = false;
   }
-
   return validation;
 };
 

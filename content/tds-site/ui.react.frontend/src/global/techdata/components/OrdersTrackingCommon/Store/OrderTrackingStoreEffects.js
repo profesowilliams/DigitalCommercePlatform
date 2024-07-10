@@ -481,12 +481,6 @@ export const orderTrackingEffects = (set, get) => {
         },
       }));
     },
-    setIsAvailable(value) {
-      set((state) => ({
-        ...state,
-        isAvailable: value,
-      }));
-    },
     setTranslations(value) {
       set((state) => ({
         ...state,

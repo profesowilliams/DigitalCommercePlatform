@@ -22,7 +22,7 @@ import {
 } from './utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import MainGridHeader from './MainGrid/MainGridHeader';
-import { addCurrencyToTotalColumn, updateQueryString, mapServiceData, buildQueryString, } from './utils/gridUtils';
+import { addCurrencyToTotalColumn, mapServiceData, buildQueryString, } from './utils/gridUtils';
 import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 import { getSessionInfo } from '../../../../utils/user/get';
@@ -81,14 +81,13 @@ function OrdersTrackingGrid(props) {
     setFeatureFlags,
     setTranslations,
     hasRights,
-    setIsAvailable,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore,
     { resetCallback, shouldGoToFirstPage, isOnSearchAction, isOnPageChange }
   );
   const userData = useOrderTrackingStore((st) => st.userData);
-  const isAvailable = useOrderTrackingStore((st) => st.isAvailable);
+  const isUnavailable = params.has('unavailable') ? true : false;
   const { isGTMReady } = useGTMStatus();
 
   const [paginationData, setPaginationData] = useState({
@@ -379,7 +378,6 @@ function OrdersTrackingGrid(props) {
           orderId,
           mapIds
         );
-        setIsAvailable(false);
       }
     } catch (error) {
       pushFailedDownloadGoogleAnalytics(flyoutType, true, 1, orderId, mapIds);
@@ -388,7 +386,6 @@ function OrdersTrackingGrid(props) {
       } else if (flyoutType === 'Invoice') {
         invoiceFailedCounter.current++;
       }
-      setIsAvailable(false);
       console.error('Error', error);
     }
   };
@@ -421,7 +418,6 @@ function OrdersTrackingGrid(props) {
           orderId,
           selectedId
         );
-        setIsAvailable(false);
       }
     } catch (error) {
       pushFailedDownloadGoogleAnalytics(
@@ -436,7 +432,6 @@ function OrdersTrackingGrid(props) {
       } else if (flyoutType === 'Invoice') {
         invoiceFailedCounter.current++;
       }
-      setIsAvailable(false);
       console.error('Error', error);
     }
   };
@@ -532,8 +527,8 @@ function OrdersTrackingGrid(props) {
     return (<AccessPermissionsNeeded noAccessProps={noAccessProps} />);
   }
 
-  if (!isAvailable) {
-    return (<TemporarilyUnavailable noAccessProps={noAccessProps} />);
+  if (isUnavailable) {
+    return <TemporarilyUnavailable noAccessProps={noAccessProps} />;
   }
 
   return (

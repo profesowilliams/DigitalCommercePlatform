@@ -24,6 +24,7 @@ import { GreenInfoIcon } from '../../../../../fluentIcons/FluentIcons';
 import OrderStatusModal from '../../OrdersTrackingGrid/Modals/OrderStatusModal';
 import AccessPermissionsNeeded from '../../AccessPermissionsNeeded/AccessPermissionsNeeded';
 import TemporarilyUnavailable from '../../TemporarilyUnavailable/TemporarilyUnavailable';
+import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 
 function OrdersTrackingDetailGrid({
   data,
@@ -40,7 +41,8 @@ function OrdersTrackingDetailGrid({
     (state) => state.refreshOrderTrackingDetailApi
   );
   const userData = useOrderTrackingStore((st) => st.userData);
-  const isAvailable = useOrderTrackingStore((st) => st.isAvailable);
+  const params = getUrlParamsCaseInsensitive();
+  const isUnavailable = params.has('unavailable') ? true : false;
   const resetCallback = useRef(null);
   const shouldGoToFirstPage = useRef(false);
   const isOnSearchAction = useRef(false);
@@ -292,12 +294,15 @@ function OrdersTrackingDetailGrid({
     groupLinesFlagRef.current = groupLinesFlag;
   }, [groupLinesFlag]);
 
+  if (isUnavailable) {
+    return <TemporarilyUnavailable noAccessProps={noAccessProps} />;
+  }
+
   return (
     <>
       {(userData?.activeCustomer || isLocalDevelopment) && (
         <>
           {hasAccess ? (
-            isAvailable ? (
               <div className="cmp-order-tracking-details-grid">
                 <Grid
                   columnDefinition={addCurrencyToColumns(
@@ -332,11 +337,6 @@ function OrdersTrackingDetailGrid({
                   labels={config?.statusesLabels}
                 />
               </div>
-            ) : (
-              <TemporarilyUnavailable
-                noAccessProps={componentProps?.noAccessProps}
-              />
-            )
           ) : (
             <>
               <AccessPermissionsNeeded

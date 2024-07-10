@@ -50,7 +50,7 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const { setUserData, hasRights, setTranslations, setIsAvailable } =
+  const { setUserData, hasRights, setTranslations } =
     useOrderTrackingStore((st) => st.effects);
   const userData = useOrderTrackingStore((st) => st.userData);
   const hasAIORights = hasRights('AIO');
@@ -119,7 +119,6 @@ function OrdersTrackingDetail(props) {
           orderId,
           mapIds
         );
-        setIsAvailable(false);
       }
     } catch (error) {
       pushFailedDownloadGoogleAnalytics(flyoutType, false, 1, orderId, mapIds);
@@ -128,7 +127,6 @@ function OrdersTrackingDetail(props) {
       } else if (flyoutType === 'Invoice') {
         invoiceFailCounter.current++;
       }
-      setIsAvailable(false);
       console.error('Error', error);
     }
   };
@@ -164,7 +162,6 @@ function OrdersTrackingDetail(props) {
           orderId,
           selectedId
         );
-        setIsAvailable(false);
       }
     } catch (error) {
       pushFailedDownloadGoogleAnalytics(
@@ -179,7 +176,6 @@ function OrdersTrackingDetail(props) {
       } else if (flyoutType === 'Invoice') {
         invoiceFailCounter.current++;
       }
-      setIsAvailable(false);
     }
   }
 
