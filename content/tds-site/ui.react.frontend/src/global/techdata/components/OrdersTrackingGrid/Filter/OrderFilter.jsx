@@ -8,6 +8,7 @@ import Hover from '../../Hover/Hover';
 import { removeSpecificParams } from '../../../../../utils/index';
 import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
 import { getUrlParamsCaseInsensitive, removeDisallowedParams } from '../../../../../utils/index';
+import { getFilterAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
 
 /**
  * Functional component representing the Order Filter feature
@@ -106,7 +107,7 @@ function OrderFilter({ onChange }, ref) {
 
     if (filters) {
       // List of allowed parameters
-      const allowedParameters = ['field', 'gtmfield', 'value', 'page', 'sortby', 'sortdirection'];
+      const allowedParameters = ['field', 'gtmfield', 'value', 'page', 'sortby', 'sortdirection', 'saleslogin'];
 
       // Remove disallowed parameters from the current URL, keeping only specified ones
       url = removeDisallowedParams(new URL(window.location.href), allowedParameters);
@@ -162,15 +163,8 @@ function OrderFilter({ onChange }, ref) {
     updateUrl(filters);
 
     if (numberOfAppliedFilters > 0) {
-      //TODOOOOOOOOOO
       // Push data to Google Analytics
-      //pushDataLayerGoogle(
-      //  getFilterAnalyticsGoogle(
-      //    getDictionaryValueOrKey(analyticsCategories.filter),
-      //    checkedFilters,
-      //    dateRangeFiltersChecked.length > 0 ? dateType : ''
-      //  )
-      //);
+      pushDataLayerGoogle(getFilterAnalyticsGoogle(filters));
     }
 
     // Set number of applied filters to calculated number

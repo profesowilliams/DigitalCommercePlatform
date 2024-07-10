@@ -114,7 +114,7 @@ function Report({ onChange, analyticsLabel }, ref) {
     // If an report is selected
     if (report) {
       // List of allowed parameters
-      const allowedParameters = ['page', 'sortby', 'sortdirection'];
+      const allowedParameters = ['page', 'sortby', 'sortdirection', 'saleslogin'];
 
       // Remove disallowed parameters from the current URL, keeping only specified ones
       url = removeDisallowedParams(new URL(window.location.href), allowedParameters);

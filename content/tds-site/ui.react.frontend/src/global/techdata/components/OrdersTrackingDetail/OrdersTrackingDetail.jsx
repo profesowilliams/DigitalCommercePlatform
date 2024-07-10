@@ -20,6 +20,7 @@ import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import { endpoints } from '../OrdersTrackingGrid/utils/orderTrackingUtils';
 import { buildQueryString } from '../OrdersTrackingGrid/utils/gridUtils';
 import { getHeaderInfo } from '../../../../utils/headers/get';
+import { getUrlParamsCaseInsensitive } from '../../../../utils/index';
 
 const translationDictionaries = [
   'OrderTracking.Details',
@@ -27,11 +28,14 @@ const translationDictionaries = [
 ];
 
 function OrdersTrackingDetail(props) {
-  const { id = '' } = getUrlParams();
+  console.log('OrdersTrackingDetail::init');
+  const params = getUrlParamsCaseInsensitive();
+  const id = params.get('id');
   const gridRef = useRef();
   const rowsToGrayOutTDNameRef = useRef([]);
   const dNoteFailCounter = useRef(1);
   const invoiceFailCounter = useRef(1);
+  const [isLoading, setIsLoading] = useState(false);
   const [newItem, setNewItem] = useState(null);
   const [content, setContent] = useState(null);
   const [orderModifyHeaderInfo, setOrderModifyHeaderInfo] = useState(false);
@@ -52,28 +56,33 @@ function OrdersTrackingDetail(props) {
   const hasAIORights = hasRights('AIO');
   const hasOrderModificationRights = hasRights('OrderModification');
 
-  const redirectToMainDashboard = () => {
+  const redirectToMainDashboard = (orderId) => {
     let currentUrl = new URL(window.location.href);
     currentUrl.search = '';
     currentUrl.pathname = currentUrl.pathname.replace(
       '/order-details.html',
       '.html'
     );
-    currentUrl.search = `?id=${id}`;
+    currentUrl.search = `?id=${orderId}`;
     window.location.href = currentUrl.href;
   };
 
-  const headerRequest = async () => {
+  const headerRequest = async (orderId) => {
+    setIsLoading(true);
+    console.log('OrdersTrackingDetail::headerRequest');
+
     try {
       const apiResponse = await usGet(
-        `${config.uiCommerceServiceDomain}${endpoints.orderDetail}/${id}`
+        `${config.uiCommerceServiceDomain}${endpoints.orderDetail}/${orderId}`
       );
       setContent(apiResponse?.data?.content);
       if (apiResponse.status === 204) {
-        redirectToMainDashboard();
+        redirectToMainDashboard(orderId);
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -187,6 +196,35 @@ function OrdersTrackingDetail(props) {
     return results.data;
   };
 
+  const onProductChange = (orderId) => {
+    console.log('OrdersTrackingDetail::onProductChange');
+    setContent(null);
+    updateUrl(orderId, true);
+    headerRequest(orderId);
+  };
+
+  const updateUrl = (id, replaceState) => {
+    console.log('OrdersTrackingDetail::updateUrl');
+
+    // Get the current URL
+    const currentUrl = new URL(window.location.href);
+
+    // Update id
+    const url = new URL(window.location.href);
+    url.searchParams.set('id', id);
+
+    // If the URL has changed, update the browser history
+    if (url.toString() !== currentUrl.toString()) {
+      if (replaceState) {
+        // Use pushState to add a new entry to the browser history
+        window.history.pushState(null, '', url.toString());
+      } else {
+        // Use replaceState to modify the current entry in the browser history
+        window.history.replaceState(null, '', url.toString());
+      }
+    }
+  };
+
   useEffect(() => {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
@@ -207,18 +245,21 @@ function OrdersTrackingDetail(props) {
   }, [isGTMReady]);
 
   useEffect(async () => {
-    headerRequest();
+    console.log('OrdersTrackingDetail::useEffect::headerRequest');
+    headerRequest(id);
     const uiTranslations = await fetchUITranslations();
     setTranslations(uiTranslations);
   }, []);
 
   useEffect(() => {
+    console.log('OrdersTrackingDetail::useEffect::title');
     document.title = getDictionaryValueOrKey(config?.labels?.pageTitle);
   }, []);
 
   useEffect(() => {
+    console.log('OrdersTrackingDetail::orderModifyHeaderInfo');
     if (orderModifyHeaderInfo) {
-      headerRequest();
+      headerRequest(id);
       setOrderModifyHeaderInfo(false);
     }
   }, [orderModifyHeaderInfo]);
@@ -227,7 +268,7 @@ function OrdersTrackingDetail(props) {
     <>
       <div className="cmp-quote-preview cmp-order-preview">
         <section>
-          {content && (
+          {!isLoading && content && (
             <>
               <OrderTrackingDetailHeader
                 config={config}
@@ -238,6 +279,7 @@ function OrdersTrackingDetail(props) {
                 componentProps={componentProps}
                 userData={userData}
                 setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
+                onProductChange={onProductChange}
               />
               <OrderTrackingDetailBody
                 config={config}
@@ -248,21 +290,24 @@ function OrdersTrackingDetail(props) {
                 rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
                 newItem={newItem}
               />
-              <OrderTrackingDetailFooter config={config} content={content} />
+              <OrderTrackingDetailFooter
+                config={config}
+                content={content} />
+              <Flyouts
+                downloadAllFile={downloadAllFile}
+                openFilePdf={openFilePdf}
+                config={config}
+                content={content}
+                gridRef={gridRef}
+                rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+                addNewItem={handleAddNewItem}
+                setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
+              />
             </>
           )}
+          {isLoading && (<div>Loading...</div>)}
         </section>
       </div>
-      <Flyouts
-        downloadAllFile={downloadAllFile}
-        openFilePdf={openFilePdf}
-        config={config}
-        content={content}
-        gridRef={gridRef}
-        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-        addNewItem={handleAddNewItem}
-        setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
-      />
     </>
   );
 }

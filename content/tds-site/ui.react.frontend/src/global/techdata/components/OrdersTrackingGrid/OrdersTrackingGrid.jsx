@@ -28,10 +28,8 @@ import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 import { getSessionInfo } from '../../../../utils/user/get';
 import { usGet } from '../../../../utils/api';
 import useGet from '../../hooks/useGet';
-import { getUrlParams, deleteSearchParam } from '../../../../utils';
 import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getHeaderInfo } from '../../../../utils/headers/get';
 import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
 
@@ -60,7 +58,6 @@ function OrdersTrackingGrid(props) {
 
   const params = getUrlParamsCaseInsensitive();
 
-  const { redirectedFrom = '' } = getUrlParams();
   const searchCriteria = useRef({ field: '', value: '' });
   const paginationAndSorting = useRef({
     pageNumber: params.get('page') || 1,
@@ -152,6 +149,8 @@ function OrdersTrackingGrid(props) {
   };
 
   const sendGTMDataOnError = () => {
+    console.log('OrdersTrackingGrid::sendGTMDataOnError');
+
     if (reportFilterValue?.current?.value) {
       pushDataLayerGoogle(
         getReportsNRFAnalyticsGoogle(reportFilterValue.current.value)
@@ -164,9 +163,11 @@ function OrdersTrackingGrid(props) {
     }
     const filtersStatusAndType =
       (filtersRefs?.current?.type ?? '') + (filtersRefs?.current?.status ?? '');
+
     const dateFilters = Object.entries(filtersRefs?.current).filter(
       (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
     );
+
     if (filtersStatusAndType !== '' || dateFilters.length > 0) {
       pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
     }
@@ -175,7 +176,7 @@ function OrdersTrackingGrid(props) {
   const verifyIfPageNumberIsNotOutsideLimit = (ordersCountResponseContent) => {
     console.log('OrdersTrackingGrid::verifyIfPageNumberIsNotOutsideLimit');
     var correctPageNumber = Math.ceil(ordersCountResponseContent?.totalItems / gridPageSize);
-    if (correctPageNumber < paginationAndSorting.current.pageNumber) {
+    if (correctPageNumber < paginationAndSorting.current.pageNumber || !paginationAndSorting.current.pageNumber) {
       console.log('OrdersTrackingGrid::verifyIfPageNumberIsNotOutsideLimit::page number needs to be corrected');
       paginationAndSorting.current.pageNumber = correctPageNumber;
       updateUrl(paginationAndSorting, true);
@@ -320,8 +321,8 @@ function OrdersTrackingGrid(props) {
     }
 
     // If a page number is provided, set it in the URL
-    if (paginationAndSorting?.current?.page) {
-      url.searchParams.set('page', paginationAndSorting.current.page);
+    if (paginationAndSorting?.current?.pageNumber) {
+      url.searchParams.set('page', paginationAndSorting.current.pageNumber);
     }
 
     // If a query cache key is provided, set it in the URL
@@ -440,10 +441,6 @@ function OrdersTrackingGrid(props) {
     }
   };
 
-  //const onCloseToaster = () => {
-  //  closeAndCleanToaster();
-  //};
-
   const fetchFiltersRefinements = async () => {
     const results = await usGet(
       `${componentProp.uiCommerceServiceDomain}/v3/refinements`
@@ -474,17 +471,15 @@ function OrdersTrackingGrid(props) {
   };
 
   useEffect(async () => {
-    document.title = getDictionaryValueOrKey(gridConfig?.pageTitle);
-    redirectedFrom && deleteSearchParam('redirectedFrom');
     const refinements = await fetchFiltersRefinements();
     setRefinements(refinements);
+
     setFeatureFlags(refinements?.featureFlags);
+
     const uiTranslations = await fetchUITranslations();
     setTranslations(uiTranslations);
 
-    //if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
-    //  hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
-    //}
+    document.title = uiTranslations?.['OrderTracking.MainGrid']?.Title;
   }, []);
 
   useEffect(() => {

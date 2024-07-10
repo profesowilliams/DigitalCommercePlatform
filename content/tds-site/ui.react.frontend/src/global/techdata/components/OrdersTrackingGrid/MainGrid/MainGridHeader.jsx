@@ -9,6 +9,17 @@ import Pill from '../../Widgets/Pill';
 import OrderTrackingGridPagination from '../Pagination/OrderTrackingGridPagination';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
+/**
+ * MainGridHeader component to manage the main grid's header functionalities including search, filters, and pagination.
+ * @param {Object} props - Component props.
+ * @param {Function} props.onQueryChanged - Callback function invoked when the query changes.
+ * @param {Object} props.analyticsCategories - Analytics categories for tracking events. (remove?)
+ * @param {boolean} props.isLoading - Flag indicating if the grid data is loading.
+ * @param {Object} props.searchParams - Object containing search parameters.
+ * @param {Object} props.gridConfig - Configuration object for the grid.
+ * @param {Object} props.settings - Settings for the main grid. (remove?)
+ * @param {Object} props.paginationData - Data related to pagination.
+ */
 function MainGridHeader({
   onQueryChanged,
   analyticsCategories,
@@ -65,9 +76,6 @@ function MainGridHeader({
       reportRef.current.cleanUp();
       // Clear the current report filter references
       searchParams.reports.current = {};
-
-      // Set the custom state to show the criteria
-      //setCustomState({ key: 'showCriteria', value: true });
     } else {
       console.log('MainGridHeader::clearReports::not required');
     }
@@ -88,85 +96,129 @@ function MainGridHeader({
       searchRef.current.cleanUp();
       // Clear the current search filter references
       searchParams.search.current = {};
-
-      // Set the custom state to show the criteria
-      //setCustomState({ key: 'showCriteria', value: true });
     } else {
       console.log('MainGridHeader::clearSearch::not required');
     }
   };
 
+  /**
+   * Handles the action of deleting a pill (filter or search criteria) in the main grid header.
+   */
   const handleDeletePill = () => {
     console.log('MainGridHeader::handleDeletePill');
 
+    // Clear the reports filters
     clearReports();
+
+    // Clear the search criteria
     clearSearch();
 
+    // Trigger any actions associated with changing the pill
     onPillChanged();
+
+    // Trigger the query change to update the grid data
     onQueryChanged();
   };
 
+  /**
+   * Handler for changing the report filters in the main grid header.
+   * @param {Object} filters - The filters object containing field, label, and key (report name).
+   */
   const onReportChange = (filters) => {
     console.log('MainGridHeader::onReportChange');
 
-    // clear search criteria
+    // Clear the current filter criteria
     clearFilters();
+
+    // Clear the current search criteria
     clearSearch();
 
+    // Update the pill (filter indicator) with the new field and label
     onPillChanged({
       field: filters.field,
       label: filters.label
     });
 
+    // Update the current report value in the search parameters
     searchParams.reports.current.value = filters.key;
 
+    // Trigger the query change to update the grid data, indicating a search action
     onQueryChanged({ onSearchAction: true });
   };
 
+  /**
+   * Handler for changing the search filters in the main grid header.
+   * @param {Object} filters - The filters object containing field, label, key, value, and gtmField.
+   */
   const onSearchChange = (filters) => {
     console.log('MainGridHeader::onSearchChange');
 
+    // Clear the current report criteria
     clearReports();
 
+    // Update the pill (filter indicator) with the new field and value
     onPillChanged({
       field: filters.field,
       label: filters.value
     });
 
+    // Update the current search parameters with the new filters
     searchParams.search.current.field = filters.key;
     searchParams.search.current.value = filters.value;
     searchParams.search.current.gtmField = filters.gtmField;
 
+    // Trigger the query change to update the grid data, indicating a search action
     onQueryChanged({ onSearchAction: true });
   };
 
+  /**
+   * Handler for filter changes in the main grid.
+   * @param {Object} filters - The filters object containing the updated filter values.
+   */
   const onFilterChange = (filters) => {
     console.log('MainGridHeader::onFilterChange');
 
+    // Clear any existing report filters
     clearReports();
 
+    // Update the searchParams with the new filters
     searchParams.filtersRefs.current = {
       date: filters?.date,
       statuses: filters?.statuses,
       types: filters?.types
     };
 
+    // Trigger the query change callback indicating a search action
     onQueryChanged({ onSearchAction: true });
   };
 
+  /**
+   * Handler for page changes in the main grid.
+   * @param {Object} data - The data object containing the updated page information.
+   */
   const onPageChange = (data) => {
     console.log("MainGridHeader::onPageChange");
 
+    // Update the current page number in the search parameters
     searchParams.paginationAndSorting.current.pageNumber = data.pageNumber;
 
+    // Trigger the query change callback indicating a search action
     onQueryChanged({ onSearchAction: true });
   }
 
+  /**
+   * Handler for changes to the pill (filter chip).
+   * @param {Object} data - The data object containing the new pill information, or null to clear the pill.
+   */
   const onPillChanged = (data) => {
     console.log("MainGridHeader::onPillChanged");
+
+    // Check if data is provided to update the pill
     if (data) {
+      // Update the pill state with the new key, field, and label from the data object
       setPill({ key: data.key, field: data.field, label: data.label });
     } else {
+      // Clear the pill by setting it to null
       setPill(null);
     }
   }

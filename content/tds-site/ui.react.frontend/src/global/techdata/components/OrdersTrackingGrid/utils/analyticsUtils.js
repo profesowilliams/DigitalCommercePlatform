@@ -28,13 +28,26 @@ export const getPaginationAnalyticsGoogle = (pageEvent, pageNum) => {
   };
 };
 
-export const getFilterAnalyticsGoogle = (category, filterData, dateLabel) => {
-  const filters = filterData?.length > 0 ? filterData : [];
+export const getFilterAnalyticsGoogle = (filters) => {
+  var dateRange = '';
+  if (filters.statuses) {
+    dateRange = 'Date Range: ' + filters.date.from + ' ' + filters.date.to + '|Date Type: ' + filters.date.type;
+  }
+
+  var statuses = '';
+  if (filters.statuses) {
+    statuses = 'Order Status: ' + filters.statuses.join(',');
+  }
+
+  var types = '';
+  if (filters.types) {
+    types = 'Order Type: ' + filters.types.join(',');
+  }
+
   return {
     event: 'Order tracking - Advanced Search',
-    category,
-    orderTracking: filters.join('|'),
-    label: dateLabel,
+    category: 'filter',
+    orderTracking: [dateRange, statuses, types].filter(str => str).join('|')
   };
 };
 
@@ -60,28 +73,6 @@ const getEnglishReportLabel = (optionKey) => {
       return optionKey;
   }
 }
-
-export const getEnglishFiltersLabel = (optionKey) => {
-  const labels = {
-    OPEN: 'Open',
-    INVESTIGATION: 'Investigation',
-    SHIPPING: 'Shipping',
-    COMPLETED: 'Completed',
-    REJECTED: 'Rejected',
-    CANCELLED: 'Cancelled',
-    ON_HOLD: 'On Hold',
-    SHIPPED: 'Shipped',
-    IN_PROCESS: 'In Process',
-    INTOUCH: 'In Touch',
-    EDI_OR_XML: 'EDI or XML',
-    LICENSING: 'Licensing',
-    MANUAL: 'Manual',
-    STOCKING_ORDER: 'Stocking Order',
-    THIRD_PARTY: 'Third Party',
-    STREAM_ONE: 'Stream One',
-  };
-  return labels[optionKey] || optionKey;
-};
 
 export const getEngUserDataAnalyticsGoogle = () => {
   return {
@@ -221,7 +212,7 @@ export const getPageReloadAnalyticsGoogle = ({
 
 export const getProActiveSettingsActivactionAnalyticsGoogle = (active) => {
   return {
-    event: 'Order tracking - Pro Active Messaging- Settings',
+    event: 'Order tracking - Pro Active Messaging - Settings',
     orderTracking: `Pro Active Messaging - Type Active`,
     label: active,
   };
@@ -229,7 +220,7 @@ export const getProActiveSettingsActivactionAnalyticsGoogle = (active) => {
 
 export const getProActiveNotificationAnalyticsGoogle = (value) => {
   return {
-    event: 'Order tracking - Pro Active Messaging- Settings',
+    event: 'Order tracking - Pro Active Messaging - Settings',
     orderTracking: 'Pro Active Messaging - Type Notification Messages',
     label: value === 'Intouch' ? 'InTouch' : 'All',
   };
@@ -237,7 +228,7 @@ export const getProActiveNotificationAnalyticsGoogle = (value) => {
 
 export const getProActiveTypesAnalyticsGoogle = ( value ) => {
   return {
-    event: 'Order tracking - Pro Active Messaging- Settings',
+    event: 'Order tracking - Pro Active Messaging - Settings',
     orderTracking: 'Pro Active Messaging - Type types',
     label: value,
   };

@@ -228,3 +228,4 @@ export function setPaginationData(response, responseContent, pageSize = 25) {
     queryCacheKey: responseContent?.queryCacheKey,
   };
 }
+

@@ -4,21 +4,11 @@ import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import MenuActions from './Header/MenuActions';
 import OrderTrackingDetailTitle from './Header/OrderTrackingDetailTitle';
 import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
-import {
-  XMLMessageAnalyticsGoogle,
-  pushDataLayerGoogle,
-} from '../OrdersTrackingGrid/utils/analyticsUtils';
-//import { getLocalStorageData } from '../OrdersTrackingGrid/utils/gridUtils';
+import { XMLMessageAnalyticsGoogle, pushDataLayerGoogle, } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import SoldToCard from './Header/SoldToCard';
 import OrderAcknowledgementCard from './Header/OrderAcknowledgementCard';
 import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
-//import {
-//  ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-//  ORDER_SEARCH_LOCAL_STORAGE_KEY,
-//  ORDER_FILTER_LOCAL_STORAGE_KEY,
-//  REPORTS_LOCAL_STORAGE_KEY,
-//} from '../../../../utils/constants';
 import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
 import { usGet, usPost } from '../../../../utils/api';
 import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAlertModal';
@@ -37,6 +27,7 @@ const OrderTrackingDetailHeader = ({
   componentProps,
   userData,
   setOrderModifyHeaderInfo,
+  onProductChange
 }) => {
   const params = getUrlParamsCaseInsensitive();
   const saleslogin = params.get('saleslogin');
@@ -350,28 +341,34 @@ const OrderTrackingDetailHeader = ({
       : detailsTranslations?.Button_BackToAll || 'All orders';
   };
 
+  const handleClick = (e, id) => {
+    console.log('OrderTrackingDetailHeader::handleClick');
+    e.preventDefault();
+    onProductChange(id);
+  };
+
   const renderRightSideOfNavigation = () => {
     return (
       <div className="navigation-container--right">
         {previousOrder && (
-          <Link
-            variant="previous"
+          <a 
             href={window.location.href.replace(id, previousOrder)}
-            underline="underline-none"
+            className="tdr-link previous underline-none"
+            onClick={(e) => handleClick(e, previousOrder)} 
           >
             <i className="fas fa-chevron-left"></i>
             {detailsTranslations?.Button_Prev || 'Previous order'}
-          </Link>
+          </a>
         )}
         {nextOrder && (
-          <Link
-            variant="next"
+          <a 
             href={window.location.href.replace(id, nextOrder)}
-            underline="underline-none"
+            className="tdr-link next underline-none"
+            onClick={(e) => handleClick(e, nextOrder)} 
           >
             {detailsTranslations?.Button_Next || 'Next order'}
             <i className="fas fa-chevron-right"></i>
-          </Link>
+          </a>
         )}
       </div>
     );

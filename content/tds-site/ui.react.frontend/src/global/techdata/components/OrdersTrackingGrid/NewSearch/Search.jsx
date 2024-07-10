@@ -9,7 +9,6 @@ import { usGet } from '../../../../../utils/api';
 import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
 import { filtersDateGroup } from '../utils/orderTrackingUtils';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils';
 import { getSearchAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
 import { debounce } from '../utils/utils';
@@ -220,7 +219,7 @@ const Search = (
 
     if (filter) {
       // List of allowed parameters
-      const allowedParameters = ['status', 'type', 'datetype', 'datefrom', 'dateto', 'page', 'sortby', 'sortdirection'];
+      const allowedParameters = ['status', 'type', 'datetype', 'datefrom', 'dateto', 'page', 'sortby', 'sortdirection', 'saleslogin'];
 
       // Remove disallowed parameters from the current URL, keeping only specified ones
       url = removeDisallowedParams(new URL(window.location.href), allowedParameters);
@@ -253,12 +252,19 @@ const Search = (
     }
   }));
 
+  /**
+   * Effect hook to trigger the initial search when translations are ready.
+   * It checks if initial search parameters are present and then calls the handleSearch function.
+   */
   useEffect(() => {
     console.log('Search::Translations ready trigger handleSearch');
+
+    // Check if initial search parameters are provided
     if (getInitial.field && getInitial.value && getInitial.gtmField) {
+      // Trigger the search with the initial parameters
       handleSearch(getInitial.field, getInitial.value, getInitial.gtmField);
     }
-  }, [freeTextSearchTranslations]);
+  }, [freeTextSearchTranslations]); // Dependency array to re-run the effect when translations are updated
 
   const debouncedAutocomplete = useMemo(() => {
     const timeout =
@@ -341,7 +347,7 @@ const Search = (
             value={value}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
-            placeholder={getDictionaryValueOrKey(gridConfig.searchPlaceholder)}
+            placeholder={mainGridTranslations?.Search_Placeholder}
             inputProps={{
               ...params.inputProps,
               maxLength: 30,
