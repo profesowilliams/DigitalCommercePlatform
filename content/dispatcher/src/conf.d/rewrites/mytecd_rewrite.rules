@@ -16,3 +16,8 @@ RewriteCond %{REQUEST_URI} !^/(apps|bin|content|etc|home|libs|saml_login|system|
 RewriteCond %{REQUEST_URI} \.(html|jpe?g|png|svg|txt|xml|cache)$ [NC]
 # Rewrite the URL
 RewriteRule ^/(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/my/$1 [PT,L]
+
+# Match specific hosts
+RewriteCond %{HTTP_HOST} ^(mytecd\.com|uat\.dc\.mytecd\.com|stage\.dc\.mytecd\.com)$ [NC]
+# Google Site Verification
+RewriteRule ^/google(.*).html$ http://www.techdata.com/content/dam/${CONTENT_FOLDER_NAME_TECHDATA}/site-root-files/google$1.html [R=301, PT, L]
