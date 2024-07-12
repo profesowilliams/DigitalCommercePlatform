@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  SettingsIcon,
-  SettingsIconFilled,
-} from '../../../../../fluentIcons/FluentIcons';
+import { SettingsIcon, SettingsIconFilled } from '../../../../../fluentIcons/FluentIcons';
 import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import Tooltip from '@mui/material/Tooltip';

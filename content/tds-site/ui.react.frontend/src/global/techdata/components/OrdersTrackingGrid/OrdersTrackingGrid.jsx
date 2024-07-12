@@ -105,10 +105,6 @@ function OrdersTrackingGrid(props) {
   const [responseError, setResponseError] = useState(null);
   const [sendAnalyticsDataHome, setSendAnalyticsDataHome] = useState(true);
   const [newItem, setNewItem] = useState(null);
-  const [searchParameters, setSearchParameters] = useState({
-    field: '',
-    value: '',
-  });
   const componentProp = JSON.parse(props.componentProp);
   const gridPageSize = 25;
 
@@ -197,7 +193,6 @@ function OrdersTrackingGrid(props) {
     console.log('OrdersTrackingGrid::customRequestInterceptor');
     const gridApi = gridApiRef?.current?.api;
 
-    setSearchParameters(searchCriteria?.current);
     gridApi.paginationSetPageSize(gridPageSize);
 
     const baseUrl = componentProp.uiCommerceServiceDomain;
@@ -525,6 +520,7 @@ function OrdersTrackingGrid(props) {
   }, [userData, isGTMReady, reloadAddedToGTM]);
 
   if (!hasAccess || !userData?.activeCustomer) {
+    console.log('OrdersTrackingGrid::noAccessProps');
     return (<AccessPermissionsNeeded noAccessProps={noAccessProps} />);
   }
 
@@ -536,9 +532,12 @@ function OrdersTrackingGrid(props) {
     <>
       <div className="cmp-order-tracking-grid">
         <Criteria
-          config={gridConfig}
-          searchCriteria={searchParameters}
-          reportValue={reportFilterValue.current.value}
+          searchParams={{
+            reports: reportFilterValue,
+            paginationAndSorting: paginationAndSorting,
+            search: searchCriteria,
+            filtersRefs: filtersRefs
+          }}
         />
         <MainGridHeader
           onQueryChanged={onQueryChanged}

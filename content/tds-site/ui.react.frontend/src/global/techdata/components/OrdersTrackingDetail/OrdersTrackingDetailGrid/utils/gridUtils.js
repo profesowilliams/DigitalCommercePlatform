@@ -1,5 +1,3 @@
-export const isLocalDevelopment = window.origin === 'http://localhost:8080';
-
 export const mapServiceData = (response) => {
   const mappedResponse = { ...response };
   const responseData = mappedResponse?.data?.content;
@@ -54,4 +52,22 @@ export const addCurrencyToColumns = (list, userData) => {
     }
     return column;
   });
+};
+
+export function prepareGroupedItems(content) {
+  let items = [];
+  content.groupedItems.forEach((group) => {
+    group.items.forEach((item, index) => {
+      items.push({
+        ...item,
+        ...(index === 0
+          ? {
+            TDSynnexPO: group.tdSynnexPO,
+            manufacturer: group.manufacturer,
+          }
+          : {}),
+      });
+    });
+  });
+  return items;
 };

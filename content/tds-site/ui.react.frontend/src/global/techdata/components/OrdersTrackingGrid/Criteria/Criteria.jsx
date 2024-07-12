@@ -1,40 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
-const Criteria = ({ config, searchCriteria, reportValue }) => {
-  const [selectedLabel, setSelectedLabel] = useState(
-    config?.last30DaysCriteria
-  );
-  const predefinedFiltersApplied = useOrderTrackingStore(
-    (state) => state.filter.predefinedFiltersApplied
-  );
-  const uiTranslations = useOrderTrackingStore(
-    (state) => state.uiTranslations
-  );
-  const translations = uiTranslations?.['OrderTracking.MainGrid.Reports'];
+/**
+ * Component to manage and display criteria based on search parameters and configuration.
+ * @param {Object} searchParams - Object containing current search parameters.
+ */
+const Criteria = ({ searchParams }) => {
 
-  const { field } = searchCriteria || {};
+  // Get UI translations from the store
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
 
-  const hasDateRangeFilter = predefinedFiltersApplied.some(
-    (filterApplied) => 'createdTo' in filterApplied
-  );
-  const hasOtherFilters = predefinedFiltersApplied.some(
-    (filterApplied) => 'filterOptionKey' in filterApplied
-  );
+  // Extract translations for the main grid filters
+  const translations = uiTranslations?.['OrderTracking.MainGrid'];
+
+  // State to hold the date range info based on criteria
+  const [dateRangeInfo, setDateRangeInfo] = useState();
+
+  // Effect to determine the date range info based on current search parameters
   useEffect(() => {
-    let label = config?.last30DaysCriteria;
-    if (hasDateRangeFilter || field || reportValue) {
-      label = '';
+    console.log('Criteria::useEffect');
+
+    // Default date range info from translations
+    let dateRangeInfoTranslated = translations?.Last30DaysCriteria;
+    const filtersRefs = searchParams?.filtersRefs?.current;
+    const search = searchParams?.search?.current;
+    const reports = searchParams?.reports?.current;
+
+    // Check if date range filter is active
+    const hasDateRangeFilter = filtersRefs?.date?.type
+      && filtersRefs?.date?.from
+      && filtersRefs?.date?.to;
+
+    // Check if search filter is active
+    const hasSearchFilter = search?.field && search?.value;
+
+    // Check if report filter is active
+    const hasReportFilter = reports?.value;
+
+    // Check if there are any types or statuses filters
+    const hasOtherFilters = filtersRefs?.types
+      || filtersRefs?.statuses;
+
+    console.log('Criteria::useEffect::hasDateRangeFilter[' + hasDateRangeFilter + ']');
+    console.log('Criteria::useEffect::hasSearchFilter[' + hasSearchFilter + ']');
+    console.log('Criteria::useEffect::hasReportFilter[' + hasReportFilter + ']');
+    console.log('Criteria::useEffect::hasOtherFilters[' + hasOtherFilters + ']');
+
+    // Determine the date range info based on active filters
+    if (hasDateRangeFilter || hasSearchFilter || hasReportFilter) {
+      dateRangeInfoTranslated = '';
     } else if (hasOtherFilters) {
-      label = config?.last90DaysCriteria;
+      dateRangeInfoTranslated = translations?.Last90DaysCriteria;
     } else {
-      label = config?.last30DaysCriteria;
+      dateRangeInfoTranslated = translations?.Last30DaysCriteria;
     }
-    setSelectedLabel(label);
-  }, [field, hasOtherFilters, hasDateRangeFilter, reportValue]);
+
+    // Update the date range info state
+    setDateRangeInfo(dateRangeInfoTranslated);
+  }, [searchParams, translations]);
+
   return (
     <div className="cmp-order-tracking-grid__criteria">
-      {translations?.[selectedLabel]}
+      {dateRangeInfo}
     </div>
   );
 };

@@ -5,10 +5,10 @@ import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTra
 
 /**
  * ContactCard component displays contact information of a sales agent.
- * @param {Object} content - Contains the sales agent details.
+ * @param {Object} orderData - Contains the order data.
  * @param {boolean} isLoading - Indicates if the data is still loading.
  */
-function ContactCard({ content, isLoading }) {
+function ContactCard({ orderData, isLoading }) {
 
   // Retrieve translations from the store
   const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
@@ -20,20 +20,20 @@ function ContactCard({ content, isLoading }) {
   const [email, setEmail] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
-  // Effect hook to update contact information when content changes
+  // Effect hook to update contact information when order data changes
   useEffect(() => {
-    console.log('ContactCard::useEffect::content');
+    console.log('ContactCard::useEffect::orderData');
 
     // Check if sales agent information is available
-    if (!content?.salesAgent) return;
+    if (!orderData?.salesAgent) return;
 
     // Update state variables with sales agent information
-    setName(content.salesAgent.name);
-    setPhoneNumber(content.salesAgent.phoneNumber);
-    setEmail(content.salesAgent.email);
-    setImageUrl(content.salesAgent.imageUrl);
+    setName(orderData.salesAgent.name);
+    setPhoneNumber(orderData.salesAgent.phoneNumber);
+    setEmail(orderData.salesAgent.email);
+    setImageUrl(orderData.salesAgent.imageUrl);
 
-  }, [content]);
+  }, [orderData]);
 
   // Display a loader icon if the data is still loading
   if (isLoading) {

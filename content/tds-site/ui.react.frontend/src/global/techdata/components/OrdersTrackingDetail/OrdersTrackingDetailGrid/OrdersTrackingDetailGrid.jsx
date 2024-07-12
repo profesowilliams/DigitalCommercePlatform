@@ -12,7 +12,7 @@ import UnitCostColumn from '../Columns/UnitCostColumn';
 import Toaster from '../../Widgets/Toaster';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { mapServiceData, } from './utils/gridUtils';
+import { mapServiceData, prepareGroupedItems } from './utils/gridUtils';
 import { fetchData } from './utils/fetchUtils';
 import useExtendGridOperations from '../../BaseGrid/Hooks/useExtendGridOperations';
 import { useStore } from '../../../../../utils/useStore';
@@ -28,7 +28,6 @@ function OrdersTrackingDetailGrid({
   isLoading
 }) {
   const [responseError, setResponseError] = useState(null);
-  //const [response, setResponse] = useState(null);
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
   const refreshOrderTrackingDetailApi = useStore(
     (state) => state.refreshOrderTrackingDetailApi
@@ -86,37 +85,6 @@ function OrdersTrackingDetailGrid({
     gridApiRef.current = config;
   };
 
-  //const loadingCellRenderer = () => {
-  //  const rowsToZero = response?.data?.content?.items?.map((item) => {
-  //    if (item?.status === 'Rejected' && item?.orderQuantity === 0) {
-  //      item.totalPrice = 0;
-  //      item.totalPriceFormatted = '0';
-  //      item.quantity = 0;
-  //      item.orderQuantity = 0;
-  //    }
-  //    return item;
-  //  });
-  //  gridRef.current?.api.setRowData(rowsToZero);
-  //};
-
-  const prepareGroupedItems = (content) => {
-    let items = [];
-    content.groupedItems.forEach((group) => {
-      group.items.forEach((item, index) => {
-        items.push({
-          ...item,
-          ...(index === 0
-            ? {
-              TDSynnexPO: group.tdSynnexPO,
-              manufacturer: group.manufacturer,
-            }
-            : {}),
-        });
-      });
-    });
-    return items;
-  };
-
   const customRequestInterceptor = async () => {
     console.log('OrdersTrackingDetailGrid::customRequestInterceptor');
 
@@ -138,10 +106,8 @@ function OrdersTrackingDetailGrid({
           },
         },
       });
-      //setResponse(groupedItemsResponse);
       mappedResponse = groupedItemsResponse;
     } else {
-      //setResponse(response);
       mappedResponse = mapServiceData(response);
     }
     setResponseError(false);
@@ -343,8 +309,7 @@ function OrdersTrackingDetailGrid({
           labels={config?.statusesLabels}
         />
       </div>)}
-  </>
-  );
+  </>);
 }
 
 export default OrdersTrackingDetailGrid;

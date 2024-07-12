@@ -5,10 +5,10 @@ import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderT
 import OrderCountClear from './OrderCountClear';
 import Tooltip from '@mui/material/Tooltip';
 import Hover from '../../Hover/Hover';
-import { removeSpecificParams } from '../../../../../utils/index';
 import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
-import { getUrlParamsCaseInsensitive, removeDisallowedParams } from '../../../../../utils/index';
+import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
 import { getFilterAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
+import { updateUrl } from './utils/utils';
 
 /**
  * Functional component representing the Order Filter feature
@@ -80,6 +80,8 @@ function OrderFilter({ onChange }, ref) {
 
     // Update the URL to reflect the cleared filters
     updateUrl();
+
+    return newFilters;
   };
 
   /**
@@ -90,57 +92,10 @@ function OrderFilter({ onChange }, ref) {
     console.log('OrderFilter::onClearFilters');
 
     // Call clearFilters to reset the filters
-    clearFilters();
+    var newFilters = clearFilters();
 
     // Trigger the onChange callback with the new filters
-    onChange(filters);
-  };
-
-  const updateUrl = (filters) => {
-    console.log('OrderFilter::updateUrl');
-
-    // Get the current URL
-    const currentUrl = new URL(window.location.href);
-
-    // Declare a variable to hold the updated URL
-    let url;
-
-    if (filters) {
-      // List of allowed parameters
-      const allowedParameters = ['field', 'gtmfield', 'value', 'page', 'sortby', 'sortdirection', 'saleslogin'];
-
-      // Remove disallowed parameters from the current URL, keeping only specified ones
-      url = removeDisallowedParams(new URL(window.location.href), allowedParameters);
-
-      if (filters.date?.from && filters.date?.to && filters.date?.type) {
-        url.searchParams.set('datetype', filters.date.type);
-        url.searchParams.set('datefrom', filters.date.from);
-        url.searchParams.set('dateto', filters.date.to);
-      }
-
-      if (filters.types) {
-        filters.types.forEach(type => {
-          url.searchParams.append('type', type);
-        });
-      }
-
-      if (filters.statuses) {
-        filters.statuses.forEach(status => {
-          url.searchParams.append('status', status);
-        });
-      }
-    } else {
-      // List of parameters which should be removed
-      const parametersToRemove = ['datetype', 'datefrom', 'dateto', 'status', 'type'];
-
-      // Remove specific parameters from the URL
-      url = removeSpecificParams(currentUrl, parametersToRemove);
-    }
-
-    // If the URL has changed, update the browser history
-    if (url.toString() !== currentUrl.toString())
-      window.history.pushState(null, '', url.toString());
-    // history.push(url.href.replace(url.origin, ''));
+    onChange(newFilters);
   };
 
   /**
@@ -162,13 +117,13 @@ function OrderFilter({ onChange }, ref) {
     // Update the URL to reflect the filters
     updateUrl(filters);
 
+    // Set number of applied filters to calculated number
+    setNumberOfFilters(numberOfAppliedFilters);
+
     if (numberOfAppliedFilters > 0) {
       // Push data to Google Analytics
       pushDataLayerGoogle(getFilterAnalyticsGoogle(filters));
     }
-
-    // Set number of applied filters to calculated number
-    setNumberOfFilters(numberOfAppliedFilters);
   };
 
   /**

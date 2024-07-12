@@ -29,26 +29,30 @@ export const getPaginationAnalyticsGoogle = (pageEvent, pageNum) => {
 };
 
 export const getFilterAnalyticsGoogle = (filters) => {
-  var dateRange = '';
-  if (filters.statuses) {
-    dateRange = 'Date Range: ' + filters.date.from + ' ' + filters.date.to + '|Date Type: ' + filters.date.type;
-  }
+  try {
+    var dateRange = '';
+    if (filters.date) {
+      dateRange = 'Date Range: ' + filters.date?.from + ' ' + filters.date?.to + '|Date Type: ' + filters.date?.type;
+    }
 
-  var statuses = '';
-  if (filters.statuses) {
-    statuses = 'Order Status: ' + filters.statuses.join(',');
-  }
+    var statuses = '';
+    if (filters.statuses) {
+      statuses = 'Order Status: ' + filters.statuses.join(',');
+    }
 
-  var types = '';
-  if (filters.types) {
-    types = 'Order Type: ' + filters.types.join(',');
-  }
+    var types = '';
+    if (filters.types) {
+      types = 'Order Type: ' + filters.types.join(',');
+    }
 
-  return {
-    event: 'Order tracking - Advanced Search',
-    category: 'filter',
-    orderTracking: [dateRange, statuses, types].filter(str => str).join('|')
-  };
+    return {
+      event: 'Order tracking - Advanced Search',
+      category: 'filter',
+      orderTracking: [dateRange, statuses, types].filter(str => str).join('|')
+    };
+  } catch (error) {
+    console.error('AnalyticsUtils::getFilterAnalyticsGoogle::error::', error);
+  }
 };
 
 const getEnglishReportLabel = (optionKey) => {

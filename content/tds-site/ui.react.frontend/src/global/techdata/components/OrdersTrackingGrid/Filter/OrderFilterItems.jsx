@@ -12,24 +12,26 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
   const orderStatusFiltersChecked = params.getAll('status');
 
   const filterList = useOrderTrackingStore((state) => state.filter.filterList);
-  //const orderStatusFiltersChecked = useOrderTrackingStore(
-  //  (state) => state.filter.orderStatusFiltersChecked
-  //);
+
   const orderTypeFiltersChecked = useOrderTrackingStore(
     (state) => state.filter.orderTypeFiltersChecked
   );
+
   const dateRangeFiltersChecked = useOrderTrackingStore(
     (state) => state.filter.dateRangeFiltersChecked
   );
+
   const orderStatusFilters = filterList.find(
     (filter) =>
       filter.accordionLabel ===
       getDictionaryValueOrKey(filterLabels.orderStatus)
   ).filterOptionList;
+
   const orderTypeFilters = filterList.find(
     (filter) =>
       filter.accordionLabel === getDictionaryValueOrKey(filterLabels.orderType)
   ).filterOptionList;
+
   const {
     setOrderTypeFiltersChecked,
     setOrderStatusFiltersChecked,
@@ -57,15 +59,8 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
           ...orderStatusFiltersChecked,
           ...orderStatusFilters.filter((status) => status.id === id).map((element) => element.id),
         ];
-    //    filtersRefs.current.status = newList
-    //      .map((element) => '&status=' + element.filterOptionKey)
-    //      .join('');
+
     setOrderStatusFiltersChecked(newList);
-    //setPredefinedFiltersSelectedAfter([
-    //  ...newList,
-    //  ...orderTypeFiltersChecked,
-    //  ...dateRangeFiltersChecked,
-    //]);
     setFilterClicked(true);
     setAreThereAnyFiltersSelectedButNotApplied();
   };
@@ -146,4 +141,5 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
     </div>
   );
 };
+
 export default OrderFilterItems;

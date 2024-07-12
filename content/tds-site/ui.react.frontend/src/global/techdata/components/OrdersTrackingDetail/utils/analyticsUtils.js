@@ -16,3 +16,10 @@ export const getOrderDetailsAnalyticsGoogle = (number, orderDate) => {
     order_date: created,
   };
 };
+
+export const prevNextOrder = (type, id) => {
+  return {
+    event: 'Order tracking - Order Details - PrevNext',
+    orderTracking: `Order Details: ${type} - ${id}`
+  };
+};

@@ -104,9 +104,6 @@ const OrderFilterType = ({ onChange, initialFilter }, ref) => {
       setFiltersChecked(checkedList);
       // Update the count of checked filters
       setFiltersCheckedCount(checkedList.length);
-
-      // Call the `onChange` function with the updated list of checked filters
-      //onChange(checkedList);
     }
   }));
 

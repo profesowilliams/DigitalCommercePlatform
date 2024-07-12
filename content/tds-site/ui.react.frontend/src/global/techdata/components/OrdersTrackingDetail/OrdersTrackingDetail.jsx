@@ -45,8 +45,6 @@ function OrdersTrackingDetail(props) {
     useOrderTrackingStore((st) => st.effects);
 
   const userData = useOrderTrackingStore((st) => st.userData);
-  const hasAIORights = hasRights('AIO');
-  const hasOrderModificationRights = hasRights('OrderModification');
   const hasCanViewOrdersRights = hasRights('CanViewOrders');
   const hasOrderTrackingRights = hasRights('OrderTracking');
   const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
@@ -191,9 +189,7 @@ function OrdersTrackingDetail(props) {
     <div className="cmp-quote-preview cmp-order-preview">
       <OrderTrackingDetailHeader
         config={config}
-        content={orderData}
-        hasAIORights={hasAIORights}
-        hasOrderModificationRights={hasOrderModificationRights}
+        orderData={orderData}
         openFilePdf={openFilePdf}
         componentProps={componentProps}
         setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}

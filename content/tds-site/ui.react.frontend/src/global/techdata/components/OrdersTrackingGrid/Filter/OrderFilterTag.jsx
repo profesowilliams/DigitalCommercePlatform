@@ -12,4 +12,5 @@ const OrderFilterTag = ({ closeHandler, value, id }) => {
     </div>
   );
 };
+
 export default OrderFilterTag;

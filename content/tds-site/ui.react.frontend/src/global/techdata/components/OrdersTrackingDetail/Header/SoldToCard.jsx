@@ -5,10 +5,10 @@ import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTra
 
 /**
  * SoldToCard component displays shipping information.
- * @param {Object} content - Contains the shipping details.
+ * @param {Object} orderData - Contains the order details.
  * @param {boolean} isLoading - Indicates if the data is still loading.
  */
-function SoldToCard({ content, isLoading }) {
+function SoldToCard({ orderData, isLoading }) {
 
   // Retrieve translations from the store
   const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
@@ -90,33 +90,33 @@ function SoldToCard({ content, isLoading }) {
   };
 
   /**
-   * Effect hook to update the template and replacements when content changes.
+   * Effect hook to update the template and replacements when order data changes.
    */
   useEffect(() => {
-    console.log('SoldToCard::useEffect::content');
+    console.log('SoldToCard::useEffect::orderData');
 
-    // Check if shipTo content and translations are available
-    if (!content?.shipTo || !translations?.SoldToCard_ShipToTemplate) return;
+    // Check if shipTo and translations are available
+    if (!orderData?.shipTo || !translations?.SoldToCard_ShipToTemplate) return;
 
     // Update the template with the translated template
     setTemplate(translations?.SoldToCard_ShipToTemplate);
 
     setReplacements({
-      '{companyName}': content.shipTo.companyName,
-      '{line1}': content.shipTo.line1,
-      '{line2}': content.shipTo.line2,
-      '{line3}': content.shipTo.line3,
-      '{lineName3}': content.shipTo.lineName3,
-      '{lineName4}': content.shipTo.lineName4,
-      '{city}': content.shipTo.city,
-      '{state}': content.shipTo.state,
-      '{zip}': content.shipTo.zip,
-      '{country}': content.shipTo.country,
-      '{phoneNumber}': content.shipTo.phoneNumber,
-      '{email}': content.shipTo.email,
-      '{houseNumber}': content.shipTo.houseNumber,
+      '{companyName}': orderData.shipTo.companyName,
+      '{line1}': orderData.shipTo.line1,
+      '{line2}': orderData.shipTo.line2,
+      '{line3}': orderData.shipTo.line3,
+      '{lineName3}': orderData.shipTo.lineName3,
+      '{lineName4}': orderData.shipTo.lineName4,
+      '{city}': orderData.shipTo.city,
+      '{state}': orderData.shipTo.state,
+      '{zip}': orderData.shipTo.zip,
+      '{country}': orderData.shipTo.country,
+      '{phoneNumber}': orderData.shipTo.phoneNumber,
+      '{email}': orderData.shipTo.email,
+      '{houseNumber}': orderData.shipTo.houseNumber,
     });
-  }, [content, translations]);
+  }, [orderData, translations]);
 
   // Display a loader icon if the data is still loading
   if (isLoading) {

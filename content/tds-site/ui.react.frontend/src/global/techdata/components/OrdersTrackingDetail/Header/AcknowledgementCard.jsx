@@ -4,11 +4,11 @@ import { LoaderIcon } from '../../../../../fluentIcons/FluentIcons';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 /**
- * OrderAcknowledgementCard component displays order acknowledgement information.
- * @param {Object} content - Contains the order details.
+ * AcknowledgementCard component displays order acknowledgement information.
+ * @param {Object} orderData - Contains the order details.
  * @param {boolean} isLoading - Indicates if the data is still loading.
  */
-function OrderAcknowledgementCard({ content, isLoading }) {
+function AcknowledgementCard({ orderData, isLoading }) {
 
   // Retrieve translations from the store
   const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
@@ -21,21 +21,21 @@ function OrderAcknowledgementCard({ content, isLoading }) {
   const [docTypeText, setDocTypeText] = useState('');
   const [creator, setCreator] = useState('');
 
-  // Effect hook to update order acknowledgement information when content changes
+  // Effect hook to update order acknowledgement information when order data changes
   useEffect(() => {
-    console.log('OrderAcknowledgementCard::useEffect::content');
+    console.log('AcknowledgementCard::useEffect::orderData');
 
-    // Check if content is available
-    if (!content) return;
+    // Check if orderData is available
+    if (!orderData) return;
 
     // Update state variables with order acknowledgement information
-    setReseller(content.reseller);
-    setCreatedFormatted(content.createdFormatted);
-    setCustomerPO(content.customerPO);
-    setDocTypeText(content.docTypeText);
-    setCreator(content.creator);
+    setReseller(orderData.reseller);
+    setCreatedFormatted(orderData.createdFormatted);
+    setCustomerPO(orderData.customerPO);
+    setDocTypeText(orderData.docTypeText);
+    setCreator(orderData.creator);
 
-  }, [content]);
+  }, [orderData]);
 
   // Display a loader icon if the data is still loading
   if (isLoading) {
@@ -93,4 +93,4 @@ function OrderAcknowledgementCard({ content, isLoading }) {
   );
 }
 
-export default OrderAcknowledgementCard;
+export default AcknowledgementCard;

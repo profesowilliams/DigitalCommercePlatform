@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
-//import { useHistory } from 'react-router-dom';
 import { ReportIcon, ReportIconFilled } from '../../../../../fluentIcons/FluentIcons'
 import ReportDropdown from './ReportDropdown';
 import '../../../../../../src/styles/TopIconsBar.scss';
@@ -7,7 +6,8 @@ import { getReportAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analytic
 import Tooltip from '@mui/material/Tooltip';
 import Hover from '../../Hover/Hover';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
-import { getUrlParamsCaseInsensitive, removeDisallowedParams, removeSpecificParams } from '../../../../../utils/index';
+import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
+import { updateUrl } from './utils/utils';
 
 /**
  * Functional component representing the Report feature
@@ -17,7 +17,6 @@ import { getUrlParamsCaseInsensitive, removeDisallowedParams, removeSpecificPara
  * @param {React.Ref} ref - Reference object used to expose imperative methods
  */
 function Report({ onChange, analyticsLabel }, ref) {
-  //const history = useHistory();
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const wrapperRef = useRef(null);
@@ -99,41 +98,6 @@ function Report({ onChange, analyticsLabel }, ref) {
   };
 
   /**
-   * Updates the URL based on the selected report
-   * @param {Object} report - The selected report
-   */
-  const updateUrl = (report) => {
-    console.log('Report::updateUrl');
-
-    // Get the current URL
-    const currentUrl = new URL(window.location.href);
-
-    // Declare a variable to hold the updated URL
-    let url;
-
-    // If an report is selected
-    if (report) {
-      // List of allowed parameters
-      const allowedParameters = ['page', 'sortby', 'sortdirection', 'saleslogin'];
-
-      // Remove disallowed parameters from the current URL, keeping only specified ones
-      url = removeDisallowedParams(new URL(window.location.href), allowedParameters);
-      url.searchParams.set('report', report.key);
-    } else {
-      // List of parameters which should be removed
-      const parametersToRemove = ['report'];
-
-      // Remove specific parameters from the URL
-      url = removeSpecificParams(currentUrl, parametersToRemove);
-    }
-
-    // If the URL has changed, update the browser history
-    if (url.toString() !== currentUrl.toString())
-      window.history.pushState(null, '', url.toString());
-    // history.push(url.href.replace(url.origin, ''));
-  };
-
-  /**
    * Exposes methods to the parent component using a ref
    */
   useImperativeHandle(ref, () => ({
@@ -164,13 +128,29 @@ function Report({ onChange, analyticsLabel }, ref) {
     // This effect runs whenever the translations object changes
   }, [translations]);
 
+  /**
+   * Custom hook to handle clicks outside of a specified element.
+   * This hook will close a dropdown menu if a click occurs outside of the specified element.
+   * @param {Object} wrapperRef - The reference to the element to detect outside clicks for.
+   * @param {Function} setIsDropdownOpen - Function to update the dropdown open state.
+   */
   useEffect(() => {
+    /**
+     * Function to handle clicks outside of the specified element.
+     * @param {Event} event - The click event.
+     */
     function handleClickOutside(event) {
+      // Check if the click is outside the element referenced by wrapperRef
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        // Close the dropdown menu
         setIsDropdownOpen(false);
       }
     }
+
+    // Add event listener to detect clicks outside of the specified element
     document.addEventListener('mousedown', handleClickOutside);
+
+    // Cleanup event listener when the component unmounts or wrapperRef changes
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };

@@ -34,6 +34,7 @@ export const setSearchCriteriaDefaultDateRange = ({
   console.log('Utils::setSearchCriteriaDefaultDateRange');
   const { field, value } = searchCriteria?.current || {};
 
+  let isDefaultDateCriteria = false;
   let from;
   let to;
   let dateFromParam = 'createdFrom';
@@ -61,15 +62,21 @@ export const setSearchCriteriaDefaultDateRange = ({
     const defaultDate90 = setDefaultSearchDateRange(90);
     from = defaultDate90.from;
     to = defaultDate90.to;
+    isDefaultDateCriteria = true;
   } else if (!field && !reportValue) {
     const defaultDate30 = setDefaultSearchDateRange(30);
     from = defaultDate30.from;
     to = defaultDate30.to;
+    isDefaultDateCriteria = true;
   }
 
   if (from && to) {
     requestUrl.searchParams.set(dateFromParam, from);
     requestUrl.searchParams.set(dateToParam, to);
+  }
+
+  if (isDefaultDateCriteria) {
+    requestUrl.searchParams.set('ignoreInCache', 'CreatedDate');
   }
 };
 
