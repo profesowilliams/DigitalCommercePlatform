@@ -521,7 +521,6 @@ function RenewalsGrid(props) {
         copyFlyout={gridConfig.copyFlyout}
         newPurchaseFlyout={gridConfig.newPurchaseFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        resetGrid={resetGrid}
         userData={userData}
       />
       <RevisionFlyout

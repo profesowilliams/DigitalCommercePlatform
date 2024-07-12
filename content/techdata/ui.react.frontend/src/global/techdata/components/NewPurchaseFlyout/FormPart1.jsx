@@ -23,15 +23,12 @@ function FormPart1({
   copyFlyout,
   newPurchaseFlyout,
   newPurchaseFlyoutConfig,
-  resetGrid,
   formPart1States,
   internalUser,
 }) {
   const {
     enableNext,
     setEnableNext,
-    autocompleteTitle,
-    setAutocompleteTitle,
     quotes,
     setQuotes,
     accountNumber,
@@ -102,6 +99,8 @@ function FormPart1({
     setEndUserCountryError,
   } = formPart1States;
 
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   // Reseller change
   const handleResellerIdChange = async (event) => {
     setIsTyping(true);
@@ -109,9 +108,11 @@ function FormPart1({
     const resellerId = event.target.value;
     setAccountNumber(resellerId);
 
+    if (resellerId.length === 0 && internalUser) {
+      setErrorMessage(getDictionaryValueOrKey(newPurchaseFlyout?.required));
+    }
     if (resellerId.length >= 3) {
       setIsAutocompleteOpen(true);
-      setAutocompleteTitle(getDictionaryValueOrKey(newPurchaseFlyout?.search));
       const response = await resellerLookUp(
         encodeURIComponent(resellerId),
         copyFlyout?.accountLookUpEndpoint
@@ -124,9 +125,6 @@ function FormPart1({
       }
     } else {
       setIsAutocompleteOpen(false);
-      setAutocompleteTitle(
-        getDictionaryValueOrKey(newPurchaseFlyout?.resellerAccountNumber)
-      );
       setQuotes([]);
     }
   };
@@ -173,42 +171,7 @@ function FormPart1({
     findSelectedQuote(newInput);
     const selectedQuote = findSelectedQuote(newInput);
     setSelectedQuote(selectedQuote);
-    setAutocompleteTitle(
-      getDictionaryValueOrKey(newPurchaseFlyout?.resellerAccountNumber)
-    );
     setErrorMessage('');
-  };
-  const handleCopy = async () => {
-    if (!enableCopy) {
-      return;
-    }
-
-    setIsLoading(true);
-
-    const response = await copyQuote(
-      newPurchaseFlyoutConfig?.data?.source?.id,
-      selectedQuote.accountNumber,
-      accountNumber,
-      copyFlyout?.copyQuoteEndpoint
-    );
-    setIsLoading(false);
-    resetGrid();
-    closeFlyout();
-  };
-
-  const handleFocusIn = () => {
-    setAutocompleteTitle(
-      getDictionaryValueOrKey(newPurchaseFlyout?.resellerAccountNumber)
-    );
-  };
-
-  const handleFocusOut = (event) => {
-    const resellerId = event.target.value;
-    if (resellerId?.length === 0) {
-      setAutocompleteTitle(
-        getDictionaryValueOrKey(newPurchaseFlyout?.resellerAccountNumber)
-      );
-    }
   };
 
   const handleKeyDown = (event) => {
@@ -264,7 +227,6 @@ function FormPart1({
   const handleEmailChange = (event) => {
     const value = event.target.value;
     setEmail(value);
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (value.length === 0) {
       setEmailError(getDictionaryValueOrKey(newPurchaseFlyout?.required));
     } else if (!emailPattern.test(value)) {
@@ -329,12 +291,17 @@ function FormPart1({
   const handleEndUserEmailChange = (event) => {
     const value = event.target.value;
     setEndUserEmail(value);
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (value.length === 0) {
       setEndUserEmailError(
         getDictionaryValueOrKey(newPurchaseFlyout?.required)
       );
-    } else if (!emailPattern.test(value) && value.length > 240) {
+    } else if (
+      value.length > 0 &&
+      value.length <= 240 &&
+      emailPattern.test(value)
+    ) {
+      setEndUserEmailError('');
+    } else if (!emailPattern.test(value) || value.length > 240) {
       setEndUserEmailError(
         getDictionaryValueOrKey(newPurchaseFlyout?.invalidEmail)
       );
@@ -344,7 +311,6 @@ function FormPart1({
   };
 
   // End user Type
-
   const handleEndUserTypeChange = (event) => {
     const value = event.target.value;
     setEndUserType(value);
@@ -452,8 +418,9 @@ function FormPart1({
       <div className="cmp-flyout-newPurchase__form">
         <div className="cmp-flyout-newPurchase__form__container">
           <p>{getDictionaryValueOrKey(newPurchaseFlyout?.resellerContact)}</p>
-          {internalUser && (
-            <div>
+          {/* {internalUser && ( */}
+          {true && (
+            <div className="cmp-flyout-newPurchase__form__input-reseller-search">
               <Autocomplete
                 id="combo-box-demo"
                 open={isAutocompleteOpen}
@@ -488,15 +455,12 @@ function FormPart1({
                     <TextField
                       {...params}
                       error={!!errorMessage}
-                      label={autocompleteTitle}
+                      label={getDictionaryValueOrKey(
+                        newPurchaseFlyout?.resellerAccountNumber
+                      )}
                       value={accountNumber}
                       variant="standard"
                       onChange={handleResellerIdChange}
-                      onBlur={handleFocusOut}
-                      onFocus={handleFocusIn}
-                      placeholder={getDictionaryValueOrKey(
-                        newPurchaseFlyout?.resellerAccountNumber
-                      )}
                       InputProps={{
                         ...params.InputProps,
                         endAdornment: (
@@ -600,7 +564,7 @@ function FormPart1({
           variant="standard"
           value={endUserEmail}
           onChange={handleEndUserEmailChange}
-          error={!!endUserEmailError}
+          error={Boolean(endUserEmailError)}
           helperText={endUserEmailError}
           inputProps={{ maxLength: 240 }}
         />

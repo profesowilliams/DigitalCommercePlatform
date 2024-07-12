@@ -821,6 +821,54 @@ li[id^='combo-box-demo-option-']:active {
       place-self: center;
     }
 
+    &__input-reseller-search {
+      margin-bottom: 8px;
+      position: relative;
+
+      .MuiAutocomplete-root .MuiFormControl-root {
+        .MuiInput-root.MuiInputLabel-formControl,
+        .Mui-error,
+        .Mui-focused,
+        .MuiInputLabel-shrink {
+          color: $brand-text-gray;
+          font-family: $font-family-arial;
+          font-size: 1rem;
+          bottom: 35px;
+          top: unset;
+          .Mui-focused,
+          .MuiInputLabel-shrink {
+            color: map-get($color-palette, 'teal');
+          }
+        }
+        .MuiInput-root.MuiInput-root.MuiAutocomplete-inputRoot,
+        .MuiInput-root.MuiAutocomplete-inputRoot.Mui-focused {
+          font-family: $font-family-arial;
+          bottom: -8px;
+          padding-bottom: 2px;
+          line-height: 16px;
+        }
+      }
+
+      .MuiInput-root.MuiInput-root.MuiInputBase-adornedEnd {
+        padding-right: 0;
+        .cmp-autocomplete__button-section,
+        .MuiInput-root {
+          padding-right: 0 !important;
+          .cmp-button__autocomplete-search {
+            height: 24px;
+            padding-left: 0;
+            padding-right: 0;
+            min-width: 24px;
+          }
+        }
+      }
+      .MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-standard.MuiFormLabel-root.MuiFormLabel-colorPrimary,
+      .MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-standard.MuiFormLabel-root.MuiFormLabel-colorPrimary:focus {
+        font-size: 12px;
+        color: $brand-text-lightgray;
+      }
+    }
+
     &__input-container {
       width: 100%;
       margin-top: 16px !important;

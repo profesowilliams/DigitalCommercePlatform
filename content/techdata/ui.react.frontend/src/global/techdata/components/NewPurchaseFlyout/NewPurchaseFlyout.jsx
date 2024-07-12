@@ -10,7 +10,6 @@ function NewPurchaseFlyout({
   copyFlyout,
   newPurchaseFlyout,
   subheaderReference,
-  resetGrid,
   userData,
 }) {
   const effects = store((state) => state.effects);
@@ -36,9 +35,6 @@ function NewPurchaseFlyout({
   const [enableNext, setEnableNext] = useState(false);
 
   // Reseller state
-  const [autocompleteTitle, setAutocompleteTitle] = useState(
-    getDictionaryValueOrKey(newPurchaseFlyout?.resellerAccountNumber)
-  );
   const [quotes, setQuotes] = useState([]);
   const [accountNumber, setAccountNumber] = useState('');
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
@@ -105,8 +101,6 @@ function NewPurchaseFlyout({
   const formPart1States = {
     enableNext,
     setEnableNext,
-    autocompleteTitle,
-    setAutocompleteTitle,
     quotes,
     setQuotes,
     accountNumber,
@@ -255,6 +249,9 @@ function NewPurchaseFlyout({
       setEndUserAddress1('');
       setEndUserAddress1Error('');
 
+      setEndUserAddress2('');
+      setEndUserAddress2Error('');
+
       setEndUserCity('');
       setEndUserCityError('');
 
@@ -328,7 +325,6 @@ function NewPurchaseFlyout({
             copyFlyout={copyFlyout}
             newPurchaseFlyout={newPurchaseFlyout}
             newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}
-            resetGrid={resetGrid}
             formPart1States={formPart1States}
             internalUser={internalUser}
           />

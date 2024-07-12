@@ -34,9 +34,6 @@ function FormPart2({
   } = formPart1States;
 
   // Vendor state
-  const [autocompleteTitle, setAutocompleteTitle] = useState(
-    getDictionaryValueOrKey(newPurchaseFlyout?.searchVendorPartNo)
-  );
   const [quotes, setQuotes] = useState([]);
   const [vendorNumber, setVendorNumber] = useState('');
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
@@ -61,7 +58,6 @@ function FormPart2({
 
     if (resellerId.length >= 3) {
       setIsAutocompleteOpen(true);
-      setAutocompleteTitle(getDictionaryValueOrKey(newPurchaseFlyout?.search));
       const response = await resellerLookUp(
         encodeURIComponent(resellerId),
         copyFlyout?.accountLookUpEndpoint
@@ -74,9 +70,6 @@ function FormPart2({
       }
     } else {
       setIsAutocompleteOpen(false);
-      setAutocompleteTitle(
-        getDictionaryValueOrKey(newPurchaseFlyout?.searchVendorPartNo)
-      );
       setQuotes([]);
     }
   };
@@ -123,11 +116,10 @@ function FormPart2({
     findSelectedQuote(newInput);
     const selectedQuote = findSelectedQuote(newInput);
     setSelectedQuote(selectedQuote);
-    setAutocompleteTitle(
-      getDictionaryValueOrKey(newPurchaseFlyout?.searchVendorPartNo)
-    );
     setErrorMessage('');
   };
+
+  //TODO: Delete handle copy if not used after US 578976
   const handleCopy = async () => {
     if (!enableCopy) {
       return;
@@ -144,21 +136,6 @@ function FormPart2({
     setIsLoading(false);
     resetGrid();
     closeFlyout();
-  };
-
-  const handleFocusIn = () => {
-    setAutocompleteTitle(
-      getDictionaryValueOrKey(newPurchaseFlyout?.searchVendorPartNo)
-    );
-  };
-
-  const handleFocusOut = (event) => {
-    const resellerId = event.target.value;
-    if (resellerId?.length === 0) {
-      setAutocompleteTitle(
-        getDictionaryValueOrKey(newPurchaseFlyout?.searchVendorPartNo)
-      );
-    }
   };
 
   const handleKeyDown = (event) => {
@@ -273,15 +250,12 @@ function FormPart2({
                 <TextField
                   {...params}
                   error={!!errorMessage}
-                  label={autocompleteTitle}
+                  label={getDictionaryValueOrKey(
+                    newPurchaseFlyout?.searchVendorPartNo
+                  )}
                   value={vendorNumber}
                   variant="standard"
                   onChange={handleResellerIdChange}
-                  onBlur={handleFocusOut}
-                  onFocus={handleFocusIn}
-                  placeholder={getDictionaryValueOrKey(
-                    newPurchaseFlyout?.searchVendorPartNo
-                  )}
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: (
