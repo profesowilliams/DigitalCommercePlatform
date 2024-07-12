@@ -93,6 +93,52 @@
     align-items: center;
     height: 0;
 
+    // Check if the specific element with id exists
+    &:has(#action-renewals-new-purchase) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      #action-renewals-new-purchase {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        span {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          &::before,
+          &::after {
+            content: '';
+            position: absolute;
+            background-color: get-color(brand-white);
+          }
+          &::before {
+            width: 17.5px;
+            height: 2px;
+            left: -25.5px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+          &::after {
+            width: 2px;
+            height: 17.5px;
+            left: -17.5px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
+      }
+
+      .cmp-sub-header--sub-nav__title {
+        flex: 1;
+      }
+
+      > ol {
+        margin-right: auto;
+      }
+    }
+
     > ol {
       margin: 0;
       padding: 0;
