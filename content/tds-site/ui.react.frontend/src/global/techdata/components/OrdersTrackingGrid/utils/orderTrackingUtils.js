@@ -231,6 +231,15 @@ export async function fetchOrderLinesData(baseUrl, id) {
   }
 }
 
+export async function fetchGetUserAEM() {
+  try {
+    const result = await usGet(`/ui-account/v1/GetUser/AEM`);
+    return result;
+  } catch (error) {
+    console.error('🚀error on orders tracking details grid >>', error);
+  }
+}
+
 export function setPaginationData(response, responseContent, pageSize = 25) {
   const pageCount = Math.ceil(response?.totalItems / pageSize);
   return {

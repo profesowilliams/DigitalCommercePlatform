@@ -8619,3 +8619,124 @@ app.get("/ui-commerce/v3/cache/:q/order/:id", function (req, res) {
     return res.status(200).json(response);
   }, 100);
 });
+
+app.get("/ui-account/v1/GetUser/AEM", (req, res) => {
+  
+  res.json({
+    content: {
+      user: {
+        id: "516514",
+        firstName: "DAYNA",
+        lastName: "KARAPHILLIS",
+        name: "516514",
+        country: "",
+        email: "daniel.vogt@techdata.com",
+        phone: null,
+        customers: ["0038048612", "0009000325", "0009000325"],
+        roles: null,
+        isHouseAccount: true,
+        roleList: [
+          {
+            entitlement: "CanManageOwnProfile",
+            accountId: "",
+          },
+          {
+            entitlement: "CanAccessAccount",
+            accountId: "0038048612",
+          },
+          {
+            entitlement: "CanAccessDeveloperCenter",
+            accountId: "0038048612",
+          },
+          {
+            entitlement: "CanViewCreditStatement",
+            accountId: "0038048612",
+          },
+          {
+            entitlement: "CanDownloadPriceFiles",
+            accountId: "0038048612",
+          },
+          {
+            entitlement: "CanViewInvoices",
+            accountId: "0038048612",
+          },
+          {
+            entitlement: "CanPlaceOrder",
+            accountId: "0038048612",
+          },
+          {
+            entitlement: "AdminUser",
+            accountId: "0038048612",
+          },
+          {
+            entitlement: "CanViewOrders",
+            accountId: "0038048612",
+          },
+          {
+            entitlement: "OrderModification",
+            accountId: "0038048612",
+          },
+          {
+            entitlement: "AIO",
+            accountId: "0038048612",
+          },
+          {
+            entitlement: "hasDCPAccess",
+            accountId: "",
+          },
+          {
+            entitlement: "hasRenewalsAccess",
+            accountId: "",
+          },
+          {
+            entitlement: "CanAccessRenewals",
+            accountId: "",
+          },
+        ],
+        customersV2: [
+          {
+            number: "0038048612",
+            name: "SHI INTERNATIONAL CORP",
+            customerNumber: "0038048612",
+            customerName: "SHI INTERNATIONAL CORP",
+            salesOrg: "0101",
+            system: "2",
+            dcpAccess: true,
+            defaultCurrency: "GBP",
+          },
+          {
+            number: "0009000325",
+            name: "SHI INTERNATIONAL CORP.",
+            customerNumber: "0009000325",
+            customerName: "SHI INTERNATIONAL CORP.",
+            salesOrg: "1001",
+            system: "3",
+            dcpAccess: false,
+            defaultCurrency: "GBP",
+          },
+          {
+            number: "0009000325",
+            name: null,
+            customerNumber: "0009000325",
+            customerName: null,
+            salesOrg: null,
+            system: null,
+            dcpAccess: false,
+            defaultCurrency: "GBP",
+          },
+        ],
+        activeCustomer: {
+          number: "0038048612",
+          name: "SHI INTERNATIONAL CORP",
+          customerNumber: "0038048612",
+          customerName: "SHI INTERNATIONAL CORP",
+          salesOrg: "0101",
+          system: "2",
+          dcpAccess: true,
+          defaultCurrency: "CNY",
+        },
+      },
+    },
+    error: { code: 0, messages: [], isError: false },
+  });
+});
