@@ -265,7 +265,7 @@ function ProductReplacementFlyout({
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(labels?.replacementModifyOrder)}
       secondaryButton={null}
-      isTDSynnex={isTDSynnex}
+      isTDSynnex={true}
       onClickButton={null}
       bottomContent={null}
       buttonsSection={buttonsSection}

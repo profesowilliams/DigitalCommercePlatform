@@ -12,37 +12,28 @@ import UnitCostColumn from '../Columns/UnitCostColumn';
 import Toaster from '../../Widgets/Toaster';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import {
-  isLocalDevelopment,
-  mapServiceData,
-  addCurrencyToColumns,
-} from './utils/gridUtils';
-import { fetchData } from './utils/orderTrackingUtils';
+import { mapServiceData, } from './utils/gridUtils';
+import { fetchData } from './utils/fetchUtils';
 import useExtendGridOperations from '../../BaseGrid/Hooks/useExtendGridOperations';
 import { useStore } from '../../../../../utils/useStore';
 import { GreenInfoIcon } from '../../../../../fluentIcons/FluentIcons';
 import OrderStatusModal from '../../OrdersTrackingGrid/Modals/OrderStatusModal';
-import AccessPermissionsNeeded from '../../AccessPermissionsNeeded/AccessPermissionsNeeded';
-import TemporarilyUnavailable from '../../TemporarilyUnavailable/TemporarilyUnavailable';
-import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 
 function OrdersTrackingDetailGrid({
-  data,
+  content,
   gridProps,
   openFilePdf,
   gridRef,
   rowsToGrayOutTDNameRef,
-  componentProps,
+  isLoading
 }) {
   const [responseError, setResponseError] = useState(null);
-  const [response, setResponse] = useState(null);
+  //const [response, setResponse] = useState(null);
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
   const refreshOrderTrackingDetailApi = useStore(
     (state) => state.refreshOrderTrackingDetailApi
   );
-  const userData = useOrderTrackingStore((st) => st.userData);
-  const params = getUrlParamsCaseInsensitive();
-  const isUnavailable = params.has('unavailable') ? true : false;
+
   const resetCallback = useRef(null);
   const shouldGoToFirstPage = useRef(false);
   const isOnSearchAction = useRef(false);
@@ -50,6 +41,7 @@ function OrdersTrackingDetailGrid({
     useOrderTrackingStore,
     { resetCallback, shouldGoToFirstPage, isOnSearchAction }
   );
+
   const groupLinesFlag = useOrderTrackingStore(
     (state) => state.featureFlags.groupLines
   );
@@ -60,18 +52,14 @@ function OrdersTrackingDetailGrid({
     paginationStyle: 'none',
     suppressContextMenu: true,
     enableCellTextSelection: true,
+    suppressMultiSort: true,
     ensureDomOrder: true,
     domLayout: 'autoHeight',
-    itemsPerPage: 99999,
+    itemsPerPage: 99999
   };
   const gridApiRef = useRef();
-
-  const hasRights = (entitlement) =>
-    userData?.roleList?.some((role) => role.entitlement === entitlement);
-  const hasCanViewOrdersRights = hasRights('CanViewOrders');
-  const hasOrderTrackingRights = hasRights('OrderTracking');
-  const hasAccess =
-    hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
+  let id = useRef('');
+  const currency = useRef();
 
   const gridColumnWidths = Object.freeze({
     id: '95px',
@@ -98,18 +86,18 @@ function OrdersTrackingDetailGrid({
     gridApiRef.current = config;
   };
 
-  const loadingCellRenderer = () => {
-    const rowsToZero = response?.data?.content?.items?.map((item) => {
-      if (item?.status === 'Rejected' && item?.orderQuantity === 0) {
-        item.totalPrice = 0;
-        item.totalPriceFormatted = '0';
-        item.quantity = 0;
-        item.orderQuantity = 0;
-      }
-      return item;
-    });
-    gridRef.current?.api.setRowData(rowsToZero);
-  };
+  //const loadingCellRenderer = () => {
+  //  const rowsToZero = response?.data?.content?.items?.map((item) => {
+  //    if (item?.status === 'Rejected' && item?.orderQuantity === 0) {
+  //      item.totalPrice = 0;
+  //      item.totalPriceFormatted = '0';
+  //      item.quantity = 0;
+  //      item.orderQuantity = 0;
+  //    }
+  //    return item;
+  //  });
+  //  gridRef.current?.api.setRowData(rowsToZero);
+  //};
 
   const prepareGroupedItems = (content) => {
     let items = [];
@@ -119,9 +107,9 @@ function OrdersTrackingDetailGrid({
           ...item,
           ...(index === 0
             ? {
-                TDSynnexPO: group.tdSynnexPO,
-                manufacturer: group.manufacturer,
-              }
+              TDSynnexPO: group.tdSynnexPO,
+              manufacturer: group.manufacturer,
+            }
             : {}),
         });
       });
@@ -130,7 +118,12 @@ function OrdersTrackingDetailGrid({
   };
 
   const customRequestInterceptor = async () => {
-    const response = await fetchData(config);
+    console.log('OrdersTrackingDetailGrid::customRequestInterceptor');
+
+    if (!id?.current || isLoading)
+      return [];
+
+    const response = await fetchData(config, id.current);
     let mappedResponse;
     if ('groupedItems' in response.data.content && groupLinesFlagRef.current) {
       const groupedItemsResponse = mapServiceData({
@@ -145,17 +138,17 @@ function OrdersTrackingDetailGrid({
           },
         },
       });
-      setResponse(groupedItemsResponse);
+      //setResponse(groupedItemsResponse);
       mappedResponse = groupedItemsResponse;
     } else {
-      setResponse(response);
+      //setResponse(response);
       mappedResponse = mapServiceData(response);
     }
     setResponseError(false);
     return mappedResponse;
   };
 
-  const CustomStatusComponent = () => (
+  const customStatusComponent = () => (
     <div className="ag-cell-label-container">
       <span className="ag-header-cell-text">
         {getDictionaryValueOrKey(config?.itemsLabels?.shipDate)}
@@ -164,98 +157,107 @@ function OrdersTrackingDetailGrid({
     </div>
   );
 
-  const columnDefinitionsOverride = [
-    {
-      field: 'id',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineNo),
-      cellRenderer: ({ data }) => (
-        <LineNumberColumn line={data} labels={config?.itemsLabels} />
-      ),
-      width: gridColumnWidths.id,
-    },
-    {
-      field: 'description',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.descriptionPN),
-      cellRenderer: ({ data }) => (
-        <DescriptionColumn line={data} config={gridProps} />
-      ),
-      width: gridColumnWidths.description,
-    },
-    {
-      field: 'status',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineStatus),
-      cellRenderer: ({ data }) => (
-        <LineStatusColumn
-          line={data}
-          config={gridProps}
-          sortedLineDetails={sortedLineDetails}
-        />
-      ),
-      width: gridColumnWidths.status,
-    },
-    {
-      field: 'shipDate',
-      headerComponentFramework: CustomStatusComponent,
-      cellRenderer: ({ data }) => (
-        <ShipDateColumn
-          line={data}
-          config={gridProps}
-          sortedLineDetails={sortedLineDetails}
-          rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-        />
-      ),
-      width: gridColumnWidths.shipDate,
-    },
-    {
-      field: 'unitPriceFormatted',
-      headerName: getDictionaryValueOrKey(
-        config?.itemsLabels?.unitPrice
-      )?.replace('{currency-code}', data?.paymentDetails?.currency),
-      cellRenderer: ({ data }) => (
-        <UnitCostColumn line={data} sortedLineDetails={sortedLineDetails} />
-      ),
-      width: gridColumnWidths.unitPriceFormatted,
-    },
-    {
-      field: 'quantity',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.itemsQuantity),
-      cellRenderer: ({ data }) => (
-        <QuantityColumn
-          line={data}
-          sortedLineDetails={sortedLineDetails}
-          rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-        />
-      ),
-      width: gridColumnWidths.quantity,
-    },
-    {
-      field: 'totalPriceFormatted',
-      headerName: getDictionaryValueOrKey(
-        config?.itemsLabels?.lineTotalPrice
-      )?.replace('{currency-code}', data?.paymentDetails?.currency),
-      cellRenderer: ({ data }) => (
-        <TotalColumn
-          line={data}
-          sortedLineDetails={sortedLineDetails}
-          rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-        />
-      ),
-      width: gridColumnWidths.totalPriceFormatted,
-    },
-    {
-      field: 'actions',
-      headerName: '',
-      cellRenderer: ({ data }) => (
-        <ActionsColumn
-          line={data}
-          config={gridProps}
-          openFilePdf={openFilePdf}
-          sortedLineDetails={sortedLineDetails}
-        />
-      ),
-      width: gridColumnWidths.actions,
-    },
-  ];
+  const createColumnDefinitions = () => {
+    console.log('OrdersTrackingDetailGrid::createColumnDefinitions::' + currency?.current);
+
+    if (!currency?.current) {
+      return null;
+    }
+
+    return buildColumnDefinitions([
+      {
+        field: 'id',
+        headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineNo),
+        cellRenderer: ({ data }) => (
+          <LineNumberColumn line={data} labels={config?.itemsLabels} />
+        ),
+        width: gridColumnWidths.id,
+      },
+      {
+        field: 'description',
+        headerName: getDictionaryValueOrKey(config?.itemsLabels?.descriptionPN),
+        cellRenderer: ({ data }) => (
+          <DescriptionColumn line={data} config={gridProps} />
+        ),
+        width: gridColumnWidths.description,
+      },
+      {
+        field: 'status',
+        headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineStatus),
+        cellRenderer: ({ data }) => (
+          <LineStatusColumn
+            line={data}
+            config={gridProps}
+            sortedLineDetails={sortedLineDetails}
+          />
+        ),
+        width: gridColumnWidths.status,
+      },
+      {
+        field: 'shipDate',
+        headerComponentFramework: customStatusComponent,
+        cellRenderer: ({ data }) => (
+          <ShipDateColumn
+            line={data}
+            config={gridProps}
+            sortedLineDetails={sortedLineDetails}
+            rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+          />
+        ),
+        width: gridColumnWidths.shipDate,
+      },
+      {
+        field: 'unitPriceFormatted',
+        headerName: getDictionaryValueOrKey(config?.itemsLabels?.unitPrice)?.replace('{currency-code}', currency?.current),
+        cellRenderer: ({ data }) => (
+          <UnitCostColumn line={data} sortedLineDetails={sortedLineDetails} />
+        ),
+        width: gridColumnWidths.unitPriceFormatted,
+      },
+      {
+        field: 'quantity',
+        headerName: getDictionaryValueOrKey(config?.itemsLabels?.itemsQuantity),
+        cellRenderer: ({ data }) => (
+          <QuantityColumn
+            line={data}
+            sortedLineDetails={sortedLineDetails}
+            rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+          />
+        ),
+        width: gridColumnWidths.quantity,
+      },
+      {
+        field: 'totalPriceFormatted',
+        headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineTotalPrice)?.replace('{currency-code}', currency?.current),
+        cellRenderer: ({ data }) => (
+          <TotalColumn
+            line={data}
+            sortedLineDetails={sortedLineDetails}
+            rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+          />
+        ),
+        width: gridColumnWidths.totalPriceFormatted,
+      },
+      {
+        field: 'actions',
+        headerName: '',
+        cellRenderer: ({ data }) => (
+          <ActionsColumn
+            line={data}
+            config={gridProps}
+            openFilePdf={openFilePdf}
+            sortedLineDetails={sortedLineDetails}
+          />
+        ),
+        width: gridColumnWidths.actions,
+      },
+    ]);
+  }
+
+  const columnDefinition = useMemo(
+    () => createColumnDefinitions(),
+    [currency.current]
+  );
 
   const getRowClass = ({ node }) => {
     const data = node.group ? node.aggData : node.data;
@@ -263,6 +265,7 @@ function OrdersTrackingDetailGrid({
       return true;
     }
   };
+
   const getGroupHeaderClass = ({ node }) => {
     const data = node.group ? node.aggData : node.data;
     if (data?.manufacturer) {
@@ -275,11 +278,6 @@ function OrdersTrackingDetailGrid({
     'group-header-row': getGroupHeaderClass,
   };
 
-  const myColumnDefs = useMemo(
-    () => buildColumnDefinitions(columnDefinitionsOverride),
-    []
-  );
-
   const { closeAndCleanToaster } = useOrderTrackingStore((st) => st.effects);
 
   const onCloseToaster = () => {
@@ -287,66 +285,66 @@ function OrdersTrackingDetailGrid({
   };
 
   useEffect(() => {
+    console.log('OrdersTrackingDetailGrid::useEffect::lineDetails');
     onQueryChanged();
   }, [refreshOrderTrackingDetailApi?.lineDetails]);
 
   useEffect(() => {
+    console.log('OrdersTrackingDetailGrid::useEffect::content');
+    if (content) {
+      id.current = content.orderNumber;
+      currency.current = content.paymentDetails?.currency;
+      onQueryChanged();
+    }
+  }, [content]);
+
+  useEffect(() => {
+    console.log('OrdersTrackingDetailGrid::useEffect::groupLinesFlag');
     groupLinesFlagRef.current = groupLinesFlag;
   }, [groupLinesFlag]);
 
-  if (isUnavailable) {
-    return <TemporarilyUnavailable noAccessProps={noAccessProps} />;
-  }
+  useEffect(() => {
+    console.log('OrdersTrackingDetailGrid::useEffect::isLoading');
+    if (isLoading) {
+      gridRef?.current?.api.showLoadingOverlay();
+    }
+  }, [isLoading]);
 
-  return (
-    <>
-      {(userData?.activeCustomer || isLocalDevelopment) && (
-        <>
-          {hasAccess ? (
-              <div className="cmp-order-tracking-details-grid">
-                <Grid
-                  columnDefinition={addCurrencyToColumns(
-                    myColumnDefs,
-                    userData
-                  )}
-                  config={config}
-                  gridConfig={config}
-                  requestInterceptor={customRequestInterceptor}
-                  mapServiceData={mapServiceData}
-                  onAfterGridInit={_onAfterGridInit}
-                  loadingCellRenderer={loadingCellRenderer}
-                  rowClassRules={rowClassRules}
-                  gridRef={gridRef}
-                  responseError={responseError}
-                />
-                <Toaster
-                  classname="toaster-modal-otg"
-                  onClose={onCloseToaster}
-                  closeEnabled
-                  store={useOrderTrackingStore}
-                  message={{
-                    successSubmission: 'successSubmission',
-                    failedSubmission: 'failedSubmission',
-                  }}
-                />
-                <OrderStatusModal
-                  open={openStatusesModal}
-                  handleClose={() => {
-                    setOpenStatusesModal(false);
-                  }}
-                  labels={config?.statusesLabels}
-                />
-              </div>
-          ) : (
-            <>
-              <AccessPermissionsNeeded
-                noAccessProps={componentProps?.noAccessProps}
-              />
-            </>
-          )}
-        </>
-      )}
-    </>
+  return (<>
+    {columnDefinition &&
+      (<div className="cmp-order-tracking-details-grid">
+        <Grid
+          columnDefinition={columnDefinition}
+          config={config}
+          gridConfig={config}
+          requestInterceptor={customRequestInterceptor}
+          mapServiceData={mapServiceData}
+          onAfterGridInit={_onAfterGridInit}
+          //loadingCellRenderer={loadingCellRenderer}
+          rowClassRules={rowClassRules}
+          gridRef={gridRef}
+          responseError={responseError}
+        />
+        <Toaster
+          classname="toaster-modal-otg"
+          onClose={onCloseToaster}
+          closeEnabled
+          store={useOrderTrackingStore}
+          message={{
+            successSubmission: 'successSubmission',
+            failedSubmission: 'failedSubmission',
+          }}
+        />
+        <OrderStatusModal
+          open={openStatusesModal}
+          handleClose={() => {
+            setOpenStatusesModal(false);
+          }}
+          labels={config?.statusesLabels}
+        />
+      </div>)}
+  </>
   );
 }
+
 export default OrdersTrackingDetailGrid;

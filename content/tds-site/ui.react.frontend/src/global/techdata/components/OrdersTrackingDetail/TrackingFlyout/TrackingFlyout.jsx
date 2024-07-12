@@ -15,8 +15,7 @@ import {
 function TrackingFlyout({
   config,
   trackingFlyout = {},
-  subheaderReference,
-  isTDSynnex,
+  subheaderReference
 }) {
   const trackingFlyoutConfig = useOrderTrackingStore((st) => st.trackingFlyout);
   const trackAndTraceCounter = useOrderTrackingStore(
@@ -79,7 +78,7 @@ function TrackingFlyout({
       subheaderReference={subheaderReference}
       titleLabel={trackingFlyout.titleTracking || 'Track and Trace'}
       buttonLabel={trackingFlyout.cancelButtonTracking || 'Cancel'}
-      isTDSynnex={isTDSynnex}
+      isTDSynnex={true}
       onClickButton={closeFlyout}
     >
       <section className="cmp-flyout-with-links__content">

@@ -3,7 +3,6 @@ import TrackingFlyout from './TrackingFlyout/TrackingFlyout';
 import ReturnFlyout from './ReturnFlyout/ReturnFlyout';
 import DNotesFlyout from '../OrdersTrackingCommon/Flyouts/DNotes/DNotesFlyout';
 import InvoicesFlyout from '../OrdersTrackingCommon/Flyouts/Invoices/InvoicesFlyout';
-import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
 import OrderModificationFlyout from './ModificationFlyout/OrderModificationFlyout';
 import ProductReplacementFlyout from '../ReplacementFlyout/ProductReplacementFlyout';
 
@@ -16,27 +15,24 @@ const Flyouts = ({
   rowsToGrayOutTDNameRef,
   addNewItem,
   setOrderModifyHeaderInfo,
+  isLoading
 }) => {
-  const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   return (
-    <>
+    !isLoading && content && (<>
       <TrackingFlyout
         config={config}
         trackingFlyout={config?.trackingFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        isTDSynnex={isTDSynnex}
       />
       <ReturnFlyout
         returnFlyout={config?.returnFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        isTDSynnex={isTDSynnex}
       />
       <DNotesFlyout
         gridConfig={config}
         dNotesFlyout={config?.dNotesFlyout}
         dNoteColumnList={config?.dNoteColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        isTDSynnex={isTDSynnex}
         downloadAllFile={(flyoutType, orderId, selectedId) =>
           downloadAllFile(flyoutType, orderId, selectedId)
         }
@@ -49,7 +45,6 @@ const Flyouts = ({
         invoicesFlyout={config?.invoicesFlyout}
         invoicesColumnList={config?.invoicesColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        isTDSynnex={isTDSynnex}
         downloadAllFile={(flyoutType, orderId, selectedId) =>
           downloadAllFile(flyoutType, orderId, selectedId)
         }
@@ -65,7 +60,6 @@ const Flyouts = ({
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         content={content}
         setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
-        isTDSynnex={isTDSynnex}
       />
       <ProductReplacementFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}
@@ -78,9 +72,9 @@ const Flyouts = ({
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         addNewItem={addNewItem}
         setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
-        isTDSynnex={isTDSynnex}
       />
-    </>
+    </>)
   );
 };
+
 export default Flyouts;

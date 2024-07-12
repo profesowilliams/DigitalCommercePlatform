@@ -4,6 +4,15 @@
  * @class cmp-order-tracking-grid-details
  * @classdesc Styles for the order tracking grid details component.
  */
+
+.ag-overlay .ag-custom-loading-cell {
+  display: block!important;
+}
+
+.ag-custom-loading-cell {
+  display: none;
+}
+
 %clickable-action {
   display: flex;
   gap: rem(8px);

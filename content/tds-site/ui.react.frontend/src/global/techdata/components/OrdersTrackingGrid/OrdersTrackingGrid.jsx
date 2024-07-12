@@ -57,6 +57,7 @@ function OrdersTrackingGrid(props) {
   console.log('OrdersTrackingGrid::init');
 
   const params = getUrlParamsCaseInsensitive();
+  const isUnavailable = params.has('unavailable');
 
   const searchCriteria = useRef({ field: '', value: '' });
   const paginationAndSorting = useRef({
@@ -87,7 +88,10 @@ function OrdersTrackingGrid(props) {
     { resetCallback, shouldGoToFirstPage, isOnSearchAction, isOnPageChange }
   );
   const userData = useOrderTrackingStore((st) => st.userData);
-  const isUnavailable = params.has('unavailable') ? true : false;
+  const hasCanViewOrdersRights = hasRights('CanViewOrders');
+  const hasOrderTrackingRights = hasRights('OrderTracking');
+  const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
+
   const { isGTMReady } = useGTMStatus();
 
   const [paginationData, setPaginationData] = useState({
@@ -122,6 +126,7 @@ function OrdersTrackingGrid(props) {
     errorGettingDataMessage: 'Internal server error please refresh the page',
     suppressContextMenu: true,
     enableCellTextSelection: true,
+    suppressMultiSort: true,
     ensureDomOrder: true,
   };
 
@@ -507,10 +512,6 @@ function OrdersTrackingGrid(props) {
     });
   }, [isGTMReady]);
 
-  const hasCanViewOrdersRights = hasRights('CanViewOrders');
-  const hasOrderTrackingRights = hasRights('OrderTracking');
-  const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
-
   useEffect(() => {
     if (sendAnalyticsDataHome && reloadAddedToGTM) {
       if (hasAccess) {
@@ -561,7 +562,6 @@ function OrdersTrackingGrid(props) {
             userData?.isInternalUser
           )}
           config={gridConfig}
-          suppressMultiSort={true}
           gridConfig={gridConfig}
           omitCreatedQuery={true}
           requestInterceptor={customRequestInterceptor}

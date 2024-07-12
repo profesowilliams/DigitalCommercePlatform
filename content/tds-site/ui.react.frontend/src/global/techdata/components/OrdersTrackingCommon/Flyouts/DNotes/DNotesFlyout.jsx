@@ -10,7 +10,6 @@ function DNotesFlyout({
   gridConfig,
   dNoteColumnList: columnList,
   subheaderReference,
-  isTDSynnex,
   downloadAllFile,
   openFilePdf,
 }) {
@@ -103,7 +102,7 @@ function DNotesFlyout({
       disabledButton={selected.length === 0}
       selected={selected}
       secondaryButton={SecondaryButton}
-      isTDSynnex={isTDSynnex}
+      isTDSynnex={true}
       onClickButton={handleDownload}
     >
       <section className="cmp-flyout__content">

@@ -63,6 +63,8 @@
     }
   }
   .header-container {
+    min-height: 100px;
+
     .navigation-container {
       display: flex;
       justify-content: space-between;
@@ -71,6 +73,7 @@
       border-bottom: 1px solid $brand-cool-gray-1;
       margin-bottom: 17px;
       color: $brand-green;
+      min-height: 58px;
 
       &--right {
         .next {
@@ -102,6 +105,11 @@
       }
     }
   }
+
+  .info-container{
+    min-height: 264px;
+  }
+
   .title-container {
     display: flex;
     justify-content: space-between;
@@ -240,40 +248,50 @@
     font-family: $font-family-arial;
     color: $brand-black;
   }
+
   margin: 0 2rem;
+
   .box-container {
+    min-height: 128px;
     display: flex;
     justify-content: space-between;
     align-items: start;
     padding: 16px 20px;
     background-color: $td-neutral-gray;
     height: auto;
+
     &__leftPart {
       display: flex;
       flex-direction: column;
       max-width: 35rem;
       font-size: 14px;
+
       &-line1 {
         line-height: 24px;
+
         & a {
           color: $brand-green;
         }
       }
+
       &-line2 {
         font-weight: 700;
         line-height: 24px;
       }
     }
+
     &__rightPart {
       display: flex;
       justify-content: end;
       align-items: center;
       margin-left: 100px;
+
       &-subtotalLabel {
         text-align: end;
         font-weight: 700;
         font-size: 20px;
       }
+
       &-subtotalValue {
         text-align: end;
         margin-left: 35px;

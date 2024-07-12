@@ -1,20 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { getOrderDetailsAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import { LoaderIcon } from '../../../../../fluentIcons/FluentIcons';
 
-const OrderTrackingDetailTitle = ({ content, labels }) => {
-  const { statusText, orderNumber, shipComplete } = content;
+const OrderTrackingDetailTitle = ({ content, labels, isLoading }) => {
+
+  const [statusText, setStatusText] = useState('');
+  const [orderNumber, setOrderNumber] = useState('');
+  const [completeDeliveryOnlyAvailable, setCompleteDeliveryOnlyAvailable] = useState(false);
+
   const { orderNo, completeDeliveryOnly } = labels;
-  const completeDeliveryOnlyAvailable = shipComplete === true;
 
   useEffect(() => {
-    pushDataLayerGoogle(
-      getOrderDetailsAnalyticsGoogle(
-        content?.orderNumber,
-        content?.created
-      )
-    );
-  }, []);
+    console.log('OrderTrackingDetailTitle::useEffect::content');
+
+    if (!content) return;
+
+    setStatusText(content.statusText);
+    setOrderNumber(content.orderNumber);
+    setCompleteDeliveryOnlyAvailable(content.shipComplete === true);
+  }, [content]);
+
+  if (isLoading) {
+    return (<div className="quote-preview-title"><LoaderIcon /></div>);
+  }
 
   return (
     <div className="quote-preview-title">
@@ -34,4 +42,5 @@ const OrderTrackingDetailTitle = ({ content, labels }) => {
     </div>
   );
 };
+
 export default OrderTrackingDetailTitle;

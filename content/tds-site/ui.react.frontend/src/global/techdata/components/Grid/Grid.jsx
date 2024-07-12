@@ -16,6 +16,7 @@ import {
 import { isObject } from '../../../../utils';
 import useAuth from '../../hooks/useAuth';
 import { endpoints } from "../OrdersTrackingGrid/utils/orderTrackingUtils";
+import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
 
 function Grid(props) {
   let {
@@ -155,8 +156,8 @@ function Grid(props) {
         className="ag-custom-loading-cell"
         style={{ paddingLeft: '10px', paddingTop: '50px', lineHeight: '25px' }}
       >
-        <i className="fas fa-spinner fa-pulse"></i>{' '}
-        <span> {props.loadingMessage}</span>
+        <LoaderIcon />{' '}
+        <span>{props.loadingMessage}</span>
       </div>
     );
   };

@@ -4,7 +4,10 @@ import FlyoutTableWithRedirectLinks from '../FlyoutTableWithRedirectLinks/Flyout
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
-function ReturnFlyout({ returnFlyout = {}, subheaderReference, isTDSynnex }) {
+function ReturnFlyout({
+  returnFlyout = {},
+  subheaderReference
+}) {
   const returnFlyoutConfig = useOrderTrackingStore((st) => st.returnFlyout);
   const effects = useOrderTrackingStore((st) => st.effects);
   const data = returnFlyoutConfig?.line?.invoices;
@@ -31,7 +34,7 @@ function ReturnFlyout({ returnFlyout = {}, subheaderReference, isTDSynnex }) {
       subheaderReference={subheaderReference}
       titleLabel={returnFlyout.titleReturn || 'Return'}
       buttonLabel={returnFlyout.cancelButtonReturn || 'Cancel'}
-      isTDSynnex={isTDSynnex}
+      isTDSynnex={true}
       onClickButton={closeFlyout}
     >
       <section className="cmp-flyout-with-links__content">

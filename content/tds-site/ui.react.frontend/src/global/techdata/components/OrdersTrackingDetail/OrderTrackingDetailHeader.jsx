@@ -15,8 +15,9 @@ import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAle
 import XMLMessageModal from '../OrdersTrackingGrid/Modals/XMLMessageModal';
 import MigrationInfoBox from '../MigrationInfoBox/MigrationInfoBox';
 import { ArrowLeftIcon } from '../../../../fluentIcons/FluentIcons';
-import { handleDownloadExcelExport } from './utils/orderTrackingExportUtils';
-import { fetchOrderDetailsData } from './OrdersTrackingDetailGrid/utils/orderTrackingUtils';
+import { handleDownloadExcelExport } from './utils/exportUtils';
+import { fetchCriteriaData, fetchNavigationData, fetchFiltersRefinements } from './utils/fetchUtils';
+import { renderBackButton, createBackUrl } from './utils/utils';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -25,14 +26,29 @@ const OrderTrackingDetailHeader = ({
   hasOrderModificationRights,
   openFilePdf,
   componentProps,
-  userData,
   setOrderModifyHeaderInfo,
-  onProductChange
+  onProductChange,
+  isLoading
 }) => {
   const params = getUrlParamsCaseInsensitive();
   const saleslogin = params.get('saleslogin');
   const queryCacheKeyParam = params.get('q');
 
+  const userData = useOrderTrackingStore((state) => state.userData);
+
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const detailsTranslations = uiTranslations?.['OrderTracking.Details'];
+  const exportTranslations = uiTranslations?.['OrderTracking.Details.Export'];
+
+  const labels = config?.actionLabels;
+
+  const effects = useOrderTrackingStore((state) => state.effects);
+  const orderModificationFlag = useOrderTrackingStore(
+    (state) => state.featureFlags.orderModification
+  );
+  const { setCustomState, setFeatureFlags } = effects;
+
+  const [backButton, setBackButton] = useState(null);
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
@@ -41,18 +57,14 @@ const OrderTrackingDetailHeader = ({
   const [previousOrder, setPreviousOrder] = useState(null);
   const [nextOrder, setNextOrder] = useState(null);
   const [backUrl, setBackUrl] = useState(null);
-  const [backButton, setBackButton] = useState(null);
   const [currency, setCurrency] = useState(null);
-  const effects = useOrderTrackingStore((state) => state.effects);
-  const orderModificationFlag = useOrderTrackingStore(
-    (state) => state.featureFlags.orderModification
-  );
-  const { setCustomState, setFeatureFlags } = effects;
-  const orderEditable = content?.orderEditable === true;
-  const infoBoxEnable = content?.sapOrderMigration?.referenceType?.length > 0;
-  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
-  const detailsTranslations = uiTranslations?.['OrderTracking.Details'];
-  const exportTranslations = uiTranslations?.['OrderTracking.MainGrid.Export'];
+  const [orderEditable, setOrderEditable] = useState(false);
+  const [infoBoxEnable, setInfoBoxEnable] = useState(false);
+  const [isDeliveryNoteDownloadable, setIsDeliveryNoteDownloadable] = useState(false);
+  const [isInvoiceDownloadable, setIsInvoiceDownloadable] = useState(false);
+  const [menuActionsItems, setMenuActionsItems] = useState([]);
+  const [poNumber, setPoNumber] = useState('');
+  const [id, setId] = useState('');
 
   const handleActionMouseOver = () => {
     setActionsDropdownVisible(true);
@@ -74,35 +86,6 @@ const OrderTrackingDetailHeader = ({
         },
       });
   };
-
-  const labels = config?.actionLabels;
-
-  const firstDeliveryNote = content?.deliveryNotes
-    ? content?.deliveryNotes[0]
-    : [];
-  const isDeliveryNoteDownloadable = firstDeliveryNote?.canDownloadDocument;
-  const firstInvoice = content?.invoices ? content.invoices[0] : [];
-  const isInvoiceDownloadable = firstInvoice?.canDownloadDocument;
-
-  const areDeliveryNotesAvailable =
-    content?.deliveryNotes?.length > 1 ||
-    (content?.deliveryNotes?.length === 1 && isDeliveryNoteDownloadable);
-  const areInvoicesAvailable =
-    content?.invoices?.length > 1 ||
-    (content?.invoices?.length === 1 && isInvoiceDownloadable);
-  const isReleaseTheOrderAvailable =
-    hasOrderModificationRights &&
-    content.shipComplete === true &&
-    content.status !== 'Completed' &&
-    content.orderEditable;
-  const areSerialNumbersAvailable = content.serialsAny === true;
-  const areXMLMessageAvailable =
-    content?.xmlAvailable === true && userData?.isInternalUser;
-  const isModifiable = hasOrderModificationRights && orderEditable;
-  const id = content.orderNumber;
-  const poNumber = content?.customerPO;
-  const hasMultipleDNotes = content?.deliveryNotes?.length > 1;
-  const hasMultipleInvoices = content?.invoices?.length > 1;
 
   const handleDownloadDNote = () => {
     if (isDeliveryNoteDownloadable) {
@@ -161,115 +144,6 @@ const OrderTrackingDetailHeader = ({
       });
   };
 
-  const menuActionsItems = [
-    {
-      condition: areDeliveryNotesAvailable,
-      label: labels?.viewDNotes,
-      onClick: hasMultipleDNotes ? triggerDNotesFlyout : handleDownloadDNote,
-    },
-    {
-      condition: hasAIORights && areInvoicesAvailable,
-      label: labels?.viewInvoices,
-      onClick: hasMultipleInvoices
-        ? triggerInvoicesFlyout
-        : handleDownloadInvoice,
-    },
-    ...(orderModificationFlag
-      ? [
-        {
-          condition: isReleaseTheOrderAvailable,
-          label: labels?.releaseTheOrder,
-          onClick: () => setReleaseOrderShow(true),
-        },
-        {
-          condition: isModifiable,
-          label: labels?.actionModifyOrder,
-          onClick: handleOrderModification,
-        },
-      ]
-      : []),
-    {
-      condition: areSerialNumbersAvailable,
-      label: labels?.exportSerialNumbers,
-      onClick: triggerExport,
-    },
-  ];
-
-  const XMLelement = {
-    condition: true,
-    label: labels?.xmlMessageLabel,
-    onClick: triggerXMLMessage,
-  };
-
-  areXMLMessageAvailable && menuActionsItems.push(XMLelement);
-
-  const createBackUrl = (data) => {
-    console.log('OrderTrackingDetailHeader::createBackUrl');
-
-    const url = new URL(location.href.substring(0, location.href.lastIndexOf('/')) + '.html');
-    if (saleslogin) url.searchParams.set('saleslogin', saleslogin);
-
-    if (data?.criteria) {
-      url.searchParams.set('sortby', data.criteria.sortBy.toLowerCase());
-      url.searchParams.set('sortdirection', data.criteria.sortAscending ? 'asc' : 'desc');
-      url.searchParams.set('page', data.criteria.pageNumber);
-
-      if (data.criteria?.createdFrom && data.criteria?.createdTo) {
-        url.searchParams.set('datetype', 'orderDate');
-        url.searchParams.set('datefrom', data.criteria?.createdFrom);
-        url.searchParams.set('dateto', data.criteria?.createdTo);
-      }
-
-      if (data.criteria?.shippedDateFrom && data.criteria?.shippedDateTo) {
-        url.searchParams.set('datetype', 'shipDate');
-        url.searchParams.set('datefrom', data.criteria?.shippedDateFrom);
-        url.searchParams.set('dateto', data.criteria?.shippedDateTo);
-      }
-
-      if (data.criteria?.invoiceDateFrom && data.criteria?.invoiceDateTo) {
-        url.searchParams.set('datetype', 'invoiceDate');
-        url.searchParams.set('datefrom', data.criteria?.invoiceDateFrom);
-        url.searchParams.set('dateto', data.criteria?.invoiceDateTo);
-      }
-
-      if (data.criteria?.etaDateFrom && data.criteria?.etaDateTo) {
-        url.searchParams.set('datetype', 'etaDate');
-        url.searchParams.set('datefrom', data.criteria?.etaDateFrom);
-        url.searchParams.set('dateto', data.criteria?.etaDateTo);
-      }
-
-      if (data.criteria?.type) {
-        data.criteria.type.forEach(type => {
-          url.searchParams.append('type', type);
-        });
-      }
-
-      if (data.criteria?.status) {
-        data.criteria.status.forEach(status => {
-          url.searchParams.append('status', status);
-        });
-      }
-
-      if (data.criteria?.freetextSearch) {
-        url.searchParams.append('value', data.criteria.freetextSearch);
-      }
-
-      if (data.criteria?.freetextSearchKey) {
-        url.searchParams.append('field', data.criteria.freetextSearchKey);
-      }
-
-      if (data.criteria?.gtmfield) {
-        url.searchParams.append('gtmfield', data.criteria.gtmfield);
-      }
-
-      if (data.criteria?.reportName) {
-        url.searchParams.append('report', data.criteria.reportName);
-      }
-    }
-
-    return url.toString();
-  };
-
   const handleReleaseOrder = async () => {
     setReleaseOrderShow(false);
     const params = {
@@ -298,49 +172,6 @@ const OrderTrackingDetailHeader = ({
       });
   };
 
-  const fetchFiltersRefinements = async () => {
-    const results = await usGet(
-      `${componentProps.uiCommerceServiceDomain}/v3/refinements`
-    );
-    return results.data.content;
-  };
-
-  const fetchNavigationData = async () => {
-    try {
-      if (!queryCacheKeyParam || !id) return null;
-      const results = await usGet(
-        `${componentProps.uiCommerceServiceDomain}/v3/cache/${queryCacheKeyParam}/order/${id}`
-      );
-      return results.data.content;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  };
-
-  const fetchCriteriaData = async () => {
-    try {
-      if (!queryCacheKeyParam) return null;
-      const results = await usGet(
-        `${componentProps.uiCommerceServiceDomain}/v3/cache/${queryCacheKeyParam}/criteria`
-      );
-      return results.data.content;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  };
-
-  const renderBackButton = (criteria) => {
-    const isSearchActive = criteria?.freetextSearch || criteria?.freetextSearchKey;
-    const areFiltersActive = criteria?.type || criteria?.status;
-    const areReportsActive = criteria?.reportName;
-
-    return isSearchActive || areFiltersActive || areReportsActive
-      ? detailsTranslations?.Button_BackToSearchResults || 'Search Results'
-      : detailsTranslations?.Button_BackToAll || 'All orders';
-  };
-
   const handleClick = (e, id) => {
     console.log('OrderTrackingDetailHeader::handleClick');
     e.preventDefault();
@@ -351,20 +182,20 @@ const OrderTrackingDetailHeader = ({
     return (
       <div className="navigation-container--right">
         {previousOrder && (
-          <a 
+          <a
             href={window.location.href.replace(id, previousOrder)}
             className="tdr-link previous underline-none"
-            onClick={(e) => handleClick(e, previousOrder)} 
+            onClick={(e) => handleClick(e, previousOrder)}
           >
             <i className="fas fa-chevron-left"></i>
             {detailsTranslations?.Button_Prev || 'Previous order'}
           </a>
         )}
         {nextOrder && (
-          <a 
+          <a
             href={window.location.href.replace(id, nextOrder)}
             className="tdr-link next underline-none"
-            onClick={(e) => handleClick(e, nextOrder)} 
+            onClick={(e) => handleClick(e, nextOrder)}
           >
             {detailsTranslations?.Button_Next || 'Next order'}
             <i className="fas fa-chevron-right"></i>
@@ -375,93 +206,184 @@ const OrderTrackingDetailHeader = ({
   };
 
   useEffect(async () => {
-    const refinements = await fetchFiltersRefinements();
+    console.log('OrderTrackingDetailHeader::useEffect');
+
+    const refinements = await fetchFiltersRefinements(config);
     setFeatureFlags(refinements?.featureFlags);
-
-    const response = await fetchOrderDetailsData(config);
-    setCurrency(response?.data?.content?.paymentDetails?.currency);
-    const navigationData = queryCacheKeyParam && (await fetchNavigationData());
-    if (navigationData) {
-      setPreviousOrder(navigationData.prevOrder || null);
-      setNextOrder(navigationData.nextOrder || null);
-    }
-
-    const criteriaData = queryCacheKeyParam && (await fetchCriteriaData());
-    setBackUrl(createBackUrl(criteriaData));
-    setBackButton(renderBackButton(criteriaData));
   }, []);
 
+  useEffect(async () => {
+    console.log('OrderTrackingDetailHeader::useEffect::content');
+
+    if (!content) return;
+
+    setOrderEditable(content.orderEditable === true);
+    setInfoBoxEnable(content.sapOrderMigration?.referenceType?.length > 0);
+    setPoNumber(content.customerPO);
+    setId(content.orderNumber);
+
+    const firstDeliveryNote = content.deliveryNotes ? content.deliveryNotes[0] : []
+    setIsDeliveryNoteDownloadable(firstDeliveryNote?.canDownloadDocument);
+
+    const firstInvoice = content.invoices ? content.invoices[0] : [];
+    setIsInvoiceDownloadable(firstInvoice?.canDownloadDocument);
+
+    console.log('OrderTrackingDetailHeader::useEffect::content::currency[' + content?.paymentDetails?.currency + ']');
+    setCurrency(content?.paymentDetails?.currency);
+
+    const navigationData = queryCacheKeyParam && (await fetchNavigationData(config, queryCacheKeyParam, content.orderNumber));
+    setPreviousOrder(navigationData?.prevOrder);
+    setNextOrder(navigationData?.nextOrder);
+
+    const criteriaData = queryCacheKeyParam && (await fetchCriteriaData(config, queryCacheKeyParam, content.orderNumber));
+    setBackUrl(createBackUrl(saleslogin, criteriaData));
+    setBackButton(renderBackButton(detailsTranslations, criteriaData));
+
+    const areDeliveryNotesAvailable = content.deliveryNotes?.length > 1 || (content.deliveryNotes?.length === 1 && firstDeliveryNote?.canDownloadDocument);
+    const areInvoicesAvailable = content.invoices?.length > 1 || (content.invoices?.length === 1 && firstInvoice?.canDownloadDocument);
+    const isReleaseTheOrderAvailable = hasOrderModificationRights && content.shipComplete === true && content.status !== 'Completed' && content.orderEditable;
+    const areSerialNumbersAvailable = content.serialsAny === true;
+    const areXMLMessageAvailable = content.xmlAvailable === true && userData?.isInternalUser;
+    const isModifiable = hasOrderModificationRights && orderEditable;
+    const hasMultipleDNotes = content?.deliveryNotes?.length > 1;
+    const hasMultipleInvoices = content?.invoices?.length > 1;
+
+    console.log('OrderTrackingDetailHeader::useEffect::content::areDeliveryNotesAvailable[' + areDeliveryNotesAvailable + ']');
+    console.log('OrderTrackingDetailHeader::useEffect::content::areInvoicesAvailable[' + areInvoicesAvailable + ']');
+    console.log('OrderTrackingDetailHeader::useEffect::content::isReleaseTheOrderAvailable[' + isReleaseTheOrderAvailable + ']');
+    console.log('OrderTrackingDetailHeader::useEffect::content::areSerialNumbersAvailable[' + areSerialNumbersAvailable + ']');
+    console.log('OrderTrackingDetailHeader::useEffect::content::areXMLMessageAvailable[' + areXMLMessageAvailable + ']');
+    console.log('OrderTrackingDetailHeader::useEffect::content::isModifiable[' + isModifiable + ']');
+    console.log('OrderTrackingDetailHeader::useEffect::content::hasMultipleDNotes[' + hasMultipleDNotes + ']');
+    console.log('OrderTrackingDetailHeader::useEffect::content::hasMultipleInvoices[' + hasMultipleInvoices + ']');
+
+    const actionsItems = [
+      {
+        condition: areDeliveryNotesAvailable,
+        label: labels?.viewDNotes,
+        onClick: hasMultipleDNotes ? triggerDNotesFlyout : handleDownloadDNote,
+      },
+      {
+        condition: hasAIORights && areInvoicesAvailable,
+        label: labels?.viewInvoices,
+        onClick: hasMultipleInvoices
+          ? triggerInvoicesFlyout
+          : handleDownloadInvoice,
+      },
+      ...(orderModificationFlag
+        ? [
+          {
+            condition: isReleaseTheOrderAvailable,
+            label: labels?.releaseTheOrder,
+            onClick: () => setReleaseOrderShow(true),
+          },
+          {
+            condition: isModifiable,
+            label: labels?.actionModifyOrder,
+            onClick: handleOrderModification,
+          },
+        ]
+        : []),
+      {
+        condition: areSerialNumbersAvailable,
+        label: labels?.exportSerialNumbers,
+        onClick: triggerExport,
+      },
+    ];
+
+    const XMLelement = {
+      condition: true,
+      label: labels?.xmlMessageLabel,
+      onClick: triggerXMLMessage,
+    };
+
+    areXMLMessageAvailable && actionsItems.push(XMLelement);
+
+    setMenuActionsItems(actionsItems);
+
+  }, [content]);
+
   return (
-    currency && (
-      <div className="cmp-orders-qp__config-grid">
-        <div className="header-container">
-          <div className="navigation-container">
-            {backUrl && (<Link
-              variant="back-to-orders"
-              href={backUrl}
-              underline="underline-none"
-            >
-              <ArrowLeftIcon className="arrow-left" />
-              {backButton}
-            </Link>)}
-            {renderRightSideOfNavigation()}
-          </div>
-          <div className="title-container">
-            <OrderTrackingDetailTitle
-              content={content}
-              labels={config?.labels}
-            />
-            <div
-              className="actions-container"
-              onMouseOver={handleActionMouseOver}
-              onMouseLeave={handleActionMouseLeave}
-            >
-              <span className="quote-actions">
-                {getDictionaryValueOrKey(config.labels?.actions)}
-              </span>
-              {actionsDropdownVisible && (
-                <div className="actions-dropdown">
-                  <MenuActions items={menuActionsItems} />
-                </div>
-              )}
-            </div>
-          </div>
+    <div className="cmp-orders-qp__config-grid">
+      <div className="header-container">
+        <div className="navigation-container">
+          {backUrl && (<Link
+            variant="back-to-orders"
+            href={backUrl}
+            underline="underline-none"
+          >
+            <ArrowLeftIcon className="arrow-left" />
+            {backButton}
+          </Link>)}
+          {!isLoading && renderRightSideOfNavigation()}
         </div>
-        {infoBoxEnable && (
-          <MigrationInfoBox
-            config={config?.labels}
-            id={content?.sapOrderMigration?.id}
-            referenceType={content?.sapOrderMigration?.referenceType}
+        <div className="title-container">
+          <OrderTrackingDetailTitle
+            content={content}
+            labels={config?.labels}
+            isLoading={isLoading}
           />
-        )}
-        <div className="info-container">
-          <SoldToCard shipTo={content.shipTo} config={config} />
-          <OrderAcknowledgementCard content={content} config={config} />
-          <ContactCard content={content} config={config} />
+          <div
+            className="actions-container"
+            onMouseOver={handleActionMouseOver}
+            onMouseLeave={handleActionMouseLeave}
+          >
+            <span className="quote-actions">
+              {getDictionaryValueOrKey(config.labels?.actions)}
+            </span>
+            {actionsDropdownVisible && (
+              <div className="actions-dropdown">
+                <MenuActions items={menuActionsItems} />
+              </div>
+            )}
+          </div>
         </div>
-        <OrderReleaseModal
-          open={releaseOrderShow}
-          handleClose={() => setReleaseOrderShow(false)}
-          handleReleaseOrder={handleReleaseOrder}
-          orderLineDetails={config.actionLabels}
-          orderNo={id}
-          PONo={poNumber}
+      </div>
+      {infoBoxEnable && (
+        <MigrationInfoBox
+          config={config?.labels}
+          id={content?.sapOrderMigration?.id}
+          referenceType={content?.sapOrderMigration?.referenceType}
+          isLoading={isLoading}
         />
-        <OrderReleaseAlertModal
-          open={openAlert}
-          handleClose={() => {
-            setOpenAlert(false);
-          }}
-          orderLineDetails={config.actionLabels}
-          releaseSuccess={releaseSuccess}
+      )}
+      <div className="info-container">
+        <SoldToCard
+          content={content}
+          isLoading={isLoading}
         />
-        <XMLMessageModal
-          open={openXMLAlert}
-          handleClose={() => setOpenXMLAlert(false)}
-          message={labels?.xmlMessageAlertLabel}
+        <OrderAcknowledgementCard
+          content={content}
+          isLoading={isLoading}
+        />
+        <ContactCard
+          content={content}
+          isLoading={isLoading}
         />
       </div>
-    )
+      <OrderReleaseModal
+        open={releaseOrderShow}
+        handleClose={() => setReleaseOrderShow(false)}
+        handleReleaseOrder={handleReleaseOrder}
+        orderLineDetails={config.actionLabels}
+        orderNo={id}
+        PONo={poNumber}
+      />
+      <OrderReleaseAlertModal
+        open={openAlert}
+        handleClose={() => {
+          setOpenAlert(false);
+        }}
+        orderLineDetails={config.actionLabels}
+        releaseSuccess={releaseSuccess}
+      />
+      <XMLMessageModal
+        open={openXMLAlert}
+        handleClose={() => setOpenXMLAlert(false)}
+        message={labels?.xmlMessageAlertLabel}
+      />
+    </div>
   );
 };
+
 export default OrderTrackingDetailHeader;

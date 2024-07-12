@@ -218,6 +218,19 @@ export async function fetchData(
   }
 }
 
+export async function fetchOrderLinesData(baseUrl, id) {
+  console.log('Utils::fetchOrderLinesData');
+  try {
+    const result = await usGet(
+      `${baseUrl}/v3/orderdetails/${id}/lines`
+    );
+    return result;
+  } catch (error) {
+    console.error('Utils::fetchOrderLinesData::error', error);
+    return null;
+  }
+}
+
 export function setPaginationData(response, responseContent, pageSize = 25) {
   const pageCount = Math.ceil(response?.totalItems / pageSize);
   return {
@@ -228,4 +241,3 @@ export function setPaginationData(response, responseContent, pageSize = 25) {
     queryCacheKey: responseContent?.queryCacheKey,
   };
 }
-

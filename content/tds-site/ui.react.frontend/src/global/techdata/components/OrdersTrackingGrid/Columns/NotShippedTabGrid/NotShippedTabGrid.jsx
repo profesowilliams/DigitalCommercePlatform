@@ -13,7 +13,7 @@ import { usPost } from '../../../../../../utils/api';
 import OrderReleaseAlertModal from '../../Modals/OrderReleaseAlertModal';
 import OrderStatusModal from '../../Modals/OrderStatusModal';
 import { GreenInfoIcon } from '../../../../../../fluentIcons/FluentIcons';
-import { fetchOrderLinesData } from '../../../OrdersTrackingDetail/OrdersTrackingDetailGrid/utils/orderTrackingUtils';
+import { fetchOrderLinesData } from '../../utils/orderTrackingUtils';
 
 function NotShippedTabGrid({
   data,
@@ -181,7 +181,7 @@ function NotShippedTabGrid({
   };
 
   useEffect(async () => {
-    const response = await fetchOrderLinesData(config, orderNo);
+    const response = await fetchOrderLinesData(config.uiCommerceServiceDomain, orderNo);
     const currencyFromResponse =
       response?.data?.content?.notShipped[0]?.currency ?? '';
     setCurrency(currencyFromResponse);

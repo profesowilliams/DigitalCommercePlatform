@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import OrderTrackingContainer from './Body/OrderTrackingContainer';
 import OrdersTrackingDetailGrid from './OrdersTrackingDetailGrid/OrdersTrackingDetailGrid';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 const OrderTrackingDetailBody = ({
   config,
@@ -10,8 +10,10 @@ const OrderTrackingDetailBody = ({
   rowsToGrayOutTDNameRef,
   newItem,
   componentProps,
+  isLoading
 }) => {
   useEffect(() => {
+    console.log('OrderTrackingDetailBody::useEffect::newItem');
     if (newItem && content && content.items) {
       const itemsCopy = [...content.items];
       const newLineDetails = content.items[0].lineDetails;
@@ -35,16 +37,22 @@ const OrderTrackingDetailBody = ({
 
   return (
     <div className="cmp-orders-qp__grid cmp-order-preview">
-      <OrderTrackingContainer config={config} />
+      <div className="details-container">
+        <span className="details-preview">
+          {getDictionaryValueOrKey(config?.itemsLabels?.header)}
+        </span>
+      </div>
       <OrdersTrackingDetailGrid
-        data={content}
+        content={content}
         gridProps={config}
         openFilePdf={openFilePdf}
         gridRef={gridRef}
         componentProps={componentProps}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+        isLoading={isLoading}
       />
     </div>
   );
 };
+
 export default OrderTrackingDetailBody;

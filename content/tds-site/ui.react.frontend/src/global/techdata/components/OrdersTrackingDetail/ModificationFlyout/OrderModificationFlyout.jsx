@@ -33,7 +33,6 @@ const areItemsListIdentical = (items, itemsCopy) => {
 
 function OrderModificationFlyout({
   subheaderReference = '',
-  isTDSynnex = true,
   labels = {},
   gridConfig = {},
   content,
@@ -332,7 +331,7 @@ function OrderModificationFlyout({
       )}
       disabledButton={isDisabled}
       secondaryButton={null}
-      isTDSynnex={isTDSynnex}
+      isTDSynnex={true}
       onClickButton={null}
       bottomContent={null}
       buttonsSection={buttonsSection}
