@@ -190,6 +190,12 @@ function RenewalPreviewGrid(
   }, [isEditing]);
 
   useEffect(() => {
+    if (gridApiRef.current) {
+      gridApiRef.current.setRowData(orignalGridData);
+    }
+  }, [data]);
+
+  useEffect(() => {
     if (isEditing) {
       effects.setCustomState({
         key: 'items',
