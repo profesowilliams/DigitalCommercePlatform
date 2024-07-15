@@ -213,7 +213,8 @@ function OrdersTrackingGrid(props) {
       setResponseError(false);
       if (
         (response?.status && response?.status !== 200) ||
-        response?.data?.content?.items?.length === 0
+        response?.data?.content?.items?.length === 0 ||
+        response?.data?.content?.totalItems === 0
       ) {
         sendGTMDataOnError();
       }

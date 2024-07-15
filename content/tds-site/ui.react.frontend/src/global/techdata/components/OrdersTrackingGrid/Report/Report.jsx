@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } f
 import { ReportIcon, ReportIconFilled } from '../../../../../fluentIcons/FluentIcons'
 import ReportDropdown from './ReportDropdown';
 import '../../../../../../src/styles/TopIconsBar.scss';
-import { getReportAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
 import Tooltip from '@mui/material/Tooltip';
 import Hover from '../../Hover/Hover';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
@@ -82,9 +81,6 @@ function Report({ onChange, analyticsLabel }, ref) {
     if (option) {
       // Add a new field to the option with a label from translations
       option.field = translations?.PillLabel;
-
-      // Push data to Google Analytics with the selected option and report label
-      pushDataLayerGoogle(getReportAnalyticsGoogle(analyticsLabel, option));
     }
 
     // Trigger the onChange callback with the selected option
