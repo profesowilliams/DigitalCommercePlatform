@@ -14,7 +14,7 @@ function NewPurchaseFlyout({
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
-  const internalUser = userData?.isInternalUser;
+  const internalUser = userData?.isHouseAccount;
   const externalUser = !internalUser;
 
   const newPurchaseFlyoutConfig = store((state) => state.newPurchaseFlyout);
