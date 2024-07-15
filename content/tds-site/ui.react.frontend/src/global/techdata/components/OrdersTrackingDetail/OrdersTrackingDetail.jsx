@@ -15,6 +15,7 @@ import { fetchTranslations, setDocumentTitle } from './utils/translationsUtils';
 import { downloadFile, openFile } from './utils/fileUtils';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
 import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
+import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
 
 function OrdersTrackingDetail(props) {
   console.log('OrdersTrackingDetail::init');
@@ -177,12 +178,18 @@ function OrdersTrackingDetail(props) {
     }
   }, [orderModifyHeaderInfo]);
 
-  if (!hasAccess || !userData?.activeCustomer) {
-    return (<AccessPermissionsNeeded noAccessProps={noAccessProps} />);
-  }
-
   if (isUnavailable) {
     return <TemporarilyUnavailable noAccessProps={noAccessProps} />;
+  }
+
+  // Display a loader icon if the data is still loading
+  if (!userData) {
+    console.log('OrdersTrackingDetail::loading user data');
+    return (<div className="cmp-order-tracking-grid"><LoaderIcon /></div>);
+  }
+
+  if (!hasAccess || !userData?.activeCustomer) {
+    return (<AccessPermissionsNeeded noAccessProps={noAccessProps} />);
   }
 
   return (

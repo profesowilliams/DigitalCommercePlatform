@@ -1,109 +1,109 @@
 <script>
-    function resolveAcceptLanguage(language, country) {
-        const collectiveCountry = country === 'UK' ? 'GB' : country;
-        return language + '-' + collectiveCountry;
+  function resolveAcceptLanguage(language, country) {
+    const collectiveCountry = country === 'UK' ? 'GB' : country;
+    return language + '-' + collectiveCountry;
+  }
+
+  function getHeaderInfoFromUrl(pathName) {
+    let countryIndex = 1; // uat/stage/prod
+    let languageIndex = 2
+    const pathArray = pathName?.split('/');
+
+    if (pathArray && pathArray.length >= 5 && pathArray[1] === 'content') {
+      countryIndex = 4; // dit/sit
+      languageIndex = 5;
     }
 
-    function getHeaderInfoFromUrl(pathName) {
-        let countryIndex = 1; // uat/stage/prod
-        let languageIndex = 2
-        const pathArray = pathName?.split('/');
+    const country = pathArray[countryIndex]?.toUpperCase() || '';
+    const language = pathArray[languageIndex]?.replace('.html', '') || country === 'US' ? 'en' : '';
+    return {
+      site: country,
+      acceptLanguage: resolveAcceptLanguage(language, country)
+    };
+  }
 
-        if (pathArray && pathArray.length >= 5 && pathArray[1] === 'content') {
-            countryIndex = 4; // dit/sit
-            languageIndex = 5;
-        }
+  const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 
-        const country = pathArray[countryIndex]?.toUpperCase() || '';
-        const language = pathArray[languageIndex]?.replace('.html', '') || country === 'US' ? 'en' : '';
-        return {
-            site: country,
-            acceptLanguage: resolveAcceptLanguage(language, country)
-        };
+  let userDataPromise = null;
+  let cachedUserData = null;
+  let cachedResponseStatus = null;
+  let cacheExpiration = null;
+  const CACHE_DURATION = 600;
+
+  async function getUserData() {
+    if ((cachedUserData || !!cachedResponseStatus) && Date.now() < cacheExpiration) {
+      if (cachedResponseStatus === 401) {
+        throw (new Error(401));
+      }
+
+      return cachedUserData;
     }
 
-    const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
-
-    let userDataPromise = null;
-    let cachedUserData = null;
-    let cachedResponseStatus = null;
-    let cacheExpiration = null;
-    const CACHE_DURATION = 600;
-
-    async function getUserData() {
-        if ((cachedUserData || !!cachedResponseStatus) && Date.now() < cacheExpiration) {
-            if (cachedResponseStatus === 401) {
-                throw (new Error(401));
-            }
-
-            return cachedUserData;
-        }
-
-        if (userDataPromise) {
-            return await userDataPromise;
-        }
-
-        try {
-            userDataPromise = fetch(
-                "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}" +
-                "${caconfig['com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration'].getUserEndpoint @ context='scriptString'}", {
-                "headers": {
-                    "accept": "application/json, text/plain, */*",
-                    "accept-language": headerInfo.acceptLanguage,
-                    "consumer": "AEM",
-                    "site": headerInfo.site,
-                    "traceid": new Date().toISOString()
-                },
-                "body": null,
-                "method": "GET",
-                "credentials": "include"
-            });
-
-            const response = await userDataPromise;
-            cachedResponseStatus = response.status;
-            cacheExpiration = Date.now() + CACHE_DURATION * 1000;
-
-            if (response.ok) {
-                const data = await response.json();
-                cachedUserData = data.content.user;
-                return cachedUserData;
-            } else {
-                console.log('HTTP-Error: ' + response.status);
-                throw (new Error(response.status));
-            }
-        }
-        catch (error) {
-            throw (new Error(401));
-        }
-        finally {
-            userDataPromise = null;
-        }
-
-        return null;
+    if (userDataPromise) {
+      return await userDataPromise;
     }
 
-    const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
-    const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
-    async function getSessionInfo() {
-        let isLoggedIn;
-        let userData;
+    try {
+      userDataPromise = fetch(
+        "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}" +
+        "${caconfig['com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration'].getUserEndpoint @ context='scriptString'}", {
+        "headers": {
+          "accept": "application/json, text/plain, */*",
+          "accept-language": headerInfo.acceptLanguage,
+          "consumer": "AEM",
+          "site": headerInfo.site,
+          "traceid": new Date().toISOString()
+        },
+        "body": null,
+        "method": "GET",
+        "credentials": "include"
+      });
 
-        if (isHttpOnlyEnabled() || isExtraReloadDisabled()) {
-            let data;
+      const response = await userDataPromise;
+      cachedResponseStatus = response.status;
+      cacheExpiration = Date.now() + CACHE_DURATION * 1000;
 
-            try {
-                data = await getUserData();
-            } catch (error) {
-                data = null;
-            }
-
-            isLoggedIn = !!data;
-            userData = data;
-        } else {
-            isLoggedIn = window.localStorage.getItem("sessionId");
-            userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
-        }
-
-        return [isLoggedIn, userData];
+      if (response.ok) {
+        const data = await response.json();
+        cachedUserData = data.content.user;
+        return cachedUserData;
+      } else {
+        console.log('HTTP-Error: ' + response.status);
+        throw (new Error(response.status));
+      }
     }
+    catch (error) {
+      throw (new Error(401));
+    }
+    finally {
+      userDataPromise = null;
+    }
+
+    return {};
+  }
+
+  const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+  const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
+  async function getSessionInfo() {
+    let isLoggedIn;
+    let userData;
+
+    if (isHttpOnlyEnabled() || isExtraReloadDisabled()) {
+      let data;
+
+      try {
+        data = await getUserData();
+      } catch (error) {
+        data = null;
+      }
+
+      isLoggedIn = !!data;
+      userData = data;
+    } else {
+      isLoggedIn = window.localStorage.getItem("sessionId");
+      userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+    }
+
+    return [isLoggedIn, userData];
+  }
 </script>

@@ -32,6 +32,7 @@ import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getHeaderInfo } from '../../../../utils/headers/get';
 import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
+import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
 
 const translationDictionaries = [
   'OrderTracking.FreetextSearchFields',
@@ -520,13 +521,19 @@ function OrdersTrackingGrid(props) {
     }
   }, [userData, isGTMReady, reloadAddedToGTM]);
 
+  if (isUnavailable) {
+    return <TemporarilyUnavailable noAccessProps={noAccessProps} />;
+  }
+
+  // Display a loader icon if the data is still loading
+  if (!userData) {
+    console.log('OrdersTrackingGrid::loading user data');
+    return (<div className="cmp-order-tracking-grid"><LoaderIcon /></div>);
+  }
+
   if (!hasAccess || !userData?.activeCustomer) {
     console.log('OrdersTrackingGrid::noAccessProps');
     return (<AccessPermissionsNeeded noAccessProps={noAccessProps} />);
-  }
-
-  if (isUnavailable) {
-    return <TemporarilyUnavailable noAccessProps={noAccessProps} />;
   }
 
   return (
