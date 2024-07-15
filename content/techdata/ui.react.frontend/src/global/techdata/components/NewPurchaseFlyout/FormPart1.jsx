@@ -418,8 +418,7 @@ function FormPart1({
       <div className="cmp-flyout-newPurchase__form">
         <div className="cmp-flyout-newPurchase__form__container">
           <p>{getDictionaryValueOrKey(newPurchaseFlyout?.resellerContact)}</p>
-          {/* {internalUser && ( */}
-          {true && (
+          {internalUser && (
             <div className="cmp-flyout-newPurchase__form__input-reseller-search">
               <Autocomplete
                 id="combo-box-demo"
