@@ -43,7 +43,6 @@ function NewPurchaseFlyout({
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-
   // Contact First Name state
   const [firstName, setFirstName] = useState('');
   const [firstNameError, setFirstNameError] = useState('');
@@ -79,12 +78,12 @@ function NewPurchaseFlyout({
   const [endUserTypeError, setEndUserTypeError] = useState('');
 
   // End User Address 1 state
-  const [endUserAdress1, setEndUserAddress1] = useState('');
-  const [endUserAdress1Error, setEndUserAddress1Error] = useState('');
+  const [endUserAddress1, setEndUserAddress1] = useState('');
+  const [endUserAddress1Error, setEndUserAddress1Error] = useState('');
 
   // End User Address 2 state
-  const [endUserAdress2, setEndUserAddress2] = useState('');
-  const [endUserAdress2Error, setEndUserAddress2Error] = useState('');
+  const [endUserAddress2, setEndUserAddress2] = useState('');
+  const [endUserAddress2Error, setEndUserAddress2Error] = useState('');
 
   // End User City state
   const [endUserCity, setEndUserCity] = useState('');
@@ -149,13 +148,13 @@ function NewPurchaseFlyout({
     setEndUserType,
     endUserTypeError,
     setEndUserTypeError,
-    endUserAdress1,
+    endUserAddress1,
     setEndUserAddress1,
-    endUserAdress1Error,
+    endUserAddress1Error,
     setEndUserAddress1Error,
-    endUserAdress2,
+    endUserAddress2,
     setEndUserAddress2,
-    endUserAdress2Error,
+    endUserAddress2Error,
     setEndUserAddress2Error,
     endUserCity,
     setEndUserCity,
@@ -264,7 +263,7 @@ function NewPurchaseFlyout({
   }, [newPurchaseFlyoutConfig?.show]);
 
   useEffect(() => {
-    if (
+    const isCommonFieldsValid =
       firstName?.length > 0 &&
       lastName?.length > 0 &&
       email?.length > 0 &&
@@ -275,11 +274,18 @@ function NewPurchaseFlyout({
       endUserEmail?.length > 0 &&
       endUserEmailError?.length === 0 &&
       endUserType?.length > 0 &&
-      endUserAdress1?.length > 0 &&
+      endUserAddress1?.length > 0 &&
       endUserCity?.length > 0 &&
       endUserAreaCode?.length > 0 &&
-      endUserCountry?.length > 0
-    ) {
+      endUserCountry?.length > 0;
+
+    const isInternalUserValid = internalUser
+      ? selectedQuote?.accountNumber?.length > 0 &&
+        !isAutocompleteOpen &&
+        errorMessage?.length === 0
+      : true;
+
+    if (isCommonFieldsValid && isInternalUserValid) {
       setEnableNext(true);
     } else {
       setEnableNext(false);
@@ -295,10 +301,14 @@ function NewPurchaseFlyout({
     endUserEmail,
     endUserEmailError,
     endUserType,
-    endUserAdress1,
+    endUserAddress1,
     endUserCity,
     endUserAreaCode,
     endUserCountry,
+    errorMessage,
+    isAutocompleteOpen,
+    selectedQuote,
+    internalUser,
   ]);
   return (
     <BaseFlyout

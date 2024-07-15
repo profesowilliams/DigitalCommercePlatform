@@ -26,8 +26,8 @@ function FormPart2({
     endUserCompanyLastName,
     endUserEmail,
     endUserType,
-    endUserAdress1,
-    endUserAdress2,
+    endUserAddress1,
+    endUserAddress2,
     endUserCity,
     endUserAreaCode,
     endUserCountry,
@@ -200,7 +200,7 @@ function FormPart2({
               {endUserAreaCode}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserAdress1}, {endUserAdress2}
+              {endUserAddress1}, {endUserAddress2}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {endUserCity}, {endUserCountry}

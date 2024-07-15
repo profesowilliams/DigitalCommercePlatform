@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   BannerInfoIcon,
   AutoCompleteSearchIcon,
@@ -11,15 +11,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { QuoteDetails } from './QuoteDetails';
 
 import { createFilterOptions } from '@mui/material/Autocomplete';
-import {
-  checkQuoteExitsforReseller,
-  copyQuote,
-  resellerLookUp,
-} from '../CopyFlyout/api';
+import { checkQuoteExitsforReseller, resellerLookUp } from '../CopyFlyout/api';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 function FormPart1({
-  store,
   copyFlyout,
   newPurchaseFlyout,
   newPurchaseFlyoutConfig,
@@ -27,8 +22,6 @@ function FormPart1({
   internalUser,
 }) {
   const {
-    enableNext,
-    setEnableNext,
     quotes,
     setQuotes,
     accountNumber,
@@ -37,12 +30,8 @@ function FormPart1({
     setIsAutocompleteOpen,
     selectedQuote,
     setSelectedQuote,
-    enableCopy,
-    setEnableCopy,
     errorMessage,
     setErrorMessage,
-    isLoading,
-    setIsLoading,
     isTyping,
     setIsTyping,
     firstName,
@@ -77,13 +66,13 @@ function FormPart1({
     setEndUserType,
     endUserTypeError,
     setEndUserTypeError,
-    endUserAdress1,
+    endUserAddress1,
     setEndUserAddress1,
-    endUserAdress1Error,
+    endUserAddress1Error,
     setEndUserAddress1Error,
-    endUserAdress2,
+    endUserAddress2,
     setEndUserAddress2,
-    endUserAdress2Error,
+    endUserAddress2Error,
     setEndUserAddress2Error,
     endUserCity,
     setEndUserCity,
@@ -149,10 +138,6 @@ function FormPart1({
       newPurchaseFlyoutConfig?.data?.agreementNumber,
       copyFlyout?.checkQuoteExitsforResellerEndpoint
     );
-
-    if (!selectedQuote) {
-      setEnableCopy(!quoteExists);
-    }
 
     if (quoteExists) {
       setIsTyping(false);
@@ -322,7 +307,7 @@ function FormPart1({
   };
 
   // End user Address 1
-  const handleEndUserAdress1Change = (event) => {
+  const handleEndUserAddress1Change = (event) => {
     const value = event.target.value;
     setEndUserAddress1(value);
     if (value.length === 0) {
@@ -604,23 +589,23 @@ function FormPart1({
         <TextField
           className="cmp-flyout-newPurchase__form__input-container"
           id="end-user-address-1"
-          label={getDictionaryValueOrKey(newPurchaseFlyout?.endUserAdress1)}
+          label={getDictionaryValueOrKey(newPurchaseFlyout?.endUserAddress1)}
           variant="standard"
-          value={endUserAdress1}
-          onChange={handleEndUserAdress1Change}
-          error={!!endUserAdress1Error}
-          helperText={endUserAdress1Error}
+          value={endUserAddress1}
+          onChange={handleEndUserAddress1Change}
+          error={!!endUserAddress1Error}
+          helperText={endUserAddress1Error}
           inputProps={{ maxLength: 40 }}
         />
         <TextField
           className="cmp-flyout-newPurchase__form__input-container"
           id="end-user-address-2"
-          label={getDictionaryValueOrKey(newPurchaseFlyout?.endUserAdress2)}
+          label={getDictionaryValueOrKey(newPurchaseFlyout?.endUserAddress2)}
           variant="standard"
-          value={endUserAdress2}
+          value={endUserAddress2}
           onChange={handleEndUserAddress2Change}
-          error={!!endUserAdress2Error}
-          helperText={endUserAdress2Error}
+          error={!!endUserAddress2Error}
+          helperText={endUserAddress2Error}
           inputProps={{ maxLength: 40 }}
         />
         <TextField
