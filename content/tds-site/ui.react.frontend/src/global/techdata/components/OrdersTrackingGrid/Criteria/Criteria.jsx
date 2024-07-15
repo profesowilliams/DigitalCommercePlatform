@@ -38,8 +38,8 @@ const Criteria = ({ searchParams }) => {
     const hasReportFilter = reports?.value;
 
     // Check if there are any types or statuses filters
-    const hasOtherFilters = filtersRefs?.types
-      || filtersRefs?.statuses;
+    const hasOtherFilters = filtersRefs?.types?.length > 0
+      || filtersRefs?.statuses?.length > 0;
 
     console.log('Criteria::useEffect::hasDateRangeFilter[' + hasDateRangeFilter + ']');
     console.log('Criteria::useEffect::hasSearchFilter[' + hasSearchFilter + ']');

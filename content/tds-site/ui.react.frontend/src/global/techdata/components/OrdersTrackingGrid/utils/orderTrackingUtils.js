@@ -58,7 +58,7 @@ export const setSearchCriteriaDefaultDateRange = ({
 
     from = filtersRefs.current.date.from;
     to = filtersRefs.current.date.to;
-  } else if (filtersRefs?.current.types || filtersRefs?.current.statuses) {
+  } else if (filtersRefs?.current?.types?.length > 0 || filtersRefs?.current?.statuses?.length > 0) {
     const defaultDate90 = setDefaultSearchDateRange(90);
     from = defaultDate90.from;
     to = defaultDate90.to;
