@@ -13,7 +13,9 @@ import { usPost } from '../../../../../../utils/api';
 import OrderReleaseAlertModal from '../../Modals/OrderReleaseAlertModal';
 import OrderStatusModal from '../../Modals/OrderStatusModal';
 import { GreenInfoIcon } from '../../../../../../fluentIcons/FluentIcons';
-import { fetchOrderLinesData } from '../../utils/orderTrackingUtils';
+import {
+  fetchOrderLinesData,
+} from '../../utils/orderTrackingUtils';
 
 function NotShippedTabGrid({
   data,
@@ -42,6 +44,7 @@ function NotShippedTabGrid({
   const orderModificationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.orderModification
   );
+  const userData = useOrderTrackingStore((state) => state.userData);
   const effects = useOrderTrackingStore((state) => state.effects);
 
   const { setCustomState, hasRights } = effects;
@@ -181,9 +184,12 @@ function NotShippedTabGrid({
   };
 
   useEffect(async () => {
-    const response = await fetchOrderLinesData(config.uiCommerceServiceDomain, orderNo);
-    const currencyFromResponse =
+    const response = await fetchOrderLinesData(config, orderNo);
+    let currencyFromResponse =
       response?.data?.content?.notShipped[0]?.currency ?? '';
+    if(currencyFromResponse === '') {
+      currencyFromResponse = userData?.activeCustomer?.defaultCurrency ?? '';
+    }
     setCurrency(currencyFromResponse);
     setCustomState({
       key: 'orderModificationFlyout',
