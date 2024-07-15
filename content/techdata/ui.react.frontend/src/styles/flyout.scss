@@ -825,6 +825,10 @@ li[id^='combo-box-demo-option-']:active {
       margin-bottom: 8px;
       position: relative;
 
+      .cmp-flyout__content--error {
+        margin-top: 10px;
+      }
+
       .MuiAutocomplete-root .MuiFormControl-root {
         .MuiInput-root.MuiInputLabel-formControl,
         .Mui-error,
