@@ -589,7 +589,7 @@ function FormPart1({
         <TextField
           className="cmp-flyout-newPurchase__form__input-container"
           id="end-user-address-1"
-          label={getDictionaryValueOrKey(newPurchaseFlyout?.endUserAddress1)}
+          label={getDictionaryValueOrKey(newPurchaseFlyout?.endUserAdress1)}
           variant="standard"
           value={endUserAddress1}
           onChange={handleEndUserAddress1Change}
@@ -600,7 +600,7 @@ function FormPart1({
         <TextField
           className="cmp-flyout-newPurchase__form__input-container"
           id="end-user-address-2"
-          label={getDictionaryValueOrKey(newPurchaseFlyout?.endUserAddress2)}
+          label={getDictionaryValueOrKey(newPurchaseFlyout?.endUserAdress2)}
           variant="standard"
           value={endUserAddress2}
           onChange={handleEndUserAddress2Change}
