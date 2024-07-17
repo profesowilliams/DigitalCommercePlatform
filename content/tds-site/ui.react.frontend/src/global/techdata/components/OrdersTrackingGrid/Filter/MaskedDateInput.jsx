@@ -45,7 +45,12 @@ const MaskedDateInput = ({ translations, value, onChange }) => {
     } else {
       if (date > new Date()) {
         // If the date is in the future, set the date to today
+        setInternalValue(moment().format(translations?.DateFormat));
         onChange(new Date());
+      } else if (date < new Date('2010')) {
+        // If the date is in the past, set the date to 2010-01-01
+        setInternalValue(moment('2010-01-01').format(translations?.DateFormat));
+        onChange(new Date('2010'));
       } else {
         // Otherwise, set the date to the parsed date
         onChange(date);

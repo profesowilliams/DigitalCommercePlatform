@@ -50,18 +50,13 @@
   width: 250px!important;
 }
 
-/*.rdrMonthName {
-  display: none;
-}*/
-
 .rdrDateDisplayWrapper {
-  //background-color: #ffffff;
   display: none;
 }
 
 .rdrDay {
-  line-height: 30px !important;
-  height: 30px !important;
+  line-height: 32px !important;
+  height: 32px !important;
 }
 
 .rdrEndEdge, .rdrInRange, .rdrSelected, .rdrStartEdge {
@@ -80,7 +75,7 @@
   content: "";
   display: block;
   width: 50%;
-  height: 30px;
+  height: 32px;
   margin-left: 50%;
   background-color: rgba(0, 87, 88, .2);
 }
@@ -96,7 +91,7 @@
   content: "";
   display: block;
   width: 50%;
-  height: 30px;
+  height: 32px;
   background-color: rgba(0, 87, 88, .2);
 }
 
@@ -107,21 +102,21 @@ span.rdrInRange {
 }
 
 .rdrDayStartOfMonth .rdrEndEdge, .rdrDayStartOfMonth .rdrInRange, .rdrDayStartOfWeek .rdrEndEdge, .rdrDayStartOfWeek .rdrInRange {
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
+  //border-top-left-radius: 0 !important;
+  //border-bottom-left-radius: 0 !important;
   left: 0px !important;
 }
 
-.rdrDayEndOfMonth .rdrInRange, .rdrDayEndOfMonth .rdrStartEdge, .rdrDayEndOfWeek .rdrInRange {
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+.rdrDayEndOfWeek .rdrStartEdge {
   right: 0px !important;
-  //background-color: inherit !important;
 }
 
-/*.rdrDayNumber span {
-  color: #1d2429 !important;
-}*/
+.rdrDayEndOfMonth .rdrInRange, .rdrDayEndOfMonth .rdrStartEdge, .rdrDayEndOfWeek .rdrInRange {
+  //border-top-right-radius: 0 !important;
+  //border-bottom-right-radius: 0 !important;
+  right: 0px !important;
+}
+
 .rdrDayNumber span {
   color: inherit !important;
 }
@@ -178,7 +173,6 @@ span.rdrDayInPreview > span {
 }
 
 button.rdrStaticRange {
-  background-color: #005758;
   min-width: 25px;
   border-radius: 20px;
   padding: 0 17px;
@@ -191,10 +185,25 @@ button.rdrStaticRange {
   align-items: center;
   margin-bottom: 2px;
   padding: 0 10px;
+  border: solid 1px #005758;
+}
+
+.rdrStaticRangeSelected {
+  background-color: #005758;
+}
+
+button.rdrStaticRange:hover {
+  background-color: #005758;
+  color: #ffffff !important;
+}
+
+button.rdrStaticRange:hover .rdrStaticRangeLabel,
+button.rdrStaticRangeSelected:hover .rdrStaticRangeLabel {
+  color: #fff !important;
 }
 
 span.rdrStaticRangeLabel {
-  color: #fff !important;
+  color: rgb(0, 48, 49) !important;
   font-size: 14px !important;
   font-weight: 400 !important;
   letter-spacing: -.07px !important;
@@ -204,8 +213,12 @@ span.rdrStaticRangeLabel {
   padding: 10px 0 !important;
 }
 
+.rdrMonthAndYearPickers select {
+  font-family: Arial!important;
+}
+
 .rdrStaticRange:focus .rdrStaticRangeLabel, .rdrStaticRange:hover .rdrStaticRangeLabel {
-  background: unset!important;
+  background: unset !important;
 }
 
 .rdrStaticRanges {
