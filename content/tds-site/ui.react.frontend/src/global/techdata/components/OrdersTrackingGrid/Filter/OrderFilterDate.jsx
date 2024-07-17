@@ -1,13 +1,13 @@
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import useComputeBranding from './../../../hooks/useComputeBranding';
-import moment from 'moment';
-import { DateRangePicker } from 'react-dates-gte-react-17';
 import 'react-dates-gte-react-17/initialize';
-import { ChevronLeftIcon, ChevronRightIcon, } from '../../../../../fluentIcons/FluentIcons';
 import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import OrderFilterDateType from './OrderFilterDateType';
 import StartEndDisplay from './StartEndDisplay';
 import OrderCount from './OrderCount';
+import { DateRangePicker, DateInput } from 'react-date-range';
+import { customRanges } from './utils/utils';
+import moment from 'moment';
 
 /**
  * Component for filtering orders by date
@@ -22,18 +22,20 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
   const { computeClassName } = useComputeBranding(useOrderTrackingStore);
   const [filters, setFilters] = useState(initialFilter);
   const [filtersCheckedCount, setFiltersCheckedCount] = useState(filters?.from && filters?.to && filters?.type ? 1 : 0);
-  const [currentStartDate, setCurrentStartDate] = useState(filters?.from);
-  const [currentEndDate, setCurrentEndDate] = useState(filters?.to);
+
+  const startDate = !filters?.from || isNaN(moment(filters?.from).toDate().getTime()) ? null : moment(filters?.from).toDate();
+  const endDate = !filters?.to || isNaN(moment(filters?.to).toDate().getTime()) ? null : moment(filters?.to).toDate();
+
+  const [currentStartDate, setCurrentStartDate] = useState(!startDate ? '' : moment(startDate).format(translations?.DateFormat));
+  const [currentEndDate, setCurrentEndDate] = useState(!endDate ? '' : moment(endDate).format(translations?.DateFormat));
+
+  const [selectionRange, setSelectionRange] = useState({
+    startDate: startDate || new Date(),
+    endDate: endDate || new Date(),
+    key: 'selection',
+  });
 
   const [accordionIsOpen, setAccordionIsOpen] = useState(filters?.from && filters?.to && filters?.type);
-
-  const [focusedInput, setFocusedInput] = useState('startDate');
-
-  const dark_teal = '#003031';
-  const navIcons = {
-    navPrev: <ChevronLeftIcon fill={dark_teal} />,
-    navNext: <ChevronRightIcon fill={dark_teal} />,
-  };
 
   const filterDateOptions = [
     {
@@ -88,10 +90,16 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
     console.log('OrderFilterDate::onChangeRadio');
 
     // Clear the current start date state
-    setCurrentStartDate(undefined);
+    setCurrentStartDate('');
 
     // Clear the current end date state
-    setCurrentEndDate(undefined);
+    setCurrentEndDate('');
+
+    setSelectionRange((prevRange) => ({
+      ...prevRange,
+      startDate: new Date(),
+      endDate: new Date(),
+    }));
 
     // Reset the count of checked filters to 0
     setFiltersCheckedCount(0);
@@ -119,28 +127,22 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
   const onDatesChange = ({ startDate, endDate }) => {
     console.log('OrderFilterDate::onDatesChange');
 
-    const from = startDate?.toISOString() || currentStartDate;
-    const to = endDate?.toISOString() || currentEndDate;
+    const from = startDate || moment(currentStartDate, translations?.DateFormat).toDate();
+    const to = endDate || moment(currentEndDate, translations?.DateFormat).toDate();
 
     // Check if both startDate and endDate are defined
-    if (from && to) {
+    if (!isNaN(from.getTime()) && !isNaN(to.getTime())) {
       // Create a new filter object with the provided type, from, and to dates
       const newFilter = {
         type: filters.type,
-        from: toShortDateFormat(from),
-        to: toShortDateFormat(to)
+        from: toShortDateFormat(from?.toISOString()),
+        to: toShortDateFormat(to?.toISOString())
       };
 
       onFilterChange(newFilter);
 
       // Invoke the onChange callback with the new filter object
       onChange(newFilter);
-    } else if (startDate) {
-      // Update the current start date state if startDate is defined
-      setCurrentStartDate(startDate.toISOString());
-    } else if (endDate) {
-      // Update the current end date state if endDate is defined
-      setCurrentEndDate(endDate.toISOString());
     }
   };
 
@@ -159,6 +161,13 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
 
     // Update the current end date state if endDate is defined
     setCurrentEndDate(to);
+
+    // Update the calendar state with the new selection range
+    setSelectionRange((prevRange) => ({
+      ...prevRange,
+      startDate: from ? moment(from).toDate() : new Date(),
+      endDate: to ? moment(to).toDate() : new Date(),
+    }));
 
     // Create a new filter object with the provided type, from, and to dates
     const newFilter = {
@@ -195,6 +204,33 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
   };
 
   /**
+   * Toggles the state of an accordion
+   * @param {Function} set - Setter function to update the state
+   * @param {boolean} get - Current state value to toggle
+   */
+  const handleAccordionClick = (set, get) => {
+    // Toggle the state by calling the setter function with the opposite of the current state value
+    set(!get);
+  };
+
+  /**
+   * Handle the selection of date ranges.
+   * 
+   * @param {Object} ranges - Object containing the selected date ranges.
+   */
+  const handleSelect = (ranges) => {
+    console.log('OrderFilterDate::handleSelect');
+
+    // Call the onDatesChange function with the updated start and end dates
+    onDatesChange({
+      // If the start date is a valid date, use it; otherwise, use the current date
+      startDate: isNaN(ranges?.selection?.startDate.getTime()) ? new Date() : ranges.selection?.startDate,
+      // If the end date is a valid date, use it; otherwise, use the current date
+      endDate: isNaN(ranges?.selection?.endDate.getTime()) ? new Date() : ranges.selection.endDate
+    });
+  };
+
+  /**
    * Exposes imperative methods to manipulate the date filters from the parent component
    * @param {React.Ref} ref - Reference object to expose imperative methods
    */
@@ -227,16 +263,6 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
       });
     }
   }));
-
-  /**
-   * Toggles the state of an accordion
-   * @param {Function} set - Setter function to update the state
-   * @param {boolean} get - Current state value to toggle
-   */
-  const handleAccordionClick = (set, get) => {
-    // Toggle the state by calling the setter function with the opposite of the current state value
-    set(!get);
-  };
 
   /**
    * Executes an effect only once when the component mounts
@@ -277,54 +303,23 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
         </div>
         <div className="order_datapicker">
           <DateRangePicker
-            startDate={currentStartDate ? moment(currentStartDate) : null}
-            startDateId="start-date"
-            startDatePlaceholderText={translations?.DatePlaceholder}
-            endDatePlaceholderText={translations?.DatePlaceholder}
-            endDate={currentEndDate ? moment(currentEndDate) : null}
-            {...navIcons}
-            minimumNights={0}
-            endDateId="end-date"
-            verticalHeight={280}
-            customArrowIcon={<div className="customHyphen"></div>}
-            reopenPickerOnClearDates
-            keepOpenOnDateSelect={true}
-            onDatesChange={onDatesChange}
-            isOutsideRange={() => false}
-            numberOfMonths={1}
-            displayFormat={translations?.DateFormat}
-            noBorder={true}
-            regular={false}
-            transitionDuration={300}
-            daySize={30}
-            focusedInput={focusedInput}
-            onFocusChange={(focusedInput) => {
-              const start = document.querySelector('#start-date').value;
-              const end = document.querySelector('#end-date').value;
-              if (['startDate', 'endDate'].includes(focusedInput)) {
-                setFocusedInput(focusedInput);
-              } else if (!focusedInput && start === '') {
-                setFocusedInput('startDate');
-              } else if (end === '') {
-                setFocusedInput('endDate');
-              } else {
-                setFocusedInput('startDate');
-              }
-            }}
+            ranges={[selectionRange]}
+            moveRangeOnFirstSelection={false}
+            staticRanges={customRanges}
+            months={1}
+            maxDate={new Date()}
+            minDate={new Date('2010')}
+            direction="vertical"
+            onChange={handleSelect}
+            editableDateInputs={false}
+            preventSnapRefocus={true}
           />
         </div>
         <StartEndDisplay
           translations={translations}
-          startDate={
-            currentStartDate
-              ? moment(currentStartDate).format(translations?.DateFormat)
-              : null
-          }
-          endDate={
-            currentEndDate
-              ? moment(currentEndDate).format(translations?.DateFormat)
-              : null
-          }
+          startDate={currentStartDate}
+          endDate={currentEndDate}
+          onChange={handleSelect}
         />
       </>}
     </div>

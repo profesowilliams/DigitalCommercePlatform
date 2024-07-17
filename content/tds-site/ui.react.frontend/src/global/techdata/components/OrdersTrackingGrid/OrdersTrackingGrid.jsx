@@ -177,9 +177,18 @@ function OrdersTrackingGrid(props) {
   const verifyIfPageNumberIsNotOutsideLimit = (ordersCountResponseContent) => {
     console.log('OrdersTrackingGrid::verifyIfPageNumberIsNotOutsideLimit');
     var correctPageNumber = Math.ceil(ordersCountResponseContent?.totalItems / gridPageSize);
-    if (correctPageNumber < paginationAndSorting.current.pageNumber || !paginationAndSorting.current.pageNumber) {
+    var newPageNumber = null;
+
+    if (!paginationAndSorting.current.pageNumber) {
+      newPageNumber = 1;
+    }
+    else if (correctPageNumber < paginationAndSorting.current.pageNumber) {
+      newPageNumber = correctPageNumber;
+    }
+
+    if (newPageNumber) {
       console.log('OrdersTrackingGrid::verifyIfPageNumberIsNotOutsideLimit::page number needs to be corrected');
-      paginationAndSorting.current.pageNumber = correctPageNumber;
+      paginationAndSorting.current.pageNumber = newPageNumber;
       updateUrl(paginationAndSorting, true);
     }
   }
@@ -486,9 +495,6 @@ function OrdersTrackingGrid(props) {
   }, [settingsResponse]);
 
   useEffect(() => {
-    //if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
-    //  hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
-    //}
     getSessionInfo().then((data) => {
       setUserData(data[1]);
       if (isGTMReady) {

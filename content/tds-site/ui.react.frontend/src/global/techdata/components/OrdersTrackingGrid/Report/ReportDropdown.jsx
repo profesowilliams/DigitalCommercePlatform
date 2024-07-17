@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { getReportAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
 
-function ReportDropdown({ reportOptions, selectOption }, ref) {
+function ReportDropdown({ reportOptions, selectOption, analyticsLabel }, ref) {
   const handleOptionClick = (option) => {
     selectOption(option);
     // Push data to Google Analytics with the selected option and report label

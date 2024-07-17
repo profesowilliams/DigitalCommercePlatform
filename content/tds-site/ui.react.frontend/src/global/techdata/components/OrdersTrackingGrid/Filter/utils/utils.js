@@ -1,5 +1,6 @@
 import { removeSpecificParams } from '../../../../../../utils/index';
 import { removeDisallowedParams } from '../../../../../../utils/index';
+import { addDays, endOfDay, startOfDay, startOfYear, startOfMonth, endOfMonth, endOfYear, addMonths, addYears, startOfWeek, endOfWeek, isSameDay, differenceInCalendarDays, } from 'date-fns';
 
 export function updateUrl(filters) {
   console.log('OrderFilter::updateUrl');
@@ -12,7 +13,7 @@ export function updateUrl(filters) {
 
   if (filters) {
     // List of allowed parameters
-    const allowedParameters = ['field', 'gtmfield', 'value', 'page', 'sortby', 'sortdirection', 'saleslogin'];
+    const allowedParameters = ['field', 'gtmfield', 'value', 'sortby', 'sortdirection', 'saleslogin'];
 
     // Remove disallowed parameters from the current URL, keeping only specified ones
     url = removeDisallowedParams(new URL(window.location.href), allowedParameters);
@@ -34,6 +35,8 @@ export function updateUrl(filters) {
         url.searchParams.append('status', status);
       });
     }
+
+    url.searchParams.append('page', '1');
   } else {
     // List of parameters which should be removed
     const parametersToRemove = ['datetype', 'datefrom', 'dateto', 'status', 'type'];
@@ -47,3 +50,90 @@ export function updateUrl(filters) {
     window.history.pushState(null, '', url.toString());
   // history.push(url.href.replace(url.origin, ''));
 };
+
+export const customRanges = [
+  {
+    label: 'This Week',
+    range: () => ({
+      startDate: startOfWeek(new Date()),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameDay(range.startDate, definedRange.startDate) &&
+        isSameDay(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: 'Previous Week',
+    range: () => ({
+      startDate: startOfWeek(addDays(new Date(), -7)),
+      endDate: endOfWeek(addDays(new Date(), -7)),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameDay(range.startDate, definedRange.startDate) &&
+        isSameDay(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: 'Current Month',
+    range: () => ({
+      startDate: startOfMonth(new Date()),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameDay(range.startDate, definedRange.startDate) &&
+        isSameDay(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: 'Previous Month',
+    range: () => ({
+      startDate: startOfMonth(addMonths(new Date(), -1)),
+      endDate: endOfMonth(addMonths(new Date(), -1)),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameDay(range.startDate, definedRange.startDate) &&
+        isSameDay(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: 'Prev 6 Months',
+    range: () => ({
+      startDate: startOfMonth(addMonths(new Date(), -6)),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameDay(range.startDate, definedRange.startDate) &&
+        isSameDay(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: 'This year',
+    range: () => ({
+      startDate: startOfYear(new Date()),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameDay(range.startDate, definedRange.startDate) &&
+        isSameDay(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+];

@@ -12,7 +12,8 @@ import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTra
 import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils';
 import { getSearchAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
 import { debounce } from '../utils/utils';
-import { getUrlParamsCaseInsensitive, removeDisallowedParams, removeSpecificParams } from '../../../../../utils/index';
+import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
+import { updateUrl } from './utils/utils';
 
 function CustomPaper({ children }) {
   return (
@@ -202,42 +203,6 @@ const Search = (
     });
     pushDataToGTMAutocomplete(gtmField, value, suggestions);
     resetSearch();
-  };
-
-  /**
-   * Updates the URL based on the selected filter
-   * @param {Object} filter - The selected filter
-   */
-  const updateUrl = (filter) => {
-    console.log('Search::updateUrl');
-
-    // Get the current URL
-    const currentUrl = new URL(window.location.href);
-
-    // Declare a variable to hold the updated URL
-    let url;
-
-    if (filter) {
-      // List of allowed parameters
-      const allowedParameters = ['status', 'type', 'datetype', 'datefrom', 'dateto', 'page', 'sortby', 'sortdirection', 'saleslogin'];
-
-      // Remove disallowed parameters from the current URL, keeping only specified ones
-      url = removeDisallowedParams(new URL(window.location.href), allowedParameters);
-      url.searchParams.set('field', filter.field);
-      url.searchParams.set('gtmfield', filter.gtmField);
-      url.searchParams.set('value', filter.value);
-    } else {
-      // List of parameters which should be removed
-      const parametersToRemove = ['field', 'gtmfield', 'value'];
-
-      // Remove specific parameters from the URL
-      url = removeSpecificParams(new URL(window.location.href), parametersToRemove);
-    }
-
-    // If the URL has changed, update the browser history
-    if (url.toString() !== currentUrl.toString())
-      window.history.pushState(null, '', url.toString());
-    // history.push(url.href.replace(url.origin, ''));
   };
 
   /**

@@ -178,6 +178,7 @@ function Report({ onChange, analyticsLabel }, ref) {
             ref={wrapperRef}
             reportOptions={reportOptions}
             selectOption={handleSelectOption}
+            analyticsLabel={analyticsLabel}
           />
         )}
       </div>

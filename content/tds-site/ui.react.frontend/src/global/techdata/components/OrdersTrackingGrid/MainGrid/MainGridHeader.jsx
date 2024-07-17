@@ -53,6 +53,9 @@ function MainGridHeader({
       filterRef.current.cleanUp();
       // Clear the current filter references
       searchParams.filtersRefs.current = {};
+      // Reset page number to 1
+      searchParams.paginationAndSorting.current.pageNumber = 1;
+
 
       // Trigger query change indicating a search action
       onQueryChanged({ onSearchAction: true });
@@ -76,6 +79,8 @@ function MainGridHeader({
       reportRef.current.cleanUp();
       // Clear the current report filter references
       searchParams.reports.current = {};
+      // Reset page number to 1
+      searchParams.paginationAndSorting.current.pageNumber = 1;
     } else {
       console.log('MainGridHeader::clearReports::not required');
     }
@@ -96,6 +101,8 @@ function MainGridHeader({
       searchRef.current.cleanUp();
       // Clear the current search filter references
       searchParams.search.current = {};
+      // Reset page number to 1
+      searchParams.paginationAndSorting.current.pageNumber = 1;
     } else {
       console.log('MainGridHeader::clearSearch::not required');
     }
@@ -187,6 +194,9 @@ function MainGridHeader({
       statuses: filters?.statuses,
       types: filters?.types
     };
+
+    // Reset page number to 1
+    searchParams.paginationAndSorting.current.pageNumber = 1;
 
     // Trigger the query change callback indicating a search action
     onQueryChanged({ onSearchAction: true });

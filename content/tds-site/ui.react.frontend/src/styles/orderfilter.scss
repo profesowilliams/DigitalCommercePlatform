@@ -1,5 +1,10 @@
 .check-order-wrapper {
-    margin-bottom: 30px !important;
-    padding-left: 40px;
-    display: block;
+  padding-left: 30px;
+  display: block;
+  padding-bottom: 5px;
+  margin-top: -10px;
+
+  label {
+    margin-bottom: 0;
+  }
 }

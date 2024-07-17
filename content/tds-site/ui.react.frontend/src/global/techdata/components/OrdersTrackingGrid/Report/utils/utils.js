@@ -16,11 +16,12 @@ export function updateUrl(report) {
   // If an report is selected
   if (report) {
     // List of allowed parameters
-    const allowedParameters = ['page', 'sortby', 'sortdirection', 'saleslogin'];
+    const allowedParameters = ['sortby', 'sortdirection', 'saleslogin'];
 
     // Remove disallowed parameters from the current URL, keeping only specified ones
     url = removeDisallowedParams(new URL(window.location.href), allowedParameters);
     url.searchParams.set('report', report.key);
+    url.searchParams.set('page', '1');
   } else {
     // List of parameters which should be removed
     const parametersToRemove = ['report'];
@@ -32,5 +33,4 @@ export function updateUrl(report) {
   // If the URL has changed, update the browser history
   if (url.toString() !== currentUrl.toString())
     window.history.pushState(null, '', url.toString());
-  // history.push(url.href.replace(url.origin, ''));
 };
