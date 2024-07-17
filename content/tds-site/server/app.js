@@ -6104,7 +6104,7 @@ app.get("/ui-commerce/v3/orders", (req, res) => {
               canDownloadDocument: true,
             },
           ],
-          currency: "GBP",
+          currency: "",
           shipTo: {
             name: "SCC Warehouse",
             address: {
