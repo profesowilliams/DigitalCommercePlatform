@@ -70,7 +70,7 @@ export const customRanges = [
     label: 'Last 7 days',
     range: () => ({
       startDate: addDays(new Date(), -7),
-      endDate: endOfWeek(addDays(new Date(), -7)),
+      endDate: new Date(),
     }),
     isSelected(range) {
       const definedRange = this.range();

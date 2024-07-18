@@ -317,6 +317,21 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
     });
   }, []);
 
+  /**
+   * useEffect hook to update the maximum date in the calendar based on the selected filter type.
+   * 
+   * This effect will run whenever the `filters.type` changes. 
+   * It calls `updateMaxDate` to set the appropriate maximum date in the calendar.
+   */
+  useEffect(() => {
+    console.log('OrderFilterDate::useEffect::type');
+
+    // Update the maximum date in the calendar based on the selected filter type
+    updateMaxDate(filters?.type);
+
+    // The effect will re-run whenever filters.type changes
+  }, [filters?.type]);
+  
   return (
     <div className={`order-filter-accordion__item ${!accordionIsOpen ? 'separator' : ''}`}>
       <div className="order-filter-accordion__item--group"
