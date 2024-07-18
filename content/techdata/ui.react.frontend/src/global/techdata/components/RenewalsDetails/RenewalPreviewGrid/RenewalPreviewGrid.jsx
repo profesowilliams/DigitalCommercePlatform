@@ -113,7 +113,7 @@ function Price({ value }, data, compProps) {
 }
 
 function RenewalPreviewGrid(
-  { data, gridProps, shopDomainPage, isEditing, compProps, isActiveLicense, activeLicenseEdit },
+  { data, gridProps, shopDomainPage, isEditing, compProps, isActiveLicense, activeLicenseEdit, getUpdatedMutableGrid },
   ref
 ) {
   const [modal, setModal] = useState(null);
@@ -191,7 +191,8 @@ function RenewalPreviewGrid(
 
   useEffect(() => {
     if (gridApiRef.current) {
-      gridApiRef.current.setRowData(orignalGridData);
+        getUpdatedMutableGrid(orignalGridData);
+        gridApiRef.current.setRowData(orignalGridData);
     }
   }, [data]);
 

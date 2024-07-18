@@ -61,6 +61,8 @@ function RenewalsDetails(props) {
 
   const [openCancelDialog, setOpenCancelDialog] = useState(false);
 
+  const [mutableData, setMutableData] = useState(null);
+
   const redirectToShop = () => {
     window.location = shopURL;
   };
@@ -72,7 +74,7 @@ function RenewalsDetails(props) {
     const parentRenewalsStyle = renewalsNode?.parentNode?.parentNode?.parentNode;
     const isTDSynnex = parentRenewalsStyle?.classList.contains("cmp-renewals-details__tds");
     const isTechdata = parentRenewalsStyle?.classList.contains("cmp-grid-techdata");
-    let branding = isTechdata ? 'cmp-grid-techdata' : (isTDSynnex ? 'td-synnex' : '');    
+    let branding = isTechdata ? 'cmp-grid-techdata' : (isTDSynnex ? 'td-synnex' : '');
     effects.setCustomState({key:'branding', value:branding});
   },[])
 
@@ -161,8 +163,8 @@ function RenewalsDetails(props) {
     } else {
       setEditMode(true);
     }
-  }  
-  
+  }
+
   const handleCancel = () => {
     setOpenCancelDialog(true);
     setEditMode(true);
@@ -195,37 +197,44 @@ function RenewalsDetails(props) {
     effects.setCustomState({ key: 'isEditingDetails', value: flag });
   };
 
+  const getUpdatedMutableGrid = (resultArr) => {
+    setMutableData(resultArr);
+  }
+
   const updateDetails = async (endUserDetails, resellerDetails, shipToDetails) => {
-    try {      
+    try {
+        const data = mutableData && JSON.stringify(gridRef.current.getMutableGridData()) !== JSON.stringify(mutableData) ?
+            mutableData : gridRef.current.getMutableGridData();
       effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
       renewalsDetails.endUser = endUserDetails || renewalsDetails.endUser;
       renewalsDetails.reseller = resellerDetails || renewalsDetails.reseller;
       renewalsDetails.shipTo = shipToDetails || renewalsDetails.shipTo;
-      renewalsDetails.items = (gridRef.current.getMutableGridData())?.filter(item => !(item.id.includes('Agreement')));
-      
+      renewalsDetails.items = (data)?.filter(item => !(item.id.includes('Agreement')));
+
       if (renewalsDetails.endUser?.eaNumber?.text) {
         renewalsDetails['EANumber'] = renewalsDetails.endUser?.eaNumber?.text;
       }
+
 
       const updated = await updateRenewalDetails(renewalsDetails);
       if(updated) {
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint: componentProp.getStatusEndpoint,
-          id: renewalsDetails.source.id, 
+          id: renewalsDetails.source.id,
           delay: 2000,
           iterations: 7})
-        if(isActiveQuote) {            
+        if(isActiveQuote) {
           const toaster = {isOpen:true, origin:'fromUpdate', isAutoClose:true, isSuccess: true, message:componentProp.quoteEditing.successUpdate}
           effects.setCustomState({ key: 'toaster', value: { ...toaster } });
           if (endUserDetails || resellerDetails)
             changeRefreshDetailApiState();
-          return true;          
+          return true;
         } else {
           const toaster = {isOpen:true, origin:'fromUpdate', isAutoClose:true, isSuccess: false, message:componentProp.quoteEditing?.failedUpdate}
           effects.setCustomState({ key: 'toaster', value: { ...toaster } });
         }
       }
-    } catch (ex) {      
+    } catch (ex) {
       const errorTitle = "Could not save changes.";
       let errorMessage = 'We are sorry, your update could not be processed, please try again later.';
       if(ex.status === 200 && ex?.data?.salesContentEmail) {
@@ -239,9 +248,9 @@ function RenewalsDetails(props) {
 
   const updateRenewalDetails = async (details) => {
     const { POAllowedLength, ...payload} = mapRenewalForUpdateDetails(details);
-    const updateResponse = await post(componentProp.updateRenewalOrderEndpoint, payload);  
+    const updateResponse = await post(componentProp.updateRenewalOrderEndpoint, payload);
     const updateError = updateResponse?.data?.error;
-    if(updateError?.isError) throw updateResponse; 
+    if(updateError?.isError) throw updateResponse;
     return true;
   }
 
@@ -281,6 +290,7 @@ function RenewalsDetails(props) {
                             isEditing={false}
                             shopDomainPage={componentProp.shopDomainPage}
                             isActiveLicense={true}
+                            getUpdatedMutableGrid={getUpdatedMutableGrid}
                           />
                       </AccordionDetails>
                     </Accordion>
@@ -313,6 +323,7 @@ function RenewalsDetails(props) {
                               isEditing={!toggleEdit}
                               shopDomainPage={componentProp.shopDomainPage}
                               activeLicenseEdit={renewalsDetails?.itemsActive?.length > 0}
+                              getUpdatedMutableGrid={getUpdatedMutableGrid}
                             />
                         </AccordionDetails>
                       </Accordion>
@@ -343,6 +354,7 @@ function RenewalsDetails(props) {
                         }}
                         isEditing={!toggleEdit}
                         shopDomainPage={componentProp.shopDomainPage}
+                        getUpdatedMutableGrid={getUpdatedMutableGrid}
                       />
                   </>
             )
