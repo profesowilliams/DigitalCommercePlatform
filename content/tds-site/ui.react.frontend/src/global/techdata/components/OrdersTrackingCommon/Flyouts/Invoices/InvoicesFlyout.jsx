@@ -6,24 +6,45 @@ import { usGet } from '../../../../../../utils/api';
 import ToolTip from '../../../BaseGrid/ToolTip';
 import { useOrderTrackingStore } from '../../Store/OrderTrackingStore';
 
+/**
+ * InvoicesFlyout component that handles displaying and downloading invoices.
+ * 
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.gridConfig - Configuration for the grid.
+ * @param {string} props.subheaderReference - Reference for the subheader.
+ * @param {Function} props.downloadAllFile - Function to download all files.
+ * @param {Function} props.openFilePdf - Function to open a PDF file.
+ */
 function InvoicesFlyout({
   gridConfig,
-  invoicesColumnList: columnList,
   subheaderReference,
-  isTDSynnex,
   downloadAllFile,
   openFilePdf,
 }) {
+  // Retrieve invoicesFlyout configuration from the store
   const invoicesFlyoutConfig = useOrderTrackingStore((st) => st.invoicesFlyout);
   const [showTooltip, setShowTooltip] = useState(false);
   const effects = useOrderTrackingStore((st) => st.effects);
   const [selected, setSelected] = useState([]);
   const [invoicesResponse, setInvoicesResponse] = useState(null);
-  const uiTranslations = useOrderTrackingStore(
-    (state) => state.uiTranslations
-  );
-  const translations = uiTranslations?.['OrderTracking.MainGrid.InvoicesFlyout'];
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const translations = uiTranslations?.['OrderTracking.Common.InvoicesFlyout'];
 
+  // Define the columns for the invoices table
+  const columnList = [
+    {
+      columnLabel: "Column_InvoiceNo_Label",
+      columnKey: "id",
+    },
+    {
+      columnLabel: "Column_ShipDate_Label",
+      columnKey: "dateFormatted",
+    },
+  ];
+
+  /**
+   * Closes the invoices flyout.
+   */
   const closeFlyout = () => {
     effects.setCustomState({
       key: 'invoicesFlyout',
@@ -32,6 +53,7 @@ function InvoicesFlyout({
     setSelected([]);
   };
 
+  // Configuration for the table flyout
   const config = {
     ...invoicesFlyoutConfig,
     data: invoicesFlyoutConfig?.data || invoicesResponse,
@@ -44,6 +66,12 @@ function InvoicesFlyout({
     handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
+
+  /**
+   * Fetches invoices from the API.
+   *
+   * @returns {Promise<Object>} The result from the API call.
+   */
   const getInvoices = async () => {
     try {
       const result = await usGet(
@@ -55,6 +83,9 @@ function InvoicesFlyout({
     }
   };
 
+  /**
+   * Handles downloading the selected invoices.
+   */
   const handleDownload = () => {
     closeFlyout();
     if (selected.length === 1) {
@@ -64,22 +95,40 @@ function InvoicesFlyout({
     }
   };
 
+  /**
+   * Handles downloading a single invoice.
+   *
+   * @param {string} clickedId - The ID of the invoice to download.
+   */
   const handleSingleDownload = (clickedId) => {
     openFilePdf('Invoice', config?.id, clickedId);
   };
 
+  /**
+   * Determines if the checkbox should be enabled for a row.
+   *
+   * @param {Object} row - The row data.
+   * @returns {boolean} True if the checkbox should be enabled, otherwise false.
+   */
   const handleCheckboxEnabled = (row) => {
     return row.canDownloadDocument;
   };
 
+  /**
+   * Determines if any checkboxes should be enabled.
+   *
+   * @returns {boolean} True if any checkboxes should be enabled, otherwise false.
+   */
   const checkboxEnabled = () => {
     return rows.filter((n) => n.canDownloadDocument).length > 0;
   };
 
+  /**
+   * Effect to fetch invoices when the invoicesFlyoutConfig id changes.
+   */
   useEffect(() => {
     setInvoicesResponse(null);
-    !invoicesFlyoutConfig?.data &&
-      invoicesFlyoutConfig?.id &&
+    if (!invoicesFlyoutConfig?.data && invoicesFlyoutConfig?.id) {
       getInvoices()
         .then((result) => {
           setInvoicesResponse(result?.data?.content);
@@ -87,6 +136,7 @@ function InvoicesFlyout({
         .catch((error) => {
           console.error('Error:', error);
         });
+    }
   }, [invoicesFlyoutConfig?.id]);
 
   return (

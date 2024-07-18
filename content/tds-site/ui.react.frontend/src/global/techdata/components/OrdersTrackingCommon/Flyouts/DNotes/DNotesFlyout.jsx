@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import BaseFlyout from '../../../BaseFlyout/BaseFlyout';
 import FlyoutTable from '../../../FlyoutTable/FlyoutTable';
 import useTableFlyout from '../../../../hooks/useTableFlyout';
@@ -6,23 +6,45 @@ import { usGet } from '../../../../../../utils/api';
 import ToolTip from '../../../BaseGrid/ToolTip';
 import { useOrderTrackingStore } from '../../Store/OrderTrackingStore';
 
+/**
+ * DNotesFlyout component that handles displaying and downloading delivery notes.
+ * 
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.gridConfig - Configuration for the grid.
+ * @param {string} props.subheaderReference - Reference for the subheader.
+ * @param {Function} props.downloadAllFile - Function to download all files.
+ * @param {Function} props.openFilePdf - Function to open a PDF file.
+ */
 function DNotesFlyout({
   gridConfig,
-  dNoteColumnList: columnList,
   subheaderReference,
   downloadAllFile,
   openFilePdf,
 }) {
+  // Retrieve delivery notes flyout configuration from the store
   const dNoteFlyoutConfig = useOrderTrackingStore((st) => st.dNotesFlyout);
   const effects = useOrderTrackingStore((st) => st.effects);
   const [showTooltip, setShowTooltip] = useState(false);
   const [selected, setSelected] = useState([]);
   const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
-  const uiTranslations = useOrderTrackingStore(
-    (state) => state.uiTranslations
-  );
-  const translations = uiTranslations?.['OrderTracking.MainGrid.DnoteFlyout'];
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const translations = uiTranslations?.['OrderTracking.Common.DnoteFlyout'];
 
+  // Define the columns for the delivery notes table
+  const columnList = [
+    {
+      columnLabel: "Column_DNote_Label",
+      columnKey: "id",
+    },
+    {
+      columnLabel: "Column_ShipDate_Label",
+      columnKey: "actualShipDateFormatted",
+    },
+  ];
+
+  /**
+   * Closes the delivery notes flyout.
+   */
   const closeFlyout = () => {
     effects.setCustomState({
       key: 'dNotesFlyout',
@@ -31,6 +53,7 @@ function DNotesFlyout({
     setSelected([]);
   };
 
+  // Configuration for the table flyout
   const config = {
     ...dNoteFlyoutConfig,
     data: dNoteFlyoutConfig?.data || deliveryNotesResponse,
@@ -44,6 +67,11 @@ function DNotesFlyout({
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
 
+  /**
+   * Fetches delivery notes from the API.
+   *
+   * @returns {Promise<Object>} The result from the API call.
+   */
   const getDeliveryNotes = async () => {
     try {
       const result = await usGet(
@@ -55,6 +83,9 @@ function DNotesFlyout({
     }
   };
 
+  /**
+   * Handles downloading the selected delivery notes.
+   */
   const handleDownload = () => {
     closeFlyout();
     if (selected.length === 1) {
@@ -64,22 +95,40 @@ function DNotesFlyout({
     }
   };
 
+  /**
+   * Handles downloading a single delivery note.
+   *
+   * @param {string} clickedId - The ID of the delivery note to download.
+   */
   const handleSingleDownload = (clickedId) => {
     openFilePdf('DNote', config?.id, clickedId);
   };
 
+  /**
+   * Determines if the checkbox should be enabled for a row.
+   *
+   * @param {Object} row - The row data.
+   * @returns {boolean} True if the checkbox should be enabled, otherwise false.
+   */
   const handleCheckboxEnabled = (row) => {
     return row.canDownloadDocument;
   };
 
+  /**
+   * Determines if any checkboxes should be enabled.
+   *
+   * @returns {boolean} True if any checkboxes should be enabled, otherwise false.
+   */
   const checkboxEnabled = () => {
     return rows.filter((n) => n.canDownloadDocument).length > 0;
   };
 
+  /**
+   * Effect to fetch delivery notes when the dNoteFlyoutConfig id changes.
+   */
   useEffect(() => {
     setDeliveryNotesResponse(null);
-    !dNoteFlyoutConfig?.data &&
-      dNoteFlyoutConfig?.id &&
+    if (!dNoteFlyoutConfig?.data && dNoteFlyoutConfig?.id) {
       getDeliveryNotes()
         .then((result) => {
           setDeliveryNotesResponse(result?.data?.content);
@@ -87,7 +136,9 @@ function DNotesFlyout({
         .catch((error) => {
           console.error('Error:', error);
         });
+    }
   }, [dNoteFlyoutConfig?.id]);
+
 
   return (
     <BaseFlyout

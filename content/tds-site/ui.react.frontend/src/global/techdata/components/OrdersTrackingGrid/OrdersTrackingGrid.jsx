@@ -22,7 +22,7 @@ import {
 } from './utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import MainGridHeader from './MainGrid/MainGridHeader';
-import { addCurrencyToTotalColumn, mapServiceData, buildQueryString, } from './utils/gridUtils';
+import { addCurrencyToTotalColumn, mapServiceData } from './utils/gridUtils';
 import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 import { getSessionInfo } from '../../../../utils/user/get';
@@ -30,29 +30,9 @@ import { usGet } from '../../../../utils/api';
 import useGet from '../../hooks/useGet';
 import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
-import { getHeaderInfo } from '../../../../utils/headers/get';
 import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
 import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
-
-const translationDictionaries = [
-  'OrderTracking.FreetextSearchFields',
-  'OrderTracking.MainGrid',
-  'OrderTracking.MainGrid.Items',
-  'OrderTracking.MainGrid.OrderLineDropdown',
-  'OrderTracking.MainGrid.Filters',
-  'OrderTracking.MainGrid.Reports',
-  'OrderTracking.MainGrid.Search',
-  'OrderTracking.MainGrid.Export',
-  'OrderTracking.MainGrid.OrderModify',
-  'OrderTracking.MainGrid.SettingsFlyout',
-  'OrderTracking.MainGrid.InvoicesFlyout',
-  'OrderTracking.MainGrid.DnoteFlyout',
-  'OrderTracking.MainGrid.NoAccessScreen',
-  'OrderTracking.MainGrid.Pagination',
-  'OrderTracking.MainGrid.SearchNoResult',
-  'OrderTracking.MainGrid.ProductReplacmentFlyout',
-  'OrderTracking.MainGrid.OrderStatuses',
-];
+import { fetchTranslations } from './utils/translationsUtils';
 
 function OrdersTrackingGrid(props) {
   console.log('OrdersTrackingGrid::init');
@@ -454,16 +434,6 @@ function OrdersTrackingGrid(props) {
     return results.data.content;
   };
 
-  const fetchUITranslations = async () => {
-    const results = await usGet(
-      // TODO: cacheInSec - cache value should be configurable? or hardcoded 3600?
-      `${componentProp.uiLocalizeServiceDomain}/v1` +
-      buildQueryString(translationDictionaries) +
-      `&cacheInSec=900&country=` + getHeaderInfo().acceptLanguage
-    );
-    return results.data;
-  };
-
   const [settingsResponse] = useGet(
     `${gridConfig.uiProactiveServiceDomain}/v1`,
     'settings'
@@ -482,7 +452,7 @@ function OrdersTrackingGrid(props) {
 
     setFeatureFlags(refinements?.featureFlags);
 
-    const uiTranslations = await fetchUITranslations();
+    const uiTranslations = await fetchTranslations(componentProp);
     setTranslations(uiTranslations);
 
     document.title = uiTranslations?.['OrderTracking.MainGrid']?.Title;

@@ -38,7 +38,7 @@ function OrderModificationFlyout({
   content,
   gridRef = null,
   rowsToGrayOutTDNameRef = null,
-  setOrderModifyHeaderInfo = () => {},
+  setOrderModifyHeaderInfo = () => { },
   onQueryChanged,
 }) {
   const { id = '' } = getUrlParams();
@@ -295,7 +295,7 @@ function OrderModificationFlyout({
   useEffect(() => {
     setIsDisabled(
       (!orderChanged || doesReasonDropdownHaveEmptyItems) &&
-        newlyAddedItems.length === 0
+      newlyAddedItems.length === 0
     );
   }, [orderChanged, doesReasonDropdownHaveEmptyItems, newlyAddedItems]);
 
@@ -319,6 +319,7 @@ function OrderModificationFlyout({
       setOrderModificationResponse(null);
     }
   }, [orderModificationConfig?.show]);
+
   return (
     <BaseFlyout
       open={orderModificationConfig?.show}

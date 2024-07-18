@@ -1,4 +1,4 @@
-﻿import { usGet } from "../../../../../utils/api";
+import { usGet } from "../../../../../utils/api";
 import { buildQueryString } from '../../OrdersTrackingGrid/utils/gridUtils'; // move to common
 import { getHeaderInfo } from '../../../../../utils/headers/get';
 
@@ -6,11 +6,24 @@ import { getHeaderInfo } from '../../../../../utils/headers/get';
 const translationDictionaries = [
   'OrderTracking.Common.InvoicesFlyout',
   'OrderTracking.Common.DnoteFlyout',
-  'OrderTracking.Details',
-  'OrderTracking.Details.Export',
-  'OrderTracking.Details.Cards',
+  'OrderTracking.FreetextSearchFields',
+  'OrderTracking.MainGrid',
+  'OrderTracking.MainGrid.Items',
+  'OrderTracking.MainGrid.OrderLineDropdown',
+  'OrderTracking.MainGrid.Filters',
+  'OrderTracking.MainGrid.Reports',
+  'OrderTracking.MainGrid.Search',
+  'OrderTracking.MainGrid.Export',
+  'OrderTracking.MainGrid.OrderModify',
+  'OrderTracking.MainGrid.SettingsFlyout',
+  'OrderTracking.MainGrid.NoAccessScreen',
+  'OrderTracking.MainGrid.Pagination',
+  'OrderTracking.MainGrid.SearchNoResult',
+  'OrderTracking.MainGrid.ProductReplacmentFlyout',
+  'OrderTracking.MainGrid.OrderStatuses',
 ];
 
+//TODO: move to common, the same method is in Details Page
 /**
  * Fetches UI translations from the localization service.
  * @param {Object} config - Configuration object containing the domain information.
@@ -27,7 +40,3 @@ export async function fetchTranslations(config) {
   // Return the translation data from the response
   return results.data;
 };
-
-export function setDocumentTitle(translations) {
-  document.title = translations['OrderTracking.Details']?.Title;
-}

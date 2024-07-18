@@ -26,9 +26,7 @@ const MainGridFlyouts = ({
         store={useOrderTrackingStore}
         gridConfig={gridConfig}
         dNotesFlyout={gridConfig.dNotesFlyout}
-        dNoteColumnList={gridConfig.dNoteColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        isTDSynnex={isTDSynnex}
         downloadAllFile={(flyoutType, orderId, selectedId) =>
           downloadAllFile(flyoutType, orderId, selectedId)
         }
@@ -40,9 +38,7 @@ const MainGridFlyouts = ({
         store={useOrderTrackingStore}
         gridConfig={gridConfig}
         invoicesFlyout={gridConfig.invoicesFlyout}
-        invoicesColumnList={gridConfig.invoicesColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        isTDSynnex={isTDSynnex}
         downloadAllFile={(flyoutType, orderId, selectedId) =>
           downloadAllFile(flyoutType, orderId, selectedId)
         }

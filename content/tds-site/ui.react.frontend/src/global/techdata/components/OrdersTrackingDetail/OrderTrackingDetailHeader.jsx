@@ -11,6 +11,21 @@ import XMLMessageModal from '../OrdersTrackingGrid/Modals/XMLMessageModal';
 import MigrationInfoBox from '../MigrationInfoBox/MigrationInfoBox';
 import { fetchFiltersRefinements } from './utils/fetchUtils';
 
+/**
+ * OrderTrackingDetailHeader component.
+ *
+ * This component handles the header section of the order tracking details page.
+ * It manages the release order functionality, alerts, and displays order-related information.
+ *
+ * @param {object} props - The component props.
+ * @param {object} props.config - The configuration object.
+ * @param {object} props.orderData - The data of the order being tracked.
+ * @param {function} props.openFilePdf - Function to open PDF files.
+ * @param {object} props.componentProps - Additional properties for the component.
+ * @param {function} props.setOrderModifyHeaderInfo - Function to modify order header information.
+ * @param {function} props.onProductChange - Function to handle product change.
+ * @param {boolean} props.isLoading - Indicates if the data is currently loading.
+ */
 const OrderTrackingDetailHeader = ({
   config,
   orderData,
@@ -20,11 +35,14 @@ const OrderTrackingDetailHeader = ({
   onProductChange,
   isLoading
 }) => {
+  // Extract action labels from config
   const labels = config?.actionLabels;
 
+  // Get effects from the store
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setFeatureFlags } = effects;
 
+  // State variables for managing component state
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [openXMLAlert, setOpenXMLAlert] = useState(false);
@@ -33,6 +51,9 @@ const OrderTrackingDetailHeader = ({
   const [poNumber, setPoNumber] = useState('');
   const [id, setId] = useState('');
 
+  /**
+   * Handles the release order action.
+   */
   const handleReleaseOrder = async () => {
     setReleaseOrderShow(false);
     const params = {
@@ -61,12 +82,18 @@ const OrderTrackingDetailHeader = ({
       });
   };
 
+  /**
+   * Fetches filter refinements and sets feature flags.
+   */
   useEffect(async () => {
     console.log('OrderTrackingDetailHeader::useEffect');
     const refinements = await fetchFiltersRefinements(config);
     setFeatureFlags(refinements?.featureFlags);
   }, []);
 
+  /**
+   * Updates component state based on order data.
+   */
   useEffect(async () => {
     console.log('OrderTrackingDetailHeader::useEffect::orderData');
 
@@ -75,7 +102,6 @@ const OrderTrackingDetailHeader = ({
     setInfoBoxEnable(orderData.sapOrderMigration?.referenceType?.length > 0);
     setPoNumber(orderData.customerPO);
     setId(orderData.orderNumber);
-
   }, [orderData]);
 
   return (

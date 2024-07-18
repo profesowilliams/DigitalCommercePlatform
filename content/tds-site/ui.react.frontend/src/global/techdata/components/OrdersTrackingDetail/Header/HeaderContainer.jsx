@@ -33,70 +33,83 @@ const HeaderContainer = ({
   );
 
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
-  const [currency, setCurrency] = useState(null);
-  const [orderEditable, setOrderEditable] = useState(false);
   const [isDeliveryNoteDownloadable, setIsDeliveryNoteDownloadable] = useState(false);
   const [isInvoiceDownloadable, setIsInvoiceDownloadable] = useState(false);
   const [menuActionsItems, setMenuActionsItems] = useState([]);
 
   const handleActionMouseOver = () => {
+    console.log('HeaderContainer::handleActionMouseOver');
     setActionsDropdownVisible(true);
   };
 
   const handleActionMouseLeave = () => {
+    console.log('HeaderContainer::handleActionMouseLeave');
     setActionsDropdownVisible(false);
   };
 
   const handleDownloadDNote = () => {
-    if (isDeliveryNoteDownloadable) {
-      openFilePdf('DNote', id, content?.deliveryNotes[0]?.id);
+    console.log('HeaderContainer::handleDownloadDNote');
+    if (isDeliveryNoteDownloadable && content?.orderNumber && content?.deliveryNotes[0]?.id) {
+      openFilePdf('DNote', content.orderNumber, content.deliveryNotes[0].id);
     }
   };
 
   const handleDownloadInvoice = () => {
-    if (isInvoiceDownloadable) {
-      openFilePdf('Invoice', id, content?.invoices[0]?.id);
+    console.log('HeaderContainer::handleDownloadInvoice');
+    if (isInvoiceDownloadable && content?.orderNumber && content?.invoices[0]?.id) {
+      openFilePdf('Invoice', content.orderNumber, content?.invoices[0].id);
     }
   };
 
   const triggerOrderModificationFlyout = () => {
-    currency && orderEditable &&
+    console.log('HeaderContainer::triggerOrderModificationFlyout');
+    content?.paymentDetails?.currency && content?.orderEditable === true && content?.orderNumber &&
       setCustomState({
         key: 'orderModificationFlyout',
         value: {
           data: null,
-          id,
+          id: content.orderNumber,
           show: true,
-          currency,
+          currency: content.paymentDetails.currency,
         },
       });
   };
 
   const triggerDNotesFlyout = () => {
-    setCustomState({
+    console.log('HeaderContainer::triggerDNotesFlyout');
+    content?.orderNumber && content?.customerPO && content?.deliveryNotes && setCustomState({
       key: 'dNotesFlyout',
       value: {
-        data: content?.deliveryNotes,
+        data: content.deliveryNotes,
         show: true,
-        id,
-        reseller: poNumber,
+        id: content.orderNumber,
+        reseller: content.customerPO,
       },
     });
   };
 
   const triggerInvoicesFlyout = () => {
-    setCustomState({
+    console.log('HeaderContainer::invoicesFlyout');
+    content?.orderNumber && content?.customerPO && content?.invoices && setCustomState({
       key: 'invoicesFlyout',
-      value: { data: content?.invoices, show: true, id, reseller: poNumber },
+      value: {
+        data: content.invoices,
+        show: true,
+        id: content.orderNumber,
+        reseller: content.customerPO
+      },
     });
   };
 
   const triggerExport = () => {
+    console.log('HeaderContainer::triggerExport');
     handleDownloadExcelExport({ translations: exportTranslations, config, effects });
   };
 
   const triggerXMLMessage = async () => {
-    const url = `${componentProps.uiCommerceServiceDomain}/v3/Order/ITOrderXML/${id}`;
+    console.log('HeaderContainer::triggerXMLMessage');
+
+    const url = `${componentProps.uiCommerceServiceDomain}/v3/Order/ITOrderXML/${content?.orderNumber}`;
     await usGet(url)
       .then((response) => {
         if (response?.status === 200) {
@@ -122,8 +135,6 @@ const HeaderContainer = ({
 
     if (!content) return;
 
-    setOrderEditable(content.orderEditable === true);
-
     const firstDeliveryNote = content.deliveryNotes ? content.deliveryNotes[0] : []
     setIsDeliveryNoteDownloadable(firstDeliveryNote?.canDownloadDocument);
 
@@ -131,14 +142,13 @@ const HeaderContainer = ({
     setIsInvoiceDownloadable(firstInvoice?.canDownloadDocument);
 
     console.log('HeaderContainer::useEffect::content::currency[' + content?.paymentDetails?.currency + ']');
-    setCurrency(content?.paymentDetails?.currency);
 
     const areDeliveryNotesAvailable = content.deliveryNotes?.length > 1 || (content.deliveryNotes?.length === 1 && firstDeliveryNote?.canDownloadDocument);
     const areInvoicesAvailable = content.invoices?.length > 1 || (content.invoices?.length === 1 && firstInvoice?.canDownloadDocument);
-    const isReleaseTheOrderAvailable = hasOrderModificationRights && content.shipComplete === true && content.status !== 'Completed' && content.orderEditable;
+    const isReleaseTheOrderAvailable = hasOrderModificationRights && content.shipComplete === true && content.status !== 'Completed' && content.orderEditable === true;
     const areSerialNumbersAvailable = content.serialsAny === true;
     const areXMLMessageAvailable = content.xmlAvailable === true && userData?.isInternalUser;
-    const isModifiable = hasOrderModificationRights && orderEditable;
+    const isModifiable = hasOrderModificationRights && content.orderEditable === true;
     const hasMultipleDNotes = content?.deliveryNotes?.length > 1;
     const hasMultipleInvoices = content?.invoices?.length > 1;
 

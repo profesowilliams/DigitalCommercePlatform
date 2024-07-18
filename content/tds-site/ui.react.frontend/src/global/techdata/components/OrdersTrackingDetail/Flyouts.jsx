@@ -31,7 +31,6 @@ const Flyouts = ({
       <DNotesFlyout
         gridConfig={config}
         dNotesFlyout={config?.dNotesFlyout}
-        dNoteColumnList={config?.dNoteColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
         downloadAllFile={(flyoutType, orderId, selectedId) =>
           downloadAllFile(flyoutType, orderId, selectedId)
@@ -43,7 +42,6 @@ const Flyouts = ({
       <InvoicesFlyout
         gridConfig={config}
         invoicesFlyout={config?.invoicesFlyout}
-        invoicesColumnList={config?.invoicesColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
         downloadAllFile={(flyoutType, orderId, selectedId) =>
           downloadAllFile(flyoutType, orderId, selectedId)
