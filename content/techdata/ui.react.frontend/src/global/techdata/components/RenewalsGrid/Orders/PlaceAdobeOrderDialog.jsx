@@ -24,7 +24,7 @@ function PlaceAdobeOrderDialog({
   const {
     placeOrderDialogTitle,
     termsAndConditions,
-    adobeTermsAndConditionsLink,
+    termsAndConditionsLink,
     adobeResellerTermsAndConditionsLink,
     successSubmission,
     failedSubmission,
@@ -75,7 +75,7 @@ function PlaceAdobeOrderDialog({
   const constructTermsCondLink = (text) => {
     if (!text) return null;
     const [label, terms = ''] = text.split(/\b(?=terms .+ conditions)/gi);
-    const adobeLink = getDictionaryValueOrKey(adobeTermsAndConditionsLink);
+    const adobeLink = getDictionaryValueOrKey(termsAndConditionsLink);
     const adobeResellerLink = getDictionaryValueOrKey(
       adobeResellerTermsAndConditionsLink
     );

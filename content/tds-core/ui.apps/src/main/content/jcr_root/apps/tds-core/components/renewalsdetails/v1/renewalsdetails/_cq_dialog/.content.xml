@@ -501,12 +501,6 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                                 fieldLabel="Terms and Conditions Link"
                                                                 name="./termsAndConditionsLink"/>
-                                                            <adobeTermsAndConditionsLink
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                                fieldDescription="details.renewal.orders.label.adobeTermsAndConditionsLink"
-                                                                fieldLabel="Adobe Terms and Conditions Link"
-                                                                name="./adobeTermsAndConditionsLink"/>
                                                             <adobeResellerTermsAndConditionsLink
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"

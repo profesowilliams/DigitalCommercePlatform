@@ -5237,8 +5237,6 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "mainDashboard.renewal.newPurchaseFlyout.label.addProducts": "Add products",
     "mainDashboard.renewal.newPurchaseFlyout.label.searchForAdditionalSoftware":
       "Search for additional software products you would like to add to your quote. Enter the Vendor part № followed by the desired quantity.",
-    "details.renewal.orders.label.adobeTermsAndConditionsLink":
-      "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions.html",
     "details.renewal.orders.label.adobeResellerTermsAndConditionsLink":
       "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions/vendor-pass-through-terms.html",
     "mainDashboard.renewal.newPurchaseFlyout.label.searchVendorPartNo":

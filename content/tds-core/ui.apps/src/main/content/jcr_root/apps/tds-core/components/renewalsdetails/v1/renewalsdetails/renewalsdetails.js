@@ -412,7 +412,6 @@ use(['../../../common/utils.js'], function(utils) {
       "placeOrderDialogTitle",
       "termsAndConditions",
       "termsAndConditionsLink",
-      "adobeTermsAndConditionsLink",
       "adobeResellerTermsAndConditionsLink",
       "successSubmission",
       "failedSubmission",
