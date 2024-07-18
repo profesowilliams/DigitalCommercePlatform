@@ -26,6 +26,9 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
   const startDate = !filters?.from || isNaN(moment(filters?.from).toDate().getTime()) ? null : moment(filters?.from).toDate();
   const endDate = !filters?.to || isNaN(moment(filters?.to).toDate().getTime()) ? null : moment(filters?.to).toDate();
 
+  const minDate = new Date('2010');
+  const [maxDate, setMaxDate] = useState(new Date);
+
   const [currentStartDate, setCurrentStartDate] = useState(!startDate ? '' : moment(startDate).format(translations?.DateFormat));
   const [currentEndDate, setCurrentEndDate] = useState(!endDate ? '' : moment(endDate).format(translations?.DateFormat));
 
@@ -113,6 +116,9 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
 
     // Set the updated filters
     setFilters(newFilter);
+
+    // Set calendar max date
+    updateMaxDate(value);
 
     // Trigger the onChange callback with the updated filters
     onChange(newFilter);
@@ -231,6 +237,21 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
   };
 
   /**
+   * Updates the maximum date based on the type provided.
+   *
+   * @param {string} type - The type of date to update the maximum date for.
+   *                        If the type is 'etaDate', the maximum date is set to one year from the current date.
+   *                        Otherwise, the maximum date is set to the current date.
+   */
+  const updateMaxDate = (type) => {
+    console.log('OrderFilterDate::updateMaxDate');
+
+    setMaxDate(type === 'etaDate'
+      ? new Date(new Date().setFullYear(new Date().getFullYear() + 1))  // Set max date to one year from current date for 'etaDate'
+      : new Date);  // Set max date to current date for other types
+  };
+
+  /**
    * Exposes imperative methods to manipulate the date filters from the parent component
    * @param {React.Ref} ref - Reference object to expose imperative methods
    */
@@ -255,12 +276,17 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
     set(date) {
       console.log('OrderFilterDate::set');
 
-      // Update the filters with the provided date object
-      onFilterChange({
+      const newFilter = {
         type: date?.type || filterDateOptions[0].key,
         from: date?.from,
         to: date?.to
-      });
+      };
+
+      // Update the filters with the provided date object
+      onFilterChange(newFilter);
+
+      // Set calendar max date
+      updateMaxDate(newFilter.type);
     }
   }));
 
@@ -269,13 +295,20 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
    * Sets default filter values if `filters.type` is not already set
    */
   useEffect(() => {
+    console.log('OrderFilterDate::useEffect');
+
+    const defaultFilter = {
+      type: filterDateOptions[0].key, // Set the first key from `filterDateOptions` as default type
+      from: undefined,
+      to: undefined
+    };
+
     if (!filters?.type) {
-      setFilters({
-        type: filterDateOptions[0].key, // Set the first key from `filterDateOptions` as default type
-        from: undefined,
-        to: undefined
-      });
+      setFilters(defaultFilter);
     }
+
+    // Set calendar max date
+    updateMaxDate(defaultFilter.type);
 
     // Call the onDatesChange function to handle any initial setup or state updates
     onDatesChange({
@@ -307,7 +340,7 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
             moveRangeOnFirstSelection={false}
             staticRanges={customRanges}
             months={1}
-            maxDate={new Date()}
+            maxDate={maxDate}
             minDate={new Date('2010')}
             direction="vertical"
             onChange={handleSelect}
@@ -319,6 +352,8 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
           translations={translations}
           startDate={currentStartDate}
           endDate={currentEndDate}
+          minDate={minDate}
+          maxDate={maxDate}
           onChange={handleSelect}
         />
       </>}

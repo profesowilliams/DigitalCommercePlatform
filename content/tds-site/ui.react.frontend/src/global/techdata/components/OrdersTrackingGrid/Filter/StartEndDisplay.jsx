@@ -9,9 +9,11 @@ import moment from 'moment';
  * @param {Object} props.translations - Translations object, including date format.
  * @param {Date|string} props.startDate - Initial start date value.
  * @param {Date|string} props.endDate - Initial end date value.
+ * @param {Date|object} props.minDate - Min date.
+ * @param {Date|object} props.maxDate - Max date.
  * @param {Function} props.onChange - Function called when the date values change.
  */
-export default function StartEndDisplay({ translations, startDate, endDate, onChange }) {
+export default function StartEndDisplay({ translations, startDate, endDate, minDate, maxDate, onChange }) {
   console.log('StartEndDisplay::init');
 
   /**
@@ -81,6 +83,8 @@ export default function StartEndDisplay({ translations, startDate, endDate, onCh
           <MaskedDateInput
             translations={translations}
             value={endDate}
+            minDate={minDate}
+            maxDate={maxDate}
             onChange={onEndDateChange}
           />
         </div>

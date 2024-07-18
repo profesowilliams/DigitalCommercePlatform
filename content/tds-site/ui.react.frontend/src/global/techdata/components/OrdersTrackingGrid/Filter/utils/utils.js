@@ -67,9 +67,9 @@ export const customRanges = [
     },
   },
   {
-    label: 'Previous Week',
+    label: 'Last 7 days',
     range: () => ({
-      startDate: startOfWeek(addDays(new Date(), -7)),
+      startDate: addDays(new Date(), -7),
       endDate: endOfWeek(addDays(new Date(), -7)),
     }),
     isSelected(range) {
@@ -81,7 +81,7 @@ export const customRanges = [
     },
   },
   {
-    label: 'Current Month',
+    label: 'This Month',
     range: () => ({
       startDate: startOfMonth(new Date()),
       endDate: new Date(),
@@ -95,23 +95,9 @@ export const customRanges = [
     },
   },
   {
-    label: 'Previous Month',
+    label: 'Last 30 days',
     range: () => ({
-      startDate: startOfMonth(addMonths(new Date(), -1)),
-      endDate: endOfMonth(addMonths(new Date(), -1)),
-    }),
-    isSelected(range) {
-      const definedRange = this.range();
-      return (
-        isSameDay(range.startDate, definedRange.startDate) &&
-        isSameDay(range.endDate, definedRange.endDate)
-      );
-    },
-  },
-  {
-    label: 'Prev 6 Months',
-    range: () => ({
-      startDate: startOfMonth(addMonths(new Date(), -6)),
+      startDate: addDays(new Date(), -30),
       endDate: new Date(),
     }),
     isSelected(range) {
@@ -126,6 +112,20 @@ export const customRanges = [
     label: 'This year',
     range: () => ({
       startDate: startOfYear(new Date()),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameDay(range.startDate, definedRange.startDate) &&
+        isSameDay(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: 'Today',
+    range: () => ({
+      startDate: new Date(),
       endDate: new Date(),
     }),
     isSelected(range) {

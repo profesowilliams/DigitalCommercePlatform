@@ -8,9 +8,11 @@ import moment from 'moment';
  * @param {Object} props - Properties passed to the component.
  * @param {Object} props.translations - Translations object, including date format.
  * @param {Date|string} props.value - Initial date value.
+ * @param {Date|object} props.minDate - Min date.
+ * @param {Date|object} props.maxDate - Max date.
  * @param {Function} props.onChange - Function called when the date value changes.
  */
-const MaskedDateInput = ({ translations, value, onChange }) => {
+const MaskedDateInput = ({ translations, value, minDate, maxDate, onChange }) => {
   console.log('MaskedDateInput::init[' + value + ']');
 
   // State to store the internal value of the input field
@@ -43,14 +45,14 @@ const MaskedDateInput = ({ translations, value, onChange }) => {
       // If the date is invalid, clear the input field
       setInternalValue('');
     } else {
-      if (date > new Date()) {
-        // If the date is in the future, set the date to today
-        setInternalValue(moment().format(translations?.DateFormat));
-        onChange(new Date());
-      } else if (date < new Date('2010')) {
-        // If the date is in the past, set the date to 2010-01-01
-        setInternalValue(moment('2010-01-01').format(translations?.DateFormat));
-        onChange(new Date('2010'));
+      if (date > maxDate) {
+        // If the date is bigger than maxDate, set the date to maxDate
+        setInternalValue(moment(maxDate).format(translations?.DateFormat));
+        onChange(maxDate);
+      } else if (date < minDate) {
+        // If the date is below than minDate, set the date to minDate
+        setInternalValue(moment(minDate).format(translations?.DateFormat));
+        onChange(minDate);
       } else {
         // Otherwise, set the date to the parsed date
         onChange(date);

@@ -102,8 +102,6 @@ span.rdrInRange {
 }
 
 .rdrDayStartOfMonth .rdrEndEdge, .rdrDayStartOfMonth .rdrInRange, .rdrDayStartOfWeek .rdrEndEdge, .rdrDayStartOfWeek .rdrInRange {
-  //border-top-left-radius: 0 !important;
-  //border-bottom-left-radius: 0 !important;
   left: 0px !important;
 }
 
@@ -112,8 +110,6 @@ span.rdrInRange {
 }
 
 .rdrDayEndOfMonth .rdrInRange, .rdrDayEndOfMonth .rdrStartEdge, .rdrDayEndOfWeek .rdrInRange {
-  //border-top-right-radius: 0 !important;
-  //border-bottom-right-radius: 0 !important;
   right: 0px !important;
 }
 
@@ -188,7 +184,7 @@ button.rdrStaticRange {
   border: solid 1px #005758;
 }
 
-.rdrStaticRangeSelected {
+button.rdrStaticRange.rdrStaticRangeSelected {
   background-color: #005758;
 }
 
@@ -198,6 +194,7 @@ button.rdrStaticRange:hover {
 }
 
 button.rdrStaticRange:hover .rdrStaticRangeLabel,
+button.rdrStaticRangeSelected .rdrStaticRangeLabel,
 button.rdrStaticRangeSelected:hover .rdrStaticRangeLabel {
   color: #fff !important;
 }
