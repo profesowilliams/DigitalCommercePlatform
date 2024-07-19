@@ -353,6 +353,8 @@ function OrdersTrackingGrid(props) {
       if (response?.status === 200) {
         const successCounter =
           response?.headers['Ga-Download-Documents-Success'];
+        console.log(response.headers.get('GA-Download-Documents-Success'));
+        console.log(response.headers.get('ga-download-documents-success')); 
         pushSuccessDownloadGoogleAnalytics(
           flyoutType,
           true,
@@ -362,6 +364,8 @@ function OrdersTrackingGrid(props) {
         );
       } else if (response?.status === 204) {
         const failCounter = response?.headers['Ga-Download-Documents-Fail'];
+        console.log(response.headers.get('GA-Download-Documents-Fail'));
+        console.log(response.headers.get('ga-download-documents-fail')); 
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
           true,
@@ -393,6 +397,8 @@ function OrdersTrackingGrid(props) {
       if (response?.status === 200) {
         const successCounter =
           response?.headers['Ga-Download-Documents-Success'];
+          console.log(response.headers.get('GA-Download-Documents-Success'));
+          console.log(response.headers.get('ga-download-documents-success')); 
         pushSuccessDownloadGoogleAnalytics(
           flyoutType,
           true,
@@ -402,6 +408,8 @@ function OrdersTrackingGrid(props) {
         );
       } else if (response?.status === 204) {
         const failCounter = response?.headers['Ga-Download-Documents-Fail'];
+        console.log(response.headers.get('GA-Download-Documents-Fail'));
+        console.log(response.headers.get('ga-download-documents-fail')); 
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
           true,
