@@ -352,9 +352,7 @@ function OrdersTrackingGrid(props) {
       );
       if (response?.status === 200) {
         const successCounter =
-          response?.headers['Ga-Download-Documents-Success'];
-        console.log(response.headers.get('GA-Download-Documents-Success'));
-        console.log(response.headers.get('ga-download-documents-success')); 
+          response?.headers['ga-download-documents-success'];
         pushSuccessDownloadGoogleAnalytics(
           flyoutType,
           true,
@@ -363,9 +361,7 @@ function OrdersTrackingGrid(props) {
           mapIds
         );
       } else if (response?.status === 204) {
-        const failCounter = response?.headers['Ga-Download-Documents-Fail'];
-        console.log(response.headers.get('GA-Download-Documents-Fail'));
-        console.log(response.headers.get('ga-download-documents-fail')); 
+        const failCounter = response?.headers['ga-download-documents-fail'];
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
           true,
@@ -395,10 +391,7 @@ function OrdersTrackingGrid(props) {
         redirect: true,
       });
       if (response?.status === 200) {
-        const successCounter =
-          response?.headers['Ga-Download-Documents-Success'];
-          console.log(response.headers.get('GA-Download-Documents-Success'));
-          console.log(response.headers.get('ga-download-documents-success')); 
+        const successCounter = response?.headers['ga-download-documents-success'];
         pushSuccessDownloadGoogleAnalytics(
           flyoutType,
           true,
@@ -407,9 +400,7 @@ function OrdersTrackingGrid(props) {
           selectedId
         );
       } else if (response?.status === 204) {
-        const failCounter = response?.headers['Ga-Download-Documents-Fail'];
-        console.log(response.headers.get('GA-Download-Documents-Fail'));
-        console.log(response.headers.get('ga-download-documents-fail')); 
+        const failCounter = response?.headers['ga-download-documents-fail'];
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
           true,
