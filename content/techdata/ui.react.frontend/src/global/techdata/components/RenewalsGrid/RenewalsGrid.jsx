@@ -107,7 +107,8 @@ function RenewalsGrid(props) {
 
   const previousFilter = useRef(false);
 
-  const { searchOptionsList, shopURL, icons } = componentProp;
+  const { searchOptionsList, shopURL, icons, enableNewPurchaseAction } =
+    componentProp;
 
   const defaultSearchDateRange = setDefaultSearchDateRange(30);
 
@@ -401,10 +402,22 @@ function RenewalsGrid(props) {
     data['link'] = '';
     setCustomState({ key: 'requestFlyout', value: { data, show: true } });
   };
+  
+  
+
 
   useEffect(() => {
+    const newPurchaseButton = document.getElementById(
+      'action-renewals-new-purchase'
+    );
+    if (!enableNewPurchaseAction && newPurchaseButton) {
+      newPurchaseButton.style.display = 'none';
+    }
     const checkUrl = () => {
-      if (window.location.hash.includes('#action-renewals-new-purchase')) {
+      if (
+        enableNewPurchaseAction &&
+        window.location.hash.includes('#action-renewals-new-purchase')
+      ) {
         setCustomState({
           key: 'newPurchaseFlyout',
           value: {

@@ -288,6 +288,8 @@ public class CaConfigReader {
 
     private boolean enableShareOption;
 
+    private boolean enableNewPurchaseAction;
+
     private boolean enableRequestQuote;
     private boolean enableReviseOption;
 
@@ -379,6 +381,7 @@ public class CaConfigReader {
         gtmBodyJSScript = analyticsConfiguration.gtmBodyJSScript();
         disableMultipleAgreement = featureFlagsConfiguration.disableMultipleAgreement();
         enableShareOption = featureFlagsConfiguration.enableShareOption();
+        enableNewPurchaseAction = featureFlagsConfiguration.enableNewPurchaseAction();
         enableRequestQuote = featureFlagsConfiguration.enableRequestQuote();
         enableReviseOption = featureFlagsConfiguration.enableReviseOption();
 
@@ -878,6 +881,10 @@ public class CaConfigReader {
 
     public boolean getEnableShareOption() {
         return enableShareOption;
+    }
+
+    public boolean getEnableNewPurchaseAction() {
+        return enableNewPurchaseAction;
     }
 
     public boolean getEnableRequestQuote() {
