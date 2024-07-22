@@ -56,3 +56,22 @@ export function isReportFilterNotEmpty(filter) {
   return filter.key
     || filter.value ? true : false;
 }
+
+/**
+ * Validates the structure of a report change model filter.
+ * 
+ * @summary This function checks if the provided filter object is a valid report change model.
+ *          A valid report change model must have the properties: 'key', 'label', and 'field'.
+ * 
+ * @param {Object} filter - The filter object to validate.
+ * @returns {boolean} - Returns true if the filter object is valid, otherwise false.
+ */
+export function isReportChangeModelIsValid(filter) {
+  // Return false if the filter object is null or undefined
+  if (!filter) return false;
+
+  // Check if the filter object has 'key', 'label', and 'field' properties
+  return filter.key
+    && filter.label
+    && filter.field ? true : false;
+}

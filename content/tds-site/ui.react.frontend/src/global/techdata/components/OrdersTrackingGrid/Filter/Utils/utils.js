@@ -27,13 +27,13 @@ export function updateUrl(filter) {
     }
 
     if (filter?.types && filter?.types?.length > 0) {
-      filters.types.forEach(type => {
+      filter.types.forEach(type => {
         url.searchParams.append('type', type);
       });
     }
 
     if (filter?.statuses && filter?.statuses?.length > 0) {
-      filters.statuses.forEach(status => {
+      filter.statuses.forEach(status => {
         url.searchParams.append('status', status);
       });
     }
@@ -81,6 +81,25 @@ export function isFilterNotEmpty(filter) {
   const isStatusFilter = filter?.statuses && filter?.statuses?.length > 0;
 
   return isDateFilter || isTypeFilter || isStatusFilter ? true : false;
+}
+
+/**
+ * Validates if a filter change model is valid.
+ * 
+ * @summary This function checks if the provided filter change model has valid date
+ *          information (type, from, and to), or non-empty types or statuses arrays.
+ * 
+ * @param {Object} filter - The filter change model object with properties for date, types, and statuses.
+ * @returns {boolean} - Returns true if the filter change model is valid, otherwise false.
+ */
+export function isFilterChangeModelIsValid(filter) {
+  // Check if the filter object is provided
+  if (!filter) return false;
+
+  // Validate the filter by checking the date fields or if types or statuses arrays are non-empty
+  return (filter.date?.type && filter.date?.from && filter.date?.to)
+    || (filter.types?.length > 0)
+    || (filter.statuses?.length > 0) ? true : false;
 }
 
 export const customRanges = [

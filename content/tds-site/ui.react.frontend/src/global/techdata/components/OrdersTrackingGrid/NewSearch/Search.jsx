@@ -1,3 +1,7 @@
+/**
+ * File is too big!
+ * reorganise: CustomPaper, fetchSuggestions, GTM
+ */
 import React, { useState, useMemo, useCallback, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -7,13 +11,12 @@ import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
 import { usGet } from '../../../../../utils/api';
 import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
-import { filtersDateGroup } from '../utils/orderTrackingUtils';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils';
 import { getSearchAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
 import { debounce } from '../utils/utils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
-import { updateUrl } from './Utils/utils';
+import { updateUrl, prepareFiltersParams } from './Utils/utils';
 
 function CustomPaper({ children }) {
   return (
@@ -42,21 +45,6 @@ function CustomPaper({ children }) {
     </Paper>
   );
 }
-
-const prepareFiltersParams = (filtersRefs) => {
-  const dateFilters = Object.entries(filtersRefs?.current).filter(
-    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
-  );
-  let filterDateParams = '';
-  dateFilters.forEach(
-    (filter) =>
-      (filterDateParams = filterDateParams + '&' + filter[0] + '=' + filter[1])
-  );
-
-  const filtersStatusAndType =
-    (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
-  return filterDateParams + filtersStatusAndType;
-};
 
 const Search = (
   {
@@ -183,25 +171,50 @@ const Search = (
         field = newValue.field;
         newGTMKey = newValue.gtmField;
       }
-      handleSearch(field, value, newGTMKey);
+
+      handleSearch({
+        field: field,
+        value: value,
+        gtmField: newGTMKey
+      });
     }
   };
 
-  const handleSearch = (field, value, gtmField) => {
+  /**
+   * Handles the search action when a search option is selected.
+   *
+   * @param {Object} option - The selected search option.
+   * @param {string} option.field - The field being searched.
+   * @param {string} option.value - The value of the search.
+   * @param {string} option.gtmField - The Google Tag Manager field associated with the search.
+   * @param {boolean} option.isInit - Indicates if the search is an initial search.
+   */
+  const handleSearch = (option) => {
     console.log('Search::handleSearch');
+
+    // Trigger the onChange callback with the selected search option details
     onChange({
-      key: field,
-      field: freeTextSearchTranslations?.[field],
-      value: value,
-      gtmField: gtmField
+      key: option.field,
+      field: freeTextSearchTranslations?.[option.field],
+      value: option.value,
+      gtmField: option.gtmField,
+      isInit: option.isInit
     });
+
+    // Set the focused state to false
     setFocused(false);
+
+    // Update the URL with the search option details
     updateUrl({
-      field: field,
-      gtmField: gtmField, 
-      value: value
+      field: option.field,
+      gtmField: option.gtmField,
+      value: option.value
     });
-    pushDataToGTMAutocomplete(gtmField, value, suggestions);
+
+    // Push data to Google Tag Manager for autocomplete tracking
+    pushDataToGTMAutocomplete(option.gtmField, option.value, suggestions);
+
+    // Reset the search state
     resetSearch();
   };
 
@@ -227,19 +240,34 @@ const Search = (
     // Check if initial search parameters are provided
     if (getInitial.field && getInitial.value && getInitial.gtmField) {
       // Trigger the search with the initial parameters
-      handleSearch(getInitial.field, getInitial.value, getInitial.gtmField);
+      handleSearch({
+        field: getInitial.field,
+        value: getInitial.value,
+        gtmField: getInitial.gtmField,
+        isInit: true
+      });
     }
   }, [freeTextSearchTranslations]); // Dependency array to re-run the effect when translations are updated
 
+  /**
+   * Returns a debounced version of the handleAutocompleteInput function.
+   * The debounce delay is determined based on the length of the input value.
+   *
+   * @param {string} value - The current input value.
+   * @returns {Function} - The debounced handleAutocompleteInput function.
+   */
   const debouncedAutocomplete = useMemo(() => {
+    // Determine the debounce timeout based on the length of the input value
     const timeout =
       !value || value.length < 3
-        ? 300
+        ? 300 // 300ms delay for input length less than 3 or empty
         : value.length < 5
-          ? 200
+          ? 200 // 200ms delay for input length between 3 and 4
           : value.length < 10
-            ? 100
-            : 0;
+            ? 100 // 100ms delay for input length between 5 and 9
+            : 0;  // No delay for input length 10 or more
+
+    // Return the debounced handleAutocompleteInput function with the calculated timeout
     return debounce(handleAutocompleteInput, timeout);
   }, [value]);
 

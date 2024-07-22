@@ -8,10 +8,9 @@ import OrderExport from '../Export/OrderExport';
 import Pill from '../../Widgets/Pill';
 import OrderTrackingGridPagination from '../Pagination/OrderTrackingGridPagination';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
-import { isFilterNotEmpty } from '../Filter/Utils/utils';
-import { isReportFilterNotEmpty } from '../Report/Utils/utils';
-import { isSearchFilterNotEmpty } from '../NewSearch/Utils/utils';
-import { arraysEqual } from '../../OrdersTrackingCommon/Utils/utils';
+import { isFilterNotEmpty, isFilterChangeModelIsValid } from '../Filter/Utils/utils';
+import { isReportFilterNotEmpty, isReportChangeModelIsValid } from '../Report/Utils/utils';
+import { isSearchFilterNotEmpty, isSearchChangeModelIsValid } from '../NewSearch/Utils/utils';
 
 /**
  * MainGridHeader component to manage the main grid's header functionalities including search, filters, and pagination.
@@ -41,6 +40,8 @@ function MainGridHeader({
 
   /**
    * Function to clear filters if any filters are applied
+   *
+   * @returns {boolean} - Returns true if filters were cleared, otherwise false.
    */
   const clearFilters = () => {
     // Check if any date filters or type/status filters are applied
@@ -57,14 +58,20 @@ function MainGridHeader({
       searchParams.paginationAndSorting.current.pageNumber = 1;
 
       // Trigger query change indicating a search action
-      onQueryChanged({ onSearchAction: true });
+      //onQueryChanged({ onSearchAction: true });
+
+      return true;
     } else {
       console.log('MainGridHeader::clearFilters::not required');
     }
+
+    return false;
   };
 
   /**
-   * Function to clear report filters if any report filters are applied
+   * Function to clear report filters if any report filters are applied.
+   *
+   * @returns {boolean} - Returns true if report filters were cleared, otherwise false.
    */
   const clearReports = () => {
     // Check if there is any report filter applied
@@ -82,13 +89,19 @@ function MainGridHeader({
 
       // Reset page number to 1
       searchParams.paginationAndSorting.current.pageNumber = 1;
+
+      return true;
     } else {
       console.log('MainGridHeader::clearReports::not required');
     }
+
+    return false;
   };
 
   /**
    * Function to clear search filters if any search filters are applied
+   *
+   * @returns {boolean} - Returns true if search filters were cleared, otherwise false.
    */
   const clearSearch = () => {
     // Check if there is any search filter applied
@@ -106,9 +119,13 @@ function MainGridHeader({
 
       // Reset page number to 1
       searchParams.paginationAndSorting.current.pageNumber = 1;
+
+      return true;
     } else {
       console.log('MainGridHeader::clearSearch::not required');
     }
+
+    return false;
   };
 
   /**
@@ -137,6 +154,11 @@ function MainGridHeader({
   const onReportChange = (filters) => {
     console.log('MainGridHeader::onReportChange');
 
+    if (!isReportChangeModelIsValid(filters)) {
+      console.log('MainGridHeader::onReportChange::model is invalid');
+      return;
+    }
+
     if (Object.keys(searchParams.reports.current).length === 0
       && !isReportFilterNotEmpty(filters)) {
       console.log('MainGridHeader::onReportChange::filters are empty');
@@ -146,10 +168,10 @@ function MainGridHeader({
     console.log('MainGridHeader::onReportChange::filters are not empty');
 
     // Clear the current filter criteria
-    clearFilters();
+    const filtersCleared = clearFilters();
 
     // Clear the current search criteria
-    clearSearch();
+    const searchCleared = clearSearch();
 
     // Update the pill (filter indicator) with the new field and label
     onPillChanged({
@@ -158,8 +180,7 @@ function MainGridHeader({
     });
 
     // Reset page number to 1
-    if (isReportFilterNotEmpty(searchParams.reports.current)
-      && searchParams.reports.current.value !== filters.key) {
+    if (!filtersCleared && !searchCleared && !filters.isInit) {
       console.log('MainGridHeader::onReportChange::reset page number');
       searchParams.paginationAndSorting.current.pageNumber = 1;
     }
@@ -178,6 +199,11 @@ function MainGridHeader({
   const onSearchChange = (filters) => {
     console.log('MainGridHeader::onSearchChange');
 
+    if (!isSearchChangeModelIsValid(filters)) {
+      console.log('MainGridHeader::onSearchChange::model is invalid');
+      return;
+    }
+
     if (Object.keys(searchParams.search.current).length === 0
       && !isSearchFilterNotEmpty(filters)) {
       console.log('MainGridHeader::onSearchChange::filters are empty');
@@ -187,7 +213,7 @@ function MainGridHeader({
     console.log('MainGridHeader::onSearchChange::filters are not empty');
 
     // Clear the current report criteria
-    clearReports();
+    const reportsCleared = clearReports();
 
     // Update the pill (filter indicator) with the new field and value
     onPillChanged({
@@ -196,11 +222,8 @@ function MainGridHeader({
     });
 
     // Reset page number to 1
-    if (isSearchFilterNotEmpty(searchParams.search.current) &&
-      (searchParams.search.current.field !== filters.key
-      || searchParams.search.current.value !== filters.value
-      || searchParams.search.current.gtmField !== filters.gtmField)) {
-      console.log('MainGridHeader::onSearchChange::reset page number');
+    if (!reportsCleared && !filters.isInit) {
+      console.log('MainGridHeader::onReportChange::reset page number');
       searchParams.paginationAndSorting.current.pageNumber = 1;
     }
 
@@ -220,6 +243,11 @@ function MainGridHeader({
   const onFilterChange = (filters) => {
     console.log('MainGridHeader::onFilterChange');
 
+    if (!isFilterChangeModelIsValid(filters)) {
+      console.log('MainGridHeader::onSearchChange::model is invalid');
+      return;
+    }
+
     if (Object.keys(searchParams.filtersRefs.current).length === 0
       && !isFilterNotEmpty(filters)) {
       console.log('MainGridHeader::onFilterChange::filters are empty');
@@ -229,16 +257,11 @@ function MainGridHeader({
     console.log('MainGridHeader::onFilterChange::filters are not empty');
 
     // Clear any existing report filters
-    clearReports();
+    const reportsCleared = clearReports();
 
     // Reset page number to 1
-    if (isFilterNotEmpty(searchParams.filtersRefs.current) &&
-      (searchParams.filtersRefs.current.date.type !== filters.date.type
-      || searchParams.filtersRefs.current.date.from !== filters.date.from
-      || searchParams.filtersRefs.current.date.to !== filters.date.to
-      || !arraysEqual(searchParams.filtersRefs.current.types, filters.types)
-      || !arraysEqual(searchParams.filtersRefs.current.statuses, filters.statuses))) {
-      console.log('MainGridHeader::onFilterChange::reset page number');
+    if (!reportsCleared && !filters.isInit) {
+      console.log('MainGridHeader::onReportChange::reset page number');
       searchParams.paginationAndSorting.current.pageNumber = 1;
     }
 

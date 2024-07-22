@@ -120,7 +120,8 @@ function Report({ onChange, analyticsLabel }, ref) {
       // Select the option corresponding to the initial value
       handleSelectOption({
         key: getInitial,
-        label: translations?.[getInitial]
+        label: translations?.[getInitial],
+        isInit: true
       });
     }
     // This effect runs whenever the translations object changes

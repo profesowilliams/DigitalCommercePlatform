@@ -148,6 +148,7 @@ function OrderFilter({ onChange }, ref) {
   useEffect(() => {
     console.log('OrderFilter::useEffect::empty');
     // Call onFilterChanged with the current filters to update the applied filters count
+    filters.isInit = true;
     onFilterChanged(filters);
   }, []); // Empty dependency array ensures this effect runs only once on mount
 

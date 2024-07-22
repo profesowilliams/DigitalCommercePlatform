@@ -62,3 +62,37 @@ export function isSearchFilterNotEmpty(filter) {
     || filter.value
     || filter.gtmField ? true : false;
 }
+
+/**
+ * Validates the structure of a search change model filter.
+ * 
+ * @summary This function checks if the provided filter object is a valid search change model.
+ *          A valid search change model must have the properties: 'key', 'value', and 'gtmField'.
+ * 
+ * @param {Object} filter - The filter object to validate.
+ * @returns {boolean} - Returns true if the filter object is valid, otherwise false.
+ */
+export function isSearchChangeModelIsValid(filter) {
+  // Return false if the filter object is null or undefined
+  if (!filter) return false;
+
+  // Check if the filter object has 'key', 'value', and 'gtmField' properties
+  return filter.key
+    && filter.value
+    && filter.gtmField ? true : false;
+}
+
+export function prepareFiltersParams(filtersRefs) {
+  const dateFilters = Object.entries(filtersRefs?.current).filter(
+    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
+  );
+  let filterDateParams = '';
+  dateFilters.forEach(
+    (filter) =>
+      (filterDateParams = filterDateParams + '&' + filter[0] + '=' + filter[1])
+  );
+
+  const filtersStatusAndType =
+    (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
+  return filterDateParams + filtersStatusAndType;
+};
