@@ -60,5 +60,5 @@ export function isSearchFilterNotEmpty(filter) {
   return filter.key
     || filter.field
     || filter.value
-    || filter.gtmField;
+    || filter.gtmField ? true : false;
 }

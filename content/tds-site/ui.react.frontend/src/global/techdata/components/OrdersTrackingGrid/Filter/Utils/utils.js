@@ -80,7 +80,7 @@ export function isFilterNotEmpty(filter) {
   // Check if status filter is applied
   const isStatusFilter = filter?.statuses && filter?.statuses?.length > 0;
 
-  return isDateFilter || isTypeFilter || isStatusFilter;
+  return isDateFilter || isTypeFilter || isStatusFilter ? true : false;
 }
 
 export const customRanges = [

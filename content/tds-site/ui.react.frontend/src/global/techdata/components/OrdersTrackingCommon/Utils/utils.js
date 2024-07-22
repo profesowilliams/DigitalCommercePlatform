@@ -36,3 +36,31 @@ export function compareURLs(url1, url2) {
 
   return true;
 }
+
+/**
+* Compares two arrays and checks if they contain the same elements,
+* regardless of the order of elements.
+*
+* @param {Array} arr1 - The first array to compare.
+* @param {Array} arr2 - The second array to compare.
+* @returns {boolean} True if arrays contain the same elements, false otherwise.
+*/
+export function arraysEqual(arr1, arr2) {
+  // Check if arrays have the same length
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  // Create copies of arrays to avoid modifying originals
+  const arr1Copy = [...arr1];
+  const arr2Copy = [...arr2];
+  // Sort both copies of arrays
+  arr1Copy.sort();
+  arr2Copy.sort();
+  // Compare sorted arrays element by element
+  for (let i = 0; i < arr1Copy.length; i++) {
+    if (arr1Copy[i] !== arr2Copy[i]) {
+      return false;
+    }
+  }
+  return true;
+}

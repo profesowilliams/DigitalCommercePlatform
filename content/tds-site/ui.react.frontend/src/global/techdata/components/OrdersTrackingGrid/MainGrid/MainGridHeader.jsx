@@ -158,7 +158,7 @@ function MainGridHeader({
     });
 
     // Reset page number to 1
-    if (!isReportFilterNotEmpty(searchParams.reports.current)
+    if (isReportFilterNotEmpty(searchParams.reports.current)
       && searchParams.reports.current.value !== filters.key) {
       console.log('MainGridHeader::onReportChange::reset page number');
       searchParams.paginationAndSorting.current.pageNumber = 1;
@@ -232,12 +232,12 @@ function MainGridHeader({
     clearReports();
 
     // Reset page number to 1
-    if (!isFilterNotEmpty(searchParams.filtersRefs.current) &&
-      (searchParams.filtersRefs.current.date.type !== filter.date.type
-      || searchParams.filtersRefs.current.date.from !== filter.date.from
-      || searchParams.filtersRefs.current.date.to !== filter.date.to
-      || !arraysEqual(searchParams.filtersRefs.current.types, filter.types)
-      || !arraysEqual(searchParams.filtersRefs.current.statuses, filter.statuses))) {
+    if (isFilterNotEmpty(searchParams.filtersRefs.current) &&
+      (searchParams.filtersRefs.current.date.type !== filters.date.type
+      || searchParams.filtersRefs.current.date.from !== filters.date.from
+      || searchParams.filtersRefs.current.date.to !== filters.date.to
+      || !arraysEqual(searchParams.filtersRefs.current.types, filters.types)
+      || !arraysEqual(searchParams.filtersRefs.current.statuses, filters.statuses))) {
       console.log('MainGridHeader::onFilterChange::reset page number');
       searchParams.paginationAndSorting.current.pageNumber = 1;
     }

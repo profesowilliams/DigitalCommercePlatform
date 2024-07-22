@@ -54,5 +54,5 @@ export function isReportFilterNotEmpty(filter) {
 
   // Check if any relevant properties of the filter object are non-empty
   return filter.key
-    || filter.value;
+    || filter.value ? true : false;
 }
