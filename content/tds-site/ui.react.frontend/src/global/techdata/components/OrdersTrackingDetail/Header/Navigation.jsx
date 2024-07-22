@@ -61,7 +61,7 @@ const Navigation = ({ config, content, onProductChange, isLoading }) => {
     setNextOrder(navigationData?.nextOrder);
 
     const criteriaData = queryCacheKeyParam && (await fetchCriteriaData(config, queryCacheKeyParam, content.orderNumber));
-    setBackUrl(createBackUrl(saleslogin, criteriaData));
+    setBackUrl(createBackUrl(saleslogin, queryCacheKeyParam, criteriaData));
     setBackButton(renderBackButton(detailsTranslations, criteriaData));
   }, [content]);
 

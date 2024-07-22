@@ -23,10 +23,11 @@ export function renderBackButton(translations, data) {
 /**
  * Creates a back URL with the appropriate search parameters based on the provided data.
  * @param {string} saleslogin - Sales login value.
+ * @param {string} queryCacheKey - Query cache key.
  * @param {Object} data - The data object containing the criteria for the URL parameters.
  * @returns {string} - The constructed back URL as a string.
  */
-export function createBackUrl(saleslogin, data) {
+export function createBackUrl(saleslogin, queryCacheKey, data) {
   console.log('OrderTrackingDetailHeader::Utils::createBackUrl');
 
   // Create a new URL based on the current location, changing the path to end with '.html'
@@ -40,8 +41,8 @@ export function createBackUrl(saleslogin, data) {
     url.searchParams.set('sortby', data.criteria.sortBy.toLowerCase());
     url.searchParams.set('sortdirection', data.criteria.sortAscending ? 'asc' : 'desc');
     url.searchParams.set('page', data.criteria.pageNumber);
+    url.searchParams.set('q', queryCacheKey);
 
-    // Set date parameters based on the type of date present in the criteria
     if (data.criteria?.createdFrom && data.criteria?.createdTo) {
       url.searchParams.set('datetype', 'orderDate');
       url.searchParams.set('datefrom', data.criteria?.createdFrom);
@@ -66,21 +67,18 @@ export function createBackUrl(saleslogin, data) {
       url.searchParams.set('dateto', data.criteria?.etaDateTo);
     }
 
-    // Append type parameters if present
     if (data.criteria?.type) {
       data.criteria.type.forEach(type => {
         url.searchParams.append('type', type);
       });
     }
 
-    // Append status parameters if present
     if (data.criteria?.status) {
       data.criteria.status.forEach(status => {
         url.searchParams.append('status', status);
       });
     }
 
-    // Append free text search parameters if present
     if (data.criteria?.freetextSearch) {
       url.searchParams.append('value', data.criteria.freetextSearch);
     }
@@ -89,12 +87,10 @@ export function createBackUrl(saleslogin, data) {
       url.searchParams.append('field', data.criteria.freetextSearchKey);
     }
 
-    // Append Google Tag Manager field if present
     if (data.criteria?.gtmfield) {
       url.searchParams.append('gtmfield', data.criteria.gtmfield);
     }
 
-    // Append report name if present
     if (data.criteria?.reportName) {
       url.searchParams.append('report', data.criteria.reportName);
     }

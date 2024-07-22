@@ -6,7 +6,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Hover from '../../Hover/Hover';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
-import { updateUrl } from './utils/utils';
+import { updateUrl } from './Utils/utils';
 
 /**
  * Functional component representing the Report feature
@@ -16,6 +16,8 @@ import { updateUrl } from './utils/utils';
  * @param {React.Ref} ref - Reference object used to expose imperative methods
  */
 function Report({ onChange, analyticsLabel }, ref) {
+  console.log('Report::init');
+
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const wrapperRef = useRef(null);

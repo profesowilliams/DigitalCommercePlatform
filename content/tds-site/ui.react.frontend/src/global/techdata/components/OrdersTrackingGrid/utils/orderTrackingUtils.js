@@ -146,13 +146,21 @@ export async function fetchReport(
   requestUrl.searchParams.set('ReportName', reportName);
 
   if (paginationAndSorting?.current) {
-    requestUrl.searchParams.set('pagenumber', paginationAndSorting.current.pageNumber);
-    requestUrl.searchParams.set('q', paginationAndSorting.current.queryCacheKey);
-  }
+    if (paginationAndSorting.current.sortBy) {
+      requestUrl.searchParams.set('sortby', sortSwap(paginationAndSorting.current.sortBy));
+    }
 
-  if (paginationAndSorting?.current) {
-    requestUrl.searchParams.set('sortdirection', paginationAndSorting.current.sortDirection);
-    requestUrl.searchParams.set('sortby', sortSwap(paginationAndSorting.current.sortBy));
+    if (paginationAndSorting.current.sortDirection) {
+      requestUrl.searchParams.set('sortdirection', paginationAndSorting.current.sortDirection);
+    }
+
+    if (paginationAndSorting.current.pageNumber) {
+      requestUrl.searchParams.set('pagenumber', paginationAndSorting.current.pageNumber);
+    }
+
+    if (paginationAndSorting.current.queryCacheKey) {
+      requestUrl.searchParams.set('q', paginationAndSorting.current.queryCacheKey);
+    }
   }
 
   try {
@@ -185,10 +193,21 @@ export async function fetchData(
   const requestUrl = new URL(`${baseUrl}${endpoints.orders}`);
 
   if (paginationAndSorting?.current) {
-    requestUrl.searchParams.set('pagenumber', paginationAndSorting.current.pageNumber);
-    requestUrl.searchParams.set('sortdirection', paginationAndSorting.current.sortDirection);
-    requestUrl.searchParams.set('sortby', sortSwap(paginationAndSorting.current.sortBy));
-    requestUrl.searchParams.set('q', paginationAndSorting.current.queryCacheKey);
+    if (paginationAndSorting.current.sortBy) {
+      requestUrl.searchParams.set('sortby', sortSwap(paginationAndSorting.current.sortBy));
+    }
+
+    if (paginationAndSorting.current.sortDirection) {
+      requestUrl.searchParams.set('sortdirection', paginationAndSorting.current.sortDirection);
+    }
+
+    if (paginationAndSorting.current.pageNumber) {
+      requestUrl.searchParams.set('pagenumber', paginationAndSorting.current.pageNumber);
+    }
+
+    if (paginationAndSorting.current.queryCacheKey) {
+      requestUrl.searchParams.set('q', paginationAndSorting.current.queryCacheKey);
+    }
   }
 
   if (searchCriteria.current?.field) {

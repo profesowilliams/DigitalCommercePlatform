@@ -5,8 +5,8 @@ import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderT
 import OrderFilterDateType from './OrderFilterDateType';
 import StartEndDisplay from './StartEndDisplay';
 import OrderCount from './OrderCount';
-import { DateRangePicker, DateInput } from 'react-date-range';
-import { customRanges } from './utils/utils';
+import { DateRangePicker } from 'react-date-range';
+import { customRanges } from './Utils/utils';
 import moment from 'moment';
 
 /**

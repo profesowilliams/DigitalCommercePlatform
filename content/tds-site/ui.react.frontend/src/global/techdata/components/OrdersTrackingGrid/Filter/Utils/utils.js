@@ -1,8 +1,9 @@
 import { removeSpecificParams } from '../../../../../../utils/index';
 import { removeDisallowedParams } from '../../../../../../utils/index';
 import { addDays, endOfDay, startOfDay, startOfYear, startOfMonth, endOfMonth, endOfYear, addMonths, addYears, startOfWeek, endOfWeek, isSameDay, differenceInCalendarDays, } from 'date-fns';
+import { arraysEqual, compareURLs } from '../../../OrdersTrackingCommon/Utils/utils';
 
-export function updateUrl(filters) {
+export function updateUrl(filter) {
   console.log('OrderFilter::updateUrl');
 
   // Get the current URL
@@ -11,32 +12,41 @@ export function updateUrl(filters) {
   // Declare a variable to hold the updated URL
   let url;
 
-  if (filters) {
+  // Check if any filters are applied
+  if (isFilterNotEmpty(filter)) {
     // List of allowed parameters
     const allowedParameters = ['field', 'gtmfield', 'value', 'sortby', 'sortdirection', 'saleslogin'];
 
     // Remove disallowed parameters from the current URL, keeping only specified ones
     url = removeDisallowedParams(new URL(window.location.href), allowedParameters);
 
-    if (filters.date?.from && filters.date?.to && filters.date?.type) {
-      url.searchParams.set('datetype', filters.date.type);
-      url.searchParams.set('datefrom', filters.date.from);
-      url.searchParams.set('dateto', filters.date.to);
+    if (filter.date?.from && filter.date?.to && filter.date?.type) {
+      url.searchParams.set('datetype', filter.date.type);
+      url.searchParams.set('datefrom', filter.date.from);
+      url.searchParams.set('dateto', filter.date.to);
     }
 
-    if (filters.types) {
+    if (filter?.types && filter?.types?.length > 0) {
       filters.types.forEach(type => {
         url.searchParams.append('type', type);
       });
     }
 
-    if (filters.statuses) {
+    if (filter?.statuses && filter?.statuses?.length > 0) {
       filters.statuses.forEach(status => {
         url.searchParams.append('status', status);
       });
     }
 
-    url.searchParams.append('page', '1');
+    if (currentUrl.searchParams.get('datetype') !== filter.date.type
+      || currentUrl.searchParams.get('datefrom') !== filter.date.from
+      || currentUrl.searchParams.get('dateto') !== filter.date.to
+      || !arraysEqual(currentUrl.searchParams.getAll('type'), filter.types)
+      || !arraysEqual(currentUrl.searchParams.getAll('status'), filter.statuses)) {
+      console.log('OrderFilter::updateUrl::reset page');
+      url.searchParams.set('page', '1');
+      url.searchParams.delete('q');
+    }
   } else {
     // List of parameters which should be removed
     const parametersToRemove = ['datetype', 'datefrom', 'dateto', 'status', 'type'];
@@ -46,10 +56,32 @@ export function updateUrl(filters) {
   }
 
   // If the URL has changed, update the browser history
-  if (url.toString() !== currentUrl.toString())
+  if (!compareURLs(url, currentUrl))
     window.history.pushState(null, '', url.toString());
   // history.push(url.href.replace(url.origin, ''));
 };
+
+/**
+ * Checks if the filter object is not empty.
+ * 
+ * @param {Object} filter - The filter object to check.
+ * @returns {boolean} - Returns true if the filter is not empty, otherwise false.
+ */
+export function isFilterNotEmpty(filter) {
+  // Return false if the filter is null or undefined
+  if (!filter) return false;
+
+  // Check if date filter is applied
+  const isDateFilter = filter.date?.from && filter.date?.to && filter.date?.type;
+
+  // Check if type filter is applied
+  const isTypeFilter = filter?.types && filter?.types?.length > 0;
+
+  // Check if status filter is applied
+  const isStatusFilter = filter?.statuses && filter?.statuses?.length > 0;
+
+  return isDateFilter || isTypeFilter || isStatusFilter;
+}
 
 export const customRanges = [
   {

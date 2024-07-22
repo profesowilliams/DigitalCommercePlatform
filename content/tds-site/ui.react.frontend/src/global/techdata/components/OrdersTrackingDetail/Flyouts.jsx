@@ -17,8 +17,8 @@ const Flyouts = ({
   setOrderModifyHeaderInfo,
   isLoading
 }) => {
-  return (
-    !isLoading && content && (<>
+  return (<>
+    {!isLoading && content && (<>
       <TrackingFlyout
         config={config}
         trackingFlyout={config?.trackingFlyout}
@@ -71,8 +71,8 @@ const Flyouts = ({
         addNewItem={addNewItem}
         setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
       />
-    </>)
-  );
+    </>)}
+  </>);
 };
 
 export default Flyouts;

@@ -13,7 +13,7 @@ import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils'
 import { getSearchAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
 import { debounce } from '../utils/utils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
-import { updateUrl } from './utils/utils';
+import { updateUrl } from './Utils/utils';
 
 function CustomPaper({ children }) {
   return (

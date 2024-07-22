@@ -8,7 +8,7 @@ import Hover from '../../Hover/Hover';
 import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
 import { getFilterAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
-import { updateUrl } from './utils/utils';
+import { updateUrl } from './Utils/utils';
 
 /**
  * Functional component representing the Order Filter feature

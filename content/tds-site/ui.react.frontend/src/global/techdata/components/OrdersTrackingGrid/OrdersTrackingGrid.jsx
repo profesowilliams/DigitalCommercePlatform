@@ -33,6 +33,7 @@ import { useGTMStatus } from '../../hooks/useGTMStatus';
 import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
 import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
 import { fetchTranslations } from './utils/translationsUtils';
+import { compareURLs } from '../OrdersTrackingCommon/Utils/utils';
 
 function OrdersTrackingGrid(props) {
   console.log('OrdersTrackingGrid::init');
@@ -44,7 +45,8 @@ function OrdersTrackingGrid(props) {
   const paginationAndSorting = useRef({
     pageNumber: params.get('page') || 1,
     sortBy: params.get('sortby') || 'created',
-    sortDirection: params.get('sortdirection') || 'desc'
+    sortDirection: params.get('sortdirection') || 'desc',
+    queryCacheKey: params.get('q') || ''
   });
   const reportFilterValue = useRef({ value: '' });
   const filtersRefs = useRef({});
@@ -321,7 +323,7 @@ function OrdersTrackingGrid(props) {
     }
 
     // If the URL has changed, update the browser history
-    if (url.toString() !== currentUrl.toString()) {
+    if (!compareURLs(url, currentUrl)) {
       if (replaceState) {
         // Use pushState to add a new entry to the browser history
         window.history.pushState(null, '', url.toString());
