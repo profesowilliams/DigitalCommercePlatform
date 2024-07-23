@@ -3,7 +3,7 @@ import { ReportIcon, ReportIconFilled } from '../../../../../fluentIcons/FluentI
 import ReportDropdown from './ReportDropdown';
 import '../../../../../../src/styles/TopIconsBar.scss';
 import Tooltip from '@mui/material/Tooltip';
-import Hover from '../../Hover/Hover';
+import Hover from '../Hover/Hover';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
 import { updateUrl } from './Utils/utils';

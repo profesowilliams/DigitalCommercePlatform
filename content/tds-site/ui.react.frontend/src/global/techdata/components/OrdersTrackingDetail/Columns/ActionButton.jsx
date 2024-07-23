@@ -14,7 +14,7 @@ import {
   getReturnAnalyticsGoogle,
   getTrackAndTraceAnalyticsGoogle,
   pushDataLayerGoogle,
-} from '../../OrdersTrackingGrid/utils/analyticsUtils';
+} from '../../OrdersTrackingGrid/Utils/analyticsUtils';
 
 const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   const iconStyle = {

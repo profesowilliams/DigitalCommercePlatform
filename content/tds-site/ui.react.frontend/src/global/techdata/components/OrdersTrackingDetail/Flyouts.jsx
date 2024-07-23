@@ -3,8 +3,8 @@ import TrackingFlyout from './TrackingFlyout/TrackingFlyout';
 import ReturnFlyout from './ReturnFlyout/ReturnFlyout';
 import DNotesFlyout from '../OrdersTrackingCommon/Flyouts/DNotes/DNotesFlyout';
 import InvoicesFlyout from '../OrdersTrackingCommon/Flyouts/Invoices/InvoicesFlyout';
-import OrderModificationFlyout from './ModificationFlyout/OrderModificationFlyout';
-import ProductReplacementFlyout from '../ReplacementFlyout/ProductReplacementFlyout';
+import OrderModificationFlyout from '../OrdersTrackingCommon/Flyouts/OrderModification/OrderModificationFlyout';
+import ProductReplacementFlyout from '../OrdersTrackingCommon/Flyouts/ProductReplacement/ProductReplacementFlyout';
 
 const Flyouts = ({
   downloadAllFile,

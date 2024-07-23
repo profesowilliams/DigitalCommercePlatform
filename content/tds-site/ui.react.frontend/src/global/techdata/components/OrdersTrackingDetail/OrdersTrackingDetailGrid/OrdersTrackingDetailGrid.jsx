@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
-import Grid from '../../Grid/Grid';
+import Grid from '../../OrdersTrackingCommon/Grid/Grid';
 import buildColumnDefinitions from './buildColumnDefinitions';
 import LineNumberColumn from '../Columns/LineNumberColumn';
 import DescriptionColumn from '../Columns/DescriptionColumn';

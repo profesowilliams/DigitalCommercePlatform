@@ -13,8 +13,8 @@ import { usGet } from '../../../../../utils/api';
 import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils';
-import { getSearchAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
-import { debounce } from '../utils/utils';
+import { getSearchAnalyticsGoogle, pushDataLayerGoogle } from '../Utils/analyticsUtils';
+import { debounce } from '../../OrdersTrackingCommon/Utils/utils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
 import { updateUrl, prepareFiltersParams } from './Utils/utils';
 
@@ -100,10 +100,7 @@ const Search = (
     const filterParams = prepareFiltersParams(filtersRefs);
     try {
       const result = await usGet(
-        `${gridConfig.uiCommerceServiceDomain
-        }/v3/lookahead?searchtext=${encodeURIComponent(
-          newValue
-        )}${filterParams}`
+        `${gridConfig.uiCommerceServiceDomain}/v3/lookahead?searchtext=${encodeURIComponent(newValue)}${filterParams}`
       );
       return result;
     } catch (error) {

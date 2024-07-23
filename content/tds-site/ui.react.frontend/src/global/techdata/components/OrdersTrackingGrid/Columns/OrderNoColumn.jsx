@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { isJavaScriptProtocol } from '../../../../../utils/utils';
-import { getOrderDetailsAnalyticsGoogle } from '../utils/analyticsUtils';
+import { getOrderDetailsAnalyticsGoogle } from '../Utils/analyticsUtils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 import { CopyIcon, TickIcon } from '../../../../../fluentIcons/FluentIcons';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';

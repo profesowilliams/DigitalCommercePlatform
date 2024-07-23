@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { getReportAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
+import { getReportAnalyticsGoogle, pushDataLayerGoogle } from '../Utils/analyticsUtils';
 
 function ReportDropdown({ reportOptions, selectOption, analyticsLabel }, ref) {
   const handleOptionClick = (option) => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import DNotesFlyout from '../../OrdersTrackingCommon/Flyouts/DNotes/DNotesFlyout';
 import InvoicesFlyout from '../../OrdersTrackingCommon/Flyouts/Invoices/InvoicesFlyout';
-import OrderModificationFlyout from '../../OrdersTrackingDetail/ModificationFlyout/OrderModificationFlyout';
+import OrderModificationFlyout from '../../OrdersTrackingCommon/Flyouts/OrderModification/OrderModificationFlyout';
 import SettingsFlyout from '../Flyouts/Settings/SettingsFlyout';
-import ProductReplacementFlyout from '../../ReplacementFlyout/ProductReplacementFlyout';
+import ProductReplacementFlyout from '../../OrdersTrackingCommon/Flyouts/ProductReplacement/ProductReplacementFlyout';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const MainGridFlyouts = ({

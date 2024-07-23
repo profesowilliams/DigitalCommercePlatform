@@ -10,7 +10,7 @@ import {
   getProActiveSettingsActivactionAnalyticsGoogle,
   getProActiveTypesAnalyticsGoogle,
   pushDataLayerGoogle
-} from '../../../OrdersTrackingGrid/utils/analyticsUtils';
+} from '../../../OrdersTrackingGrid/Utils/analyticsUtils';
 
 const settingsKeys = [
   'active',

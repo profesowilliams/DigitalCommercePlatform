@@ -1,10 +1,10 @@
 import {
   getExportAnalyticsGoogle,
   pushDataLayerGoogle,
-} from '../../OrdersTrackingGrid/utils/analyticsUtils';
+} from '../../OrdersTrackingGrid/Utils/analyticsUtils';
 import {
   endpoints,
-} from '../../OrdersTrackingGrid/utils/orderTrackingUtils';
+} from '../../OrdersTrackingGrid/Utils/orderTrackingUtils';
 import { requestFileBlobWithoutModal } from '../../../../../utils/utils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
 

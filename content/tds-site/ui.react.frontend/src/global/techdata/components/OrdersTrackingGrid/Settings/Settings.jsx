@@ -3,7 +3,7 @@ import { SettingsIcon, SettingsIconFilled } from '../../../../../fluentIcons/Flu
 import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import Tooltip from '@mui/material/Tooltip';
-import Hover from '../../Hover/Hover';
+import Hover from '../Hover/Hover';
 
 const Settings = ({ settings }) => {
   const { setCustomState } = useOrderTrackingStore((state) => state.effects);

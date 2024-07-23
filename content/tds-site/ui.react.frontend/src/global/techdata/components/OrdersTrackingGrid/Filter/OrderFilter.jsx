@@ -4,10 +4,10 @@ import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import OrderCountClear from './OrderCountClear';
 import Tooltip from '@mui/material/Tooltip';
-import Hover from '../../Hover/Hover';
+import Hover from '../Hover/Hover';
 import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
-import { getFilterAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
+import { getFilterAnalyticsGoogle, pushDataLayerGoogle } from '../Utils/analyticsUtils';
 import { updateUrl } from './Utils/utils';
 
 /**

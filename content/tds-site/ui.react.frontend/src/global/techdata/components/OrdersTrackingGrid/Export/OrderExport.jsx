@@ -6,15 +6,15 @@ import {
 import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import Tooltip from '@mui/material/Tooltip';
-import Hover from '../../Hover/Hover';
+import Hover from '../Hover/Hover';
 import {
   getExportAnalyticsGoogle,
   pushDataLayerGoogle,
-} from '../utils/analyticsUtils';
+} from '../Utils/analyticsUtils';
 import {
   endpoints,
   setSearchCriteriaDefaultDateRange,
-} from '../utils/orderTrackingUtils';
+} from '../Utils/orderTrackingUtils';
 import { requestFileBlobWithoutModal } from '../../../../../utils/utils';
 
 function OrderExport({

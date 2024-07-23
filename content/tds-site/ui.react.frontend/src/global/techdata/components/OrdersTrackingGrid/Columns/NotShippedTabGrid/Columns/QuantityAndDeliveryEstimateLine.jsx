@@ -3,7 +3,7 @@ import { getDictionaryValueOrKey } from '../../../../../../../utils/utils';
 import { WarningTriangleLarge } from '../../../../../../../fluentIcons/FluentIcons';
 import { useOrderTrackingStore } from '../../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { usGet } from '../../../../../../../utils/api';
-import { getOrderModificationFailedGoogle, pushDataLayerGoogle } from '../../../utils/analyticsUtils';
+import { getOrderModificationFailedGoogle, pushDataLayerGoogle } from '../../../Utils/analyticsUtils';
 
 function QuantityAndDeliveryEstimateLine({
   line,

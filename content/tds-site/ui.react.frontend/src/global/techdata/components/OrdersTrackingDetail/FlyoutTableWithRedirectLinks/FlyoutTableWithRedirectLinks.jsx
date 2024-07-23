@@ -1,6 +1,6 @@
 import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { getReturnAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import { getReturnAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/Utils/analyticsUtils';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 export default function FlyoutTableWithRedirectLinks({

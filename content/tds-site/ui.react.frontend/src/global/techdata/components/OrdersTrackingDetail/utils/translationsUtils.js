@@ -1,33 +1,29 @@
-﻿import { usGet } from "../../../../../utils/api";
-import { buildQueryString } from '../../OrdersTrackingGrid/utils/gridUtils'; // move to common
-import { getHeaderInfo } from '../../../../../utils/headers/get';
+﻿import { fetchTranslations } from '../../OrdersTrackingCommon/Utils/translationsUtils';
 
 // Define the dictionaries that need to be translated
 const translationDictionaries = [
-  'OrderTracking.Common.InvoicesFlyout',
-  'OrderTracking.Common.DnoteFlyout',
   'OrderTracking.Details',
   'OrderTracking.Details.Export',
   'OrderTracking.Details.Cards',
 ];
 
 /**
- * Fetches UI translations from the localization service.
- * @param {Object} config - Configuration object containing the domain information.
- * @returns {Object} - The fetched translation data.
+ * Fetches translations and returns the translation data.
+ *
+ * @param {string} baseUrl - The base URL of the localization service.
+ * @returns {Promise<Object>} A promise that resolves to the translation data.
  */
-export async function fetchTranslations(config) {
-  // Make a GET request to the localization service
-  const results = await usGet(
-    `${config.uiLocalizeServiceDomain}/v1` +
-    buildQueryString(translationDictionaries) +
-    `&cacheInSec=900&country=` + getHeaderInfo().acceptLanguage
-  );
-
-  // Return the translation data from the response
-  return results.data;
+export async function getTranslations(baseUrl) {
+  // Fetch translations using the provided base URL and predefined translation dictionaries
+  return await fetchTranslations(baseUrl, translationDictionaries);
 };
 
+/**
+ * Sets the document title based on the provided translations.
+ *
+ * @param {Object} translations - The translations object containing various localized strings.
+ */
 export function setDocumentTitle(translations) {
+  // Set the document title using the translation for 'OrderTracking.Details.Title'
   document.title = translations['OrderTracking.Details']?.Title;
 }

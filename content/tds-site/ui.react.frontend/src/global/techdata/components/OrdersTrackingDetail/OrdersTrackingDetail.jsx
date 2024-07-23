@@ -4,15 +4,15 @@ import OrderTrackingDetailBody from './OrderTrackingDetailBody';
 import OrderTrackingDetailFooter from './OrderTrackingDetailFooter';
 import { getSessionInfo } from '../../../../utils/user/get';
 import Flyouts from './Flyouts';
-import { getPageReloadAnalyticsGoogle, fixCountryCode } from '../OrdersTrackingGrid/utils/analyticsUtils'; // move to common!
+import { getPageReloadAnalyticsGoogle, fixCountryCode } from '../OrdersTrackingGrid/Utils/analyticsUtils'; // move to common!
 import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getUrlParamsCaseInsensitive } from '../../../../utils/index';
 import { fetchOrderDetailsData } from './utils/fetchUtils';
 import { updateUrl, mainDashboardUrl } from './utils/utils';
 import { getOrderDetailsAnalyticsGoogle, pushDataLayerGoogle } from './utils/analyticsUtils';
-import { fetchTranslations, setDocumentTitle } from './utils/translationsUtils';
-import { downloadFile, openFile } from './utils/fileUtils';
+import { getTranslations, setDocumentTitle } from './utils/translationsUtils';
+import { downloadFile, openFile } from '../OrdersTrackingCommon/Utils/fileUtils';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
 import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
 import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
@@ -139,7 +139,7 @@ function OrdersTrackingDetail(props) {
     console.log('OrdersTrackingDetail::useEffect');
 
     // Fetch the UI translations from the server
-    const uiTranslations = await fetchTranslations(config);
+    const uiTranslations = await getTranslations(config.uiLocalizeServiceDomain);
 
     // Set the fetched translations in the state
     setTranslations(uiTranslations);

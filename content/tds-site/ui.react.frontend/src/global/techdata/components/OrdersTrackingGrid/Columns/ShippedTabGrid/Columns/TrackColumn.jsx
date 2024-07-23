@@ -1,7 +1,7 @@
 import React from 'react';
 import { getDictionaryValueOrKey, addUrlParam } from '../../../../../../../utils/utils';
 import { usGet } from '../../../../../../../utils/api';
-import { getTrackAndTraceAnalyticsGoogle, pushDataLayerGoogle } from '../../../utils/analyticsUtils';
+import { getTrackAndTraceAnalyticsGoogle, pushDataLayerGoogle } from '../../../Utils/analyticsUtils';
 import { useOrderTrackingStore } from '../../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 function TrackColumn({ line, config, id }) {

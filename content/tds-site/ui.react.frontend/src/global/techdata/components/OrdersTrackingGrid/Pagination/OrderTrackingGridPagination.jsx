@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Button from '../../Widgets/Button';
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon, } from '../../../../../fluentIcons/FluentIcons';
-import { ANALYTIC_CONSTANTS, getPaginationAnalyticsGoogle, pushDataLayerGoogle } from '../utils/analyticsUtils';
+import { ANALYTIC_CONSTANTS, getPaginationAnalyticsGoogle, pushDataLayerGoogle } from '../Utils/analyticsUtils';
 import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 function OrderTrackingGridPagination({

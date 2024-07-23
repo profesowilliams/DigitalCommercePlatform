@@ -6,7 +6,7 @@ import {
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { PeopleIcon } from '../../../../../fluentIcons/FluentIcons';
 import Tooltip from '@mui/material/Tooltip';
-import { getEngUserDataAnalyticsGoogle, getSelectItemAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import { getEngUserDataAnalyticsGoogle, getSelectItemAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/Utils/analyticsUtils';
 
 function DescriptionColumn({ line, config }) {
   const [open, setOpen] = useState(false);

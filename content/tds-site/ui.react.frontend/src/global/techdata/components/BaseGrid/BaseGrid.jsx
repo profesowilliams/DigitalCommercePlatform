@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useStore } from '../../../../utils/useStore';
-import Grid from '../Grid/Grid';
+import Grid from '../OrdersTrackingCommon/Grid/Grid';
 import ErrorBoundaryBaseGrid from './utils/ErrorBoundaryBaseGrid';
 import { getBaseColumnDefinitions } from './utils/GenericColumnTypes';
 

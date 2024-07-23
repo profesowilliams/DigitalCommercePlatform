@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Grid from '../../../Grid/Grid';
+import Grid from '../../../OrdersTrackingCommon/Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from '../NotShippedTabGrid/buildColumnDefinitions';
 import { getDictionaryValueOrKey } from '../../../../../../utils/utils';
@@ -13,9 +13,7 @@ import { usPost } from '../../../../../../utils/api';
 import OrderReleaseAlertModal from '../../Modals/OrderReleaseAlertModal';
 import OrderStatusModal from '../../Modals/OrderStatusModal';
 import { GreenInfoIcon } from '../../../../../../fluentIcons/FluentIcons';
-import {
-  fetchOrderLinesData,
-} from '../../utils/orderTrackingUtils';
+import { fetchOrderLinesData, } from '../../Utils/orderTrackingUtils';
 
 function NotShippedTabGrid({
   data,

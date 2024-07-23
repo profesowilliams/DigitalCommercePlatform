@@ -4,7 +4,7 @@ import { WarningTriangle } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { getUrlParams } from '../../../../../utils';
 import { usGet } from '../../../../../utils/api';
-import { getOrderModificationFailedGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import { getOrderModificationFailedGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/Utils/analyticsUtils';
 
 function LineStatusColumn({ line, config, sortedLineDetails }) {
   const { id = '' } = getUrlParams();

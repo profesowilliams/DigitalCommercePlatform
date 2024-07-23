@@ -64,3 +64,30 @@ export function arraysEqual(arr1, arr2) {
   }
   return true;
 }
+
+/**
+ * Creates a debounced version of the provided function, which delays its execution until after
+ * a specified timeout has elapsed since the last time it was invoked.
+ *
+ * @param {Function} func - The function to debounce.
+ * @param {number} [timeout=300] - The number of milliseconds to delay execution. Defaults to 300ms.
+ * @returns {Function} A debounced version of the provided function.
+ */
+export const debounce = (func, timeout = 300) => {
+  let timer;
+
+  /**
+   * The debounced function that delays the execution of the original function.
+   *
+   * @param {...any} args - The arguments to pass to the original function.
+   */
+  return (...args) => {
+    // Clear the previous timer, if any
+    clearTimeout(timer);
+
+    // Set a new timer to execute the function after the specified timeout
+    timer = setTimeout(() => {
+      func(...args);
+    }, timeout);
+  };
+};

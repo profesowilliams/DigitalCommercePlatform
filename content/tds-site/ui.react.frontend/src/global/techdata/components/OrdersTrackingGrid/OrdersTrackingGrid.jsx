@@ -2,27 +2,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
 import { useOrderTrackingStore } from './../OrdersTrackingCommon/Store/OrderTrackingStore';
-import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
-import { requestFileBlobWithoutModal } from '../../../../utils/utils';
+import { ordersTrackingDefinition } from './Utils/ordersTrackingDefinitions';
 import { getUrlParamsCaseInsensitive } from '../../../../utils/index';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
-import { fetchData, fetchOrdersCount, fetchReport, filtersDateGroup, } from './utils/orderTrackingUtils';
+import { fetchData, fetchOrdersCount, fetchReport, filtersDateGroup, } from './Utils/orderTrackingUtils';
 import {
   getHomeAnalyticsGoogle,
   getMainDashboardAnalyticsGoogle,
   getSortAnalyticsGoogle,
   pushDataLayerGoogle,
   getPageReloadAnalyticsGoogle,
-  pushFailedDownloadGoogleAnalytics,
   getSearchNRFAnalyticsGoogle,
   getAdvancedSearchNRFAnalyticsGoogle,
   getReportsNRFAnalyticsGoogle,
   fixCountryCode,
-  pushSuccessDownloadGoogleAnalytics,
-} from './utils/analyticsUtils';
+} from './Utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import MainGridHeader from './MainGrid/MainGridHeader';
-import { addCurrencyToTotalColumn, mapServiceData } from './utils/gridUtils';
+import { addCurrencyToTotalColumn, mapServiceData } from './Utils/gridUtils';
 import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 import { getSessionInfo } from '../../../../utils/user/get';
@@ -32,8 +29,9 @@ import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
 import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
 import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
-import { fetchTranslations } from './utils/translationsUtils';
-import { compareURLs } from '../OrdersTrackingCommon/Utils/utils';
+import { getTranslations, setDocumentTitle } from './Utils/translationsUtils';
+import { updateUrl } from './Utils/utils';
+import { downloadFile, openFile } from '../OrdersTrackingCommon/Utils/fileUtils';
 
 function OrdersTrackingGrid(props) {
   console.log('OrdersTrackingGrid::init');
@@ -54,8 +52,6 @@ function OrdersTrackingGrid(props) {
   const shouldGoToFirstPage = useRef(false);
   const isOnSearchAction = useRef(false);
   const isOnPageChange = useRef(false);
-  const dNoteFailedCounter = useRef(1);
-  const invoiceFailedCounter = useRef(1);
   const rowsToGrayOutTDNameRef = useRef([]);
 
   const {
@@ -65,6 +61,7 @@ function OrdersTrackingGrid(props) {
     setFeatureFlags,
     setTranslations,
     hasRights,
+    setMainGridRowsTotalCounter
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore,
@@ -88,6 +85,7 @@ function OrdersTrackingGrid(props) {
   const [responseError, setResponseError] = useState(null);
   const [sendAnalyticsDataHome, setSendAnalyticsDataHome] = useState(true);
   const [newItem, setNewItem] = useState(null);
+
   const componentProp = JSON.parse(props.componentProp);
   const gridPageSize = 25;
 
@@ -234,6 +232,11 @@ function OrdersTrackingGrid(props) {
 
     storeQueryCacheKeyParameter(responseContent?.queryCacheKey);
 
+    // expand first details row
+    setMainGridRowsTotalCounter(
+      paginationAndSorting.current.pageNumber == 1 ? responseContent?.items?.length : null
+    );
+
     console.log('OrdersTrackingGrid::customRequestInterceptor::paginationValue');
     setPaginationData({
       totalCounter: ordersCountResponseContent?.totalItems,
@@ -282,150 +285,34 @@ function OrdersTrackingGrid(props) {
     }
   };
 
-  /**
- * Updates the URL with pagination and sorting parameters.
- * If the URL changes, it updates the browser history.
- * 
- * @param {Object} paginationAndSorting - Contains pagination and sorting information.
- * @param {Object} paginationAndSorting.current - The current pagination and sorting state.
- * @param {string} [paginationAndSorting.current.sortBy] - The field to sort by.
- * @param {string} [paginationAndSorting.current.sortDirection] - The direction to sort (e.g., 'asc', 'desc').
- * @param {number} [paginationAndSorting.current.page] - The current page number.
- * @param {boolean} [replaceState=false] - Whether to replace the current history state (default is false).
- */
-  const updateUrl = (paginationAndSorting, replaceState = false) => {
-    console.log('OrderTrackingGrid::updateUrl');
-
-    // Get the current URL
-    const currentUrl = new URL(window.location.href);
-
-    // Declare a variable to hold the updated URL
-    let url = new URL(window.location.href);
-
-    // If a sorting parameter is provided, set it in the URL
-    if (paginationAndSorting?.current?.sortBy) {
-      url.searchParams.set('sortby', paginationAndSorting.current.sortBy);
-    }
-
-    // If a sorting direction is provided, set it in the URL
-    if (paginationAndSorting?.current?.sortDirection) {
-      url.searchParams.set('sortdirection', paginationAndSorting.current.sortDirection);
-    }
-
-    // If a page number is provided, set it in the URL
-    if (paginationAndSorting?.current?.pageNumber) {
-      url.searchParams.set('page', paginationAndSorting.current.pageNumber);
-    }
-
-    // If a query cache key is provided, set it in the URL
-    if (paginationAndSorting?.current?.queryCacheKey) {
-      url.searchParams.set('q', paginationAndSorting.current.queryCacheKey);
-    }
-
-    // If the URL has changed, update the browser history
-    if (!compareURLs(url, currentUrl)) {
-      if (replaceState) {
-        // Use pushState to add a new entry to the browser history
-        window.history.pushState(null, '', url.toString());
-      } else {
-        // Use replaceState to modify the current entry in the browser history
-        window.history.replaceState(null, '', url.toString());
-      }
-    }
-  };
-
   const onDataLoad = () => {
     setIsLoading(false);
   };
 
+  /**
+   * Downloads a file based on the provided parameters.
+   * @param {string} flyoutType - The type of the flyout
+   * @param {string} orderId - The ID of the order.
+   * @param {string} selectedId - The ID of the selected file/item.
+   */
   const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
-    let response = null;
-    try {
-      const url = `${componentProp.uiCommerceServiceDomain}/v3/orders/downloaddocuments`;
-      const mapIds = selectedId.map((ids) => `&id=${ids}`).join('');
-      const downloadOrderInvoicesUrl =
-        url + `?Order=${orderId}&Type=${flyoutType}${mapIds}`;
-      response = await requestFileBlobWithoutModal(
-        downloadOrderInvoicesUrl,
-        null,
-        {
-          redirect: false,
-        }
-      );
-      if (response?.status === 200) {
-        const successCounter =
-          response?.headers['ga-download-documents-success'];
-        pushSuccessDownloadGoogleAnalytics(
-          flyoutType,
-          true,
-          successCounter,
-          orderId,
-          mapIds
-        );
-      } else if (response?.status === 204) {
-        const failCounter = response?.headers['ga-download-documents-fail'];
-        pushFailedDownloadGoogleAnalytics(
-          flyoutType,
-          true,
-          failCounter,
-          orderId,
-          mapIds
-        );
-      }
-    } catch (error) {
-      pushFailedDownloadGoogleAnalytics(flyoutType, true, 1, orderId, mapIds);
-      if (flyoutType === 'DNote') {
-        dNoteFailedCounter.current++;
-      } else if (flyoutType === 'Invoice') {
-        invoiceFailedCounter.current++;
-      }
-      console.error('Error', error);
-    }
+    console.log('OrdersTrackingGrid::downloadFileBlob::' + orderId);
+
+    // Call the downloadFile function with the necessary parameters to download the file.
+    await downloadFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
   };
 
+  /**
+   * Opens a PDF file based on the provided parameters.
+   * @param {string} flyoutType - The type of the flyout
+   * @param {string} orderId - The ID of the order.
+   * @param {string} selectedId - The ID of the selected file/item.
+   */
   const openFilePdf = async (flyoutType, orderId, selectedId) => {
-    const url = `${componentProp.uiCommerceServiceDomain}/v3/orders/downloaddocuments`;
-    const singleDownloadUrl =
-      url + `?Order=${orderId}&Type=${flyoutType}&id=${selectedId}`;
-    let response = null;
-    try {
-      response = await requestFileBlobWithoutModal(singleDownloadUrl, null, {
-        redirect: true,
-      });
-      if (response?.status === 200) {
-        const successCounter = response?.headers['ga-download-documents-success'];
-        pushSuccessDownloadGoogleAnalytics(
-          flyoutType,
-          true,
-          successCounter,
-          orderId,
-          selectedId
-        );
-      } else if (response?.status === 204) {
-        const failCounter = response?.headers['ga-download-documents-fail'];
-        pushFailedDownloadGoogleAnalytics(
-          flyoutType,
-          true,
-          failCounter,
-          orderId,
-          selectedId
-        );
-      }
-    } catch (error) {
-      pushFailedDownloadGoogleAnalytics(
-        flyoutType,
-        true,
-        1,
-        orderId,
-        selectedId
-      );
-      if (flyoutType === 'DNote') {
-        dNoteFailedCounter.current++;
-      } else if (flyoutType === 'Invoice') {
-        invoiceFailedCounter.current++;
-      }
-      console.error('Error', error);
-    }
+    console.log('OrdersTrackingDetail::openFilePdf::' + orderId);
+
+    // Call the openFile function with the necessary parameters to open the file in PDF format.
+    await openFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
   };
 
   const fetchFiltersRefinements = async () => {
@@ -449,14 +336,19 @@ function OrdersTrackingGrid(props) {
 
   useEffect(async () => {
     const refinements = await fetchFiltersRefinements();
+
     setRefinements(refinements);
 
     setFeatureFlags(refinements?.featureFlags);
 
-    const uiTranslations = await fetchTranslations(componentProp);
+    // Fetch the UI translations from the server
+    const uiTranslations = await getTranslations(gridConfig.uiLocalizeServiceDomain);
+
+    // Set the fetched translations in the state
     setTranslations(uiTranslations);
 
-    document.title = uiTranslations?.['OrderTracking.MainGrid']?.Title;
+    // Set the document title based on the fetched translations
+    setDocumentTitle(uiTranslations);
   }, []);
 
   useEffect(() => {

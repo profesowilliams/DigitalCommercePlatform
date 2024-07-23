@@ -10,7 +10,7 @@ import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTra
 import {
   getTrackAndTraceAnalyticsGoogle,
   pushDataLayerGoogle,
-} from '../../OrdersTrackingGrid/utils/analyticsUtils';
+} from '../../OrdersTrackingGrid/Utils/analyticsUtils';
 
 function TrackingFlyout({
   config,

@@ -8,7 +8,7 @@ import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
 import { usPost } from '../../../../utils/api';
 import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAlertModal';
 import XMLMessageModal from '../OrdersTrackingGrid/Modals/XMLMessageModal';
-import MigrationInfoBox from '../MigrationInfoBox/MigrationInfoBox';
+import MigrationInfoBox from '../OrdersTrackingCommon/MigrationInfoBox/MigrationInfoBox';
 import { fetchFiltersRefinements } from './utils/fetchUtils';
 
 /**

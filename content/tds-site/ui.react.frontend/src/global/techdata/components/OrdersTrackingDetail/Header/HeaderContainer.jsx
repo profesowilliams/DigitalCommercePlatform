@@ -4,7 +4,7 @@ import MenuActions from './MenuActions';
 import Title from './Title';
 import Navigation from './Navigation';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
-import { XMLMessageAnalyticsGoogle, pushDataLayerGoogle, } from '../../OrdersTrackingGrid/utils/analyticsUtils'; // TODO!
+import { XMLMessageAnalyticsGoogle, pushDataLayerGoogle, } from '../../OrdersTrackingGrid/Utils/analyticsUtils'; // TODO!
 import { usGet } from '../../../../../utils/api';
 import { handleDownloadExcelExport } from '../utils/exportUtils';
 
