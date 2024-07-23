@@ -410,8 +410,14 @@ function RenewalsGrid(props) {
     const newPurchaseButton = document.getElementById(
       'action-renewals-new-purchase'
     );
-    if (!enableNewPurchaseAction && newPurchaseButton) {
+    
+    if (newPurchaseButton) {
       newPurchaseButton.style.display = 'none';
+      if (enableNewPurchaseAction) {
+        newPurchaseButton.style.display = 'flex';
+      } else {
+        newPurchaseButton.style.display = 'none';
+      }
     }
     const checkUrl = () => {
       if (
