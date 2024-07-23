@@ -182,9 +182,12 @@ function NotShippedTabGrid({
   };
 
   useEffect(async () => {
-    const response = await fetchOrderLinesData(config, orderNo);
+    const response = await fetchOrderLinesData(
+      config.uiCommerceServiceDomain,
+      orderNo
+    );
     let currencyFromResponse =
-      response?.data?.content?.notShipped[0]?.currency ?? '';
+      response?.data?.content?.notShipped?.[0]?.currency ?? '';
     if(currencyFromResponse === '') {
       currencyFromResponse = userData?.activeCustomer?.defaultCurrency ?? '';
     }
@@ -242,7 +245,7 @@ function NotShippedTabGrid({
               )}
             </button>
           )}
-          {isOrderModificationButtonVisible && currency && (
+          {isOrderModificationButtonVisible && (
             <button
               className="order-line-details__content__title-button"
               onClick={handleOrderModification}

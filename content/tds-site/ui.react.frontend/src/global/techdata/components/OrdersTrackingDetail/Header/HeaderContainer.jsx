@@ -143,8 +143,13 @@ const HeaderContainer = ({
 
     console.log('HeaderContainer::useEffect::content::currency[' + content?.paymentDetails?.currency + ']');
 
-    const areDeliveryNotesAvailable = content.deliveryNotes?.length > 1 || (content.deliveryNotes?.length === 1 && firstDeliveryNote?.canDownloadDocument);
-    const areInvoicesAvailable = content.invoices?.length > 1 || (content.invoices?.length === 1 && firstInvoice?.canDownloadDocument);
+    const areDeliveryNotesAvailable = content?.orderNumber && content?.deliveryNotes[0]?.id && (content.deliveryNotes?.length > 1 || (content.deliveryNotes?.length === 1 && firstDeliveryNote?.canDownloadDocument));
+    const areInvoicesAvailable =
+        content?.orderNumber &&
+        content?.invoices[0]?.id &&
+      (content.invoices?.length > 1 ||
+      (content.invoices?.length === 1 &&
+        firstInvoice?.canDownloadDocument));
     const isReleaseTheOrderAvailable = hasOrderModificationRights && content.shipComplete === true && content.status !== 'Completed' && content.orderEditable === true;
     const areSerialNumbersAvailable = content.serialsAny === true;
     const areXMLMessageAvailable = content.xmlAvailable === true && userData?.isInternalUser;

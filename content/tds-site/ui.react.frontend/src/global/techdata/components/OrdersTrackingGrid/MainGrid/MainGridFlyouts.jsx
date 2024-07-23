@@ -5,6 +5,7 @@ import OrderModificationFlyout from '../../OrdersTrackingCommon/Flyouts/OrderMod
 import SettingsFlyout from '../Flyouts/Settings/SettingsFlyout';
 import ProductReplacementFlyout from '../../OrdersTrackingCommon/Flyouts/ProductReplacement/ProductReplacementFlyout';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
+import Toaster from '../../Widgets/Toaster';
 
 const MainGridFlyouts = ({
   gridConfig,
@@ -19,6 +20,12 @@ const MainGridFlyouts = ({
   function downloadAllFile(flyoutType, orderId, selectedId) {
     return downloadFileBlob(flyoutType, orderId, selectedId);
   }
+  
+  const { closeAndCleanToaster } = useOrderTrackingStore((st) => st.effects);
+
+  const onCloseToaster = () => {
+    closeAndCleanToaster();
+  };
 
   return (
     <>
@@ -72,6 +79,16 @@ const MainGridFlyouts = ({
         addNewItem={addNewItem}
         isTDSynnex={isTDSynnex}
         onQueryChanged={onQueryChanged}
+      />
+      <Toaster
+        classname="toaster-modal-otg"
+        onClose={onCloseToaster}
+        closeEnabled
+        store={useOrderTrackingStore}
+        message={{
+          successSubmission: 'successSubmission',
+          failedSubmission: 'failedSubmission',
+        }}
       />
     </>
   );

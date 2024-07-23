@@ -176,7 +176,7 @@ function OrderModificationFlyout({
       const addLineError = resultContent.addLine?.some((e) => e.isError);
       const reduceLineError = resultContent.reduceLine?.some((e) => e.isError);
 
-      const toasterSucess = {
+      const toasterSuccess = {
         isOpen: true,
         origin: 'fromUpdate',
         isAutoClose: true,
@@ -219,7 +219,7 @@ function OrderModificationFlyout({
       closeFlyout();
       if (result.data && !result.data?.error?.isError) {
         changeRefreshDetailApiState('lineDetails');
-        setCustomState({ key: 'toaster', value: { ...toasterSucess } });
+        setCustomState({ key: 'toaster', value: { ...toasterSuccess } });
       }
       if (addLineError || reduceLineError) {
         setCustomState({

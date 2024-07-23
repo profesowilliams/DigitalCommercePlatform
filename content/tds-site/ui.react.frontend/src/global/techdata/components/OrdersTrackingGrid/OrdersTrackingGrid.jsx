@@ -413,7 +413,7 @@ function OrdersTrackingGrid(props) {
             reports: reportFilterValue,
             paginationAndSorting: paginationAndSorting,
             search: searchCriteria,
-            filtersRefs: filtersRefs
+            filtersRefs: filtersRefs,
           }}
         />
         <MainGridHeader
@@ -424,7 +424,7 @@ function OrdersTrackingGrid(props) {
             reports: reportFilterValue,
             paginationAndSorting: paginationAndSorting,
             search: searchCriteria,
-            filtersRefs: filtersRefs
+            filtersRefs: filtersRefs,
           }}
           gridConfig={gridConfig}
           settings={settingsResponse}
@@ -466,7 +466,7 @@ function OrdersTrackingGrid(props) {
             reports: reportFilterValue,
             paginationAndSorting: paginationAndSorting,
             search: searchCriteria,
-            filtersRefs: filtersRefs
+            filtersRefs: filtersRefs,
           }}
           paginationData={paginationData}
         />
