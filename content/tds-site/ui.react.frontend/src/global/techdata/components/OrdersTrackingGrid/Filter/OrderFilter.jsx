@@ -9,6 +9,8 @@ import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
 import { getFilterAnalyticsGoogle, pushDataLayerGoogle } from '../Utils/analyticsUtils';
 import { updateUrl } from './Utils/utils';
+import { deepCopy } from './../../OrdersTrackingCommon/Utils/utils';
+import { isFilterNotEmpty } from './Utils/utils';
 
 /**
  * Functional component representing the Order Filter feature
@@ -21,7 +23,7 @@ function OrderFilter({ onChange }, ref) {
   console.log('OrderFilter::init');
 
   // Import necessary functions and hooks from the store
-  const { setFilterClicked, setCustomState } = useOrderTrackingStore(
+  const { setCustomState } = useOrderTrackingStore(
     (state) => state.effects
   );
 
@@ -47,6 +49,9 @@ function OrderFilter({ onChange }, ref) {
     statuses: [...new Set(params.getAll('status'))],
     types: [...new Set(params.getAll('type'))]
   });
+
+  // State to keep track of applied filters
+  const [appliedFilters, setAppliedFilters] = useState({});
 
   /**
    * Triggers the display of the filters flyout
@@ -74,6 +79,7 @@ function OrderFilter({ onChange }, ref) {
 
     // Set the cleared filters in the component's state
     setFilters(newFilters);
+    setAppliedFilters(newFilters);
 
     // Reset the number of applied filters to 0
     setNumberOfFilters(0);
@@ -114,17 +120,35 @@ function OrderFilter({ onChange }, ref) {
     // Trigger a query change event with the updated filter
     onChange(filters);
 
-    // Update the URL to reflect the filters
-    updateUrl(filters);
+    // Set updated filters as applied
+    setAppliedFilters(deepCopy(filters));
 
     // Set number of applied filters to calculated number
     setNumberOfFilters(numberOfAppliedFilters);
+
+    // Update the URL to reflect the filters
+    updateUrl(filters);
 
     if (numberOfAppliedFilters > 0) {
       // Push data to Google Analytics
       pushDataLayerGoogle(getFilterAnalyticsGoogle(filters));
     }
   };
+
+  /**
+   * Handles the event when the flyout is opened.
+   */
+  const onFlyoutOpen = () => {
+    console.log('OrderFilter::onFlyoutOpen');
+
+    // Check if any filters are applied
+    if (isFilterNotEmpty(appliedFilters)) {
+      console.log('OrderFilter::onFlyoutOpen::copy filters');
+
+      // Deep copy the applied filters to the local state
+      setFilters(deepCopy(appliedFilters));
+    }
+  }
 
   /**
    * Exposes methods to the parent component using a ref
@@ -147,6 +171,10 @@ function OrderFilter({ onChange }, ref) {
    */
   useEffect(() => {
     console.log('OrderFilter::useEffect::empty');
+
+    // Set initial filters as applied
+    setAppliedFilters(deepCopy(filters));
+
     // Call onFilterChanged with the current filters to update the applied filters count
     filters.isInit = true;
     onFilterChanged(filters);
@@ -162,10 +190,7 @@ function OrderFilter({ onChange }, ref) {
       >
         <div
           className="cmp-order-tracking-grid__filter"
-          onClick={() => {
-            triggerFiltersFlyout();
-            setFilterClicked(false);
-          }}
+          onClick={() => { triggerFiltersFlyout(); }}
         >
           <Hover
             onHover={
@@ -183,7 +208,9 @@ function OrderFilter({ onChange }, ref) {
       )}
       <OrderFilterFlyout
         onFilterChanged={onFilterChanged}
+        onFlyoutOpen={onFlyoutOpen}
         filters={filters}
+        appliedFilters={appliedFilters}
         subheaderReference={document.querySelector('.subheader > div > div')}
       />
     </>

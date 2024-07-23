@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import OrderFilterTags from './OrderFilterTags';
 import OrderFilterDate from './OrderFilterDate';
 import OrderFilterStatus from './OrderFilterStatus';
@@ -6,22 +6,28 @@ import OrderFilterType from './OrderFilterType';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { CollapseIcon, ExpandIcon } from '../../../../../fluentIcons/FluentIcons';
+import { compareFilters } from './Utils/utils';
 
 /**
  * Functional component representing the Order Filter Flyout feature.
  * - Manages filter states and user interactions.
  * @param {Object} props - Component props
  * @param {Function} props.onFilterChanged - Callback function invoked when filter changes
+ * @param {Function} props.onFlyoutOpen - Callback function invoked when the flyout opens
  * @param {Object} props.filters - References to filters used in the component
+ * @param {Object} props.appliedFilters - References to the applied filters
  * @param {React.Ref} props.subheaderReference - Reference to subheader element
  */
 const OrderFilterFlyout = ({
   onFilterChanged,
+  onFlyoutOpen,
   filters,
+  appliedFilters,
   subheaderReference
 }) => {
   const [showFilterTags, setShowFilterTags] = useState(false);
 
+  const [areThereAnyFiltersSelectedButNotApplied, setAreThereAnyFiltersSelectedButNotApplied] = useState(false);
   const [dateFromTo, setDateFromTo] = useState({ type: filters?.date?.type, from: filters?.date?.from, to: filters?.date?.to });
   const dateFilterRef = useRef();
 
@@ -31,13 +37,9 @@ const OrderFilterFlyout = ({
   const [checkedTypes, setCheckedTypes] = useState(filters?.types || []);
   const typeFilterRef = useRef();
 
-  const [areThereAnyFiltersSelectedButNotApplied, setAreThereAnyFiltersSelectedButNotApplied] = useState(false);
-
   const [showLess, setShowLess] = useState(false);
 
-  const filtersFlyoutConfig = useOrderTrackingStore(
-    (state) => state.filtersFlyout
-  );
+  const filtersFlyoutConfig = useOrderTrackingStore((state) => state.filtersFlyout);
 
   const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
   const translations = uiTranslations?.['OrderTracking.MainGrid.Filters'];
@@ -48,19 +50,24 @@ const OrderFilterFlyout = ({
     setShowLess(!showLess);
   };
 
+  /**
+   * Function to show the filtered results.
+   * - Closes the filters flyout.
+   * - Triggers the filter change callback with the current filter selections.
+   */
   const showResult = () => {
     console.log("OrderFilterFlyout::showResult");
 
+    // Close the filters flyout by setting its 'show' property to false
     setCustomState({ key: 'filtersFlyout', value: { show: false } });
 
+    // Trigger the onFilterChanged callback with the selected filters
     onFilterChanged({
-      onSearchAction: true,
-      date: dateFromTo,
-      statuses: checkedStatuses,
-      types: checkedTypes
+      onSearchAction: true, // Indicates that this action is a search action
+      date: dateFromTo,     // The selected date range
+      statuses: checkedStatuses, // The selected statuses
+      types: checkedTypes        // The selected types
     });
-
-    setAreThereAnyFiltersSelectedButNotApplied(false);
   };
 
   /**
@@ -81,8 +88,6 @@ const OrderFilterFlyout = ({
     dateFilterRef.current.set(dateFromTo);
     statusFilterRef.current.set(checkedStatuses);
     typeFilterRef.current.set(checkedTypes);
-
-    setAreThereAnyFiltersSelectedButNotApplied(false); // Resetting filter applied state
   };
 
   /**
@@ -98,11 +103,11 @@ const OrderFilterFlyout = ({
     // Update the state to reflect the selected date range
     setDateFromTo(option);
 
-    // Indicate that there are not applied filter changes
-    setAreThereAnyFiltersSelectedButNotApplied(true);
-
     // Show/hide filter tags to indicate that filters are applied
     showHideFilterTags();
+
+    // Update the state to indicate whether there are any filters selected but not applied
+    setAreThereAnyFiltersSelectedButNotApplied(!compareFilters(appliedFilters, filters));
   };
 
   /**
@@ -118,11 +123,11 @@ const OrderFilterFlyout = ({
     // Update the state to reflect the selected status options
     setCheckedStatuses(option);
 
-    // Indicate that there are not applied filter changes
-    setAreThereAnyFiltersSelectedButNotApplied(true);
-
     // Show/hide filter tags to indicate that filters are applied
     showHideFilterTags();
+
+    // Update the state to indicate whether there are any filters selected but not applied
+    setAreThereAnyFiltersSelectedButNotApplied(!compareFilters(appliedFilters, filters));
   };
 
   /**
@@ -138,11 +143,11 @@ const OrderFilterFlyout = ({
     // Update the state to reflect the selected type options
     setCheckedTypes(types);
 
-    // Indicate that there are not applied filter changes
-    setAreThereAnyFiltersSelectedButNotApplied(true);
-
     // Show/hide filter tags to indicate that filters are applied
     showHideFilterTags();
+
+    // Update the state to indicate whether there are any filters selected but not applied
+    setAreThereAnyFiltersSelectedButNotApplied(!compareFilters(appliedFilters, filters));
   };
 
   /**
@@ -190,6 +195,9 @@ const OrderFilterFlyout = ({
 
     // Show/hide filter tags to indicate that filters are applied
     showHideFilterTags();
+
+    // Update the state to indicate whether there are any filters selected but not applied
+    setAreThereAnyFiltersSelectedButNotApplied(!compareFilters(appliedFilters, filters));
   };
 
   /**
@@ -210,6 +218,35 @@ const OrderFilterFlyout = ({
     // Update the state to show or hide filter tags based on the number of applied filters
     setShowFilterTags(numberOfAppliedFilters > 0);
   };
+
+  /**
+   * Callback function invoked when the flyout opens.
+   * This function calls the provided onFlyoutOpen function, if defined.
+   */
+  const onOpen = () => {
+    // Check if the onFlyoutOpen function is provided and is a function
+    if (typeof onFlyoutOpen === 'function') {
+      // Call the onFlyoutOpen function
+      onFlyoutOpen();
+    }
+  };
+
+  useEffect(() => {
+    console.log('OrderFilterFlyout::useEffect::filtersFlyoutConfig');
+
+    // Check if the `filtersFlyoutConfig` object has a `show` property that is truthy
+    if (filtersFlyoutConfig?.show) {
+      onOpen();
+    }
+    // The dependency array ensures this effect runs whenever `filtersFlyoutConfig` changes
+  }, [filtersFlyoutConfig]);
+
+  useEffect(() => {
+    console.log('OrderFilterFlyout::useEffect::empty');
+
+    // Update the state to indicate whether there are any filters selected but not applied
+    setAreThereAnyFiltersSelectedButNotApplied(!compareFilters(appliedFilters, filters));
+  }, []); // Empty dependency array ensures this effect runs only once on mount
 
   return (
     <BaseFlyout

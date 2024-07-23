@@ -1,6 +1,5 @@
 import { removeSpecificParams } from '../../../../../../utils/index';
 import { removeDisallowedParams } from '../../../../../../utils/index';
-import { addDays, endOfDay, startOfDay, startOfYear, startOfMonth, endOfMonth, endOfYear, addMonths, addYears, startOfWeek, endOfWeek, isSameDay, differenceInCalendarDays, } from 'date-fns';
 import { arraysEqual, compareURLs } from '../../../OrdersTrackingCommon/Utils/utils';
 
 export function updateUrl(filter) {
@@ -38,11 +37,11 @@ export function updateUrl(filter) {
       });
     }
 
-    if (currentUrl.searchParams.get('datetype') !== filter.date.type
-      || currentUrl.searchParams.get('datefrom') !== filter.date.from
-      || currentUrl.searchParams.get('dateto') !== filter.date.to
-      || !arraysEqual(currentUrl.searchParams.getAll('type'), filter.types)
-      || !arraysEqual(currentUrl.searchParams.getAll('status'), filter.statuses)) {
+    if (currentUrl.searchParams.get('datetype') !== filter.date?.type
+      || currentUrl.searchParams.get('datefrom') !== filter.date?.from
+      || currentUrl.searchParams.get('dateto') !== filter.date?.to
+      || !arraysEqual(currentUrl.searchParams.getAll('type'), filter?.types)
+      || !arraysEqual(currentUrl.searchParams.getAll('status'), filter?.statuses)) {
       console.log('OrderFilter::updateUrl::reset page');
       url.searchParams.set('page', '1');
       url.searchParams.delete('q');
@@ -58,7 +57,6 @@ export function updateUrl(filter) {
   // If the URL has changed, update the browser history
   if (!compareURLs(url, currentUrl))
     window.history.pushState(null, '', url.toString());
-  // history.push(url.href.replace(url.origin, ''));
 };
 
 /**
@@ -102,89 +100,36 @@ export function isFilterChangeModelIsValid(filter) {
     || (filter.statuses?.length > 0) ? true : false;
 }
 
-export const customRanges = [
-  {
-    label: 'This Week',
-    range: () => ({
-      startDate: startOfWeek(new Date()),
-      endDate: new Date(),
-    }),
-    isSelected(range) {
-      const definedRange = this.range();
-      return (
-        isSameDay(range.startDate, definedRange.startDate) &&
-        isSameDay(range.endDate, definedRange.endDate)
-      );
-    },
-  },
-  {
-    label: 'Last 7 days',
-    range: () => ({
-      startDate: addDays(new Date(), -7),
-      endDate: new Date(),
-    }),
-    isSelected(range) {
-      const definedRange = this.range();
-      return (
-        isSameDay(range.startDate, definedRange.startDate) &&
-        isSameDay(range.endDate, definedRange.endDate)
-      );
-    },
-  },
-  {
-    label: 'This Month',
-    range: () => ({
-      startDate: startOfMonth(new Date()),
-      endDate: new Date(),
-    }),
-    isSelected(range) {
-      const definedRange = this.range();
-      return (
-        isSameDay(range.startDate, definedRange.startDate) &&
-        isSameDay(range.endDate, definedRange.endDate)
-      );
-    },
-  },
-  {
-    label: 'Last 30 days',
-    range: () => ({
-      startDate: addDays(new Date(), -30),
-      endDate: new Date(),
-    }),
-    isSelected(range) {
-      const definedRange = this.range();
-      return (
-        isSameDay(range.startDate, definedRange.startDate) &&
-        isSameDay(range.endDate, definedRange.endDate)
-      );
-    },
-  },
-  {
-    label: 'This year',
-    range: () => ({
-      startDate: startOfYear(new Date()),
-      endDate: new Date(),
-    }),
-    isSelected(range) {
-      const definedRange = this.range();
-      return (
-        isSameDay(range.startDate, definedRange.startDate) &&
-        isSameDay(range.endDate, definedRange.endDate)
-      );
-    },
-  },
-  {
-    label: 'Today',
-    range: () => ({
-      startDate: new Date(),
-      endDate: new Date(),
-    }),
-    isSelected(range) {
-      const definedRange = this.range();
-      return (
-        isSameDay(range.startDate, definedRange.startDate) &&
-        isSameDay(range.endDate, definedRange.endDate)
-      );
-    },
-  },
-];
+function dateFilterIsCorrect(date) {
+  return date && date.type && date.from && date.to ? true : false;
+}
+
+/**
+ * Compares two filter objects to determine if they are equal.
+ *
+ * @param {Object} appliedFilter - The first filter object to compare.
+ * @param {Object} newFilter - The second filter object to compare.
+ * @returns {boolean} - Returns true if the filters are equal, otherwise false.
+ */
+export function compareFilters(appliedFilter, newFilter) {
+  // Check if both filters are provided
+  if (!appliedFilter || !newFilter) return false;
+
+  // Compare date properties
+  const datesEqual =
+    !dateFilterIsCorrect(appliedFilter.date) && !dateFilterIsCorrect(newFilter.date)
+    ||
+    dateFilterIsCorrect(appliedFilter.date) && dateFilterIsCorrect(newFilter.date) &&
+    (
+      appliedFilter.date.type === newFilter.date.type &&
+      appliedFilter.date.from === newFilter.date.from &&
+      appliedFilter.date.to === newFilter.date.to
+    );
+
+  // Compare statuses and types arrays
+  const statusesEqual = appliedFilter.statuses && newFilter.statuses && arraysEqual(appliedFilter.statuses, newFilter.statuses);
+  const typesEqual = appliedFilter.types && newFilter.types && arraysEqual(appliedFilter.types, newFilter.types);
+
+  // Return true if all parts of the filters are equal
+  return datesEqual && statusesEqual && typesEqual;
+}

@@ -6,7 +6,7 @@ import OrderFilterDateType from './OrderFilterDateType';
 import StartEndDisplay from './StartEndDisplay';
 import OrderCount from './OrderCount';
 import { DateRangePicker } from 'react-date-range';
-import { customRanges } from './Utils/utils';
+import { getCustomRanges, getFilterDateOptions } from './Utils/translationsUtils';
 import moment from 'moment';
 
 /**
@@ -40,50 +40,8 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
 
   const [accordionIsOpen, setAccordionIsOpen] = useState(filters?.from && filters?.to && filters?.type);
 
-  const filterDateOptions = [
-    {
-      key: 'orderDate',
-      label: (
-        <span className="filter-dateType">
-          {translations?.OrderDate}
-        </span>
-      )
-    },
-    {
-      key: 'shipDate',
-      label: (
-        <div>
-          <span className="filter-dateType">
-            {translations?.ShipDate}{' '}
-          </span>
-          <span className="filter-dateType-description">
-            {translations?.PastDateRange}
-          </span>
-        </div>
-      )
-    },
-    {
-      key: 'etaDate',
-      label: (
-        <div>
-          <span className="filter-dateType">
-            {translations?.ETADate}{' '}
-          </span>
-          <span className="filter-dateType-description">
-            {translations?.FutureDateRange}
-          </span>
-        </div>
-      )
-    },
-    {
-      key: 'invoiceDate',
-      label: (
-        <span className="filter-dateType">
-          {translations?.InvoiceDate}
-        </span>
-      )
-    },
-  ];
+  const filterDateOptions = getFilterDateOptions(translations);
+  const customRanges = getCustomRanges(translations);
 
   /**
    * Handles changes to the radio button selection

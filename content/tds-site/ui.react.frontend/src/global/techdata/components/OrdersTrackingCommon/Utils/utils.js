@@ -91,3 +91,18 @@ export const debounce = (func, timeout = 300) => {
     }, timeout);
   };
 };
+
+/**
+ * Creates a deep copy of an object.
+ * 
+ * This function uses JSON serialization and deserialization to create a deep copy
+ * of the provided object. Note that this method may not handle all edge cases, 
+ * such as functions, undefined values, or circular references.
+ * 
+ * @param {Object} obj - The object to be deeply copied.
+ * @returns {Object} - A new object that is a deep copy of the input object.
+ */
+export function deepCopy(obj) {
+  // Convert the object to a JSON string and parse it back to a new object
+  return JSON.parse(JSON.stringify(obj));
+}
