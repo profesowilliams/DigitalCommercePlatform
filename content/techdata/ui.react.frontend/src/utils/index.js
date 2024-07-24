@@ -51,7 +51,7 @@ export const handleLogout = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogou
                 logoutReturnUrl = returnHomePageUrl;
             }
         }
-        shopLogoutRedirectUrl = shopLogoutRedirectUrl + "?returnUrl=" + encodeURIComponent(logoutReturnUrl);
+        shopLogoutRedirectUrl = shopLogoutRedirectUrl;// + "?returnUrl=" + encodeURIComponent(logoutReturnUrl);
     }
     pingLogoutUrl = pingLogoutUrl + "?TargetResource=" + shopLogoutRedirectUrl + "&InErrorResource=" + encodeURIComponent(errorPageUrl);
 
@@ -81,16 +81,17 @@ export const signOutForExpiredSession = (authUrl, clientId) => {
 
 export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl, isPrivatePage, isLoggedIn, isNewLoginEnabled) => {
   const { protocol, hostname, port, pathname } = window.location;
+  let returnUrl = encodeURIComponent(aemAuthUrl + "|"+ window.location.href);
 
+  let replacedShopLogoutRedirectUrl = shopLogoutRedirectUrl.replaceAll("{returnUrl}", aemAuthUrl);
   if(window.SHOP && window.SHOP.authentication) {
     /**cleaning up localstorage for logout*/
     localStorage.removeItem('userData');
     localStorage.removeItem('ActiveCart');
     localStorage.removeItem('signin');
-    let returnUrl = encodeURIComponent(aemAuthUrl + "|"+ window.location.href);
-    window.location.replace(shopLogoutRedirectUrl + "?returnUrl=" + returnUrl);
+    window.location.replace(replacedShopLogoutRedirectUrl);
   } else {
-    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, false /*redirect back to current url*/, isPrivatePage, isLoggedIn, isNewLoginEnabled) ;
+    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, replacedShopLogoutRedirectUrl, false /*redirect back to current url*/, isPrivatePage, isLoggedIn, isNewLoginEnabled) ;
   }
 }
 
