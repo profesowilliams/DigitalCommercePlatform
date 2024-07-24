@@ -4,6 +4,12 @@ $flyout-padding: 16px;
 $flyout-small-height: 780px;
 $flyout-small-height-formax: 779px;
 
+.MuiDrawer-modal,
+.MuiDrawer-paper,
+.MuiAutocomplete-popper {
+  z-index: 12000 !important;
+}
+
 .cmp-flyout {
   font-family: $font-family-arial;
   position: relative;
