@@ -56,9 +56,7 @@ function MainGridHeader({
 
       // Reset page number to 1
       searchParams.paginationAndSorting.current.pageNumber = 1;
-
-      // Trigger query change indicating a search action
-      //onQueryChanged({ onSearchAction: true });
+      searchParams.paginationAndSorting.current.queryCacheKey = '';
 
       return true;
     } else {
@@ -89,6 +87,7 @@ function MainGridHeader({
 
       // Reset page number to 1
       searchParams.paginationAndSorting.current.pageNumber = 1;
+      searchParams.paginationAndSorting.current.queryCacheKey = '';
 
       return true;
     } else {
@@ -119,6 +118,7 @@ function MainGridHeader({
 
       // Reset page number to 1
       searchParams.paginationAndSorting.current.pageNumber = 1;
+      searchParams.paginationAndSorting.current.queryCacheKey = '';
 
       return true;
     } else {
@@ -183,6 +183,7 @@ function MainGridHeader({
     if (!filtersCleared && !searchCleared && !filters.isInit) {
       console.log('MainGridHeader::onReportChange::reset page number');
       searchParams.paginationAndSorting.current.pageNumber = 1;
+      searchParams.paginationAndSorting.current.queryCacheKey = '';
     }
 
     // Update the current report value in the search parameters
@@ -225,6 +226,7 @@ function MainGridHeader({
     if (!reportsCleared && !filters.isInit) {
       console.log('MainGridHeader::onReportChange::reset page number');
       searchParams.paginationAndSorting.current.pageNumber = 1;
+      searchParams.paginationAndSorting.current.queryCacheKey = '';
     }
 
     // Update the current search parameters with the new filters
@@ -263,6 +265,7 @@ function MainGridHeader({
     if (!reportsCleared && !filters.isInit) {
       console.log('MainGridHeader::onReportChange::reset page number');
       searchParams.paginationAndSorting.current.pageNumber = 1;
+      searchParams.paginationAndSorting.current.queryCacheKey = '';
     }
 
     // Update the searchParams with the new filters
