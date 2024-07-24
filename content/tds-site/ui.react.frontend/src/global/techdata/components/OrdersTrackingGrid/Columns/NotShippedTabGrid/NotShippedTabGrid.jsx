@@ -42,7 +42,6 @@ function NotShippedTabGrid({
   const orderModificationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.orderModification
   );
-  const userData = useOrderTrackingStore((state) => state.userData);
   const effects = useOrderTrackingStore((state) => state.effects);
 
   const { setCustomState, hasRights } = effects;
@@ -52,7 +51,6 @@ function NotShippedTabGrid({
   const [openAlert, setOpenAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
-  const [currency, setCurrency] = useState(null);
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels || {};
   const hasOrderModificationRights = hasRights('OrderModification');
@@ -125,19 +123,16 @@ function NotShippedTabGrid({
   );
 
   const handleOrderModification = () => {
-    currency &&
-      orderEditable &&
-      setCustomState({
-        key: 'orderModificationFlyout',
-        value: {
-          data: null,
-          id: orderNo,
-          show: true,
-          gridRef,
-          rowsToGrayOutTDNameRef,
-          currency,
-        },
-      });
+    orderEditable && setCustomState({
+      key: 'orderModificationFlyout',
+      value: {
+        data: null,
+        id: orderNo,
+        show: true,
+        gridRef,
+        rowsToGrayOutTDNameRef
+      },
+    });
   };
 
   const getRowClass = ({ node }) => {

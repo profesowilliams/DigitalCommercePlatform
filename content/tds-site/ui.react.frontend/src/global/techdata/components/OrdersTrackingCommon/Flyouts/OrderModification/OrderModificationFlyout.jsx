@@ -363,7 +363,7 @@ function OrderModificationFlyout({
                 onChange={handleChangeNewItem}
                 removeElement={() => handleRemoveNewItem(index)}
                 domain={gridConfig.uiCommerceServiceDomain}
-                currency={orderModificationConfig?.currency}
+                currency={orderModificationResponse?.currency}
               />
             ))}
           </ul>
@@ -389,7 +389,6 @@ function OrderModificationFlyout({
               labels={labels}
               domain={gridConfig.uiCommerceServiceDomain}
               enableAddLine={enableAddLine}
-              currency={orderModificationConfig?.currency}
             />
           ))}
         </ul>

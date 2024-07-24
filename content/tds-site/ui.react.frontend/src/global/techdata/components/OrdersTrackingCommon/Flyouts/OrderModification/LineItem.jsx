@@ -7,7 +7,7 @@ import { useOrderTrackingStore } from '../../Store/OrderTrackingStore';
 import Tooltip from '@mui/material/Tooltip';
 import { usGet } from '../../../../../../utils/api';
 
-const LineItem = ({ item, index, onChange, labels, domain, enableAddLine, currency }) => {
+const LineItem = ({ item, index, onChange, labels, domain, enableAddLine }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
   const [quantityDecreased, setQuantityDecreased] = useState(false);
   const [currentValue, setCurrentValue] = useState(item.orderQuantity);
@@ -116,7 +116,7 @@ const LineItem = ({ item, index, onChange, labels, domain, enableAddLine, curren
       </div>
       <div className="cmp-flyout-list__element__price">
         <p className="cmp-flyout-list__element__price-bold">
-          {getDictionaryValueOrKey(labels.lineTotal)} ({currency})
+          {getDictionaryValueOrKey(labels.lineTotal)} ({item.currency})
         </p>
         <p>{totalPriceFormatted}</p>
       </div>
