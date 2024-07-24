@@ -182,21 +182,10 @@ function NotShippedTabGrid({
   };
 
   useEffect(async () => {
-    const response = await fetchOrderLinesData(
-      config.uiCommerceServiceDomain,
-      orderNo
-    );
-    let currencyFromResponse =
-      response?.data?.content?.notShipped?.[0]?.currency ?? '';
-    if(currencyFromResponse === '') {
-      currencyFromResponse = userData?.activeCustomer?.defaultCurrency ?? '';
-    }
-    setCurrency(currencyFromResponse);
     setCustomState({
       key: 'orderModificationFlyout',
       value: {
         id: orderNo,
-        currency: currencyFromResponse,
       },
     });
   }, []);
