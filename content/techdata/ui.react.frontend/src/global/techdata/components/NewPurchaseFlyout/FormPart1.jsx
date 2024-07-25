@@ -566,9 +566,6 @@ function FormPart1({
             value={endUserType}
             onChange={handleEndUserTypeChange}
             error={!!endUserTypeError}
-            MenuProps={{
-              style: { zIndex: 12000 },
-            }}
           >
             <MenuItem value="Commercial">
               {getDictionaryValueOrKey(newPurchaseFlyout?.endUserTypeComercial)}
@@ -647,9 +644,6 @@ function FormPart1({
             value={endUserCountry}
             onChange={handleEndUserCountryChange}
             error={!!endUserCountryError}
-            MenuProps={{
-              style: { zIndex: 12000 },
-            }}
           >
             <MenuItem value="Commercial">
               {getDictionaryValueOrKey(newPurchaseFlyout?.endUserVietnam)}
