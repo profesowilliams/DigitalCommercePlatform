@@ -140,14 +140,10 @@ function OrderFilter({ onChange }, ref) {
    */
   const onFlyoutOpen = () => {
     console.log('OrderFilter::onFlyoutOpen');
+    console.log('OrderFilter::onFlyoutOpen::copy filters');
 
-    // Check if any filters are applied
-    if (isFilterNotEmpty(appliedFilters)) {
-      console.log('OrderFilter::onFlyoutOpen::copy filters');
-
-      // Deep copy the applied filters to the local state
-      setFilters(deepCopy(appliedFilters));
-    }
+    // Deep copy the applied filters to the local state
+    setFilters(deepCopy(appliedFilters));
   }
 
   /**
