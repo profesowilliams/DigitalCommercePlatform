@@ -41,8 +41,8 @@
 }
 
 .rdrMonthAndYearWrapper {
-  height: auto!important;
-  padding-top: 0!important;
+  height: auto !important;
+  padding-top: 80px !important;
 }
 
 .rdrMonth {
@@ -252,4 +252,19 @@ button.rdrStaticRange {
 .rdrNextPrevButton.rdrPprevButton,
 .rdrNextPrevButton.rdrNextButton {
   background: none !important;
+}
+
+.start-end-display {
+  margin-top: -310px !important;
+  margin-bottom: 240px !important;
+}
+
+.rdrMonthPicker, .rdrYearPicker {
+  margin: 0 5px;
+  background-color: #f8f8f8;
+}
+
+.rdrMonthPicker select, .rdrYearPicker select {
+  font-weight: normal !important;
+  padding: 5px !important;
 }
