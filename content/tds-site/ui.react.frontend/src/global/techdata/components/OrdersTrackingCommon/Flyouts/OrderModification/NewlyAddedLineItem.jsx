@@ -9,11 +9,11 @@ const NewlyAddedLineItem = ({
   onChange,
   removeElement,
   labels,
-  domain,
-  currency,
+  domain
 }) => {
   const [price, setPrice] = useState(null);
-  const [quantity, setQuantity] = useState(item.quantity);
+  const [quantity, setQuantity] = useState(item?.quantity);
+  const [currency, setCurrency] = useState('');
 
   const handleAmountChange = (newValue) => {
     setQuantity(newValue);
@@ -22,13 +22,13 @@ const NewlyAddedLineItem = ({
   useEffect(async () => {
     try {
       const result = await usPost(`${domain}/v2/Price/GetPriceForProduct`, {
-        productId: item.id,
+        productId: item?.id,
         quantity: quantity,
-        currency,
       });
-      const { price, totalPriceFormatted } =
+      const { price, totalPriceFormatted, currency } =
         result?.data?.content?.priceData || {};
       setPrice(totalPriceFormatted);
+      setCurrency(currency);
       onChange(index, quantity, price);
     } catch (error) {
       console.error('Error:', error);
@@ -38,18 +38,18 @@ const NewlyAddedLineItem = ({
   return (
     <li key={index} className="cmp-flyout-list__element newly-added">
       <div className="cmp-flyout-list__element__picture">
-        <img src={item.imageUrl} alt="" />
+        <img src={item?.imageUrl} alt="" />
       </div>
       <div className="cmp-flyout-list__element__title">
-        <p>{item.description}</p>
+        <p>{item?.description}</p>
         <div>{`${getDictionaryValueOrKey(labels?.lineMfgPartNo)} ${
-          item.manufacturerPartNumber
+          item?.manufacturerPartNumber
         }`}</div>
       </div>
       <div className="cmp-flyout-list__element__counter">
         <Counter
           minVal={0}
-          value={Number(item.quantity)}
+          value={Number(item?.quantity)}
           onChange={handleAmountChange}
         />
         <a
@@ -61,7 +61,7 @@ const NewlyAddedLineItem = ({
       </div>
       <div className="cmp-flyout-list__element__price">
         <p className="cmp-flyout-list__element__price-bold">
-          {getDictionaryValueOrKey(labels.lineTotal)} ({currency}){' '}
+          {getDictionaryValueOrKey(labels?.lineTotal)} ({currency}){' '}
         </p>
         {price && <p>{price}</p>}
       </div>
