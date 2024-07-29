@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
+﻿import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { ReportIcon, ReportIconFilled } from '../../../../../fluentIcons/FluentIcons'
 import ReportDropdown from './ReportDropdown';
 import '../../../../../../src/styles/TopIconsBar.scss';
@@ -11,11 +11,12 @@ import { updateUrl } from './Utils/utils';
 /**
  * Functional component representing the Report feature
  * @param {Object} props - Component props
+ * @param {Function} props.onInit - Callback function invoked on initialization
  * @param {Function} props.onChange - Callback function invoked on change events
  * @param {string} props.analyticsLabel - Label used for analytics purposes
  * @param {React.Ref} ref - Reference object used to expose imperative methods
  */
-function Report({ onChange, analyticsLabel }, ref) {
+function Report({ onInit, onChange, analyticsLabel }, ref) {
   console.log('Report::init');
 
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
@@ -109,6 +110,7 @@ function Report({ onChange, analyticsLabel }, ref) {
 
   useEffect(() => {
     console.log('Report::useEffect::translations');
+
     // Check if the initial value (getInitial) is provided
     if (getInitial) {
 
@@ -117,15 +119,20 @@ function Report({ onChange, analyticsLabel }, ref) {
         getInitial = 'EOLOrders';
       }
 
-      // Select the option corresponding to the initial value
       handleSelectOption({
         key: getInitial,
         label: translations?.[getInitial],
-        isInit: true
-      });
+        isInit: true // true - kiedy kryteria wyszukiwania pochodzą z Init a nie akcji wyszukiwania
+      })
+
+      // Control is on ready state
+      onInit(false);
     }
-    // This effect runs whenever the translations object changes
-  }, [translations]);
+    else {
+      // Control is on ready state, and initial criteria are empty
+      onInit(true);
+    }
+  }, [translations]); // This effect runs whenever the translations object changes
 
   /**
    * Custom hook to handle clicks outside of a specified element.

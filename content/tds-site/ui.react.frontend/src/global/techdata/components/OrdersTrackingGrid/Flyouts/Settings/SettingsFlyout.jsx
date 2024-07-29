@@ -131,10 +131,7 @@ const SettingsFlyout = ({
   };
 
   const isDataModifiedAndValid = () => {
-    if (_.isEmpty(data)) {
-      return false;
-    }
-    if (!data.emailActive && !data.additionalEmailActive) {
+    if (!data?.emailActive && !data?.additionalEmailActive) {
       return false;
     }
     if (areSettingsIdentical(dataCopy, data)) {

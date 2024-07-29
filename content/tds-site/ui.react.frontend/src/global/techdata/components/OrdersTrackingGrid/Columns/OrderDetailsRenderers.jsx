@@ -10,9 +10,12 @@ function OrderDetailsRenderers({
   newItem,
   onQueryChanged,
 }) {
+  console.log('OrderDetailsRenderers::init');
+
   const detailRender = useOrderTrackingStore(
     (state) => state.filter.detailRender
   );
+
   const mainGridRowsTotalCounter = useOrderTrackingStore(
     (state) => state.mainGridRowsTotalCounter
   );

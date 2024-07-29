@@ -8,29 +8,24 @@ import Hover from '../Hover/Hover';
 import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils/index';
 import { getFilterAnalyticsGoogle, pushDataLayerGoogle } from '../Utils/analyticsUtils';
-import { updateUrl } from './Utils/utils';
+import { updateUrl, isFilterChangeModelIsValid } from './Utils/utils';
 import { deepCopy } from './../../OrdersTrackingCommon/Utils/utils';
-import { isFilterNotEmpty } from './Utils/utils';
 
 /**
  * Functional component representing the Order Filter feature
  * includes filter icon with tooltip, counter, and flyout
  * @param {Object} props - Component props
+ * @param {Function} props.onInit - Callback function invoked on initialization
  * @param {Function} props.onChange - Callback function invoked when filter changes
  * @param {React.Ref} ref - Reference object used to expose imperative methods
  */
-function OrderFilter({ onChange }, ref) {
+function OrderFilter({ onInit, onChange }, ref) {
   console.log('OrderFilter::init');
 
-  // Import necessary functions and hooks from the store
   const { setCustomState } = useOrderTrackingStore(
     (state) => state.effects
   );
-
-  // Get UI translations from the store
   const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
-
-  // Extract translations for the main grid filters
   const translations = uiTranslations?.['OrderTracking.MainGrid.Filters'];
 
   // State to keep track of the number of active filters
@@ -72,9 +67,14 @@ function OrderFilter({ onChange }, ref) {
 
     // Clear the date, statuses and types filters
     const newFilters = {
-      date: { type: undefined, from: undefined, to: undefined },
+      date: {
+        type: undefined,
+        from: undefined,
+        to: undefined
+      },
       statuses: [],
-      types: []
+      types: [],
+      resetFilters: true // bypass filter validation
     };
 
     // Set the cleared filters in the component's state
@@ -121,7 +121,12 @@ function OrderFilter({ onChange }, ref) {
     onChange(filters);
 
     // Set updated filters as applied
-    setAppliedFilters(deepCopy(filters));
+    const filtersCopy = deepCopy(filters);
+    setAppliedFilters({
+      date: filtersCopy.date,
+      statuses: filtersCopy.statuses,
+      types: filtersCopy.types
+    });
 
     // Set number of applied filters to calculated number
     setNumberOfFilters(numberOfAppliedFilters);
@@ -143,7 +148,12 @@ function OrderFilter({ onChange }, ref) {
     console.log('OrderFilter::onFlyoutOpen::copy filters');
 
     // Deep copy the applied filters to the local state
-    setFilters(deepCopy(appliedFilters));
+    const filtersCopy = deepCopy(appliedFilters);
+    setFilters({
+      date: filtersCopy.date,
+      statuses: filtersCopy.statuses,
+      types: filtersCopy.types
+    });
   }
 
   /**
@@ -166,14 +176,24 @@ function OrderFilter({ onChange }, ref) {
    * Runs only once on component mount
    */
   useEffect(() => {
-    console.log('OrderFilter::useEffect::empty');
+    console.log('OrderFilter::useEffect');
 
     // Set initial filters as applied
     setAppliedFilters(deepCopy(filters));
 
-    // Call onFilterChanged with the current filters to update the applied filters count
-    filters.isInit = true;
-    onFilterChanged(filters);
+    // Check if the initial value (getInitial) is provided
+    if (isFilterChangeModelIsValid(filters)) {
+      // Call onFilterChanged with the current filters to update the applied filters count
+      filters.isInit = true;
+      onFilterChanged(filters);
+
+      // Control is on ready state
+      onInit(false);
+    }
+    else {
+      // Control is on ready state, and initial criteria are empty
+      onInit(true);
+    }
   }, []); // Empty dependency array ensures this effect runs only once on mount
 
   return (

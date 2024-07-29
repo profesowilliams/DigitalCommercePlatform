@@ -2,20 +2,8 @@ import React, { useEffect, useState, useRef, Fragment, useMemo } from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
-import { get } from "../../../../../utils/api";
-import {
-  getDictionaryValue,
-  getDictionaryValueOrKey,
-  setDefaultSearchDateRange,
-  fromExceptionToErrorObject,
-  normalizeErrorCode,
-  stringifyValue,
-  hasSearchOrFilterPresent,
-} from '../../../../../utils/utils';
+import { getDictionaryValue, getDictionaryValueOrKey, hasSearchOrFilterPresent, } from '../../../../../utils/utils';
 
-import { isObject } from '../../../../../utils';
-import useAuth from '../../../hooks/useAuth';
-import { endpoints } from "../../OrdersTrackingGrid/Utils/orderTrackingUtils"; //TODO!
 import { LoaderIcon } from '../../../../../fluentIcons/FluentIcons';
 
 function Grid(props) {
@@ -28,26 +16,17 @@ function Grid(props) {
     onRowSelected,
     onSelectionChanged,
     getRowIdCallback,
-    onModelUpdateFinished,
-    requestInterceptor,
     onSortChanged,
     handlerIsRowMaster,
     icons,
-    omitCreatedQuery = false,
-    contextMenuItems = undefined,
-    extendedContextMenuItems = undefined,
-    noContextMenuItemsWhenColumnNull = false,
     customizedDetailedRender,
     onExpandAnalytics,
     onCollapseAnalytics,
     onCellMouseOver,
     onCellMouseOut,
-    getDefaultCopyValue,
     suppressPaginationPanel = false,
     suppressRowTransform = true,
     getRowId,
-    defaultSearchDateRange = setDefaultSearchDateRange(30),
-    onDataLoad,
     responseError = null,
     rowClassRules,
     gridRef,
@@ -55,17 +34,10 @@ function Grid(props) {
     suppressMultiSort = false,
   } = Object.assign({}, props);
   let isLicenseSet = false;
-  const componentVersion = '1.3.0';
   const gridData = data;
   const [agGrid, setAgGrid] = useState(null);
   const noRowsErrorMessage = useRef(null);
-  const [actualRange, setActualRange] = useState({
-    from: null,
-    to: null,
-    total: null,
-  });
   const popupParent = useMemo(() => document.querySelector('body'), []);
-  const { isUserLoggedIn: isLoggedIn } = useAuth();
   const pagination =
     config?.paginationStyle &&
     config?.paginationStyle !== 'none' &&
@@ -75,14 +47,8 @@ function Grid(props) {
   const enableCellTextSelection = config?.enableCellTextSelection ?? false;
   const ensureDomOrder = config?.ensureDomOrder ?? false;
   const gridNodeRef = useRef(null);
-  const gridId = useRef(null);
   const gridApi = useRef(null);
   const DEFAULT_ROW_HEIGHT = 25;
-
-  const updatingFinished =
-    typeof onModelUpdateFinished === 'function'
-      ? debouncer(200, () => onModelUpdateFinished())
-      : null;
 
   const getAgGridDomLayout = () => {
     if (config?.domLayout) return config.domLayout;
@@ -95,15 +61,15 @@ function Grid(props) {
   const CustomNoRowsOverlay = (props) => {
     const configInfo = hasSearchOrFilterPresent()
       ? {
-          src: config.searchResultsError?.noResultsImage,
-          title: config.searchResultsError?.noResultsTitle,
-          description: config.searchResultsError?.noResultsDescription,
-        }
+        src: config.searchResultsError?.noResultsImage,
+        title: config.searchResultsError?.noResultsTitle,
+        description: config.searchResultsError?.noResultsDescription,
+      }
       : {
-          src: config.searchResultsError?.noDataImage,
-          title: config.searchResultsError?.noDataTitle,
-          description: config.searchResultsError?.noDataDescription,
-        };
+        src: config.searchResultsError?.noDataImage,
+        title: config.searchResultsError?.noDataTitle,
+        description: config.searchResultsError?.noDataDescription,
+      };
 
     if (customErrorMessage) {
       return (
@@ -168,168 +134,6 @@ function Grid(props) {
     };
   }, []);
 
-  const getDefaultMenuItems = (params) => {
-    const extendedItems =
-      typeof extendedContextMenuItems === 'function'
-        ? extendedContextMenuItems(params)
-        : [];
-    return [
-      {
-        name: config?.menuCopy,
-        shortcut: 'Ctrl+C',
-        action: () => {
-          switch (true) {
-            case !params.value && typeof getDefaultCopyValue === 'function':
-              navigator.clipboard.writeText(
-                stringifyValue(getDefaultCopyValue(params))
-              );
-              break;
-            case isObject(params.value):
-              navigator.clipboard.writeText(stringifyValue(params.value?.name));
-              break;
-            case params?.column?.colDef?.field === 'renewalGridOptions' &&
-              params.value.split(/:(.*)/s).length === 3:
-              navigator.clipboard.writeText(
-                stringifyValue(params.value.split(/:(.*)/s)[1].trim())
-              );
-              break;
-            default:
-              navigator.clipboard.writeText(stringifyValue(params.value));
-              break;
-          }
-        },
-        icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
-      },
-      {
-        name: config?.menuCopyWithHeaders,
-        action: function () {
-          navigator.clipboard.writeText(
-            `${params.column.colDef.headerName}\n${
-              stringifyValue(params.value) || ''
-            }`
-          );
-        },
-        icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
-      },
-      'separator',
-      {
-        name: config?.menuExport,
-        subMenu: [
-          {
-            name: config?.menuCsvExport,
-            action: function () {
-              gridApi.current.exportDataAsCsv();
-            },
-            icon: '<span class="ag-icon ag-icon-csv" unselectable="on" role="presentation"></span>',
-          },
-          {
-            name: config?.menuExcelExport,
-            action: function () {
-              gridApi.current.exportDataAsExcel();
-            },
-            icon: '<span class="ag-icon ag-icon-excel" unselectable="on" role="presentation"></span>',
-          },
-        ],
-        icon: '<span class="ag-icon ag-icon-save" unselectable="on" role="presentation"></span>',
-      },
-      ...extendedItems,
-    ];
-  };
-
-  const getContextMenuItems = (params) => {
-    if (contextMenuItems) {
-      return contextMenuItems(params);
-    } else if (noContextMenuItemsWhenColumnNull && !params.column) {
-      return undefined;
-    } else {
-      return getDefaultMenuItems(params);
-    }
-  };
-
-  /*
-    function that returns AG grid vnode outside main return function to keep that
-    node on useState hook and set it once per component lifecycle or on demand
-  */
-  const AgGrid = () => (
-    <AgGridReact
-      masterDetail={true}
-      isRowMaster={function (dataItem) {
-        if (typeof handlerIsRowMaster === 'function') {
-          return handlerIsRowMaster(dataItem);
-        } else {
-          return true;
-        }
-      }}
-      key={Math.floor(1000 * Math.random()).toString()}
-      frameworkComponents={renderers}
-      noRowsOverlayComponent={'CustomNoRowsOverlay'}
-      noRowsOverlayComponentParams={noRowMsg}
-      loadingCellRenderer={'CustomLoadingCellRenderer'}
-      loadingCellRendererParams={loadingCellRendererParams}
-      loadingOverlayComponent={'CustomLoadingCellRenderer'}
-      loadingOverlayComponentParams={loadingCellRendererParams}
-      pagination={pagination}
-      paginationPageSize={config.itemsPerPage}
-      cacheBlockSize={config.itemsPerPage}
-      maxBlocksInCache={config.itemsPerPage}
-      rowModelType={serverSide ? 'serverSide' : 'clientSide'}
-      rowData={gridData}
-      onGridReady={onGridReady}
-      serverSideDatasource={serverSide && createDataSource()}
-      serverSideStoreType={serverSide ? 'partial' : 'full'}
-      rowHeight={DEFAULT_ROW_HEIGHT}
-      onViewportChanged={onViewportChanged}
-      blockLoadDebounceMillis={100}
-      detailCellRenderer={'$$detailRenderer'}
-      detailRowAutoHeight={true}
-      animateRows={false}
-      domLayout={getAgGridDomLayout()}
-      onFirstDataRendered={onFirstDataRendered}
-      onRowGroupOpened={onRowGroupOpened}
-      onExpandOrCollapseAll={onExpandOrCollapseAll}
-      onRowSelected={onRowSelected}
-      onCellMouseOver={onCellMouseOver}
-      onCellMouseOut={onCellMouseOut}
-      onSelectionChanged={onSelectionChanged}
-      rowSelection={'multiple'}
-      getRowHeight={getRowHeight}
-      getRowClass={getRowClass}
-      getRowNodeId={getRowIdCallback}
-      suppressRowClickSelection={true}
-      suppressPropertyNamesCheck={true}
-      suppressPaginationPanel={suppressPaginationPanel}
-      suppressRowTransform={suppressRowTransform}
-      onCellValueChanged={onModelUpdated}
-      onModelUpdated={onModelUpdated}
-      onSortChanged={onSortChanged}
-      icons={icons}
-      getContextMenuItems={getContextMenuItems}
-      suppressContextMenu={suppressContextMenu}
-      enableCellTextSelection={enableCellTextSelection}
-      ensureDomOrder={ensureDomOrder}
-      popupParent={popupParent}
-      getRowId={getRowId}
-      rowClassRules={rowClassRules}
-      ref={gridRef}
-      suppressMultiSort={suppressMultiSort}
-    >
-      {filteredColumns.map((column) => {
-        return (
-          <AgGridColumn
-            {...column}
-            cellRenderer={
-              column.expandable
-                ? 'agGroupCellRenderer'
-                : renderers[column.field] && column.field
-            }
-            suppressMenu={true}
-            key={column.field}
-          ></AgGridColumn>
-        );
-      })}
-    </AgGridReact>
-  );
-
   const setLicenseKey = () => {
     if (isLicenseSet != true) {
       LicenseManager.setLicenseKey(config.agGridLicenseKey);
@@ -344,6 +148,7 @@ function Grid(props) {
   let filteredColumns = [];
 
   setLicenseKey();
+
   // disable default behaviour of column being movable
   columnDefinition.forEach((column) => {
     if (column.movable !== true || column.suppressMovable === false)
@@ -390,18 +195,10 @@ function Grid(props) {
     options = config.options;
   }
 
-  function resetGrid() {
-    setAgGrid(<AgGrid />);
-  }
-
-  const handleNoRowMsg = (response) => {
-    if (response?.isError) {
-      noRowsErrorMessage.current = getDictionaryValue(
-        `techdata.grids.message.error.${response.code}`,
-        `Service ${response.code} error.`
-      );
-      gridApi.current.showNoRowsOverlay();
-    } else if (!response?.items || response?.items.length === 0) {
+  const handleNoRowMsg = (itemsCount) => {
+    console.log('Grid::handleNoRowMsg');
+    if (!itemsCount) {
+      console.log('Grid::handleNoRowMsg::noRows');
       noRowsErrorMessage.current = getDictionaryValue(
         'techdata.grids.message.noRows',
         'No rows found.'
@@ -410,102 +207,12 @@ function Grid(props) {
     }
   };
 
-  function createDataSource() {
-    return {
-      getRows: (params) => {
-        gridApi.current.showLoadingOverlay();
-        const pageNo = params.request.endRow / config.itemsPerPage;
-        const sortKey = params.request.sortModel?.[0]?.colId;
-        const sortDir = params.request.sortModel?.[0]?.sort;
-        getGridData(config.itemsPerPage, pageNo, sortKey, sortDir).then(
-          (response) => {
-            params.success({
-              rowData: response?.items ?? 0,
-              lastRow: response?.totalItems ?? 0,
-              rowCount: response?.totalItems ?? 0,
-            });
-            handleNoRowMsg(response);
-          }
-        );
-      },
-    };
-  }
-
-  function postProcessResponse(response) {
-    if (response?.data?.error?.isError) {
-      response.data.error.code = normalizeErrorCode(response.data.error.code);
-      return response?.data?.error;
-    }
-    return response?.data?.content;
-  }
-
-  async function getGridData(pageSize, pageNumber, sortKey, sortDir) {
-    const dateRangeUrlParam =
-      defaultSearchDateRange && !omitCreatedQuery
-        ? `&${defaultSearchDateRange}`
-        : '';
-
-    if (gridId.current) {
-      // check if there are additional query params in url, append grid specific params
-      const url = new URL(config.uiCommerceServiceDomain+endpoints.orders);
-      const pages =
-        pageSize && pageNumber
-          ? `PageSize=${pageSize}&PageNumber=${pageNumber}`
-          : null;
-      const sortParams =
-        sortKey && sortDir
-          ? `&SortDirection=${sortDir}&SortBy=${sortKey}${dateRangeUrlParam}`
-          : dateRangeUrlParam
-          ? `&SortDirection=desc&SortBy=id${dateRangeUrlParam}`
-          : null; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
-      let pathName = url.pathname ?? '';
-      pathName.slice(-1) === '/' && (pathName = pathName.slice(0, -1));
-      const apiUrl = `${url.origin}${pathName ?? ''}${url.search ?? ''}${
-        url.search !== '' ? '&' : '?'
-      }${pages}${sortParams}`;
-      let response = null;
-      // check if request interceptor is attached and use it.
-      // otherwise get data according to grid state
-      if (typeof requestInterceptor === 'function') {
-        response = await requestInterceptor({
-          url: apiUrl,
-          get: async (_url) => {
-            globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall(_url);
-            return get(_url);
-          },
-        });
-        gridApi.current.hideOverlay();
-      } else {
-        try {
-          globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall(apiUrl);
-          response = await get(apiUrl);
-          gridApi.current.hideOverlay();
-        } catch (error) {
-          console.error(error);
-          response = fromExceptionToErrorObject(error);
-        }
-      }
-      onDataLoad &&
-        response?.data?.content?.items &&
-        onDataLoad(response.data.content.items);
-      globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded(response);
-
-      return postProcessResponse(response);
-    }
-  }
-
-  function onModelUpdated(_) {
-    updatingFinished && updatingFinished.call(true);
-  }
-
   function onGridReady(_) {
-    if (!gridId.current) {
-      let str = Math.floor(1000 * Math.random()).toString();
-      let pad = '0000';
-      gridId.current = pad.substring(0, pad.length - str.length) + str;
-    }
+    console.log('Grid::onGridReady');
+
     _.api.sizeColumnsToFit();
     gridApi.current = _.api;
+
     // apply default sorting
     if (options?.defaultSortingColumnKey) {
       _.columnApi.applyColumnState({
@@ -518,21 +225,7 @@ function Grid(props) {
         defaultState: { sort: null },
       });
     }
-    // expose this instance of grid object globally for debug purposes
-    // keep custom hooks after grid refresh
-    globalThis[`$$tdGrid${gridId.current}`] = {
-      version: componentVersion,
-      node: gridNodeRef.current,
-      api: _.api,
-      props: props,
-      onAjaxCall: globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall
-        ? globalThis[`$$tdGrid${gridId.current}`].onAjaxCall
-        : (apiUrl) => null,
-      onNewGridDataLoaded: globalThis[`$$tdGrid${gridId.current}`]
-        ?.onNewGridDataLoaded
-        ? globalThis[`$$tdGrid${gridId.current}`].onNewGridDataLoaded
-        : (response) => null,
-    };
+
     // fire onAfterGridInit callback and pass AG grid object to parent
     if (typeof onAfterGridInit === 'function') {
       onAfterGridInit({
@@ -540,52 +233,18 @@ function Grid(props) {
         api: _.api,
         columnApi: _.columnApi,
         gridResetRequest: () => resetGrid(),
+        handleNoRowMsg: (itemsCount) => handleNoRowMsg(itemsCount)
       });
     }
   }
 
-  function onResize() {
-    gridApi?.current?.sizeColumnsToFit();
-  }
-
-  function onViewportChanged(_) {
-    if (config.paginationStyle === 'scroll') {
-      const renderedNodes = _.api.getRenderedNodes();
-      const applyRange = () => {
-        const rowContainer =
-          gridNodeRef.current.querySelector('.ag-body-viewport');
-        const bbox = rowContainer.getBoundingClientRect();
-        // DEFAULT_ROW_HEIGHT / 2 is fix for FireFox
-        // FF is unable to get element from bottom bbox coords
-        // so margin has to be applied
-        const firstRowIndex = parseInt(
-          document
-            .elementFromPoint(bbox.x, bbox.y)
-            ?.closest('.ag-row')
-            ?.getAttribute('row-index')
-        );
-        const lastRowIndex = parseInt(
-          document
-            .elementFromPoint(bbox.x, bbox.bottom - DEFAULT_ROW_HEIGHT / 2)
-            ?.closest('.ag-row')
-            ?.getAttribute('row-index')
-        );
-
-        setActualRange({
-          from: isNaN(firstRowIndex) ? '' : firstRowIndex + 1,
-          to: isNaN(firstRowIndex) ? '' : lastRowIndex + 1,
-          total: _.api.getDisplayedRowCount(),
-        });
-      };
-      renderedNodes.length > 0 && applyRange();
-    }
-  }
-
   function onFirstDataRendered() {
+    console.log('Grid::onFirstDataRendered');
     gridApi?.current?.sizeColumnsToFit();
   }
 
   function onRowExpandOrCollapse(row) {
+    console.log('Grid::onRowExpandOrCollapse');
     const columnKeys = Object.keys(row.data);
     columnKeys.forEach((key) => {
       const columnDef = filteredColumns.find((el) => {
@@ -610,18 +269,21 @@ function Grid(props) {
   }
 
   function onRowGroupOpened(row) {
+    console.log('Grid::onRowGroupOpened');
     if (onExpandAnalytics && onCollapseAnalytics)
       row.expanded ? onExpandAnalytics(row) : onCollapseAnalytics(row);
     onRowExpandOrCollapse(row);
   }
 
   function onExpandOrCollapseAll(_) {
+    console.log('Grid::onExpandOrCollapseAll');
     _.api.forEachNode((node) => {
       onRowExpandOrCollapse(node);
     });
   }
 
   function getRowHeight(row) {
+    console.log('Grid::getRowHeight');
     if (row?.data) {
       const heights = [];
       const columnKeys = Object.keys(row.data);
@@ -639,6 +301,7 @@ function Grid(props) {
   }
 
   function getRowClass(row) {
+    console.log('Grid::getRowClass');
     if (row?.data) {
       let classes = '';
       const columnKeys = Object.keys(row.data);
@@ -654,61 +317,101 @@ function Grid(props) {
     }
   }
 
-  function debouncer(interval, done) {
-    return (() => {
-      let calls = 0;
-      let awaiter = (fn, arg) => setTimeout(() => fn.call(this, arg), interval);
-      return {
-        call: (fn) => {
-          if (typeof fn === 'function') fn();
-          calls++;
-          awaiter((_calls) => {
-            if (_calls === calls) {
-              done && done();
-            }
-          }, calls);
-        },
-      };
-    })();
-  }
+  useEffect(() => {
+    console.log('Grid::useEffect');
+    setAgGrid(<AgGrid />);
+  }, []);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      !data && getGridData();
-      setAgGrid(<AgGrid />);
-      // set minimum height if height wasn't explicitly set in css
-      if (getAgGridDomLayout() !== 'autoHeight') {
-        window.getComputedStyle(gridNodeRef.current).height === '0px' &&
-          (gridNodeRef.current.style.height =
-            DEFAULT_ROW_HEIGHT * config.itemsPerPage + 'px');
-      }
-      window.addEventListener('resize', onResize);
-      return () => {
-        gridApi?.current?.destroy();
-        delete globalThis[`$$tdGrid${gridId.current}`];
-        window.removeEventListener('resize', onResize);
-      };
-    }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
+    console.log('Grid::useEffect2');
     if (responseError) {
       gridApi.current?.showNoRowsOverlay();
     }
   }, [responseError, gridApi.current]);
+
+  /*
+    function that returns AG grid vnode outside main return function to keep that
+    node on useState hook and set it once per component lifecycle or on demand
+  */
+  const AgGrid = () => (
+    <AgGridReact
+      masterDetail={true}
+      isRowMaster={function (dataItem) {
+        if (typeof handlerIsRowMaster === 'function') {
+          return handlerIsRowMaster(dataItem);
+        } else {
+          return true;
+        }
+      }}
+      key={Math.floor(1000 * Math.random()).toString()}
+      frameworkComponents={renderers}
+      noRowsOverlayComponent={'CustomNoRowsOverlay'}
+      noRowsOverlayComponentParams={noRowMsg}
+      loadingCellRenderer={'CustomLoadingCellRenderer'}
+      loadingCellRendererParams={loadingCellRendererParams}
+      loadingOverlayComponent={'CustomLoadingCellRenderer'}
+      loadingOverlayComponentParams={loadingCellRendererParams}
+      pagination={pagination}
+      paginationPageSize={config.itemsPerPage}
+      cacheBlockSize={config.itemsPerPage}
+      maxBlocksInCache={config.itemsPerPage}
+      rowModelType={serverSide ? 'serverSide' : 'clientSide'}
+      rowData={gridData}
+      onGridReady={onGridReady}
+      serverSideStoreType={serverSide ? 'partial' : 'full'}
+      rowHeight={DEFAULT_ROW_HEIGHT}
+      detailCellRenderer={'$$detailRenderer'}
+      detailRowAutoHeight={true}
+      animateRows={false}
+      domLayout={getAgGridDomLayout()}
+      onFirstDataRendered={onFirstDataRendered}
+      onRowGroupOpened={onRowGroupOpened}
+      onExpandOrCollapseAll={onExpandOrCollapseAll}
+      onRowSelected={onRowSelected}
+      onCellMouseOver={onCellMouseOver}
+      onCellMouseOut={onCellMouseOut}
+      onSelectionChanged={onSelectionChanged}
+      rowSelection={'multiple'}
+      getRowHeight={getRowHeight}
+      getRowClass={getRowClass}
+      getRowNodeId={getRowIdCallback}
+      suppressRowClickSelection={true}
+      suppressPropertyNamesCheck={true}
+      suppressPaginationPanel={suppressPaginationPanel}
+      suppressRowTransform={suppressRowTransform}
+      onSortChanged={onSortChanged}
+      icons={icons}
+      suppressContextMenu={suppressContextMenu}
+      enableCellTextSelection={enableCellTextSelection}
+      ensureDomOrder={ensureDomOrder}
+      popupParent={popupParent}
+      getRowId={getRowId}
+      rowClassRules={rowClassRules}
+      ref={gridRef}
+      suppressMultiSort={suppressMultiSort}
+    >
+      {filteredColumns.map((column) => {
+        return (
+          <AgGridColumn
+            {...column}
+            cellRenderer={
+              column.expandable
+                ? 'agGroupCellRenderer'
+                : renderers[column.field] && column.field
+            }
+            suppressMenu={true}
+            key={column.field}
+          ></AgGridColumn>
+        );
+      })}
+    </AgGridReact>
+  );
+
   return (
     <div className={`cmp-grid ag-theme-alpine`} ref={gridNodeRef}>
-      <Fragment>
-        <div
-          className={`page-info ${
-            config.paginationStyle === 'scroll' ? 'visible' : 'hidden'
-          }`}
-        >
-          {actualRange.from} - {actualRange.to} of {actualRange.total || ''}
-        </div>
-        {agGrid}
-      </Fragment>
+      {agGrid}
     </div>
   );
 }
+
 export default Grid;

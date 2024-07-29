@@ -244,7 +244,7 @@ function OrderModificationFlyout({
       greyOutRows([]);
       setOrderDetailSubtotalValue(null);
       onQueryChanged
-        ? onQueryChanged({ onSearchAction: true })
+        ? onQueryChanged()
         : setOrderModifyHeaderInfo(true);
     }
   };

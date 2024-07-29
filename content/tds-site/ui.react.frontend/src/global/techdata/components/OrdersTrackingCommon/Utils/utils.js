@@ -96,13 +96,34 @@ export const debounce = (func, timeout = 300) => {
  * Creates a deep copy of an object.
  * 
  * This function uses JSON serialization and deserialization to create a deep copy
- * of the provided object. Note that this method may not handle all edge cases, 
- * such as functions, undefined values, or circular references.
+ * of the provided object. 
  * 
  * @param {Object} obj - The object to be deeply copied.
  * @returns {Object} - A new object that is a deep copy of the input object.
  */
 export function deepCopy(obj) {
+  if (!obj) return {};
   // Convert the object to a JSON string and parse it back to a new object
   return JSON.parse(JSON.stringify(obj));
 }
+
+/**
+ * Translates the sorting value to the appropriate backend value.
+ * @param {string} swapValue - The sorting value used in the frontend.
+ * @returns {string} - The corresponding sorting value for the backend.
+ */
+export const sortSwap = (swapValue) => {
+  switch (swapValue) {
+    // Change 'reseller' to 'CustomerPO' for the backend
+    case 'reseller':
+      return 'CustomerPO';
+
+    // Change 'shipTo.name' to 'ShipTo' for the backend
+    case 'shipTo.name':
+      return 'ShipTo';
+
+    // By default, return the value unchanged
+    default:
+      return swapValue;
+  }
+};

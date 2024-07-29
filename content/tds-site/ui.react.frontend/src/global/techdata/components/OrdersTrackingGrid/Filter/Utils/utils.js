@@ -78,7 +78,10 @@ export function isFilterNotEmpty(filter) {
   // Check if status filter is applied
   const isStatusFilter = filter?.statuses && filter?.statuses?.length > 0;
 
-  return isDateFilter || isTypeFilter || isStatusFilter ? true : false;
+  // Check if reset filter it applied
+  const isReset = filter.resetFilters;
+
+  return isReset || isDateFilter || isTypeFilter || isStatusFilter ? true : false;
 }
 
 /**
@@ -95,7 +98,8 @@ export function isFilterChangeModelIsValid(filter) {
   if (!filter) return false;
 
   // Validate the filter by checking the date fields or if types or statuses arrays are non-empty
-  return (filter.date?.type && filter.date?.from && filter.date?.to)
+  return filter.resetFilters
+    || (filter.date?.type && filter.date?.from && filter.date?.to)
     || (filter.types?.length > 0)
     || (filter.statuses?.length > 0) ? true : false;
 }

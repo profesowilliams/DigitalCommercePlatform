@@ -7,7 +7,7 @@ import ProductReplacementFlyout from '../../OrdersTrackingCommon/Flyouts/Product
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import Toaster from '../../Widgets/Toaster';
 
-const MainGridFlyouts = ({
+const Flyouts = ({
   gridConfig,
   openFilePdf,
   downloadFileBlob,
@@ -93,4 +93,5 @@ const MainGridFlyouts = ({
     </>
   );
 };
-export default MainGridFlyouts;
+
+export default Flyouts;

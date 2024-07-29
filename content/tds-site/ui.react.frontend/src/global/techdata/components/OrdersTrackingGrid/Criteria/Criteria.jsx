@@ -16,20 +16,22 @@ const Criteria = ({ searchParams }) => {
   // State to hold the date range info based on criteria
   const [dateRangeInfo, setDateRangeInfo] = useState();
 
-  // Effect to determine the date range info based on current search parameters
-  useEffect(() => {
-    console.log('Criteria::useEffect');
-
+  /**
+   * Updates the criteria message based on the current search parameters.
+   * Checks for active date range, search, report, and other filters,
+   * then determines the appropriate date range information to display.
+   */
+  const updateCriteriaMessage = () => {
     // Default date range info from translations
     let dateRangeInfoTranslated = translations?.Last30DaysCriteria;
-    const filtersRefs = searchParams?.filtersRefs?.current;
-    const search = searchParams?.search?.current;
-    const reports = searchParams?.reports?.current;
+    const filters = searchParams?.filters;
+    const search = searchParams?.search;
+    const reports = searchParams?.reports;
 
     // Check if date range filter is active
-    const hasDateRangeFilter = filtersRefs?.date?.type
-      && filtersRefs?.date?.from
-      && filtersRefs?.date?.to;
+    const hasDateRangeFilter = filters?.date?.type
+      && filters?.date?.from
+      && filters?.date?.to;
 
     // Check if search filter is active
     const hasSearchFilter = search?.field && search?.value;
@@ -38,8 +40,8 @@ const Criteria = ({ searchParams }) => {
     const hasReportFilter = reports?.value;
 
     // Check if there are any types or statuses filters
-    const hasOtherFilters = filtersRefs?.types?.length > 0
-      || filtersRefs?.statuses?.length > 0;
+    const hasOtherFilters = filters?.types?.length > 0
+      || filters?.statuses?.length > 0;
 
     console.log('Criteria::useEffect::hasDateRangeFilter[' + hasDateRangeFilter + ']');
     console.log('Criteria::useEffect::hasSearchFilter[' + hasSearchFilter + ']');
@@ -57,6 +59,12 @@ const Criteria = ({ searchParams }) => {
 
     // Update the date range info state
     setDateRangeInfo(dateRangeInfoTranslated);
+  }
+
+  // Effect to determine the date range info based on current search parameters
+  useEffect(() => {
+    console.log('Criteria::useEffect');
+    updateCriteriaMessage();    
   }, [searchParams, translations]);
 
   return (

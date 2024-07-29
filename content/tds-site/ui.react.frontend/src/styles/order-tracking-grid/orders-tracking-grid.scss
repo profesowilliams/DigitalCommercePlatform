@@ -44,6 +44,10 @@
 }
 
 .cmp-order-tracking-grid {
+
+  .ag-full-width-container:empty {
+    display: none !important;
+  }
   /* Styles for the base grid */
   & .cmp-base-grid .cmp-grid {
     &.ag-theme-alpine {
@@ -52,11 +56,14 @@
       & .ag-header {
         padding-top: 0;
       }
+
       & .ag-header-cell {
         cursor: default;
+
         & * .ag-header-cell-text::before {
           cursor: pointer;
         }
+
         &:not(.ag-header-cell-sortable) {
           padding-left: 0;
         }
@@ -77,17 +84,20 @@
             }
           }
         }
+
         &[col-id='statusText'] {
           .ag-header-cell-label {
             padding-left: 21px;
           }
         }
       }
+
       & .ag-cell {
         &[col-id='select'] {
           padding-left: 10px;
         }
       }
+
       & .ag-root-wrapper-body {
         overflow-x: hidden !important;
       }
@@ -114,10 +124,12 @@
       width: calc((100vw - 1280px) / 2);
       background-color: $td-neutral-gray;
     }
+
     &:before {
       left: 0;
       transform: translateX(-100%);
     }
+
     &:after {
       left: 100%;
     }

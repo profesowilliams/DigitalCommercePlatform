@@ -50,7 +50,7 @@ function ShipToColumn({ data, shipToTooltipTemplate }) {
       return <div key={idx}>{el}</div>;
     });
   };
-  return data && data ? (
+  return data ? (
     <div className="status-column-container">
       <Tooltip
         title={renderTemplate(template)}

@@ -1,5 +1,6 @@
 import { removeDisallowedParams, removeSpecificParams } from '../../../../../../utils/index';
 import { compareURLs } from '../../../OrdersTrackingCommon/Utils/utils';
+import { filtersDateGroup } from '../../Utils/orderTrackingUtils';
 
 /**
  * Updates the URL based on the selected filter
@@ -82,8 +83,9 @@ export function isSearchChangeModelIsValid(filter) {
     && filter.gtmField ? true : false;
 }
 
-export function prepareFiltersParams(filtersRefs) {
-  const dateFilters = Object.entries(filtersRefs?.current).filter(
+export function prepareFiltersParams(filters) {
+  if (!filters) return '';
+  const dateFilters = Object.entries(filters).filter(
     (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
   );
   let filterDateParams = '';
@@ -93,6 +95,6 @@ export function prepareFiltersParams(filtersRefs) {
   );
 
   const filtersStatusAndType =
-    (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
+    (filters.type ?? '') + (filters.status ?? '');
   return filterDateParams + filtersStatusAndType;
 };

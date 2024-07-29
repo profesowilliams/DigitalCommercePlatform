@@ -48,9 +48,10 @@ function CustomPaper({ children }) {
 
 const Search = (
   {
+    onInit,
     onChange,
     gridConfig,
-    filtersRefs,
+    filters,
     analyticsLabel,
   }, ref
 ) => {
@@ -97,7 +98,7 @@ const Search = (
   };
 
   const fetchSuggestions = useCallback(async (newValue) => {
-    const filterParams = prepareFiltersParams(filtersRefs);
+    const filterParams = prepareFiltersParams(filters);
     try {
       const result = await usGet(
         `${gridConfig.uiCommerceServiceDomain}/v3/lookahead?searchtext=${encodeURIComponent(newValue)}${filterParams}`
@@ -243,6 +244,13 @@ const Search = (
         gtmField: getInitial.gtmField,
         isInit: true
       });
+
+      // Control is on ready state
+      onInit(false);
+    }
+    else {
+      // Control is on ready state, and initial criteria are empty
+      onInit(true);
     }
   }, [freeTextSearchTranslations]); // Dependency array to re-run the effect when translations are updated
 

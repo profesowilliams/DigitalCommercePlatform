@@ -13,7 +13,6 @@ import { usPost } from '../../../../../../utils/api';
 import OrderReleaseAlertModal from '../../Modals/OrderReleaseAlertModal';
 import OrderStatusModal from '../../Modals/OrderStatusModal';
 import { GreenInfoIcon } from '../../../../../../fluentIcons/FluentIcons';
-import { fetchOrderLinesData, } from '../../Utils/orderTrackingUtils';
 
 function NotShippedTabGrid({
   data,

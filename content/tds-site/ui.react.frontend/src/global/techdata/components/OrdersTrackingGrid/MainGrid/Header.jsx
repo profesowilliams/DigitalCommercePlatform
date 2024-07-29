@@ -1,4 +1,4 @@
-import React, { cloneElement, useState, useRef } from 'react';
+import React, { cloneElement, useState, useEffect, useRef } from 'react';
 import Report from '../Report/Report';
 import Settings from '../Settings/Settings';
 import VerticalSeparator from '../../Widgets/VerticalSeparator';
@@ -13,26 +13,31 @@ import { isReportFilterNotEmpty, isReportChangeModelIsValid } from '../Report/Ut
 import { isSearchFilterNotEmpty, isSearchChangeModelIsValid } from '../NewSearch/Utils/utils';
 
 /**
- * MainGridHeader component to manage the main grid's header functionalities including search, filters, and pagination.
+ * Header component to manage the main grid's header functionalities including search, filters, and pagination.
  * @param {Object} props - Component props.
+ * @param {Function} props.onInit - Callback function invoked on initialization
  * @param {Function} props.onQueryChanged - Callback function invoked when the query changes.
  * @param {Object} props.analyticsCategories - Analytics categories for tracking events. (remove?)
  * @param {boolean} props.isLoading - Flag indicating if the grid data is loading.
  * @param {Object} props.searchParams - Object containing search parameters.
  * @param {Object} props.gridConfig - Configuration object for the grid.
  * @param {Object} props.settings - Settings for the main grid. (remove?)
- * @param {Object} props.paginationData - Data related to pagination.
  */
-function MainGridHeader({
+function Header({
+  onInit,
   onQueryChanged,
   analyticsCategories,
   isLoading,
   searchParams,
   gridConfig,
-  settings,
-  paginationData
+  settings
 }) {
   const proactiveMessagingFlag = useOrderTrackingStore((state) => state.featureFlags.proactiveMessage);
+
+  const [isFiltersReady, setIsFiltersReady] = useState(false);
+  const [isReportsReady, setIsReportsReady] = useState(false);
+  const [isSearchReady, setIsSearchReady] = useState(false);
+
   const [pill, setPill] = useState();
   const reportRef = useRef();
   const searchRef = useRef();
@@ -45,22 +50,25 @@ function MainGridHeader({
    */
   const clearFilters = () => {
     // Check if any date filters or type/status filters are applied
-    if (isFilterNotEmpty(searchParams.filtersRefs.current)) {
-      console.log('MainGridHeader::clearFilters');
+    if (isFilterNotEmpty(searchParams.filters)) {
+      console.log('Header::clearFilters');
 
       // Clean up the filters using the filterRef
       filterRef.current.cleanUp();
 
       // Clear the current filter references
-      searchParams.filtersRefs.current = {};
+      searchParams.filters = {};
 
       // Reset page number to 1
-      searchParams.paginationAndSorting.current.pageNumber = 1;
-      searchParams.paginationAndSorting.current.queryCacheKey = '';
+      searchParams.paginationAndSorting = {
+        ...searchParams.paginationAndSorting,
+        pageNumber: 1,
+        queryCacheKey: ''
+      };
 
       return true;
     } else {
-      console.log('MainGridHeader::clearFilters::not required');
+      console.log('Header::clearFilters::not required');
     }
 
     return false;
@@ -73,8 +81,8 @@ function MainGridHeader({
    */
   const clearReports = () => {
     // Check if there is any report filter applied
-    if (isReportFilterNotEmpty(searchParams.reports.current)) {
-      console.log('MainGridHeader::clearReports');
+    if (isReportFilterNotEmpty(searchParams.reports)) {
+      console.log('Header::clearReports');
 
       // Hide pill
       onPillChanged();
@@ -83,15 +91,18 @@ function MainGridHeader({
       reportRef.current.cleanUp();
 
       // Clear the current report filter references
-      searchParams.reports.current = {};
+      searchParams.reports = {};
 
       // Reset page number to 1
-      searchParams.paginationAndSorting.current.pageNumber = 1;
-      searchParams.paginationAndSorting.current.queryCacheKey = '';
+      searchParams.paginationAndSorting = {
+        ...searchParams.paginationAndSorting,
+        pageNumber: 1,
+        queryCacheKey: ''
+      };
 
       return true;
     } else {
-      console.log('MainGridHeader::clearReports::not required');
+      console.log('Header::clearReports::not required');
     }
 
     return false;
@@ -104,8 +115,8 @@ function MainGridHeader({
    */
   const clearSearch = () => {
     // Check if there is any search filter applied
-    if (isSearchFilterNotEmpty(searchParams.search.current)) {
-      console.log('MainGridHeader::clearSearch');
+    if (isSearchFilterNotEmpty(searchParams.search)) {
+      console.log('Header::clearSearch');
 
       // Hide pill
       onPillChanged();
@@ -114,58 +125,86 @@ function MainGridHeader({
       searchRef.current.cleanUp();
 
       // Clear the current search filter references
-      searchParams.search.current = {};
+      searchParams.search = {};
 
       // Reset page number to 1
-      searchParams.paginationAndSorting.current.pageNumber = 1;
-      searchParams.paginationAndSorting.current.queryCacheKey = '';
+      searchParams.paginationAndSorting = {
+        ...searchParams.paginationAndSorting,
+        pageNumber: 1,
+        queryCacheKey: ''
+      };
 
       return true;
     } else {
-      console.log('MainGridHeader::clearSearch::not required');
+      console.log('Header::clearSearch::not required');
     }
 
     return false;
   };
 
   /**
-   * Handles the action of deleting a pill (filter or search criteria) in the main grid header.
+   * Handler for filter changes in the main grid.
+   * @param {Object} filters - The filters object containing the updated filter values.
    */
-  const handleDeletePill = () => {
-    console.log('MainGridHeader::handleDeletePill');
+  const onFiltersChange = (filters) => {
+    console.log('Header::onFilterChange');
 
-    // Clear the reports filters
-    clearReports();
+    if (!isFilterChangeModelIsValid(filters)) {
+      console.log('Header::onSearchChange::model is invalid');
+      return;
+    }
 
-    // Clear the search criteria
-    clearSearch();
+    if (!isFilterNotEmpty(filters)) {
+      console.log('Header::onFilterChange::filters are empty');
+      return;
+    }
 
-    // Trigger any actions associated with changing the pill
-    onPillChanged();
+    console.log('Header::onFilterChange::filters are not empty');
 
-    // Trigger the query change to update the grid data
-    onQueryChanged();
+    // Clear any existing report filters
+    const reportsCleared = clearReports();
+
+    searchParams.paginationAndSorting = searchParams.paginationAndSorting ?? {};
+
+    // Reset page number to 1
+    if (!reportsCleared && !filters?.isInit) {
+      console.log('Header::onReportChange::reset page number');
+      searchParams.paginationAndSorting = {
+        ...searchParams.paginationAndSorting,
+        pageNumber: 1,
+        queryCacheKey: ''
+      };
+    }
+
+    // Update the searchParams with the new filters
+    searchParams.filters = {
+      date: filters?.date,
+      statuses: filters?.statuses,
+      types: filters?.types
+    };
+
+    // Trigger the query change callback indicating a search action
+    onQueryChanged(searchParams);
   };
 
   /**
    * Handler for changing the report filters in the main grid header.
    * @param {Object} filters - The filters object containing field, label, and key (report name).
    */
-  const onReportChange = (filters) => {
-    console.log('MainGridHeader::onReportChange');
+  const onReportsChange = (filters) => {
+    console.log('Header::onReportChange');
 
     if (!isReportChangeModelIsValid(filters)) {
-      console.log('MainGridHeader::onReportChange::model is invalid');
+      console.log('Header::onReportChange::model is invalid');
       return;
     }
 
-    if (Object.keys(searchParams.reports.current).length === 0
-      && !isReportFilterNotEmpty(filters)) {
-      console.log('MainGridHeader::onReportChange::filters are empty');
+    if (!isReportFilterNotEmpty(filters)) {
+      console.log('Header::onReportChange::filters are empty');
       return;
     }
 
-    console.log('MainGridHeader::onReportChange::filters are not empty');
+    console.log('Header::onReportChange::filters are not empty');
 
     // Clear the current filter criteria
     const filtersCleared = clearFilters();
@@ -179,18 +218,23 @@ function MainGridHeader({
       label: filters.label
     });
 
+    searchParams.paginationAndSorting = searchParams.paginationAndSorting ?? {};
+
     // Reset page number to 1
-    if (!filtersCleared && !searchCleared && !filters.isInit) {
-      console.log('MainGridHeader::onReportChange::reset page number');
-      searchParams.paginationAndSorting.current.pageNumber = 1;
-      searchParams.paginationAndSorting.current.queryCacheKey = '';
+    if (!filtersCleared && !searchCleared && !filters?.isInit) {
+      console.log('Header::onReportChange::reset page number');
+      searchParams.paginationAndSorting = {
+        ...searchParams.paginationAndSorting,
+        pageNumber: 1,
+        queryCacheKey: ''
+      };
     }
 
     // Update the current report value in the search parameters
-    searchParams.reports.current.value = filters.key;
+    searchParams.reports = { value: filters.key }
 
     // Trigger the query change to update the grid data, indicating a search action
-    onQueryChanged({ onSearchAction: true });
+    onQueryChanged(searchParams);
   };
 
   /**
@@ -198,20 +242,19 @@ function MainGridHeader({
    * @param {Object} filters - The filters object containing field, label, key, value, and gtmField.
    */
   const onSearchChange = (filters) => {
-    console.log('MainGridHeader::onSearchChange');
+    console.log('Header::onSearchChange');
 
     if (!isSearchChangeModelIsValid(filters)) {
-      console.log('MainGridHeader::onSearchChange::model is invalid');
+      console.log('Header::onSearchChange::model is invalid');
       return;
     }
 
-    if (Object.keys(searchParams.search.current).length === 0
-      && !isSearchFilterNotEmpty(filters)) {
-      console.log('MainGridHeader::onSearchChange::filters are empty');
+    if (!isSearchFilterNotEmpty(filters)) {
+      console.log('Header::onSearchChange::filters are empty');
       return;
     }
 
-    console.log('MainGridHeader::onSearchChange::filters are not empty');
+    console.log('Header::onSearchChange::filters are not empty');
 
     // Clear the current report criteria
     const reportsCleared = clearReports();
@@ -222,76 +265,97 @@ function MainGridHeader({
       label: filters.value
     });
 
+    searchParams.paginationAndSorting = searchParams.paginationAndSorting ?? {};
+
     // Reset page number to 1
-    if (!reportsCleared && !filters.isInit) {
-      console.log('MainGridHeader::onReportChange::reset page number');
-      searchParams.paginationAndSorting.current.pageNumber = 1;
-      searchParams.paginationAndSorting.current.queryCacheKey = '';
+    if (reportsCleared || !reportsCleared && !filters?.isInit) {
+      console.log('Header::onReportChange::reset page number');
+      searchParams.paginationAndSorting = {
+        ...searchParams.paginationAndSorting,
+        pageNumber: 1,
+        queryCacheKey: ''
+      };
     }
 
     // Update the current search parameters with the new filters
-    searchParams.search.current.field = filters.key;
-    searchParams.search.current.value = filters.value;
-    searchParams.search.current.gtmField = filters.gtmField;
+    searchParams.search = {
+      field: filters.key,
+      value: filters.value,
+      gtmField: filters.gtmField
+    }
 
     // Trigger the query change to update the grid data, indicating a search action
-    onQueryChanged({ onSearchAction: true });
+    onQueryChanged(searchParams);
   };
 
   /**
-   * Handler for filter changes in the main grid.
-   * @param {Object} filters - The filters object containing the updated filter values.
+   * Callback function invoked when filters are initialized.
+   * Sets the filters control as ready. The control can only be ready
+   * when the filter criteria are empty; otherwise, the control itself 
+   * will trigger a search.
    */
-  const onFilterChange = (filters) => {
-    console.log('MainGridHeader::onFilterChange');
-
-    if (!isFilterChangeModelIsValid(filters)) {
-      console.log('MainGridHeader::onSearchChange::model is invalid');
-      return;
-    }
-
-    if (Object.keys(searchParams.filtersRefs.current).length === 0
-      && !isFilterNotEmpty(filters)) {
-      console.log('MainGridHeader::onFilterChange::filters are empty');
-      return;
-    }
-
-    console.log('MainGridHeader::onFilterChange::filters are not empty');
-
-    // Clear any existing report filters
-    const reportsCleared = clearReports();
-
-    // Reset page number to 1
-    if (!reportsCleared && !filters.isInit) {
-      console.log('MainGridHeader::onReportChange::reset page number');
-      searchParams.paginationAndSorting.current.pageNumber = 1;
-      searchParams.paginationAndSorting.current.queryCacheKey = '';
-    }
-
-    // Update the searchParams with the new filters
-    searchParams.filtersRefs.current = {
-      date: filters?.date,
-      statuses: filters?.statuses,
-      types: filters?.types
-    };
-
-    // Trigger the query change callback indicating a search action
-    onQueryChanged({ onSearchAction: true });
-  };
+  const onFiltersInit = (filterIsEmpty) => {
+    console.log('Header::onFiltersInit');
+    setIsFiltersReady(filterIsEmpty);
+  }
 
   /**
-   * Handler for page changes in the main grid.
-   * @param {Object} data - The data object containing the updated page information.
+   * Callback function invoked when reports are initialized.
+   * Sets the reports control as ready. The control can only be ready
+   * when the filter criteria are empty; otherwise, the control itself 
+   * will trigger a search.
+   */
+  const onReportsInit = (filterIsEmpty) => {
+    console.log('Header::onReportsInit');
+    setIsReportsReady(filterIsEmpty);
+  }
+
+  /**
+   * Callback function invoked when search is initialized.
+   * Sets the search control as ready. The control can only be ready
+   * when the filter criteria are empty; otherwise, the control itself 
+   * will trigger a search.
+   */
+  const onSearchInit = (filterIsEmpty) => {
+    console.log('Header::onSearchInit');
+    setIsSearchReady(filterIsEmpty);
+  }
+
+  /**
+   * Handles page change event from the pagination component.
+   * @param {Object} data - The data containing the new page number.
    */
   const onPageChange = (data) => {
     console.log("MainGridHeader::onPageChange");
 
-    // Update the current page number in the search parameters
-    searchParams.paginationAndSorting.current.pageNumber = data.pageNumber;
+    // Ensure searchParams and nested paginationAndSorting objects are defined
+    searchParams.paginationAndSorting = searchParams.paginationAndSorting ?? {};
 
-    // Trigger the query change callback indicating a search action
-    onQueryChanged({ onSearchAction: true });
+    // Update the current page number in the search parameters
+    searchParams.paginationAndSorting.pageNumber = data.pageNumber;
+
+    // Trigger the query change callback indicating a search action with updated searchParams
+    onQueryChanged(searchParams);
   }
+
+  /**
+   * Handles the action of deleting a pill (filter or search criteria) in the main grid header.
+   */
+  const handleDeletePill = () => {
+    console.log('Header::handleDeletePill');
+
+    // Clear the reports filters
+    clearReports();
+
+    // Clear the search criteria
+    clearSearch();
+
+    // Trigger any actions associated with changing the pill
+    onPillChanged();
+
+    // Trigger the query change to update the grid data
+    onQueryChanged(searchParams);
+  };
 
   /**
    * Handler for changes to the pill (filter chip).
@@ -310,11 +374,19 @@ function MainGridHeader({
     }
   }
 
+  useEffect(() => {
+    // Check if filters, reports, and search are all initialized
+    if (isFiltersReady && isReportsReady && isSearchReady) {
+      // If all are initialized, invoke the onInit callback function
+      onInit();
+    }
+  }, [isFiltersReady, isReportsReady, isSearchReady]);
+
   const leftComponents = [
     <OrderTrackingGridPagination
       onPageChange={onPageChange}
       disabled={isLoading}
-      paginationData={paginationData}
+      searchParams={searchParams}
     />,
   ];
 
@@ -334,21 +406,23 @@ function MainGridHeader({
       : []),
     <Search
       ref={searchRef}
+      onInit={onSearchInit}
       onChange={onSearchChange}
       gridConfig={gridConfig}
-      filtersRefs={searchParams.filtersRefs}
+      filters={searchParams?.filters}
       analyticsLabel={analyticsCategories.search}
     />,
     <VerticalSeparator />,
     <OrderFilter
       ref={filterRef}
-      onChange={onFilterChange}
-      filtersRefs={searchParams.filtersRefs}
+      onInit={onFiltersInit}
+      onChange={onFiltersChange}
     />,
     <VerticalSeparator />,
     <Report
       ref={reportRef}
-      onChange={onReportChange}
+      onInit={onReportsInit}
+      onChange={onReportsChange}
       analyticsLabel={analyticsCategories.report}
     />,
     <VerticalSeparator />,
@@ -381,4 +455,4 @@ function MainGridHeader({
   );
 }
 
-export default MainGridHeader;
+export default Header;

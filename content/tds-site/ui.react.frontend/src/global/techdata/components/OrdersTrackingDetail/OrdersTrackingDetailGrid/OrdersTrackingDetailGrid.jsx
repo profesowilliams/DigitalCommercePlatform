@@ -14,7 +14,6 @@ import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTra
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { mapServiceData, prepareGroupedItems } from './utils/gridUtils';
 import { fetchData } from './utils/fetchUtils';
-import useExtendGridOperations from '../../BaseGrid/Hooks/useExtendGridOperations';
 import { useStore } from '../../../../../utils/useStore';
 import { GreenInfoIcon } from '../../../../../fluentIcons/FluentIcons';
 import OrderStatusModal from '../../OrdersTrackingGrid/Modals/OrderStatusModal';
@@ -27,18 +26,13 @@ function OrdersTrackingDetailGrid({
   rowsToGrayOutTDNameRef,
   isLoading
 }) {
+  const [isGridReady, setIsGridReady] = useState(false);
+  const [triggerSearch, setTriggerSearch] = useState(false);
   const [responseError, setResponseError] = useState(null);
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
+
   const refreshOrderTrackingDetailApi = useStore(
     (state) => state.refreshOrderTrackingDetailApi
-  );
-
-  const resetCallback = useRef(null);
-  const shouldGoToFirstPage = useRef(false);
-  const isOnSearchAction = useRef(false);
-  const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
-    useOrderTrackingStore,
-    { resetCallback, shouldGoToFirstPage, isOnSearchAction }
   );
 
   const groupLinesFlag = useOrderTrackingStore(
@@ -81,37 +75,8 @@ function OrdersTrackingDetailGrid({
     });
 
   const _onAfterGridInit = (config) => {
-    onAfterGridInit(config);
     gridApiRef.current = config;
-  };
-
-  const customRequestInterceptor = async () => {
-    console.log('OrdersTrackingDetailGrid::customRequestInterceptor');
-
-    if (!id?.current || isLoading)
-      return [];
-
-    const response = await fetchData(config, id.current);
-    let mappedResponse;
-    if ('groupedItems' in response.data.content && groupLinesFlagRef.current) {
-      const groupedItemsResponse = mapServiceData({
-        ...response,
-        data: {
-          content: {
-            ...response.data.content,
-            items: [
-              ...response.data.content.items,
-              ...prepareGroupedItems(response.data.content),
-            ],
-          },
-        },
-      });
-      mappedResponse = groupedItemsResponse;
-    } else {
-      mappedResponse = mapServiceData(response);
-    }
-    setResponseError(false);
-    return mappedResponse;
+    setIsGridReady(true);
   };
 
   const customStatusComponent = () => (
@@ -250,6 +215,69 @@ function OrdersTrackingDetailGrid({
     closeAndCleanToaster();
   };
 
+  const onQueryChanged = () => {
+    console.log('OrdersTrackingDetail::onQueryChanged');
+    setTriggerSearch(true);
+  }
+
+  useEffect(async () => {
+    console.log('OrdersTrackingDetailGrid::useEffect');
+
+    if (!isGridReady || !triggerSearch) {
+      console.log('OrdersTrackingDetailGrid::useEffect::wait');
+      return;
+    }
+
+    console.log('OrdersTrackingDetailGrid::useEffect::go');
+
+    const datasource = {
+      getRows: (params) => {
+        gridApiRef.current.api.showLoadingOverlay();
+
+        fetchData(config, id.current)
+          .then(response => {
+            let mappedResponse;
+            if ('groupedItems' in response.data.content && groupLinesFlagRef.current) {
+              const groupedItemsResponse = mapServiceData({
+                ...response,
+                data: {
+                  content: {
+                    ...response.data.content,
+                    items: [
+                      ...response.data.content.items,
+                      ...prepareGroupedItems(response.data.content),
+                    ],
+                  },
+                },
+              });
+              mappedResponse = groupedItemsResponse;
+            } else {
+              mappedResponse = mapServiceData(response);
+            }
+            setResponseError(false);
+            return mappedResponse.data.content;
+          })
+          .then(data => {
+            gridApiRef.current.api.hideOverlay();
+
+            params.successCallback(data.items ?? [], data.totalItems ?? 0);
+
+            const countItems = params.api.getDisplayedRowCount();
+            gridApiRef.current.handleNoRowMsg(countItems);
+          })
+          .catch(error => {
+            console.error(error);
+            params.failCallback();
+          });
+      },
+    };
+
+    gridApiRef.current.api.setServerSideDatasource(datasource);
+
+    setTriggerSearch(false);
+
+  }, [isGridReady, triggerSearch]);
+
   useEffect(() => {
     console.log('OrdersTrackingDetailGrid::useEffect::lineDetails');
     onQueryChanged();
@@ -272,7 +300,7 @@ function OrdersTrackingDetailGrid({
   useEffect(() => {
     console.log('OrdersTrackingDetailGrid::useEffect::isLoading');
     if (isLoading) {
-      gridRef?.current?.api.showLoadingOverlay();
+      gridApiRef?.current?.api.showLoadingOverlay();
     }
   }, [isLoading]);
 
@@ -283,10 +311,8 @@ function OrdersTrackingDetailGrid({
           columnDefinition={columnDefinition}
           config={config}
           gridConfig={config}
-          requestInterceptor={customRequestInterceptor}
           mapServiceData={mapServiceData}
           onAfterGridInit={_onAfterGridInit}
-          //loadingCellRenderer={loadingCellRenderer}
           rowClassRules={rowClassRules}
           gridRef={gridRef}
           responseError={responseError}

@@ -25,16 +25,18 @@ const OrderFilterFlyout = ({
   appliedFilters,
   subheaderReference
 }) => {
+  console.log("OrderFilterFlyout::init");
+
   const [showFilterTags, setShowFilterTags] = useState(false);
 
   const [areThereAnyFiltersSelectedButNotApplied, setAreThereAnyFiltersSelectedButNotApplied] = useState(false);
-  const [dateFromTo, setDateFromTo] = useState({ type: filters?.date?.type, from: filters?.date?.from, to: filters?.date?.to });
+  const [dateFromTo, setDateFromTo] = useState({});
   const dateFilterRef = useRef();
 
-  const [checkedStatuses, setCheckedStatuses] = useState(filters?.statuses || []);
+  const [checkedStatuses, setCheckedStatuses] = useState([]);
   const statusFilterRef = useRef();
 
-  const [checkedTypes, setCheckedTypes] = useState(filters?.types || []);
+  const [checkedTypes, setCheckedTypes] = useState([]);
   const typeFilterRef = useRef();
 
   const [showLess, setShowLess] = useState(false);
@@ -66,7 +68,8 @@ const OrderFilterFlyout = ({
       onSearchAction: true, // Indicates that this action is a search action
       date: dateFromTo,     // The selected date range
       statuses: checkedStatuses, // The selected statuses
-      types: checkedTypes        // The selected types
+      types: checkedTypes,       // The selected types
+      resetFilters: true // Trigger search even if we dont have any filters
     });
   };
 
@@ -242,7 +245,16 @@ const OrderFilterFlyout = ({
   }, [filtersFlyoutConfig]);
 
   useEffect(() => {
-    console.log('OrderFilterFlyout::useEffect::empty');
+    console.log('OrderFilterFlyout::useEffect::filters');
+
+    setDateFromTo(filters?.date || {});
+    setCheckedStatuses(filters?.statuses || []);
+    setCheckedTypes(filters?.types || []);
+
+  }, [filters]);
+
+  useEffect(() => {
+    console.log('OrderFilterFlyout::useEffect');
 
     // Update the state to indicate whether there are any filters selected but not applied
     setAreThereAnyFiltersSelectedButNotApplied(!compareFilters(appliedFilters, filters));

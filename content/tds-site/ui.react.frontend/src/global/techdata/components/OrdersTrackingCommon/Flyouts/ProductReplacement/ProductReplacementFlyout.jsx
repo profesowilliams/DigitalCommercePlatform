@@ -189,7 +189,7 @@ function ProductReplacementFlyout({
       ];
       changeRefreshDetailApiState('lineDetails');
       onQueryChanged
-        ? onQueryChanged({ onSearchAction: true })
+        ? onQueryChanged()
         : setOrderModifyHeaderInfo(true);
     }
   };
