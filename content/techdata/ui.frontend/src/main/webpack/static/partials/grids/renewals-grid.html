@@ -290,6 +290,7 @@
       copyQuoteEndpoint: 'http://localhost:3000/ui-renewal/v1/CopyQuote',
     },
     newPurchaseFlyout: {
+      vendorPartNoLookUpEndpoint: "http://localhost:3000/ui-browse/v1/PartNumbers/Find",
       resellerAccountNumber: 'mainDashboard.renewal.newPurchaseFlyout.label.resellerAccountNumber',
       search: 'mainDashboard.renewal.newPurchaseFlyout.label.search',
       required: 'mainDashboard.renewal.newPurchaseFlyout.label.required',
@@ -331,7 +332,6 @@
       orderDetails: 'mainDashboard.renewal.newPurchaseFlyout.label.orderDetails',
       resellerDetails: 'mainDashboard.renewal.newPurchaseFlyout.label.resellerDetails',
       endUserDetails: 'mainDashboard.renewal.newPurchaseFlyout.label.endUserDetails',
-      endUserAddress: 'mainDashboard.renewal.newPurchaseFlyout.label.endUserAddress',
       addProducts: 'mainDashboard.renewal.newPurchaseFlyout.label.addProducts',
       searchForAdditionalSoftware: 'mainDashboard.renewal.newPurchaseFlyout.label.searchForAdditionalSoftware',
       searchVendorPartNo: 'mainDashboard.renewal.newPurchaseFlyout.label.searchVendorPartNo',
@@ -339,7 +339,16 @@
       endDate: 'mainDashboard.renewal.newPurchaseFlyout.label.endDate',
       duration: 'mainDashboard.renewal.newPurchaseFlyout.label.duration',
       licensePriceLevel: 'mainDashboard.renewal.newPurchaseFlyout.label.licensePriceLevel',
-
+      productDetails:'mainDashboard.renewal.newPurchaseFlyout.label.productDetails',
+      vendorPartNo:'mainDashboard.renewal.newPurchaseFlyout.label.vendorPartNo',
+      listPrice:'mainDashboard.renewal.newPurchaseFlyout.label.listPrice',
+      unitPrice:'mainDashboard.renewal.newPurchaseFlyout.label.unitPrice',
+      qty:'mainDashboard.renewal.newPurchaseFlyout.label.qty',
+      totalPrice:'mainDashboard.renewal.newPurchaseFlyout.label.totalPrice',
+      subtotal:'mainDashboard.renewal.newPurchaseFlyout.label.subtotal',
+      resellerSubtotal:'mainDashboard.renewal.newPurchaseFlyout.label.resellerSubtotal',
+      taxesNotIncluded:'mainDashboard.renewal.newPurchaseFlyout.label.taxesNotIncluded',
+      days:'mainDashboard.renewal.newPurchaseFlyout.label.days',
     },
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);

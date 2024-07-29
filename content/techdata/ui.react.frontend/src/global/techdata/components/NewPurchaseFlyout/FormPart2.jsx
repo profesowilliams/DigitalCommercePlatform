@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { AutoCompleteSearchIcon } from '../../../../fluentIcons/FluentIcons';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import { Autocomplete, Button, TextField } from '@mui/material';
-import {
-  checkQuoteExitsforReseller,
-  copyQuote,
-  resellerLookUp,
-} from '../CopyFlyout/api';
-import { QuoteDetails } from './QuoteDetails';
+import { vendorPartNoLookUp } from './api';
+import { VendorPartNoDetails } from './VendorPartNoDetails';
+import NewPurchaseTable from './NewPurchaseTable';
+import DatePicker from './Datepicker';
+
+export const formatDate = (date) => {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${month}/${day}/${year}`;
+};
 
 function FormPart2({
   copyFlyout,
   newPurchaseFlyout,
   newPurchaseFlyoutConfig,
   formPart1States,
+  componentProp,
+  pickedResellerQuote,
+  internalUser,
+  currency,
+  subtotalValue,
+  setSubtotalValue,
 }) {
   const {
-    accountNumber,
     firstName,
     lastName,
     email,
@@ -34,23 +44,40 @@ function FormPart2({
   } = formPart1States;
 
   // Vendor state
-  const [quotes, setQuotes] = useState([]);
+  const [vendorPartNumbers, setVendorPartNumbers] = useState([]);
   const [vendorNumber, setVendorNumber] = useState('');
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
-  const [selectedQuote, setSelectedQuote] = useState(null);
-  const [enableCopy, setEnableCopy] = useState(false);
+  const [selectedVendorPartNo, setSelectedVendorPartNo] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
   // Date
-  const startDate = '01/01/2024';
-  const endDate = '01/01/2025';
-  const duration = '365 days';
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
+  const today = new Date();
+  const futureDate = new Date(today);
+  futureDate.setDate(today.getDate() + 365);
+  const formattedEndDate = formatDate(futureDate);
+  const startDate = formatDate(today);
+  const [pickedEndDate, setPickedEndDate] = useState(formattedEndDate);
+  const [duration, setDuration] = useState('365');
   const licensePriceLevel = '1 (Qty: 1-9)';
 
+  // Grid
+  const { productId, manufacturerPartNumber, globalManufacturer } =
+    selectedVendorPartNo || {};
+  const data = [
+    {
+      productDetails: 'details text',
+      productFamily: 'Family',
+      productDescription: 'Description....',
+      vendorPartNo: productId || 'vendor number',
+      listPrice: 'list price',
+      unitPrice: '25',
+      qty: '1',
+    },
+  ];
   // Search Vendor part No
-  const handleResellerIdChange = async (event) => {
+  const handleVendorPartNoChange = async (event) => {
     setIsTyping(true);
     setErrorMessage('');
     const resellerId = event.target.value;
@@ -58,84 +85,71 @@ function FormPart2({
 
     if (resellerId.length >= 3) {
       setIsAutocompleteOpen(true);
-      const response = await resellerLookUp(
-        encodeURIComponent(resellerId),
-        copyFlyout?.accountLookUpEndpoint
+
+      const payload = {
+        MaxParts: 10,
+        PartialManufacturerPartNumber: resellerId,
+        Properties: [
+          {
+            Id: 'EndUserType',
+            Value: endUserType,
+          },
+          {
+            Id: 'Vendor',
+            Value: 'ADOBE',
+          },
+        ],
+      };
+      const response = await vendorPartNoLookUp(
+        newPurchaseFlyout?.vendorPartNoLookUpEndpoint,
+        payload
       );
       if (response.isError) {
         setErrorMessage(copyFlyout?.unknownError);
-        setQuotes([]);
+        setVendorPartNumbers([]);
       } else {
-        setQuotes(response);
+        setVendorPartNumbers(response);
       }
     } else {
       setIsAutocompleteOpen(false);
-      setQuotes([]);
+      setVendorPartNumbers([]);
     }
   };
 
-  const checkQuoteInList = (quote) =>
-    quotes.find((q) => q.accountNumber === quote.accountNumber);
+  const checkVendorPartNoInList = (quote) => {
+    return vendorPartNumbers.find((q) => q.productId === quote.productId);
+  };
 
-  const findSelectedQuote = async (newInput) => {
+  const findSelectedVendorPartNo = async (newInput) => {
     if (!newInput) {
       return;
     }
 
-    if (!checkQuoteInList(newInput)) {
+    if (!checkVendorPartNoInList(newInput)) {
       setErrorMessage(
         getDictionaryValueOrKey(copyFlyout?.accountDoesntExistError)
       );
       return;
     }
 
-    const quoteExists = await checkQuoteExitsforReseller(
-      newInput.accountNumber ?? vendorNumber,
-      newPurchaseFlyoutConfig?.data?.agreementNumber,
-      copyFlyout?.checkQuoteExitsforResellerEndpoint
-    );
+    const vendorPartNoExists = vendorPartNumbers.length > 0;
 
-    if (!selectedQuote) {
-      setEnableCopy(!quoteExists);
-    }
-
-    if (quoteExists) {
+    if (vendorPartNoExists) {
       setIsTyping(false);
-      setErrorMessage(copyFlyout?.quoteExistsError);
     } else {
       setVendorNumber('');
-      setQuotes([]);
+      setVendorPartNumbers([]);
       setErrorMessage('');
-      setSelectedQuote(newInput);
+      setSelectedVendorPartNo(newInput);
       setIsTyping(false);
     }
     setIsAutocompleteOpen(false);
   };
 
   const handleQuoteSelectedChange = (event, newInput) => {
-    findSelectedQuote(newInput);
-    const selectedQuote = findSelectedQuote(newInput);
-    setSelectedQuote(selectedQuote);
+    findSelectedVendorPartNo(newInput);
+    setSelectedVendorPartNo(newInput);
     setErrorMessage('');
-  };
-
-  //TODO: Delete handle copy if not used after US 578976
-  const handleCopy = async () => {
-    if (!enableCopy) {
-      return;
-    }
-
-    setIsLoading(true);
-
-    const response = await copyQuote(
-      newPurchaseFlyoutConfig?.data?.source?.id,
-      selectedQuote.accountNumber,
-      vendorNumber,
-      copyFlyout?.copyQuoteEndpoint
-    );
-    setIsLoading(false);
-    resetGrid();
-    closeFlyout();
   };
 
   const handleKeyDown = (event) => {
@@ -147,32 +161,33 @@ function FormPart2({
   };
 
   const selectQuoteForCopying = () => {
-    const newInput = quotes.find(
-      (quote) => quote.accountNumber === vendorNumber
+    const newInput = vendorPartNumbers.find(
+      (vendorPart) => vendorPart.productId === vendorNumber
     );
-    findSelectedQuote(newInput || vendorNumber);
+    findSelectedVendorPartNo(newInput || vendorNumber);
   };
 
   const filterOptions = createFilterOptions({
-    stringify: (option) => `${option.accountNumber} ${option.name}`,
+    stringify: (option) =>
+      `${option.productId} ${option.manufacturerPartNumber}`,
   });
 
   return (
     <>
       <div className="cmp-flyout-newPurchase__form-details">
         <p className="cmp-flyout-newPurchase__form-details__title">
-          {getDictionaryValueOrKey(newPurchaseFlyout.orderDetails)}
+          {getDictionaryValueOrKey(newPurchaseFlyout?.orderDetails)}
         </p>
         <div className="cmp-flyout-newPurchase__form-details__card">
           <div className="cmp-flyout-newPurchase__form-details__card-section">
             <p className="cmp-flyout-newPurchase__form-details__card-title">
-              {getDictionaryValueOrKey(newPurchaseFlyout.resellerDetails)}
+              {getDictionaryValueOrKey(newPurchaseFlyout?.resellerDetails)}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserCompanyName}
+              {pickedResellerQuote?.name}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {accountNumber}
+              {pickedResellerQuote?.accountNumber}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {firstName} {lastName}
@@ -183,7 +198,10 @@ function FormPart2({
           </div>
           <div className="cmp-flyout-newPurchase__form-details__card-section">
             <p className="cmp-flyout-newPurchase__form-details__card-title">
-              {getDictionaryValueOrKey(newPurchaseFlyout.endUserDetails)}
+              {getDictionaryValueOrKey(newPurchaseFlyout?.endUserDetails)}
+            </p>
+            <p className="cmp-flyout-newPurchase__form-details__card-text">
+              {endUserCompanyName}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {endUserCompanyFirstName} {endUserCompanyLastName}
@@ -191,29 +209,33 @@ function FormPart2({
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {endUserEmail}
             </p>
+            <p className="cmp-flyout-newPurchase__form-details__card-text">
+              {endUserType}
+            </p>
           </div>
           <div className="cmp-flyout-newPurchase__form-details__card-section">
             <p className="cmp-flyout-newPurchase__form-details__card-title">
-              {getDictionaryValueOrKey(newPurchaseFlyout.endUserAddress)}
+              {getDictionaryValueOrKey(newPurchaseFlyout?.endUserAddress)}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserAreaCode}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserAddress1}, {endUserAddress2}
+              {endUserAddress1}
+              {endUserAddress2 && `, ${endUserAddress2}`}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {endUserCity}, {endUserCountry}
+            </p>
+            <p className="cmp-flyout-newPurchase__form-details__card-text">
+              {endUserAreaCode}
             </p>
           </div>
         </div>
         <div className="cmp-flyout-newPurchase__form-details__description">
           <p className="cmp-flyout-newPurchase__form-details__description-title">
-            {getDictionaryValueOrKey(newPurchaseFlyout.addProducts)}
+            {getDictionaryValueOrKey(newPurchaseFlyout?.addProducts)}
           </p>
           <p className="cmp-flyout-newPurchase__form-details__description-text">
             {getDictionaryValueOrKey(
-              newPurchaseFlyout.searchForAdditionalSoftware
+              newPurchaseFlyout?.searchForAdditionalSoftware
             )}
           </p>
         </div>
@@ -222,18 +244,20 @@ function FormPart2({
             id="combo-box-demo"
             open={isAutocompleteOpen}
             freeSolo={true}
-            options={quotes}
+            options={vendorPartNumbers}
             filterOptions={filterOptions}
-            getOptionLabel={(option) => option.accountNumber ?? vendorNumber}
+            getOptionLabel={(option) => {
+              return option.productId ?? vendorNumber;
+            }}
             onChange={handleQuoteSelectedChange}
-            value={selectedQuote}
+            value={selectedVendorPartNo}
             onKeyDown={handleKeyDown}
             renderOption={(props, option) => {
               return (
                 <li {...props}>
                   <div>
                     <div className="cmp-flyout-autocomplete__option-name">
-                      <QuoteDetails
+                      <VendorPartNoDetails
                         quote={option}
                         currentlyTypedWord={vendorNumber}
                       />
@@ -255,7 +279,7 @@ function FormPart2({
                   )}
                   value={vendorNumber}
                   variant="standard"
-                  onChange={handleResellerIdChange}
+                  onChange={handleVendorPartNoChange}
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: (
@@ -292,16 +316,19 @@ function FormPart2({
             <span className="cmp-flyout-newPurchase__form-date__title">
               {getDictionaryValueOrKey(newPurchaseFlyout?.endDate)}
             </span>
-            <span className="cmp-flyout-newPurchase__form-date__text">
-              {endDate}
-            </span>
+            <div
+              onClick={() => setDatePickerOpen((prevState) => !prevState)}
+              className="cmp-flyout-newPurchase__form-date__input"
+            >
+              {pickedEndDate ? pickedEndDate : formattedEndDate}
+            </div>
           </div>
           <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
             <span className="cmp-flyout-newPurchase__form-date__title">
               {getDictionaryValueOrKey(newPurchaseFlyout?.duration)}
             </span>
             <span className="cmp-flyout-newPurchase__form-date__text">
-              {duration}
+              {duration} {getDictionaryValueOrKey(newPurchaseFlyout?.days)}
             </span>
           </div>
           <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
@@ -313,6 +340,23 @@ function FormPart2({
             </span>
           </div>
         </div>
+        {datePickerOpen && (
+          <DatePicker
+            isOpen={datePickerOpen}
+            startDate={startDate}
+            endDate={formattedEndDate}
+            setPickedEndDate={setPickedEndDate}
+            setDuration={setDuration}
+          />
+        )}
+        <NewPurchaseTable
+          data={data}
+          config={newPurchaseFlyout}
+          currency={currency}
+          subtotalValue={subtotalValue}
+          setSubtotalValue={setSubtotalValue}
+          internalUser={internalUser}
+        />
       </div>
     </>
   );

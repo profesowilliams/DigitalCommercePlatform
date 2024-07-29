@@ -7,3 +7,7 @@ export const shareQuote = async (dataObj, endpoint) => {
     endpoint, dataObj);
   return response.data.error.isError ? response.data.error : response.data.content;
 };
+export const vendorPartNoLookUp = async (endpoint, payload) => {
+  const response = await post(endpoint, payload);
+  return response.data.foundParts;
+};

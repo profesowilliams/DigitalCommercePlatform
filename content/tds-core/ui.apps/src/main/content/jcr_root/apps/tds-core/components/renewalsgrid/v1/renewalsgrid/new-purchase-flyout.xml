@@ -223,6 +223,150 @@
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserLaos"
                     fieldLabel="Laos"
                     name="./endUserLaos"/>
+                <back
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.back"
+                    fieldLabel="Back"
+                    name="./back"/>
+                <placeOrder
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.placeOrder"
+                    fieldLabel="Place order"
+                    name="./placeOrder"/>
+                <placeOrder
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.placeOrder"
+                    fieldLabel="Place order"
+                    name="./placeOrder"/>
+                <orderDetails
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.orderDetails"
+                    fieldLabel="Order details"
+                    name="./orderDetails"/>
+                <resellerDetails
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.resellerDetails"
+                    fieldLabel="Reseller details"
+                    name="./resellerDetails"/>
+                <endUserDetails
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserDetails"
+                    fieldLabel="End user details"
+                    name="./endUserDetails"/>
+                <endUserAddress
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endUserAddress"
+                    fieldLabel="End user address"
+                    name="./endUserAddress"/>
+                <addProducts
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.addProducts"
+                    fieldLabel="Add products"
+                    name="./addProducts"/>
+                <searchForAdditionalSoftware
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.searchForAdditionalSoftware"
+                    fieldLabel="Search for additional software products you would like to add to your quote. Enter the Vendor part № followed by the desired quantity."
+                    name="./searchForAdditionalSoftware"/>
+                <searchVendorPartNo
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.searchVendorPartNo"
+                    fieldLabel="Search Vendor part  Nº"
+                    name="./searchVendorPartNo"/>
+                <startDate
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.startDate"
+                    fieldLabel="Start date"
+                    name="./startDate"/>
+                <endDate
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.endDate"
+                    fieldLabel="End date"
+                    name="./endDate"/>
+                <duration
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.duration"
+                    fieldLabel="Duration"
+                    name="./duration"/>
+                <licensePriceLevel
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.licensePriceLevel"
+                    fieldLabel="License/price level"
+                    name="./licensePriceLevel"/>
+                <productDetails
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.productDetails"
+                    fieldLabel="Product details"
+                    name="./productDetails"/>
+                <vendorPartNo
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.vendorPartNo"
+                    fieldLabel="Vendor part Nº"
+                    name="./vendorPartNo"/>
+                <listPrice
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.listPrice"
+                    fieldLabel="List price"
+                    name="./listPrice"/>
+                <unitPrice
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.unitPrice"
+                    fieldLabel="Unit price"
+                    name="./unitPrice"/>
+                <qty
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.qty"
+                    fieldLabel="Qty"
+                    name="./qty"/>
+                <totalPrice
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.totalPrice"
+                    fieldLabel="Total price"
+                    name="./totalPrice"/>
+                <subtotal
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.subtotal"
+                    fieldLabel="Subtotal:"
+                    name="./subtotal"/>
+                <resellerSubtotal
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.resellerSubtotal"
+                    fieldLabel="Reseller subtotal ({currency-code}):"
+                    name="./resellerSubtotal"/>
+                <taxesNotIncluded
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.taxesNotIncluded"
+                    fieldLabel="Taxes not included."
+                    name="./taxesNotIncluded"/>
+                <days
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.days"
+                    fieldLabel="days"
+                    name="./days"/>
             </items>
         </newPyrchaseFlyoutGroup>
     </items>

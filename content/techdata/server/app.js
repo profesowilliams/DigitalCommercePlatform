@@ -5163,6 +5163,8 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "grids.common.label.filterSearch": "Show results",
     "grids.common.label.filterDate": "Date",
 
+    "mainDashboard.renewal.newPurchaseFlyout.label.vendorPartNoLookUpEndpoint":
+      "http://localhost:3000/ui-browse/v1/PartNumbers/Find",
     "mainDashboard.renewal.newPurchaseFlyout.label.resellerAccountNumber":
       "* Reseller account number",
     "mainDashboard.renewal.newPurchaseFlyout.label.search": "Search",
@@ -5232,8 +5234,6 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
       "Reseller details",
     "mainDashboard.renewal.newPurchaseFlyout.label.endUserDetails":
       "End user details",
-    "mainDashboard.renewal.newPurchaseFlyout.label.endUserAddress":
-      "End user address",
     "mainDashboard.renewal.newPurchaseFlyout.label.addProducts": "Add products",
     "mainDashboard.renewal.newPurchaseFlyout.label.searchForAdditionalSoftware":
       "Search for additional software products you would like to add to your quote. Enter the Vendor part № followed by the desired quantity.",
@@ -5246,6 +5246,20 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "mainDashboard.renewal.newPurchaseFlyout.label.duration": "Duration",
     "mainDashboard.renewal.newPurchaseFlyout.label.licensePriceLevel":
       "License/price level",
+    "mainDashboard.renewal.newPurchaseFlyout.label.productDetails":
+      "Product details",
+    "mainDashboard.renewal.newPurchaseFlyout.label.vendorPartNo":
+      "Vendor part Nº",
+    "mainDashboard.renewal.newPurchaseFlyout.label.listPrice": "List price",
+    "mainDashboard.renewal.newPurchaseFlyout.label.unitPrice": "Unit price",
+    "mainDashboard.renewal.newPurchaseFlyout.label.qty": "Qty",
+    "mainDashboard.renewal.newPurchaseFlyout.label.totalPrice": "Total price",
+    "mainDashboard.renewal.newPurchaseFlyout.label.subtotal": "Subtotal:",
+    "mainDashboard.renewal.newPurchaseFlyout.label.resellerSubtotal":
+      "Reseller subtotal ({currency-code}):",
+    "mainDashboard.renewal.newPurchaseFlyout.label.taxesNotIncluded":
+      "Taxes not included.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.days": "days",
   });
 });
 
@@ -5419,6 +5433,60 @@ app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
   };
 
   return res.status(200).json(SearchInput.includes("err") ? fail : success);
+});
+
+app.post("/ui-browse/v1/PartNumbers/Find", function (req, res) {
+  const { MaxParts, PartialManufacturerPartNumber, Properties } = req.body;
+
+  console.log("PartNumbers", req.body);
+  const success = {
+    foundParts: [
+      {
+        productId: "ADB30001555CA01A12",
+        manufacturerPartNumber: "30001555CA01A12",
+        globalManufacturer: "ADOBE",
+      },
+      {
+        productId: "ADB30001555CA02A12",
+        manufacturerPartNumber: "30001555CA02A12",
+        globalManufacturer: "ADOBE",
+      },
+      {
+        productId: "ADB30001555CA03A12",
+        manufacturerPartNumber: "30001555CA03A12",
+        globalManufacturer: "ADOBE",
+      },
+      {
+        productId: "ADB30001555CA04A12",
+        manufacturerPartNumber: "30001555CA04A12",
+        globalManufacturer: "ADOBE",
+      },
+      {
+        productId: "ADB30001563CA04A12",
+        manufacturerPartNumber: "30001563CA04A12",
+        globalManufacturer: "ADOBE",
+      },
+      {
+        productId: "ADB30001563CA01A12",
+        manufacturerPartNumber: "30001563CA01A12",
+        globalManufacturer: "ADOBE",
+      },
+      {
+        productId: "ADB30001563CA02A12",
+        manufacturerPartNumber: "30001563CA02A12",
+        globalManufacturer: "ADOBE",
+      },
+      {
+        productId: "ADB30001563CA03A12",
+        manufacturerPartNumber: "30001563CA03A12",
+        globalManufacturer: "ADOBE",
+      },
+    ],
+  };
+
+  //mockResponses.failedResponse
+
+  return res.status(200).json(success);
 });
 
 app.get("/ui-renewal/v1/SearchCheck", (req, res) => {

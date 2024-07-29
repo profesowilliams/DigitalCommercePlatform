@@ -11,6 +11,7 @@ function NewPurchaseFlyout({
   newPurchaseFlyout,
   subheaderReference,
   userData,
+  componentProp,
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
@@ -96,6 +97,10 @@ function NewPurchaseFlyout({
   // End User Country state
   const [endUserCountry, setEndUserCountry] = useState('');
   const [endUserCountryError, setEndUserCountryError] = useState('');
+
+  const [subtotalValue, setSubtotalValue] = useState('111');
+
+  const currency = 'VND';
 
   const formPart1States = {
     enableNext,
@@ -205,6 +210,22 @@ function NewPurchaseFlyout({
     }
   };
 
+  const ResellerSubtotal = (classNameSuffix) => {
+    return (
+      <div className="new-purchase-footer-info">
+        <span className="new-purchase-footer-info__title">
+          {getDictionaryValueOrKey(
+            newPurchaseFlyout?.resellerSubtotal
+          )?.replace('{currency-code}', currency || '')}{' '}
+          {subtotalValue}
+        </span>
+        <span>
+          {getDictionaryValueOrKey(newPurchaseFlyout?.taxesNotIncluded)}
+        </span>
+      </div>
+    );
+  };
+
   useEffect(() => {
     if (!newPurchaseFlyoutConfig?.show) {
       setSelectedQuote(null);
@@ -310,6 +331,7 @@ function NewPurchaseFlyout({
     selectedQuote,
     internalUser,
   ]);
+
   return (
     <BaseFlyout
       open={newPurchaseFlyoutConfig?.show}
@@ -327,6 +349,11 @@ function NewPurchaseFlyout({
       isShareFlyout={true}
       loadingButtonLabel={null}
       buttonsSection={buttonSection()}
+      bottomContent={
+        step === 2
+          ? (classNameSuffix) => ResellerSubtotal({ classNameSuffix })
+          : null
+      }
     >
       <section className="cmp-flyout__content cmp-flyout-newPurchase">
         {step === 1 && (
@@ -338,13 +365,19 @@ function NewPurchaseFlyout({
             formPart1States={formPart1States}
             internalUser={internalUser}
           />
-        )}
+        )}{' '}
         {step === 2 && (
           <FormPart2
             copyFlyout={copyFlyout}
             newPurchaseFlyout={newPurchaseFlyout}
             newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}
             formPart1States={formPart1States}
+            componentProp={componentProp}
+            pickedResellerQuote={selectedQuote}
+            internalUser={internalUser}
+            currency={currency}
+            subtotalValue={subtotalValue}
+            setSubtotalValue={setSubtotalValue}
           />
         )}
       </section>
