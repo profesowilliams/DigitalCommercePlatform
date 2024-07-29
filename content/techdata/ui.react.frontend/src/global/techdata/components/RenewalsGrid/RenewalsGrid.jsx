@@ -92,6 +92,7 @@ function RenewalsGrid(props) {
   const firstAPICall = useRef(true);
   const userData = useStore((state) => state.userData);
   const setUserData = useStore((state) => state.setUserData);
+  const [isNewPurchaseEnabled, setIsNewPurchaseEnabled]  = useState(false);
 
   const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
 
@@ -239,6 +240,9 @@ function RenewalsGrid(props) {
       gridApiRef,
     };
     response = await handleFetchDataStrategy(renewalOperations);
+    if (response?.data?.content?.canDoNewPurchase) {
+        setIsNewPurchaseEnabled(true);
+    }
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;
     const pageSize = gridConfig.itemsPerPage;
@@ -407,18 +411,6 @@ function RenewalsGrid(props) {
 
 
   useEffect(() => {
-    const newPurchaseButton = document.getElementById(
-      'action-renewals-new-purchase'
-    );
-    
-    if (newPurchaseButton) {
-      newPurchaseButton.style.display = 'none';
-      if (enableNewPurchaseAction) {
-        newPurchaseButton.style.display = 'flex';
-      } else {
-        newPurchaseButton.style.display = 'none';
-      }
-    }
     const checkUrl = () => {
       if (
         enableNewPurchaseAction &&
@@ -458,6 +450,22 @@ function RenewalsGrid(props) {
       window.removeEventListener('hashchange', handleUrlChange);
     };
   }, []);
+
+  useEffect(() => {
+
+    const newPurchaseButton = document.getElementById(
+      'action-renewals-new-purchase'
+    );
+
+    if (newPurchaseButton) {
+      newPurchaseButton.style.display = 'none';
+      if (isNewPurchaseEnabled) {
+        newPurchaseButton.style.display = 'flex';
+      } else {
+        newPurchaseButton.style.display = 'none';
+      }
+    }
+  }, [isNewPurchaseEnabled]);
 
   return isLoggedIn ? (
     <section ref={renewalsRef} id="renewals-grid-component">

@@ -354,6 +354,7 @@ function catalogServiceResponse(){
 
 const renewalSearchResponse = {
     "content": {
+        "canDoNewPurchase": true,
         "totalItems": 50,
         "pageCount": 2,
         "pageNumber": 2,
