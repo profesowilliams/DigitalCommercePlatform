@@ -1,4 +1,4 @@
-import { endpoints, setSearchCriteriaDefaultDateRange } from '../../Utils/orderTrackingUtils';
+import { endpoints, setDefaultDateRange } from '../../Utils/orderTrackingUtils';
 import { sortSwap } from '../../../OrdersTrackingCommon/Utils/utils';
 
 export function getFetchExportUrl(baseUrl, searchParams) {
@@ -44,7 +44,7 @@ export function getFetchExportUrl(baseUrl, searchParams) {
     });
   }
 
-  setSearchCriteriaDefaultDateRange(requestUrl, searchParams);
+  setDefaultDateRange(requestUrl, searchParams);
 
   return requestUrl.href;
 }

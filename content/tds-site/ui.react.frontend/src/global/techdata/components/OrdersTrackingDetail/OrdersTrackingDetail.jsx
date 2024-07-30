@@ -8,10 +8,10 @@ import { getPageReloadAnalyticsGoogle, fixCountryCode } from '../OrdersTrackingG
 import { useOrderTrackingStore } from '../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getUrlParamsCaseInsensitive } from '../../../../utils/index';
-import { fetchOrderDetailsData } from './utils/fetchUtils';
-import { updateUrl, mainDashboardUrl } from './utils/utils';
-import { getOrderDetailsAnalyticsGoogle, pushDataLayerGoogle } from './utils/analyticsUtils';
-import { getTranslations, setDocumentTitle } from './utils/translationsUtils';
+import { fetchOrderDetailsData } from './Utils/fetchUtils';
+import { updateUrl, mainDashboardUrl } from './Utils/utils';
+import { getOrderDetailsAnalyticsGoogle, pushDataLayerGoogle } from './Utils/analyticsUtils';
+import { getTranslations, setDocumentTitle } from './Utils/translationsUtils';
 import { downloadFile, openFile } from '../OrdersTrackingCommon/Utils/fileUtils';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
 import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';

@@ -8,7 +8,7 @@ import OrderTrackingGridPagination from '../Pagination/OrderTrackingGridPaginati
  * @param {boolean} props.isLoading - Flag indicating if data is currently loading.
  * @param {Object} props.searchParams - The current search parameters.
  */
-const Footer = ({ onQueryChanged, isLoading, searchParams }) => {
+const Footer = ({ onQueryChanged, isLoading, searchParams, paginationData }) => {
 
   /**
    * Handles page change event from the pagination component.
@@ -33,7 +33,7 @@ const Footer = ({ onQueryChanged, isLoading, searchParams }) => {
         <OrderTrackingGridPagination
           onPageChange={onPageChange}
           disabled={isLoading}
-          searchParams={searchParams}
+          paginationData={paginationData}
         />
       </div>
     </>

@@ -9,7 +9,7 @@ import { usPost } from '../../../../utils/api';
 import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAlertModal';
 import XMLMessageModal from '../OrdersTrackingGrid/Modals/XMLMessageModal';
 import MigrationInfoBox from '../OrdersTrackingCommon/MigrationInfoBox/MigrationInfoBox';
-import { fetchFiltersRefinements } from './utils/fetchUtils';
+import { fetchFiltersRefinements } from './Utils/fetchUtils';
 
 /**
  * OrderTrackingDetailHeader component.

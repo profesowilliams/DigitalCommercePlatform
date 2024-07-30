@@ -27,7 +27,7 @@ import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTra
 function OrderTrackingGridPagination({
   onPageChange,
   disabled = false,
-  searchParams
+  paginationData
 }) {
   console.log('OrderTrackingGridPagination::init');
 
@@ -210,15 +210,14 @@ function OrderTrackingGridPagination({
   useEffect(() => {
     console.log('OrderTrackingGridPagination::useEffect');
 
-    if (!searchParams?.paginationAndSorting) return;
+    if (!paginationData) return;
 
-    const paginationAndSorting = searchParams.paginationAndSorting;
-    setTotalCounter(paginationAndSorting.totalCounter);
-    setPageCount(paginationAndSorting.pageCount);
-    setPageNumber(paginationAndSorting.pageNumber);
-    setIsGoBackDisabled(paginationAndSorting.pageNumber === 1 || disabled);
-    setIsGoForwardDisabled(paginationAndSorting.pageNumber === paginationAndSorting.pageCount || disabled);
-  }, [searchParams?.paginationAndSorting, disabled]);
+    setTotalCounter(paginationData.totalCounter);
+    setPageCount(paginationData.pageCount);
+    setPageNumber(paginationData.pageNumber);
+    setIsGoBackDisabled(paginationData.pageNumber === 1 || disabled);
+    setIsGoForwardDisabled(paginationData.pageNumber === paginationData.pageCount || disabled);
+  }, [paginationData, disabled]);
 
   return (
     <>

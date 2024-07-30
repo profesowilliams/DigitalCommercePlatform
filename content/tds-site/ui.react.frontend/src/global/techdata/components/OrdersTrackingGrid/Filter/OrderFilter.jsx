@@ -67,11 +67,7 @@ function OrderFilter({ onInit, onChange }, ref) {
 
     // Clear the date, statuses and types filters
     const newFilters = {
-      date: {
-        type: undefined,
-        from: undefined,
-        to: undefined
-      },
+      date: {},
       statuses: [],
       types: [],
       resetFilters: true // bypass filter validation

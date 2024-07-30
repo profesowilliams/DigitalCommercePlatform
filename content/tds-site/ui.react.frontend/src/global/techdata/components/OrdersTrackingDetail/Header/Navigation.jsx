@@ -3,9 +3,9 @@ import Link from '../../Widgets/Link';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 import { ArrowLeftIcon } from '../../../../../fluentIcons/FluentIcons';
-import { fetchCriteriaData, fetchNavigationData } from '../utils/fetchUtils';
-import { renderBackButton, createBackUrl } from '../utils/utils';
-import { prevNextOrder, pushDataLayerGoogle } from '../utils/analyticsUtils';
+import { fetchCriteriaData, fetchNavigationData } from '../Utils/fetchUtils';
+import { renderBackButton, createBackUrl } from '../Utils/utils';
+import { prevNextOrder, pushDataLayerGoogle } from '../Utils/analyticsUtils';
 
 /**
  * Navigation component to handle the navigation within the order tracking details.

@@ -1,4 +1,4 @@
-import { compareURLs } from '../../OrdersTrackingCommon/Utils/utils';
+import { compareURLs, deepEqual } from '../../OrdersTrackingCommon/Utils/utils';
 
 /**
  * Updates the URL with pagination and sorting parameters.
@@ -58,33 +58,7 @@ export function updateUrl(paginationAndSorting, replaceState = false) {
  * @param {Object} oldCriteria - The old criteria object containing filters, reports, and search. Can be null.
  * @returns {boolean} - Returns true if any of the filters, reports, or search objects are different; otherwise, false.
  */
-export function checkIfCountIsRequired(newCriteria, oldCriteria) {
-  // Helper function to compare two objects
-  const areObjectsDifferent = (obj1, obj2) => {
-    // If both objects are null or undefined, return false (they are the same)
-    if (!obj1 && !obj2) return false;
-
-    // If only one of the objects is null or undefined, return true (they are different)
-    if (!obj1 || !obj2) return true;
-
-    // Get the keys of both objects
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
-
-    // If the number of keys is different, return true (they are different)
-    if (keys1.length !== keys2.length) return true;
-
-    // Check if any of the keys have different values
-    for (const key of keys1) {
-      if (obj1[key] !== obj2[key]) {
-        return true;
-      }
-    }
-
-    // If all keys have the same values, return false (they are the same)
-    return false;
-  };
-
+export function checkIfFetchCountIsRequired(newCriteria, oldCriteria) {
   // If both criteria are null, they are considered the same
   if (!newCriteria && !oldCriteria) return false;
 
@@ -92,10 +66,34 @@ export function checkIfCountIsRequired(newCriteria, oldCriteria) {
   if (!newCriteria || !oldCriteria) return true;
 
   // Compare the filters, reports, and search objects of the new and old criteria
-  const filtersDifferent = areObjectsDifferent(newCriteria.filters, oldCriteria.filters);
-  const reportsDifferent = areObjectsDifferent(newCriteria.reports, oldCriteria.reports);
-  const searchDifferent = areObjectsDifferent(newCriteria.search, oldCriteria.search);
+  const filtersDifferent = !deepEqual(newCriteria.filters, oldCriteria.filters);
+  const reportsDifferent = !deepEqual(newCriteria.reports, oldCriteria.reports);
+  const searchDifferent = !deepEqual(newCriteria.search, oldCriteria.search);
 
   // Return true if any of the objects are different; otherwise, return false
   return filtersDifferent || reportsDifferent || searchDifferent;
+}
+
+/**
+* Compares the filters, reports, search, and paginationAndSorting objects of two criteria objects
+* to determine if they are different.
+* @param {Object} newCriteria - The new criteria object containing filters, reports, search, and paginationAndSorting. Can be null.
+* @param {Object} oldCriteria - The old criteria object containing filters, reports, search, and paginationAndSorting. Can be null.
+* @returns {boolean} - Returns true if any of the filters, reports, search, or paginationAndSorting objects are different; otherwise, false.
+*/
+export function checkIfFetchDataIsRequired(newCriteria, oldCriteria) {
+  // If both criteria are null, they are considered the same
+  if (!newCriteria && !oldCriteria) return false;
+
+  // If only one of the criteria is null, they are considered different
+  if (!newCriteria || !oldCriteria) return true;
+
+  // Compare the filters, reports, search, and paginationAndSorting objects of the new and old criteria
+  const filtersDifferent = !deepEqual(newCriteria.filters, oldCriteria.filters);
+  const reportsDifferent = !deepEqual(newCriteria.reports, oldCriteria.reports);
+  const searchDifferent = !deepEqual(newCriteria.search, oldCriteria.search);
+  const paginationAndSortingDifferent = !deepEqual(newCriteria.paginationAndSorting, oldCriteria.paginationAndSorting);
+
+  // Return true if any of the objects are different; otherwise, return false
+  return filtersDifferent || reportsDifferent || searchDifferent || paginationAndSortingDifferent;
 }

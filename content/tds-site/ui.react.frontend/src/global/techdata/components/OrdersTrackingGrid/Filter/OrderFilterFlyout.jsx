@@ -247,10 +247,16 @@ const OrderFilterFlyout = ({
   useEffect(() => {
     console.log('OrderFilterFlyout::useEffect::filters');
 
+    // Update the state for dateFromTo using the date filter from the filters object, or set it to an empty object if not present
     setDateFromTo(filters?.date || {});
+
+    // Update the state for checkedStatuses using the statuses filter from the filters object, or set it to an empty array if not present
     setCheckedStatuses(filters?.statuses || []);
+
+    // Update the state for checkedTypes using the types filter from the filters object, or set it to an empty array if not present
     setCheckedTypes(filters?.types || []);
 
+    // This useEffect will run whenever the filters dependency changes
   }, [filters]);
 
   useEffect(() => {

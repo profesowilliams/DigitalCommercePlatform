@@ -29,8 +29,9 @@ import { useGTMStatus } from '../../hooks/useGTMStatus';
 import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
 import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
 import { getTranslations, setDocumentTitle } from './Utils/translationsUtils';
-import { updateUrl, checkIfCountIsRequired } from './Utils/utils';
+import { updateUrl, checkIfFetchCountIsRequired, checkIfFetchDataIsRequired } from './Utils/utils';
 import { downloadFile, openFile } from '../OrdersTrackingCommon/Utils/fileUtils';
+import useDeepCompareEffect from './Utils/Effect/useDeepCompareEffect';
 import { deepCopy } from '../OrdersTrackingCommon/Utils/utils';
 
 function OrdersTrackingGrid(props) {
@@ -56,26 +57,56 @@ function OrdersTrackingGrid(props) {
   const hasOrderTrackingRights = hasRights('OrderTracking');
   const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
 
-  const { isGTMReady } = useGTMStatus();
+  // Criteria used for the Count query
+  const countParams = useRef();
 
-  const [countParams, setCountParams] = useState(); // current count params
+  // Criteria used for the Data query
+  const dataParams = useRef();
+
+  // Criteria used for the Data query
   const [searchParams, setSearchParams] = useState({
     paginationAndSorting: {
-      totalCounter: 0,
-      pageCount: 0,
-      pageNumber: params.get('page') || 1,
-      sortBy: params.get('sortby') || 'created',
-      sortDirection: params.get('sortdirection') || 'desc',
-      queryCacheKey: params.get('q') || ''
+      pageNumber: params.get('page') || 1, // Page number for pagination
+      sortBy: params.get('sortby') || 'created', // Field to sort by
+      sortDirection: params.get('sortdirection') || 'desc', // Sorting direction (ascending or descending)
+      queryCacheKey: params.get('q') || '' // Cache key for query
     }
   });
+
+  // Data model collecting information about the Count query results
+  // Allows retrieving information about the number of records, page count,
+  // current page number, and caching key
+  const [paginationData, setPaginationData] = useState({
+    totalCounter: 0, // Total number of records
+    pageCount: 0, // Total number of pages
+    pageNumber: 1, // Current page number
+    sortBy: params.get('sortby') || 'created', // Field to sort by
+    sortDirection: params.get('sortdirection') || 'desc', // Sorting direction (ascending or descending)
+    queryCacheKey: params.get('q') || '', // Cache key for query
+  });
+
+  // Currently used sort model, used to detect sort changes
+  // and the need to send Google Analytics events
   const [previousSortModel, setPreviousSortModel] = useState([]);
 
+  // Information about whether the Grid has been initialized. 
+  // When it is set to true, you can use references to the grid API.
   const [isGridReady, setIsGridReady] = useState(false);
+
+  // Information about whether the data fetching has been initialized. 
+  // If there are no search criteria, it will initiate data fetching without criteria.
   const [isInitialRequestPerformed, setIsInitialRequestPerformed] = useState(false);
-  const [triggerCount, setTriggerCount] = useState(false);
-  const [triggerSearch, setTriggerSearch] = useState(false);
+
+  // Information about whether the grid is currently loading data.
   const [isLoading, setIsLoading] = useState(true);
+
+  // Information about the need to reload data in the grid
+  // The data in the grid will only be reloaded if the following criteria are met:
+  // - The current state of countParams must be different from searchParams, or
+  // - The current state of dataParams must be different from searchParams
+  const [triggerLoadGridData, setTriggerLoadGridData] = useState(false);
+
+  const { isGTMReady } = useGTMStatus();
   const [reloadAddedToGTM, setReloadAddedToGTM] = useState(false);
   const [responseError, setResponseError] = useState(null);
   const [sendAnalyticsDataHome, setSendAnalyticsDataHome] = useState(true);
@@ -100,7 +131,7 @@ function OrdersTrackingGrid(props) {
     enableCellTextSelection: true,
     suppressMultiSort: true,
     ensureDomOrder: true,
-    serverSide: true,
+    serverSide: false,
     itemsPerPage: 25
   };
 
@@ -108,8 +139,8 @@ function OrdersTrackingGrid(props) {
     setNewItem(item);
   };
 
-  const _onAfterGridInit = (config) => {
-    console.log('OrdersTrackingGrid::_onAfterGridInit');
+  const onAfterGridInit = (config) => {
+    console.log('OrdersTrackingGrid::onAfterGridInit');
 
     gridRef.current = config;
     const columnState = {
@@ -152,112 +183,151 @@ function OrdersTrackingGrid(props) {
   //  }
   //};
 
-  useEffect(() => {
-    console.log('OrdersTrackingGrid::useEffect');
+  /**
+   * Fetches the count of items and calculates the total number of pages.
+   * @param {string} baseUrl - The base URL for the API request.
+   * @param {Object} searchParams - The parameters used for the count request.
+   * @returns {Promise<Object>} - A promise that resolves with the page count and total item count.
+   */
+  const fetchOrdersCountPromise = (baseUrl, searchParams) => {
+    console.log('OrdersTrackingGrid::fetchOrdersCountPromise');
 
-    if (!isGridReady || !triggerSearch) {
-      console.log('OrdersTrackingGrid::useEffect::wait');
-      setTriggerSearch(false);
-      return;
+    // Update parameters for the count request
+    countParams.current = deepCopy(searchParams);
+
+    return fetchOrdersCount(baseUrl, searchParams)
+      .then(response => {
+        console.log('OrdersTrackingGrid::fetchOrdersCount');
+        const countContent = response?.data?.content;
+        const pageCount = Math.ceil(countContent?.totalItems / gridPageSize); // Calculate total pages
+        const totalCounter = countContent?.totalItems; // Total number of items
+
+        return { pageCount, totalCounter };
+      })
+      .catch(error => {
+        console.error(error);
+        return {}; // Return an empty object on error
+      });
+  };
+
+  /**
+   * Fetches the data for the grid and updates the grid rows.
+   * @param {string} baseUrl - The base URL for the API request.
+   * @param {Object} searchParams - The parameters used for the data request.
+   * @returns {Promise<Object>} - A promise that resolves with the grid data, page number, and query cache key.
+   */
+  const fetchDataPromise = (baseUrl, searchParams) => {
+    console.log('OrdersTrackingGrid::fetchDataPromise');
+
+    // Update parameters for the data request
+    dataParams.current = deepCopy(searchParams);
+
+    return fetchData(baseUrl, searchParams)
+      .then(response => {
+        console.log('OrdersTrackingGrid::fetchData');
+        const responseContent = response?.data?.content;
+        const pageNumber = responseContent?.pageNumber;
+        const queryCacheKey = responseContent?.queryCacheKey;
+        const items = responseContent?.items ?? [];
+        const totalItems = items.length;
+
+        return { items, totalItems, pageNumber, queryCacheKey };
+      })
+      .catch(error => {
+        console.error(error);
+        return {}; // Return an empty object on error
+      });
+  };
+
+  /**
+   * Updates the pagination data in the state.
+   * This includes total items count, number of pages, current page number, sorting options, and query cache key.
+   * 
+   * @param {number} pageCount - The total number of pages.
+   * @param {number} totalCounter - The total number of items.
+   * @param {number} pageNumber - The current page number.
+   * @param {string} sortBy - The field by which the data is sorted.
+   * @param {string} sortDirection - The direction of sorting (e.g., 'asc' for ascending or 'desc' for descending).
+   * @param {string} queryCacheKey - The cache key for the query, used to avoid redundant data fetching.
+   */
+  const updatePaginationData = (pageCount, totalCounter, pageNumber, sortBy, sortDirection, queryCacheKey) => {
+    console.log('OrdersTrackingGrid::updatePaginationData');
+
+    setPaginationData(prev => ({
+      ...prev,
+      totalCounter: totalCounter || prev?.totalCounter,
+      pageCount: pageCount || prev?.pageCount,
+      pageNumber,
+      sortBy,
+      sortDirection,
+      queryCacheKey
+    }));
+  };
+
+  /**
+   * Loads data for the grid, handles fetching counts and data, and updates the grid state.
+   */
+  const loadGridData = () => {
+    console.log('OrdersTrackingGrid::loadGridData');
+
+    gridRef.current.api.showLoadingOverlay();
+
+    const baseUrl = componentProp.uiCommerceServiceDomain;
+
+    const promises = [];
+    let pageCount, totalCounter, pageNumber, queryCacheKey;
+    const sortBy = searchParams?.paginationAndSorting?.sortBy;
+    const sortDirection = searchParams?.paginationAndSorting?.sortDirection;
+
+    // Check if fetching count and/or data is required
+    const shouldFetchCount = checkIfFetchCountIsRequired(searchParams, countParams?.current);
+    const shouldFetchData = checkIfFetchDataIsRequired(searchParams, dataParams?.current);
+
+    // Fetch count if required
+    if (shouldFetchCount) {
+      promises.push(
+        fetchOrdersCountPromise(baseUrl, searchParams)
+          .then(({ pageCount: fetchedPageCount, totalCounter: fetchedTotalCounter }) => {
+            pageCount = fetchedPageCount;
+            totalCounter = fetchedTotalCounter;
+          })
+      );
     }
 
-    console.log('OrdersTrackingGrid::useEffect::go');
-
-    const datasource = {
-      getRows: (params) => {
-        console.log('OrdersTrackingGrid::getRows');
-
-        if (!isInitialRequestPerformed && params.api.context.suppressSearchAfterSortChange) {
-          params.api.context.suppressSearchAfterSortChange = false;
-          console.log('OrdersTrackingGrid::getRows::skip');
-          return;
-        }
-
-        gridRef.current.api.showLoadingOverlay();
-
-        const baseUrl = componentProp.uiCommerceServiceDomain;
-
-        // Create an array to hold promises
-        const promises = [];
-        let pageCount, totalCounter, pageNumber, queryCacheKey;
-
-        // Conditionally add fetchOrdersCount promise
-        if (checkIfCountIsRequired(searchParams, countParams)) {
-          console.log('OrdersTrackingGrid::fetchOrdersCountPromise');
-          const fetchOrdersCountPromise = fetchOrdersCount(baseUrl, searchParams)
-            .then(response => {
-              console.log('OrdersTrackingGrid::fetchOrdersCount');
-
-              const countContent = response?.data?.content;
-              pageCount = Math.ceil(countContent?.totalItems / gridPageSize);
-              totalCounter = countContent?.totalItems;
-            })
-            .catch(error => {
-              console.error(error);
-            });
-
-          promises.push(fetchOrdersCountPromise);
-        }
-
-        // Add fetchData promise
-        console.log('OrdersTrackingGrid::fetchDataPromise');
-        const fetchDataPromise = fetchData(baseUrl, searchParams)
-          .then(response => {
-            console.log('OrdersTrackingGrid::fetchData');
-
-            const responseContent = response?.data?.content;
-            pageNumber = responseContent?.pageNumber;
-            queryCacheKey = responseContent?.queryCacheKey;
-
-            return { items: responseContent?.items, totalItems: responseContent?.items?.length };
+    // Fetch data if required
+    if (shouldFetchCount || shouldFetchData) {
+      promises.push(
+        fetchDataPromise(baseUrl, searchParams)
+          .then(({ items, totalItems, pageNumber: fetchedPageNumber, queryCacheKey: fetchedQueryCacheKey }) => {
+            pageNumber = fetchedPageNumber;
+            queryCacheKey = fetchedQueryCacheKey;
+            gridRef.current.api.setRowData(items);
           })
-          .then(data => {
-            params.successCallback(data.items ?? [], data.totalItems ?? 0);
-          })
-          .catch(error => {
-            console.error(error);
-            params.failCallback();
-          });
+      );
+    }
 
-        promises.push(fetchDataPromise);
+    // Execute all promises simultaneously
+    if (promises.length > 0) {
+      Promise.all(promises)
+        .finally(() => {
+          console.log('OrdersTrackingGrid::loadGridData::fetch::finally');
 
-        // Execute all promises simultaneously
-        Promise.all(promises)
-          .finally(() => {
+          updatePaginationData(pageCount, totalCounter, pageNumber, sortBy, sortDirection, queryCacheKey);
 
-            console.log('OrdersTrackingGrid::fetch::finally');
+          // Set total counter for the first details row if applicable
+          setMainGridRowsTotalCounter(pageNumber === 1 ? totalCounter : null);
 
-            setTriggerSearch(false);
-
-            setCountParams(searchParams);
-            setSearchParams(prev => ({
-              ...prev,
-              paginationAndSorting: {
-                ...prev.paginationAndSorting,
-                totalCounter: totalCounter || prev.paginationAndSorting?.totalCounter,
-                pageCount: pageCount || prev.paginationAndSorting?.pageCount,
-                pageNumber: pageNumber,
-                queryCacheKey: queryCacheKey,
-              }
-            }));
-
-            // Expand first details row
-            setMainGridRowsTotalCounter(pageNumber == 1 ? totalCounter : null);
-
-            // This block will be executed after all promises are resolved or any of them fails
+          // Hide loading overlay and handle no row message
+          if (totalCounter == 0)
+            gridRef.current.handleNoRowMsg(totalCounter);
+          else
             gridRef.current.api.hideOverlay();
 
-            const countItems = params.api.getDisplayedRowCount();
-            gridRef.current.handleNoRowMsg(countItems);
-
-            setIsLoading(false);
-          });
-      },
-    };
-
-    gridRef.current.api.setServerSideDatasource(datasource);
-
-  }, [isGridReady, triggerSearch]);
+          // Notify that data loading is complete
+          setIsLoading(false);
+        });
+    }
+  };
 
   /**
    * Handler for sorting changes in the grid.
@@ -278,9 +348,6 @@ function OrdersTrackingGrid(props) {
     const isSortChanged = JSON.stringify(previousSortModel) !== JSON.stringify(sortedModel);
 
     if (isSortChanged) {
-      // Set a flag in the grid context to stop automatic data processing
-      params.api.context.suppressSearchAfterSortChange = true;
-
       // Update the search parameters with the new sorting information
       setSearchParams(prev => ({
         ...prev,
@@ -291,8 +358,7 @@ function OrdersTrackingGrid(props) {
         }
       }));
 
-      // Trigger a search operation by setting the triggerSearch state to true
-      setTriggerSearch(true);
+      setTriggerLoadGridData(true);
 
       // Push the sorting information to Google Analytics for tracking
       pushDataLayerGoogle(getSortAnalyticsGoogle(`${sortedModel.sortDirection}: ${sortedModel.sortBy}`, 'Click'));
@@ -347,34 +413,40 @@ function OrdersTrackingGrid(props) {
     });
   };
 
+  /**
+   * Handles the event when the query parameters are changed.
+   * @param {Object} params - The new query parameters.
+   */
   const onQueryChanged = (params) => {
-    console.log('OrdersTrackingDetail::onQueryChanged');
+    console.log('OrdersTrackingGrid::onQueryChanged');
 
-    //const criteriaChangesTriggerNewCount = checkIfCountIsRequired(params, countParams);
-
-    //console.log('OrdersTrackingDetail::onQueryChanged::performCount[' + criteriaChangesTriggerNewCount + ']');
-
+    // Update the search parameters with the new query parameters
     setSearchParams(params);
-    setTriggerSearch(true);
-    //setTriggerCount(criteriaChangesTriggerNewCount);
+
+    // Trigger the loading of grid data
+    setTriggerLoadGridData(true);
+
+    // Mark the initial request as performed
     setIsInitialRequestPerformed(true);
   }
 
+  /**
+   * Handles the initialization of the header.
+   * This function is called when the header is first initialized.
+   */
   const onHeaderInit = () => {
     console.log('OrdersTrackingDetail::onHeaderInit');
 
+    // If no onQueryChange event has been triggered at startup
+    // (meaning there were no specified filters), trigger the onQueryChange event
     if (!isInitialRequestPerformed) {
-      console.log('OrdersTrackingDetail::onHeaderInit::initial onQueryChanged');
+      console.log('OrdersTrackingGrid::onHeaderInit::initial onQueryChanged');
+
+      // Trigger the onQueryChanged function with the current search parameters
       onQueryChanged(searchParams);
     }
   }
 
-  useEffect(() => {
-    console.log('OrdersTrackingDetail::useEffect::paginationAndSorting');
-    if (searchParams?.paginationAndSorting) {
-      updateUrl(searchParams.paginationAndSorting, true);
-    }
-  }, [searchParams?.paginationAndSorting]);
 
   useEffect(async () => {
     console.log('OrdersTrackingGrid::useEffect');
@@ -393,6 +465,33 @@ function OrdersTrackingGrid(props) {
     // Set the document title based on the fetched translations
     setDocumentTitle(uiTranslations);
   }, []);
+
+  useEffect(() => {
+    console.log('OrdersTrackingGrid::useEffect');
+
+    // Check if the grid is not ready or if loading data should not be triggered
+    // If either condition is true, exit the effect early
+    if (!isGridReady || !triggerLoadGridData) {
+      return;
+    }
+
+    // Call the function to load grid data
+    loadGridData();
+
+    // Reset the trigger to prevent re-loading the data until it is set to true again
+    setTriggerLoadGridData(false);
+
+  }, [isGridReady, triggerLoadGridData]); // Dependencies array to re-run the effect when isGridReady or triggerLoadGridData change
+
+  useEffect(() => {
+    console.log('OrdersTrackingDetail::useEffect::paginationAndSorting');
+
+    // Check if paginationAndSorting exists in searchParams
+    if (searchParams?.paginationAndSorting) {
+      // Update the URL with the current pagination and sorting parameters
+      updateUrl(paginationData, true);
+    }
+  }, [paginationData]);
 
   useEffect(() => {
     if (settingsResponse && params.has('notifications')) {
@@ -453,6 +552,7 @@ function OrdersTrackingGrid(props) {
       <div className="cmp-order-tracking-grid">
         <Criteria
           searchParams={searchParams}
+          shouldUpdateCriteriaMessage={triggerLoadGridData}
         />
         <Header
           onInit={onHeaderInit}
@@ -460,6 +560,7 @@ function OrdersTrackingGrid(props) {
           analyticsCategories={analyticsCategories}
           isLoading={isLoading}
           searchParams={searchParams}
+          paginationData={paginationData}
           gridConfig={gridConfig}
           settings={settingsResponse}
         />
@@ -474,7 +575,7 @@ function OrdersTrackingGrid(props) {
           gridConfig={gridConfig}
           mapServiceData={mapServiceData}
           onSortChanged={onSortChanged}
-          onAfterGridInit={_onAfterGridInit}
+          onAfterGridInit={onAfterGridInit}
           responseError={responseError}
           DetailRenderers={(props) => (
             <OrderDetailsRenderers
@@ -492,7 +593,7 @@ function OrdersTrackingGrid(props) {
         <Footer
           onQueryChanged={onQueryChanged}
           isLoading={isLoading}
-          searchParams={searchParams}
+          paginationData={paginationData}
         />
       </div>
       <Flyouts

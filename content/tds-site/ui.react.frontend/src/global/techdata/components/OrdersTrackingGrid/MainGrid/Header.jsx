@@ -29,6 +29,7 @@ function Header({
   analyticsCategories,
   isLoading,
   searchParams,
+  paginationData,
   gridConfig,
   settings
 }) {
@@ -386,7 +387,7 @@ function Header({
     <OrderTrackingGridPagination
       onPageChange={onPageChange}
       disabled={isLoading}
-      searchParams={searchParams}
+      paginationData={paginationData}
     />,
   ];
 

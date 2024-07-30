@@ -4,8 +4,9 @@ import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderT
 /**
  * Component to manage and display criteria based on search parameters and configuration.
  * @param {Object} searchParams - Object containing current search parameters.
+ * @param {Function} shouldUpdateCriteriaMessage - Function to determine if the criteria message should be updated.
  */
-const Criteria = ({ searchParams }) => {
+const Criteria = ({ searchParams, shouldUpdateCriteriaMessage }) => {
 
   // Get UI translations from the store
   const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
@@ -65,7 +66,7 @@ const Criteria = ({ searchParams }) => {
   useEffect(() => {
     console.log('Criteria::useEffect');
     updateCriteriaMessage();    
-  }, [searchParams, translations]);
+  }, [searchParams, shouldUpdateCriteriaMessage, translations]);
 
   return (
     <div className="cmp-order-tracking-grid__criteria">

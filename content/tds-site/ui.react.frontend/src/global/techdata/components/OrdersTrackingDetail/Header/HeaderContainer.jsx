@@ -6,7 +6,7 @@ import Navigation from './Navigation';
 import { useOrderTrackingStore } from '../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import { XMLMessageAnalyticsGoogle, pushDataLayerGoogle, } from '../../OrdersTrackingGrid/Utils/analyticsUtils'; // TODO!
 import { usGet } from '../../../../../utils/api';
-import { handleDownloadExcelExport } from '../utils/exportUtils';
+import { handleDownloadExcelExport } from '../Utils/exportUtils';
 
 const HeaderContainer = ({
   config,
