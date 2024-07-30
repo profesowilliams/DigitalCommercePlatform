@@ -4872,6 +4872,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           canEditResellerPrice: true,
           canEditLines: true,
           canCopy: false,
+          canAddMore: true,
           customerPO: {
             text: "TEST1234 IBM",
             isValid: true,

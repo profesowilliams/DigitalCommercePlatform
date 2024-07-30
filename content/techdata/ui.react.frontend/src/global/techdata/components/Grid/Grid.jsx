@@ -424,10 +424,14 @@ function Grid(props) {
       // check if there are additional query params in url, append grid specific params
       const url = new URL(config.uiServiceEndPoint);
       const pages = `PageSize=${pageSize}&PageNumber=${pageNumber}`;
-      const sortParams =
+      let sortParams =
         sortKey && sortDir
           ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true${dateRangeUrlParam}`
           : `&SortDirection=desc&SortBy=id&WithPaginationInfo=true${dateRangeUrlParam}`; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
+      if (sortKey && sortKey === 'vendor') {
+        sortParams = `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true${dateRangeUrlParam}&SortBy=programname:${sortDir}`
+      }
+
       let pathName = url.pathname ?? '';
       pathName.slice(-1) === '/' && (pathName = pathName.slice(0, -1));
       const apiUrl = `${url.origin}${pathName ?? ''}${url.search ?? ''}${

@@ -22,10 +22,13 @@ import { get, post } from '../../../../utils/api';
 import { getStatusLoopUntilStatusIsActive, mapRenewalForUpdateDetails } from '../RenewalsGrid/Orders/orderingRequests';
 import { useRenewalsDetailsStore } from "./store/RenewalsDetailsStore";
 import EditFlow from './ConfigGrid/Common/EditFlow'; 
-import { removeDashboardSeparator } from "../../../../utils/utils";
+import { removeDashboardSeparator, getDictionaryValueOrKey } from "../../../../utils/utils";
 import useAuth from "../../hooks/useAuth";
 import { getSessionInfo } from "../../../../utils/intouch/user/get";
 import { enableIntouchLogin } from "../../../../utils/intouch/intouchUtils";
+import {
+  AddIcon
+} from '../../../../fluentIcons/FluentIcons';
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -275,6 +278,13 @@ function RenewalsDetails(props) {
                       <AccordionSummary>
                           <div className="details-container">
                               <span className="details-preview">{componentProp?.productLines?.lineActiveLicenceLabel || "Details"}<span className="details-price-level">{renewalsDetails.renewalLevelActive}</span></span>
+                              {
+                                renewalsDetails?.canAddMore &&
+                                  <div className="details-preview-add-more">
+                                    <AddIcon width="17" />
+                                    <span>{getDictionaryValueOrKey(componentProp?.productLines?.addMoreButton, 'Add More')}</span>
+                                  </div>
+                              }
                           </div>
                       </AccordionSummary>
                       <AccordionDetails>

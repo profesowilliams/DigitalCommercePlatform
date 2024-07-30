@@ -47,6 +47,13 @@
                                                     fieldLabel="Line Active Licence Label"
                                                     name="./lineActiveLicenceLabel"
                                                     required="{Boolean}false"/>
+                                            <addMoreButton
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Add More Button"
+                                                    fieldLabel="Add More Button"
+                                                    name="./addMoreButton"
+                                                    required="{Boolean}false"/>
                                             <shopURL
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
