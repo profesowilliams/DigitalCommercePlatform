@@ -25,7 +25,7 @@ export function ErrorFlyout({ store, subheaderReference }) {
     <BaseFlyout
       open={errorFlyoutConfig?.show}
       onClose={closeFlyout}
-      width="360px"
+      width="1080px"
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey('Error details')}
