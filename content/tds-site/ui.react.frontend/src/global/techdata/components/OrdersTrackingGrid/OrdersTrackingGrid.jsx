@@ -112,18 +112,18 @@ function OrdersTrackingGrid(props) {
   const [sendAnalyticsDataHome, setSendAnalyticsDataHome] = useState(true);
   const [newItem, setNewItem] = useState(null);
 
-  const componentProp = JSON.parse(props.componentProp);
+  const componentProps = JSON.parse(props.componentProp);
   const gridPageSize = 25;
 
   const {
     noAccessProps,
     analyticsCategories,
-  } = componentProp;
+  } = componentProps;
 
   const gridRef = useRef();
 
   const gridConfig = {
-    ...componentProp,
+    ...componentProps,
     paginationStyle: 'custom',
     noRowsErrorMessage: 'No data found',
     errorGettingDataMessage: 'Internal server error please refresh the page',
@@ -272,7 +272,7 @@ function OrdersTrackingGrid(props) {
 
     gridRef.current.api.showLoadingOverlay();
 
-    const baseUrl = componentProp.uiCommerceServiceDomain;
+    const baseUrl = componentProps.uiCommerceServiceDomain;
 
     const promises = [];
     let pageCount, totalCounter, pageNumber, queryCacheKey;
@@ -396,7 +396,7 @@ function OrdersTrackingGrid(props) {
 
   const fetchFiltersRefinements = async () => {
     const results = await usGet(
-      `${componentProp.uiCommerceServiceDomain}/v3/refinements`
+      `${componentProps.uiCommerceServiceDomain}/v3/refinements`
     );
     return results.data.content;
   };
@@ -565,9 +565,9 @@ function OrdersTrackingGrid(props) {
           settings={settingsResponse}
         />
         <BaseGrid
-          columnList={addCurrencyToTotalColumn(componentProp.columnList)}
+          columnList={addCurrencyToTotalColumn(componentProps.columnList)}
           definitions={ordersTrackingDefinition(
-            componentProp,
+            componentProps,
             openFilePdf,
             userData?.isInternalUser
           )}
