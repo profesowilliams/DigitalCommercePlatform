@@ -1,11 +1,11 @@
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import useComputeBranding from './../../../hooks/useComputeBranding';
-import 'react-dates-gte-react-17/initialize';
 import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import OrderFilterDateType from './OrderFilterDateType';
 import StartEndDisplay from './StartEndDisplay';
 import OrderCount from './OrderCount';
 import { DateRangePicker } from 'react-date-range';
+import * as locales from 'react-date-range/dist/locale';
 import { getCustomRanges, getFilterDateOptions } from './Utils/translationsUtils';
 import moment from 'moment';
 
@@ -19,7 +19,10 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
   console.log('OrderFilterDate::init');
   const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
   const translations = uiTranslations?.['OrderTracking.MainGrid.Filters'];
+  const userData = useOrderTrackingStore((st) => st.userData);
+
   const { computeClassName } = useComputeBranding(useOrderTrackingStore);
+
   const [filters, setFilters] = useState(initialFilter);
   const [filtersCheckedCount, setFiltersCheckedCount] = useState(filters?.from && filters?.to && filters?.type ? 1 : 0);
 
@@ -289,7 +292,7 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
 
     // The effect will re-run whenever filters.type changes
   }, [filters?.type]);
-  
+
   return (
     <div className={`order-filter-accordion__item ${!accordionIsOpen ? 'separator' : ''}`}>
       <div className="order-filter-accordion__item--group"
@@ -300,37 +303,40 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
         <OrderCount>{filtersCheckedCount > 0 ? filtersCheckedCount : ''}</OrderCount>
       </div>
       {accordionIsOpen && <>
-        <div className="check-order-wrapper">
-          <OrderFilterDateType
-            onChangeRadio={onChangeRadio}
-            options={filterDateOptions}
-            dateType={filters?.type}
-          />
-        </div>
-        <div className="order_datapicker">
-          <DateRangePicker
-            ranges={[selectionRange]}
-            moveRangeOnFirstSelection={false}
-            staticRanges={customRanges}
-            months={1}
+        <div className="order-filter-accordion__item--open">
+          <div className="check-order-wrapper">
+            <OrderFilterDateType
+              onChangeRadio={onChangeRadio}
+              options={filterDateOptions}
+              dateType={filters?.type}
+            />
+          </div>
+          <div className="order_datapicker">
+            <DateRangePicker
+              ranges={[selectionRange]}
+              moveRangeOnFirstSelection={false}
+              staticRanges={customRanges}
+              months={1}
+              maxDate={maxDate}
+              minDate={new Date('2010')}
+              direction="vertical"
+              onChange={handleSelect}
+              editableDateInputs={false}
+              preventSnapRefocus={true}
+              locale={locales[moment.locale()]}
+            />
+          </div>
+          <StartEndDisplay
+            translations={translations}
+            startDate={currentStartDate}
+            endDate={currentEndDate}
+            minDate={minDate}
             maxDate={maxDate}
-            minDate={new Date('2010')}
-            direction="vertical"
             onChange={handleSelect}
-            editableDateInputs={false}
-            preventSnapRefocus={true}
           />
         </div>
-        <StartEndDisplay
-          translations={translations}
-          startDate={currentStartDate}
-          endDate={currentEndDate}
-          minDate={minDate}
-          maxDate={maxDate}
-          onChange={handleSelect}
-        />
       </>}
-    </div>
+    </div >
   );
 };
 
