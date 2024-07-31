@@ -640,6 +640,7 @@ function OrdersTrackingGrid(props) {
           onQueryChanged={onQueryChanged}
           isLoading={isLoading}
           paginationData={paginationData}
+          searchParams={searchParams}
         />
       </div>
       <Flyouts

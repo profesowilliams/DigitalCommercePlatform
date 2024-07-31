@@ -18,13 +18,14 @@ const Footer = ({ onQueryChanged, isLoading, searchParams, paginationData }) => 
     console.log("MainGridFooter::onPageChange");
 
     // Ensure searchParams and nested paginationAndSorting objects are defined
-    searchParams.paginationAndSorting = searchParams.paginationAndSorting ?? {};
+
+    searchParams.paginationAndSorting = searchParams?.paginationAndSorting ?? {};
 
     // Update the current page number in the search parameters
     searchParams.paginationAndSorting.pageNumber = data.pageNumber;
 
     // Trigger the query change callback indicating a search action with updated searchParams
-    onQueryChanged();
+    onQueryChanged(searchParams);
   }
 
   return (
