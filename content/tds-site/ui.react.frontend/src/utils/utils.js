@@ -133,15 +133,6 @@ const validateBlobResponseWithoutModal = async (response) => {
     validation = true;
     if (response.status !== 200) {
       validation = false;
-      if (
-        response.status === 204 ||
-        (response.status > 500 &&
-        response.status <= 599)
-      ) {
-        let url = new URL(window.location.href);
-        url.searchParams.set('unavailable', 1);
-        window.open(url, '_blank');
-      }
     }
   } else {
     validation = false;

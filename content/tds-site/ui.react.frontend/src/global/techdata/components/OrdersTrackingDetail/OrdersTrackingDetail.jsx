@@ -14,14 +14,12 @@ import { getOrderDetailsAnalyticsGoogle, pushDataLayerGoogle } from './Utils/ana
 import { getTranslations, setDocumentTitle } from './Utils/translationsUtils';
 import { downloadFile, openFile } from '../OrdersTrackingCommon/Utils/fileUtils';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
-import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
 import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
 
 function OrdersTrackingDetail(props) {
   console.log('OrdersTrackingDetail::init');
   const params = getUrlParamsCaseInsensitive();
   const id = params.get('id');
-  const isUnavailable = params.has('unavailable');
 
   const gridRef = useRef();
   const rowsToGrayOutTDNameRef = useRef([]);
@@ -107,6 +105,7 @@ function OrdersTrackingDetail(props) {
 
   /**
    * Downloads a file based on the provided parameters.
+   * @param {Object} translations - Translations.
    * @param {string} flyoutType - The type of the flyout
    * @param {string} orderId - The ID of the order.
    * @param {string} selectedId - The ID of the selected file/item.
@@ -114,16 +113,19 @@ function OrdersTrackingDetail(props) {
   const downloadAllFile = async (translations, flyoutType, orderId, selectedId) => {
     console.log('OrdersTrackingDetail::downloadFileBlob::' + orderId);
 
+    // Display a toaster message indicating the download has started.
     showToasterWithMessage(true, translations?.Message_Download_Started);
 
     // Call the downloadFile function with the necessary parameters to download the file.
     const status = await downloadFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
 
+    // Display a toaster message indicating whether the download was successful or failed.
     showToasterWithMessage(status, translations?.Message_Download_Success, translations?.Message_Download_Failed);
   };
 
   /**
    * Opens a PDF file based on the provided parameters.
+   * @param {Object} translations - Translations.
    * @param {string} flyoutType - The type of the flyout
    * @param {string} orderId - The ID of the order.
    * @param {string} selectedId - The ID of the selected file/item.
@@ -131,11 +133,13 @@ function OrdersTrackingDetail(props) {
   const openFilePdf = async (translations, flyoutType, orderId, selectedId) => {
     console.log('OrdersTrackingDetail::openFilePdf::' + orderId);
 
+    // Display a toaster message indicating the download has started.
     showToasterWithMessage(true, translations?.Message_Download_Started);
 
     // Call the openFile function with the necessary parameters to open the file in PDF format.
     const status = await openFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
 
+    // Display a toaster message indicating whether the download was successful or failed.
     showToasterWithMessage(status, translations?.Message_Download_Success, translations?.Message_Download_Failed);
   };
 
@@ -203,10 +207,6 @@ function OrdersTrackingDetail(props) {
       setOrderModifyHeaderInfo(false);
     }
   }, [orderModifyHeaderInfo]);
-
-  if (isUnavailable) {
-    return <TemporarilyUnavailable noAccessProps={noAccessProps} />;
-  }
 
   // Display a loader icon if the data is still loading
   if (!userData) {

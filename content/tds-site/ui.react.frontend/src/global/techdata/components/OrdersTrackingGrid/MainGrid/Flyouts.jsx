@@ -10,17 +10,13 @@ import Toaster from '../../Widgets/Toaster';
 const Flyouts = ({
   gridConfig,
   openFilePdf,
-  downloadFileBlob,
+  downloadAllFile,
   onQueryChanged,
   settings,
   rowsToGrayOutTDNameRef,
   addNewItem,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
-  function downloadAllFile(flyoutType, orderId, selectedId) {
-    return downloadFileBlob(flyoutType, orderId, selectedId);
-  }
-  
   const { closeAndCleanToaster } = useOrderTrackingStore((st) => st.effects);
 
   const onCloseToaster = () => {

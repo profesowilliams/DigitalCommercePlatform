@@ -26,7 +26,6 @@ import { usGet } from '../../../../utils/api';
 import useGet from '../../hooks/useGet';
 import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
-import TemporarilyUnavailable from '../TemporarilyUnavailable/TemporarilyUnavailable';
 import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
 import { getTranslations, setDocumentTitle } from './Utils/translationsUtils';
 import { updateUrl, checkIfFetchCountIsRequired, checkIfFetchDataIsRequired } from './Utils/utils';
@@ -40,7 +39,6 @@ function OrdersTrackingGrid(props) {
   console.log('OrdersTrackingGrid::init');
 
   const params = getUrlParamsCaseInsensitive();
-  const isUnavailable = params.has('unavailable');
 
   const rowsToGrayOutTDNameRef = useRef([]);
 
@@ -412,23 +410,27 @@ function OrdersTrackingGrid(props) {
 
   /**
    * Downloads a file based on the provided parameters.
-   * @param {string} flyoutType - The type of the flyout
+   * @param {Object} translations - Translations.
+   * @param {string} flyoutType - The type of the flyout.
    * @param {string} orderId - The ID of the order.
    * @param {string} selectedId - The ID of the selected file/item.
    */
-  const downloadFileBlob = async (translations, flyoutType, orderId, selectedId) => {
-    console.log('OrdersTrackingGrid::downloadFileBlob::' + orderId);
+  const downloadAllFile = async (translations, flyoutType, orderId, selectedId) => {
+    console.log('OrdersTrackingGrid::downloadAllFile::' + orderId);
 
+    // Display a toaster message indicating the download has started.
     showToasterWithMessage(true, translations?.Message_Download_Started);
 
     // Call the downloadFile function with the necessary parameters to download the file.
     const status = await downloadFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
 
+    // Display a toaster message indicating whether the download was successful or failed.
     showToasterWithMessage(status, translations?.Message_Download_Success, translations?.Message_Download_Failed);
   };
 
   /**
    * Opens a PDF file based on the provided parameters.
+   * @param {Object} translations - Translations.
    * @param {string} flyoutType - The type of the flyout
    * @param {string} orderId - The ID of the order.
    * @param {string} selectedId - The ID of the selected file/item.
@@ -436,11 +438,13 @@ function OrdersTrackingGrid(props) {
   const openFilePdf = async (translations, flyoutType, orderId, selectedId) => {
     console.log('OrdersTrackingGrid::openFilePdf::' + orderId);
 
+    // Display a toaster message indicating the download has started.
     showToasterWithMessage(true, translations?.Message_Download_Started);
 
     // Call the openFile function with the necessary parameters to open the file in PDF format.
     const status = await openFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
 
+    // Display a toaster message indicating whether the download was successful or failed.
     showToasterWithMessage(status, translations?.Message_Download_Success, translations?.Message_Download_Failed);
   };
 
@@ -581,10 +585,6 @@ function OrdersTrackingGrid(props) {
     }
   }, [userData, isGTMReady, reloadAddedToGTM]);
 
-  if (isUnavailable) {
-    return <TemporarilyUnavailable noAccessProps={noAccessProps} />;
-  }
-
   // Display a loader icon if the data is still loading
   if (!userData) {
     console.log('OrdersTrackingGrid::loading user data');
@@ -644,7 +644,7 @@ function OrdersTrackingGrid(props) {
         />
       </div>
       <Flyouts
-        downloadFileBlob={downloadFileBlob}
+        downloadAllFile={downloadAllFile}
         gridConfig={gridConfig}
         openFilePdf={openFilePdf}
         onQueryChanged={onQueryChanged}
