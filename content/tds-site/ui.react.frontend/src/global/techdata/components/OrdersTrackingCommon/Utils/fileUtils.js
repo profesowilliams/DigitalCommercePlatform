@@ -11,13 +11,15 @@ export async function downloadFile(baseUrl, flyoutType, orderId, selectedId) {
   try {
     const response = await requestFileBlobWithoutModal(downloadUrl, null, { redirect: false });
 
+    const successCounter = response?.headers['ga-download-documents-success'] ?? 0;
+    const failCounter = response?.headers['ga-download-documents-fail'] ?? 0;
+    const counter = getFormattedCounter(successCounter, failCounter);
+
     if (response?.status === 200) {
-      const successCounter = response?.headers['ga-download-documents-success'];
-      pushSuccessDownloadGoogleAnalytics(flyoutType, false, successCounter, orderId, mapIds);
+      pushSuccessDownloadGoogleAnalytics(flyoutType, false, counter, orderId, mapIds);
       return true;
     } else if (response?.status === 204) {
-      const failCounter = response?.headers['ga-download-documents-fail'];
-      pushFailedDownloadGoogleAnalytics(flyoutType, false, failCounter, orderId, mapIds);
+      pushFailedDownloadGoogleAnalytics(flyoutType, false, counter, orderId, mapIds);
       return false;
     }
   } catch (error) {
@@ -32,17 +34,19 @@ export async function openFile(baseUrl, flyoutType, orderId, selectedId) {
 
   const url = `${baseUrl}/v3/orders/downloaddocuments`;
   const downloadUrl = url + `?order=${orderId}&type=${flyoutType}&id=${selectedId}`;
+  const counter = getFormattedCounter(successCounter, failCounter);
 
   try {
     const response = await requestFileBlobWithoutModal(downloadUrl, null, { redirect: true, });
 
+    const successCounter = response?.headers['ga-download-documents-success'] ?? 0;
+    const failCounter = response?.headers['ga-download-documents-fail'] ?? 0;
+
     if (response?.status === 200) {
-      const successCounter = response?.headers['ga-download-documents-success'];
-      pushSuccessDownloadGoogleAnalytics(flyoutType, false, successCounter, orderId, selectedId);
+      pushSuccessDownloadGoogleAnalytics(flyoutType, false, counter, orderId, selectedId);
       return true;
     } else if (response?.status === 204) {
-      const failCounter = response?.headers['ga-download-documents-fail'];
-      pushFailedDownloadGoogleAnalytics(flyoutType, false, failCounter, orderId, selectedId);
+      pushFailedDownloadGoogleAnalytics(flyoutType, false, counter, orderId, selectedId);
       return false;
     }
   } catch (error) {
@@ -51,3 +55,24 @@ export async function openFile(baseUrl, flyoutType, orderId, selectedId) {
     return false;
   }
 }
+
+/**
+* Returns a formatted string based on success and fail counters.
+* If both counters are greater than 0, it returns "successCounter/failCounter".
+* If only one counter is greater than 0, it returns that counter.
+* If both counters are 0, it returns an empty string.
+* @param {number} successCounter - The success counter value.
+* @param {number} failCounter - The fail counter value.
+* @returns {string | null} - The formatted string or null if both counters are 0.
+*/
+const getFormattedCounter = (successCounter, failCounter) => {
+  if (successCounter > 0 && failCounter > 0) {
+    return `${successCounter}/${failCounter}`;
+  } else if (successCounter > 0) {
+    return `${successCounter}`;
+  } else if (failCounter > 0) {
+    return `${failCounter}`;
+  } else {
+    return ``;
+  }
+};
