@@ -250,7 +250,7 @@ const Search = (
     }
     else {
       // Control is on ready state, and initial criteria are empty
-      onInit(true);
+      onInit(true); // true - when search criteria come from Init and not from a search action
     }
   }, [freeTextSearchTranslations]); // Dependency array to re-run the effect when translations are updated
 

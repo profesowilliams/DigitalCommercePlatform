@@ -19,6 +19,7 @@ import { updateUrl } from './Utils/utils';
 function Report({ onInit, onChange, analyticsLabel }, ref) {
   console.log('Report::init');
 
+  const [isInit, setIsInit] = useState(false);
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const wrapperRef = useRef(null);
@@ -111,6 +112,8 @@ function Report({ onInit, onChange, analyticsLabel }, ref) {
   useEffect(() => {
     console.log('Report::useEffect::translations');
 
+    if (!isInit) return;
+
     // Check if the initial value (getInitial) is provided
     if (getInitial) {
 
@@ -122,15 +125,16 @@ function Report({ onInit, onChange, analyticsLabel }, ref) {
       handleSelectOption({
         key: getInitial,
         label: translations?.[getInitial],
-        isInit: true // true - kiedy kryteria wyszukiwania pochodzą z Init a nie akcji wyszukiwania
+        isInit: true 
       })
 
       // Control is on ready state
       onInit(false);
+      setIsInit(true);
     }
     else {
       // Control is on ready state, and initial criteria are empty
-      onInit(true);
+      onInit(true); // true - when search criteria come from Init and not from a search action
     }
   }, [translations]); // This effect runs whenever the translations object changes
 

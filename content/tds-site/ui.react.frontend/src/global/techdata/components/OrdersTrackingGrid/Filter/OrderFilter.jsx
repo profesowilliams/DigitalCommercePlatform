@@ -188,7 +188,7 @@ function OrderFilter({ onInit, onChange }, ref) {
     }
     else {
       // Control is on ready state, and initial criteria are empty
-      onInit(true);
+      onInit(true); // true - when search criteria come from Init and not from a search action
     }
   }, []); // Empty dependency array ensures this effect runs only once on mount
 

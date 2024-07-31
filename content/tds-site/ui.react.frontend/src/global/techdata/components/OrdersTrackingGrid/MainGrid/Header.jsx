@@ -377,10 +377,8 @@ function Header({
 
   useEffect(() => {
     // Check if filters, reports, and search are all initialized
-    if (isFiltersReady && isReportsReady && isSearchReady) {
-      // If all are initialized, invoke the onInit callback function
-      onInit();
-    }
+    // If all are initialized, invoke the onInit callback function
+    onInit(isFiltersReady && isReportsReady && isSearchReady);
   }, [isFiltersReady, isReportsReady, isSearchReady]);
 
   const leftComponents = [

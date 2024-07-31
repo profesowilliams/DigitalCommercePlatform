@@ -15,10 +15,10 @@ export async function downloadFile(baseUrl, flyoutType, orderId, selectedId) {
     const failCounter = response?.headers['ga-download-documents-fail'] ?? 0;
     const counter = getFormattedCounter(successCounter, failCounter);
 
-    if (response?.status === 200) {
+    if (response?.status === 200 && successCounter > 0) {
       pushSuccessDownloadGoogleAnalytics(flyoutType, false, counter, orderId, mapIds);
       return true;
-    } else if (response?.status === 204) {
+    } else {
       pushFailedDownloadGoogleAnalytics(flyoutType, false, counter, orderId, mapIds);
       return false;
     }
@@ -42,10 +42,10 @@ export async function openFile(baseUrl, flyoutType, orderId, selectedId) {
     const failCounter = response?.headers['ga-download-documents-fail'] ?? 0;
     const counter = getFormattedCounter(successCounter, failCounter);
 
-    if (response?.status === 200) {
+    if (response?.status === 200 && successCounter > 0) {
       pushSuccessDownloadGoogleAnalytics(flyoutType, false, counter, orderId, selectedId);
       return true;
-    } else if (response?.status === 204) {
+    } else {
       pushFailedDownloadGoogleAnalytics(flyoutType, false, counter, orderId, selectedId);
       return false;
     }

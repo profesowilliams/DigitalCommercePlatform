@@ -88,15 +88,11 @@ function OrdersTrackingGrid(props) {
 
   // Currently used sort model, used to detect sort changes
   // and the need to send Google Analytics events
-  const [previousSortModel, setPreviousSortModel] = useState([]);
+  const previousSortModel = useRef();
 
   // Information about whether the Grid has been initialized. 
   // When it is set to true, you can use references to the grid API.
   const [isGridReady, setIsGridReady] = useState(false);
-
-  // Information about whether the data fetching has been initialized. 
-  // If there are no search criteria, it will initiate data fetching without criteria.
-  const [isInitialRequestPerformed, setIsInitialRequestPerformed] = useState(false);
 
   // Information about whether the grid is currently loading data.
   const [isLoading, setIsLoading] = useState(true);
@@ -366,7 +362,7 @@ function OrdersTrackingGrid(props) {
       .map(({ colId, sort }) => ({ sortBy: colId, sortDirection: sort }))[0]; // Map the relevant properties to an object with sortBy and sortDirection
 
     // Check if the sorting model has changed by comparing the previous sort model with the current one
-    const isSortChanged = JSON.stringify(previousSortModel) !== JSON.stringify(sortedModel);
+    const isSortChanged = JSON.stringify(previousSortModel?.current) !== JSON.stringify(sortedModel);
 
     if (isSortChanged) {
       // Update the search parameters with the new sorting information
@@ -382,11 +378,14 @@ function OrdersTrackingGrid(props) {
       setTriggerLoadGridData(true);
 
       // Push the sorting information to Google Analytics for tracking
-      pushDataLayerGoogle(getSortAnalyticsGoogle(`${sortedModel.sortDirection}: ${sortedModel.sortBy}`, 'Click'));
-
-      // Update the previous sort model to the current sort model
-      setPreviousSortModel(sortedModel);
+      if (previousSortModel?.current?.sortBy && previousSortModel?.current?.sortDirection) {
+        // Dont send GA event when its sort setup instead of change
+        pushDataLayerGoogle(getSortAnalyticsGoogle(`${sortedModel.sortDirection}: ${sortedModel.sortBy}`, 'Click'));
+      }
     }
+
+    // Update the previous sort model to the current sort model
+    previousSortModel.current = sortedModel;
   };
 
   /**
@@ -479,21 +478,18 @@ function OrdersTrackingGrid(props) {
 
     // Trigger the loading of grid data
     setTriggerLoadGridData(true);
-
-    // Mark the initial request as performed
-    setIsInitialRequestPerformed(true);
   }
 
   /**
    * Handles the initialization of the header.
    * This function is called when the header is first initialized.
    */
-  const onHeaderInit = () => {
+  const onHeaderInit = (filtersEmpty) => {
     console.log('OrdersTrackingGrid::onHeaderInit');
 
     // If no onQueryChange event has been triggered at startup
     // (meaning there were no specified filters), trigger the onQueryChange event
-    if (!isInitialRequestPerformed) {
+    if (filtersEmpty) {
       console.log('OrdersTrackingGrid::onHeaderInit::initial onQueryChanged');
 
       // Trigger the onQueryChanged function with the current search parameters

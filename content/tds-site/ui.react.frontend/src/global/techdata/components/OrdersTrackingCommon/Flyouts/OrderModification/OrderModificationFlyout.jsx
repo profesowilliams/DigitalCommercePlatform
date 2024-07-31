@@ -363,7 +363,6 @@ function OrderModificationFlyout({
                 onChange={handleChangeNewItem}
                 removeElement={() => handleRemoveNewItem(index)}
                 domain={gridConfig.uiCommerceServiceDomain}
-                defaultCurrency={orderModificationResponse?.currency}
               />
             ))}
           </ul>
