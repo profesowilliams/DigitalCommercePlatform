@@ -34,13 +34,13 @@ export async function openFile(baseUrl, flyoutType, orderId, selectedId) {
 
   const url = `${baseUrl}/v3/orders/downloaddocuments`;
   const downloadUrl = url + `?order=${orderId}&type=${flyoutType}&id=${selectedId}`;
-  const counter = getFormattedCounter(successCounter, failCounter);
 
   try {
     const response = await requestFileBlobWithoutModal(downloadUrl, null, { redirect: true, });
 
     const successCounter = response?.headers['ga-download-documents-success'] ?? 0;
     const failCounter = response?.headers['ga-download-documents-fail'] ?? 0;
+    const counter = getFormattedCounter(successCounter, failCounter);
 
     if (response?.status === 200) {
       pushSuccessDownloadGoogleAnalytics(flyoutType, false, counter, orderId, selectedId);
