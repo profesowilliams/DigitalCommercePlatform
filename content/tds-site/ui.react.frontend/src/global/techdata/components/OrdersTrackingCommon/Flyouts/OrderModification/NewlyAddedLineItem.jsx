@@ -9,7 +9,8 @@ const NewlyAddedLineItem = ({
   onChange,
   removeElement,
   labels,
-  domain
+  domain,
+  defaultCurrency,
 }) => {
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(item?.quantity);
@@ -27,11 +28,11 @@ const NewlyAddedLineItem = ({
       const result = await usPost(`${domain}/v2/Price/GetPriceForProduct`, {
         productId: item?.id,
         quantity: quantity,
-        currency
+        currency: currency ?? defaultCurrency
       });
 
       setPrice(totalPriceFormatted);
-      setCurrency(currency);
+      setCurrency(currency ?? defaultCurrency);
       onChange(index, quantity, price);
     } catch (error) {
       console.error('Error:', error);
