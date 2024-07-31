@@ -87,8 +87,8 @@ export function createBackUrl(saleslogin, queryCacheKey, data) {
       url.searchParams.append('field', data.criteria.freetextSearchKey);
     }
 
-    if (data.criteria?.gtmfield) {
-      url.searchParams.append('gtmfield', data.criteria.gtmfield);
+    if (data.criteria?.gtmField) {
+      url.searchParams.append('gtmfield', data.criteria.gtmField);
     }
 
     if (data.criteria?.reportName) {

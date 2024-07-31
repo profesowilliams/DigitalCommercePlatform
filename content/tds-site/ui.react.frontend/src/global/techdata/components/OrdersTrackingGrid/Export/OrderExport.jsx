@@ -21,9 +21,7 @@ function OrderExport({
   searchParams,
   exportAnalyticsLabel
 }) {
-  const uiTranslations = useOrderTrackingStore(
-    (state) => state.uiTranslations
-  );
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
   const translations = uiTranslations?.['OrderTracking.MainGrid.Export'];
   const effects = useOrderTrackingStore((st) => st.effects);
 

@@ -16,6 +16,7 @@ function DeliveryNotesColumn({
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const translations = useOrderTrackingStore((state) => state.uiTranslations);
   const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
+  const errorMessagesTranslations = translations?.['OrderTracking.Common.ErrorMessages'];
   
   const [copied, setCopied] = useState(false);
   const hasMultiple = deliveryNotes?.length > 1;
@@ -35,7 +36,7 @@ function DeliveryNotesColumn({
 
   const handleDownload = () => {
     if (isDeliveryNoteDownloadable) {
-      openFilePdf('DNote', id, firstDeliveryNote?.id);
+      openFilePdf(errorMessagesTranslations, 'DNote', id, firstDeliveryNote?.id);
     }
   };
 

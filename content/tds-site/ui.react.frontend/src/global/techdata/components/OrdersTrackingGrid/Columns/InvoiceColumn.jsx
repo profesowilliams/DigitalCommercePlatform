@@ -12,11 +12,16 @@ function InvoiceColumn({
   openFilePdf,
   isInternalUser,
 }) {
-  const [copied, setCopied] = useState(false);
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
+  const translations = useOrderTrackingStore((state) => state.uiTranslations);
+  const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
+  const errorMessagesTranslations = translations?.['OrderTracking.Common.ErrorMessages'];
+
+  const [copied, setCopied] = useState(false);
   const hasMultiple = invoices?.length > 1;
   const firstInvoice = invoices ? invoices[0] : [];
   const isInvoiceDownloadable = firstInvoice?.canDownloadDocument;
+
   const triggerInvoicesFlyout = () => {
     setCustomState({
       key: 'invoicesFlyout',
@@ -42,10 +47,6 @@ function InvoiceColumn({
     }
   };
 
-  const translations = useOrderTrackingStore((state) => state.uiTranslations);
-
-  const mainGridTranslations = translations?.['OrderTracking.MainGrid'];
-
   const tooltipMessage =
     copied ? (
       <span className="tooltip-span">
@@ -61,7 +62,7 @@ function InvoiceColumn({
 
   const handleDownload = () => {
     if (isInvoiceDownloadable) {
-      openFilePdf('Invoice', id, firstInvoice?.id);
+      openFilePdf(errorMessagesTranslations, 'Invoice', id, firstInvoice?.id);
     }
   };
 

@@ -32,23 +32,15 @@ const Flyouts = ({
         gridConfig={config}
         dNotesFlyout={config?.dNotesFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        downloadAllFile={(flyoutType, orderId, selectedId) =>
-          downloadAllFile(flyoutType, orderId, selectedId)
-        }
-        openFilePdf={(flyoutType, orderId, selectedId) =>
-          openFilePdf(flyoutType, orderId, selectedId)
-        }
+        downloadAllFile={downloadAllFile}
+        openFilePdf={openFilePdf}
       />
       <InvoicesFlyout
         gridConfig={config}
         invoicesFlyout={config?.invoicesFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        downloadAllFile={(flyoutType, orderId, selectedId) =>
-          downloadAllFile(flyoutType, orderId, selectedId)
-        }
-        openFilePdf={(flyoutType, orderId, selectedId) =>
-          openFilePdf(flyoutType, orderId, selectedId)
-        }
+        downloadAllFile={downloadAllFile}
+        openFilePdf={openFilePdf}
       />
       <OrderModificationFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}

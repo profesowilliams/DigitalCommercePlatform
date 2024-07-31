@@ -23,6 +23,9 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
     fontSize: '1.2rem',
     width: '1.3rem',
   };
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const errorMessagesTranslations = uiTranslations?.['OrderTracking.Common.ErrorMessages'];
+
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const actionButtonVisible = element?.quantity > 0;
   const returnCounter = useOrderTrackingStore((state) => state.returnCounter);
@@ -86,12 +89,12 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
     invoices?.length > 0 && invoicesWithReturnURL.length >= 1;
 
   const handleDownloadDnote = () => {
-    openFilePdf('DNote', id, dNoteId);
+    openFilePdf(errorMessagesTranslations, 'DNote', id, dNoteId);
   };
 
   const handleDownloadInvoice = () => {
     if (isInvoiceDownloadable) {
-      openFilePdf('Invoice', id, invoices[0]?.id);
+      openFilePdf(errorMessagesTranslations, 'Invoice', id, invoices[0]?.id);
     }
   };
 

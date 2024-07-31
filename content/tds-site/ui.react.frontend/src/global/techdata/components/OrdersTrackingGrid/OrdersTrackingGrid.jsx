@@ -31,8 +31,10 @@ import { LoaderIcon } from '../../../../fluentIcons/FluentIcons';
 import { getTranslations, setDocumentTitle } from './Utils/translationsUtils';
 import { updateUrl, checkIfFetchCountIsRequired, checkIfFetchDataIsRequired } from './Utils/utils';
 import { downloadFile, openFile } from '../OrdersTrackingCommon/Utils/fileUtils';
-import useDeepCompareEffect from './Utils/Effect/useDeepCompareEffect';
 import { deepCopy } from '../OrdersTrackingCommon/Utils/utils';
+import { isFilterNotEmpty } from './Filter/Utils/utils';
+import { isReportFilterNotEmpty } from './Report/Utils/utils';
+import { isSearchFilterNotEmpty } from './NewSearch/Utils/utils';
 
 function OrdersTrackingGrid(props) {
   console.log('OrdersTrackingGrid::init');
@@ -51,6 +53,7 @@ function OrdersTrackingGrid(props) {
     hasRights,
     setMainGridRowsTotalCounter
   } = useOrderTrackingStore((st) => st.effects);
+  console.log('OrdersTrackingGrid::translations');
 
   const userData = useOrderTrackingStore((st) => st.userData);
   const hasCanViewOrdersRights = hasRights('CanViewOrders');
@@ -108,7 +111,6 @@ function OrdersTrackingGrid(props) {
 
   const { isGTMReady } = useGTMStatus();
   const [reloadAddedToGTM, setReloadAddedToGTM] = useState(false);
-  const [responseError, setResponseError] = useState(null);
   const [sendAnalyticsDataHome, setSendAnalyticsDataHome] = useState(true);
   const [newItem, setNewItem] = useState(null);
 
@@ -139,49 +141,64 @@ function OrdersTrackingGrid(props) {
     setNewItem(item);
   };
 
+  /**
+   * Callback function triggered after the grid is initialized.
+   * Sets up the grid reference and applies initial column sorting based on search parameters.
+   *
+   * @param {Object} config - The grid configuration object provided after initialization.
+   */
   const onAfterGridInit = (config) => {
     console.log('OrdersTrackingGrid::onAfterGridInit');
 
+    // Store the grid configuration in the grid reference
     gridRef.current = config;
+
+    // Define the initial column sorting state based on search parameters
     const columnState = {
       state: [
         {
-          colId: searchParams.paginationAndSorting?.sortBy,
-          sort: searchParams.paginationAndSorting?.sortDirection,
+          colId: searchParams.paginationAndSorting?.sortBy, // Column ID to sort by
+          sort: searchParams.paginationAndSorting?.sortDirection, // Sort direction (asc/desc)
         },
       ],
-      defaultState: { sort: null },
+      defaultState: { sort: null }, // Default state for columns not specified in 'state'
     };
 
+    // Apply the column sorting state to the grid
     config.columnApi.applyColumnState({ ...columnState });
 
+    // Mark the grid as ready for interaction
     setIsGridReady(true);
   };
 
-  //const sendGTMDataOnError = () => {
-  //  console.log('OrdersTrackingGrid::sendGTMDataOnError');
+  /**
+   * Sends Google Tag Manager (GTM) data when no results are found.
+   * This function checks if specific filters or search parameters are active,
+   * and then pushes relevant data to the Google Tag Manager for analytics purposes
+   * related to "No Results Found" scenarios.
+   */
+  const sendGTMNotResultFound = () => {
+    console.log('OrdersTrackingGrid::sendGTMNotResultFound');
 
-  //  if (reportFilterValue?.current?.value) {
-  //    pushDataLayerGoogle(
-  //      getReportsNRFAnalyticsGoogle(reportFilterValue.current.value)
-  //    );
-  //  }
-  //  if (searchCriteria?.current?.field) {
-  //    pushDataLayerGoogle(
-  //      getSearchNRFAnalyticsGoogle(searchCriteria?.current?.field)
-  //    );
-  //  }
-  //  const filtersStatusAndType =
-  //    (filtersRefs?.current?.type ?? '') + (filtersRefs?.current?.status ?? '');
+    // Check if the report filter is not empty and send corresponding GTM data
+    if (isReportFilterNotEmpty(searchParams?.reports)) {
+      pushDataLayerGoogle(
+        getReportsNRFAnalyticsGoogle(searchParams?.reports.value)
+      );
+    }
 
-  //  const dateFilters = Object.entries(filtersRefs?.current).filter(
-  //    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
-  //  );
+    // Check if the search filter is not empty and send corresponding GTM data
+    if (isSearchFilterNotEmpty(searchParams?.search)) {
+      pushDataLayerGoogle(
+        getSearchNRFAnalyticsGoogle(searchParams?.search?.field)
+      );
+    }
 
-  //  if (filtersStatusAndType !== '' || dateFilters.length > 0) {
-  //    pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
-  //  }
-  //};
+    // Check if any filters are applied and send corresponding GTM data
+    if (isFilterNotEmpty(searchParams?.filters)) {
+      pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
+    }
+  };
 
   /**
    * Fetches the count of items and calculates the total number of pages.
@@ -318,13 +335,19 @@ function OrdersTrackingGrid(props) {
           setMainGridRowsTotalCounter(pageNumber === 1 ? totalCounter : null);
 
           // Hide loading overlay and handle no row message
-          if (totalCounter == 0)
+          if (totalCounter == 0) {
             gridRef.current.handleNoRowMsg(totalCounter);
+            sendGTMNotResultFound();
+          }
           else
             gridRef.current.api.hideOverlay();
 
           // Notify that data loading is complete
           setIsLoading(false);
+        })
+        .catch(function (err) {
+          console.log('OrdersTrackingGrid::loadGridData::fetch::error');
+          sendGTMNotResultFound();
         });
     }
   };
@@ -369,16 +392,39 @@ function OrdersTrackingGrid(props) {
   };
 
   /**
+   * Displays a toaster notification with a message based on the download status.
+   * 
+   * @param {boolean} status - The status of the operation, where `true` indicates success and `false` indicates failure.
+   * @param {string} success - The message to display when the operation is successful.
+   * @param {string} failed - The message to display when the operation fails.
+   */
+  const showToasterWithMessage = (status, success, failed) => {
+    const toaster = {
+      isOpen: true, // Indicates that the toaster notification should be displayed.
+      origin: 'downloadAllFile', // The origin or source of the notification.
+      isAutoClose: true, // Determines if the toaster should automatically close after a certain time.
+      message: status ? success : failed, // Sets the message based on the operation status.
+      isSuccess: status // Boolean indicating whether the operation was successful.
+    };
+
+    setCustomState({ key: 'toaster', value: { ...toaster } }); // Updates the state to trigger the display of the toaster notification.
+  };
+
+  /**
    * Downloads a file based on the provided parameters.
    * @param {string} flyoutType - The type of the flyout
    * @param {string} orderId - The ID of the order.
    * @param {string} selectedId - The ID of the selected file/item.
    */
-  const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
+  const downloadFileBlob = async (translations, flyoutType, orderId, selectedId) => {
     console.log('OrdersTrackingGrid::downloadFileBlob::' + orderId);
 
+    showToasterWithMessage(true, translations?.Message_Download_Started);
+
     // Call the downloadFile function with the necessary parameters to download the file.
-    await downloadFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
+    const status = await downloadFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
+
+    showToasterWithMessage(status, translations?.Message_Download_Success, translations?.Message_Download_Failed);
   };
 
   /**
@@ -387,11 +433,15 @@ function OrdersTrackingGrid(props) {
    * @param {string} orderId - The ID of the order.
    * @param {string} selectedId - The ID of the selected file/item.
    */
-  const openFilePdf = async (flyoutType, orderId, selectedId) => {
-    console.log('OrdersTrackingDetail::openFilePdf::' + orderId);
+  const openFilePdf = async (translations, flyoutType, orderId, selectedId) => {
+    console.log('OrdersTrackingGrid::openFilePdf::' + orderId);
+
+    showToasterWithMessage(true, translations?.Message_Download_Started);
 
     // Call the openFile function with the necessary parameters to open the file in PDF format.
-    await openFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
+    const status = await openFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
+
+    showToasterWithMessage(status, translations?.Message_Download_Success, translations?.Message_Download_Failed);
   };
 
   const fetchFiltersRefinements = async () => {
@@ -435,7 +485,7 @@ function OrdersTrackingGrid(props) {
    * This function is called when the header is first initialized.
    */
   const onHeaderInit = () => {
-    console.log('OrdersTrackingDetail::onHeaderInit');
+    console.log('OrdersTrackingGrid::onHeaderInit');
 
     // If no onQueryChange event has been triggered at startup
     // (meaning there were no specified filters), trigger the onQueryChange event
@@ -446,7 +496,6 @@ function OrdersTrackingGrid(props) {
       onQueryChanged(searchParams);
     }
   }
-
 
   useEffect(async () => {
     console.log('OrdersTrackingGrid::useEffect');
@@ -484,7 +533,7 @@ function OrdersTrackingGrid(props) {
   }, [isGridReady, triggerLoadGridData]); // Dependencies array to re-run the effect when isGridReady or triggerLoadGridData change
 
   useEffect(() => {
-    console.log('OrdersTrackingDetail::useEffect::paginationAndSorting');
+    console.log('OrdersTrackingGrid::useEffect::paginationAndSorting');
 
     // Check if paginationAndSorting exists in searchParams
     if (searchParams?.paginationAndSorting) {
@@ -576,14 +625,11 @@ function OrdersTrackingGrid(props) {
           mapServiceData={mapServiceData}
           onSortChanged={onSortChanged}
           onAfterGridInit={onAfterGridInit}
-          responseError={responseError}
           DetailRenderers={(props) => (
             <OrderDetailsRenderers
               {...props}
               config={gridConfig}
-              openFilePdf={(flyoutType, orderId, selectedId) =>
-                openFilePdf(flyoutType, orderId, selectedId)
-              }
+              openFilePdf={openFilePdf}
               rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
               newItem={newItem}
               onQueryChanged={onQueryChanged}

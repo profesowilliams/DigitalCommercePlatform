@@ -34,24 +34,16 @@ const Flyouts = ({
         gridConfig={gridConfig}
         dNotesFlyout={gridConfig.dNotesFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        downloadAllFile={(flyoutType, orderId, selectedId) =>
-          downloadAllFile(flyoutType, orderId, selectedId)
-        }
-        openFilePdf={(flyoutType, orderId, selectedId) =>
-          openFilePdf(flyoutType, orderId, selectedId)
-        }
+        downloadAllFile={downloadAllFile}
+        openFilePdf={openFilePdf}
       />
       <InvoicesFlyout
         store={useOrderTrackingStore}
         gridConfig={gridConfig}
         invoicesFlyout={gridConfig.invoicesFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        downloadAllFile={(flyoutType, orderId, selectedId) =>
-          downloadAllFile(flyoutType, orderId, selectedId)
-        }
-        openFilePdf={(flyoutType, orderId, selectedId) =>
-          openFilePdf(flyoutType, orderId, selectedId)
-        }
+        downloadAllFile={downloadAllFile}
+        openFilePdf={openFilePdf}
       />
       <OrderModificationFlyout
         store={useOrderTrackingStore}

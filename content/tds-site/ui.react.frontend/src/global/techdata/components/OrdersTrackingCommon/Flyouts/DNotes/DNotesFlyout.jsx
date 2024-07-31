@@ -21,15 +21,16 @@ function DNotesFlyout({
   downloadAllFile,
   openFilePdf,
 }) {
-  // Retrieve delivery notes flyout configuration from the store
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const translations = uiTranslations?.['OrderTracking.Common.DnoteFlyout'];
+  const errorMessagesTranslations = uiTranslations?.['OrderTracking.Common.ErrorMessages'];
+
   const dNoteFlyoutConfig = useOrderTrackingStore((st) => st.dNotesFlyout);
   const effects = useOrderTrackingStore((st) => st.effects);
   const [showTooltip, setShowTooltip] = useState(false);
   const [selected, setSelected] = useState([]);
   const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
-  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
-  const translations = uiTranslations?.['OrderTracking.Common.DnoteFlyout'];
-
+  
   // Define the columns for the delivery notes table
   const columnList = [
     {
@@ -89,9 +90,9 @@ function DNotesFlyout({
   const handleDownload = () => {
     closeFlyout();
     if (selected.length === 1) {
-      return openFilePdf('DNote', config?.id, selected);
+      return openFilePdf(errorMessagesTranslations, 'DNote', config?.id, selected);
     } else if (selected.length > 1) {
-      return downloadAllFile('DNote', config?.id, selected);
+      return downloadAllFile(errorMessagesTranslations, 'DNote', config?.id, selected);
     }
   };
 
@@ -101,7 +102,7 @@ function DNotesFlyout({
    * @param {string} clickedId - The ID of the delivery note to download.
    */
   const handleSingleDownload = (clickedId) => {
-    openFilePdf('DNote', config?.id, clickedId);
+    openFilePdf(errorMessagesTranslations, 'DNote', config?.id, clickedId);
   };
 
   /**

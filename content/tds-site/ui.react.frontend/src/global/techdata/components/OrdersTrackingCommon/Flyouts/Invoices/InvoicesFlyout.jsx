@@ -21,14 +21,15 @@ function InvoicesFlyout({
   downloadAllFile,
   openFilePdf,
 }) {
-  // Retrieve invoicesFlyout configuration from the store
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const translations = uiTranslations?.['OrderTracking.Common.InvoicesFlyout'];
+  const errorMessagesTranslations = uiTranslations?.['OrderTracking.Common.ErrorMessages'];
+
   const invoicesFlyoutConfig = useOrderTrackingStore((st) => st.invoicesFlyout);
   const [showTooltip, setShowTooltip] = useState(false);
   const effects = useOrderTrackingStore((st) => st.effects);
   const [selected, setSelected] = useState([]);
   const [invoicesResponse, setInvoicesResponse] = useState(null);
-  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
-  const translations = uiTranslations?.['OrderTracking.Common.InvoicesFlyout'];
 
   // Define the columns for the invoices table
   const columnList = [
@@ -89,9 +90,9 @@ function InvoicesFlyout({
   const handleDownload = () => {
     closeFlyout();
     if (selected.length === 1) {
-      return openFilePdf('Invoice', config?.id, selected);
+      return openFilePdf(errorMessagesTranslations, 'Invoice', config?.id, selected);
     } else if (selected.length > 1) {
-      return downloadAllFile('Invoice', config?.id, selected);
+      return downloadAllFile(errorMessagesTranslations, 'Invoice', config?.id, selected);
     }
   };
 
@@ -101,7 +102,7 @@ function InvoicesFlyout({
    * @param {string} clickedId - The ID of the invoice to download.
    */
   const handleSingleDownload = (clickedId) => {
-    openFilePdf('Invoice', config?.id, clickedId);
+    openFilePdf(errorMessagesTranslations, 'Invoice', config?.id, clickedId);
   };
 
   /**

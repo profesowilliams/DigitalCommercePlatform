@@ -14,13 +14,16 @@ export async function downloadFile(baseUrl, flyoutType, orderId, selectedId) {
     if (response?.status === 200) {
       const successCounter = response?.headers['ga-download-documents-success'];
       pushSuccessDownloadGoogleAnalytics(flyoutType, false, successCounter, orderId, mapIds);
+      return true;
     } else if (response?.status === 204) {
       const failCounter = response?.headers['ga-download-documents-fail'];
       pushFailedDownloadGoogleAnalytics(flyoutType, false, failCounter, orderId, mapIds);
+      return false;
     }
   } catch (error) {
     pushFailedDownloadGoogleAnalytics(flyoutType, false, 1, orderId, mapIds);
     console.log('OrdersTrackingDetail::downloadFileBlob::' + error);
+    return false;
   }
 };
 
@@ -36,12 +39,15 @@ export async function openFile(baseUrl, flyoutType, orderId, selectedId) {
     if (response?.status === 200) {
       const successCounter = response?.headers['ga-download-documents-success'];
       pushSuccessDownloadGoogleAnalytics(flyoutType, false, successCounter, orderId, selectedId);
+      return true;
     } else if (response?.status === 204) {
       const failCounter = response?.headers['ga-download-documents-fail'];
       pushFailedDownloadGoogleAnalytics(flyoutType, false, failCounter, orderId, selectedId);
+      return false;
     }
   } catch (error) {
     pushFailedDownloadGoogleAnalytics(flyoutType, false, 1, orderId, selectedId);
     console.log('OrdersTrackingDetail::openFile::' + error);
+    return false;
   }
 }

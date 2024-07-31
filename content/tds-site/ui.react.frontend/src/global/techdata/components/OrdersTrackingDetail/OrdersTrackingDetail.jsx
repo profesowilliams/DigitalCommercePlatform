@@ -42,8 +42,7 @@ function OrdersTrackingDetail(props) {
     ensureDomOrder: true,
   };
   const { noAccessProps } = componentProps;
-  const { setUserData, hasRights, setTranslations } =
-    useOrderTrackingStore((st) => st.effects);
+  const { setCustomState, setUserData, hasRights, setTranslations } = useOrderTrackingStore((st) => st.effects);
 
   const userData = useOrderTrackingStore((st) => st.userData);
   const hasCanViewOrdersRights = hasRights('CanViewOrders');
@@ -88,16 +87,39 @@ function OrdersTrackingDetail(props) {
   };
 
   /**
+   * Displays a toaster notification with a message based on the download status.
+   * 
+   * @param {boolean} status - The status of the operation, where `true` indicates success and `false` indicates failure.
+   * @param {string} success - The message to display when the operation is successful.
+   * @param {string} failed - The message to display when the operation fails.
+   */
+  const showToasterWithMessage = (status, success, failed) => {
+    const toaster = {
+      isOpen: true, // Indicates that the toaster notification should be displayed.
+      origin: 'downloadAllFile', // The origin or source of the notification.
+      isAutoClose: true, // Determines if the toaster should automatically close after a certain time.
+      message: status ? success : failed, // Sets the message based on the operation status.
+      isSuccess: status // Boolean indicating whether the operation was successful.
+    };
+
+    setCustomState({ key: 'toaster', value: { ...toaster } }); // Updates the state to trigger the display of the toaster notification.
+  };
+
+  /**
    * Downloads a file based on the provided parameters.
    * @param {string} flyoutType - The type of the flyout
    * @param {string} orderId - The ID of the order.
    * @param {string} selectedId - The ID of the selected file/item.
    */
-  const downloadAllFile = async (flyoutType, orderId, selectedId) => {
+  const downloadAllFile = async (translations, flyoutType, orderId, selectedId) => {
     console.log('OrdersTrackingDetail::downloadFileBlob::' + orderId);
 
+    showToasterWithMessage(true, translations?.Message_Download_Started);
+
     // Call the downloadFile function with the necessary parameters to download the file.
-    await downloadFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
+    const status = await downloadFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
+
+    showToasterWithMessage(status, translations?.Message_Download_Success, translations?.Message_Download_Failed);
   };
 
   /**
@@ -106,11 +128,15 @@ function OrdersTrackingDetail(props) {
    * @param {string} orderId - The ID of the order.
    * @param {string} selectedId - The ID of the selected file/item.
    */
-  const openFilePdf = async (flyoutType, orderId, selectedId) => {
+  const openFilePdf = async (translations, flyoutType, orderId, selectedId) => {
     console.log('OrdersTrackingDetail::openFilePdf::' + orderId);
 
+    showToasterWithMessage(true, translations?.Message_Download_Started);
+
     // Call the openFile function with the necessary parameters to open the file in PDF format.
-    await openFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
+    const status = await openFile(componentProps.uiCommerceServiceDomain, flyoutType, orderId, selectedId);
+
+    showToasterWithMessage(status, translations?.Message_Download_Success, translations?.Message_Download_Failed);
   };
 
   const handleAddNewItem = (item) => {

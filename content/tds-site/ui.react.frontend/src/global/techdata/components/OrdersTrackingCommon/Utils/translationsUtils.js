@@ -4,6 +4,7 @@ import { usGet } from "../../../../../utils/api";
 
 // Define the dictionaries that need to be translated
 const translationDictionaries = [
+  'OrderTracking.Common.ErrorMessages',
   'OrderTracking.Common.InvoicesFlyout',
   'OrderTracking.Common.DnoteFlyout'
 ];
