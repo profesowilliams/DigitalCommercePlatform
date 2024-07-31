@@ -24,6 +24,10 @@ export function getFetchExportUrl(baseUrl, searchParams) {
     }
   }
 
+  if (searchParams.reports?.value) {
+    requestUrl.searchParams.set('reportName', searchParams.reports.value);
+  }
+
   if (searchParams?.search?.field &&
     searchParams?.search?.value &&
     searchParams?.search?.gtmField) {
