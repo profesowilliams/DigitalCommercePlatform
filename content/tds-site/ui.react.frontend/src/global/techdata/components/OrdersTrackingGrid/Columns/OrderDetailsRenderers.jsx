@@ -12,13 +12,17 @@ function OrderDetailsRenderers({
 }) {
   console.log('OrderDetailsRenderers::init');
 
+  const detailRender = useOrderTrackingStore(
+    (state) => state.filter.detailRender
+  );
+
   const mainGridRowsTotalCounter = useOrderTrackingStore(
     (state) => state.mainGridRowsTotalCounter
   );
 
   return (
     <>
-      {(mainGridRowsTotalCounter === 1) && (
+      {(mainGridRowsTotalCounter === 1 || detailRender === 'primary') && (
         <DropdownOrderDetails
           data={data}
           aemConfig={config}

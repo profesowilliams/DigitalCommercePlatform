@@ -21,12 +21,15 @@ const NewlyAddedLineItem = ({
 
   useEffect(async () => {
     try {
+      const { price, totalPriceFormatted, currency } =
+        result?.data?.content?.priceData || {};
+
       const result = await usPost(`${domain}/v2/Price/GetPriceForProduct`, {
         productId: item?.id,
         quantity: quantity,
+        currency
       });
-      const { price, totalPriceFormatted, currency } =
-        result?.data?.content?.priceData || {};
+
       setPrice(totalPriceFormatted);
       setCurrency(currency);
       onChange(index, quantity, price);
