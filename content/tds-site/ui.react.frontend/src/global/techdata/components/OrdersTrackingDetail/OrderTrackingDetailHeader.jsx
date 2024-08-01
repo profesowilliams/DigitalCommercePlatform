@@ -113,6 +113,7 @@ const OrderTrackingDetailHeader = ({
         componentProps={componentProps}
         onProductChange={onProductChange}
         isLoading={isLoading}
+        setReleaseOrderShow={setReleaseOrderShow}
       />
       {infoBoxEnable && (
         <MigrationInfoBox
@@ -123,18 +124,9 @@ const OrderTrackingDetailHeader = ({
         />
       )}
       <div className="info-container">
-        <SoldToCard
-          orderData={orderData}
-          isLoading={isLoading}
-        />
-        <AcknowledgementCard
-          orderData={orderData}
-          isLoading={isLoading}
-        />
-        <ContactCard
-          orderData={orderData}
-          isLoading={isLoading}
-        />
+        <SoldToCard orderData={orderData} isLoading={isLoading} />
+        <AcknowledgementCard orderData={orderData} isLoading={isLoading} />
+        <ContactCard orderData={orderData} isLoading={isLoading} />
       </div>
       <OrderReleaseModal
         open={releaseOrderShow}

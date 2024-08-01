@@ -14,7 +14,8 @@ const HeaderContainer = ({
   openFilePdf,
   componentProps,
   onProductChange,
-  isLoading
+  isLoading,
+  setReleaseOrderShow,
 }) => {
   const labels = config?.actionLabels;
 
@@ -33,7 +34,8 @@ const HeaderContainer = ({
   );
 
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
-  const [isDeliveryNoteDownloadable, setIsDeliveryNoteDownloadable] = useState(false);
+  const [isDeliveryNoteDownloadable, setIsDeliveryNoteDownloadable] =
+    useState(false);
   const [isInvoiceDownloadable, setIsInvoiceDownloadable] = useState(false);
   const [menuActionsItems, setMenuActionsItems] = useState([]);
 
@@ -49,21 +51,31 @@ const HeaderContainer = ({
 
   const handleDownloadDNote = () => {
     console.log('HeaderContainer::handleDownloadDNote');
-    if (isDeliveryNoteDownloadable && content?.orderNumber && content?.deliveryNotes[0]?.id) {
+    if (
+      isDeliveryNoteDownloadable &&
+      content?.orderNumber &&
+      content?.deliveryNotes[0]?.id
+    ) {
       openFilePdf('DNote', content.orderNumber, content.deliveryNotes[0].id);
     }
   };
 
   const handleDownloadInvoice = () => {
     console.log('HeaderContainer::handleDownloadInvoice');
-    if (isInvoiceDownloadable && content?.orderNumber && content?.invoices[0]?.id) {
+    if (
+      isInvoiceDownloadable &&
+      content?.orderNumber &&
+      content?.invoices[0]?.id
+    ) {
       openFilePdf('Invoice', content.orderNumber, content?.invoices[0].id);
     }
   };
 
   const triggerOrderModificationFlyout = () => {
     console.log('HeaderContainer::triggerOrderModificationFlyout');
-    content?.paymentDetails?.currency && content?.orderEditable === true && content?.orderNumber &&
+    content?.paymentDetails?.currency &&
+      content?.orderEditable === true &&
+      content?.orderNumber &&
       setCustomState({
         key: 'orderModificationFlyout',
         value: {
@@ -77,33 +89,43 @@ const HeaderContainer = ({
 
   const triggerDNotesFlyout = () => {
     console.log('HeaderContainer::triggerDNotesFlyout');
-    content?.orderNumber && content?.customerPO && content?.deliveryNotes && setCustomState({
-      key: 'dNotesFlyout',
-      value: {
-        data: content.deliveryNotes,
-        show: true,
-        id: content.orderNumber,
-        reseller: content.customerPO,
-      },
-    });
+    content?.orderNumber &&
+      content?.customerPO &&
+      content?.deliveryNotes &&
+      setCustomState({
+        key: 'dNotesFlyout',
+        value: {
+          data: content.deliveryNotes,
+          show: true,
+          id: content.orderNumber,
+          reseller: content.customerPO,
+        },
+      });
   };
 
   const triggerInvoicesFlyout = () => {
     console.log('HeaderContainer::invoicesFlyout');
-    content?.orderNumber && content?.customerPO && content?.invoices && setCustomState({
-      key: 'invoicesFlyout',
-      value: {
-        data: content.invoices,
-        show: true,
-        id: content.orderNumber,
-        reseller: content.customerPO
-      },
-    });
+    content?.orderNumber &&
+      content?.customerPO &&
+      content?.invoices &&
+      setCustomState({
+        key: 'invoicesFlyout',
+        value: {
+          data: content.invoices,
+          show: true,
+          id: content.orderNumber,
+          reseller: content.customerPO,
+        },
+      });
   };
 
   const triggerExport = () => {
     console.log('HeaderContainer::triggerExport');
-    handleDownloadExcelExport({ translations: exportTranslations, config, effects });
+    handleDownloadExcelExport({
+      translations: exportTranslations,
+      config,
+      effects,
+    });
   };
 
   const triggerXMLMessage = async () => {
@@ -135,36 +157,82 @@ const HeaderContainer = ({
 
     if (!content) return;
 
-    const firstDeliveryNote = content.deliveryNotes ? content.deliveryNotes[0] : []
+    const firstDeliveryNote = content.deliveryNotes
+      ? content.deliveryNotes[0]
+      : [];
     setIsDeliveryNoteDownloadable(firstDeliveryNote?.canDownloadDocument);
 
     const firstInvoice = content.invoices ? content.invoices[0] : [];
     setIsInvoiceDownloadable(firstInvoice?.canDownloadDocument);
 
-    console.log('HeaderContainer::useEffect::content::currency[' + content?.paymentDetails?.currency + ']');
+    console.log(
+      'HeaderContainer::useEffect::content::currency[' +
+        content?.paymentDetails?.currency +
+        ']'
+    );
 
-    const areDeliveryNotesAvailable = content?.orderNumber && content?.deliveryNotes[0]?.id && (content.deliveryNotes?.length > 1 || (content.deliveryNotes?.length === 1 && firstDeliveryNote?.canDownloadDocument));
+    const areDeliveryNotesAvailable =
+      content?.orderNumber &&
+      content?.deliveryNotes[0]?.id &&
+      (content.deliveryNotes?.length > 1 ||
+        (content.deliveryNotes?.length === 1 &&
+          firstDeliveryNote?.canDownloadDocument));
     const areInvoicesAvailable =
-        content?.orderNumber &&
-        content?.invoices[0]?.id &&
+      content?.orderNumber &&
+      content?.invoices[0]?.id &&
       (content.invoices?.length > 1 ||
-      (content.invoices?.length === 1 &&
-        firstInvoice?.canDownloadDocument));
-    const isReleaseTheOrderAvailable = hasOrderModificationRights && content.shipComplete === true && content.status !== 'Completed' && content.orderEditable === true;
+        (content.invoices?.length === 1 && firstInvoice?.canDownloadDocument));
+    const isReleaseTheOrderAvailable =
+      hasOrderModificationRights &&
+      content.shipComplete === true &&
+      content.status !== 'Completed' &&
+      content.orderEditable === true;
     const areSerialNumbersAvailable = content.serialsAny === true;
-    const areXMLMessageAvailable = content.xmlAvailable === true && userData?.isInternalUser;
-    const isModifiable = hasOrderModificationRights && content.orderEditable === true;
+    const areXMLMessageAvailable =
+      content.xmlAvailable === true && userData?.isInternalUser;
+    const isModifiable =
+      hasOrderModificationRights && content.orderEditable === true;
     const hasMultipleDNotes = content?.deliveryNotes?.length > 1;
     const hasMultipleInvoices = content?.invoices?.length > 1;
 
-    console.log('HeaderContainer::useEffect::content::areDeliveryNotesAvailable[' + areDeliveryNotesAvailable + ']');
-    console.log('HeaderContainer::useEffect::content::areInvoicesAvailable[' + areInvoicesAvailable + ']');
-    console.log('HeaderContainer::useEffect::content::isReleaseTheOrderAvailable[' + isReleaseTheOrderAvailable + ']');
-    console.log('HeaderContainer::useEffect::content::areSerialNumbersAvailable[' + areSerialNumbersAvailable + ']');
-    console.log('HeaderContainer::useEffect::content::areXMLMessageAvailable[' + areXMLMessageAvailable + ']');
-    console.log('HeaderContainer::useEffect::content::isModifiable[' + isModifiable + ']');
-    console.log('HeaderContainer::useEffect::content::hasMultipleDNotes[' + hasMultipleDNotes + ']');
-    console.log('HeaderContainer::useEffect::content::hasMultipleInvoices[' + hasMultipleInvoices + ']');
+    console.log(
+      'HeaderContainer::useEffect::content::areDeliveryNotesAvailable[' +
+        areDeliveryNotesAvailable +
+        ']'
+    );
+    console.log(
+      'HeaderContainer::useEffect::content::areInvoicesAvailable[' +
+        areInvoicesAvailable +
+        ']'
+    );
+    console.log(
+      'HeaderContainer::useEffect::content::isReleaseTheOrderAvailable[' +
+        isReleaseTheOrderAvailable +
+        ']'
+    );
+    console.log(
+      'HeaderContainer::useEffect::content::areSerialNumbersAvailable[' +
+        areSerialNumbersAvailable +
+        ']'
+    );
+    console.log(
+      'HeaderContainer::useEffect::content::areXMLMessageAvailable[' +
+        areXMLMessageAvailable +
+        ']'
+    );
+    console.log(
+      'HeaderContainer::useEffect::content::isModifiable[' + isModifiable + ']'
+    );
+    console.log(
+      'HeaderContainer::useEffect::content::hasMultipleDNotes[' +
+        hasMultipleDNotes +
+        ']'
+    );
+    console.log(
+      'HeaderContainer::useEffect::content::hasMultipleInvoices[' +
+        hasMultipleInvoices +
+        ']'
+    );
 
     const actionsItems = [
       {
@@ -181,17 +249,17 @@ const HeaderContainer = ({
       },
       ...(orderModificationFlag
         ? [
-          {
-            condition: isReleaseTheOrderAvailable,
-            label: labels?.releaseTheOrder,
-            onClick: () => setReleaseOrderShow(true),
-          },
-          {
-            condition: isModifiable,
-            label: labels?.actionModifyOrder,
-            onClick: triggerOrderModificationFlyout,
-          },
-        ]
+            {
+              condition: isReleaseTheOrderAvailable,
+              label: labels?.releaseTheOrder,
+              onClick: () => setReleaseOrderShow(true),
+            },
+            {
+              condition: isModifiable,
+              label: labels?.actionModifyOrder,
+              onClick: triggerOrderModificationFlyout,
+            },
+          ]
         : []),
       {
         condition: areSerialNumbersAvailable,
@@ -209,7 +277,6 @@ const HeaderContainer = ({
     areXMLMessageAvailable && actionsItems.push(XMLelement);
 
     setMenuActionsItems(actionsItems);
-
   }, [content]);
 
   return (
