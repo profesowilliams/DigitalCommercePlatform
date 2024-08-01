@@ -54,9 +54,9 @@ public class ApjPageChangesProcess implements WorkflowProcess {
                 boolean hasStructuralChanges = hasStructuralChanges(currentVersion, lastActivatedVersion);
 
                 if (hasStructuralChanges) {
-                    workItem.getWorkflow().getMetaDataMap().put(REQUIRES_VALIDATION, STRUCTURAL_CHANGES);
+                    workItem.getWorkflowData().getMetaDataMap().put(REQUIRES_VALIDATION, STRUCTURAL_CHANGES);
                 } else {
-                    workItem.getWorkflow().getMetaDataMap().put(REQUIRES_VALIDATION, TEXT_CHANGES);
+                    workItem.getWorkflowData().getMetaDataMap().put(REQUIRES_VALIDATION, TEXT_CHANGES);
                 }
             }
         } catch (Exception e) {

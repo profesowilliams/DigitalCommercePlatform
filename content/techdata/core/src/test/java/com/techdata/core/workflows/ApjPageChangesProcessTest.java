@@ -2,7 +2,6 @@ package com.techdata.core.workflows;
 
 import com.adobe.granite.workflow.WorkflowSession;
 import com.adobe.granite.workflow.exec.WorkItem;
-import com.adobe.granite.workflow.exec.Workflow;
 import com.adobe.granite.workflow.exec.WorkflowData;
 import com.adobe.granite.workflow.metadata.MetaDataMap;
 import com.day.cq.wcm.api.Page;
@@ -94,9 +93,6 @@ public class ApjPageChangesProcessTest {
     private WorkflowData workflowData;
 
     @Mock
-    private Workflow workflow;
-
-    @Mock
     private MetaDataMap metaDataMap;
 
     private static final String PAGE_PATH = UUID.randomUUID().toString();
@@ -105,8 +101,6 @@ public class ApjPageChangesProcessTest {
 
     @BeforeEach
     public void setUp() throws RepositoryException {
-
-
         when(workflowSession.adaptTo(ResourceResolver.class)).thenReturn(resourceResolver);
         when(resourceResolver.getResource(anyString())).thenReturn(pageResource);
         when(pageResource.isResourceType(Resource.RESOURCE_TYPE_NON_EXISTING)).thenReturn(false);
@@ -117,8 +111,7 @@ public class ApjPageChangesProcessTest {
         when(session.getWorkspace()).thenReturn(mock(Workspace.class));
         when(session.getWorkspace().getVersionManager()).thenReturn(versionManager);
         when(workItem.getWorkflowData()).thenReturn(workflowData);
-        when(workItem.getWorkflow()).thenReturn(workflow);
-        when(workflow.getMetaDataMap()).thenReturn(metaDataMap);
+        when(workflowData.getMetaDataMap()).thenReturn(metaDataMap);
     }
 
     @Test
@@ -148,7 +141,7 @@ public class ApjPageChangesProcessTest {
 
         apjPageChangesProcess.execute(workItem, workflowSession, args);
 
-        verify(workItem.getWorkflow().getMetaDataMap()).put(REQUIRES_VALIDATION, TEXT_CHANGES);
+        verify(workItem.getWorkflowData().getMetaDataMap()).put(REQUIRES_VALIDATION, TEXT_CHANGES);
     }
 
     @Test
@@ -189,6 +182,6 @@ public class ApjPageChangesProcessTest {
 
         apjPageChangesProcess.execute(workItem, workflowSession, args);
 
-        verify(workItem.getWorkflow().getMetaDataMap()).put(REQUIRES_VALIDATION, STRUCTURAL_CHANGES);
+        verify(workItem.getWorkflowData().getMetaDataMap()).put(REQUIRES_VALIDATION, STRUCTURAL_CHANGES);
     }
 }
