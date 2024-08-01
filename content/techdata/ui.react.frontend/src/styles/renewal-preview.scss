@@ -24,13 +24,13 @@
       line-height: 33px;
     }
     .details-price-level {
-      color: map-get($color-palette, 'cool-gray-10');
+      color: map-get($color-palette, 'charcoal');
       font-family: inherit;
       padding-left: 1.25rem;
-      font-size: 0.875rem;
+      font-size: 16px;
       font-style: normal;
       font-weight: 400;
-      line-height: 1.125rem;
+      line-height: 24px;
     }
   }
   .loader-rotate {
