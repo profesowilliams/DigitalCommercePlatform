@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Grid from '../../../OrdersTrackingCommon/Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from '../NotShippedTabGrid/buildColumnDefinitions';
-import { getDictionaryValueOrKey } from '../../../../../../utils/utils';
 import LineColumn from './Columns/LineColumn';
 import ItemColumn from './Columns/ItemColumn';
 import QuantityAndDeliveryEstimateColumn from './Columns/QuantityAndDeliveryEstimateColumn';
@@ -29,6 +28,10 @@ function NotShippedTabGrid({
   newItem,
   onQueryChanged,
 }) {
+  // Fetch translations from the order tracking store
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const translations = uiTranslations?.['OrderTracking.MainGrid.Expand.NotShippedTab'];
+
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -73,10 +76,10 @@ function NotShippedTabGrid({
   const CustomHeaderComponent = () => (
     <div className="not-shipped-header-end">
       <div className="not-shipped-header-end__qty-column">
-        {getDictionaryValueOrKey(nqty)}
+        {translations?.Column_NotShippedQuantity || 'QTY'}
       </div>
       <div className="not-shipped-header-end__delivery-column">
-        {getDictionaryValueOrKey(deliveryEstimate)}
+        {translations?.DeliveryEstimate || 'DELIVERY ESTIMATE'}
         <GreenInfoIcon onClick={() => setOpenStatusesModal(true)} />
       </div>
     </div>
@@ -85,19 +88,19 @@ function NotShippedTabGrid({
   const columnDefinitionsOverride = [
     {
       field: 'lineNumber',
-      headerName: getDictionaryValueOrKey(lineNumber),
+      headerName: translations?.Column_LineNumber || 'LINE',
       cellRenderer: ({ data }) => <LineColumn line={data} />,
       width: gridColumnWidths.lineNumber,
     },
     {
       field: 'item',
-      headerName: getDictionaryValueOrKey(item),
+      headerName: translations?.Column_Item || 'ITEM',
       cellRenderer: ({ data }) => <ItemColumn line={data} />,
       width: gridColumnWidths.item,
     },
     {
       field: 'pnsku',
-      headerName: getDictionaryValueOrKey(pnsku),
+      headerName: translations?.Column_PnSku || 'PN/SKU',
       cellRenderer: ({ data }) => <PnSkuColumn line={data} />,
       width: gridColumnWidths.pnsku,
     },
@@ -215,7 +218,7 @@ function NotShippedTabGrid({
     <section>
       <div className="order-line-details__content__title">
         <span className="order-line-details__content__title-text">
-          {getDictionaryValueOrKey(config?.orderLineDetails?.notShippedLabel)}
+          {translations?.Title || 'Not Shipped'}
         </span>
         <span>
           {isReleaseOrderButtonVisible && (
@@ -223,9 +226,7 @@ function NotShippedTabGrid({
               className="order-line-details__content__release-button"
               onClick={() => setReleaseOrderShow(true)}
             >
-              {getDictionaryValueOrKey(
-                config?.orderLineDetails?.releaseButtonLabel
-              )}
+              {translations?.Button_Release || 'Release the order'}
             </button>
           )}
           {isOrderModificationButtonVisible && (
@@ -233,9 +234,7 @@ function NotShippedTabGrid({
               className="order-line-details__content__title-button"
               onClick={handleOrderModification}
             >
-              {getDictionaryValueOrKey(
-                config?.orderLineDetails?.modifyEligibleItemsLabel
-              )}
+              {translations?.Button_ModifyEligibleItems || 'Modify eligible items'}
             </button>
           )}
         </span>
@@ -276,4 +275,5 @@ function NotShippedTabGrid({
     </section>
   );
 }
+
 export default NotShippedTabGrid;

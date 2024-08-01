@@ -1,4 +1,5 @@
 import React from 'react';
+
 function QuantityColumn({ line }) {
   return (
     <div>
@@ -6,4 +7,5 @@ function QuantityColumn({ line }) {
     </div>
   );
 }
+
 export default QuantityColumn;

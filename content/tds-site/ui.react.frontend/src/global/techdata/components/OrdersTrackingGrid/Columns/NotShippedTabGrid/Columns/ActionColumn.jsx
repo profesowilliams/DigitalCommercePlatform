@@ -1,5 +1,6 @@
 import React from 'react';
 import { EllipsisIcon } from '../../../../../../../fluentIcons/FluentIcons';
+
 function ActionColumn({ line }) {
   const iconStyle = {
     color: '#21314D',
@@ -14,6 +15,7 @@ function ActionColumn({ line }) {
   };
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
+
   return (
     <div className="order-line-details__content__innerTableNotShipped__item-column">
       {line?.lineDetails?.map((el, index) => {
@@ -36,4 +38,5 @@ function ActionColumn({ line }) {
     </div>
   );
 }
+
 export default ActionColumn;

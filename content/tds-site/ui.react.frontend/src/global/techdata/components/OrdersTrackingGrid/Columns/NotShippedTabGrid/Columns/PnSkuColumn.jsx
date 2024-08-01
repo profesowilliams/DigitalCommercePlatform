@@ -1,4 +1,5 @@
 import React from 'react';
+
 function PnSkuColumn({ line }) {
   return (
     <div className="order-line-details__content__innerTableNotShipped__item-column">
@@ -11,4 +12,5 @@ function PnSkuColumn({ line }) {
     </div>
   );
 }
+
 export default PnSkuColumn;

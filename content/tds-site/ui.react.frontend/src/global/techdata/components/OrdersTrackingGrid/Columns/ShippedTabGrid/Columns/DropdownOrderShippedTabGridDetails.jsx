@@ -116,4 +116,5 @@ function DropdownOrderShippedTabGridDetails({ data }) {
 
   return <div>{data && <ProductTable data={data} />}</div>;
 }
+
 export default DropdownOrderShippedTabGridDetails;

@@ -1,10 +1,13 @@
 import React from 'react';
 import { useOrderTrackingStore } from '../../../../OrdersTrackingCommon/Store/OrderTrackingStore';
 import DropdownOrderShippedTabGridDetails from './DropdownOrderShippedTabGridDetails';
+
 function ShippedTabGridRenderers(props) {
+
   const detailRender = useOrderTrackingStore(
     (state) => state.filter.detailRender
   );
+
  return (
    <>
      {detailRender === 'primary' && (
@@ -16,4 +19,5 @@ function ShippedTabGridRenderers(props) {
    </>
  );
 }
+
 export default ShippedTabGridRenderers;

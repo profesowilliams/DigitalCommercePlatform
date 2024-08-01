@@ -17,6 +17,8 @@ const translationDictionaries = [
   'OrderTracking.MainGrid.SearchNoResult',
   'OrderTracking.MainGrid.ProductReplacmentFlyout',
   'OrderTracking.MainGrid.OrderStatuses',
+  'OrderTracking.MainGrid.Expand.NotShippedTab',
+  'OrderTracking.MainGrid.Expand.ShippedTab',
 ];
 
 /**

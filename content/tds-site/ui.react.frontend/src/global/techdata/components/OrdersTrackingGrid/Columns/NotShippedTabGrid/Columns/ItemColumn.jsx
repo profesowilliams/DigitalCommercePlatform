@@ -33,4 +33,5 @@ function ItemColumn({ line }) {
     </div>
   );
 }
+
 export default ItemColumn;

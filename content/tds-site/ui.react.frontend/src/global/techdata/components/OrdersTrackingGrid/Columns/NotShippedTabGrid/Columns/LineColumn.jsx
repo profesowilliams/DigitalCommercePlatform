@@ -1,4 +1,5 @@
 import React from 'react';
+
 function LineColumn({ line }) {
   return (
     <div>
@@ -6,4 +7,5 @@ function LineColumn({ line }) {
     </div>
   );
 }
+
 export default LineColumn;

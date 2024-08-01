@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Grid from '../../../OrdersTrackingCommon/Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from './buildColumnDefinitions';
-import { getDictionaryValueOrKey } from '../../../../../../utils/utils';
 import QuantityColumn from './Columns/QuantityColumn';
 import TrackColumn from './Columns/TrackColumn';
 import ShipDateColumn from './Columns/ShipDateColumn';
@@ -10,13 +9,27 @@ import DNoteColumn from './Columns/DNoteColumn';
 import InvoiceColumn from './Columns/InvoiceColumn';
 import DropdownColumn from './Columns/DropdownColumn';
 import ShippedTabGridRenderers from './Columns/ShippedTabGridRenderers';
-function ShippedTabGrid({
-  data,
-  gridProps,
-  openFilePdf,
-  reseller,
-  id,
-}) {
+import { useOrderTrackingStore } from '../../../OrdersTrackingCommon/Store/OrderTrackingStore';
+
+/**
+ * ShippedTabGrid component is responsible for rendering a grid that displays information 
+ * about shipped orders. It customizes column definitions and cell renderers based on the 
+ * provided data and configuration.
+ * 
+ * @param {Object} props - The component properties.
+ * @param {Array} props.data - The data to be displayed in the grid.
+ * @param {Object} props.gridProps - The configuration for the grid.
+ * @param {Function} props.openFilePdf - Function to handle opening PDF files for invoices or delivery notes.
+ * @param {string} props.reseller - Reseller information for the order.
+ * @param {string} props.id - The unique ID of the order.
+ * @returns {JSX.Element} The rendered component.
+ */
+function ShippedTabGrid({ data, gridProps, openFilePdf, reseller, id }) {
+  // Fetch translations from the order tracking store
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const translations = uiTranslations?.['OrderTracking.MainGrid.Expand.ShippedTab'];
+
+  // Define grid configuration
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -26,8 +39,8 @@ function ShippedTabGrid({
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const { shipDate, dnote, invoice, qty } =
-    config?.orderLineDetailsShippedColumnLabels || {};
+
+  // Define fixed grid column widths for different columns
   const gridColumnWidths = Object.freeze({
     dropdownArrow: '50px',
     shipDate: '185px',
@@ -36,6 +49,8 @@ function ShippedTabGrid({
     qty: '526px',
     track: '184px',
   });
+
+  // Override default column definitions with specific renderers and configurations
   const columnDefinitionsOverride = [
     {
       field: 'dropdownArrow',
@@ -52,13 +67,13 @@ function ShippedTabGrid({
     },
     {
       field: 'actualShipDateFormatted',
-      headerName: getDictionaryValueOrKey(shipDate),
+      headerName: translations?.Column_ShipDate || 'SHIP DATE',
       cellRenderer: ({ data }) => <ShipDateColumn line={data} />,
       width: gridColumnWidths.shipDate,
     },
     {
       field: 'deliveryNotes',
-      headerName: getDictionaryValueOrKey(dnote),
+      headerName: translations?.Column_DNote || 'D-NOTE',
       cellRenderer: ({ data }) => (
         <DNoteColumn line={data} id={id} openFilePdf={openFilePdf} />
       ),
@@ -66,7 +81,7 @@ function ShippedTabGrid({
     },
     {
       field: 'invoices',
-      headerName: getDictionaryValueOrKey(invoice),
+      headerName: translations?.Column_Invoice || 'INVOICE',
       cellRenderer: ({ data }) => (
         <InvoiceColumn
           line={data}
@@ -80,9 +95,9 @@ function ShippedTabGrid({
     },
     {
       field: 'quantity',
-      headerName: getDictionaryValueOrKey(qty),
+      headerName: translations?.Column_Qty || 'QTY',
       cellRenderer: ({ data }) => <QuantityColumn line={data} />,
-      width: gridColumnWidths.quantity,
+      width: gridColumnWidths.qty,
     },
     {
       field: 'track',
@@ -94,15 +109,17 @@ function ShippedTabGrid({
     },
   ];
 
+  // Memoize column definitions to prevent unnecessary recalculations
   const myColumnDefs = useMemo(
     () => buildColumnDefinitions(columnDefinitionsOverride),
     []
   );
+
   return (
     <section>
       <div className="order-line-details__content__title">
         <span className="order-line-details__content__title-text">
-          {getDictionaryValueOrKey(config?.orderLineDetails?.shippedLabel)}
+          {translations?.Title || 'Shipped'}
         </span>
       </div>
       <div className="order-line-details__content__grid">
@@ -119,4 +136,5 @@ function ShippedTabGrid({
     </section>
   );
 }
+
 export default ShippedTabGrid;
