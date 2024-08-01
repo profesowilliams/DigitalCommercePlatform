@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import NewItemForm from './NewItemForm';
 import NewlyAddedLineItem from './NewlyAddedLineItem';
 import LineItem from './LineItem';
@@ -74,6 +74,10 @@ function OrderModificationFlyout({
   const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${orderNumber}`;
   const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}${endpoints.orderModify}`;
   const enableErrorMessage = orderModificationResponse?.length === 0;
+
+  // Order currency (if not specified, the value will be taken from the default currency for the user's context)
+  const orderCurrency = useRef();
+
   const getOrderModificationData = async () => {
     try {
       const result = await usGet(requestURLData);
@@ -304,6 +308,7 @@ function OrderModificationFlyout({
       flyoutVisible &&
       getOrderModificationData()
         .then((result) => {
+          orderCurrency.current = result?.data?.content?.currency;
           setOrderModificationResponse(result?.data?.content?.items);
           setItems(result?.data?.content?.items);
           setItemsCopy(result?.data?.content?.items);
@@ -363,6 +368,7 @@ function OrderModificationFlyout({
                 onChange={handleChangeNewItem}
                 removeElement={() => handleRemoveNewItem(index)}
                 domain={gridConfig.uiCommerceServiceDomain}
+                orderCurrencyRef={orderCurrency}
               />
             ))}
           </ul>
