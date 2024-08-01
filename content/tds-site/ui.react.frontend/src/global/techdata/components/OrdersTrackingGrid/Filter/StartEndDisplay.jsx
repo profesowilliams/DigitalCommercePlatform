@@ -70,6 +70,8 @@ export default function StartEndDisplay({ translations, startDate, endDate, minD
           <MaskedDateInput
             translations={translations}
             value={startDate}
+            minDate={minDate}
+            maxDate={maxDate}
             onChange={onStartDateChange}
           />
         </div>

@@ -1,13 +1,15 @@
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import useComputeBranding from './../../../hooks/useComputeBranding';
 import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
-import OrderFilterDateType from './OrderFilterDateType';
+import FilterDateType from './FilterDateType';
 import StartEndDisplay from './StartEndDisplay';
 import OrderCount from './OrderCount';
-import { DateRangePicker } from 'react-date-range';
+import DatePredefinedRanges from './DatePredefinedRanges';
+import { DateRange } from 'react-date-range';
 import * as locales from 'react-date-range/dist/locale';
 import { getCustomRanges, getFilterDateOptions } from './Utils/translationsUtils';
 import moment from 'moment';
+import { isSameDay } from 'date-fns';
 
 /**
  * Component for filtering orders by date
@@ -19,7 +21,6 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
   console.log('OrderFilterDate::init');
   const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
   const translations = uiTranslations?.['OrderTracking.MainGrid.Filters'];
-  const userData = useOrderTrackingStore((st) => st.userData);
 
   const { computeClassName } = useComputeBranding(useOrderTrackingStore);
 
@@ -45,13 +46,15 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
 
   const filterDateOptions = getFilterDateOptions(translations);
   const customRanges = getCustomRanges(translations);
+  const [selectedRange, setSelectedRange] = useState(customRanges[customRanges.length - 1].key);
+  const customDateRangeKey = 'custom';
 
   /**
    * Handles changes to the radio button selection
    * @param {string} value - The selected radio button value
    */
-  const onChangeRadio = (value) => {
-    console.log('OrderFilterDate::onChangeRadio');
+  const handleFilterDateChange = (value) => {
+    console.log('OrderFilterDate::handleFilterDateChange');
 
     // Clear the current start date state
     setCurrentStartDate('');
@@ -68,6 +71,8 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
     // Reset the count of checked filters to 0
     setFiltersCheckedCount(0);
 
+    setSelectedRange(customDateRangeKey);
+
     // Create filters object with the new type and undefined dates (from, to)
     const newFilter = {
       type: value,
@@ -83,6 +88,93 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
 
     // Trigger the onChange callback with the updated filters
     onChange(newFilter);
+  };
+
+  /**
+   * Handles the change of date range selection.
+   * Depending on whether the selected range is 'Custom' or a predefined range, 
+   * it either resets the selection or triggers the appropriate range change logic.
+   * 
+   * @param {string} rangeKey - The key of the selected date range.
+   */
+  const handleRangeChange = (rangeKey) => {
+    console.log('OrderFilterDate::handleRangeChange');
+
+    // If the selected range is 'Custom', reset to the default date range option.
+    if (rangeKey === customDateRangeKey) {
+      handleRangeChangeResetToDefaultOption();
+    } else {
+      // Otherwise, trigger the selection change for the predefined range.
+      handleRangeChangeTriggerSelectionChange(rangeKey);
+    }
+  };
+
+  /**
+   * Resets the date range selection to the default option.
+   * This function is used when the user selects the 'Custom' date range.
+   * It clears any previously set filters and resets the selection range to the current date.
+   */
+  const handleRangeChangeResetToDefaultOption = () => {
+    console.log('OrderFilterDate::handleRangeChangeResetToDefaultOption');
+    // Reset the selection range to today's date
+    setSelectionRange({
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection',
+    });
+
+    // Clear the current start date state
+    setCurrentStartDate('');
+
+    // Clear the current end date state
+    setCurrentEndDate('');
+
+    const newFilter = {
+      type: filters.type,
+      from: undefined,
+      to: undefined
+    };
+
+    // Clear any applied filters by setting them to undefined or the default state
+    onFilterChange(newFilter);
+
+    // Invoke the onChange callback with the new filter object
+    onChange(newFilter);
+  };
+
+  /**
+   * Triggers the selection change for a predefined date range.
+   * This function is used when the user selects a predefined range other than 'Custom'.
+   * It updates the selection range and formats the start and end dates for display.
+   * 
+   * @param {string} rangeKey - The key of the selected predefined date range.
+   */
+  const handleRangeChangeTriggerSelectionChange = (rangeKey) => {
+    console.log('OrderFilterDate::handleRangeChangeTriggerSelectionChange');
+    // Find the selected range object based on the provided rangeKey
+    const selectedRangeObj = customRanges.find((range) => range.key === rangeKey);
+
+    // Get the new date range from the selected range object
+    const newRange = selectedRangeObj.range();
+
+    // Update the selection range state with the new start and end dates
+    setSelectionRange({
+      startDate: newRange.startDate,
+      endDate: newRange.endDate,
+      key: 'selection',
+    });
+
+    // Set the currently selected range key
+    setSelectedRange(rangeKey);
+
+    // Format the start and end dates for display
+    const startDate = newRange.startDate;
+    const endDate = newRange.endDate;
+    setCurrentStartDate(moment(startDate).format(translations?.DateFormat));
+    setCurrentEndDate(moment(endDate).format(translations?.DateFormat));
+
+    // Notify the parent component about the date change
+    onDatesChange({ startDate, endDate });
   };
 
   /**
@@ -121,7 +213,7 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
    * @param {Date} param.to - End date of the filter
    */
   const onFilterChange = ({ type, from, to }) => {
-    console.log('OrderFilterDate::onFilterChange'); // Log for debugging
+    console.log('OrderFilterDate::onFilterChange');
 
     // Update the current start date state if startDate is defined
     setCurrentStartDate(from);
@@ -181,21 +273,61 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
   };
 
   /**
-   * Handle the selection of date ranges.
+   * Matches the selected date range with predefined custom ranges.
+   * If the selected dates match any of the predefined ranges, it updates the selected range state accordingly.
+   * If no match is found, it sets the selected range to the custom range key.
+   * 
+   * @param {Date} startDate - The start date of the selected range.
+   * @param {Date} endDate - The end date of the selected range.
+   */
+  const matchRangeWithDates = (startDate, endDate) => {
+    console.log('OrderFilterDate::matchRangeWithDates');
+
+    // Default to 'Custom' range if no predefined range matches
+    let matchedRangeKey = customDateRangeKey;
+
+    // Iterate over each predefined range to check for a match with the selected dates
+    if (startDate && endDate) {
+      for (let range of customRanges) {
+        const definedRange = range.range();
+        if (
+          isSameDay(startDate, definedRange.startDate) &&
+          isSameDay(endDate, definedRange.endDate)
+        ) {
+          // If a match is found, update the matchedRange and exit the loop
+          matchedRangeKey = range.key;
+          break;
+        }
+      }
+    }
+
+    // Update the selected range state with the matched range label or 'Custom'
+    setSelectedRange(matchedRangeKey);
+  }
+
+  /**
+   * Handles the selection of date ranges in the date picker.
+   * This function is triggered when the user selects a date range and updates the state accordingly.
+   * It also attempts to match the selected dates with predefined ranges.
    * 
    * @param {Object} ranges - Object containing the selected date ranges.
    */
   const handleSelect = (ranges) => {
     console.log('OrderFilterDate::handleSelect');
 
-    // Call the onDatesChange function with the updated start and end dates
-    onDatesChange({
-      // If the start date is a valid date, use it; otherwise, use the current date
-      startDate: isNaN(ranges?.selection?.startDate.getTime()) ? new Date() : ranges.selection?.startDate,
-      // If the end date is a valid date, use it; otherwise, use the current date
-      endDate: isNaN(ranges?.selection?.endDate.getTime()) ? new Date() : ranges.selection.endDate
-    });
+    // Validate and set the start date, defaulting to the current date if invalid
+    const startDate = isNaN(ranges?.selection?.startDate.getTime()) ? new Date() : ranges.selection?.startDate;
+
+    // Validate and set the end date, defaulting to the current date if invalid
+    const endDate = isNaN(ranges?.selection?.endDate.getTime()) ? new Date() : ranges.selection.endDate;
+
+    // Attempt to match the selected date range with predefined ranges
+    matchRangeWithDates(startDate, endDate);
+
+    // Notify the parent component about the date change
+    onDatesChange({ startDate, endDate });
   };
+
 
   /**
    * Updates the maximum date based on the type provided.
@@ -229,6 +361,9 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
         from: undefined,
         to: undefined
       });
+
+      // Reset ranges to default
+      matchRangeWithDates(undefined, undefined);
     },
     /**
      * Sets the date filters
@@ -245,6 +380,13 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
 
       // Update the filters with the provided date object
       onFilterChange(newFilter);
+
+      // Attempt to match the selected date range with predefined ranges
+      if (date?.from && date?.to) {
+        matchRangeWithDates(moment(date.from).toDate(), moment(date.to).toDate());
+      } else {
+        matchRangeWithDates(undefined, undefined);
+      }
 
       // Set calendar max date
       updateMaxDate(newFilter.type);
@@ -266,6 +408,13 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
 
     if (!filters?.type) {
       setFilters(defaultFilter);
+    }
+
+    // Attempt to match the selected date range with predefined ranges
+    if (filters?.from && filters?.to) {
+      matchRangeWithDates(moment(filters.from).toDate(), moment(filters.to).toDate());
+    } else {
+      matchRangeWithDates(undefined, undefined);
     }
 
     // Set calendar max date
@@ -304,26 +453,18 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
       </div>
       {accordionIsOpen && <>
         <div className="order-filter-accordion__item--open">
-          <div className="check-order-wrapper">
-            <OrderFilterDateType
-              onChangeRadio={onChangeRadio}
+          <div className="check-order-wrapper filterdatetype">
+            <FilterDateType
+              onRadioChange={handleFilterDateChange}
               options={filterDateOptions}
-              dateType={filters?.type}
+              selectedValue={filters?.type}
             />
           </div>
-          <div className="order_datapicker">
-            <DateRangePicker
-              ranges={[selectionRange]}
-              moveRangeOnFirstSelection={false}
-              staticRanges={customRanges}
-              months={1}
-              maxDate={maxDate}
-              minDate={new Date('2010')}
-              direction="vertical"
-              onChange={handleSelect}
-              editableDateInputs={false}
-              preventSnapRefocus={true}
-              locale={locales[moment.locale()]}
+          <div className="check-order-wrapper datepredefinedranges">
+            <DatePredefinedRanges
+              onChangeRadio={handleRangeChange}
+              options={customRanges}
+              selectedValue={selectedRange}
             />
           </div>
           <StartEndDisplay
@@ -334,6 +475,20 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
             maxDate={maxDate}
             onChange={handleSelect}
           />
+          <div className="order_datapicker">
+            <DateRange
+              ranges={[selectionRange]}
+              moveRangeOnFirstSelection={false}
+              staticRanges={customRanges}
+              months={1}
+              maxDate={maxDate}
+              minDate={minDate}
+              onChange={handleSelect}
+              editableDateInputs={false}
+              preventSnapRefocus={true}
+              locale={locales[moment.locale()]}
+            />
+          </div>
         </div>
       </>}
     </div >

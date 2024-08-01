@@ -22,13 +22,17 @@
 }
 
 .rdrCalendarWrapper.rdrDateRangeWrapper {
-  width: 300px;
-  padding-left: 50px;
-  height: 335px;
+  width: 325px;
+  padding-left: 45px;
+  padding-bottom: 10px;
 }
 
 .rdrStaticRangeLabel {
   padding: 10px 10px !important;
+}
+
+.rdrNextPrevButton {
+  margin: 0!important;
 }
 
 .rdrNextPrevButton.rdrPprevButton {
@@ -43,12 +47,13 @@
 
 .rdrMonthAndYearWrapper {
   height: auto !important;
-  padding-top: 80px !important;
+  padding-top: 0!important;
 }
 
 .rdrMonth {
-  padding: 0 10px 0!important;
-  width: 250px!important;
+  padding: 0 10px 0 !important;
+  width: 250px !important;
+  margin: 0 auto !important;
 }
 
 .rdrDateDisplayWrapper {
@@ -256,13 +261,34 @@ button.rdrStaticRange {
 }
 
 .start-end-display {
-  margin-top: -340px !important;
-  margin-bottom: 240px !important;
+
+  input {
+    border-bottom: 1px solid #727679 !important;
+    height: 24px !important;
+    background-color: #FFFFFF !important;
+  }
+
+  input:active, input:focus-visible, input:visited, input:hover, input:target {
+    outline: none;
+  }
+
+  &__start {
+    &__label {
+      font-size: 12px;
+      margin-bottom: 0px;
+    }
+  }
+
+  &__end {
+    &__label {
+      font-size: 12px;
+      margin-bottom: 0px;
+    }
+  }
 }
 
 .rdrMonthPicker, .rdrYearPicker {
   margin: 0 5px;
-  background-color: #f8f8f8;
 }
 
 .rdrMonthPicker select, .rdrYearPicker select {

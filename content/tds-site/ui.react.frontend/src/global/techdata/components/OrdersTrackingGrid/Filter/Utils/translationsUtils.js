@@ -11,6 +11,7 @@ export const getCustomRanges = (translations) => {
   return [
     {
       label: translations?.PredefinedRanges_ThisWeek || 'This Week',
+      key: 'ThisWeek',
       range: () => ({
         startDate: startOfWeek(new Date()),
         endDate: new Date(),
@@ -25,6 +26,7 @@ export const getCustomRanges = (translations) => {
     },
     {
       label: translations?.PredefinedRanges_Last7Days || 'Last 7 days',
+      key: 'Last7Days',
       range: () => ({
         startDate: addDays(new Date(), -7),
         endDate: new Date(),
@@ -39,6 +41,7 @@ export const getCustomRanges = (translations) => {
     },
     {
       label: translations?.PredefinedRanges_ThisMonth || 'This Month',
+      key: 'ThisMonth',
       range: () => ({
         startDate: startOfMonth(new Date()),
         endDate: new Date(),
@@ -53,6 +56,7 @@ export const getCustomRanges = (translations) => {
     },
     {
       label: translations?.PredefinedRanges_Last30Days || 'Last 30 days',
+      key: 'Last30Days',
       range: () => ({
         startDate: addDays(new Date(), -30),
         endDate: new Date(),
@@ -67,6 +71,7 @@ export const getCustomRanges = (translations) => {
     },
     {
       label: translations?.PredefinedRanges_ThisYear || 'This year',
+      key: 'ThisYear',
       range: () => ({
         startDate: startOfYear(new Date()),
         endDate: new Date(),
@@ -78,21 +83,7 @@ export const getCustomRanges = (translations) => {
           isSameDay(range.endDate, definedRange.endDate)
         );
       },
-    },
-    {
-      label: translations?.PredefinedRanges_Today || 'Today',
-      range: () => ({
-        startDate: new Date(),
-        endDate: new Date(),
-      }),
-      isSelected(range) {
-        const definedRange = this.range();
-        return (
-          isSameDay(range.startDate, definedRange.startDate) &&
-          isSameDay(range.endDate, definedRange.endDate)
-        );
-      },
-    },
+    }
   ];
 };
 
