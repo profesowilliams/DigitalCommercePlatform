@@ -27,7 +27,7 @@ import java.util.Set;
 
 @Component(
         service = WorkflowProcess.class,
-        property = {"process.label=TDS-Core APJ page changes process"}
+        property = {"process.label=TDS-Core - APJ page changes process"}
 )
 public class ApjPageChangesProcess implements WorkflowProcess {
     private static final Logger log = LoggerFactory.getLogger(ApjPageChangesProcess.class);
@@ -37,10 +37,10 @@ public class ApjPageChangesProcess implements WorkflowProcess {
     public static final String CQ_LAST_REPLICATED = "cq:lastReplicated";
     private static final String SLASH_JCR_CONTENT = "/jcr:content";
     public static final String JCR_CONTENT = "jcr:content";
-    public static final String TOLERANCE_IN_SECONDS_ARG = "toleranceInSecArg";
+    public static final String TOLERANCE_IN_SECONDS_ARG = "toleranceInSeconds";
     public static final int DEFAULT_TOLERANCE_IN_SECONDS = 5;
 
-    private Long toleranceInSeconds;
+    private long toleranceInSeconds;
 
     @Override
     public void execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap args) throws WorkflowException {
@@ -49,7 +49,7 @@ public class ApjPageChangesProcess implements WorkflowProcess {
             String payloadPath = workItem.getWorkflowData().getPayload().toString();
             Resource pageResource = resourceResolver.getResource(payloadPath + SLASH_JCR_CONTENT);
 
-            toleranceInSeconds = (Long) workItem.getWorkflowData().getMetaDataMap().getOrDefault(TOLERANCE_IN_SECONDS_ARG, DEFAULT_TOLERANCE_IN_SECONDS);
+            toleranceInSeconds = args.get(TOLERANCE_IN_SECONDS_ARG, DEFAULT_TOLERANCE_IN_SECONDS);
 
             if (pageResource != null && !pageResource.isResourceType(Resource.RESOURCE_TYPE_NON_EXISTING)) {
                 PageManager pageManager = resourceResolver.adaptTo(PageManager.class);

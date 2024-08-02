@@ -118,9 +118,8 @@ public class ApjPageChangesProcessTest {
         when(session.getWorkspace().getVersionManager()).thenReturn(versionManager);
         when(workItem.getWorkflowData()).thenReturn(workflowData);
         when(workflowData.getMetaDataMap()).thenReturn(metaDataMap);
-        when(metaDataMap.getOrDefault(TOLERANCE_IN_SECONDS_ARG, DEFAULT_TOLERANCE_IN_SECONDS)).thenReturn(Long.valueOf(5L));
+        when(args.get(TOLERANCE_IN_SECONDS_ARG, DEFAULT_TOLERANCE_IN_SECONDS)).thenReturn(5);
     }
-
 
     @Test
     public void testExecuteWithNoStructuralChanges() throws Exception {
