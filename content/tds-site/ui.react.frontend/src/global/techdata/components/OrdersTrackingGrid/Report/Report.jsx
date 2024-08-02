@@ -19,7 +19,7 @@ import { updateUrl } from './Utils/utils';
 function Report({ onInit, onChange, analyticsLabel }, ref) {
   console.log('Report::init');
 
-  const [isInit, setIsInit] = useState(false);
+  const isInit = useRef(false);
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const wrapperRef = useRef(null);
@@ -112,25 +112,26 @@ function Report({ onInit, onChange, analyticsLabel }, ref) {
   useEffect(() => {
     console.log('Report::useEffect::translations');
 
-    if (!isInit) return;
+    if (isInit?.current) return;
 
     // Check if the initial value (getInitial) is provided
     if (getInitial) {
+      if (translations) {
+        // Normalize the initial value to 'EOLOrders' if it matches 'EOL' (case-insensitive)
+        if (getInitial.toLowerCase() === 'EOL'.toLowerCase()) {
+          getInitial = 'EOLOrders';
+        }
 
-      // Normalize the initial value to 'EOLOrders' if it matches 'EOL' (case-insensitive)
-      if (getInitial.toLowerCase() === 'EOL'.toLowerCase()) {
-        getInitial = 'EOLOrders';
+        handleSelectOption({
+          key: getInitial,
+          label: translations?.[getInitial],
+          isInit: true
+        })
+
+        // Control is on ready state
+        onInit(false);
+        isInit.current = true;
       }
-
-      handleSelectOption({
-        key: getInitial,
-        label: translations?.[getInitial],
-        isInit: true 
-      })
-
-      // Control is on ready state
-      onInit(false);
-      setIsInit(true);
     }
     else {
       // Control is on ready state, and initial criteria are empty
