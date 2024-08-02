@@ -19,7 +19,7 @@ import { updateUrl } from './Utils/utils';
 function Report({ onInit, onChange, analyticsLabel }, ref) {
   console.log('Report::init');
 
-  const isInit = useRef(false);
+  const isInit = useRef();
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const wrapperRef = useRef(null);

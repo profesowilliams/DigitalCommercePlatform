@@ -375,10 +375,10 @@ function OrdersTrackingGrid(props) {
         }
       }));
 
-      setTriggerLoadGridData(true);
-
       // Push the sorting information to Google Analytics for tracking
       if (previousSortModel?.current?.sortBy && previousSortModel?.current?.sortDirection) {
+        setTriggerLoadGridData(true);
+
         // Dont send GA event when its sort setup instead of change
         pushDataLayerGoogle(getSortAnalyticsGoogle(`${sortedModel.sortDirection}: ${sortedModel.sortBy}`, 'Click'));
       }
