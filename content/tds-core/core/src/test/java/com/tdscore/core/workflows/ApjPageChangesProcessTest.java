@@ -1,4 +1,4 @@
-package com.techdata.core.workflows;
+package com.tdscore.core.workflows;
 
 import com.adobe.granite.workflow.WorkflowSession;
 import com.adobe.granite.workflow.exec.WorkItem;
@@ -6,7 +6,7 @@ import com.adobe.granite.workflow.exec.WorkflowData;
 import com.adobe.granite.workflow.metadata.MetaDataMap;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
-import com.techdata.core.workflow.process.impl.ApjPageChangesProcess;
+import com.tdscore.core.workflow.process.impl.ApjPageChangesProcess;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,11 +29,14 @@ import javax.jcr.version.VersionManager;
 import java.util.Calendar;
 import java.util.UUID;
 
-import static com.techdata.core.workflow.process.impl.ApjPageChangesProcess.CQ_LAST_REPLICATED;
-import static com.techdata.core.workflow.process.impl.ApjPageChangesProcess.REQUIRES_VALIDATION;
-import static com.techdata.core.workflow.process.impl.ApjPageChangesProcess.STRUCTURAL_CHANGES;
-import static com.techdata.core.workflow.process.impl.ApjPageChangesProcess.TEXT_CHANGES;
-import static org.mockito.Mockito.anyString;
+import static com.tdscore.core.workflow.process.impl.ApjPageChangesProcess.CQ_LAST_REPLICATED;
+import static com.tdscore.core.workflow.process.impl.ApjPageChangesProcess.DEFAULT_TOLERANCE_IN_SECONDS;
+import static com.tdscore.core.workflow.process.impl.ApjPageChangesProcess.JCR_CONTENT;
+import static com.tdscore.core.workflow.process.impl.ApjPageChangesProcess.REQUIRES_VALIDATION;
+import static com.tdscore.core.workflow.process.impl.ApjPageChangesProcess.STRUCTURAL_CHANGES;
+import static com.tdscore.core.workflow.process.impl.ApjPageChangesProcess.TEXT_CHANGES;
+import static com.tdscore.core.workflow.process.impl.ApjPageChangesProcess.TOLERANCE_IN_SECONDS_ARG;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -90,6 +93,9 @@ public class ApjPageChangesProcessTest {
     private Node lastActivatedFrozenNode;
 
     @Mock
+    private Node currentNodeChild;
+
+    @Mock
     private WorkflowData workflowData;
 
     @Mock
@@ -112,7 +118,9 @@ public class ApjPageChangesProcessTest {
         when(session.getWorkspace().getVersionManager()).thenReturn(versionManager);
         when(workItem.getWorkflowData()).thenReturn(workflowData);
         when(workflowData.getMetaDataMap()).thenReturn(metaDataMap);
+        when(metaDataMap.getOrDefault(TOLERANCE_IN_SECONDS_ARG, DEFAULT_TOLERANCE_IN_SECONDS)).thenReturn(Long.valueOf(5L));
     }
+
 
     @Test
     public void testExecuteWithNoStructuralChanges() throws Exception {
@@ -123,21 +131,26 @@ public class ApjPageChangesProcessTest {
         when(versionManager.getVersionHistory(anyString())).thenReturn(versionHistory);
         when(currentVersion.getFrozenNode()).thenReturn(currentFrozenNode);
         when(lastActivatedVersion.getFrozenNode()).thenReturn(lastActivatedFrozenNode);
+        when(lastActivatedVersion.getCreated()).thenReturn(replicationDate);
 
-        when(lastActivatedFrozenNode.hasProperty(CQ_LAST_REPLICATED)).thenReturn(true);
-        when(lastActivatedFrozenNode.getProperty(CQ_LAST_REPLICATED)).thenReturn(mock(Property.class));
-        when(lastActivatedFrozenNode.getProperty(CQ_LAST_REPLICATED).getDate()).thenReturn(replicationDate);
+        when(currentNode.getNode(JCR_CONTENT)).thenReturn(currentNodeChild);
+        when(currentNodeChild.hasProperty(CQ_LAST_REPLICATED)).thenReturn(true);
+        when(currentNodeChild.getProperty(CQ_LAST_REPLICATED)).thenReturn(mock(Property.class));
+        when(currentNodeChild.getProperty(CQ_LAST_REPLICATED).getDate()).thenReturn(replicationDate);
 
         VersionIterator versionIterator = mock(VersionIterator.class);
         when(versionIterator.hasNext()).thenReturn(true, false);
         when(versionIterator.nextVersion()).thenReturn(lastActivatedVersion);
         when(versionHistory.getAllVersions()).thenReturn(versionIterator);
 
-        NodeIterator nodeIterator = mock(NodeIterator.class);
-        when(nodeIterator.hasNext()).thenReturn(false);
+        NodeIterator currentChildNodes = mock(NodeIterator.class);
+        when(currentChildNodes.hasNext()).thenReturn(false);
 
-        when(currentFrozenNode.getNodes()).thenReturn(nodeIterator);
-        when(lastActivatedFrozenNode.getNodes()).thenReturn(nodeIterator);
+        NodeIterator lastActivatedChildNodes = mock(NodeIterator.class);
+        when(lastActivatedChildNodes.hasNext()).thenReturn(false);
+
+        when(currentFrozenNode.getNodes()).thenReturn(currentChildNodes);
+        when(lastActivatedFrozenNode.getNodes()).thenReturn(lastActivatedChildNodes);
 
         apjPageChangesProcess.execute(workItem, workflowSession, args);
 
@@ -152,11 +165,13 @@ public class ApjPageChangesProcessTest {
         when(versionManager.getBaseVersion(anyString())).thenReturn(currentVersion);
         when(versionManager.getVersionHistory(anyString())).thenReturn(versionHistory);
         when(currentVersion.getFrozenNode()).thenReturn(currentFrozenNode);
-
         when(lastActivatedVersion.getFrozenNode()).thenReturn(lastActivatedFrozenNode);
-        when(lastActivatedFrozenNode.hasProperty(CQ_LAST_REPLICATED)).thenReturn(true);
-        when(lastActivatedFrozenNode.getProperty(CQ_LAST_REPLICATED)).thenReturn(mock(Property.class));
-        when(lastActivatedFrozenNode.getProperty(CQ_LAST_REPLICATED).getDate()).thenReturn(replicationDate);
+        when(lastActivatedVersion.getCreated()).thenReturn(replicationDate);
+
+        when(currentNode.getNode(JCR_CONTENT)).thenReturn(currentNodeChild);
+        when(currentNodeChild.hasProperty(CQ_LAST_REPLICATED)).thenReturn(true);
+        when(currentNodeChild.getProperty(CQ_LAST_REPLICATED)).thenReturn(mock(Property.class));
+        when(currentNodeChild.getProperty(CQ_LAST_REPLICATED).getDate()).thenReturn(replicationDate);
 
         VersionIterator versionIterator = mock(VersionIterator.class);
         when(versionIterator.hasNext()).thenReturn(true, false);
