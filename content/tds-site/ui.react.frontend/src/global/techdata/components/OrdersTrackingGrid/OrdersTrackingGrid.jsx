@@ -281,8 +281,6 @@ function OrdersTrackingGrid(props) {
   const loadGridData = () => {
     console.log('OrdersTrackingGrid::loadGridData');
 
-    gridRef.current.api.showLoadingOverlay();
-
     const baseUrl = componentProps.uiCommerceServiceDomain;
 
     const promises = [];
@@ -319,7 +317,13 @@ function OrdersTrackingGrid(props) {
 
     // Execute all promises simultaneously
     if (promises.length > 0) {
+      gridRef.current.api.showLoadingOverlay();
+
       Promise.all(promises)
+        .catch(function (err) {
+          console.log('OrdersTrackingGrid::loadGridData::fetch::error');
+          sendGTMNotResultFound();
+        })
         .finally(() => {
           console.log('OrdersTrackingGrid::loadGridData::fetch::finally');
 
@@ -338,10 +342,6 @@ function OrdersTrackingGrid(props) {
 
           // Notify that data loading is complete
           setIsLoading(false);
-        })
-        .catch(function (err) {
-          console.log('OrdersTrackingGrid::loadGridData::fetch::error');
-          sendGTMNotResultFound();
         });
     }
   };
@@ -474,7 +474,9 @@ function OrdersTrackingGrid(props) {
     console.log('OrdersTrackingGrid::onQueryChanged');
 
     // Update the search parameters with the new query parameters
-    setSearchParams(params);
+    if (params) { // When no criteria are provided -> use the ones that were last used
+      setSearchParams(params);
+    }
 
     // Trigger the loading of grid data
     setTriggerLoadGridData(true);
