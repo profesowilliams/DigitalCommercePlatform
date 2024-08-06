@@ -103,6 +103,8 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.consumerRequestHeader()).thenReturn("consumerRequestHeader");
         when(serviceEndPointsConfiguration.exportPDFRenewalsEndpoint()).thenReturn("exportPDFRenewalsEndpoint");
         when(serviceEndPointsConfiguration.accountLookUpEndpoint()).thenReturn("accountLookUpEndpoint");
+        when(serviceEndPointsConfiguration.vendorPartNoLookUpEndpoint()).thenReturn("vendorPartNoLookUpEndpoint");
+        when(serviceEndPointsConfiguration.addNewProductEndpoint()).thenReturn("addNewProductEndpoint");
         when(serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint()).thenReturn("checkQuoteExitsforResellerEndpoint");
         when(serviceEndPointsConfiguration.copyQuoteEndpoint()).thenReturn("copyQuoteEndpoint");
         when(serviceEndPointsConfiguration.addressesEndpoint()).thenReturn("addressesEndpoint");
@@ -207,6 +209,8 @@ class CaConfigReaderTest {
         assertEquals("agGridLicenseKey", underTest.getAgGridLicenseKey());
         assertEquals("exportPDFRenewalsEndpoint", underTest.getExportPDFRenewalsEndpoint());
         assertEquals("accountLookUpEndpoint", underTest.getAccountLookUpEndpoint());
+        assertEquals("vendorPartNoLookUpEndpoint", underTest.getVendorPartNoLookUpEndpoint());
+        assertEquals("addNewProductEndpoint", underTest.getAddNewProductEndpoint());
         assertEquals("checkQuoteExitsforResellerEndpoint", underTest.getCheckQuoteExitsforResellerEndpoint());
         assertEquals("copyQuoteEndpoint", underTest.getCopyQuoteEndpoint());
         assertEquals("addressesEndpoint", underTest.getAddressesEndpoint());

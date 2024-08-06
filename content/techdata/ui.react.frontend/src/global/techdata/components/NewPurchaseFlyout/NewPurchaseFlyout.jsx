@@ -4,6 +4,8 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { ArrowBackIcon } from '../../../../fluentIcons/FluentIcons';
 import FormPart1 from './FormPart1';
 import FormPart2 from './FormPart2';
+import { CircularProgress } from '@mui/material';
+import Button from '@mui/material/Button';
 
 function NewPurchaseFlyout({
   store,
@@ -15,7 +17,9 @@ function NewPurchaseFlyout({
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
-  const internalUser = userData?.isHouseAccount;
+  // const internalUser = userData?.isHouseAccount;
+  const defaultCurrency = userData?.activeCustomer?.defaultCurrency;
+  const internalUser = true;
   const externalUser = !internalUser;
 
   const newPurchaseFlyoutConfig = store((state) => state.newPurchaseFlyout);
@@ -98,9 +102,14 @@ function NewPurchaseFlyout({
   const [endUserCountry, setEndUserCountry] = useState('');
   const [endUserCountryError, setEndUserCountryError] = useState('');
 
+  // Currency and total price state
   const [subtotalValue, setSubtotalValue] = useState('111');
+  const [currency, setCurrency] = useState('');
 
-  const currency = 'VND';
+  // Buttons state
+  const [validating, setValidating] = useState(false);
+  const [placeOrderActive, setPlaceOrderActive] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(true);
 
   const formPart1States = {
     enableNext,
@@ -174,7 +183,12 @@ function NewPurchaseFlyout({
     endUserCountryError,
     setEndUserCountryError,
   };
-
+  const handleValidate = () => {
+    setButtonClicked((prevState) => !prevState);
+  };
+  const handlePlaceOrder = () => {
+    setStep(3);
+  };
   const handleNext = () => {
     setStep(2);
   };
@@ -191,11 +205,38 @@ function NewPurchaseFlyout({
       </button>
     </div>
   );
+
   const buttonsSectionStep2 = (
     <div className="cmp-flyout__footer-buttons order-modification">
-      <button disabled={!enableNext} className="primary" onClick={handleNext}>
-        {getDictionaryValueOrKey(newPurchaseFlyout?.placeOrder)}
-      </button>
+      {!placeOrderActive ? (
+        validating ? (
+          <Button
+            startIcon={
+              <CircularProgress
+                size={20}
+                sx={{ color: '#888B8D', fontSize: '16px' }}
+              />
+            }
+            sx={{
+              textTransform: 'none',
+            }}
+            disabled={true}
+            className="primary"
+            onClick={handleValidate}
+          >
+            {getDictionaryValueOrKey(newPurchaseFlyout?.validating)}
+          </Button>
+        ) : (
+          <button className="primary" onClick={handleValidate}>
+            {getDictionaryValueOrKey(newPurchaseFlyout?.validateOrder)}
+          </button>
+        )
+      ) : (
+        <button className="primary" onClick={handlePlaceOrder}>
+          {getDictionaryValueOrKey(newPurchaseFlyout?.placeOrder)}
+        </button>
+      )}
+
       <button className="secondary" onClick={handleBack}>
         <ArrowBackIcon />
         {getDictionaryValueOrKey(newPurchaseFlyout?.back)}
@@ -216,7 +257,10 @@ function NewPurchaseFlyout({
         <span className="new-purchase-footer-info__title">
           {getDictionaryValueOrKey(
             newPurchaseFlyout?.resellerSubtotal
-          )?.replace('{currency-code}', currency || '')}{' '}
+          )?.replace(
+            '{currency-code}',
+            currency ? currency : defaultCurrency || ''
+          )}{' '}
           {subtotalValue}
         </span>
         <span>
@@ -368,16 +412,20 @@ function NewPurchaseFlyout({
         )}{' '}
         {step === 2 && (
           <FormPart2
-            copyFlyout={copyFlyout}
             newPurchaseFlyout={newPurchaseFlyout}
-            newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}
             formPart1States={formPart1States}
-            componentProp={componentProp}
             pickedResellerQuote={selectedQuote}
             internalUser={internalUser}
             currency={currency}
+            defaultCurrency={defaultCurrency}
+            setCurrency={setCurrency}
             subtotalValue={subtotalValue}
             setSubtotalValue={setSubtotalValue}
+            validating={validating}
+            setValidating={setValidating}
+            setPlaceOrderActive={setPlaceOrderActive}
+            buttonClicked={buttonClicked}
+            setButtonClicked={setButtonClicked}
           />
         )}
       </section>

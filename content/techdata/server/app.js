@@ -5261,6 +5261,15 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "mainDashboard.renewal.newPurchaseFlyout.label.taxesNotIncluded":
       "Taxes not included.",
     "mainDashboard.renewal.newPurchaseFlyout.label.days": "days",
+    "mainDashboard.renewal.newPurchaseFlyout.label.validateOrder":
+      "Validate order",
+    "mainDashboard.renewal.newPurchaseFlyout.label.validating": "Validating",
+    "mainDashboard.renewal.newPurchaseFlyout.label.unknownError":
+      "Unknown error has occurred. Please try again.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.accountDoesntExistError":
+      "Account doesn't exist!",
+    "mainDashboard.renewal.newPurchaseFlyout.label.quoteExistsError":
+      "Quote exists, please try again with another account.",
   });
 });
 
@@ -5436,7 +5445,7 @@ app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
   return res.status(200).json(SearchInput.includes("err") ? fail : success);
 });
 
-app.post("/ui-browse/v1/PartNumbers/Find", function (req, res) {
+app.post("/ui-renewal/v1/PartNumbers/Find", function (req, res) {
   const { MaxParts, PartialManufacturerPartNumber, Properties } = req.body;
 
   console.log("PartNumbers", req.body);
@@ -5446,41 +5455,57 @@ app.post("/ui-browse/v1/PartNumbers/Find", function (req, res) {
         productId: "ADB30001555CA01A12",
         manufacturerPartNumber: "30001555CA01A12",
         globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Enterprise ALL Other Multi Asian Languages Enterprise Hosted Subscription New",
       },
       {
         productId: "ADB30001555CA02A12",
         manufacturerPartNumber: "30001555CA02A12",
         globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Enterprise ALL Other Multi Asian Languages Enterprise Hosted Subscription New",
       },
       {
         productId: "ADB30001555CA03A12",
         manufacturerPartNumber: "30001555CA03A12",
         globalManufacturer: "ADOBE",
-      },
-      {
-        productId: "ADB30001555CA04A12",
-        manufacturerPartNumber: "30001555CA04A12",
-        globalManufacturer: "ADOBE",
-      },
-      {
-        productId: "ADB30001563CA04A12",
-        manufacturerPartNumber: "30001563CA04A12",
-        globalManufacturer: "ADOBE",
-      },
-      {
-        productId: "ADB30001563CA01A12",
-        manufacturerPartNumber: "30001563CA01A12",
-        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Enterprise ALL Other Multi Asian Languages Enterprise Hosted Subscription New",
       },
       {
         productId: "ADB30001563CA02A12",
         manufacturerPartNumber: "30001563CA02A12",
         globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Teams ALL Other Multi Asian Languages Hosted Subscription",
+      },
+      {
+        productId: "ADB30001563CA01A12",
+        manufacturerPartNumber: "30001563CA01A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Teams ALL Other Multi Asian Languages Hosted Subscription",
+      },
+      {
+        productId: "ADB30001555CA04A12",
+        manufacturerPartNumber: "30001555CA04A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Enterprise ALL Other Multi Asian Languages Enterprise Hosted Subscription New",
+      },
+      {
+        productId: "ADB30001563CA04A12",
+        manufacturerPartNumber: "30001563CA04A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Teams ALL Other Multi Asian Languages Hosted Subscription",
       },
       {
         productId: "ADB30001563CA03A12",
         manufacturerPartNumber: "30001563CA03A12",
         globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Teams ALL Other Multi Asian Languages Hosted Subscription",
       },
     ],
   };
@@ -5488,6 +5513,410 @@ app.post("/ui-browse/v1/PartNumbers/Find", function (req, res) {
   //mockResponses.failedResponse
 
   return res.status(200).json(success);
+});
+
+app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
+  const success = {
+    content: {
+      reseller: {
+        id: "",
+        isValid: true,
+        incumbent: false,
+        vendorAccountNumber: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: true,
+          allowedLength: 0,
+        },
+        name: "",
+        nameUpper: "",
+        contact: [
+          {
+            name: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            email: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            phone: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+          },
+        ],
+        address: {
+          line1: "",
+          city: "",
+          country: "",
+          countryCode: "",
+        },
+      },
+      endUser: {
+        isValid: true,
+        name: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: false,
+          allowedLength: 0,
+        },
+        nameUpper: "",
+        eaNumber: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: false,
+          allowedLength: 0,
+        },
+        contact: [
+          {
+            name: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            email: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            phone: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+          },
+        ],
+        address: {
+          line1: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+          city: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+          postalCode: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+          country: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+          countryCode: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+        },
+      },
+      items: [
+        {
+          id: "1",
+          product: [
+            {
+              type: "TECHDATA",
+            },
+            {
+              type: "MANUFACTURER",
+              id: "123231234",
+              name: "Product very special name",
+              manufacturer: "manufacturer",
+              manufacturerId: "manufacturerId",
+              localManufacturer: "localManufacturer",
+              classification: "classification",
+              family: "family",
+            },
+          ],
+          quantity: "100.0",
+          unitPrice: "10",
+          unitPriceCurrency: "VND",
+          totalPrice: "10.0",
+          unitListPrice: "10.0",
+          unitListPriceCurrency: "VND",
+          agency: "CreateOrder",
+          minimumQuantity: "0.0",
+          maximumQuantity: "999998.0",
+          contract: {
+            startDate: "4/12/2025 12:00:00 AM",
+            endDate: "4/12/2025 12:00:00 AM",
+          },
+        },
+      ],
+      currency: "PLN",
+      totalSellPrice: "0",
+      renewalLevel: "renewalLevel",
+      feedBackMessages: [
+        {
+          ruleNumber: 102,
+          errorCriticality: 1,
+          message:
+            "We have experienced an unexpected error processing your order for TEST1234 IBM. Contact your Account Manager for more information.",
+          refId: "P1005108534",
+          type: "Preview Order",
+          jsonUrl: "UI-Renewal/v1/GetAdobeRenewalAuditLogs?",
+          jsonUrlMessage: "View error details",
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+  const success2 = {
+    content: {
+      reseller: {
+        id: "",
+        isValid: true,
+        incumbent: false,
+        vendorAccountNumber: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: true,
+          allowedLength: 0,
+        },
+        name: "",
+        nameUpper: "",
+        contact: [
+          {
+            name: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            email: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            phone: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+          },
+        ],
+        address: {
+          line1: "",
+          city: "",
+          country: "",
+          countryCode: "",
+        },
+      },
+      endUser: {
+        isValid: true,
+        name: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: false,
+          allowedLength: 0,
+        },
+        nameUpper: "",
+        eaNumber: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: false,
+          allowedLength: 0,
+        },
+        contact: [
+          {
+            name: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            email: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            phone: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+          },
+        ],
+        address: {
+          line1: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+          city: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+          postalCode: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+          country: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+          countryCode: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+        },
+      },
+      items: [
+        {
+          id: "1",
+          product: [
+            {
+              type: "TECHDATA",
+            },
+            {
+              type: "MANUFACTURER",
+              id: "123231234",
+              name: "Product very special name",
+              manufacturer: "manufacturer",
+              manufacturerId: "manufacturerId",
+              localManufacturer: "localManufacturer",
+              classification: "classification",
+              family: "family",
+            },
+          ],
+          quantity: "100.0",
+          unitPrice: "10",
+          unitPriceCurrency: "VND",
+          totalPrice: "1000.0",
+          unitListPrice: "10.0",
+          unitListPriceCurrency: "VND",
+          agency: "CreateOrder",
+          minimumQuantity: "0.0",
+          maximumQuantity: "999998.0",
+          contract: {
+            startDate: "4/12/2025 12:00:00 AM",
+            endDate: "4/12/2025 12:00:00 AM",
+          },
+        },
+        {
+          id: "2",
+          product: [
+            {
+              type: "TECHDATA",
+            },
+            {
+              type: "MANUFACTURER",
+              id: "123231235",
+              name: "Product very special name 2",
+              manufacturer: "manufacturer",
+              manufacturerId: "manufacturerId2",
+              localManufacturer: "localManufacturer",
+              classification: "classification",
+              family: "family",
+            },
+          ],
+          quantity: "100.0",
+          unitPrice: "10",
+          unitPriceCurrency: "VND",
+          totalPrice: "1000.0",
+          unitListPrice: "10.0",
+          unitListPriceCurrency: "VND",
+          agency: "CreateOrder",
+          minimumQuantity: 0,
+          maximumQuantity: 999998,
+          contract: {
+            startDate: "4/12/2025 12:00:00 AM",
+            endDate: "4/12/2025 12:00:00 AM",
+          },
+        },
+      ],
+      currency: "PLN",
+      totalSellPrice: "0",
+      renewalLevel: "renewalLevel",
+      feedBackMessages: [
+        {
+          ruleNumber: 102,
+          errorCriticality: 3,
+          message:
+            "We have experienced an unexpected error processing your order for TEST1234 IBM. Contact your Account Manager for more information.",
+          refId: "P1005108534",
+          type: "Preview Order",
+          jsonUrl: "UI-Renewal/v1/GetAdobeRenewalAuditLogs?",
+          jsonUrlMessage: "View error details",
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+
+  //mockResponses.failedResponse
+
+  setTimeout(() => {
+    return res.status(200).json(success2);
+  }, 1000);
 });
 
 app.get("/ui-renewal/v1/SearchCheck", (req, res) => {

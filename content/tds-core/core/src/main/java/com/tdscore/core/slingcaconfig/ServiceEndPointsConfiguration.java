@@ -197,6 +197,12 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Account LookUp Endpoint", description = "Account LookUp Endpoint")
     String accountLookUpEndpoint();
 
+    @Property(label = "Vendor Part No LookUp Endpoint", description = "Vendor Part No LookUp Endpoint")
+    String vendorPartNoLookUpEndpoint();
+
+    @Property(label = "Add New Product Endpoint", description = "Add New Product Endpoint")
+    String addNewProductEndpoint();
+
     @Property(label = "Check Quote Exits for Reseller Endpoint", description = "Check Quote Exits for Reseller Endpoint")
     String checkQuoteExitsforResellerEndpoint();
 

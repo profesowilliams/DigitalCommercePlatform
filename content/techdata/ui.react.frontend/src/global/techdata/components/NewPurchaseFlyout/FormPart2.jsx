@@ -1,9 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import { AutoCompleteSearchIcon } from '../../../../fluentIcons/FluentIcons';
+import {
+  AutoCompleteSearchIcon,
+  WarningTriangleIcon,
+  ProhibitedIcon,
+  BannerInfoIcon,
+  CloseXButtonIcon,
+} from '../../../../fluentIcons/FluentIcons';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import { Autocomplete, Button, TextField } from '@mui/material';
-import { vendorPartNoLookUp } from './api';
+import { vendorPartNoLookUp, addProductToGrid } from './api';
 import { VendorPartNoDetails } from './VendorPartNoDetails';
 import NewPurchaseTable from './NewPurchaseTable';
 import DatePicker from './Datepicker';
@@ -16,16 +22,20 @@ export const formatDate = (date) => {
 };
 
 function FormPart2({
-  copyFlyout,
   newPurchaseFlyout,
-  newPurchaseFlyoutConfig,
   formPart1States,
-  componentProp,
   pickedResellerQuote,
   internalUser,
   currency,
+  defaultCurrency,
+  setCurrency,
   subtotalValue,
   setSubtotalValue,
+  validating,
+  setValidating,
+  setPlaceOrderActive,
+  buttonClicked,
+  setButtonClicked,
 }) {
   const {
     firstName,
@@ -51,6 +61,8 @@ function FormPart2({
   const [errorMessage, setErrorMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
+  // Banned state
+  const [bannerOpen, setBannerOpen] = useState(true);
   // Date
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const today = new Date();
@@ -65,17 +77,90 @@ function FormPart2({
   // Grid
   const { productId, manufacturerPartNumber, globalManufacturer } =
     selectedVendorPartNo || {};
-  const data = [
-    {
-      productDetails: 'details text',
-      productFamily: 'Family',
-      productDescription: 'Description....',
-      vendorPartNo: productId || 'vendor number',
-      listPrice: 'list price',
-      unitPrice: '25',
-      qty: '1',
-    },
-  ];
+  const [dataTable, setDataTable] = useState([]);
+
+  // Add Product to Grid
+  const [items, setItems] = useState([]);
+
+  const resellerId = pickedResellerQuote?.accountNumber;
+  const handleAddProductToGrid = async () => {
+    setErrorMessage('');
+    setBannerOpen(false);
+
+    const itemsChecked = items && Array.isArray(items) ? items : [];
+    const itemsPayload = itemsChecked?.map((item) => item);
+    const addProductPayload = {
+      reseller: {
+        id: resellerId || '',
+      },
+      endUser: {
+        name: endUserCompanyName,
+        contact: {
+          name: `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
+          email: endUserEmail,
+        },
+        address: {
+          line1: endUserAddress1,
+          line2: endUserAddress2,
+          city: endUserCity,
+          postalCode: endUserAreaCode,
+          country: endUserCountry,
+        },
+      },
+      items: [
+        ...itemsPayload,
+        {
+          id: '1',
+          product: [
+            {
+              type: 'MANUFACTURER',
+              id: manufacturerPartNumber,
+            },
+          ],
+          quantity: '1',
+          contract: {
+            startDate: startDate,
+            endDate: pickedEndDate,
+          },
+        },
+      ],
+    };
+
+    try {
+      const response = await addProductToGrid(
+        newPurchaseFlyout?.addNewProductEndpoint,
+        addProductPayload
+      );
+      if (response?.isError) {
+        setErrorMessage(newPurchaseFlyout?.unknownError);
+      } else {
+        setDataTable(response);
+      }
+    } catch (error) {
+      setErrorMessage(newPurchaseFlyout?.unknownError);
+    } finally {
+      setValidating(false);
+      setButtonClicked(false);
+    }
+  };
+
+  // Validation banner
+  const hasFeedBackMessages = dataTable?.feedBackMessages?.length > 0;
+  const errorCriticality = hasFeedBackMessages
+    ? dataTable?.feedBackMessages[0]?.errorCriticality
+    : 4;
+  const bannerErrorMessage = hasFeedBackMessages
+    ? dataTable?.feedBackMessages[0]?.message
+    : '';
+  const blueBanner = errorCriticality === 3;
+  const orangeBanner = errorCriticality === 2;
+  const redBanner = errorCriticality === 1;
+  const noBanner = errorCriticality === 4 || bannerErrorMessage === null;
+
+  const handleCloseBanner = () => {
+    setBannerOpen(false);
+  };
+
   // Search Vendor part No
   const handleVendorPartNoChange = async (event) => {
     setIsTyping(true);
@@ -105,7 +190,7 @@ function FormPart2({
         payload
       );
       if (response.isError) {
-        setErrorMessage(copyFlyout?.unknownError);
+        setErrorMessage(newPurchaseFlyout?.unknownError);
         setVendorPartNumbers([]);
       } else {
         setVendorPartNumbers(response);
@@ -127,7 +212,7 @@ function FormPart2({
 
     if (!checkVendorPartNoInList(newInput)) {
       setErrorMessage(
-        getDictionaryValueOrKey(copyFlyout?.accountDoesntExistError)
+        getDictionaryValueOrKey(newPurchaseFlyout?.accountDoesntExistError)
       );
       return;
     }
@@ -150,6 +235,7 @@ function FormPart2({
     findSelectedVendorPartNo(newInput);
     setSelectedVendorPartNo(newInput);
     setErrorMessage('');
+    handleAddProductToGrid();
   };
 
   const handleKeyDown = (event) => {
@@ -171,6 +257,40 @@ function FormPart2({
     stringify: (option) =>
       `${option.productId} ${option.manufacturerPartNumber}`,
   });
+
+  useEffect(() => {
+    setItems(dataTable?.items);
+  }, [dataTable]);
+
+  // Calculate subtotal price
+  const calculateSubtotal = useCallback(() => {
+    const subtotal = items?.reduce((sum, item) => {
+      return sum + parseFloat(item.totalPrice || '0');
+    }, 0);
+    setSubtotalValue(subtotal?.toFixed(2));
+  }, [items, setSubtotalValue]);
+
+  useEffect(() => {
+    calculateSubtotal();
+  }, [items, calculateSubtotal]);
+
+  useEffect(() => {
+    if (blueBanner) {
+      setPlaceOrderActive(true);
+    } else {
+      setPlaceOrderActive(false);
+    }
+    if (validating) {
+      setPlaceOrderActive(false);
+    }
+  }, [blueBanner, validating]);
+  useEffect(() => {
+    if (buttonClicked) {
+      handleAddProductToGrid();
+      setValidating(true);
+      setBannerOpen(true);
+    }
+  }, [buttonClicked]);
 
   return (
     <>
@@ -349,13 +469,54 @@ function FormPart2({
             setDuration={setDuration}
           />
         )}
+        {bannerOpen &&
+          dataTable?.feedBackMessages &&
+          dataTable?.feedBackMessages.length > 0 &&
+          errorCriticality &&
+          !noBanner &&
+          (redBanner || orangeBanner || blueBanner) &&
+          bannerErrorMessage && (
+            <div
+              className={
+                blueBanner
+                  ? 'cmp-flyout-newPurchase__form-feedback-banner blue-banner'
+                  : orangeBanner
+                  ? 'cmp-flyout-newPurchase__form-feedback-banner orange-banner'
+                  : redBanner
+                  ? 'cmp-flyout-newPurchase__form-feedback-banner red-banner'
+                  : 'cmp-flyout-newPurchase__form-feedback-banner'
+              }
+            >
+              <p>
+                {blueBanner ? (
+                  <BannerInfoIcon />
+                ) : orangeBanner ? (
+                  <WarningTriangleIcon />
+                ) : redBanner ? (
+                  <ProhibitedIcon />
+                ) : (
+                  ''
+                )}
+                {bannerErrorMessage}
+              </p>
+              <div
+                className={'banner-close-button'}
+                onClick={handleCloseBanner}
+              >
+                <CloseXButtonIcon />
+              </div>
+            </div>
+          )}
         <NewPurchaseTable
-          data={data}
+          data={dataTable}
           config={newPurchaseFlyout}
           currency={currency}
+          setCurrency={setCurrency}
+          defaultCurrency={defaultCurrency}
           subtotalValue={subtotalValue}
-          setSubtotalValue={setSubtotalValue}
-          internalUser={internalUser}
+          setItems={setItems}
+          handleAddProductToGrid={handleAddProductToGrid}
+          setPlaceOrderActive={setPlaceOrderActive}
         />
       </div>
     </>

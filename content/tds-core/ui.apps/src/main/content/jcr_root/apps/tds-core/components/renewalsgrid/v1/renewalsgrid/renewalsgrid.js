@@ -256,6 +256,11 @@ use(["../../../common/utils.js"], function (utils) {
       "resellerSubtotal",
       "taxesNotIncluded",
       "days",
+      "validateOrder",
+      "validating",
+      "unknownError",
+      "accountDoesntExistError",
+      "quoteExistsError",
     ];
 
     newPurchaseFlyoutList.map(
@@ -264,6 +269,14 @@ use(["../../../common/utils.js"], function (utils) {
 
     if (newPurchaseFlyout != null) {
       jsonObject["newPurchaseFlyout"] = newPurchaseFlyout;
+    }
+    if (this.vendorPartNoLookUpEndpoint && this.serviceData.uiServiceDomain) {
+      newPurchaseFlyout["vendorPartNoLookUpEndpoint"] =
+        this.serviceData.uiServiceDomain + this.newPurchaseFlyout;
+    }
+    if (this.addNewProductEndpoint && this.serviceData.uiServiceDomain) {
+      newPurchaseFlyout["addNewProductEndpoint"] =
+        this.serviceData.uiServiceDomain + this.newPurchaseFlyout;
     }
 
     // Share Flyout

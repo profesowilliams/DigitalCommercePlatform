@@ -11,3 +11,7 @@ export const vendorPartNoLookUp = async (endpoint, payload) => {
   const response = await post(endpoint, payload);
   return response.data.foundParts;
 };
+export const addProductToGrid = async (endpoint, payload) => {
+  const response = await post(endpoint, payload);
+  return response.data.content;
+};

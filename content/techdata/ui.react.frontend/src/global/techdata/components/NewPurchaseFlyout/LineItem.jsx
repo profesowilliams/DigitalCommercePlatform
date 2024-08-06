@@ -5,56 +5,113 @@ import {
   TrashcanIcon,
 } from '../../../../fluentIcons/FluentIcons';
 
-const LineItem = ({ item, index, internalUser, setSubtotalValue }) => {
+const LineItem = ({
+  item,
+  data,
+  setItems,
+  handleAddProductToGrid,
+  setPlaceOrderActive,
+}) => {
   // Initialize the state with the unit price as a string
-  const [quantity, setQuantity] = useState('1');
-  const [unitPrices, setUnitPrices] = useState([item?.unitPrice]);
-  const [totalPrice, setTotalPrice] = useState(quantity * unitPrices);
+  const [quantity, setQuantity] = useState(item?.quantity || '1');
+  const [unitPrice, setUnitPrice] = useState(item?.unitPrice || '0');
+  const [totalPrice, setTotalPrice] = useState(() =>
+    (quantity * parseFloat(unitPrice)).toFixed(2)
+  );
+  const itemProduct = item?.product.find(
+    (product) => product?.type === 'MANUFACTURER'
+  );
+  const canEditResellerPrice = data?.reseller?.vendorAccountNumber?.canEdit;
 
-  //   const isEditable = internalUser;
-  const isEditable = false;
-
-  const handleInputChange = (index, newValue) => {
-    const newUnitPrices = [...unitPrices];
-    newUnitPrices[index] = newValue;
-    setUnitPrices(newUnitPrices);
+  const updateItem = (itemId, changes) => {
+    setItems((prev) => {
+      const updated = prev.map((item) => {
+        const itemProduct = item?.product.find(
+          (product) => product?.type === 'MANUFACTURER'
+        );
+        if (itemProduct?.id === itemId) {
+          return { ...item, ...changes };
+        }
+        return item;
+      });
+      return updated;
+    });
   };
 
-  const handleResetPrice = (index) => {
+  const handleChange = (event, itemId) => {
+    const value = event.target.value;
+    setUnitPrice(value);
+    const changes = {
+      quantity: quantity.toString(),
+      unitPrice: value,
+      totalPrice: (quantity * parseFloat(value)).toFixed(2),
+    };
+    updateItem(itemId, changes);
+    setPlaceOrderActive(false);
+  };
+
+  const handleQuantityChange = (newQuantity) => {
+    setQuantity(newQuantity);
+    const changes = {
+      quantity: newQuantity.toString(),
+      unitPrice: unitPrice,
+      totalPrice: (newQuantity * parseFloat(unitPrice)).toFixed(2),
+    };
+    updateItem(itemProduct?.id, changes);
+    setPlaceOrderActive(false);
+  };
+
+  const handleResetPrice = () => {
     const originalPrice = item?.unitPrice;
-    handleInputChange(index, originalPrice);
+    setUnitPrice(originalPrice);
+    const changes = {
+      quantity: quantity.toString(),
+      unitPrice: originalPrice,
+      totalPrice: (quantity * parseFloat(originalPrice)).toFixed(2),
+    };
+    updateItem(itemProduct?.id, changes);
+    setPlaceOrderActive(false);
   };
 
   const handleDeleteLine = () => {
-    console.log('Line has been deleted');
+    setItems((prevItems) =>
+      prevItems.filter((i) => {
+        const product = i.product.find((p) => p.type === 'MANUFACTURER');
+        return product.id !== itemProduct?.id;
+      })
+    );
+    handleAddProductToGrid();
+    setPlaceOrderActive(false);
   };
 
   useEffect(() => {
-    setTotalPrice(quantity * unitPrices);
-  }, [quantity, unitPrices]);
+    setTotalPrice((quantity * parseFloat(unitPrice)).toFixed(2));
+  }, [quantity, unitPrice]);
+
   return (
     <tr>
       <td className="cmp-flyout-newPurchase__form-table__body__text">
         <div className="body-content-column">
-          <span>{item?.productFamily}</span>
-          <span>{item?.productDescription}</span>
+          <span>{itemProduct?.family}</span>
+          <span>{itemProduct?.name}</span>
         </div>
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text">
-        {item?.vendorPartNo}
+        {itemProduct?.id}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-end">
-        {item?.listPrice}
+        {item?.unitListPrice}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-end">
-        {isEditable ? (
+        {canEditResellerPrice ? (
           <div className="cmp-flyout-newPurchase__form-table__body__input">
             <input
               type="number"
-              value={unitPrices[index]}
-              onChange={(e) => handleInputChange(index, e.target.value)}
+              name="unitPrice"
+              value={unitPrice}
+              onChange={(e) => handleChange(e, itemProduct?.id)}
             />
-            <button onClick={() => handleResetPrice(index)}>
+            <button onClick={handleResetPrice}>
               <ArrowResetIcon />
             </button>
           </div>
@@ -64,7 +121,11 @@ const LineItem = ({ item, index, internalUser, setSubtotalValue }) => {
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-center">
         <div>
-          <QuantityColumn data={item} value={quantity} setValue={setQuantity} />
+          <QuantityColumn
+            item={item}
+            value={quantity}
+            setValue={handleQuantityChange}
+          />
         </div>
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-end">

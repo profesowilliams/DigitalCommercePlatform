@@ -290,7 +290,8 @@
       copyQuoteEndpoint: 'http://localhost:3000/ui-renewal/v1/CopyQuote',
     },
     newPurchaseFlyout: {
-      vendorPartNoLookUpEndpoint: "http://localhost:3000/ui-browse/v1/PartNumbers/Find",
+      vendorPartNoLookUpEndpoint: "http://localhost:3000/ui-renewal/v1/PartNumbers/Find",
+      addNewProductEndpoint: "http://localhost:3000/ui-renewal/v1/Cart/Validate",
       resellerAccountNumber: 'mainDashboard.renewal.newPurchaseFlyout.label.resellerAccountNumber',
       search: 'mainDashboard.renewal.newPurchaseFlyout.label.search',
       required: 'mainDashboard.renewal.newPurchaseFlyout.label.required',
@@ -349,6 +350,11 @@
       resellerSubtotal:'mainDashboard.renewal.newPurchaseFlyout.label.resellerSubtotal',
       taxesNotIncluded:'mainDashboard.renewal.newPurchaseFlyout.label.taxesNotIncluded',
       days:'mainDashboard.renewal.newPurchaseFlyout.label.days',
+      validateOrder:'mainDashboard.renewal.newPurchaseFlyout.label.validateOrder',
+      validating:'mainDashboard.renewal.newPurchaseFlyout.label.validating',
+      unknownError: "mainDashboard.renewal.newPurchaseFlyout.label.unknownError",
+      accountDoesntExistError: "mainDashboard.renewal.newPurchaseFlyout.label.accountDoesntExistError",
+      quoteExistsError: "mainDashboard.renewal.newPurchaseFlyout.label.quoteExistsError",
     },
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);

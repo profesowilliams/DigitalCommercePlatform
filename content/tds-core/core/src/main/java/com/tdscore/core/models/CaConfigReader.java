@@ -251,6 +251,10 @@ public class CaConfigReader {
 
     private String accountLookUpEndpoint;
 
+    private String vendorPartNoLookUpEndpoint;
+
+    private String addNewProductEndpoint;
+
     private String checkQuoteExitsforResellerEndpoint;
 
     private String copyQuoteEndpoint;
@@ -367,6 +371,8 @@ public class CaConfigReader {
         exportPDFRenewalsEndpoint = serviceEndPointsConfiguration.exportPDFRenewalsEndpoint();
      
         accountLookUpEndpoint = serviceEndPointsConfiguration.accountLookUpEndpoint();
+        vendorPartNoLookUpEndpoint = serviceEndPointsConfiguration.vendorPartNoLookUpEndpoint();
+        addNewProductEndpoint = serviceEndPointsConfiguration.addNewProductEndpoint();
         checkQuoteExitsforResellerEndpoint = serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint();
         copyQuoteEndpoint = serviceEndPointsConfiguration.copyQuoteEndpoint();
         shareQuoteEndpoint = serviceEndPointsConfiguration.shareQuoteEndpoint();
@@ -827,6 +833,10 @@ public class CaConfigReader {
     public String getRenewalGetStatusEndpoint() { return renewalGetStatusEndpoint; }
 
     public String getAccountLookUpEndpoint() { return accountLookUpEndpoint; }
+    
+    public String getVendorPartNoLookUpEndpoint() { return vendorPartNoLookUpEndpoint; }
+    
+    public String getAddNewProductEndpoint() { return addNewProductEndpoint; }
 
     public String getCheckQuoteExitsforResellerEndpoint() { return checkQuoteExitsforResellerEndpoint; }
 

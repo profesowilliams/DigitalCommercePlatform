@@ -1024,6 +1024,46 @@ li[id^='combo-box-demo-option-']:active {
       border-bottom: 1px solid $brand-icon-gray-color;
     }
   }
+
+  &__form-feedback-banner {
+    padding: 20px;
+    background-color: $light-blue;
+    border-left: 4px solid $brand-cobalt;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+
+    &.red-banner {
+      background-color: $banner-cherry;
+      border-left: 4px solid $brand-cherry;
+    }
+
+    &.orange-banner {
+      background-color: $banner-orange;
+      border-left: 4px solid $border-orange;
+    }
+
+    &.blue-banner {
+      background-color: $light-blue;
+      border-color: $brand-cobalt;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      color: $brand-charcoal;
+      margin: 0;
+      display: flex;
+      gap: 15px;
+      flex: 0 0 80%;
+    }
+
+    .banner-close-button {
+      cursor: pointer;
+    }
+  }
+
   &__form-table {
     margin-top: 10px;
     width: 100%;
@@ -1154,7 +1194,7 @@ li[id^='combo-box-demo-option-']:active {
           grid-area: input;
           border: 1px solid #75716e;
           text-align: center;
-          width: 32px;
+          min-width: 32px;
           height: 32px;
 
           &:focus {

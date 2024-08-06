@@ -1,22 +1,25 @@
 import React, { useRef } from 'react';
 import { AddIcon, SubtractIcon } from '../../../../fluentIcons/FluentIcons';
 
-function QuantityColumn({ value, setValue, data }) {
+function QuantityColumn({ value, setValue, item }) {
   const refInput = useRef();
-  const MIN_VAL = 0;
-  const MAX_VAL = 999998;
+  const MIN_VAL = Number(item?.minimumQuantity) || 0;
+  const MAX_VAL = Number(item?.maximumQuantity) || 999998;
   const MAX_DIGITS = MAX_VAL?.toString()?.length;
 
   const handleBtnClick = (addFlag = false) => {
-    addFlag ? refInput.current.stepUp() : refInput.current.stepDown();
-    setValue(refInput.current.valueAsNumber);
-    const total = data.totalPrice * refInput.current.valueAsNumber;
+    const newValue = addFlag
+      ? refInput.current.valueAsNumber + 1
+      : refInput.current.valueAsNumber - 1;
+
+    const clampedValue = clampNumber(newValue);
+    setValue(clampedValue);
   };
 
-  const handleInputValue = (e) => {
+  const handleChange = (e) => {
     const stringInput = e.target.value;
-    if (stringInput.length <= MAX_DIGITS)
-      setValue(clampNumber(Number(stringInput)));
+    const clampedValue = clampNumber(Number(stringInput));
+    setValue(clampedValue);
   };
 
   const handleFocus = (e) => e.target.select();
@@ -50,9 +53,11 @@ function QuantityColumn({ value, setValue, data }) {
       <input
         className="cmp-quantity-column__input"
         ref={refInput}
+        name="quantity"
         value={value}
+        style={{ width: `${Math.max(value.toString().length, 2)}ch` }}
         onFocus={handleFocus}
-        onChange={handleInputValue}
+        onChange={handleChange}
         type="number"
         step={1}
         min={MIN_VAL}
