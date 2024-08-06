@@ -3,8 +3,12 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import { useOrderTrackingStore } from './../../OrdersTrackingCommon/Store/OrderTrackingStore';
 
 const FilterDateType = ({ onRadioChange, options, selectedValue }) => {
+  const uiTranslations = useOrderTrackingStore((state) => state.uiTranslations);
+  const translations = uiTranslations?.['OrderTracking.MainGrid.Filters'];
+
   const styleLabel = {
     marginLeft: '-9px',
     '& .MuiSvgIcon-root': {
@@ -33,7 +37,7 @@ const FilterDateType = ({ onRadioChange, options, selectedValue }) => {
 
   return (
     <>
-      <p>Date criteria</p>
+      <p>{translations?.DateCriteria_Title || 'Date criteria'}</p>
       <FormControl>
         <RadioGroup
           aria-labelledby="controlled-radio-buttons-group"

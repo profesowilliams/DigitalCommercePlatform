@@ -43,7 +43,7 @@ const DatePredefinedRanges = ({ onChangeRadio, options, selectedValue }) => {
 
   return (
     <>
-      <p>Predefined ranges</p>
+      <p>{translations?.PredefinedRanges_Title || 'Predefined ranges'}</p>
       <FormControl>
         <RadioGroup
           aria-labelledby="controlled-radio-buttons-group"

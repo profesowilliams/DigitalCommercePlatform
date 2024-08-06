@@ -328,7 +328,6 @@ const OrderFilterDate = ({ onChange, initialFilter }, ref) => {
     onDatesChange({ startDate, endDate });
   };
 
-
   /**
    * Updates the maximum date based on the type provided.
    *
