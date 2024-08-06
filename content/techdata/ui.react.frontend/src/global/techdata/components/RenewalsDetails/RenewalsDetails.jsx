@@ -4,6 +4,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import RenewalPreviewGrid from "./RenewalPreviewGrid/RenewalPreviewGrid";
+import NewPurchaseFlyout from '../NewPurchaseFlyout/NewPurchaseFlyout';
 import useGet from "../../hooks/useGet";
 import Loader from "../Widgets/Loader";
 import Modal from '../Modal/Modal';
@@ -34,6 +35,7 @@ function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
   const errorMessages = componentProp?.errorMessages;
   const effects = useRenewalsDetailsStore(state => state.effects);
+  const { setCustomState } = effects;
   const { id = "U100000008378", type = "renewal" } = getUrlParams();
   const [modal, setModal] = useState(null);
   const [apiResponse, isLoading, error] = useGet(
@@ -257,6 +259,16 @@ function RenewalsDetails(props) {
     return true;
   }
 
+  const openNewPurchaseFlyout = (e) => {
+    e.preventDefault();
+    setCustomState({
+      key: 'newPurchaseFlyout',
+      value: {
+        show: true,
+      },
+    });
+  };
+
   const isEditable = ({ canEditLines }) => canEditLines && !saving;
   return (
     <div className={componentProp.productLines.enableActiveLicence === 'true' && renewalsDetails?.itemsActive?.length > 0 ?
@@ -280,7 +292,7 @@ function RenewalsDetails(props) {
                               <span className="details-preview">{componentProp?.productLines?.lineActiveLicenceLabel || "Details"}<span className="details-price-level">{renewalsDetails.renewalLevelActive}</span></span>
                               {
                                 renewalsDetails?.canAddMore &&
-                                  <div className="details-preview-add-more">
+                                  <div className="details-preview-add-more" onClick={openNewPurchaseFlyout}>
                                     <AddIcon width="17" />
                                     <span>{getDictionaryValueOrKey(componentProp?.productLines?.addMoreButton, 'Add More')}</span>
                                   </div>
@@ -397,6 +409,14 @@ function RenewalsDetails(props) {
         onClose={closeCancelDialog}
         labels={componentProp.quoteEditing}
       />
+      <NewPurchaseFlyout
+          store={useRenewalsDetailsStore}
+          copyFlyout={componentProp.copyFlyout}
+          newPurchaseFlyout={componentProp.newPurchaseFlyout}
+          subheaderReference={document.querySelector('.subheader > div > div')}
+          userData={userData}
+          componentProp={componentProp}
+        />
     </div>
   );
 }

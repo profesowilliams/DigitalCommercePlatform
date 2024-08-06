@@ -319,10 +319,10 @@ function NewPurchaseFlyout({
     } else {
       // TODO: Populate those field with proper data by the end of US #578976
       if (externalUser) {
-        setAccountNumber(userData1?.activeCustomer?.customerNumber || '');
-        setFirstName(userData1?.firstName || '');
-        setLastName(userData1?.lastName || '');
-        setEmail(userData1?.email || '');
+        setAccountNumber(userData?.activeCustomer?.customerNumber || '');
+        setFirstName(userData?.firstName || '');
+        setLastName(userData?.lastName || '');
+        setEmail(userData?.email || '');
       }
     }
   }, [newPurchaseFlyoutConfig?.show]);
