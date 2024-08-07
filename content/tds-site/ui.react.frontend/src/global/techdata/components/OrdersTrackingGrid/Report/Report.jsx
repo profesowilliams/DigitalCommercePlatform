@@ -117,14 +117,16 @@ function Report({ onInit, onChange, analyticsLabel }, ref) {
     // Check if the initial value (getInitial) is provided
     if (getInitial) {
       if (translations) {
+        let reportName = getInitial;
+
         // Normalize the initial value to 'EOLOrders' if it matches 'EOL' (case-insensitive)
-        if (getInitial.toLowerCase() === 'EOL'.toLowerCase()) {
-          getInitial = 'EOLOrders';
+        if (reportName.toLowerCase() === 'EOL'.toLowerCase()) {
+          reportName = 'EOLOrders';
         }
 
         handleSelectOption({
-          key: getInitial,
-          label: translations?.[getInitial],
+          key: reportName,
+          label: translations?.[reportName],
           isInit: true
         })
 
