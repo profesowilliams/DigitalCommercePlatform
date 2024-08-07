@@ -11,6 +11,7 @@ use(["../../../common/utils.js"], function(utils) {
     const lineItemDetailLabels = {};
     const requestQuote = {};
     const copyFlyout = {};
+    const newPurchaseFlyout = {};
     const shareFlyout = {};
     const revisionFlyout = {};
     const noResultsValues = {};
@@ -299,6 +300,90 @@ use(["../../../common/utils.js"], function(utils) {
             jsonObject["copyFlyout"] = copyFlyout;
         }
 
+         // New Purchase Flyout
+            const newPurchaseFlyoutList = [
+              "resellerAccountNumber",
+              "search",
+              "required",
+              "exceeds35CharacterLimit",
+              "invalidEmail",
+              "exceeds40CharacterLimit",
+              "exceeds10CharacterLimit",
+              "next",
+              "cancel",
+              "newPurchase",
+              "newPurchaseBanner",
+              "agreementDetails",
+              "description",
+              "indicatedRequiredField",
+              "resellerContact",
+              "contactFirstName",
+              "contactLastName",
+              "contactEmail",
+              "endUserContact",
+              "endUserCompanyName",
+              "endUserContactFirstName",
+              "endUserContactLastName",
+              "endUserEmail",
+              "endUserType",
+              "endUserTypeComercial",
+              "endUserTypeEducation",
+              "endUserTypeGovernment",
+              "endUserAddress",
+              "endUserAdress1",
+              "endUserAdress2",
+              "endUserCity",
+              "endUserAreaCode",
+              "endUserCountry",
+              "endUserVietnam",
+              "endUserCambodia",
+              "endUserLaos",
+              "back",
+              "placeOrder",
+              "orderDetails",
+              "resellerDetails",
+              "endUserDetails",
+              "endUserAddress",
+              "addProducts",
+              "searchForAdditionalSoftware",
+              "searchVendorPartNo",
+              "startDate",
+              "endDate",
+              "duration",
+              "licensePriceLevel",
+              "productDetails",
+              "vendorPartNo",
+              "listPrice",
+              "unitPrice",
+              "qty",
+              "totalPrice",
+              "subtotal",
+              "resellerSubtotal",
+              "taxesNotIncluded",
+              "days",
+              "validateOrder",
+              "validating",
+              "unknownError",
+              "accountDoesntExistError",
+              "quoteExistsError",
+            ];
+
+            newPurchaseFlyoutList.map(
+              (property) => (newPurchaseFlyout[property] = properties[property])
+            );
+
+            if (newPurchaseFlyout != null) {
+              jsonObject["newPurchaseFlyout"] = newPurchaseFlyout;
+            }
+           if (this.vendorPartNoLookUpEndpoint && this.serviceData.uiServiceDomain) {
+             newPurchaseFlyout.vendorPartNoLookUpEndpoint =
+               this.serviceData.uiServiceDomain + this.vendorPartNoLookUpEndpoint;
+           }
+           if (this.addNewProductEndpoint && this.serviceData.uiServiceDomain) {
+             newPurchaseFlyout.addNewProductEndpoint =
+               this.serviceData.uiServiceDomain + this.vendorPartNoLookUpEndpoint;
+           }
+2
         // Share flyout
         const shareFlyoutList = [
             "shareFlyoutTitle",

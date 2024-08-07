@@ -271,14 +271,13 @@ use(["../../../common/utils.js"], function (utils) {
       jsonObject["newPurchaseFlyout"] = newPurchaseFlyout;
     }
     if (this.vendorPartNoLookUpEndpoint && this.serviceData.uiServiceDomain) {
-      newPurchaseFlyout["vendorPartNoLookUpEndpoint"] =
-        this.serviceData.uiServiceDomain + this.newPurchaseFlyout;
+      newPurchaseFlyout.vendorPartNoLookUpEndpoint =
+        this.serviceData.uiServiceDomain + this.vendorPartNoLookUpEndpoint;
     }
     if (this.addNewProductEndpoint && this.serviceData.uiServiceDomain) {
-      newPurchaseFlyout["addNewProductEndpoint"] =
-        this.serviceData.uiServiceDomain + this.newPurchaseFlyout;
+      newPurchaseFlyout.addNewProductEndpoint =
+        this.serviceData.uiServiceDomain + this.vendorPartNoLookUpEndpoint;
     }
-
     // Share Flyout
     const shareFlyoutList = [
       "shareFlyoutTitle",
