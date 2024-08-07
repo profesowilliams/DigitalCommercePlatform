@@ -303,8 +303,6 @@ function FormPart2({
       setVendorPartNo('');
     }
   }, [datePickerOpen, vendorPartNo, pickedEndDate]);
-  console.log('vendorPartNo', vendorPartNo);
-  console.log('manufacturerPartNumber', manufacturerPartNumber);
 
   useEffect(() => {
     if (buttonClicked) {

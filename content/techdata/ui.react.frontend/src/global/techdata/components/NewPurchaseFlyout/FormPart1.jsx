@@ -403,71 +403,68 @@ function FormPart1({
       <div className="cmp-flyout-newPurchase__form">
         <div className="cmp-flyout-newPurchase__form__container">
           <p>{getDictionaryValueOrKey(newPurchaseFlyout?.resellerContact)}</p>
-          {internalUser && (
-            <div className="cmp-flyout-newPurchase__form__input-reseller-search">
-              <Autocomplete
-                id="combo-box-demo"
-                open={isAutocompleteOpen}
-                freeSolo={true}
-                options={quotes}
-                filterOptions={filterOptions}
-                getOptionLabel={(option) =>
-                  option.accountNumber ?? accountNumber
-                }
-                onChange={handleQuoteSelectedChange}
-                value={selectedQuote}
-                onKeyDown={handleKeyDown}
-                renderOption={(props, option) => {
-                  return (
-                    <li {...props}>
-                      <div>
-                        <div className="cmp-flyout-autocomplete__option-name">
-                          <QuoteDetails
-                            quote={option}
-                            currentlyTypedWord={accountNumber}
-                          />
-                        </div>
+
+          <div className="cmp-flyout-newPurchase__form__input-reseller-search">
+            <Autocomplete
+              id="combo-box-demo"
+              open={isAutocompleteOpen}
+              freeSolo={true}
+              options={quotes}
+              filterOptions={filterOptions}
+              getOptionLabel={(option) => option.accountNumber ?? accountNumber}
+              onChange={handleQuoteSelectedChange}
+              value={selectedQuote}
+              onKeyDown={handleKeyDown}
+              renderOption={(props, option) => {
+                return (
+                  <li {...props}>
+                    <div>
+                      <div className="cmp-flyout-autocomplete__option-name">
+                        <QuoteDetails
+                          quote={option}
+                          currentlyTypedWord={accountNumber}
+                        />
                       </div>
-                    </li>
-                  );
-                }}
-                renderInput={(params) => {
-                  if (errorMessage && !isTyping) {
-                    params.inputProps.value = '';
-                  }
-                  return (
-                    <TextField
-                      {...params}
-                      error={!!errorMessage}
-                      label={getDictionaryValueOrKey(
-                        newPurchaseFlyout?.resellerAccountNumber
-                      )}
-                      value={accountNumber}
-                      variant="standard"
-                      onChange={handleResellerIdChange}
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                          <div className="cmp-autocomplete__button-section">
-                            <Button
-                              className="cmp-button__autocomplete-search"
-                              variant="standard"
-                              onClick={selectQuoteForCopying}
-                            >
-                              <AutoCompleteSearchIcon />
-                            </Button>
-                          </div>
-                        ),
-                      }}
-                    />
-                  );
-                }}
-              />
-              {errorMessage && (
-                <div className="cmp-flyout__content--error">{errorMessage}</div>
-              )}
-            </div>
-          )}
+                    </div>
+                  </li>
+                );
+              }}
+              renderInput={(params) => {
+                if (errorMessage && !isTyping) {
+                  params.inputProps.value = '';
+                }
+                return (
+                  <TextField
+                    {...params}
+                    error={!!errorMessage}
+                    label={getDictionaryValueOrKey(
+                      newPurchaseFlyout?.resellerAccountNumber
+                    )}
+                    value={accountNumber}
+                    variant="standard"
+                    onChange={handleResellerIdChange}
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <div className="cmp-autocomplete__button-section">
+                          <Button
+                            className="cmp-button__autocomplete-search"
+                            variant="standard"
+                            onClick={selectQuoteForCopying}
+                          >
+                            <AutoCompleteSearchIcon />
+                          </Button>
+                        </div>
+                      ),
+                    }}
+                  />
+                );
+              }}
+            />
+            {errorMessage && (
+              <div className="cmp-flyout__content--error">{errorMessage}</div>
+            )}
+          </div>
           <TextField
             className="cmp-flyout-newPurchase__form__input-container"
             id="first-name"
