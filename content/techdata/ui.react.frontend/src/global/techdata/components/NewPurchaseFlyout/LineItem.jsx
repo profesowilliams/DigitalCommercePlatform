@@ -13,7 +13,7 @@ const LineItem = ({
   setPlaceOrderActive,
 }) => {
   // Initialize the state with the unit price as a string
-  const [quantity, setQuantity] = useState(item?.quantity || '1');
+  const [quantity, setQuantity] = useState(parseInt(item?.quantity) || '1');
   const [unitPrice, setUnitPrice] = useState(item?.unitPrice || '0');
   const [totalPrice, setTotalPrice] = useState(() =>
     (quantity * parseFloat(unitPrice)).toFixed(2)
@@ -39,7 +39,8 @@ const LineItem = ({
   };
 
   const handleChange = (event, itemId) => {
-    const value = event.target.value;
+    let value = event.target.value;
+    value = parseFloat(value).toFixed(2);
     setUnitPrice(value);
     const changes = {
       quantity: quantity.toString(),
@@ -51,18 +52,19 @@ const LineItem = ({
   };
 
   const handleQuantityChange = (newQuantity) => {
-    setQuantity(newQuantity);
+    const integerQuantity = parseInt(newQuantity);
+    setQuantity(integerQuantity);
     const changes = {
-      quantity: newQuantity.toString(),
+      quantity: integerQuantity.toString(),
       unitPrice: unitPrice,
-      totalPrice: (newQuantity * parseFloat(unitPrice)).toFixed(2),
+      totalPrice: (integerQuantity * parseFloat(unitPrice)).toFixed(2),
     };
     updateItem(itemProduct?.id, changes);
     setPlaceOrderActive(false);
   };
 
   const handleResetPrice = () => {
-    const originalPrice = item?.unitPrice;
+    const originalPrice = parseFloat(item?.unitPrice).toFixed(2);
     setUnitPrice(originalPrice);
     const changes = {
       quantity: quantity.toString(),

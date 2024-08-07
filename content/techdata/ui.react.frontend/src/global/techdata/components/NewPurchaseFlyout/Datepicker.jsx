@@ -98,8 +98,9 @@ export default function DatePicker({
               if (momentStartDate) {
                 const threeYearsFromStart = momentStartDate
                   .clone()
-                  .add(3, 'years');
-                // If the day is after three years from the start date, return true
+                  .add(3, 'years')
+                  .subtract(1, 'day');
+                // If the day is after three years - 1 day from the start date, return true
                 if (day.isAfter(threeYearsFromStart, 'day')) {
                   return true;
                 }

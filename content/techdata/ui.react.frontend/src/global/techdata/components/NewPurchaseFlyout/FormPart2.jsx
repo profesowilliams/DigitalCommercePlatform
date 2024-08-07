@@ -25,7 +25,6 @@ function FormPart2({
   newPurchaseFlyout,
   formPart1States,
   pickedResellerQuote,
-  internalUser,
   currency,
   defaultCurrency,
   setCurrency,
@@ -64,21 +63,21 @@ function FormPart2({
   // Banned state
   const [bannerOpen, setBannerOpen] = useState(true);
   // Date
-  const [datePickerOpen, setDatePickerOpen] = useState(false);
+  const [datePickerOpen, setDatePickerOpen] = useState(true);
   const today = new Date();
   const futureDate = new Date(today);
-  futureDate.setDate(today.getDate() + 365);
-  const formattedEndDate = formatDate(futureDate);
+  futureDate.setDate(today.getDate() + 364);
+  const defaultEndDate = formatDate(futureDate);
   const startDate = formatDate(today);
-  const [pickedEndDate, setPickedEndDate] = useState(formattedEndDate);
-  const [duration, setDuration] = useState('365');
+  const [pickedEndDate, setPickedEndDate] = useState(defaultEndDate);
+  const [duration, setDuration] = useState('364');
   const licensePriceLevel = '1 (Qty: 1-9)';
 
   // Grid
   const { productId, manufacturerPartNumber, globalManufacturer } =
     selectedVendorPartNo || {};
   const [dataTable, setDataTable] = useState([]);
-
+  const [vendorPartNo, setVendorPartNo] = useState(manufacturerPartNumber);
   // Add Product to Grid
   const [items, setItems] = useState([]);
 
@@ -114,7 +113,7 @@ function FormPart2({
           product: [
             {
               type: 'MANUFACTURER',
-              id: manufacturerPartNumber,
+              id: vendorPartNo,
             },
           ],
           quantity: '1',
@@ -168,11 +167,12 @@ function FormPart2({
     const resellerId = event.target.value;
     setVendorNumber(resellerId);
 
-    if (resellerId.length >= 3) {
+    if (resellerId?.length >= 3) {
       setIsAutocompleteOpen(true);
 
       const payload = {
         MaxParts: 10,
+        GetDetails: 'true',
         PartialManufacturerPartNumber: resellerId,
         Properties: [
           {
@@ -217,7 +217,7 @@ function FormPart2({
       return;
     }
 
-    const vendorPartNoExists = vendorPartNumbers.length > 0;
+    const vendorPartNoExists = vendorPartNumbers?.length > 0;
 
     if (vendorPartNoExists) {
       setIsTyping(false);
@@ -231,22 +231,22 @@ function FormPart2({
     setIsAutocompleteOpen(false);
   };
 
-  const handleQuoteSelectedChange = (event, newInput) => {
+  const handleVendorSelectedChange = (event, newInput) => {
     findSelectedVendorPartNo(newInput);
     setSelectedVendorPartNo(newInput);
     setErrorMessage('');
-    handleAddProductToGrid();
+    setDatePickerOpen(true);
   };
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      selectQuoteForCopying();
+      selectVendor();
       event.preventDefault();
       event.stopPropagation();
     }
   };
 
-  const selectQuoteForCopying = () => {
+  const selectVendor = () => {
     const newInput = vendorPartNumbers.find(
       (vendorPart) => vendorPart.productId === vendorNumber
     );
@@ -270,6 +270,11 @@ function FormPart2({
     setSubtotalValue(subtotal?.toFixed(2));
   }, [items, setSubtotalValue]);
 
+  // Handl date picker open and close
+  const handleDatePickerOpen = () => {
+    setDatePickerOpen((prevState) => !prevState);
+  };
+
   useEffect(() => {
     calculateSubtotal();
   }, [items, calculateSubtotal]);
@@ -284,6 +289,23 @@ function FormPart2({
       setPlaceOrderActive(false);
     }
   }, [blueBanner, validating]);
+
+  // Trigger Validate request from useEffect
+  useEffect(() => {
+    if (manufacturerPartNumber) {
+      setVendorPartNo(manufacturerPartNumber);
+    }
+  }, [manufacturerPartNumber]);
+
+  useEffect(() => {
+    if (datePickerOpen === false && vendorPartNo?.length > 0 && pickedEndDate) {
+      handleAddProductToGrid();
+      setVendorPartNo('');
+    }
+  }, [datePickerOpen, vendorPartNo, pickedEndDate]);
+  console.log('vendorPartNo', vendorPartNo);
+  console.log('manufacturerPartNumber', manufacturerPartNumber);
+
   useEffect(() => {
     if (buttonClicked) {
       handleAddProductToGrid();
@@ -369,12 +391,12 @@ function FormPart2({
             getOptionLabel={(option) => {
               return option.productId ?? vendorNumber;
             }}
-            onChange={handleQuoteSelectedChange}
+            onChange={handleVendorSelectedChange}
             value={selectedVendorPartNo}
             onKeyDown={handleKeyDown}
             renderOption={(props, option) => {
               return (
-                <li {...props}>
+                <li {...props} key={option.productId}>
                   <div>
                     <div className="cmp-flyout-autocomplete__option-name">
                       <VendorPartNoDetails
@@ -407,7 +429,7 @@ function FormPart2({
                         <Button
                           className="cmp-button__autocomplete-search"
                           variant="standard"
-                          onClick={selectQuoteForCopying}
+                          onClick={selectVendor}
                         >
                           <AutoCompleteSearchIcon />
                         </Button>
@@ -437,10 +459,10 @@ function FormPart2({
               {getDictionaryValueOrKey(newPurchaseFlyout?.endDate)}
             </span>
             <div
-              onClick={() => setDatePickerOpen((prevState) => !prevState)}
+              onClick={handleDatePickerOpen}
               className="cmp-flyout-newPurchase__form-date__input"
             >
-              {pickedEndDate ? pickedEndDate : formattedEndDate}
+              {pickedEndDate ? pickedEndDate : defaultEndDate}
             </div>
           </div>
           <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
@@ -464,14 +486,14 @@ function FormPart2({
           <DatePicker
             isOpen={datePickerOpen}
             startDate={startDate}
-            endDate={formattedEndDate}
+            endDate={defaultEndDate}
             setPickedEndDate={setPickedEndDate}
             setDuration={setDuration}
           />
         )}
         {bannerOpen &&
           dataTable?.feedBackMessages &&
-          dataTable?.feedBackMessages.length > 0 &&
+          dataTable?.feedBackMessages?.length > 0 &&
           errorCriticality &&
           !noBanner &&
           (redBanner || orangeBanner || blueBanner) &&

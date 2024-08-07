@@ -17,9 +17,8 @@ function NewPurchaseFlyout({
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
-  // const internalUser = userData?.isHouseAccount;
+  const internalUser = userData?.isHouseAccount;
   const defaultCurrency = userData?.activeCustomer?.defaultCurrency;
-  const internalUser = true;
   const externalUser = !internalUser;
 
   const newPurchaseFlyoutConfig = store((state) => state.newPurchaseFlyout);
@@ -109,7 +108,7 @@ function NewPurchaseFlyout({
   // Buttons state
   const [validating, setValidating] = useState(false);
   const [placeOrderActive, setPlaceOrderActive] = useState(false);
-  const [buttonClicked, setButtonClicked] = useState(true);
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   const formPart1States = {
     enableNext,
@@ -415,7 +414,6 @@ function NewPurchaseFlyout({
             newPurchaseFlyout={newPurchaseFlyout}
             formPart1States={formPart1States}
             pickedResellerQuote={selectedQuote}
-            internalUser={internalUser}
             currency={currency}
             defaultCurrency={defaultCurrency}
             setCurrency={setCurrency}
