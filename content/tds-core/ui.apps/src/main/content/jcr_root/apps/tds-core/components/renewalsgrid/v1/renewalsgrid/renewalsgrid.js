@@ -276,7 +276,7 @@ use(["../../../common/utils.js"], function (utils) {
     }
     if (this.addNewProductEndpoint && this.serviceData.uiServiceDomain) {
       newPurchaseFlyout.addNewProductEndpoint =
-        this.serviceData.uiServiceDomain + this.vendorPartNoLookUpEndpoint;
+        this.serviceData.uiServiceDomain + this.addNewProductEndpoint;
     }
     // Share Flyout
     const shareFlyoutList = [
