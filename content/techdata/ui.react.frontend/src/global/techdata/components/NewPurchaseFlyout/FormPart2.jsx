@@ -336,7 +336,6 @@ function FormPart2({
     }
   }, [payloadWithoutNewItem]);
 
-  console.log('itemsPayload', itemsPayload);
   return (
     <>
       <div className="cmp-flyout-newPurchase__form-details">

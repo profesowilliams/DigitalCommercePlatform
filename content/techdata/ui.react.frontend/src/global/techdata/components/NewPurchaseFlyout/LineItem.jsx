@@ -13,7 +13,8 @@ const LineItem = ({
   setPayloadWithoutNewItem,
 }) => {
   // Initialize the state with the unit price as a string
-  const [quantity, setQuantity] = useState(parseInt(item?.quantity) || '1');
+  const initialQuantity = parseInt(item?.quantity || '1');
+  const [quantity, setQuantity] = useState(parseInt(initialQuantity));
   const [unitPrice, setUnitPrice] = useState(item?.unitPrice || '0');
   const [totalPrice, setTotalPrice] = useState(() =>
     (quantity * parseFloat(unitPrice)).toFixed(2)
@@ -85,6 +86,10 @@ const LineItem = ({
   useEffect(() => {
     setTotalPrice((quantity * parseFloat(unitPrice)).toFixed(2));
   }, [quantity, unitPrice]);
+
+  useEffect(() => {
+    setQuantity(initialQuantity);
+  }, [item?.quantity]);
 
   return (
     <tr>
