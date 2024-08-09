@@ -183,6 +183,7 @@ function NewPurchaseFlyout({
   };
   const handleValidate = () => {
     setPayloadWithoutNewItem((prevState) => !prevState);
+    setValidating(true);
   };
   const handlePlaceOrder = () => {
     setStep(3);

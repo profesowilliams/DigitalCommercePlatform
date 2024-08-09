@@ -82,15 +82,25 @@ function FormPart2({
   // Add Product to Grid
   const [items, setItems] = useState([]);
 
-  const resellerId = pickedResellerQuote?.accountNumber;
-  const itemsChecked = items && Array.isArray(items) ? items : [];
-  const itemsPayload = itemsChecked?.map((item) => item);
   const pickedEndDateFormatted = moment(pickedEndDate, 'DD/MM/YYYY').format(
     'YYYY-MM-DD[T]HH:mm:ss[Z]'
   );
   const pickedStartDateFormatted = moment(startDate, 'DD/MM/YYYY').format(
     'YYYY-MM-DD[T]HH:mm:ss[Z]'
   );
+  const resellerId = pickedResellerQuote?.accountNumber;
+  const itemsChecked = items && Array.isArray(items) ? items : [];
+  const itemsPayload = itemsChecked?.map((item) => {
+    return {
+      ...item,
+      contract: {
+        ...item.contract,
+        startDate: pickedStartDateFormatted,
+        endDate: pickedEndDateFormatted,
+      },
+    };
+  });
+
   const handleAddProductToGrid = async () => {
     setErrorMessage('');
     setBannerOpen(false);
@@ -98,7 +108,7 @@ function FormPart2({
     const newItem = !payloadWithoutNewItem
       ? {
           id: '',
-          products: [
+          product: [
             {
               type: 'MANUFACTURER',
               id: vendorPartNo,
@@ -322,7 +332,6 @@ function FormPart2({
   useEffect(() => {
     if (payloadWithoutNewItem) {
       handleAddProductToGrid();
-      setValidating(true);
       setBannerOpen(true);
     }
   }, [payloadWithoutNewItem]);
@@ -551,7 +560,6 @@ function FormPart2({
           defaultCurrency={defaultCurrency}
           subtotalValue={subtotalValue}
           setItems={setItems}
-          handleAddProductToGrid={handleAddProductToGrid}
           setPlaceOrderActive={setPlaceOrderActive}
           setPayloadWithoutNewItem={setPayloadWithoutNewItem}
         />

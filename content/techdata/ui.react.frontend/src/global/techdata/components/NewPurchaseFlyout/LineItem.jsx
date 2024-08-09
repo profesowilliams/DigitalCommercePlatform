@@ -9,7 +9,6 @@ const LineItem = ({
   item,
   data,
   setItems,
-  handleAddProductToGrid,
   setPlaceOrderActive,
   setPayloadWithoutNewItem,
 }) => {
@@ -80,7 +79,6 @@ const LineItem = ({
         return i.id !== item?.id;
       })
     );
-    handleAddProductToGrid();
     setPlaceOrderActive(false);
   };
 

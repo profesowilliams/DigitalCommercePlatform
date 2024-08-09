@@ -10,7 +10,6 @@ const NewPurchaseTable = ({
   defaultCurrency,
   subtotalValue,
   setItems,
-  handleAddProductToGrid,
   setPlaceOrderActive,
   setPayloadWithoutNewItem,
 }) => {
@@ -85,7 +84,6 @@ const NewPurchaseTable = ({
               item={item}
               data={data}
               setItems={setItems}
-              handleAddProductToGrid={handleAddProductToGrid}
               setPlaceOrderActive={setPlaceOrderActive}
               setPayloadWithoutNewItem={setPayloadWithoutNewItem}
             />
