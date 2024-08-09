@@ -5516,188 +5516,7 @@ app.post("/ui-renewal/v1/PartNumbers/Find", function (req, res) {
 });
 
 app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
-  const success = {
-    content: {
-      reseller: {
-        id: "",
-        isValid: true,
-        incumbent: false,
-        vendorAccountNumber: {
-          isValid: false,
-          isMandatory: false,
-          isDisplay: false,
-          canEdit: true,
-          allowedLength: 0,
-        },
-        name: "",
-        nameUpper: "",
-        contact: [
-          {
-            name: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-            email: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-            phone: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-          },
-        ],
-        address: {
-          line1: "",
-          city: "",
-          country: "",
-          countryCode: "",
-        },
-      },
-      endUser: {
-        isValid: true,
-        name: {
-          isValid: false,
-          isMandatory: false,
-          isDisplay: false,
-          canEdit: false,
-          allowedLength: 0,
-        },
-        nameUpper: "",
-        eaNumber: {
-          isValid: false,
-          isMandatory: false,
-          isDisplay: false,
-          canEdit: false,
-          allowedLength: 0,
-        },
-        contact: [
-          {
-            name: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-            email: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-            phone: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-          },
-        ],
-        address: {
-          line1: {
-            isValid: false,
-            isMandatory: false,
-            isDisplay: false,
-            canEdit: false,
-            allowedLength: 0,
-          },
-          city: {
-            isValid: false,
-            isMandatory: false,
-            isDisplay: false,
-            canEdit: false,
-            allowedLength: 0,
-          },
-          postalCode: {
-            isValid: false,
-            isMandatory: false,
-            isDisplay: false,
-            canEdit: false,
-            allowedLength: 0,
-          },
-          country: {
-            isValid: false,
-            isMandatory: false,
-            isDisplay: false,
-            canEdit: false,
-            allowedLength: 0,
-          },
-          countryCode: {
-            isValid: false,
-            isMandatory: false,
-            isDisplay: false,
-            canEdit: false,
-            allowedLength: 0,
-          },
-        },
-      },
-      items: [
-        {
-          id: "1",
-          product: [
-            {
-              type: "TECHDATA",
-            },
-            {
-              type: "MANUFACTURER",
-              id: "123231234",
-              name: "Product very special name",
-              manufacturer: "manufacturer",
-              manufacturerId: "manufacturerId",
-              localManufacturer: "localManufacturer",
-              classification: "classification",
-              family: "family",
-            },
-          ],
-          quantity: "100.0",
-          unitPrice: "10",
-          unitPriceCurrency: "VND",
-          totalPrice: "10.0",
-          unitListPrice: "10.0",
-          unitListPriceCurrency: "VND",
-          agency: "CreateOrder",
-          minimumQuantity: "0.0",
-          maximumQuantity: "999998.0",
-          contract: {
-            startDate: "4/12/2025 12:00:00 AM",
-            endDate: "4/12/2025 12:00:00 AM",
-          },
-        },
-      ],
-      currency: "PLN",
-      totalSellPrice: "0",
-      renewalLevel: "renewalLevel",
-      feedBackMessages: [
-        {
-          ruleNumber: 102,
-          errorCriticality: 1,
-          message:
-            "We have experienced an unexpected error processing your order for TEST1234 IBM. Contact your Account Manager for more information.",
-          refId: "P1005108534",
-          type: "Preview Order",
-          jsonUrl: "UI-Renewal/v1/GetAdobeRenewalAuditLogs?",
-          jsonUrlMessage: "View error details",
-        },
-      ],
-    },
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  };
+  
   const success2 = {
     content: {
       reseller: {
@@ -5831,29 +5650,26 @@ app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
           product: [
             {
               type: "TECHDATA",
+              id: "ADB65304470CA02A12",
             },
             {
               type: "MANUFACTURER",
-              id: "123231234",
-              name: "Product very special name",
-              manufacturer: "manufacturer",
-              manufacturerId: "manufacturerId",
-              localManufacturer: "localManufacturer",
-              classification: "classification",
-              family: "family",
+              id: "65304470CA02A12",
+              name: "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
+              family: "Acrobat",
             },
           ],
-          quantity: "100.0",
-          unitPrice: "10.00",
+          quantity: "10.00",
+          unitPrice: "6115000.00",
           unitPriceCurrency: "VND",
-          totalPrice: "1000.00",
-          unitListPrice: "10.00",
+          unitCost: "229.68",
+          unitCostCurrency: "USD",
+          totalPrice: "61150000.00",
+          unitListPrice: "6934000.00",
           unitListPriceCurrency: "VND",
           agency: "CreateOrder",
-          minimumQuantity: "0.0",
-          maximumQuantity: "999998.0",
           contract: {
-            startDate: "4/12/2025 12:00:00 AM",
+            startDate: "5/12/2024 12:00:00 AM",
             endDate: "4/12/2025 12:00:00 AM",
           },
         },
@@ -5862,29 +5678,26 @@ app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
           product: [
             {
               type: "TECHDATA",
+              id: "ADB65304470CA02A13",
             },
             {
               type: "MANUFACTURER",
-              id: "123231235",
-              name: "Product very special name 2",
-              manufacturer: "manufacturer",
-              manufacturerId: "manufacturerId2",
-              localManufacturer: "localManufacturer",
-              classification: "classification",
-              family: "family",
+              id: "65304470CA02A13",
+              name: "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
+              family: "Acrobat",
             },
           ],
-          quantity: "100.0",
-          unitPrice: "10.00",
+          quantity: "10.00",
+          unitPrice: "6115000.00",
           unitPriceCurrency: "VND",
-          totalPrice: "1000.00",
-          unitListPrice: "10.00",
+          unitCost: "229.68",
+          unitCostCurrency: "USD",
+          totalPrice: "61150000.00",
+          unitListPrice: "6934000.00",
           unitListPriceCurrency: "VND",
           agency: "CreateOrder",
-          minimumQuantity: 0,
-          maximumQuantity: 999998,
           contract: {
-            startDate: "4/12/2025 12:00:00 AM",
+            startDate: "5/12/2024 12:00:00 AM",
             endDate: "4/12/2025 12:00:00 AM",
           },
         },
@@ -5895,7 +5708,7 @@ app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
       feedBackMessages: [
         {
           ruleNumber: 102,
-          errorCriticality: 1,
+          errorCriticality: 3,
           message:
             "We have experienced an unexpected error processing your order for TEST1234 IBM. Contact your Account Manager for more information.",
           refId: "P1005108534",

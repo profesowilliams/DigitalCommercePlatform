@@ -549,7 +549,6 @@ function RenewalsGrid(props) {
         newPurchaseFlyout={gridConfig.newPurchaseFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
         userData={userData}
-        componentProp={componentProp}
       />
       <RevisionFlyout
         store={useRenewalGridState}

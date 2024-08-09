@@ -26,10 +26,7 @@ const LineItem = ({
   const updateItem = (itemId, changes) => {
     setItems((prev) => {
       const updated = prev.map((item) => {
-        const itemProduct = item?.product.find(
-          (product) => product?.type === 'MANUFACTURER'
-        );
-        if (itemProduct?.id === itemId) {
+        if (item?.id === itemId) {
           return { ...item, ...changes };
         }
         return item;
@@ -59,7 +56,7 @@ const LineItem = ({
       unitPrice: unitPrice,
       totalPrice: (integerQuantity * parseFloat(unitPrice)).toFixed(2),
     };
-    updateItem(itemProduct?.id, changes);
+    updateItem(item?.id, changes);
     setPlaceOrderActive(false);
   };
 
@@ -71,15 +68,14 @@ const LineItem = ({
       unitPrice: originalPrice,
       totalPrice: (quantity * parseFloat(originalPrice)).toFixed(2),
     };
-    updateItem(itemProduct?.id, changes);
+    updateItem(item?.id, changes);
     setPlaceOrderActive(false);
   };
 
   const handleDeleteLine = () => {
     setItems((prevItems) =>
       prevItems.filter((i) => {
-        const product = i.product.find((p) => p.type === 'MANUFACTURER');
-        return product.id !== itemProduct?.id;
+        return i.id !== item?.id;
       })
     );
     handleAddProductToGrid();
@@ -111,7 +107,7 @@ const LineItem = ({
               type="number"
               name="unitPrice"
               value={unitPrice}
-              onChange={(e) => handleChange(e, itemProduct?.id)}
+              onChange={(e) => handleChange(e, item?.id)}
             />
             <button onClick={handleResetPrice}>
               <ArrowResetIcon />

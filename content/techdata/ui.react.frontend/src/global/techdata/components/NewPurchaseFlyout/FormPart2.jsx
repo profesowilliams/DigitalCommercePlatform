@@ -13,6 +13,7 @@ import { vendorPartNoLookUp, addProductToGrid } from './api';
 import { VendorPartNoDetails } from './VendorPartNoDetails';
 import NewPurchaseTable from './NewPurchaseTable';
 import DatePicker from './Datepicker';
+import moment from 'moment';
 
 export const formatDate = (date) => {
   const day = String(date.getDate()).padStart(2, '0');
@@ -82,12 +83,41 @@ function FormPart2({
   const [items, setItems] = useState([]);
 
   const resellerId = pickedResellerQuote?.accountNumber;
+  const itemsChecked = items && Array.isArray(items) ? items : [];
+  const itemsPayload = itemsChecked?.map((item) => item);
+  const pickedEndDateFormatted = moment(pickedEndDate, 'DD/MM/YYYY').format(
+    'YYYY-MM-DD[T]HH:mm:ss[Z]'
+  );
+  const pickedStartDateFormatted = moment(startDate, 'DD/MM/YYYY').format(
+    'YYYY-MM-DD[T]HH:mm:ss[Z]'
+  );
   const handleAddProductToGrid = async () => {
     setErrorMessage('');
     setBannerOpen(false);
 
-    const itemsChecked = items && Array.isArray(items) ? items : [];
-    const itemsPayload = itemsChecked?.map((item) => item);
+    const newItem = !buttonClicked
+      ? {
+          id: '',
+          products: [
+            {
+              type: 'MANUFACTURER',
+              id: vendorPartNo,
+            },
+          ],
+          quantity: '1',
+          contract: {
+            startDate: pickedStartDateFormatted,
+            endDate: pickedEndDateFormatted,
+          },
+        }
+      : null;
+
+    // Assuming itemsPayload is an array where you are adding newItem
+    const existingItems = [...itemsPayload, newItem];
+
+    // Filter out null values from the array
+    const filteredItemsPayload = existingItems.filter((item) => item !== null);
+
     const addProductPayload = {
       reseller: {
         id: resellerId || '',
@@ -106,23 +136,8 @@ function FormPart2({
           country: endUserCountry,
         },
       },
-      items: [
-        ...itemsPayload,
-        {
-          id: '1',
-          product: [
-            {
-              type: 'MANUFACTURER',
-              id: vendorPartNo,
-            },
-          ],
-          quantity: '1',
-          contract: {
-            startDate: startDate,
-            endDate: pickedEndDate,
-          },
-        },
-      ],
+
+      items: filteredItemsPayload,
     };
 
     try {
@@ -189,7 +204,7 @@ function FormPart2({
         newPurchaseFlyout?.vendorPartNoLookUpEndpoint,
         payload
       );
-      if (response.isError) {
+      if (response?.isError) {
         setErrorMessage(newPurchaseFlyout?.unknownError);
         setVendorPartNumbers([]);
       } else {
@@ -280,7 +295,7 @@ function FormPart2({
   }, [items, calculateSubtotal]);
 
   useEffect(() => {
-    if (blueBanner) {
+    if (buttonClicked && blueBanner) {
       setPlaceOrderActive(true);
     } else {
       setPlaceOrderActive(false);
@@ -311,6 +326,7 @@ function FormPart2({
       setBannerOpen(true);
     }
   }, [buttonClicked]);
+
 
   return (
     <>
@@ -384,17 +400,17 @@ function FormPart2({
             id="combo-box-demo"
             open={isAutocompleteOpen}
             freeSolo={true}
-            options={vendorPartNumbers}
+            options={vendorPartNumbers || []}
             filterOptions={filterOptions}
             getOptionLabel={(option) => {
-              return option.productId ?? vendorNumber;
+              return option?.productId ?? vendorNumber;
             }}
             onChange={handleVendorSelectedChange}
             value={selectedVendorPartNo}
             onKeyDown={handleKeyDown}
             renderOption={(props, option) => {
               return (
-                <li {...props} key={option.productId}>
+                <li {...props} key={option?.productId}>
                   <div>
                     <div className="cmp-flyout-autocomplete__option-name">
                       <VendorPartNoDetails

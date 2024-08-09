@@ -13,7 +13,6 @@ function NewPurchaseFlyout({
   newPurchaseFlyout,
   subheaderReference,
   userData,
-  componentProp,
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
