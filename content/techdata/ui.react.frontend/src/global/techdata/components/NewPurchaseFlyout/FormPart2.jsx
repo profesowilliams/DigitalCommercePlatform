@@ -34,8 +34,8 @@ function FormPart2({
   validating,
   setValidating,
   setPlaceOrderActive,
-  buttonClicked,
-  setButtonClicked,
+  payloadWithoutNewItem,
+  setPayloadWithoutNewItem,
 }) {
   const {
     firstName,
@@ -95,7 +95,7 @@ function FormPart2({
     setErrorMessage('');
     setBannerOpen(false);
 
-    const newItem = !buttonClicked
+    const newItem = !payloadWithoutNewItem
       ? {
           id: '',
           products: [
@@ -154,7 +154,7 @@ function FormPart2({
       setErrorMessage(newPurchaseFlyout?.unknownError);
     } finally {
       setValidating(false);
-      setButtonClicked(false);
+      setPayloadWithoutNewItem(false);
     }
   };
 
@@ -273,10 +273,6 @@ function FormPart2({
       `${option.productId} ${option.manufacturerPartNumber}`,
   });
 
-  useEffect(() => {
-    setItems(dataTable?.items);
-  }, [dataTable]);
-
   // Calculate subtotal price
   const calculateSubtotal = useCallback(() => {
     const subtotal = items?.reduce((sum, item) => {
@@ -291,11 +287,15 @@ function FormPart2({
   };
 
   useEffect(() => {
+    setItems(dataTable?.items);
+  }, [dataTable]);
+
+  useEffect(() => {
     calculateSubtotal();
   }, [items, calculateSubtotal]);
 
   useEffect(() => {
-    if (buttonClicked && blueBanner) {
+    if (payloadWithoutNewItem && blueBanner) {
       setPlaceOrderActive(true);
     } else {
       setPlaceOrderActive(false);
@@ -320,14 +320,14 @@ function FormPart2({
   }, [datePickerOpen, vendorPartNo, pickedEndDate]);
 
   useEffect(() => {
-    if (buttonClicked) {
+    if (payloadWithoutNewItem) {
       handleAddProductToGrid();
       setValidating(true);
       setBannerOpen(true);
     }
-  }, [buttonClicked]);
+  }, [payloadWithoutNewItem]);
 
-
+  console.log('itemsPayload', itemsPayload);
   return (
     <>
       <div className="cmp-flyout-newPurchase__form-details">
@@ -553,6 +553,7 @@ function FormPart2({
           setItems={setItems}
           handleAddProductToGrid={handleAddProductToGrid}
           setPlaceOrderActive={setPlaceOrderActive}
+          setPayloadWithoutNewItem={setPayloadWithoutNewItem}
         />
       </div>
     </>

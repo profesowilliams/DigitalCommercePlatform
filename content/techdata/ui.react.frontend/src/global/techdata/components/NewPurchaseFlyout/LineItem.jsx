@@ -11,6 +11,7 @@ const LineItem = ({
   setItems,
   handleAddProductToGrid,
   setPlaceOrderActive,
+  setPayloadWithoutNewItem,
 }) => {
   // Initialize the state with the unit price as a string
   const [quantity, setQuantity] = useState(parseInt(item?.quantity) || '1');
@@ -73,6 +74,7 @@ const LineItem = ({
   };
 
   const handleDeleteLine = () => {
+    setPayloadWithoutNewItem(true);
     setItems((prevItems) =>
       prevItems.filter((i) => {
         return i.id !== item?.id;

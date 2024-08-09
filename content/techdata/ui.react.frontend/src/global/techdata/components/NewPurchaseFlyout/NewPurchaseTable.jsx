@@ -12,6 +12,7 @@ const NewPurchaseTable = ({
   setItems,
   handleAddProductToGrid,
   setPlaceOrderActive,
+  setPayloadWithoutNewItem,
 }) => {
   const {
     productDetails,
@@ -86,6 +87,7 @@ const NewPurchaseTable = ({
               setItems={setItems}
               handleAddProductToGrid={handleAddProductToGrid}
               setPlaceOrderActive={setPlaceOrderActive}
+              setPayloadWithoutNewItem={setPayloadWithoutNewItem}
             />
           ))}
         </tbody>

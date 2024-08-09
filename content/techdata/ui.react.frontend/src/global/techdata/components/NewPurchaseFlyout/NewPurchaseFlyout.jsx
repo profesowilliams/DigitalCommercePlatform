@@ -107,7 +107,7 @@ function NewPurchaseFlyout({
   // Buttons state
   const [validating, setValidating] = useState(false);
   const [placeOrderActive, setPlaceOrderActive] = useState(false);
-  const [buttonClicked, setButtonClicked] = useState(false);
+  const [payloadWithoutNewItem, setPayloadWithoutNewItem] = useState(false);
 
   const formPart1States = {
     enableNext,
@@ -182,7 +182,7 @@ function NewPurchaseFlyout({
     setEndUserCountryError,
   };
   const handleValidate = () => {
-    setButtonClicked((prevState) => !prevState);
+    setPayloadWithoutNewItem((prevState) => !prevState);
   };
   const handlePlaceOrder = () => {
     setStep(3);
@@ -421,8 +421,8 @@ function NewPurchaseFlyout({
             validating={validating}
             setValidating={setValidating}
             setPlaceOrderActive={setPlaceOrderActive}
-            buttonClicked={buttonClicked}
-            setButtonClicked={setButtonClicked}
+            payloadWithoutNewItem={payloadWithoutNewItem}
+            setPayloadWithoutNewItem={setPayloadWithoutNewItem}
           />
         )}
       </section>
