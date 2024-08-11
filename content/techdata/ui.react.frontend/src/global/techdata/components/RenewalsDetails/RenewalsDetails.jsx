@@ -260,7 +260,7 @@ function RenewalsDetails(props) {
   }
 
   const openNewPurchaseFlyout = (e) => {
-    e.preventDefault();
+    e.stopPropagation();
     setCustomState({
       key: 'newPurchaseFlyout',
       value: {
@@ -446,6 +446,8 @@ function RenewalsDetails(props) {
         newPurchaseFlyout={componentProp.newPurchaseFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
         userData={userData}
+        activeStep={2}
+
       />
     </div>
   );

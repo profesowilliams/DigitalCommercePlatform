@@ -13,6 +13,8 @@ function NewPurchaseFlyout({
   newPurchaseFlyout,
   subheaderReference,
   userData,
+  componentProp,
+  activeStep = 1
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
@@ -32,7 +34,7 @@ function NewPurchaseFlyout({
   };
   // View flyout content step
 
-  const [step, setStep] = useState(1); // Track the current view (1 or 2)
+  const [step, setStep] = useState(activeStep); // Track the current view (1 or 2)
 
   // Enable next button
   const [enableNext, setEnableNext] = useState(false);
