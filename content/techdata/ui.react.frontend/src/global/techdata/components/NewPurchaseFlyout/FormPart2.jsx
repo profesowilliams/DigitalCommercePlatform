@@ -308,6 +308,7 @@ function FormPart2({
   useEffect(() => {
     if (payloadWithoutNewItem && blueBanner) {
       setPlaceOrderActive(true);
+      setBannerOpen(true);
     } else {
       setPlaceOrderActive(false);
     }
@@ -333,7 +334,6 @@ function FormPart2({
   useEffect(() => {
     if (payloadWithoutNewItem) {
       handleAddProductToGrid();
-      setBannerOpen(true);
     }
   }, [payloadWithoutNewItem]);
 
