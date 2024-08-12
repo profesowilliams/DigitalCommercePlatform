@@ -16,6 +16,8 @@ export default function DatePicker({
   endDate,
   setPickedEndDate,
   setDuration,
+  setBannerOpen,
+  setPlaceOrderActive,
 }) {
   const [focusedInput, setFocusedInput] = React.useState(
     isOpen ? 'endDate' : 'startDate'
@@ -92,6 +94,8 @@ export default function DatePicker({
               if ((startDate, endDate)) {
                 effects.setDatePickerState(endDate?.toDate());
               }
+              setBannerOpen(false);
+              setPlaceOrderActive(false);
             }}
             isOutsideRange={(day) => {
               // Check if momentStartDate is defined

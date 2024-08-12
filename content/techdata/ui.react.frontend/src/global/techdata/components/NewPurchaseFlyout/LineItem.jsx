@@ -11,6 +11,7 @@ const LineItem = ({
   setItems,
   setPlaceOrderActive,
   setPayloadWithoutNewItem,
+  setBannerOpen,
 }) => {
   // Initialize the state with the unit price as a string
   const initialQuantity = parseInt(item?.quantity || '1');
@@ -47,6 +48,7 @@ const LineItem = ({
     };
     updateItem(itemId, changes);
     setPlaceOrderActive(false);
+    setBannerOpen(false);
   };
 
   const handleQuantityChange = (newQuantity) => {
@@ -59,6 +61,7 @@ const LineItem = ({
     };
     updateItem(item?.id, changes);
     setPlaceOrderActive(false);
+    setBannerOpen(false);
   };
 
   const handleResetPrice = () => {
@@ -71,6 +74,7 @@ const LineItem = ({
     };
     updateItem(item?.id, changes);
     setPlaceOrderActive(false);
+    setBannerOpen(false);
   };
 
   const handleDeleteLine = () => {
@@ -81,6 +85,7 @@ const LineItem = ({
       })
     );
     setPlaceOrderActive(false);
+    setBannerOpen(false);
   };
 
   useEffect(() => {

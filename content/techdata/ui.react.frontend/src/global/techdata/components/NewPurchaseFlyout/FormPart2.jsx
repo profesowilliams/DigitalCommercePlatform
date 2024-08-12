@@ -36,6 +36,8 @@ function FormPart2({
   setPlaceOrderActive,
   payloadWithoutNewItem,
   setPayloadWithoutNewItem,
+  bannerOpen,
+  setBannerOpen,
 }) {
   const {
     firstName,
@@ -61,8 +63,6 @@ function FormPart2({
   const [errorMessage, setErrorMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
-  // Banned state
-  const [bannerOpen, setBannerOpen] = useState(true);
   // Date
   const [datePickerOpen, setDatePickerOpen] = useState(true);
   const today = new Date();
@@ -104,6 +104,7 @@ function FormPart2({
   const handleAddProductToGrid = async () => {
     setErrorMessage('');
     setBannerOpen(false);
+    setPlaceOrderActive(false);
 
     const newItem = !payloadWithoutNewItem
       ? {
@@ -511,6 +512,8 @@ function FormPart2({
             endDate={defaultEndDate}
             setPickedEndDate={setPickedEndDate}
             setDuration={setDuration}
+            setBannerOpen={setBannerOpen}
+            setPlaceOrderActive={setPlaceOrderActive}
           />
         )}
         {bannerOpen &&
@@ -561,6 +564,7 @@ function FormPart2({
           setItems={setItems}
           setPlaceOrderActive={setPlaceOrderActive}
           setPayloadWithoutNewItem={setPayloadWithoutNewItem}
+          setBannerOpen={setBannerOpen}
         />
       </div>
     </>

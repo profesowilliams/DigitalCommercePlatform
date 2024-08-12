@@ -12,6 +12,7 @@ const NewPurchaseTable = ({
   setItems,
   setPlaceOrderActive,
   setPayloadWithoutNewItem,
+  setBannerOpen,
 }) => {
   const {
     productDetails,
@@ -86,6 +87,7 @@ const NewPurchaseTable = ({
               setItems={setItems}
               setPlaceOrderActive={setPlaceOrderActive}
               setPayloadWithoutNewItem={setPayloadWithoutNewItem}
+              setBannerOpen={setBannerOpen}
             />
           ))}
         </tbody>

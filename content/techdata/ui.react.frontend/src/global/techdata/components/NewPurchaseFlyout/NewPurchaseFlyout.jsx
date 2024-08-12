@@ -111,6 +111,9 @@ function NewPurchaseFlyout({
   const [placeOrderActive, setPlaceOrderActive] = useState(false);
   const [payloadWithoutNewItem, setPayloadWithoutNewItem] = useState(false);
 
+  // Banned state
+  const [bannerOpen, setBannerOpen] = useState(true);
+
   const formPart1States = {
     enableNext,
     setEnableNext,
@@ -184,6 +187,7 @@ function NewPurchaseFlyout({
     setEndUserCountryError,
   };
   const handleValidate = () => {
+    setBannerOpen(false);
     setPayloadWithoutNewItem((prevState) => !prevState);
     setValidating(true);
   };
@@ -426,6 +430,8 @@ function NewPurchaseFlyout({
             setPlaceOrderActive={setPlaceOrderActive}
             payloadWithoutNewItem={payloadWithoutNewItem}
             setPayloadWithoutNewItem={setPayloadWithoutNewItem}
+            bannerOpen={bannerOpen}
+            setBannerOpen={setBannerOpen}
           />
         )}
       </section>

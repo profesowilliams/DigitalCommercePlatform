@@ -5708,7 +5708,7 @@ app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
       feedBackMessages: [
         {
           ruleNumber: 102,
-          errorCriticality: 1,
+          errorCriticality: 3,
           message:
             "We have experienced an unexpected error processing your order for TEST1234 IBM. Contact your Account Manager for more information.",
           refId: "P1005108534",
