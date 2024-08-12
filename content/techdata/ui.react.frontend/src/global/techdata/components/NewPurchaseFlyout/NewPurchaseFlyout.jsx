@@ -6,6 +6,7 @@ import FormPart1 from './FormPart1';
 import FormPart2 from './FormPart2';
 import { CircularProgress } from '@mui/material';
 import Button from '@mui/material/Button';
+import PlaceOrderDialog from './PlaceOrderDialog';
 
 function NewPurchaseFlyout({
   store,
@@ -14,7 +15,7 @@ function NewPurchaseFlyout({
   subheaderReference,
   userData,
   componentProp,
-  activeStep = 1
+  activeStep = 1,
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
@@ -32,6 +33,11 @@ function NewPurchaseFlyout({
     });
     window.history.replaceState(null, '', pathname + search);
   };
+  const closePlaceOrderFlyout = () => {
+    setPlaceOrderFlyoutOpen(false);
+  };
+  const [placeOrderFlyoutOpen, setPlaceOrderFlyoutOpen] = useState(false);
+
   // View flyout content step
 
   const [step, setStep] = useState(activeStep); // Track the current view (1 or 2)
@@ -191,8 +197,12 @@ function NewPurchaseFlyout({
     setPayloadWithoutNewItem((prevState) => !prevState);
     setValidating(true);
   };
+  const handleCompleteOrder = () => {
+    console.log('complete Order');
+  };
+
   const handlePlaceOrder = () => {
-    setStep(3);
+    setPlaceOrderFlyoutOpen(true);
   };
   const handleNext = () => {
     setStep(2);
@@ -245,6 +255,18 @@ function NewPurchaseFlyout({
       <button className="secondary" onClick={handleBack}>
         <ArrowBackIcon />
         {getDictionaryValueOrKey(newPurchaseFlyout?.back)}
+      </button>
+    </div>
+  );
+
+  const buttonSectionPlaceOrder = (
+    <div className="cmp-flyout__footer-buttons order-modification">
+      <button className="primary" onClick={handleCompleteOrder}>
+        {getDictionaryValueOrKey(newPurchaseFlyout?.completeOrder)}
+      </button>
+      <button className="secondary" onClick={closePlaceOrderFlyout}>
+        <ArrowBackIcon />
+        {getDictionaryValueOrKey(newPurchaseFlyout?.modifyOrder)}
       </button>
     </div>
   );
@@ -416,23 +438,30 @@ function NewPurchaseFlyout({
           />
         )}{' '}
         {step === 2 && (
-          <FormPart2
-            newPurchaseFlyout={newPurchaseFlyout}
-            formPart1States={formPart1States}
-            pickedResellerQuote={selectedQuote}
-            currency={currency}
-            defaultCurrency={defaultCurrency}
-            setCurrency={setCurrency}
-            subtotalValue={subtotalValue}
-            setSubtotalValue={setSubtotalValue}
-            validating={validating}
-            setValidating={setValidating}
-            setPlaceOrderActive={setPlaceOrderActive}
-            payloadWithoutNewItem={payloadWithoutNewItem}
-            setPayloadWithoutNewItem={setPayloadWithoutNewItem}
-            bannerOpen={bannerOpen}
-            setBannerOpen={setBannerOpen}
-          />
+          <div>
+            <FormPart2
+              newPurchaseFlyout={newPurchaseFlyout}
+              formPart1States={formPart1States}
+              pickedResellerQuote={selectedQuote}
+              currency={currency}
+              defaultCurrency={defaultCurrency}
+              setCurrency={setCurrency}
+              subtotalValue={subtotalValue}
+              setSubtotalValue={setSubtotalValue}
+              validating={validating}
+              setValidating={setValidating}
+              setPlaceOrderActive={setPlaceOrderActive}
+              payloadWithoutNewItem={payloadWithoutNewItem}
+              setPayloadWithoutNewItem={setPayloadWithoutNewItem}
+              bannerOpen={bannerOpen}
+              setBannerOpen={setBannerOpen}
+            />
+            <PlaceOrderDialog
+              onClose={closePlaceOrderFlyout}
+              open={placeOrderFlyoutOpen}
+              buttonSection={buttonSectionPlaceOrder}
+            />
+          </div>
         )}
       </section>
     </BaseFlyout>
