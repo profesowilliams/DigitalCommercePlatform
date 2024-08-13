@@ -18,9 +18,4 @@ RewriteCond %{REQUEST_URI} \.(html|jpe?g|png|svg|txt|xml|cache)$ [NC]
 RewriteRule ^/(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/my/$1 [PT,L]
 
 # Google Site Verification
-RewriteCond %{HTTP_HOST} =mytecd.com [NC]
-RewriteRule ^/google(.*).html$ /content/dam/${CONTENT_FOLDER_NAME_TECHDATA}/site-root-files/google$1.html [PT,L]
-RewriteCond %{HTTP_HOST} =uat.dc.mytecd.com [NC]
-RewriteRule ^/google(.*).html$ /content/dam/${CONTENT_FOLDER_NAME_TECHDATA}/site-root-files/google$1.html [PT,L]
-RewriteCond %{HTTP_HOST} =stage.dc.mytecd.com [NC]
-RewriteRule ^/google(.*).html$ /content/dam/${CONTENT_FOLDER_NAME_TECHDATA}/site-root-files/google$1.html [PT,L]
+RewriteRule ^/google(.*).html$ /content/dam/techdata/site-root-files/google$1.html [PT,L]
