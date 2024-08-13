@@ -6,7 +6,6 @@ import FormPart1 from './FormPart1';
 import FormPart2 from './FormPart2';
 import { CircularProgress } from '@mui/material';
 import Button from '@mui/material/Button';
-import PlaceOrderDialog from './PlaceOrderDialog';
 
 function NewPurchaseFlyout({
   store,
@@ -33,10 +32,11 @@ function NewPurchaseFlyout({
     });
     window.history.replaceState(null, '', pathname + search);
   };
+  const [placeOrderFlyoutOpen, setPlaceOrderFlyoutOpen] = useState(false);
   const closePlaceOrderFlyout = () => {
     setPlaceOrderFlyoutOpen(false);
   };
-  const [placeOrderFlyoutOpen, setPlaceOrderFlyoutOpen] = useState(false);
+  const [enablePlaceOrder, setEnablePlaceOrder] = useState(false);
 
   // View flyout content step
 
@@ -198,7 +198,7 @@ function NewPurchaseFlyout({
     setValidating(true);
   };
   const handleCompleteOrder = () => {
-    console.log('complete Order');
+    enablePlaceOrder && console.log('complete Order');
   };
 
   const handlePlaceOrder = () => {
@@ -261,7 +261,11 @@ function NewPurchaseFlyout({
 
   const buttonSectionPlaceOrder = (
     <div className="cmp-flyout__footer-buttons order-modification">
-      <button className="primary" onClick={handleCompleteOrder}>
+      <button
+        disabled={!enablePlaceOrder}
+        className="primary"
+        onClick={handleCompleteOrder}
+      >
         {getDictionaryValueOrKey(newPurchaseFlyout?.completeOrder)}
       </button>
       <button className="secondary" onClick={closePlaceOrderFlyout}>
@@ -455,11 +459,15 @@ function NewPurchaseFlyout({
               setPayloadWithoutNewItem={setPayloadWithoutNewItem}
               bannerOpen={bannerOpen}
               setBannerOpen={setBannerOpen}
-            />
-            <PlaceOrderDialog
               onClose={closePlaceOrderFlyout}
               open={placeOrderFlyoutOpen}
               buttonSection={buttonSectionPlaceOrder}
+              bottomContent={
+                step === 2
+                  ? (classNameSuffix) => ResellerSubtotal({ classNameSuffix })
+                  : null
+              }
+              setEnablePlaceOrder={setEnablePlaceOrder}
             />
           </div>
         )}

@@ -397,6 +397,83 @@
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.quoteExistsError"
                     fieldLabel="Quote exists, please try again with another account."
                     name="./quoteExistsError"/>
+                <modifyOrder
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.modifyOrder"
+                    fieldLabel="Modify order"
+                    name="./modifyOrder"/>
+                <completeOrder
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.completeOrder"
+                    fieldLabel="Complete order"
+                    name="./completeOrder"/>
+                <toCompletePlacingYourOrderFor
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.toCompletePlacingYourOrderFor"
+                    fieldLabel="To complete placing your order for"
+                    name="./toCompletePlacingYourOrderFor"/>
+                <pleaseProvideTheFollowingInformation
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.pleaseProvideTheFollowingInformation"
+                    fieldLabel="please provide the following information."
+                    name="./pleaseProvideTheFollowingInformation"/>
+                <purchaseOrderNumber
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.purchaseOrderNumber"
+                    fieldLabel="Purchase order number"
+                    name="./purchaseOrderNumber"/>
+                <max35Characters
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.max35Characters"
+                    fieldLabel="Max 35 characters"
+                    name="./max35Characters"/>
+                <iConfirmIAmAuthorizedByAdobe
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.iConfirmIAmAuthorizedByAdobe"
+                    fieldLabel="I confirm I am authorized by Adobe to purchase and sell Education licenses. Should my account no longer be authorized I agree that my order will be cancelled by Tech Data."
+                    name="./iConfirmIAmAuthorizedByAdobe"/>
+                <iHaveReadAndAcceptThe
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.iConfirmIAmAuthorizedByAdobe"
+                    fieldLabel="I have read and accept the"
+                    name="./iHaveReadAndAcceptThe"/>
+                <techDataTermsConditions
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.techDataTermsConditions"
+                    fieldLabel='TechData Terms and Conditions'
+                    name="./techDataTermsConditions"/>
+                <the
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.the"
+                    fieldLabel="and the"
+                    name="./the"/>
+                <adobeTermsConditions
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.adobeTermsConditions"
+                    fieldLabel="Adobe Terms and Conditions"
+                    name="./adobeTermsConditions"/>
+                <adobeResellerTermsAndConditionsLink
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="details.renewal.orders.label.adobeResellerTermsAndConditionsLink"
+                    fieldLabel="Adobe Reseller Terms And Conditions Link"
+                    name="./adobeResellerTermsAndConditionsLink"/>
+                <termsAndConditionsLink
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Adobe Reseller Terms And Conditions Link"
+                    name="./termsAndConditionsLink"/>
             </items>
         </newPyrchaseFlyoutGroup>
     </items>

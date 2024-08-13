@@ -5145,6 +5145,8 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "details.renewal.label.subtotal": "Quote Subtotal",
     "details.renewal.label.backTo": "Back to all Renewals",
     "details.renewal.label.title": "Quote Preview",
+    "details.renewal.orders.label.adobeResellerTermsAndConditionsLink":
+      "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions/vendor-pass-through-terms.html",
 
     "grids.common.label.results": "{0}-{1} of {2} results",
     "grids.common.label.of": "of",
@@ -5238,8 +5240,6 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "mainDashboard.renewal.newPurchaseFlyout.label.addProducts": "Add products",
     "mainDashboard.renewal.newPurchaseFlyout.label.searchForAdditionalSoftware":
       "Search for additional software products you would like to add to your quote. Enter the Vendor part № followed by the desired quantity.",
-    "details.renewal.orders.label.adobeResellerTermsAndConditionsLink":
-      "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions/vendor-pass-through-terms.html",
     "mainDashboard.renewal.newPurchaseFlyout.label.searchVendorPartNo":
       "Search Vendor part  Nº",
     "mainDashboard.renewal.newPurchaseFlyout.label.startDate": "Start date",
@@ -5270,6 +5270,26 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
       "Account doesn't exist!",
     "mainDashboard.renewal.newPurchaseFlyout.label.quoteExistsError":
       "Quote exists, please try again with another account.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.modifyOrder": "Modify order",
+    "mainDashboard.renewal.newPurchaseFlyout.label.completeOrder":
+      "Complete order",
+    "mainDashboard.renewal.newPurchaseFlyout.label.toCompletePlacingYourOrderFor":
+      "To complete placing your order for",
+    "mainDashboard.renewal.newPurchaseFlyout.label.pleaseProvideTheFollowingInformation":
+      "please provide the following information.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.purchaseOrderNumber":
+      "Purchase order number",
+    "mainDashboard.renewal.newPurchaseFlyout.label.max35Characters":
+      "Max 35 characters",
+    "mainDashboard.renewal.newPurchaseFlyout.label.iConfirmIAmAuthorizedByAdobe":
+      "I confirm I am authorized by Adobe to purchase and sell Education licenses. Should my account no longer be authorized I agree that my order will be cancelled by Tech Data.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.iHaveReadAndAcceptThe":
+      "I have read and accept the",
+    "mainDashboard.renewal.newPurchaseFlyout.label.techDataTermsConditions":
+      "TechData Terms & Conditions",
+    "mainDashboard.renewal.newPurchaseFlyout.label.the": "& the",
+    "mainDashboard.renewal.newPurchaseFlyout.label.adobeTermsConditions":
+      "Adobe Terms & Conditions",
   });
 });
 
@@ -5516,7 +5536,6 @@ app.post("/ui-renewal/v1/PartNumbers/Find", function (req, res) {
 });
 
 app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
-  
   const success2 = {
     content: {
       reseller: {
@@ -5572,6 +5591,7 @@ app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
           isDisplay: false,
           canEdit: false,
           allowedLength: 0,
+          text: "Avenir Global Cherry Advertising LTD",
         },
         nameUpper: "",
         eaNumber: {

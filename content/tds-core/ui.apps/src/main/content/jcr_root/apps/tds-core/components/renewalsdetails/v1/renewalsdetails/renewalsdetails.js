@@ -366,6 +366,19 @@ use(["../../../common/utils.js"], function(utils) {
               "unknownError",
               "accountDoesntExistError",
               "quoteExistsError",
+              "modifyOrder",
+              "completeOrder",
+              "toCompletePlacingYourOrderFor",
+              "pleaseProvideTheFollowingInformation",
+              "purchaseOrderNumber",
+              "max35Characters",
+              "iConfirmIAmAuthorizedByAdobe",
+              "iHaveReadAndAcceptThe",
+              "techDataTermsConditions",
+              "the",
+              "adobeTermsConditions",
+              "adobeResellerTermsAndConditionsLink",
+              "termsAndConditionsLink",
             ];
 
             newPurchaseFlyoutList.map(

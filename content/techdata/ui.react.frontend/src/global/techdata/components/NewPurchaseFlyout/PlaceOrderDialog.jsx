@@ -1,17 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
-function PlaceOrderDialog({ onClose, open, buttonSection }) {
+function PlaceOrderDialog({
+  data,
+  onClose,
+  open,
+  bottomContent,
+  config,
+  buttonSection,
+  setEnablePlaceOrder,
+}) {
+  const [confirmPurchaseChecked, setConfirmPurchaseChecked] = useState(false);
+  const [confirmTermsChecked, setConfirmTermsChecked] = useState(false);
+  const [purchaseOrderNumber, setPurchaseOrderNumber] = useState('');
+  const BottomContent = () => bottomContent('footer');
+
+  useEffect(() => {
+    if (
+      confirmPurchaseChecked &&
+      confirmTermsChecked &&
+      purchaseOrderNumber?.length > 0
+    ) {
+      setEnablePlaceOrder(true);
+    } else {
+      setEnablePlaceOrder(false);
+    }
+  }, [confirmPurchaseChecked, confirmTermsChecked, purchaseOrderNumber]);
   return (
     <Dialog
+      className="place-order-dialog"
       onClose={onClose}
       open={open}
       sx={{
@@ -20,56 +41,84 @@ function PlaceOrderDialog({ onClose, open, buttonSection }) {
           bottom: 0,
           right: 0,
           margin: 0,
-          height: '373px',
           width: '948px',
           maxWidth: '948px',
         },
       }}
     >
-      <DialogTitle>Place order</DialogTitle>
-      <DialogContent>
-        <Typography variant="subtitle1" gutterBottom>
-          To complete placing your order for{' '}
-          <strong>Avenir Global Cherry Advertising LTD</strong> please provide
-          the following information.
-        </Typography>
+      <div className="place-order-dialog__content">
+        <p className="place-order-dialog__content__title">
+          {getDictionaryValueOrKey(config?.placeOrder)}
+        </p>
+        <p className="place-order-dialog__content__description">
+          {getDictionaryValueOrKey(config?.toCompletePlacingYourOrderFor)}{' '}
+          <span className="place-order-dialog__content__bold">
+            {data?.endUser?.name?.text}
+          </span>{' '}
+          {getDictionaryValueOrKey(
+            config?.pleaseProvideTheFollowingInformation
+          )}
+        </p>
+        <div className="place-order-dialog__content__input">
+          <TextField
+            required
+            id="new-purchase-confirm-purchase-input"
+            label={getDictionaryValueOrKey(config?.purchaseOrderNumber)}
+            helperText={getDictionaryValueOrKey(config?.max35Characters)}
+            variant="standard"
+            value={purchaseOrderNumber}
+            onChange={(event) => {
+              setPurchaseOrderNumber(event.target.value);
+            }}
+            fullWidth
+          />
+        </div>
+        <div className="place-order-dialog__content__checkbox">
+          <Checkbox
+            id="new-purchase-confirm-purchase-checkbox"
+            checked={confirmPurchaseChecked}
+            onChange={(e) => setConfirmPurchaseChecked(e.target.checked)}
+          />
+          {''}
+          <label className="place-order-dialog__content__text">
+            {getDictionaryValueOrKey(config?.iConfirmIAmAuthorizedByAdobe)}
+          </label>
+        </div>
+        <div className="place-order-dialog__content__checkbox--single-line">
+          <Checkbox
+            id="new-purchase-confirm-terms-checkbox-single-line"
+            checked={confirmTermsChecked}
+            onChange={(e) => setConfirmTermsChecked(e.target.checked)}
+          />
+          <label className="place-order-dialog__content__text">
+            {getDictionaryValueOrKey(config?.iHaveReadAndAcceptThe)}{' '}
+            <a
+              href={getDictionaryValueOrKey(config?.termsAndConditionsLink)}
+              target="_blank"
+              className="place-order-dialog__content__link"
+            >
+              {getDictionaryValueOrKey(config?.techDataTermsConditions)}
+            </a>{' '}
+            {getDictionaryValueOrKey(config?.the)}{' '}
+            <a
+              href={getDictionaryValueOrKey(
+                config?.adobeResellerTermsAndConditionsLink
+              )}
+              target="_blank"
+              className="place-order-dialog__content__link"
+            >
+              {getDictionaryValueOrKey(config?.adobeTermsConditions)}.
+            </a>
+          </label>
+        </div>
+      </div>
 
-        <TextField
-          id="standard-helperText"
-          //   label="Purchase order number"
-          placeholder="Purchase order number"
-          helperText="Max 25 characters"
-          variant="standard"
-        />
-
-        <FormControlLabel
-          control={<Checkbox />}
-          label="I confirm I am authorized by Adobe to purchase and sell Education licenses. Should my account no longer be authorized I agree that my order will be cancelled by Tech Data."
-        />
-
-        <FormControlLabel
-          control={<Checkbox />}
-          label={
-            <Typography>
-              I have read and accept the{' '}
-              <Link href="#" underline="always">
-                TechData Terms & Conditions
-              </Link>
-              , applicable{' '}
-              <Link href="#" underline="always">
-                Country Specific Terms
-              </Link>
-              & the{' '}
-              <Link href="#" underline="always">
-                Adobe Terms & Conditions
-              </Link>
-              .
-            </Typography>
-          }
-        />
-      </DialogContent>
-
-      <DialogActions>{buttonSection}</DialogActions>
+      <DialogActions>
+        <div className="place-order-dialog__footer">
+          <BottomContent />
+          {buttonSection}
+        </div>
+      </DialogActions>
     </Dialog>
   );
 }

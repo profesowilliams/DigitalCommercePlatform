@@ -14,6 +14,7 @@ import { VendorPartNoDetails } from './VendorPartNoDetails';
 import NewPurchaseTable from './NewPurchaseTable';
 import DatePicker from './Datepicker';
 import moment from 'moment';
+import PlaceOrderDialog from './PlaceOrderDialog';
 
 export const formatDate = (date) => {
   const day = String(date.getDate()).padStart(2, '0');
@@ -38,6 +39,11 @@ function FormPart2({
   setPayloadWithoutNewItem,
   bannerOpen,
   setBannerOpen,
+  onClose,
+  open,
+  buttonSection,
+  bottomContent,
+  setEnablePlaceOrder,
 }) {
   const {
     firstName,
@@ -82,10 +88,10 @@ function FormPart2({
   // Add Product to Grid
   const [items, setItems] = useState([]);
 
-  const pickedEndDateFormatted = moment(pickedEndDate, 'DD/MM/YYYY').format(
+  const pickedEndDateFormatted = moment(pickedEndDate, 'MM/DD/YYYY').format(
     'YYYY-MM-DD[T]HH:mm:ss[Z]'
   );
-  const pickedStartDateFormatted = moment(startDate, 'DD/MM/YYYY').format(
+  const pickedStartDateFormatted = moment(startDate, 'MM/DD/YYYY').format(
     'YYYY-MM-DD[T]HH:mm:ss[Z]'
   );
   const resellerId = pickedResellerQuote?.accountNumber;
@@ -565,6 +571,15 @@ function FormPart2({
           setPlaceOrderActive={setPlaceOrderActive}
           setPayloadWithoutNewItem={setPayloadWithoutNewItem}
           setBannerOpen={setBannerOpen}
+        />
+        <PlaceOrderDialog
+          data={dataTable}
+          config={newPurchaseFlyout}
+          onClose={onClose}
+          open={open}
+          buttonSection={buttonSection}
+          bottomContent={bottomContent}
+          setEnablePlaceOrder={setEnablePlaceOrder}
         />
       </div>
     </>
