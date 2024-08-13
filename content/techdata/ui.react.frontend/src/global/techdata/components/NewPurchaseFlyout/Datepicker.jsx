@@ -52,13 +52,13 @@ export default function DatePicker({
 
   useEffect(() => {
     if (customEndDate) {
-      const formattedEndDate = moment(customEndDate).format('DD/MM/YYYY');
+      const formattedEndDate = moment(customEndDate).format('MM/DD/YYYY');
       setPickedEndDate(formattedEndDate);
     }
   }, [customEndDate, setPickedEndDate]);
 
   function getDisplayFormatBasedOnLocale() {
-    return 'DD/MM/YYYY';
+    return 'MM/DD/YYYY';
   }
 
   useEffect(() => {

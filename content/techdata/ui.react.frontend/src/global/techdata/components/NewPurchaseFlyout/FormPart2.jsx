@@ -16,12 +16,6 @@ import DatePicker from './Datepicker';
 import moment from 'moment';
 import PlaceOrderDialog from './PlaceOrderDialog';
 
-export const formatDate = (date) => {
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
-  return `${month}/${day}/${year}`;
-};
 
 function FormPart2({
   newPurchaseFlyout,
@@ -71,11 +65,10 @@ function FormPart2({
 
   // Date
   const [datePickerOpen, setDatePickerOpen] = useState(true);
-  const today = new Date();
-  const futureDate = new Date(today);
-  futureDate.setDate(today.getDate() + 364);
-  const defaultEndDate = formatDate(futureDate);
-  const startDate = formatDate(today);
+  const today = moment();
+  const futureDate = moment(today).add(364, 'days');
+  const defaultEndDate = futureDate.format('MM/DD/YYYY');
+  const startDate = today.format('MM/DD/YYYY'); 
   const [pickedEndDate, setPickedEndDate] = useState(defaultEndDate);
   const [duration, setDuration] = useState('364');
   const licensePriceLevel = '1 (Qty: 1-9)';
