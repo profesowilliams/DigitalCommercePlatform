@@ -403,8 +403,8 @@ function FormPart1({
       <div className="cmp-flyout-newPurchase__form">
         <div className="cmp-flyout-newPurchase__form__container">
           <p>{getDictionaryValueOrKey(newPurchaseFlyout?.resellerContact)}</p>
-
-          <div className="cmp-flyout-newPurchase__form__input-reseller-search">
+          { internalUser ?
+          (<div className="cmp-flyout-newPurchase__form__input-reseller-search">
             <Autocomplete
               id="combo-box-demo"
               open={isAutocompleteOpen}
@@ -464,7 +464,21 @@ function FormPart1({
             {errorMessage && (
               <div className="cmp-flyout__content--error">{errorMessage}</div>
             )}
-          </div>
+          </div>) : (
+            <TextField
+                className="cmp-flyout-newPurchase__form__input-container"
+                id="account-number"
+                label={getDictionaryValueOrKey(
+                  newPurchaseFlyout?.resellerAccountNumber
+                )}
+                value={accountNumber}
+                variant="standard"
+                onChange={handleResellerIdChange}
+                error={!!errorMessage}
+                helperText={errorMessage}
+                inputProps={{ maxLength: 35 }}
+              />
+          )}
           <TextField
             className="cmp-flyout-newPurchase__form__input-container"
             id="first-name"

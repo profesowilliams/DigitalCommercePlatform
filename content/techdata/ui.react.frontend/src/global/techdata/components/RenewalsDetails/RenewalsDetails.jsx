@@ -446,8 +446,9 @@ function RenewalsDetails(props) {
         newPurchaseFlyout={componentProp.newPurchaseFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
         userData={userData}
+        data={renewalsDetails}
         activeStep={2}
-
+        isAddMore={true}
       />
     </div>
   );

@@ -15,6 +15,8 @@ function NewPurchaseFlyout({
   userData,
   componentProp,
   activeStep = 1,
+  isAddMore = false,
+  data
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
@@ -275,9 +277,9 @@ function NewPurchaseFlyout({
     </div>
   );
   const buttonSection = () => {
-    if (step === 1) {
+    if (step === 1 || (step === 2 && isAddMore)) {
       return buttonsSectionStep1;
-    } else if (step === 2) {
+    } else if (step === 2 && !isAddMore) {
       return buttonsSectionStep2;
     }
   };
@@ -425,7 +427,7 @@ function NewPurchaseFlyout({
       loadingButtonLabel={null}
       buttonsSection={buttonSection()}
       bottomContent={
-        step === 2
+        step === 2 && !isAddMore
           ? (classNameSuffix) => ResellerSubtotal({ classNameSuffix })
           : null
       }
@@ -467,6 +469,8 @@ function NewPurchaseFlyout({
                   ? (classNameSuffix) => ResellerSubtotal({ classNameSuffix })
                   : null
               }
+              isAddMore={isAddMore}
+              data={data}
               setEnablePlaceOrder={setEnablePlaceOrder}
             />
           </div>

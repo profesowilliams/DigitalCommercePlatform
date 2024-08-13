@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
+import { getModifiedResellerData, getModifiedEndUserData } from "./utils";
+
 import {
   AutoCompleteSearchIcon,
   WarningTriangleIcon,
@@ -33,11 +35,13 @@ function FormPart2({
   setPayloadWithoutNewItem,
   bannerOpen,
   setBannerOpen,
+  isAddMore = false,
+  data,
   onClose,
   open,
   buttonSection,
   bottomContent,
-  setEnablePlaceOrder,
+  setEnablePlaceOrder
 }) {
   const {
     firstName,
@@ -68,7 +72,7 @@ function FormPart2({
   const today = moment();
   const futureDate = moment(today).add(364, 'days');
   const defaultEndDate = futureDate.format('MM/DD/YYYY');
-  const startDate = today.format('MM/DD/YYYY'); 
+  const startDate = today.format('MM/DD/YYYY');
   const [pickedEndDate, setPickedEndDate] = useState(defaultEndDate);
   const [duration, setDuration] = useState('364');
   const licensePriceLevel = '1 (Qty: 1-9)';
@@ -80,6 +84,10 @@ function FormPart2({
   const [vendorPartNo, setVendorPartNo] = useState(manufacturerPartNumber);
   // Add Product to Grid
   const [items, setItems] = useState([]);
+  const resellerResponseAsObj = typeof(data?.reseller?.vendorAccountNumber) === 'object';
+  const resellerData = resellerResponseAsObj ? getModifiedResellerData(resellerResponseAsObj, data?.reseller) : null;
+  const endUserResponseAsObj = typeof(data?.reseller?.vendorAccountNumber) === 'object';
+   const endUserData = endUserResponseAsObj ? getModifiedEndUserData(endUserResponseAsObj, data?.endUser) : null;
 
   const pickedEndDateFormatted = moment(pickedEndDate, 'MM/DD/YYYY').format(
     'YYYY-MM-DD[T]HH:mm:ss[Z]'
@@ -348,16 +356,16 @@ function FormPart2({
               {getDictionaryValueOrKey(newPurchaseFlyout?.resellerDetails)}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {pickedResellerQuote?.name}
+              {isAddMore ? resellerData?.name : pickedResellerQuote?.name}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {pickedResellerQuote?.accountNumber}
+              {isAddMore ? resellerData?.vendorAccountNumber : pickedResellerQuote?.accountNumber}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {firstName} {lastName}
+              {isAddMore ? resellerData?.contact?.name : firstName} {isAddMore ? '' : lastName}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {email}
+              {isAddMore ? resellerData?.contact?.email : email}
             </p>
           </div>
           <div className="cmp-flyout-newPurchase__form-details__card-section">
@@ -365,16 +373,16 @@ function FormPart2({
               {getDictionaryValueOrKey(newPurchaseFlyout?.endUserDetails)}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserCompanyName}
+              {isAddMore ? endUserData.nameUpper : endUserCompanyName}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserCompanyFirstName} {endUserCompanyLastName}
+              {isAddMore ? endUserData?.contact?.name : endUserCompanyFirstName} {isAddMore ? '' : endUserCompanyLastName}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserEmail}
+              {isAddMore ? endUserData?.contact?.email : endUserEmail}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserType}
+              {isAddMore ? data?.endUserType : endUserType}
             </p>
           </div>
           <div className="cmp-flyout-newPurchase__form-details__card-section">
@@ -382,14 +390,14 @@ function FormPart2({
               {getDictionaryValueOrKey(newPurchaseFlyout?.endUserAddress)}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserAddress1}
-              {endUserAddress2 && `, ${endUserAddress2}`}
+              {isAddMore ? endUserData?.address?.line1 : endUserAddress1}
+              {isAddMore && endUserData?.address?.line2 ? `, ${endUserData?.address?.line2}` : `, ${endUserAddress2}`}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserCity}, {endUserCountry}
+              {isAddMore ? endUserData?.address?.city : endUserCity}, {isAddMore ? endUserData?.address?.country : endUserCountry}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {endUserAreaCode}
+              {isAddMore ? endUserData?.address?.postalCode : endUserAreaCode}
             </p>
           </div>
         </div>
