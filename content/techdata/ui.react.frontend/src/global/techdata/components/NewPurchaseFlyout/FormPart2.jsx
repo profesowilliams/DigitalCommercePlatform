@@ -411,7 +411,7 @@ function FormPart2({
             options={vendorPartNumbers || []}
             filterOptions={filterOptions}
             getOptionLabel={(option) => {
-              return option?.productId ?? vendorNumber;
+              return option?.manufacturerPartNumber ?? vendorNumber;
             }}
             onChange={handleVendorSelectedChange}
             value={selectedVendorPartNo}
