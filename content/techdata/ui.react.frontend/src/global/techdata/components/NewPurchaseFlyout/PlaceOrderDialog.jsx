@@ -9,13 +9,22 @@ import { createOrder } from './api';
 
 function PlaceOrderDialog({
   data,
-  mandatoryPayload,
   itemsPayload,
   onClose,
   open,
   bottomContent,
   config,
   store,
+  resellerId,
+  endUserCompanyName,
+  endUserCompanyFirstName,
+  endUserCompanyLastName,
+  endUserEmail,
+  endUserAddress1,
+  endUserAddress2,
+  endUserCity,
+  endUserAreaCode,
+  endUserCountry,
 }) {
   const [confirmPurchaseChecked, setConfirmPurchaseChecked] = useState(false);
   const [confirmTermsChecked, setConfirmTermsChecked] = useState(false);
@@ -27,8 +36,24 @@ function PlaceOrderDialog({
   // Create order
   const handleCreateOrder = async () => {
     const payload = {
-      items: [itemsPayload],
-      ...mandatoryPayload,
+      reseller: {
+        id: resellerId || '',
+      },
+      endUser: {
+        name: endUserCompanyName,
+        contact: {
+          name: `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
+          email: endUserEmail,
+        },
+        address: {
+          line1: endUserAddress1,
+          line2: endUserAddress2,
+          city: endUserCity,
+          postalCode: endUserAreaCode,
+          country: endUserCountry,
+        },
+      },
+      items: itemsPayload,
       customerPo: purchaseOrderNumber,
     };
     const toasterSuccess = {
