@@ -419,7 +419,6 @@ function NewPurchaseFlyout({
       <section className="cmp-flyout__content cmp-flyout-newPurchase">
         {step === 1 && (
           <FormPart1
-            store={store}
             copyFlyout={copyFlyout}
             newPurchaseFlyout={newPurchaseFlyout}
             newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}

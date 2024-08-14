@@ -21,18 +21,18 @@ function PlaceOrderDialog({
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState('');
   const [enablePlaceOrder, setEnablePlaceOrder] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  // const effects = store((st) => st.effects);
+  const effects = store((st) => st.effects);
 
   // Create order
   const handleCreateOrder = async () => {
     const payload = { ...addProductPayload, customerPo: purchaseOrderNumber };
-    // const toasterSuccess = {
-    //   isOpen: true,
-    //   origin: 'fromShareFlyout',
-    //   isAutoClose: true,
-    //   isSuccess: true,
-    //   message: getDictionaryValueOrKey(shareFlyoutContent.shareSuccessMessage),
-    // };
+    const toasterSuccess = {
+      isOpen: true,
+      origin: 'placeNewPurchaseOrderFlyout',
+      isAutoClose: true,
+      isSuccess: true,
+      message: getDictionaryValueOrKey(config?.placeOrderSuccess),
+    };
 
     try {
       const response = await createOrder(
@@ -42,7 +42,10 @@ function PlaceOrderDialog({
       if (response?.isError) {
         setErrorMessage(config?.unknownError);
       } else {
-        // effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...toasterSuccess },
+        });
         return response;
       }
     } catch (error) {

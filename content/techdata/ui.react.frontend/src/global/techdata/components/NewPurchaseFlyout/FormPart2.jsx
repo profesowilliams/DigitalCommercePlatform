@@ -590,7 +590,7 @@ function FormPart2({
           onClose={onClose}
           open={open}
           bottomContent={bottomContent}
-          store
+          store={store}
         />
       </div>
     </>
