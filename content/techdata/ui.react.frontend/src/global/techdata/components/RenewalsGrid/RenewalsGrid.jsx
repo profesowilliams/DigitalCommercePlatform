@@ -550,6 +550,7 @@ function RenewalsGrid(props) {
         subheaderReference={document.querySelector('.subheader > div > div')}
         userData={userData}
         componentProp={gridConfig}
+        onQueryChanged={onQueryChanged}
       />
       <RevisionFlyout
         store={useRenewalGridState}

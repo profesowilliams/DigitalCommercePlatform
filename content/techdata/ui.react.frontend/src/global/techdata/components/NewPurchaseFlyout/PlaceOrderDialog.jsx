@@ -25,13 +25,40 @@ function PlaceOrderDialog({
   endUserCity,
   endUserAreaCode,
   endUserCountry,
+  closeFlyout,
+  onQueryChanged,
 }) {
   const [confirmPurchaseChecked, setConfirmPurchaseChecked] = useState(false);
   const [confirmTermsChecked, setConfirmTermsChecked] = useState(false);
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState('');
   const [enablePlaceOrder, setEnablePlaceOrder] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [createOrderResponse, setCreateOrderResponse] = useState({});
+  const createOrderSuccess = createOrderResponse?.content?.success;
   const effects = store((st) => st.effects);
+
+  // Add manufacturer: 'Adobe',and format quantity to int
+  const transformItemsPayload = (payload) => {
+    return payload.map((item) => {
+      const quantity = parseInt(item.quantity);
+
+      const updatedProduct = item.product.map((product) => {
+        if (product.type === 'MANUFACTURER') {
+          return {
+            ...product,
+            manufacturer: 'Adobe',
+          };
+        }
+        return product;
+      });
+
+      return {
+        ...item,
+        quantity,
+        product: updatedProduct,
+      };
+    });
+  };
+  const transformedPayload = transformItemsPayload(itemsPayload);
 
   // Create order
   const handleCreateOrder = async () => {
@@ -53,7 +80,7 @@ function PlaceOrderDialog({
           country: endUserCountry,
         },
       },
-      items: itemsPayload,
+      items: transformedPayload,
       customerPo: purchaseOrderNumber,
     };
     const toasterSuccess = {
@@ -63,6 +90,13 @@ function PlaceOrderDialog({
       isSuccess: true,
       message: getDictionaryValueOrKey(config?.placeOrderSuccess),
     };
+    const toasterFail = {
+      isOpen: true,
+      origin: 'placeNewPurchaseOrderFlyout',
+      isAutoClose: true,
+      isSuccess: false,
+      message: getDictionaryValueOrKey(config?.unknownError),
+    };
 
     try {
       const response = await createOrder(
@@ -70,16 +104,25 @@ function PlaceOrderDialog({
         payload
       );
       if (response?.isError) {
-        setErrorMessage(config?.unknownError);
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...toasterFail },
+        });
       } else {
         effects.setCustomState({
           key: 'toaster',
           value: { ...toasterSuccess },
         });
-        return response;
+        onClose();
+        closeFlyout();
+        onQueryChanged();
+        return setCreateOrderResponse(response);
       }
     } catch (error) {
-      setErrorMessage(config?.unknownError);
+      effects.setCustomState({
+        key: 'toaster',
+        value: { ...toasterFail },
+      });
     } finally {
     }
   };
@@ -115,6 +158,7 @@ function PlaceOrderDialog({
       setEnablePlaceOrder(false);
     }
   }, [confirmPurchaseChecked, confirmTermsChecked, purchaseOrderNumber]);
+
   return (
     <Dialog
       className="place-order-dialog"

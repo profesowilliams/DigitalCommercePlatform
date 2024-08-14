@@ -41,6 +41,8 @@ function FormPart2({
   open,
   bottomContent,
   store,
+  closeFlyout,
+  onQueryChanged,
 }) {
   const {
     firstName,
@@ -602,6 +604,8 @@ function FormPart2({
           endUserCity={endUserCity}
           endUserAreaCode={endUserAreaCode}
           endUserCountry={endUserCountry}
+          closeFlyout={closeFlyout}
+          onQueryChanged={onQueryChanged}
         />
       </div>
     </>
