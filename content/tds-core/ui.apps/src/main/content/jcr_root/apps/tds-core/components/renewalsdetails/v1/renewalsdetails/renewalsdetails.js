@@ -379,6 +379,7 @@ use(["../../../common/utils.js"], function(utils) {
               "adobeTermsConditions",
               "adobeResellerTermsAndConditionsLink",
               "termsAndConditionsLink",
+              "placeOrderSuccess",
             ];
 
             newPurchaseFlyoutList.map(

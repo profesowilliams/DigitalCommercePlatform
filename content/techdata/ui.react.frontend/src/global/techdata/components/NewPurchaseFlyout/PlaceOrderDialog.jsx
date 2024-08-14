@@ -9,7 +9,8 @@ import { createOrder } from './api';
 
 function PlaceOrderDialog({
   data,
-  addProductPayload,
+  mandatoryPayload,
+  itemsPayload,
   onClose,
   open,
   bottomContent,
@@ -25,7 +26,11 @@ function PlaceOrderDialog({
 
   // Create order
   const handleCreateOrder = async () => {
-    const payload = { ...addProductPayload, customerPo: purchaseOrderNumber };
+    const payload = {
+      items: [itemsPayload],
+      ...mandatoryPayload,
+      customerPo: purchaseOrderNumber,
+    };
     const toasterSuccess = {
       isOpen: true,
       origin: 'placeNewPurchaseOrderFlyout',

@@ -134,467 +134,475 @@ function FormPart2({
 
   // Filter out null values from the array
   const filteredItemsPayload = existingItems.filter((item) => item !== null);
-
-  const addProductPayload = {
-    reseller: {
-      id: resellerId || '',
-    },
-    endUser: {
-      name: endUserCompanyName,
-      contact: {
-        name: `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
-        email: endUserEmail,
+    const mandatoryPayload = {
+      reseller: {
+        id: resellerId || '',
       },
-      address: {
-        line1: endUserAddress1,
-        line2: endUserAddress2,
-        city: endUserCity,
-        postalCode: endUserAreaCode,
-        country: endUserCountry,
+      endUser: {
+        name: endUserCompanyName,
+        contact: {
+          name: `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
+          email: endUserEmail,
+        },
+        address: {
+          line1: endUserAddress1,
+          line2: endUserAddress2,
+          city: endUserCity,
+          postalCode: endUserAreaCode,
+          country: endUserCountry,
+        },
       },
-    },
-
-    items: filteredItemsPayload,
-  };
-  const handleAddProductToGrid = async () => {
-    setErrorMessage('');
-    setBannerOpen(false);
-    setPlaceOrderActive(false);
-
-    try {
-      const response = await addProductToGrid(
-        newPurchaseFlyout?.addNewProductEndpoint,
-        addProductPayload
-      );
-      if (response?.isError) {
-        setErrorMessage(newPurchaseFlyout?.unknownError);
-      } else {
-        setDataTable(response);
-      }
-    } catch (error) {
-      setErrorMessage(newPurchaseFlyout?.unknownError);
-    } finally {
-      setValidating(false);
-      setPayloadWithoutNewItem(false);
-    }
-  };
-
-  // Validation banner
-  const hasFeedBackMessages = dataTable?.feedBackMessages?.length > 0;
-  const errorCriticality = hasFeedBackMessages
-    ? dataTable?.feedBackMessages[0]?.errorCriticality
-    : 4;
-  const bannerErrorMessage = hasFeedBackMessages
-    ? dataTable?.feedBackMessages[0]?.message
-    : '';
-  const blueBanner = errorCriticality === 3;
-  const orangeBanner = errorCriticality === 2;
-  const redBanner = errorCriticality === 1;
-  const noBanner = errorCriticality === 4 || bannerErrorMessage === null;
-
-  const handleCloseBanner = () => {
-    setBannerOpen(false);
-  };
-
-  // Search Vendor part No
-  const handleVendorPartNoChange = async (event) => {
-    setIsTyping(true);
-    setErrorMessage('');
-    const resellerId = event.target.value;
-    setVendorNumber(resellerId);
-
-    if (resellerId?.length >= 3) {
-      setIsAutocompleteOpen(true);
-
-      const payload = {
-        MaxParts: 10,
-        GetDetails: 'true',
-        PartialManufacturerPartNumber: resellerId,
-        Properties: [
-          {
-            Id: 'EndUserType',
-            Value: endUserType,
-          },
-          {
-            Id: 'Vendor',
-            Value: 'ADOBE',
-          },
-        ],
-      };
-      const response = await vendorPartNoLookUp(
-        newPurchaseFlyout?.vendorPartNoLookUpEndpoint,
-        payload
-      );
-      if (response?.isError) {
-        setErrorMessage(newPurchaseFlyout?.unknownError);
-        setVendorPartNumbers([]);
-      } else {
-        setVendorPartNumbers(response);
-      }
-    } else {
-      setIsAutocompleteOpen(false);
-      setVendorPartNumbers([]);
-    }
-  };
-
-  const checkVendorPartNoInList = (quote) => {
-    return vendorPartNumbers.find((q) => q.productId === quote.productId);
-  };
-
-  const findSelectedVendorPartNo = async (newInput) => {
-    if (!newInput) {
-      return;
-    }
-
-    if (!checkVendorPartNoInList(newInput)) {
-      setErrorMessage(
-        getDictionaryValueOrKey(newPurchaseFlyout?.accountDoesntExistError)
-      );
-      return;
-    }
-
-    const vendorPartNoExists = vendorPartNumbers?.length > 0;
-
-    if (vendorPartNoExists) {
-      setIsTyping(false);
-    } else {
-      setVendorNumber('');
-      setVendorPartNumbers([]);
+    };
+    const addProductPayload = {
+      ...mandatoryPayload,
+      items: filteredItemsPayload,
+    };
+    const handleAddProductToGrid = async () => {
       setErrorMessage('');
+      setBannerOpen(false);
+      setPlaceOrderActive(false);
+
+      try {
+        const response = await addProductToGrid(
+          newPurchaseFlyout?.addNewProductEndpoint,
+          addProductPayload
+        );
+        if (response?.isError) {
+          setErrorMessage(newPurchaseFlyout?.unknownError);
+        } else {
+          setDataTable(response);
+        }
+      } catch (error) {
+        setErrorMessage(newPurchaseFlyout?.unknownError);
+      } finally {
+        setValidating(false);
+        setPayloadWithoutNewItem(false);
+      }
+    };
+
+    // Validation banner
+    const hasFeedBackMessages = dataTable?.feedBackMessages?.length > 0;
+    const errorCriticality = hasFeedBackMessages
+      ? dataTable?.feedBackMessages[0]?.errorCriticality
+      : 4;
+    const bannerErrorMessage = hasFeedBackMessages
+      ? dataTable?.feedBackMessages[0]?.message
+      : '';
+    const blueBanner = errorCriticality === 3;
+    const orangeBanner = errorCriticality === 2;
+    const redBanner = errorCriticality === 1;
+    const noBanner = errorCriticality === 4 || bannerErrorMessage === null;
+
+    const handleCloseBanner = () => {
+      setBannerOpen(false);
+    };
+
+    // Search Vendor part No
+    const handleVendorPartNoChange = async (event) => {
+      setIsTyping(true);
+      setErrorMessage('');
+      const resellerId = event.target.value;
+      setVendorNumber(resellerId);
+
+      if (resellerId?.length >= 3) {
+        setIsAutocompleteOpen(true);
+
+        const payload = {
+          MaxParts: 10,
+          GetDetails: 'true',
+          PartialManufacturerPartNumber: resellerId,
+          Properties: [
+            {
+              Id: 'EndUserType',
+              Value: endUserType,
+            },
+            {
+              Id: 'Vendor',
+              Value: 'ADOBE',
+            },
+          ],
+        };
+        const response = await vendorPartNoLookUp(
+          newPurchaseFlyout?.vendorPartNoLookUpEndpoint,
+          payload
+        );
+        if (response?.isError) {
+          setErrorMessage(newPurchaseFlyout?.unknownError);
+          setVendorPartNumbers([]);
+        } else {
+          setVendorPartNumbers(response);
+        }
+      } else {
+        setIsAutocompleteOpen(false);
+        setVendorPartNumbers([]);
+      }
+    };
+
+    const checkVendorPartNoInList = (quote) => {
+      return vendorPartNumbers.find((q) => q.productId === quote.productId);
+    };
+
+    const findSelectedVendorPartNo = async (newInput) => {
+      if (!newInput) {
+        return;
+      }
+
+      if (!checkVendorPartNoInList(newInput)) {
+        setErrorMessage(
+          getDictionaryValueOrKey(newPurchaseFlyout?.accountDoesntExistError)
+        );
+        return;
+      }
+
+      const vendorPartNoExists = vendorPartNumbers?.length > 0;
+
+      if (vendorPartNoExists) {
+        setIsTyping(false);
+      } else {
+        setVendorNumber('');
+        setVendorPartNumbers([]);
+        setErrorMessage('');
+        setSelectedVendorPartNo(newInput);
+        setIsTyping(false);
+      }
+      setIsAutocompleteOpen(false);
+    };
+
+    const handleVendorSelectedChange = (event, newInput) => {
+      findSelectedVendorPartNo(newInput);
       setSelectedVendorPartNo(newInput);
-      setIsTyping(false);
-    }
-    setIsAutocompleteOpen(false);
-  };
+      setErrorMessage('');
+      setDatePickerOpen(true);
+    };
 
-  const handleVendorSelectedChange = (event, newInput) => {
-    findSelectedVendorPartNo(newInput);
-    setSelectedVendorPartNo(newInput);
-    setErrorMessage('');
-    setDatePickerOpen(true);
-  };
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        selectVendor();
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      selectVendor();
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  };
+    const selectVendor = () => {
+      const newInput = vendorPartNumbers.find(
+        (vendorPart) => vendorPart.productId === vendorNumber
+      );
+      findSelectedVendorPartNo(newInput || vendorNumber);
+    };
 
-  const selectVendor = () => {
-    const newInput = vendorPartNumbers.find(
-      (vendorPart) => vendorPart.productId === vendorNumber
-    );
-    findSelectedVendorPartNo(newInput || vendorNumber);
-  };
+    const filterOptions = createFilterOptions({
+      stringify: (option) =>
+        `${option.productId} ${option.manufacturerPartNumber}`,
+    });
 
-  const filterOptions = createFilterOptions({
-    stringify: (option) =>
-      `${option.productId} ${option.manufacturerPartNumber}`,
-  });
+    // Calculate subtotal price
+    const calculateSubtotal = useCallback(() => {
+      const subtotal = items?.reduce((sum, item) => {
+        return sum + parseFloat(item.totalPrice || '0');
+      }, 0);
+      setSubtotalValue(subtotal?.toFixed(2));
+    }, [items, setSubtotalValue]);
 
-  // Calculate subtotal price
-  const calculateSubtotal = useCallback(() => {
-    const subtotal = items?.reduce((sum, item) => {
-      return sum + parseFloat(item.totalPrice || '0');
-    }, 0);
-    setSubtotalValue(subtotal?.toFixed(2));
-  }, [items, setSubtotalValue]);
+    // Handl date picker open and close
+    const handleDatePickerOpen = () => {
+      setDatePickerOpen((prevState) => !prevState);
+    };
 
-  // Handl date picker open and close
-  const handleDatePickerOpen = () => {
-    setDatePickerOpen((prevState) => !prevState);
-  };
+    useEffect(() => {
+      setItems(dataTable?.items);
+    }, [dataTable]);
 
-  useEffect(() => {
-    setItems(dataTable?.items);
-  }, [dataTable]);
+    useEffect(() => {
+      calculateSubtotal();
+    }, [items, calculateSubtotal]);
 
-  useEffect(() => {
-    calculateSubtotal();
-  }, [items, calculateSubtotal]);
+    useEffect(() => {
+      if (payloadWithoutNewItem && blueBanner) {
+        setPlaceOrderActive(true);
+        setBannerOpen(true);
+      } else {
+        setPlaceOrderActive(false);
+      }
+      if (validating) {
+        setPlaceOrderActive(false);
+      }
+    }, [blueBanner, validating]);
 
-  useEffect(() => {
-    if (payloadWithoutNewItem && blueBanner) {
-      setPlaceOrderActive(true);
-      setBannerOpen(true);
-    } else {
-      setPlaceOrderActive(false);
-    }
-    if (validating) {
-      setPlaceOrderActive(false);
-    }
-  }, [blueBanner, validating]);
+    // Trigger Validate request from useEffect
+    useEffect(() => {
+      if (manufacturerPartNumber) {
+        setVendorPartNo(manufacturerPartNumber);
+      }
+    }, [manufacturerPartNumber]);
 
-  // Trigger Validate request from useEffect
-  useEffect(() => {
-    if (manufacturerPartNumber) {
-      setVendorPartNo(manufacturerPartNumber);
-    }
-  }, [manufacturerPartNumber]);
+    useEffect(() => {
+      if (
+        datePickerOpen === false &&
+        vendorPartNo?.length > 0 &&
+        pickedEndDate
+      ) {
+        handleAddProductToGrid();
+        setVendorPartNo('');
+      }
+    }, [datePickerOpen, vendorPartNo, pickedEndDate]);
 
-  useEffect(() => {
-    if (datePickerOpen === false && vendorPartNo?.length > 0 && pickedEndDate) {
-      handleAddProductToGrid();
-      setVendorPartNo('');
-    }
-  }, [datePickerOpen, vendorPartNo, pickedEndDate]);
+    useEffect(() => {
+      if (payloadWithoutNewItem) {
+        handleAddProductToGrid();
+      }
+    }, [payloadWithoutNewItem]);
 
-  useEffect(() => {
-    if (payloadWithoutNewItem) {
-      handleAddProductToGrid();
-    }
-  }, [payloadWithoutNewItem]);
-
-  return (
-    <>
-      <div className="cmp-flyout-newPurchase__form-details">
-        <p className="cmp-flyout-newPurchase__form-details__title">
-          {getDictionaryValueOrKey(newPurchaseFlyout?.orderDetails)}
-        </p>
-        <div className="cmp-flyout-newPurchase__form-details__card">
-          <div className="cmp-flyout-newPurchase__form-details__card-section">
-            <p className="cmp-flyout-newPurchase__form-details__card-title">
-              {getDictionaryValueOrKey(newPurchaseFlyout?.resellerDetails)}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? resellerData?.name : pickedResellerQuote?.name}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore
-                ? resellerData?.vendorAccountNumber
-                : pickedResellerQuote?.accountNumber}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? resellerData?.contact?.name : firstName}{' '}
-              {isAddMore ? '' : lastName}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? resellerData?.contact?.email : email}
-            </p>
-          </div>
-          <div className="cmp-flyout-newPurchase__form-details__card-section">
-            <p className="cmp-flyout-newPurchase__form-details__card-title">
-              {getDictionaryValueOrKey(newPurchaseFlyout?.endUserDetails)}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? endUserData.nameUpper : endUserCompanyName}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? endUserData?.contact?.name : endUserCompanyFirstName}{' '}
-              {isAddMore ? '' : endUserCompanyLastName}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? endUserData?.contact?.email : endUserEmail}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? data?.endUserType : endUserType}
-            </p>
-          </div>
-          <div className="cmp-flyout-newPurchase__form-details__card-section">
-            <p className="cmp-flyout-newPurchase__form-details__card-title">
-              {getDictionaryValueOrKey(newPurchaseFlyout?.endUserAddress)}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? endUserData?.address?.line1 : endUserAddress1}
-              {isAddMore && endUserData?.address?.line2
-                ? `, ${endUserData?.address?.line2}`
-                : `, ${endUserAddress2}`}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? endUserData?.address?.city : endUserCity},{' '}
-              {isAddMore ? endUserData?.address?.country : endUserCountry}
-            </p>
-            <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? endUserData?.address?.postalCode : endUserAreaCode}
-            </p>
-          </div>
-        </div>
-        <div className="cmp-flyout-newPurchase__form-details__description">
-          <p className="cmp-flyout-newPurchase__form-details__description-title">
-            {getDictionaryValueOrKey(newPurchaseFlyout?.addProducts)}
+    return (
+      <>
+        <div className="cmp-flyout-newPurchase__form-details">
+          <p className="cmp-flyout-newPurchase__form-details__title">
+            {getDictionaryValueOrKey(newPurchaseFlyout?.orderDetails)}
           </p>
-          <p className="cmp-flyout-newPurchase__form-details__description-text">
-            {getDictionaryValueOrKey(
-              newPurchaseFlyout?.searchForAdditionalSoftware
-            )}
-          </p>
-        </div>
-        <div className="cmp-flyout-newPurchase__form-search">
-          <Autocomplete
-            id="combo-box-demo"
-            open={isAutocompleteOpen}
-            freeSolo={true}
-            options={vendorPartNumbers || []}
-            filterOptions={filterOptions}
-            getOptionLabel={(option) => {
-              return option?.manufacturerPartNumber ?? vendorNumber;
-            }}
-            onChange={handleVendorSelectedChange}
-            value={selectedVendorPartNo}
-            onKeyDown={handleKeyDown}
-            renderOption={(props, option) => {
-              return (
-                <li {...props} key={option?.productId}>
-                  <div>
-                    <div className="cmp-flyout-autocomplete__option-name">
-                      <VendorPartNoDetails
-                        quote={option}
-                        currentlyTypedWord={vendorNumber}
-                      />
-                    </div>
-                  </div>
-                </li>
-              );
-            }}
-            renderInput={(params) => {
-              if (errorMessage && !isTyping) {
-                params.inputProps.value = '';
-              }
-              return (
-                <TextField
-                  {...params}
-                  error={!!errorMessage}
-                  label={getDictionaryValueOrKey(
-                    newPurchaseFlyout?.searchVendorPartNo
-                  )}
-                  value={vendorNumber}
-                  variant="standard"
-                  onChange={handleVendorPartNoChange}
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <div className="cmp-autocomplete__button-section">
-                        <Button
-                          className="cmp-button__autocomplete-search"
-                          variant="standard"
-                          onClick={selectVendor}
-                        >
-                          <AutoCompleteSearchIcon />
-                        </Button>
-                      </div>
-                    ),
-                  }}
-                />
-              );
-            }}
-          />
-          {errorMessage && (
-            <div className="cmp-flyout__content--error">{errorMessage}</div>
-          )}
-        </div>
-        <div className="cmp-flyout-newPurchase__form-date">
-          <div className="cmp-flyout-newPurchase__form-date__display-column">
-            <span className="cmp-flyout-newPurchase__form-date__title">
-              {getDictionaryValueOrKey(newPurchaseFlyout?.startDate)}
-            </span>
-            <span className="cmp-flyout-newPurchase__form-date__text">
-              {startDate}
-            </span>
-          </div>
-          <div className="cmp-flyout-newPurchase__form-date__hyphen"></div>
-          <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
-            <span className="cmp-flyout-newPurchase__form-date__title">
-              {getDictionaryValueOrKey(newPurchaseFlyout?.endDate)}
-            </span>
-            <div
-              onClick={handleDatePickerOpen}
-              className="cmp-flyout-newPurchase__form-date__input"
-            >
-              {pickedEndDate ? pickedEndDate : defaultEndDate}
+          <div className="cmp-flyout-newPurchase__form-details__card">
+            <div className="cmp-flyout-newPurchase__form-details__card-section">
+              <p className="cmp-flyout-newPurchase__form-details__card-title">
+                {getDictionaryValueOrKey(newPurchaseFlyout?.resellerDetails)}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore ? resellerData?.name : pickedResellerQuote?.name}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore
+                  ? resellerData?.vendorAccountNumber
+                  : pickedResellerQuote?.accountNumber}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore ? resellerData?.contact?.name : firstName}{' '}
+                {isAddMore ? '' : lastName}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore ? resellerData?.contact?.email : email}
+              </p>
+            </div>
+            <div className="cmp-flyout-newPurchase__form-details__card-section">
+              <p className="cmp-flyout-newPurchase__form-details__card-title">
+                {getDictionaryValueOrKey(newPurchaseFlyout?.endUserDetails)}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore ? endUserData.nameUpper : endUserCompanyName}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore
+                  ? endUserData?.contact?.name
+                  : endUserCompanyFirstName}{' '}
+                {isAddMore ? '' : endUserCompanyLastName}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore ? endUserData?.contact?.email : endUserEmail}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore ? data?.endUserType : endUserType}
+              </p>
+            </div>
+            <div className="cmp-flyout-newPurchase__form-details__card-section">
+              <p className="cmp-flyout-newPurchase__form-details__card-title">
+                {getDictionaryValueOrKey(newPurchaseFlyout?.endUserAddress)}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore ? endUserData?.address?.line1 : endUserAddress1}
+                {isAddMore && endUserData?.address?.line2
+                  ? `, ${endUserData?.address?.line2}`
+                  : `, ${endUserAddress2}`}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore ? endUserData?.address?.city : endUserCity},{' '}
+                {isAddMore ? endUserData?.address?.country : endUserCountry}
+              </p>
+              <p className="cmp-flyout-newPurchase__form-details__card-text">
+                {isAddMore ? endUserData?.address?.postalCode : endUserAreaCode}
+              </p>
             </div>
           </div>
-          <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
-            <span className="cmp-flyout-newPurchase__form-date__title">
-              {getDictionaryValueOrKey(newPurchaseFlyout?.duration)}
-            </span>
-            <span className="cmp-flyout-newPurchase__form-date__text">
-              {duration} {getDictionaryValueOrKey(newPurchaseFlyout?.days)}
-            </span>
+          <div className="cmp-flyout-newPurchase__form-details__description">
+            <p className="cmp-flyout-newPurchase__form-details__description-title">
+              {getDictionaryValueOrKey(newPurchaseFlyout?.addProducts)}
+            </p>
+            <p className="cmp-flyout-newPurchase__form-details__description-text">
+              {getDictionaryValueOrKey(
+                newPurchaseFlyout?.searchForAdditionalSoftware
+              )}
+            </p>
           </div>
-          <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
-            <span className="cmp-flyout-newPurchase__form-date__title">
-              {getDictionaryValueOrKey(newPurchaseFlyout?.licensePriceLevel)}
-            </span>
-            <span className="cmp-flyout-newPurchase__form-date__text">
-              {licensePriceLevel}
-            </span>
+          <div className="cmp-flyout-newPurchase__form-search">
+            <Autocomplete
+              id="combo-box-demo"
+              open={isAutocompleteOpen}
+              freeSolo={true}
+              options={vendorPartNumbers || []}
+              filterOptions={filterOptions}
+              getOptionLabel={(option) => {
+                return option?.manufacturerPartNumber ?? vendorNumber;
+              }}
+              onChange={handleVendorSelectedChange}
+              value={selectedVendorPartNo}
+              onKeyDown={handleKeyDown}
+              renderOption={(props, option) => {
+                return (
+                  <li {...props} key={option?.productId}>
+                    <div>
+                      <div className="cmp-flyout-autocomplete__option-name">
+                        <VendorPartNoDetails
+                          quote={option}
+                          currentlyTypedWord={vendorNumber}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                );
+              }}
+              renderInput={(params) => {
+                if (errorMessage && !isTyping) {
+                  params.inputProps.value = '';
+                }
+                return (
+                  <TextField
+                    {...params}
+                    error={!!errorMessage}
+                    label={getDictionaryValueOrKey(
+                      newPurchaseFlyout?.searchVendorPartNo
+                    )}
+                    value={vendorNumber}
+                    variant="standard"
+                    onChange={handleVendorPartNoChange}
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <div className="cmp-autocomplete__button-section">
+                          <Button
+                            className="cmp-button__autocomplete-search"
+                            variant="standard"
+                            onClick={selectVendor}
+                          >
+                            <AutoCompleteSearchIcon />
+                          </Button>
+                        </div>
+                      ),
+                    }}
+                  />
+                );
+              }}
+            />
+            {errorMessage && (
+              <div className="cmp-flyout__content--error">{errorMessage}</div>
+            )}
           </div>
-        </div>
-        {datePickerOpen && (
-          <DatePicker
-            isOpen={datePickerOpen}
-            startDate={startDate}
-            endDate={defaultEndDate}
-            setPickedEndDate={setPickedEndDate}
-            setDuration={setDuration}
-            setBannerOpen={setBannerOpen}
-            setPlaceOrderActive={setPlaceOrderActive}
-          />
-        )}
-        {bannerOpen &&
-          dataTable?.feedBackMessages &&
-          dataTable?.feedBackMessages?.length > 0 &&
-          errorCriticality &&
-          !noBanner &&
-          (redBanner || orangeBanner || blueBanner) &&
-          bannerErrorMessage && (
-            <div
-              className={
-                blueBanner
-                  ? 'cmp-flyout-newPurchase__form-feedback-banner blue-banner'
-                  : orangeBanner
-                  ? 'cmp-flyout-newPurchase__form-feedback-banner orange-banner'
-                  : redBanner
-                  ? 'cmp-flyout-newPurchase__form-feedback-banner red-banner'
-                  : 'cmp-flyout-newPurchase__form-feedback-banner'
-              }
-            >
-              <p>
-                {blueBanner ? (
-                  <BannerInfoIcon />
-                ) : orangeBanner ? (
-                  <WarningTriangleIcon />
-                ) : redBanner ? (
-                  <ProhibitedIcon />
-                ) : (
-                  ''
-                )}
-                {bannerErrorMessage}
-              </p>
+          <div className="cmp-flyout-newPurchase__form-date">
+            <div className="cmp-flyout-newPurchase__form-date__display-column">
+              <span className="cmp-flyout-newPurchase__form-date__title">
+                {getDictionaryValueOrKey(newPurchaseFlyout?.startDate)}
+              </span>
+              <span className="cmp-flyout-newPurchase__form-date__text">
+                {startDate}
+              </span>
+            </div>
+            <div className="cmp-flyout-newPurchase__form-date__hyphen"></div>
+            <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
+              <span className="cmp-flyout-newPurchase__form-date__title">
+                {getDictionaryValueOrKey(newPurchaseFlyout?.endDate)}
+              </span>
               <div
-                className={'banner-close-button'}
-                onClick={handleCloseBanner}
+                onClick={handleDatePickerOpen}
+                className="cmp-flyout-newPurchase__form-date__input"
               >
-                <CloseXButtonIcon />
+                {pickedEndDate ? pickedEndDate : defaultEndDate}
               </div>
             </div>
+            <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
+              <span className="cmp-flyout-newPurchase__form-date__title">
+                {getDictionaryValueOrKey(newPurchaseFlyout?.duration)}
+              </span>
+              <span className="cmp-flyout-newPurchase__form-date__text">
+                {duration} {getDictionaryValueOrKey(newPurchaseFlyout?.days)}
+              </span>
+            </div>
+            <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
+              <span className="cmp-flyout-newPurchase__form-date__title">
+                {getDictionaryValueOrKey(newPurchaseFlyout?.licensePriceLevel)}
+              </span>
+              <span className="cmp-flyout-newPurchase__form-date__text">
+                {licensePriceLevel}
+              </span>
+            </div>
+          </div>
+          {datePickerOpen && (
+            <DatePicker
+              isOpen={datePickerOpen}
+              startDate={startDate}
+              endDate={defaultEndDate}
+              setPickedEndDate={setPickedEndDate}
+              setDuration={setDuration}
+              setBannerOpen={setBannerOpen}
+              setPlaceOrderActive={setPlaceOrderActive}
+            />
           )}
-        <NewPurchaseTable
-          data={dataTable}
-          config={newPurchaseFlyout}
-          currency={currency}
-          setCurrency={setCurrency}
-          defaultCurrency={defaultCurrency}
-          subtotalValue={subtotalValue}
-          setItems={setItems}
-          setPlaceOrderActive={setPlaceOrderActive}
-          setPayloadWithoutNewItem={setPayloadWithoutNewItem}
-          setBannerOpen={setBannerOpen}
-        />
-        <PlaceOrderDialog
-          data={dataTable}
-          addProductPayload={addProductPayload}
-          config={newPurchaseFlyout}
-          onClose={onClose}
-          open={open}
-          bottomContent={bottomContent}
-          store={store}
-        />
-      </div>
-    </>
-  );
+          {bannerOpen &&
+            dataTable?.feedBackMessages &&
+            dataTable?.feedBackMessages?.length > 0 &&
+            errorCriticality &&
+            !noBanner &&
+            (redBanner || orangeBanner || blueBanner) &&
+            bannerErrorMessage && (
+              <div
+                className={
+                  blueBanner
+                    ? 'cmp-flyout-newPurchase__form-feedback-banner blue-banner'
+                    : orangeBanner
+                    ? 'cmp-flyout-newPurchase__form-feedback-banner orange-banner'
+                    : redBanner
+                    ? 'cmp-flyout-newPurchase__form-feedback-banner red-banner'
+                    : 'cmp-flyout-newPurchase__form-feedback-banner'
+                }
+              >
+                <p>
+                  {blueBanner ? (
+                    <BannerInfoIcon />
+                  ) : orangeBanner ? (
+                    <WarningTriangleIcon />
+                  ) : redBanner ? (
+                    <ProhibitedIcon />
+                  ) : (
+                    ''
+                  )}
+                  {bannerErrorMessage}
+                </p>
+                <div
+                  className={'banner-close-button'}
+                  onClick={handleCloseBanner}
+                >
+                  <CloseXButtonIcon />
+                </div>
+              </div>
+            )}
+          <NewPurchaseTable
+            data={dataTable}
+            config={newPurchaseFlyout}
+            currency={currency}
+            setCurrency={setCurrency}
+            defaultCurrency={defaultCurrency}
+            subtotalValue={subtotalValue}
+            setItems={setItems}
+            setPlaceOrderActive={setPlaceOrderActive}
+            setPayloadWithoutNewItem={setPayloadWithoutNewItem}
+            setBannerOpen={setBannerOpen}
+          />
+          <PlaceOrderDialog
+            data={dataTable}
+            mandatoryPayload={mandatoryPayload}
+            itemsPayload={itemsPayload}
+            config={newPurchaseFlyout}
+            onClose={onClose}
+            open={open}
+            bottomContent={bottomContent}
+            store={store}
+          />
+        </div>
+      </>
+    );
 }
 
 export default FormPart2;
