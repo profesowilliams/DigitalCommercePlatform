@@ -472,7 +472,7 @@
                 <termsAndConditionsLink
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldLabel="Adobe Reseller Terms And Conditions Link"
+                    fieldLabel="Terms And Conditions Link"
                     name="./termsAndConditionsLink"/>
             </items>
         </newPyrchaseFlyoutGroup>
