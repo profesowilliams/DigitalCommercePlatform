@@ -212,7 +212,8 @@ public class PageImpl implements Page {
         if(localePage != null && !currentPage.getPath().contains("/content/experience-fragments")) {
             String relativePagePath = currentPage.getPath().replace(localePage.getPath(), StringUtils.EMPTY);
             List<String> hierarchyPagesList = buildHierarchyList(relativePagePath.split("/"));
-            for (int i = 0; i < hierarchyPagesList.size(); i++) {
+            int maxLength = Math.min(hierarchyPagesList.size(), siteSections.length);
+            for (int i = 0; i < maxLength; i++) {
                 String path = hierarchyPagesList.get(i);
                 if (StringUtils.isNotEmpty(path)) {
                     siteSections[i - 1] = path;

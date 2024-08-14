@@ -101,7 +101,11 @@ public class ExtractSVGModel {
     return strBuilder.toString();
   }
 
-  public String getPath() {
-    return this.asset.getPath();
-  }
+    public String getPath() {
+        if (Objects.nonNull(asset)) {
+            return this.asset.getPath();
+        }
+
+        return StringUtils.EMPTY;
+    }
 }
