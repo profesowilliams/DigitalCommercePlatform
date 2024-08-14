@@ -474,6 +474,12 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Terms And Conditions Link"
                     name="./termsAndConditionsLink"/>
+                <placeOrderSuccess
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.placeOrderSuccess"
+                    fieldLabel="Your order has been successfully submitted for processing. You will receive an email once processing is complete"
+                    name="./placeOrderSuccess"/>
             </items>
         </newPyrchaseFlyoutGroup>
     </items>
