@@ -38,7 +38,6 @@ function NewPurchaseFlyout({
   const closePlaceOrderFlyout = () => {
     setPlaceOrderFlyoutOpen(false);
   };
-  const [enablePlaceOrder, setEnablePlaceOrder] = useState(false);
 
   // View flyout content step
 
@@ -199,9 +198,9 @@ function NewPurchaseFlyout({
     setPayloadWithoutNewItem((prevState) => !prevState);
     setValidating(true);
   };
-  const handleCompleteOrder = () => {
-    enablePlaceOrder && console.log('complete Order');
-  };
+  // const handleCompleteOrder = () => {
+  //   enablePlaceOrder && console.log('complete Order');
+  // };
 
   const handlePlaceOrder = () => {
     setPlaceOrderFlyoutOpen(true);
@@ -261,21 +260,6 @@ function NewPurchaseFlyout({
     </div>
   );
 
-  const buttonSectionPlaceOrder = (
-    <div className="cmp-flyout__footer-buttons order-modification">
-      <button
-        disabled={!enablePlaceOrder}
-        className="primary"
-        onClick={handleCompleteOrder}
-      >
-        {getDictionaryValueOrKey(newPurchaseFlyout?.completeOrder)}
-      </button>
-      <button className="secondary" onClick={closePlaceOrderFlyout}>
-        <ArrowBackIcon />
-        {getDictionaryValueOrKey(newPurchaseFlyout?.modifyOrder)}
-      </button>
-    </div>
-  );
   const buttonSection = () => {
     if (step === 1 || (step === 2 && isAddMore)) {
       return buttonsSectionStep1;
@@ -463,7 +447,6 @@ function NewPurchaseFlyout({
               setBannerOpen={setBannerOpen}
               onClose={closePlaceOrderFlyout}
               open={placeOrderFlyoutOpen}
-              buttonSection={buttonSectionPlaceOrder}
               bottomContent={
                 step === 2
                   ? (classNameSuffix) => ResellerSubtotal({ classNameSuffix })
@@ -471,7 +454,7 @@ function NewPurchaseFlyout({
               }
               isAddMore={isAddMore}
               data={data}
-              setEnablePlaceOrder={setEnablePlaceOrder}
+              store={store}
             />
           </div>
         )}

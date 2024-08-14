@@ -39,9 +39,8 @@ function FormPart2({
   data,
   onClose,
   open,
-  buttonSection,
   bottomContent,
-  setEnablePlaceOrder
+  store,
 }) {
   const {
     firstName,
@@ -84,10 +83,16 @@ function FormPart2({
   const [vendorPartNo, setVendorPartNo] = useState(manufacturerPartNumber);
   // Add Product to Grid
   const [items, setItems] = useState([]);
-  const resellerResponseAsObj = typeof(data?.reseller?.vendorAccountNumber) === 'object';
-  const resellerData = resellerResponseAsObj ? getModifiedResellerData(resellerResponseAsObj, data?.reseller) : null;
-  const endUserResponseAsObj = typeof(data?.reseller?.vendorAccountNumber) === 'object';
-   const endUserData = endUserResponseAsObj ? getModifiedEndUserData(endUserResponseAsObj, data?.endUser) : null;
+  const resellerResponseAsObj =
+    typeof data?.reseller?.vendorAccountNumber === 'object';
+  const resellerData = resellerResponseAsObj
+    ? getModifiedResellerData(resellerResponseAsObj, data?.reseller)
+    : null;
+  const endUserResponseAsObj =
+    typeof data?.reseller?.vendorAccountNumber === 'object';
+  const endUserData = endUserResponseAsObj
+    ? getModifiedEndUserData(endUserResponseAsObj, data?.endUser)
+    : null;
 
   const pickedEndDateFormatted = moment(pickedEndDate, 'MM/DD/YYYY').format(
     'YYYY-MM-DD[T]HH:mm:ss[Z]'
@@ -107,56 +112,54 @@ function FormPart2({
       },
     };
   });
+  const newItem = !payloadWithoutNewItem
+    ? {
+        id: '',
+        product: [
+          {
+            type: 'MANUFACTURER',
+            id: vendorPartNo,
+          },
+        ],
+        quantity: '1',
+        contract: {
+          startDate: pickedStartDateFormatted,
+          endDate: pickedEndDateFormatted,
+        },
+      }
+    : null;
 
+  // Assuming itemsPayload is an array where you are adding newItem
+  const existingItems = [...itemsPayload, newItem];
+
+  // Filter out null values from the array
+  const filteredItemsPayload = existingItems.filter((item) => item !== null);
+
+  const addProductPayload = {
+    reseller: {
+      id: resellerId || '',
+    },
+    endUser: {
+      name: endUserCompanyName,
+      contact: {
+        name: `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
+        email: endUserEmail,
+      },
+      address: {
+        line1: endUserAddress1,
+        line2: endUserAddress2,
+        city: endUserCity,
+        postalCode: endUserAreaCode,
+        country: endUserCountry,
+      },
+    },
+
+    items: filteredItemsPayload,
+  };
   const handleAddProductToGrid = async () => {
     setErrorMessage('');
     setBannerOpen(false);
     setPlaceOrderActive(false);
-
-    const newItem = !payloadWithoutNewItem
-      ? {
-          id: '',
-          product: [
-            {
-              type: 'MANUFACTURER',
-              id: vendorPartNo,
-            },
-          ],
-          quantity: '1',
-          contract: {
-            startDate: pickedStartDateFormatted,
-            endDate: pickedEndDateFormatted,
-          },
-        }
-      : null;
-
-    // Assuming itemsPayload is an array where you are adding newItem
-    const existingItems = [...itemsPayload, newItem];
-
-    // Filter out null values from the array
-    const filteredItemsPayload = existingItems.filter((item) => item !== null);
-
-    const addProductPayload = {
-      reseller: {
-        id: resellerId || '',
-      },
-      endUser: {
-        name: endUserCompanyName,
-        contact: {
-          name: `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
-          email: endUserEmail,
-        },
-        address: {
-          line1: endUserAddress1,
-          line2: endUserAddress2,
-          city: endUserCity,
-          postalCode: endUserAreaCode,
-          country: endUserCountry,
-        },
-      },
-
-      items: filteredItemsPayload,
-    };
 
     try {
       const response = await addProductToGrid(
@@ -359,10 +362,13 @@ function FormPart2({
               {isAddMore ? resellerData?.name : pickedResellerQuote?.name}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? resellerData?.vendorAccountNumber : pickedResellerQuote?.accountNumber}
+              {isAddMore
+                ? resellerData?.vendorAccountNumber
+                : pickedResellerQuote?.accountNumber}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? resellerData?.contact?.name : firstName} {isAddMore ? '' : lastName}
+              {isAddMore ? resellerData?.contact?.name : firstName}{' '}
+              {isAddMore ? '' : lastName}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {isAddMore ? resellerData?.contact?.email : email}
@@ -376,7 +382,8 @@ function FormPart2({
               {isAddMore ? endUserData.nameUpper : endUserCompanyName}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? endUserData?.contact?.name : endUserCompanyFirstName} {isAddMore ? '' : endUserCompanyLastName}
+              {isAddMore ? endUserData?.contact?.name : endUserCompanyFirstName}{' '}
+              {isAddMore ? '' : endUserCompanyLastName}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {isAddMore ? endUserData?.contact?.email : endUserEmail}
@@ -391,10 +398,13 @@ function FormPart2({
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {isAddMore ? endUserData?.address?.line1 : endUserAddress1}
-              {isAddMore && endUserData?.address?.line2 ? `, ${endUserData?.address?.line2}` : `, ${endUserAddress2}`}
+              {isAddMore && endUserData?.address?.line2
+                ? `, ${endUserData?.address?.line2}`
+                : `, ${endUserAddress2}`}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? endUserData?.address?.city : endUserCity}, {isAddMore ? endUserData?.address?.country : endUserCountry}
+              {isAddMore ? endUserData?.address?.city : endUserCity},{' '}
+              {isAddMore ? endUserData?.address?.country : endUserCountry}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {isAddMore ? endUserData?.address?.postalCode : endUserAreaCode}
@@ -575,12 +585,12 @@ function FormPart2({
         />
         <PlaceOrderDialog
           data={dataTable}
+          addProductPayload={addProductPayload}
           config={newPurchaseFlyout}
           onClose={onClose}
           open={open}
-          buttonSection={buttonSection}
           bottomContent={bottomContent}
-          setEnablePlaceOrder={setEnablePlaceOrder}
+          store
         />
       </div>
     </>

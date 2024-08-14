@@ -5752,6 +5752,23 @@ app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
   }, 1000);
 });
 
+app.post("/ui-renewal/v1/Cart/CreateOrder", function (req, res) {
+  const success = {
+    content: {
+      success: true,
+    },
+    error: {
+      code: 0,
+      messages: ["string"],
+      isError: false,
+    },
+  };
+
+  setTimeout(() => {
+    return res.status(200).json(success);
+  }, 1000);
+});
+
 app.get("/ui-renewal/v1/SearchCheck", (req, res) => {
   const { ResellerId } = req.query;
   const response = mockResponses.renewalSearchResponse;

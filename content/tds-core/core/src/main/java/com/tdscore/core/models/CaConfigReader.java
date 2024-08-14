@@ -255,6 +255,8 @@ public class CaConfigReader {
 
     private String addNewProductEndpoint;
 
+    private String createNewPurchaseOrderEndpoint;
+
     private String checkQuoteExitsforResellerEndpoint;
 
     private String copyQuoteEndpoint;
@@ -373,6 +375,7 @@ public class CaConfigReader {
         accountLookUpEndpoint = serviceEndPointsConfiguration.accountLookUpEndpoint();
         vendorPartNoLookUpEndpoint = serviceEndPointsConfiguration.vendorPartNoLookUpEndpoint();
         addNewProductEndpoint = serviceEndPointsConfiguration.addNewProductEndpoint();
+        createNewPurchaseOrderEndpoint = serviceEndPointsConfiguration.createNewPurchaseOrderEndpoint();
         checkQuoteExitsforResellerEndpoint = serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint();
         copyQuoteEndpoint = serviceEndPointsConfiguration.copyQuoteEndpoint();
         shareQuoteEndpoint = serviceEndPointsConfiguration.shareQuoteEndpoint();
@@ -837,6 +840,8 @@ public class CaConfigReader {
     public String getVendorPartNoLookUpEndpoint() { return vendorPartNoLookUpEndpoint; }
     
     public String getAddNewProductEndpoint() { return addNewProductEndpoint; }
+    
+    public String getCreateNewPurchaseOrderEndpoint() { return createNewPurchaseOrderEndpoint; }
 
     public String getCheckQuoteExitsforResellerEndpoint() { return checkQuoteExitsforResellerEndpoint; }
 

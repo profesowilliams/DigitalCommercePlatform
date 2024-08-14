@@ -105,6 +105,7 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.accountLookUpEndpoint()).thenReturn("accountLookUpEndpoint");
         when(serviceEndPointsConfiguration.vendorPartNoLookUpEndpoint()).thenReturn("vendorPartNoLookUpEndpoint");
         when(serviceEndPointsConfiguration.addNewProductEndpoint()).thenReturn("addNewProductEndpoint");
+        when(serviceEndPointsConfiguration.createNewPurchaseOrderEndpoint()).thenReturn("createNewPurchaseOrderEndpoint");
         when(serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint()).thenReturn("checkQuoteExitsforResellerEndpoint");
         when(serviceEndPointsConfiguration.copyQuoteEndpoint()).thenReturn("copyQuoteEndpoint");
         when(serviceEndPointsConfiguration.addressesEndpoint()).thenReturn("addressesEndpoint");
@@ -211,6 +212,7 @@ class CaConfigReaderTest {
         assertEquals("accountLookUpEndpoint", underTest.getAccountLookUpEndpoint());
         assertEquals("vendorPartNoLookUpEndpoint", underTest.getVendorPartNoLookUpEndpoint());
         assertEquals("addNewProductEndpoint", underTest.getAddNewProductEndpoint());
+        assertEquals("createNewPurchaseOrderEndpoint", underTest.getCreateNewPurchaseOrderEndpoint());
         assertEquals("checkQuoteExitsforResellerEndpoint", underTest.getCheckQuoteExitsforResellerEndpoint());
         assertEquals("copyQuoteEndpoint", underTest.getCopyQuoteEndpoint());
         assertEquals("addressesEndpoint", underTest.getAddressesEndpoint());

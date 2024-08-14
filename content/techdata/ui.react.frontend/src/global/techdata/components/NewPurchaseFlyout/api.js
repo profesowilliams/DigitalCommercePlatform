@@ -15,3 +15,7 @@ export const addProductToGrid = async (endpoint, payload) => {
   const response = await post(endpoint, payload);
   return response.data.content;
 };
+export const createOrder = async (endpoint, payload) => {
+  const response = await post(endpoint, payload);
+  return response.data.content;
+};

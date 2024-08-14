@@ -203,6 +203,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Add New Product Endpoint", description = "Add New Product Endpoint")
     String addNewProductEndpoint();
 
+    @Property(label = "Create New Purchase Order Endpoint", description = "Create New Purchase Order Endpoint")
+    String createNewPurchaseOrderEndpoint();
+
     @Property(label = "Check Quote Exits for Reseller Endpoint", description = "Check Quote Exits for Reseller Endpoint")
     String checkQuoteExitsforResellerEndpoint();
 

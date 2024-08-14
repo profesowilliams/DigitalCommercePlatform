@@ -291,6 +291,13 @@ use(["../../../common/utils.js"], function (utils) {
       newPurchaseFlyout.addNewProductEndpoint =
         this.serviceData.uiServiceDomain + this.addNewProductEndpoint;
     }
+    if (
+      this.createNewPurchaseOrderEndpoint &&
+      this.serviceData.uiServiceDomain
+    ) {
+      newPurchaseFlyout.createNewPurchaseOrderEndpoint =
+        this.serviceData.uiServiceDomain + this.createNewPurchaseOrderEndpoint;
+    }
     // Share Flyout
     const shareFlyoutList = [
       "shareFlyoutTitle",

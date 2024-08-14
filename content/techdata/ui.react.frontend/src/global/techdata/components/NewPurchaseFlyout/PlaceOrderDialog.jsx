@@ -4,21 +4,73 @@ import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
+import { ArrowBackIcon } from '../../../../fluentIcons/FluentIcons';
+import { createOrder } from './api';
 
 function PlaceOrderDialog({
   data,
+  addProductPayload,
   onClose,
   open,
   bottomContent,
   config,
-  buttonSection,
-  setEnablePlaceOrder,
+  store,
 }) {
   const [confirmPurchaseChecked, setConfirmPurchaseChecked] = useState(false);
   const [confirmTermsChecked, setConfirmTermsChecked] = useState(false);
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState('');
-  const BottomContent = () => bottomContent('footer');
+  const [enablePlaceOrder, setEnablePlaceOrder] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  // const effects = store((st) => st.effects);
 
+  // Create order
+  const handleCreateOrder = async () => {
+    const payload = { ...addProductPayload, customerPo: purchaseOrderNumber };
+    // const toasterSuccess = {
+    //   isOpen: true,
+    //   origin: 'fromShareFlyout',
+    //   isAutoClose: true,
+    //   isSuccess: true,
+    //   message: getDictionaryValueOrKey(shareFlyoutContent.shareSuccessMessage),
+    // };
+
+    try {
+      const response = await createOrder(
+        config?.createNewPurchaseOrderEndpoint,
+        payload
+      );
+      if (response?.isError) {
+        setErrorMessage(config?.unknownError);
+      } else {
+        // effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+        return response;
+      }
+    } catch (error) {
+      setErrorMessage(config?.unknownError);
+    } finally {
+    }
+  };
+
+  const handleCompleteOrder = () => {
+    handleCreateOrder();
+  };
+
+  const BottomContent = () => bottomContent('footer');
+  const buttonSection = (
+    <div className="cmp-flyout__footer-buttons order-modification">
+      <button
+        disabled={!enablePlaceOrder}
+        className="primary"
+        onClick={handleCompleteOrder}
+      >
+        {getDictionaryValueOrKey(config?.completeOrder)}
+      </button>
+      <button className="secondary" onClick={onClose}>
+        <ArrowBackIcon />
+        {getDictionaryValueOrKey(config?.modifyOrder)}
+      </button>
+    </div>
+  );
   useEffect(() => {
     if (
       confirmPurchaseChecked &&
