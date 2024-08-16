@@ -44,11 +44,28 @@ export const hasDCPAccess = (user) => {
     return false;
 }
 
+const getCountryFromUrl = () => {
+    let urlSplitStrings = window.location.href.replace(window.location.origin,"").split('/');
+    let countryCodeFromUrl = "";
+
+    if(window.location.href.indexOf("/content") >= 0) { // support for sit/dit envs
+        countryCodeFromUrl = urlSplitStrings[4];
+    } else {
+        countryCodeFromUrl = urlSplitStrings[1];
+    }
+    
+    return countryCodeFromUrl;
+}
+
 export const hasAccess = ({user, accessType})=> {
+    const country = getCountryFromUrl();
     if(isDisableEntitlementsInList()) return false;
     const _accessType = accessType ? accessType : ACCESS_TYPES.CAN_VIEW_ORDERS
     const { roleList } = user ? user : { undefined };
-    var hasRoleListFlag = hasRoleList(roleList, _accessType);
+    const accountId = `${user?.activeCustomer?.customerNumber}:${country}`;
+
+    var hasRoleListFlag = hasRoleList(roleList, accountId, _accessType);
+
     if(hasRoleListFlag) {
         return true;
     }
@@ -64,10 +81,10 @@ function isDisableEntitlementsInList() {
     return false;
 }
 
-function hasRoleList(roleList, _accessType) {
+function hasRoleList(roleList, accountId, _accessType) {
     if (roleList && roleList.length) {
         for (let eachItem of roleList) {
-            if (eachItem?.entitlement.toLowerCase().trim() === _accessType.toLowerCase()) {
+            if (eachItem?.entitlement.toLowerCase().trim() === _accessType.toLowerCase() && eachItem?.accountId?.toLowerCase().trim().includes(accountId.toLowerCase())) {
                 return true;
             }
         }
