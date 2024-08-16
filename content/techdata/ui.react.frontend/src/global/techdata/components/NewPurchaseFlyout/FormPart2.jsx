@@ -209,7 +209,7 @@ function FormPart2({
       setIsAutocompleteOpen(true);
 
       const payload = {
-        MaxParts: 10,
+        MaxParts: 25,
         GetDetails: 'true',
         PartialManufacturerPartNumber: resellerId,
         Properties: [
