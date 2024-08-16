@@ -127,7 +127,7 @@ function usePlaceOrderDialogHook({
 
   function checkButtonDisabled() {
     return !(
-      purchaseOrderNumber.length <= 30 &&
+      purchaseOrderNumber.length <= 35 &&
       termsServiceChecked &&
       purchaseOrderNumber
     );
