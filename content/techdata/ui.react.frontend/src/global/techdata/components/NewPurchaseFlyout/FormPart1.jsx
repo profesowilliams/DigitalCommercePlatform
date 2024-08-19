@@ -656,13 +656,13 @@ function FormPart1({
             onChange={handleEndUserCountryChange}
             error={!!endUserCountryError}
           >
-            <MenuItem value="Commercial">
+            <MenuItem value="VN">
               {getDictionaryValueOrKey(newPurchaseFlyout?.endUserVietnam)}
             </MenuItem>
-            <MenuItem value="Education">
+            <MenuItem value="KH">
               {getDictionaryValueOrKey(newPurchaseFlyout?.endUserCambodia)}
             </MenuItem>
-            <MenuItem value="Government">
+            <MenuItem value="LA">
               {getDictionaryValueOrKey(newPurchaseFlyout?.endUserLaos)}
             </MenuItem>
           </Select>
