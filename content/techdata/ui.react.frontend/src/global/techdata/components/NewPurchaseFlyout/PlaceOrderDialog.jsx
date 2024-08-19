@@ -8,6 +8,9 @@ import { ArrowBackIcon } from '../../../../fluentIcons/FluentIcons';
 import { createOrder } from './api';
 
 function PlaceOrderDialog({
+  userData,
+  externalUser,
+  detailsData,
   data,
   itemsPayload,
   onClose,
@@ -16,15 +19,8 @@ function PlaceOrderDialog({
   config,
   store,
   resellerId,
-  endUserCompanyName,
-  endUserCompanyFirstName,
-  endUserCompanyLastName,
-  endUserEmail,
-  endUserAddress1,
-  endUserAddress2,
-  endUserCity,
-  endUserAreaCode,
-  endUserCountry,
+  resellerName,
+  formPart1States,
   closeFlyout,
   onQueryChanged,
 }) {
@@ -36,6 +32,21 @@ function PlaceOrderDialog({
   const createOrderSuccess = createOrderResponse?.content?.success;
   const effects = store((st) => st.effects);
 
+  const {
+    firstName,
+    lastName,
+    email,
+    endUserCompanyName,
+    endUserCompanyFirstName,
+    endUserCompanyLastName,
+    endUserEmail,
+    endUserType,
+    endUserAddress1,
+    endUserAddress2,
+    endUserCity,
+    endUserAreaCode,
+    endUserCountry,
+  } = formPart1States;
   // Add manufacturer: 'Adobe',and format quantity to int
   const transformItemsPayload = (payload) => {
     return payload.map((item) => {
@@ -65,6 +76,23 @@ function PlaceOrderDialog({
     const payload = {
       reseller: {
         id: resellerId || '',
+        name: externalUser
+          ? userData?.activeCustomer?.customerName
+          : detailsData
+          ? detailsData?.reseller?.name
+          : resellerName,
+        contact: {
+          name: externalUser
+            ? `${userData?.firstName} ${userData?.lastName}`
+            : detailsData
+            ? detailsData?.reseller?.contact[0]?.name?.text
+            : `${firstName} ${lastName}`,
+          email: externalUser
+            ? userData?.email
+            : detailsData
+            ? detailsData?.reseller?.contact[0]?.email?.text
+            : email,
+        },
       },
       endUser: {
         name: endUserCompanyName,

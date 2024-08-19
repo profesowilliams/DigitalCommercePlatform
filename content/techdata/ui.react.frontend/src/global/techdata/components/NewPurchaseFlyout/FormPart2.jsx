@@ -20,6 +20,8 @@ import PlaceOrderDialog from './PlaceOrderDialog';
 
 
 function FormPart2({
+  userData,
+  externalUser,
   newPurchaseFlyout,
   formPart1States,
   pickedResellerQuote,
@@ -104,6 +106,8 @@ function FormPart2({
     'YYYY-MM-DD[T]HH:mm:ss[Z]'
   );
   const resellerId = pickedResellerQuote?.accountNumber;
+  const resellerName = pickedResellerQuote?.name;
+
   const itemsChecked = items && Array.isArray(items) ? items : [];
   const itemsPayload = itemsChecked?.map((item) => {
     return {
@@ -587,6 +591,9 @@ function FormPart2({
           setBannerOpen={setBannerOpen}
         />
         <PlaceOrderDialog
+          userData={userData}
+          externalUser={externalUser}
+          detailsData={data}
           data={dataTable}
           addProductPayload={addProductPayload}
           itemsPayload={itemsPayload}
@@ -596,15 +603,8 @@ function FormPart2({
           bottomContent={bottomContent}
           store={store}
           resellerId={resellerId}
-          endUserCompanyName={endUserCompanyName}
-          endUserCompanyFirstName={endUserCompanyFirstName}
-          endUserCompanyLastName={endUserCompanyLastName}
-          endUserEmail={endUserEmail}
-          endUserAddress1={endUserAddress1}
-          endUserAddress2={endUserAddress2}
-          endUserCity={endUserCity}
-          endUserAreaCode={endUserAreaCode}
-          endUserCountry={endUserCountry}
+          resellerName={resellerName}
+          formPart1States={formPart1States}
           closeFlyout={closeFlyout}
           onQueryChanged={onQueryChanged}
         />

@@ -200,9 +200,6 @@ function NewPurchaseFlyout({
     setPayloadWithoutNewItem((prevState) => !prevState);
     setValidating(true);
   };
-  // const handleCompleteOrder = () => {
-  //   enablePlaceOrder && console.log('complete Order');
-  // };
 
   const handlePlaceOrder = () => {
     setPlaceOrderFlyoutOpen(true);
@@ -431,6 +428,8 @@ function NewPurchaseFlyout({
         {step === 2 && (
           <div>
             <FormPart2
+              userData={userData}
+              externalUser={externalUser}
               newPurchaseFlyout={newPurchaseFlyout}
               formPart1States={formPart1States}
               pickedResellerQuote={selectedQuote}
