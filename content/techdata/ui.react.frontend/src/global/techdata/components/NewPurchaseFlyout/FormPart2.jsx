@@ -607,6 +607,7 @@ function FormPart2({
           formPart1States={formPart1States}
           closeFlyout={closeFlyout}
           onQueryChanged={onQueryChanged}
+          isAddMore={isAddMore}
         />
       </div>
     </>

@@ -23,6 +23,7 @@ function PlaceOrderDialog({
   formPart1States,
   closeFlyout,
   onQueryChanged,
+  isAddMore,
 }) {
   const [confirmPurchaseChecked, setConfirmPurchaseChecked] = useState(false);
   const [confirmTermsChecked, setConfirmTermsChecked] = useState(false);
@@ -48,6 +49,9 @@ function PlaceOrderDialog({
     endUserCountry,
   } = formPart1States;
   // Add manufacturer: 'Adobe',and format quantity to int
+
+  const programName = `VIP MP ${endUserType}`;
+
   const transformItemsPayload = (payload) => {
     return payload.map((item) => {
       const quantity = parseInt(item.quantity);
@@ -66,6 +70,7 @@ function PlaceOrderDialog({
         ...item,
         quantity,
         product: updatedProduct,
+        programName: detailsData ? detailsData?.programName : programName,
       };
     });
   };
@@ -75,37 +80,51 @@ function PlaceOrderDialog({
   const handleCreateOrder = async () => {
     const payload = {
       reseller: {
-        id: resellerId || '',
+        id: isAddMore ? detailsData?.reseller?.id : resellerId || '',
         name: externalUser
           ? userData?.activeCustomer?.customerName
-          : detailsData
+          : isAddMore
           ? detailsData?.reseller?.name
           : resellerName,
         contact: {
           name: externalUser
             ? `${userData?.firstName} ${userData?.lastName}`
-            : detailsData
+            : isAddMore
             ? detailsData?.reseller?.contact[0]?.name?.text
             : `${firstName} ${lastName}`,
           email: externalUser
             ? userData?.email
-            : detailsData
+            : isAddMore
             ? detailsData?.reseller?.contact[0]?.email?.text
             : email,
         },
       },
       endUser: {
-        name: endUserCompanyName,
+        name: isAddMore ? detailsData?.endUser?.name?.text : endUserCompanyName,
         contact: {
-          name: `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
-          email: endUserEmail,
+          name: isAddMore
+            ? detailsData?.endUser?.contact[0]?.name?.text
+            : `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
+          email: isAddMore
+            ? detailsData?.endUser?.contact[0]?.email?.text
+            : endUserEmail,
         },
         address: {
-          line1: endUserAddress1,
-          line2: endUserAddress2,
-          city: endUserCity,
-          postalCode: endUserAreaCode,
-          country: endUserCountry,
+          line1: isAddMore
+            ? detailsData?.endUser?.address?.line1?.text
+            : endUserAddress1,
+          line2: isAddMore
+            ? detailsData?.endUser?.address?.line2?.text
+            : endUserAddress2,
+          city: isAddMore
+            ? detailsData?.endUser?.address?.city?.text
+            : endUserCity,
+          postalCode: isAddMore
+            ? detailsData?.endUser?.address?.postalCode?.text
+            : endUserAreaCode,
+          country: isAddMore
+            ? detailsData?.endUser?.address?.country?.text
+            : endUserCountry,
         },
       },
       items: transformedPayload,
@@ -131,7 +150,7 @@ function PlaceOrderDialog({
         config?.createNewPurchaseOrderEndpoint,
         payload
       );
-      if (response?.isError) {
+      if (response?.error?.isError) {
         effects.setCustomState({
           key: 'toaster',
           value: { ...toasterFail },
