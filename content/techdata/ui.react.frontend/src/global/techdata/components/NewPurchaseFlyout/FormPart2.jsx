@@ -43,6 +43,7 @@ function FormPart2({
   store,
   closeFlyout,
   onQueryChanged,
+  detailsEndUserType,
 }) {
   const {
     firstName,
@@ -215,7 +216,7 @@ function FormPart2({
         Properties: [
           {
             Id: 'EndUserType',
-            Value: endUserType,
+            Value: endUserType || detailsEndUserType,
           },
           {
             Id: 'Vendor',

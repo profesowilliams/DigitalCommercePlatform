@@ -5167,7 +5167,7 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "grids.common.label.filterDate": "Date",
 
     "mainDashboard.renewal.newPurchaseFlyout.label.vendorPartNoLookUpEndpoint":
-      "http://localhost:3000/ui-browse/v1/PartNumbers/Find",
+      "http://localhost:3000/ui-renewal/v1/PartNumbers/Find",
     "mainDashboard.renewal.newPurchaseFlyout.label.resellerAccountNumber":
       "* Reseller account number",
     "mainDashboard.renewal.newPurchaseFlyout.label.search": "Search",

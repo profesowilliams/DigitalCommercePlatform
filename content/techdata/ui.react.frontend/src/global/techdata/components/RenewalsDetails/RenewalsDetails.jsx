@@ -449,6 +449,7 @@ function RenewalsDetails(props) {
         data={renewalsDetails}
         activeStep={2}
         isAddMore={true}
+        detailsEndUserType={renewalsDetails?.endUserType}
       />
     </div>
   );
