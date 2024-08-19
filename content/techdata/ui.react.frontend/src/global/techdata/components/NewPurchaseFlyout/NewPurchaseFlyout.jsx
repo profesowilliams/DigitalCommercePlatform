@@ -262,7 +262,7 @@ function NewPurchaseFlyout({
   const buttonSection = () => {
     if (step === 1) {
       return buttonsSectionStep1;
-    } else if (step === 2 && isAddMore) {
+    } else if (step === 2) {
       return buttonsSectionStep2;
     }
   };
@@ -410,7 +410,7 @@ function NewPurchaseFlyout({
       loadingButtonLabel={null}
       buttonsSection={buttonSection()}
       bottomContent={
-        step === 2 && isAddMore
+        step === 2
           ? (classNameSuffix) => ResellerSubtotal({ classNameSuffix })
           : null
       }
