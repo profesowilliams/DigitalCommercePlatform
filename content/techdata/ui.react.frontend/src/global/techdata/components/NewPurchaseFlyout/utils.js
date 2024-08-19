@@ -9,6 +9,9 @@ export function getModifiedResellerData(resellerResponseAsObj, reseller) {
         name: contact[0]?.name?.text,
         email: contact[0]?.email?.text,
         phone: contact[0]?.phone?.text,
+        nameIsDisplay: contact[0]?.name?.isDisplay,
+        emailIsDisplay: contact[0]?.email?.isDisplay
+
       },
       address: {
         line1: address?.line1,
@@ -25,7 +28,7 @@ export function getModifiedResellerData(resellerResponseAsObj, reseller) {
     contact: {
       name: contact.name,
       email: contact.email,
-      phone: contact.phone,
+      phone: contact.phone
     },
     vendorAccountNumber: reseller.vendorAccountNumber,
   };
@@ -42,6 +45,9 @@ export function getModifiedEndUserData(endUserResponseAsObj, endUser) {
         name: contact.name.text,
         email: contact.email.text,
         phone: contact.phone.text,
+        nameIsDisplay: contact.name.isDisplay,
+        emailIsDisplay: contact.email.isDisplay,
+        phoneIsDisplay: contact.phone.isDisplay
       },
       address: {
         line1: address.line1.text,
@@ -53,6 +59,12 @@ export function getModifiedEndUserData(endUserResponseAsObj, endUser) {
         country: address.country.text,
         county: address.county,
         countryCode: address.countryCode.text,
+        line1IsDisplay: address.line1.isDisplay,
+        line2IsDisplay: address.line2.isDisplay,
+        line3IsDisplay: address.line3.isDisplay,
+        cityIsDisplay: address.city.isDisplay,
+        countryIsDisplay: address.country.isDisplay,
+        postalCodeIsDisplay: address.postalCode.isDisplay
       },
       vendorAccountNumber: endUser?.eaNumber?.text,
       previousEndUserPO: endUser?.previousEndUserPO

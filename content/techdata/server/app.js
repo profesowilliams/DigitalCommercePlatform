@@ -4549,7 +4549,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
             vendorAccountNumber: {
               isValid: true,
               isMandatory: false,
-              isDisplay: false,
+              isDisplay: true,
               canEdit: false,
               allowedLength: 100000,
             },
@@ -4562,7 +4562,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                   text: "UserA LastNameA",
                   isValid: true,
                   isMandatory: false,
-                  isDisplay: false,
+                  isDisplay: true,
                   canEdit: false,
                   allowedLength: 100000,
                 },
@@ -4570,7 +4570,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                   text: "Auser.lastname@resellerA.com",
                   isValid: true,
                   isMandatory: false,
-                  isDisplay: false,
+                  isDisplay: true,
                   canEdit: false,
                   allowedLength: 100000,
                 },
@@ -4578,7 +4578,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                   text: "",
                   isValid: true,
                   isMandatory: false,
-                  isDisplay: false,
+                  isDisplay: true,
                   canEdit: false,
                   allowedLength: 100000,
                 },
@@ -4599,7 +4599,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               text: "TravelAbroad",
               isValid: true,
               isMandatory: false,
-              isDisplay: false,
+              isDisplay: true,
               canEdit: false,
               allowedLength: 100000,
             },
@@ -4608,7 +4608,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               text: "P1005106687",
               isValid: true,
               isMandatory: false,
-              isDisplay: false,
+              isDisplay: true,
               canEdit: false,
               allowedLength: 100000,
             },
@@ -4618,7 +4618,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                   text: "Default FirstName Default LastName",
                   isValid: true,
                   isMandatory: false,
-                  isDisplay: false,
+                  isDisplay: true,
                   canEdit: false,
                   allowedLength: 100000,
                 },
@@ -4626,7 +4626,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                   text: "cme527-sandbox-contact+1717674493154@adobe.com",
                   isValid: true,
                   isMandatory: false,
-                  isDisplay: false,
+                  isDisplay: true,
                   canEdit: false,
                   allowedLength: 100000,
                 },
@@ -4634,7 +4634,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                   text: "",
                   isValid: true,
                   isMandatory: false,
-                  isDisplay: false,
+                  isDisplay: true,
                   canEdit: false,
                   allowedLength: 100000,
                 },
@@ -4645,7 +4645,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 text: "Tuoi Tre Tower, No. 60A,",
                 isValid: true,
                 isMandatory: false,
-                isDisplay: false,
+                isDisplay: true,
                 canEdit: false,
                 allowedLength: 100000,
               },
@@ -4653,14 +4653,14 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 text: "Hoang Van Thu Street, Ward 9, Phu Nhuan ",
                 isValid: true,
                 isMandatory: false,
-                isDisplay: false,
+                isDisplay: true,
                 canEdit: false,
                 allowedLength: 100000,
               },
               line3: {
                 isValid: true,
                 isMandatory: false,
-                isDisplay: false,
+                isDisplay: true,
                 canEdit: false,
                 allowedLength: 100000,
               },
@@ -4668,7 +4668,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 text: "Ho Chi Minh City",
                 isValid: true,
                 isMandatory: false,
-                isDisplay: false,
+                isDisplay: true,
                 canEdit: false,
                 allowedLength: 100000,
               },
@@ -4676,7 +4676,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 text: "700000",
                 isValid: true,
                 isMandatory: false,
-                isDisplay: false,
+                isDisplay: true,
                 canEdit: false,
                 allowedLength: 100000,
               },
@@ -4684,7 +4684,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 text: "VN",
                 isValid: true,
                 isMandatory: false,
-                isDisplay: false,
+                isDisplay: true,
                 canEdit: false,
                 allowedLength: 100000,
               },
@@ -4692,7 +4692,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 text: "VN",
                 isValid: true,
                 isMandatory: false,
-                isDisplay: false,
+                isDisplay: true,
                 canEdit: false,
                 allowedLength: 100000,
               },
@@ -4702,7 +4702,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
             id: {
               isValid: true,
               isMandatory: false,
-              isDisplay: false,
+              isDisplay: true,
               canEdit: false,
               allowedLength: 100000,
             },
@@ -5448,213 +5448,188 @@ app.post("/ui-renewal/v1/PartNumbers/Find", function (req, res) {
 
 app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
   const success2 = {
-    content: {
-      reseller: {
-        id: "",
-        isValid: true,
-        incumbent: false,
-        vendorAccountNumber: {
-          isValid: false,
-          isMandatory: false,
-          isDisplay: false,
-          canEdit: true,
-          allowedLength: 0,
-        },
-        name: "",
-        nameUpper: "",
-        contact: [
-          {
-            name: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-            email: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-            phone: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-          },
-        ],
-        address: {
-          line1: "",
-          city: "",
-          country: "",
-          countryCode: "",
-        },
-      },
-      endUser: {
-        isValid: true,
-        name: {
-          isValid: false,
-          isMandatory: false,
-          isDisplay: false,
-          canEdit: false,
-          allowedLength: 0,
-          text: "Avenir Global Cherry Advertising LTD",
-        },
-        nameUpper: "",
-        eaNumber: {
-          isValid: false,
-          isMandatory: false,
-          isDisplay: false,
-          canEdit: false,
-          allowedLength: 0,
-        },
-        contact: [
-          {
-            name: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-            email: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-            phone: {
-              isValid: false,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 0,
-            },
-          },
-        ],
-        address: {
-          line1: {
-            isValid: false,
-            isMandatory: false,
-            isDisplay: false,
-            canEdit: false,
-            allowedLength: 0,
-          },
-          city: {
-            isValid: false,
-            isMandatory: false,
-            isDisplay: false,
-            canEdit: false,
-            allowedLength: 0,
-          },
-          postalCode: {
-            isValid: false,
-            isMandatory: false,
-            isDisplay: false,
-            canEdit: false,
-            allowedLength: 0,
-          },
-          country: {
-            isValid: false,
-            isMandatory: false,
-            isDisplay: false,
-            canEdit: false,
-            allowedLength: 0,
-          },
-          countryCode: {
-            isValid: false,
-            isMandatory: false,
-            isDisplay: false,
-            canEdit: false,
-            allowedLength: 0,
-          },
-        },
-      },
-      items: [
-        {
-          id: "1",
-          product: [
-            {
-              type: "TECHDATA",
-              id: "ADB65304470CA02A12",
-            },
-            {
-              type: "MANUFACTURER",
-              id: "65304470CA02A12",
-              name: "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-              family: "Acrobat",
-            },
-          ],
-          quantity: "10.00",
-          unitPrice: "6115000.00",
-          unitPriceCurrency: "VND",
-          unitCost: "229.68",
-          unitCostCurrency: "USD",
-          totalPrice: "61150000.00",
-          unitListPrice: "6934000.00",
-          unitListPriceCurrency: "VND",
-          agency: "CreateOrder",
-          contract: {
-            startDate: "5/12/2024 12:00:00 AM",
-            endDate: "4/12/2025 12:00:00 AM",
-          },
-        },
-        {
-          id: "2",
-          product: [
-            {
-              type: "TECHDATA",
-              id: "ADB65304470CA02A13",
-            },
-            {
-              type: "MANUFACTURER",
-              id: "65304470CA02A13",
-              name: "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-              family: "Acrobat",
-            },
-          ],
-          quantity: "10.00",
-          unitPrice: "6115000.00",
-          unitPriceCurrency: "VND",
-          unitCost: "229.68",
-          unitCostCurrency: "USD",
-          totalPrice: "61150000.00",
-          unitListPrice: "6934000.00",
-          unitListPriceCurrency: "VND",
-          agency: "CreateOrder",
-          contract: {
-            startDate: "5/12/2024 12:00:00 AM",
-            endDate: "4/12/2025 12:00:00 AM",
-          },
-        },
-      ],
-      currency: "PLN",
-      totalSellPrice: "0",
-      renewalLevel: "renewalLevel",
-      feedBackMessages: [
-        {
-          ruleNumber: 102,
-          errorCriticality: 3,
-          message:
-            "We have experienced an unexpected error processing your order for TEST1234 IBM. Contact your Account Manager for more information.",
-          refId: "P1005108534",
-          type: "Preview Order",
-          jsonUrl: "UI-Renewal/v1/GetAdobeRenewalAuditLogs?",
-          jsonUrlMessage: "View error details",
-        },
-      ],
-    },
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  };
+                       "content": {
+                           "reseller": {
+                               "id": "",
+                               "isValid": true,
+                               "incumbent": false,
+                               "vendorAccountNumber": {
+                                   "isValid": false,
+                                   "isMandatory": false,
+                                   "isDisplay": false,
+                                   "canEdit": false,
+                                   "allowedLength": 0
+                               },
+                               "name": "",
+                               "nameUpper": "",
+                               "contact": [
+                                   {
+                                       "name": {
+                                           "isValid": false,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 0
+                                       },
+                                       "email": {
+                                           "isValid": false,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 0
+                                       },
+                                       "phone": {
+                                           "isValid": false,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 0
+                                       }
+                                   }
+                               ],
+                               "address": {
+                                   "line1": "",
+                                   "city": "",
+                                   "country": "",
+                                   "countryCode": ""
+                               }
+                           },
+                           "endUser": {
+                               "isValid": false,
+                               "name": {
+                                   "isValid": false,
+                                   "isMandatory": false,
+                                   "isDisplay": false,
+                                   "canEdit": false,
+                                   "allowedLength": 0,
+                                   "text": "fsafsa"
+                               },
+                               "nameUpper": "fsafsa",
+                               "eaNumber": {
+                                   "isValid": false,
+                                   "isMandatory": false,
+                                   "isDisplay": false,
+                                   "canEdit": false,
+                                   "allowedLength": 0
+                               },
+                               "contact": [
+                                   {
+                                       "name": {
+                                           "isValid": false,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 0,
+                                           "text": "fsafsa"
+                                       },
+                                       "email": {
+                                           "isValid": false,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 0,
+                                           "text": "dsf dsf"
+                                       },
+                                       "phone": {
+                                           "isValid": false,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 0
+                                       }
+                                   }
+                               ],
+                               "address": {
+                                   "line1": {
+                                       "isValid": false,
+                                       "isMandatory": false,
+                                       "isDisplay": false,
+                                       "canEdit": false,
+                                       "allowedLength": 0,
+                                       "text": "sa"
+                                   },
+                                   "city": {
+                                       "isValid": false,
+                                       "isMandatory": false,
+                                       "isDisplay": false,
+                                       "canEdit": false,
+                                       "allowedLength": 0,
+                                       "text": "saf"
+                                   },
+                                   "postalCode": {
+                                       "isValid": false,
+                                       "isMandatory": false,
+                                       "isDisplay": false,
+                                       "canEdit": false,
+                                       "allowedLength": 0,
+                                       "text": "saf"
+                                   },
+                                   "country": {
+                                       "isValid": false,
+                                       "isMandatory": false,
+                                       "isDisplay": false,
+                                       "canEdit": false,
+                                       "allowedLength": 0,
+                                       "text": "Commercial"
+                                   },
+                                   "countryCode": {
+                                       "isValid": false,
+                                       "isMandatory": false,
+                                       "isDisplay": false,
+                                       "canEdit": false,
+                                       "allowedLength": 0
+                                   }
+                               }
+                           },
+                           "items": [
+                               {
+                                   "id": "1",
+                                   "product": [
+                                       {
+                                           "type": "TECHDATA"
+                                       },
+                                       {
+                                           "type": "MANUFACTURER",
+                                           "id": "30001555CA01A12",
+                                           "family": "Generative Credits Add-on for Enterprise"
+                                       }
+                                   ],
+                                   "quantity": "1.0",
+                                   "unitPriceCurrency": "NA",
+                                   "unitCostCurrency": "NA",
+                                   "totalPrice": "0.0",
+                                   "unitListPriceCurrency": "NA",
+                                   "agency": "CreateOrder",
+                                   "contract": {
+                                       "startDate": "8/19/2024 00:00:00",
+                                       "endDate": "9/16/2025 00:00:00",
+                                       "autoRenew": false
+                                   }
+                               }
+                           ],
+                           "currency": "NA",
+                           "totalSellPrice": "0",
+                           "renewalLevel": "Level 1 1 - 9",
+                           "feedBackMessages": [
+                               {
+                                   "ruleNumber": 100,
+                                   "errorCriticality": 3,
+                                   "message": "License level, list price, unit price and subtotal have been updated due to quantity change.",
+                                   "refId": "",
+                                   "type": "",
+                                   "jsonUrl": ""
+                               }
+                           ],
+                           "canEditQuantity": true,
+                           "canEditReselerPrice": false,
+                           "expiry": "0001-01-01T00:00:00"
+                       },
+                       "error": {
+                           "code": 0,
+                           "messages": [],
+                           "isError": false
+                       }
+                   };
 
   //mockResponses.failedResponse
 
