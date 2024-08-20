@@ -75,56 +75,70 @@ function PlaceOrderDialog({
     });
   };
   const transformedPayload = transformItemsPayload(itemsPayload);
-
   // Create order
   const handleCreateOrder = async () => {
-    const payload = {
+    const renewalDetailsPayload = {
+      quoteId: detailsData?.source?.id,
       reseller: {
-        id: isAddMore ? detailsData?.reseller?.id : resellerId || '',
+        id: detailsData?.reseller?.id,
         name: externalUser
           ? userData?.activeCustomer?.customerName
-          : isAddMore
-          ? detailsData?.reseller?.name
+          : detailsData?.reseller?.name,
+        contact: {
+          name: externalUser
+            ? `${userData?.firstName} ${userData?.lastName}`
+            : detailsData?.reseller?.contact[0]?.name?.text,
+          email: externalUser
+            ? userData?.email
+            : detailsData?.reseller?.contact[0]?.email?.text,
+        },
+      },
+      endUser: {
+        name: detailsData?.endUser?.name?.text,
+        contact: {
+          name: detailsData?.endUser?.contact[0]?.name?.text,
+          email: detailsData?.endUser?.contact[0]?.email?.text,
+        },
+        address: {
+          line1: detailsData?.endUser?.address?.line1?.text,
+          line2: detailsData?.endUser?.address?.line2?.text,
+          city: detailsData?.endUser?.address?.city?.text,
+          postalCode: detailsData?.endUser?.address?.postalCode?.text,
+          country: detailsData?.endUser?.address?.country?.text,
+        },
+        alternateIdentifier: {
+          type: 'EANumber',
+          value: detailsData?.endUser?.eaNumber?.text,
+        },
+      },
+      items: transformedPayload,
+      customerPo: purchaseOrderNumber,
+    };
+    const renewalPayload = {
+      reseller: {
+        id: resellerId || '',
+        name: externalUser
+          ? userData?.activeCustomer?.customerName
           : resellerName,
         contact: {
           name: externalUser
             ? `${userData?.firstName} ${userData?.lastName}`
-            : isAddMore
-            ? detailsData?.reseller?.contact[0]?.name?.text
             : `${firstName} ${lastName}`,
-          email: externalUser
-            ? userData?.email
-            : isAddMore
-            ? detailsData?.reseller?.contact[0]?.email?.text
-            : email,
+          email: externalUser ? userData?.email : email,
         },
       },
       endUser: {
-        name: isAddMore ? detailsData?.endUser?.name?.text : endUserCompanyName,
+        name: endUserCompanyName,
         contact: {
-          name: isAddMore
-            ? detailsData?.endUser?.contact[0]?.name?.text
-            : `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
-          email: isAddMore
-            ? detailsData?.endUser?.contact[0]?.email?.text
-            : endUserEmail,
+          name: `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
+          email: endUserEmail,
         },
         address: {
-          line1: isAddMore
-            ? detailsData?.endUser?.address?.line1?.text
-            : endUserAddress1,
-          line2: isAddMore
-            ? detailsData?.endUser?.address?.line2?.text
-            : endUserAddress2,
-          city: isAddMore
-            ? detailsData?.endUser?.address?.city?.text
-            : endUserCity,
-          postalCode: isAddMore
-            ? detailsData?.endUser?.address?.postalCode?.text
-            : endUserAreaCode,
-          country: isAddMore
-            ? detailsData?.endUser?.address?.country?.text
-            : endUserCountry,
+          line1: endUserAddress1,
+          line2: endUserAddress2,
+          city: endUserCity,
+          postalCode: endUserAreaCode,
+          country: endUserCountry,
         },
       },
       items: transformedPayload,
@@ -148,7 +162,7 @@ function PlaceOrderDialog({
     try {
       const response = await createOrder(
         config?.createNewPurchaseOrderEndpoint,
-        payload
+        isAddMore ? renewalDetailsPayload : renewalPayload
       );
       if (response?.error?.isError) {
         effects.setCustomState({
