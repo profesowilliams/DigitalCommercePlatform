@@ -2,6 +2,7 @@ package com.tdscore.core.models;
 
 import com.adobe.cq.wcm.core.components.models.LanguageNavigation;
 import com.adobe.cq.wcm.core.components.models.NavigationItem;
+import com.day.cq.commons.Externalizer;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
@@ -18,6 +19,7 @@ import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.annotations.via.ResourceSuperType;
+import org.apache.sling.settings.SlingSettingsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Model(
 	adaptables = {SlingHttpServletRequest.class},
@@ -71,6 +74,11 @@ public class LanguageDropDownModel implements LanguageNavigation {
 	@Inject @Via("resource")
 	private String overRideCurrentPage;
 
+	@Inject
+	private Externalizer externalizer;
+
+	@Inject
+	private SlingSettingsService slingSettingsService;
 
 	private List<NavigationItem> items;
 
@@ -99,9 +107,9 @@ public class LanguageDropDownModel implements LanguageNavigation {
 				boolean active = currentPage.getPath().equals(page.getPath()) || currentPage.getPath().startsWith(page.getPath() + "/");
 				if (getChildren)
 				{
-					pages.add(new LanguageDropDownItem(page, active, 3));
+					pages.add(new LanguageDropDownItem(page, active, 3, externalizer, isAuthorMode()));
 				}else{
-					pages.add(new LanguageDropDownItem(page, active));
+					pages.add(new LanguageDropDownItem(page, active, externalizer, isAuthorMode()));
 				}
 
 			}
@@ -155,5 +163,11 @@ public class LanguageDropDownModel implements LanguageNavigation {
 
 	public String getOverRideCurrentPage(){
 		return this.overRideCurrentPage;
+	}
+
+	private boolean isAuthorMode(){
+		Set<String> runModes = slingSettingsService.getRunModes();
+
+		return runModes.contains(Externalizer.AUTHOR);
 	}
 }

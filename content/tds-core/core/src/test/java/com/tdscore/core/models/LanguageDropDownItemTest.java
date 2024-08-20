@@ -1,5 +1,6 @@
 package com.tdscore.core.models;
 
+import com.day.cq.commons.Externalizer;
 import com.day.cq.dam.api.Asset;
 import com.day.cq.dam.api.Rendition;
 import com.day.cq.wcm.api.Page;
@@ -46,6 +47,9 @@ class LanguageDropDownItemTest {
     @Mock
     InputStream inputstream;
 
+    @Mock
+    Externalizer externalizer;
+
     @BeforeEach
     void setUp() {
     }
@@ -62,7 +66,7 @@ class LanguageDropDownItemTest {
         when(resource.adaptTo(Asset.class)).thenReturn(asset);
         when(asset.getOriginal()).thenReturn(rendition);
         when(rendition.getStream()).thenReturn(inputstream);
-        underTest = new LanguageDropDownItem(page, Boolean.TRUE, 4);
+        underTest = new LanguageDropDownItem(page, Boolean.TRUE, 4, externalizer, true);
         assertEquals(0, underTest.getChildren().size());
         assertEquals(page, underTest.getPage());
         assertEquals(Boolean.TRUE, underTest.getActive());

@@ -1,5 +1,6 @@
 package com.tdscore.core.models;
 
+import com.day.cq.commons.Externalizer;
 import com.day.cq.dam.api.Asset;
 import com.day.cq.dam.api.Rendition;
 import com.day.cq.wcm.api.LanguageManager;
@@ -30,6 +31,10 @@ public class LanguageDropDownItem  {
     private static final  String DAM_TECHDATA_COUNTRY_FLAGS = "/content/dam/tds-core/country-flags";
 
     private List<LanguageDropDownItem> children;
+
+    private Externalizer externalizer;
+
+    private boolean isAuthorMode;
 
     public String getTitle(){
         return this.title;
@@ -79,28 +84,32 @@ public class LanguageDropDownItem  {
         }
         return strBuilder.toString();
     }
-    LanguageDropDownItem(Page page, boolean active) {
+    LanguageDropDownItem(Page page, boolean active, Externalizer externalizer, boolean isAuthorMode) {
         this.page = page;
         this.active = active;
         this.title = page.getPageTitle();
         this.svgFlag = initSVGFlag(page);
+        this.externalizer = externalizer;
+        this.isAuthorMode = isAuthorMode;
     }
 
-    LanguageDropDownItem(Page page, boolean active, int level) {
+    LanguageDropDownItem(Page page, boolean active, int level, Externalizer externalizer, boolean isAuthorMode) {
         List<LanguageDropDownItem> childPages = new ArrayList<>();
         this.page = page;
         this.active = active;
         this.title = page.getPageTitle();
         this.svgFlag = initSVGFlag(page);
+        this.externalizer = externalizer;
+        this.isAuthorMode = isAuthorMode;
 
         Iterator<Page> it = page.listChildren(new PageFilter());
         if(it != null) {
             while (it.hasNext()) {
                 Page nextPage = it.next();
                 if (level - 1 > 0) {
-                    childPages.add(new LanguageDropDownItem(nextPage, active, level - 1));
+                    childPages.add(new LanguageDropDownItem(nextPage, active, level - 1, externalizer, isAuthorMode));
                 } else {
-                    childPages.add(new LanguageDropDownItem(nextPage, active));
+                    childPages.add(new LanguageDropDownItem(nextPage, active, externalizer, isAuthorMode));
                 }
             }
         }
@@ -134,9 +143,13 @@ public class LanguageDropDownItem  {
         return this.page;
     }
 
-    public String getURL()
-    {
-        return this.page.getPath() + ".html";
+    public String getURL() {
+        String path = this.page.getPath() + ".html";
+        if (isAuthorMode == true) {
+            return path;
+        }
+
+        return externalizer.publishLink(page.getContentResource().getResourceResolver(), path);
     }
 
     public String getLanguage() {
