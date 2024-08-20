@@ -252,10 +252,16 @@ function NewPurchaseFlyout({
         </button>
       )}
 
-      <button className="secondary" onClick={handleBack}>
-        <ArrowBackIcon />
-        {getDictionaryValueOrKey(newPurchaseFlyout?.back)}
-      </button>
+      {isAddMore ? (
+        <button className="secondary" onClick={closeFlyout}>
+          {getDictionaryValueOrKey(newPurchaseFlyout?.cancel)}
+        </button>
+      ) : (
+        <button className="secondary" onClick={handleBack}>
+          <ArrowBackIcon />
+          {getDictionaryValueOrKey(newPurchaseFlyout?.back)}
+        </button>
+      )}
     </div>
   );
 
