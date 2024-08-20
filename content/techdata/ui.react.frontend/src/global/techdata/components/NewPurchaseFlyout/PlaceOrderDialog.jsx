@@ -24,6 +24,7 @@ function PlaceOrderDialog({
   closeFlyout,
   onQueryChanged,
   isAddMore,
+  getDetailsAPI,
 }) {
   const resetGrid = store((state) => state?.resetGrid || false);
   const [confirmPurchaseChecked, setConfirmPurchaseChecked] = useState(false);
@@ -175,6 +176,7 @@ function PlaceOrderDialog({
           key: 'toaster',
           value: { ...toasterSuccess },
         });
+        getDetailsAPI();
         onClose();
         closeFlyout();
         !isAddMore && onQueryChanged();

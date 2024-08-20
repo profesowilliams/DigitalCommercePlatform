@@ -38,7 +38,7 @@ function RenewalsDetails(props) {
   const { setCustomState } = effects;
   const { id = "U100000008378", type = "renewal" } = getUrlParams();
   const [modal, setModal] = useState(null);
-  const [apiResponse, isLoading, error] = useGet(
+  let [apiResponse, isLoading, error] = useGet(
     `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`
   );
   const userData = useStore((state) => state.userData);
@@ -124,6 +124,10 @@ function RenewalsDetails(props) {
     }
     return errorMessages?.unexpectedErrorMessage;
   }
+
+  const getDetailsAPI  = () => {
+    changeRefreshDetailApiState();
+  };
 
   const showSimpleModal = (title, content, onModalClosed=closeModal, buttonLabel, modalAction) =>
     setModal((previousInfo) => ({
@@ -450,6 +454,7 @@ function RenewalsDetails(props) {
         activeStep={2}
         isAddMore={true}
         detailsEndUserType={renewalsDetails?.endUserType}
+        getDetailsAPI={getDetailsAPI}
       />
     </div>
   );

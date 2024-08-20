@@ -19,6 +19,7 @@ function NewPurchaseFlyout({
   data,
   onQueryChanged,
   detailsEndUserType,
+  getDetailsAPI
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
@@ -463,6 +464,7 @@ function NewPurchaseFlyout({
               closeFlyout={closeFlyout}
               onQueryChanged={onQueryChanged}
               detailsEndUserType={detailsEndUserType}
+              getDetailsAPI={getDetailsAPI}
             />
           </div>
         )}

@@ -48,6 +48,7 @@ function FormPart2({
   detailsEndUserType,
   buttonSection,
   setEnablePlaceOrder,
+  getDetailsAPI,
 }) {
   const {
     firstName,
@@ -602,6 +603,7 @@ function FormPart2({
           addProductPayload={addProductPayload}
           itemsPayload={itemsPayload}
           config={newPurchaseFlyout}
+          getDetailsAPI={getDetailsAPI}
           onClose={onClose}
           open={open}
           bottomContent={bottomContent}
