@@ -333,8 +333,7 @@ function NewPurchaseFlyout({
       setEndUserCountry('');
       setEndUserCountryError('');
     } else {
-      // TODO: Populate those field with proper data by the end of US #578976
-      if (externalUser) {
+      if (externalUser && !isAddMore) {
         setAccountNumber(userData?.activeCustomer?.customerNumber || '');
         setFirstName(userData?.firstName || '');
         setLastName(userData?.lastName || '');
