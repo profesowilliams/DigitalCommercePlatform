@@ -25,6 +25,7 @@ function PlaceOrderDialog({
   onQueryChanged,
   isAddMore,
 }) {
+  const resetGrid = store((state) => state?.resetGrid || false);
   const [confirmPurchaseChecked, setConfirmPurchaseChecked] = useState(false);
   const [confirmTermsChecked, setConfirmTermsChecked] = useState(false);
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState('');
@@ -156,7 +157,7 @@ function PlaceOrderDialog({
       origin: 'placeNewPurchaseOrderFlyout',
       isAutoClose: true,
       isSuccess: false,
-      message: getDictionaryValueOrKey(config?.unknownError),
+      message: getDictionaryValueOrKey(config?.unknownErrorNewPurchase),
     };
 
     try {
@@ -176,7 +177,7 @@ function PlaceOrderDialog({
         });
         onClose();
         closeFlyout();
-        onQueryChanged();
+        !isAddMore && onQueryChanged();
         return setCreateOrderResponse(response);
       }
     } catch (error) {

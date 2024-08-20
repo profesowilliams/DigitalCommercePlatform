@@ -5054,6 +5054,7 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "details.renewal.label.subtotal": "Quote Subtotal",
     "details.renewal.label.backTo": "Back to all Renewals",
     "details.renewal.label.title": "Quote Preview",
+    "details.renewal.newPurchaseFlyout.label.addMore": "Add more",
     "details.renewal.orders.label.adobeResellerTermsAndConditionsLink":
       "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions/vendor-pass-through-terms.html",
 

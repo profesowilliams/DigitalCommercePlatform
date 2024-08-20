@@ -16,11 +16,11 @@ const NewPurchaseTable = ({
 }) => {
   const {
     productDetails,
-    vendorPartNo,
-    listPrice,
-    unitPrice,
+    vendorPartNoNewPurchase,
+    listPriceNewPurchase,
+    unitPriceNewPurchase,
     qty,
-    totalPrice,
+    totalPriceNewPurchase,
     subtotal,
   } = config || {};
   useEffect(() => {
@@ -35,11 +35,11 @@ const NewPurchaseTable = ({
               {getDictionaryValueOrKey(productDetails)}
             </th>
             <th className="cmp-flyout-newPurchase__form-table__header__title text-align-start">
-              {getDictionaryValueOrKey(vendorPartNo)}
+              {getDictionaryValueOrKey(vendorPartNoNewPurchase)}
             </th>
             <th className="cmp-flyout-newPurchase__form-table__header__title text-align-end">
               <div className="header-content-column">
-                <span>{getDictionaryValueOrKey(listPrice)}</span>
+                <span>{getDictionaryValueOrKey(listPriceNewPurchase)}</span>
                 <span className="currency">
                   (
                   {data?.items?.unitListPriceCurrency
@@ -51,7 +51,7 @@ const NewPurchaseTable = ({
             </th>
             <th className="cmp-flyout-newPurchase__form-table__header__title text-align-end">
               <div className="header-content-column unitPrice-header">
-                <span>{getDictionaryValueOrKey(unitPrice)}</span>
+                <span>{getDictionaryValueOrKey(unitPriceNewPurchase)}</span>
                 <span className="currency">
                   (
                   {data?.items?.unitPriceCurrency
@@ -66,7 +66,7 @@ const NewPurchaseTable = ({
             </th>
             <th className="cmp-flyout-newPurchase__form-table__header__title text-align-end">
               <div className="header-content-column">
-                <span>{getDictionaryValueOrKey(totalPrice)}</span>
+                <span>{getDictionaryValueOrKey(totalPriceNewPurchase)}</span>
                 <span className="currency">
                   (
                   {data?.items?.unitPriceCurrency

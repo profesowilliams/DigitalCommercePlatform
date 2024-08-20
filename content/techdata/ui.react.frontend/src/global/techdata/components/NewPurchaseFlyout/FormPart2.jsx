@@ -176,12 +176,12 @@ function FormPart2({
         addProductPayload
       );
       if (response?.isError) {
-        setErrorMessage(newPurchaseFlyout?.unknownError);
+        setErrorMessage(newPurchaseFlyout?.unknownErrorNewPurchase);
       } else {
         setDataTable(response);
       }
     } catch (error) {
-      setErrorMessage(newPurchaseFlyout?.unknownError);
+      setErrorMessage(newPurchaseFlyout?.unknownErrorNewPurchase);
     } finally {
       setValidating(false);
       setPayloadWithoutNewItem(false);
@@ -235,7 +235,7 @@ function FormPart2({
         payload
       );
       if (response?.isError) {
-        setErrorMessage(newPurchaseFlyout?.unknownError);
+        setErrorMessage(newPurchaseFlyout?.unknownErrorNewPurchase);
         setVendorPartNumbers([]);
       } else {
         setVendorPartNumbers(response);
@@ -257,7 +257,9 @@ function FormPart2({
 
     if (!checkVendorPartNoInList(newInput)) {
       setErrorMessage(
-        getDictionaryValueOrKey(newPurchaseFlyout?.accountDoesntExistError)
+        getDictionaryValueOrKey(
+          newPurchaseFlyout?.accountDoesntExistErrorNewPurchase
+        )
       );
       return;
     }

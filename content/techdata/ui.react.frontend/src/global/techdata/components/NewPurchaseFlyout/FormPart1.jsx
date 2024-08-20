@@ -107,7 +107,7 @@ function FormPart1({
         copyFlyout?.accountLookUpEndpoint
       );
       if (response.isError) {
-        setErrorMessage(newPurchaseFlyout?.unknownError);
+        setErrorMessage(newPurchaseFlyout?.unknownErrorNewPurchase);
         setQuotes([]);
       } else {
         setQuotes(response);
@@ -128,7 +128,9 @@ function FormPart1({
 
     if (!checkQuoteInList(newInput)) {
       setErrorMessage(
-        getDictionaryValueOrKey(newPurchaseFlyout?.accountDoesntExistError)
+        getDictionaryValueOrKey(
+          newPurchaseFlyout?.accountDoesntExistErrorNewPurchase
+        )
       );
       return;
     }
@@ -141,7 +143,7 @@ function FormPart1({
 
     if (quoteExists) {
       setIsTyping(false);
-      setErrorMessage(newPurchaseFlyout?.quoteExistsError);
+      setErrorMessage(newPurchaseFlyout?.quoteExistsErrorNewPurchase);
     } else {
       setAccountNumber('');
       setQuotes([]);

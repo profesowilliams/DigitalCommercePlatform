@@ -64,8 +64,8 @@
                 <newPurchase
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.newPurchase"
-                    fieldLabel="New purchase"
+                    fieldDescription="details.renewal.newPurchaseFlyout.label.addMore"
+                    fieldLabel="Add more"
                     name="./newPurchase"/>
                 <newPurchaseBanner
                     jcr:primaryType="nt:unstructured"
@@ -313,36 +313,36 @@
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.productDetails"
                     fieldLabel="Product details"
                     name="./productDetails"/>
-                <vendorPartNo
+                <vendorPartNoNewPurchase
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.vendorPartNo"
                     fieldLabel="Vendor part Nº"
-                    name="./vendorPartNo"/>
-                <listPrice
+                    name="./vendorPartNoNewPurchase"/>
+                <listPriceNewPurchase
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.listPrice"
                     fieldLabel="List price"
-                    name="./listPrice"/>
-                <unitPrice
+                    name="./listPriceNewPurchase"/>
+                <unitPriceNewPurchase
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.unitPrice"
                     fieldLabel="Unit price"
-                    name="./unitPrice"/>
+                    name="./unitPriceNewPurchase"/>
                 <qty
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.qty"
                     fieldLabel="Qty"
                     name="./qty"/>
-                <totalPrice
+                <totalPriceNewPurchase
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.totalPrice"
                     fieldLabel="Total price"
-                    name="./totalPrice"/>
+                    name="./totalPriceNewPurchase"/>
                 <subtotal
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -379,24 +379,24 @@
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.validating"
                     fieldLabel="Validating"
                     name="./validating"/>
-                <unknownError
+                <unknownErrorNewPurchase
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.unknownError"
                     fieldLabel="Unknown error has occurred. Please try again."
-                    name="./unknownError"/>
-                <accountDoesntExistError
+                    name="./unknownErrorNewPurchase"/>
+                <accountDoesntExistErrorNewPurchase
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.accountDoesntExistError"
                     fieldLabel="Account doesn't exist!"
-                    name="./accountDoesntExistError"/>
-                <quoteExistsError
+                    name="./accountDoesntExistErrorNewPurchase"/>
+                <quoteExistsErrorNewPurchase
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.quoteExistsError"
                     fieldLabel="Quote exists, please try again with another account."
-                    name="./quoteExistsError"/>
+                    name="./quoteExistsErrorNewPurchase"/>
                 <modifyOrder
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
