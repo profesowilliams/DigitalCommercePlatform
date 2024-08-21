@@ -176,10 +176,10 @@ function PlaceOrderDialog({
           key: 'toaster',
           value: { ...toasterSuccess },
         });
-        getDetailsAPI();
+        
         onClose();
         closeFlyout();
-        !isAddMore && onQueryChanged();
+        isAddMore ? getDetailsAPI() : onQueryChanged();
         return setCreateOrderResponse(response);
       }
     } catch (error) {
