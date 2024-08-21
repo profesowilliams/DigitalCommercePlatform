@@ -5202,6 +5202,8 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
       "Adobe Terms & Conditions",
     "mainDashboard.renewal.newPurchaseFlyout.label.placeOrderSuccess":
       "Your order has been successfully submitted for processing. You will receive an email once processing is complete",
+    "mainDashboard.renewal.newPurchaseFlyout.label.productNotFound":
+      "Product not found",
   });
 });
 

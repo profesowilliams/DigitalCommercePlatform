@@ -275,6 +275,7 @@ use(["../../../common/utils.js"], function (utils) {
       "adobeResellerTermsAndConditionsLink",
       "termsAndConditionsLink",
       "placeOrderSuccess",
+      "productNotFound",
     ];
 
     newPurchaseFlyoutList.map(

@@ -212,6 +212,21 @@ function FormPart2({
   };
 
   // Search Vendor part No
+  const checkIfResellerIdExist = (responseData, resellerId) => {
+    const resellerIdStr = String(resellerId);
+
+    return (
+      responseData.length >= 3 &&
+      responseData.find(({ manufacturerPartNumber }) =>
+        manufacturerPartNumber.includes(resellerIdStr)
+      ) !== undefined
+    );
+  };
+
+  const checkVendorPartNoInList = (quote) => {
+    return vendorPartNumbers.find((q) => q.productId === quote.productId);
+  };
+
   const handleVendorPartNoChange = async (event) => {
     setIsTyping(true);
     setErrorMessage('');
@@ -240,8 +255,19 @@ function FormPart2({
         newPurchaseFlyout?.vendorPartNoLookUpEndpoint,
         payload
       );
+
+      const resellerIdExist =
+        checkIfResellerIdExist(response, resellerId) === true;
+
+      if (!resellerIdExist) {
+        setErrorMessage(
+          getDictionaryValueOrKey(newPurchaseFlyout?.productNotFound)
+        );
+      }
       if (response?.isError) {
-        setErrorMessage(newPurchaseFlyout?.unknownErrorNewPurchase);
+        setErrorMessage(
+          getDictionaryValueOrKey(newPurchaseFlyout?.unknownErrorNewPurchase)
+        );
         setVendorPartNumbers([]);
       } else {
         setVendorPartNumbers(response);
@@ -252,10 +278,6 @@ function FormPart2({
     }
   };
 
-  const checkVendorPartNoInList = (quote) => {
-    return vendorPartNumbers.find((q) => q.productId === quote.productId);
-  };
-
   const findSelectedVendorPartNo = async (newInput) => {
     if (!newInput) {
       return;
@@ -263,9 +285,7 @@ function FormPart2({
 
     if (!checkVendorPartNoInList(newInput)) {
       setErrorMessage(
-        getDictionaryValueOrKey(
-          newPurchaseFlyout?.accountDoesntExistErrorNewPurchase
-        )
+        getDictionaryValueOrKey(newPurchaseFlyout?.productNotFound)
       );
       return;
     }
