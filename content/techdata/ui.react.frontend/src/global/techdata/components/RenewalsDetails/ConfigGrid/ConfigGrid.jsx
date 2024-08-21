@@ -428,7 +428,7 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
   };
 
   return (
-    <div className="cmp-renewals-qp__config-grid">
+    <div className="cmp-renewals-qp__config-grid details-upper-wrapper">
       <div className="header-container">
         <div className="image-container">
           <Link
@@ -490,14 +490,11 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
                 )}
                 {errorMessage}
               </p>
-              {
-                redBanner && data.feedBackMessages?.[0]?.jsonUrlMessage && (
-                    <a href='#error'
-                        target="_blank"
-                        onClick={openErrorFlyOut}>
-                    {data.feedBackMessages?.[0]?.jsonUrlMessage}</a>
-                )
-              }
+              {redBanner && data.feedBackMessages?.[0]?.jsonUrlMessage && (
+                <a href="#error" target="_blank" onClick={openErrorFlyOut}>
+                  {data.feedBackMessages?.[0]?.jsonUrlMessage}
+                </a>
+              )}
             </div>
           )}
       </div>

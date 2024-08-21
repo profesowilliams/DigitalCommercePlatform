@@ -296,7 +296,7 @@ function RenewalsDetails(props) {
           />
           {componentProp?.productLines?.enableActiveLicence === 'true' &&
           renewalsDetails?.itemsActive?.length > 0 ? (
-            <>
+            <div className="details-bottom-wrapper">
               <Accordion defaultExpanded>
                 <AccordionSummary>
                   <div className="details-container">
@@ -379,9 +379,9 @@ function RenewalsDetails(props) {
                   />
                 </AccordionDetails>
               </Accordion>
-            </>
+            </div>
           ) : (
-            <>
+            <div div className="details-upper-wrapper">
               <div className="details-container">
                 <span className="details-preview">
                   {componentProp?.productLines?.lineItemDetailsLabel ||
@@ -414,7 +414,7 @@ function RenewalsDetails(props) {
                 shopDomainPage={componentProp.shopDomainPage}
                 getUpdatedMutableGrid={getUpdatedMutableGrid}
               />
-            </>
+            </div>
           )}
         </section>
       ) : (
