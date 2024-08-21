@@ -89,6 +89,7 @@ function FormPart2({
     selectedVendorPartNo || {};
   const [dataTable, setDataTable] = useState([]);
   const [vendorPartNo, setVendorPartNo] = useState(manufacturerPartNumber);
+  const [vendorProductId, setVendorProductId] = useState(productId);
   // Add Product to Grid
   const [items, setItems] = useState([]);
   const resellerResponseAsObj =
@@ -126,6 +127,10 @@ function FormPart2({
     ? {
         id: '',
         product: [
+          {
+            type: 'TECHDATA',
+            id: vendorProductId,
+          },
           {
             type: 'MANUFACTURER',
             id: vendorPartNo,
@@ -344,7 +349,10 @@ function FormPart2({
     if (manufacturerPartNumber) {
       setVendorPartNo(manufacturerPartNumber);
     }
-  }, [manufacturerPartNumber]);
+    if (productId) {
+      setVendorProductId(productId);
+    }
+  }, [manufacturerPartNumber, productId]);
 
   useEffect(() => {
     if (datePickerOpen === false && vendorPartNo?.length > 0 && pickedEndDate) {
