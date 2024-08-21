@@ -22,6 +22,7 @@ function PlaceOrderDialog({
   resellerName,
   formPart1States,
   closeFlyout,
+  handleBack,
   onQueryChanged,
   isAddMore,
   getDetailsAPI,
@@ -189,6 +190,7 @@ function PlaceOrderDialog({
         });
         onClose();
         closeFlyout();
+        !isAddMore && handleBack();
         isAddMore ? getDetailsAPI() : onQueryChanged();
         return response;
       }

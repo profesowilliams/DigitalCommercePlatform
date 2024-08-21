@@ -462,6 +462,7 @@ function NewPurchaseFlyout({
               data={data}
               store={store}
               closeFlyout={closeFlyout}
+              handleBack={handleBack}
               onQueryChanged={onQueryChanged}
               detailsEndUserType={detailsEndUserType}
               getDetailsAPI={getDetailsAPI}

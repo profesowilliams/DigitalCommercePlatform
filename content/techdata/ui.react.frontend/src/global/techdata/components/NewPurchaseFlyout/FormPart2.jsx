@@ -44,6 +44,7 @@ function FormPart2({
   bottomContent,
   store,
   closeFlyout,
+  handleBack,
   onQueryChanged,
   detailsEndUserType,
   buttonSection,
@@ -402,15 +403,24 @@ function FormPart2({
               {isAddMore ? resellerData?.name : pickedResellerQuote?.name}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-               {isAddMore ? resellerData?.id : pickedResellerQuote?.accountNumber}
-
+              {isAddMore
+                ? resellerData?.id
+                : pickedResellerQuote?.accountNumber}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-               {isAddMore ? (resellerData?.contact?.nameIsDisplay ? resellerData?.contact?.name : '') : firstName} {isAddMore ? '' : lastName}
-
+              {isAddMore
+                ? resellerData?.contact?.nameIsDisplay
+                  ? resellerData?.contact?.name
+                  : ''
+                : firstName}{' '}
+              {isAddMore ? '' : lastName}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? (resellerData?.contact?.emailIsDisplay ? resellerData?.contact?.email : '') : email}
+              {isAddMore
+                ? resellerData?.contact?.emailIsDisplay
+                  ? resellerData?.contact?.email
+                  : ''
+                : email}
             </p>
           </div>
           <div className="cmp-flyout-newPurchase__form-details__card-section">
@@ -421,33 +431,71 @@ function FormPart2({
               {isAddMore ? endUserData.nameUpper : endUserCompanyName}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? (endUserData?.contact?.nameIsDisplay ? endUserData?.contact?.name : '') : endUserCompanyFirstName} {isAddMore ? '' : endUserCompanyLastName}
-
+              {isAddMore
+                ? endUserData?.contact?.nameIsDisplay
+                  ? endUserData?.contact?.name
+                  : ''
+                : endUserCompanyFirstName}{' '}
+              {isAddMore ? '' : endUserCompanyLastName}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? (endUserData?.contact?.emailIsDisplay ? endUserData?.contact?.email : '') : endUserEmail}
+              {isAddMore
+                ? endUserData?.contact?.emailIsDisplay
+                  ? endUserData?.contact?.email
+                  : ''
+                : endUserEmail}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? (endUserData?.contact?.phoneIsDisplay ? endUserData?.contact?.phone : '') : ''}
+              {isAddMore
+                ? endUserData?.contact?.phoneIsDisplay
+                  ? endUserData?.contact?.phone
+                  : ''
+                : ''}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {isAddMore ? '' : endUserType}
-               </p>
+            </p>
           </div>
           <div className="cmp-flyout-newPurchase__form-details__card-section">
             <p className="cmp-flyout-newPurchase__form-details__card-title">
               {getDictionaryValueOrKey(newPurchaseFlyout?.endUserAddress)}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-               {isAddMore ? (endUserData?.address?.line1IsDisplay ? endUserData?.address?.line1 : '') : endUserAddress1}
-               {isAddMore && endUserData?.address?.line2 ? (endUserData?.address?.line2IsDisplay ? `, ${endUserData?.address?.line2}` : '') : `, ${endUserAddress2}`}
-               {isAddMore && endUserData?.address?.line3 ? (endUserData?.address?.line3IsDisplay ? `, ${endUserData?.address?.line3}` : '') : ''}
+              {isAddMore
+                ? endUserData?.address?.line1IsDisplay
+                  ? endUserData?.address?.line1
+                  : ''
+                : endUserAddress1}
+              {isAddMore && endUserData?.address?.line2
+                ? endUserData?.address?.line2IsDisplay
+                  ? `, ${endUserData?.address?.line2}`
+                  : ''
+                : `, ${endUserAddress2}`}
+              {isAddMore && endUserData?.address?.line3
+                ? endUserData?.address?.line3IsDisplay
+                  ? `, ${endUserData?.address?.line3}`
+                  : ''
+                : ''}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-                {isAddMore ? (endUserData?.address?.cityIsDisplay ? endUserData?.address?.city : '') : endUserCity}, {isAddMore ? (endUserData?.address?.countryIsDisplay ? endUserData?.address?.country : '') : endUserCountry}
-             </p>
+              {isAddMore
+                ? endUserData?.address?.cityIsDisplay
+                  ? endUserData?.address?.city
+                  : ''
+                : endUserCity}
+              ,{' '}
+              {isAddMore
+                ? endUserData?.address?.countryIsDisplay
+                  ? endUserData?.address?.country
+                  : ''
+                : endUserCountry}
+            </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore ? (endUserData?.address?.postalCodeIsDisplay ? endUserData?.address?.postalCode : '') : endUserAreaCode}
+              {isAddMore
+                ? endUserData?.address?.postalCodeIsDisplay
+                  ? endUserData?.address?.postalCode
+                  : ''
+                : endUserAreaCode}
             </p>
           </div>
         </div>
@@ -642,6 +690,7 @@ function FormPart2({
           resellerName={resellerName}
           formPart1States={formPart1States}
           closeFlyout={closeFlyout}
+          handleBack={handleBack}
           onQueryChanged={onQueryChanged}
           isAddMore={isAddMore}
         />
