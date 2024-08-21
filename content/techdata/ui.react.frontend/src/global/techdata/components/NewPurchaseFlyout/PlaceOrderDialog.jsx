@@ -115,10 +115,8 @@ function PlaceOrderDialog({
           line2: detailsData?.endUser?.address?.line2?.text,
           city: detailsData?.endUser?.address?.city?.text,
           postalCode: detailsData?.endUser?.address?.postalCode?.text,
-          country: detailsData?.endUser?.address?.country?.text,
-          countryCode: countryCodeCheck(
-            detailsData?.endUser?.address?.country?.text
-          ),
+          country: detailsData?.endUser?.address?.countryCode?.text,
+          countryCode: detailsData?.endUser?.address?.countryCode?.text,
         },
         alternateIdentifier: {
           type: 'EANumber',
@@ -153,7 +151,7 @@ function PlaceOrderDialog({
           city: endUserCity,
           postalCode: endUserAreaCode,
           country: endUserCountry,
-          countryCode: countryCodeCheck(endUserCountry),
+          countryCode: endUserCountry,
         },
       },
       items: transformedPayload,

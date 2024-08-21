@@ -4681,7 +4681,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 allowedLength: 100000,
               },
               country: {
-                text: "Vietnam",
+                text: "VN",
                 isValid: true,
                 isMandatory: false,
                 isDisplay: true,
