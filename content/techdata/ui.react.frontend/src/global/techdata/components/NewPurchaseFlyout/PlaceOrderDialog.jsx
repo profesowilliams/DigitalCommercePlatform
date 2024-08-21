@@ -26,13 +26,10 @@ function PlaceOrderDialog({
   isAddMore,
   getDetailsAPI,
 }) {
-  const resetGrid = store((state) => state?.resetGrid || false);
   const [confirmPurchaseChecked, setConfirmPurchaseChecked] = useState(false);
   const [confirmTermsChecked, setConfirmTermsChecked] = useState(false);
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState('');
   const [enablePlaceOrder, setEnablePlaceOrder] = useState(false);
-  const [createOrderResponse, setCreateOrderResponse] = useState({});
-  const createOrderSuccess = createOrderResponse?.content?.success;
   const effects = store((st) => st.effects);
 
   const {
@@ -78,6 +75,18 @@ function PlaceOrderDialog({
   };
   const transformedPayload = transformItemsPayload(itemsPayload);
   // Create order
+
+  const countryCodeCheck = (countryName) => {
+    if (countryName === 'Vietnam') {
+      return 'VN';
+    }
+    if (countryName === 'Cambodia') {
+      return 'KH';
+    }
+    if (countryName === 'Laos') {
+      return 'LA';
+    }
+  };
   const handleCreateOrder = async () => {
     const renewalDetailsPayload = {
       quoteId: detailsData?.source?.id,
@@ -107,6 +116,9 @@ function PlaceOrderDialog({
           city: detailsData?.endUser?.address?.city?.text,
           postalCode: detailsData?.endUser?.address?.postalCode?.text,
           country: detailsData?.endUser?.address?.country?.text,
+          countryCode: countryCodeCheck(
+            detailsData?.endUser?.address?.country?.text
+          ),
         },
         alternateIdentifier: {
           type: 'EANumber',
@@ -141,6 +153,7 @@ function PlaceOrderDialog({
           city: endUserCity,
           postalCode: endUserAreaCode,
           country: endUserCountry,
+          countryCode: countryCodeCheck(endUserCountry),
         },
       },
       items: transformedPayload,
@@ -176,11 +189,10 @@ function PlaceOrderDialog({
           key: 'toaster',
           value: { ...toasterSuccess },
         });
-        
         onClose();
         closeFlyout();
         isAddMore ? getDetailsAPI() : onQueryChanged();
-        return setCreateOrderResponse(response);
+        return response;
       }
     } catch (error) {
       effects.setCustomState({
