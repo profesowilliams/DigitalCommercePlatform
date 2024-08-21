@@ -6,7 +6,19 @@ export const resellerLookUp = async (resellerId, endpoint) => {
   const response = await get(
     endpoint.replace('{reseller-id}', resellerId)
   );
-  return response.data.error.isError ? response.data.error : response.data.content;
+
+  let isError = response.data.error.isError;
+  let error = response.data.error;
+
+  if (!isError && !response.data.content) {
+    isError = true;
+    error = {
+      code: 404,
+      isError: true
+    };
+  }
+
+  return isError ? error : response.data.content;
 };
 export const vendorPartNoLookUp = async (endpoint, payload) => {
   const response = await post(endpoint, payload);

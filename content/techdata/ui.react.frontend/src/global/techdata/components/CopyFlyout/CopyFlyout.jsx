@@ -62,8 +62,9 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
         encodeURIComponent(resellerId),
         copyFlyout.accountLookUpEndpoint
       );
+
       if (response.isError) {
-        setErrorMessage(copyFlyout.unknownError);
+        setErrorMessage(response.code === 404 ? getDictionaryValueOrKey(copyFlyout.accountDoesntExistError) : copyFlyout.unknownError);
         setQuotes([]);
       }
       else {
