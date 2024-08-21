@@ -164,6 +164,7 @@ function RenewalPreviewGrid(
       data?.canOrder,
       compProps?.orderingFromDashboard?.showOrderingIcon
     ) && !isRequestQuoteFlag;
+    const [orderIconDisable, setOrderIconDisable] = useState(!isIconEnabled);
 
   function onAfterGridInit({ api }) {
     setGridApi(api);
@@ -569,6 +570,7 @@ function RenewalPreviewGrid(
     effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
     setIsPODialogOpen(true);
     setIsPAODialogOpen(true);
+    setOrderIconDisable(true);
   };
 
   const successToaster = {
@@ -604,6 +606,7 @@ function RenewalPreviewGrid(
         location.href = compProps.quotePreview.renewalsUrl;
       }
     }
+    setOrderIconDisable(false);
   };
 
   const getDefaultCopyValue = (params) => {
@@ -659,7 +662,7 @@ function RenewalPreviewGrid(
             <div className="place-cmp-order-dialog-container">
               <p className="cmp-place-order-actions">
                 <Button
-                  disabled={!isIconEnabled}
+                  disabled={orderIconDisable}
                   className={computeClassName('cmp-detail-order-button')}
                   onClick={onOrderButtonClicked}
                   variant="contained"
