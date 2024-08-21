@@ -355,11 +355,11 @@ function FormPart2({
   }, [manufacturerPartNumber, productId]);
 
   useEffect(() => {
-    if (datePickerOpen === false && vendorPartNo?.length > 0 && pickedEndDate) {
+    if (vendorPartNo?.length > 0 && pickedEndDate) {
       handleAddProductToGrid();
       setVendorPartNo('');
     }
-  }, [datePickerOpen, vendorPartNo, pickedEndDate]);
+  }, [vendorPartNo, pickedEndDate]);
 
   useEffect(() => {
     if (payloadWithoutNewItem) {
