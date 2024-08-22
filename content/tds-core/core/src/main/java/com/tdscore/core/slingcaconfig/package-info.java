@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-@Version("3.0.1")
+@Version("3.0.2")
 package com.tdscore.core.slingcaconfig;
 
 import org.osgi.annotation.versioning.Version;

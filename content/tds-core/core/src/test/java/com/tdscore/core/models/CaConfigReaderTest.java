@@ -152,6 +152,7 @@ class CaConfigReaderTest {
 
         when(commonConfigurations.languageVersion()).thenReturn("languageVersion");
 
+        when(featureFlagsConfiguration.enableEntitlementCountryValidation()).thenReturn(true);
 
         underTest.init();
         assertEquals("uiServiceDomain", underTest.getUiServiceDomain());
@@ -221,5 +222,7 @@ class CaConfigReaderTest {
         assertEquals("loginEndpoint", underTest.getEcommerceAuthenticationLoginEndpoint());
 
         assertEquals("languageVersion", underTest.getLanguageVersion());
+
+        assertTrue(underTest.isEnableEntitlementCountryValidation());
     }
 }

@@ -1,4 +1,4 @@
-import { isDisableChecksForDCPAccess, disableEntitlementsList } from "./featureFlagUtils";
+import { isDisableChecksForDCPAccess, disableEntitlementsList, isEnableEntitlementCountryValidation } from "./featureFlagUtils";
 export const ACCESS_TYPES = {
     DCP_ACCESS: "hasDCPAccess",
     CAN_VIEW_ORDERS: 'CanViewOrders',
@@ -84,7 +84,8 @@ function isDisableEntitlementsInList() {
 function hasRoleList(roleList, accountId, _accessType) {
     if (roleList && roleList.length) {
         for (let eachItem of roleList) {
-            if (eachItem?.entitlement.toLowerCase().trim() === _accessType.toLowerCase() && eachItem?.accountId?.toLowerCase().trim().includes(accountId.toLowerCase())) {
+            if (eachItem?.entitlement.toLowerCase().trim() === _accessType.toLowerCase()
+                && (!isEnableEntitlementCountryValidation() || eachItem?.accountId?.toLowerCase().trim().includes(accountId.toLowerCase()))) {
                 return true;
             }
         }

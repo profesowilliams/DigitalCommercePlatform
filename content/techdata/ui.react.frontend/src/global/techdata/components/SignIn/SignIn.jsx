@@ -13,7 +13,7 @@ import {
   isAuthenticated,
   redirectUnauthenticatedUser,
 } from "../../../../utils/policies";
-import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
+import { isEnableEntitlementCountryValidation, isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import SpinnerCode from "../spinner/spinner";
 import { usPost, USaxios, generateTraceId } from "../../../../utils/api";
@@ -248,6 +248,11 @@ const SignIn = (props) => {
     changeLoggedInState(true);
 
     triggerEvent('user:loggedIn');
+
+    if(!isEnableEntitlementCountryValidation()) {
+      // handle country redirection
+      redirectBasedOnCountry(userData);
+    }
   }
 
   const updateLoginStyles = () => {
@@ -300,8 +305,63 @@ const SignIn = (props) => {
         }
     }
 
+    if(!isEnableEntitlementCountryValidation()) {
+      // handle country redirection
+      redirectBasedOnCountry();
+    }
     showHideElements();
   }
+
+  //if(!isEnableEntitlementCountryValidation()) { START
+  const redirectBasedOnCountry = (userData) => {
+    let currentUserData;
+    if (isExtraReloadDisabled() || isHttpOnlyEnabled()) {
+      currentUserData = userData;
+    }
+    else {
+      currentUserData = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem('userData')) : null
+    }
+    if(currentUserData?.country) {
+        let countryCodeFromAPI = "/" + currentUserData?.country.toLowerCase() + '/' + "en";
+        if(window.location.href.indexOf(countryCodeFromAPI) < 0) {
+            validateCountryFromUrlAndAPI(countryCodeFromAPI);
+        }
+    }
+  }
+  const validateCountryFromUrlAndAPI = (countryCodeFromAPI) => {
+    let urlSplitStrings = window.location.href.replace(window.location.origin,"").split('/');
+    let countryCodeFromUrl = "/" + urlSplitStrings[1] + "/" + urlSplitStrings[2];
+    if(window.location.href.indexOf("/content") >= 0) { // added this to support sit/dit envs
+        performRedirectForCmsPath(countryCodeFromAPI, countryCodeFromUrl, urlSplitStrings);
+    } else {
+        performRedirectForAbsPath(countryCodeFromAPI, countryCodeFromUrl, urlSplitStrings);
+    }
+  }
+  const performRedirectForAbsPath = (countryCodeFromAPI, countryCodeFromUrl, urlSplitStrings) => {
+    if(urlSplitStrings.length <= 3) { // add .html to the url
+        if(urlSplitStrings[2] === undefined) {
+            countryCodeFromUrl = "/" + urlSplitStrings[1];
+        }
+        countryCodeFromAPI =  countryCodeFromAPI + ".html";
+    }
+    performRedirect(countryCodeFromUrl, countryCodeFromAPI);
+  }
+  const performRedirectForCmsPath = (countryCodeFromAPI, countryCodeFromUrl, urlSplitStrings) => {
+     countryCodeFromUrl = "/" + urlSplitStrings[4] + "/" + urlSplitStrings[5];
+        if(urlSplitStrings.length === 6) { // add .html to the url
+         countryCodeFromAPI =  countryCodeFromAPI + ".html";
+    }
+    performRedirect(countryCodeFromUrl, countryCodeFromAPI);
+  }
+  const performRedirect = (countryCodeFromUrl, countryCodeFromAPI) => {
+      console.log("countryCodeFromUrl == " + countryCodeFromUrl);
+      console.log("countryCodeFromAPI == " + countryCodeFromAPI);
+      if(countryCodeFromAPI.indexOf(countryCodeFromUrl) < 0) {
+          let resultantRedirectUrl = window.location.href.replace(countryCodeFromUrl, countryCodeFromAPI);
+          window.location.href = resultantRedirectUrl;
+      }
+  }
+  //if(!isEnableEntitlementCountryValidation()) { END
 
   const checkSessionStatus = async (shouldLogin) => {
     try {

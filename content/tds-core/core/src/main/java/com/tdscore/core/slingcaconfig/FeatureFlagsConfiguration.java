@@ -41,4 +41,6 @@ public @interface FeatureFlagsConfiguration {
     @Property(label = "Enable Revise Quote Option", description = "Helps to enable Revise Quote Option in Renewals grid and Renewals details.")
     boolean enableReviseOption() default false;
 
+    @Property(label = "Enable Entitlement Country Validation", description = "Helps to enable Entitlement Country Validation in Renewals grid and Renewals details.")
+    boolean enableEntitlementCountryValidation() default false;
 }

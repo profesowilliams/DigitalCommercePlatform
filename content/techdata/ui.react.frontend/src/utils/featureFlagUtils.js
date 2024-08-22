@@ -9,3 +9,4 @@ export const isDisableChecksForDCPAccess = () => document.body.hasAttribute("dat
 export const disableEntitlementsList = () => document.body.getAttribute("data-disable-entitlements-list");
 export const isImpersonateAccountHeaderDisabled = () => document.body.hasAttribute("data-disable-impersonation-header");
 export const isEnvironmentEnabled = () => document.body.hasAttribute('data-environment-header-enabled');
+export const isEnableEntitlementCountryValidation = () => document.body.hasAttribute("data-enable-entitlement-country-validation");

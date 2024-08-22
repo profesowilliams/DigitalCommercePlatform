@@ -473,7 +473,7 @@
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Terms And Conditions Link"
-                    name="./termsAndConditionsLink"/>
+                    name="./termsAndConditionsLinkNewPurchase"/>
                 <placeOrderSuccess
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

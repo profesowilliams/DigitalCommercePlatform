@@ -273,7 +273,7 @@ use(["../../../common/utils.js"], function (utils) {
       "the",
       "adobeTermsConditions",
       "adobeResellerTermsAndConditionsLink",
-      "termsAndConditionsLink",
+      "termsAndConditionsLinkNewPurchase",
       "placeOrderSuccess",
       "productNotFound",
     ];

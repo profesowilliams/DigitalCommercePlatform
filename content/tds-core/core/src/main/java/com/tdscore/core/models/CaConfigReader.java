@@ -299,6 +299,8 @@ public class CaConfigReader {
     private boolean enableRequestQuote;
     private boolean enableReviseOption;
 
+    private boolean enableEntitlementCountryValidation;
+
     private String languageVersion;
 
     @PostConstruct
@@ -393,6 +395,7 @@ public class CaConfigReader {
         enableNewPurchaseAction = featureFlagsConfiguration.enableNewPurchaseAction();
         enableRequestQuote = featureFlagsConfiguration.enableRequestQuote();
         enableReviseOption = featureFlagsConfiguration.enableReviseOption();
+        enableEntitlementCountryValidation = featureFlagsConfiguration.enableEntitlementCountryValidation();
 
 
         buildSearchConfigurations();
@@ -906,6 +909,10 @@ public class CaConfigReader {
         return enableRequestQuote;
     }
     public boolean getEnableReviseOption() { return enableReviseOption;}
+
+    public boolean isEnableEntitlementCountryValidation() {
+        return enableEntitlementCountryValidation;
+    }
 
     public String getLanguageVersion() {
         return  languageVersion;
