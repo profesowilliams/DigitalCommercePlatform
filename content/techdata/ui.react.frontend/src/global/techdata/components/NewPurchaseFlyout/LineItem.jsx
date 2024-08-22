@@ -17,13 +17,13 @@ const LineItem = ({
   const initialQuantity = parseInt(item?.quantity || '1');
   const [quantity, setQuantity] = useState(parseInt(initialQuantity));
   const [unitPrice, setUnitPrice] = useState(item?.unitPrice || '0');
-  const [totalPrice, setTotalPrice] = useState(() =>
+  const [totalPrice, setTotalPrice] = useState(
     (quantity * parseFloat(unitPrice)).toFixed(2)
   );
   const itemProduct = item?.product.find(
     (product) => product?.type === 'MANUFACTURER'
   );
-  const canEditResellerPrice = data?.reseller?.vendorAccountNumber?.canEdit;
+  const canEditResellerPrice = data?.canEditReselerPrice;
 
   const updateItem = (itemId, changes) => {
     setItems((prev) => {
@@ -41,6 +41,8 @@ const LineItem = ({
     let value = event.target.value;
     value = parseFloat(value).toFixed(2);
     setUnitPrice(value);
+    const newTotalPrice = (quantity * parseFloat(value)).toFixed(2);
+    setTotalPrice(newTotalPrice);
     const changes = {
       quantity: quantity.toString(),
       unitPrice: value,
@@ -54,6 +56,8 @@ const LineItem = ({
   const handleQuantityChange = (newQuantity) => {
     const integerQuantity = parseInt(newQuantity);
     setQuantity(integerQuantity);
+    const newTotalPrice = (integerQuantity * parseFloat(unitPrice)).toFixed(2);
+    setTotalPrice(newTotalPrice);
     const changes = {
       quantity: integerQuantity.toString(),
       unitPrice: unitPrice,
@@ -67,6 +71,8 @@ const LineItem = ({
   const handleResetPrice = () => {
     const originalPrice = parseFloat(item?.unitPrice).toFixed(2);
     setUnitPrice(originalPrice);
+    const newTotalPrice = (quantity * parseFloat(originalPrice)).toFixed(2);
+    setTotalPrice(newTotalPrice);
     const changes = {
       quantity: quantity.toString(),
       unitPrice: originalPrice,
@@ -89,12 +95,22 @@ const LineItem = ({
   };
 
   useEffect(() => {
-    setTotalPrice((quantity * parseFloat(unitPrice)).toFixed(2));
+    const newTotalPrice = (quantity * parseFloat(unitPrice)).toFixed(2);
+    setTotalPrice(newTotalPrice);
   }, [quantity, unitPrice]);
 
   useEffect(() => {
-    setQuantity(initialQuantity);
-  }, [item?.quantity]);
+    if (item) {
+      setQuantity(parseInt(item.quantity || '1'));
+      setUnitPrice(item.unitPrice || '0');
+      setTotalPrice(
+        item.totalPrice ||
+          (
+            parseInt(item.quantity || '1') * parseFloat(item.unitPrice || '0')
+          ).toFixed(2)
+      );
+    }
+  }, [item]);
 
   return (
     <tr>

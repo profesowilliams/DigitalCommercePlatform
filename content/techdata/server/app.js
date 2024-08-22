@@ -5450,194 +5450,203 @@ app.post("/ui-renewal/v1/PartNumbers/Find", function (req, res) {
 });
 
 app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
-  const success2 = {
-                       "content": {
-                           "reseller": {
-                               "id": "",
-                               "isValid": true,
-                               "incumbent": false,
-                               "vendorAccountNumber": {
-                                   "isValid": false,
-                                   "isMandatory": false,
-                                   "isDisplay": false,
-                                   "canEdit": false,
-                                   "allowedLength": 0
-                               },
-                               "name": "",
-                               "nameUpper": "",
-                               "contact": [
-                                   {
-                                       "name": {
-                                           "isValid": false,
-                                           "isMandatory": false,
-                                           "isDisplay": false,
-                                           "canEdit": false,
-                                           "allowedLength": 0
-                                       },
-                                       "email": {
-                                           "isValid": false,
-                                           "isMandatory": false,
-                                           "isDisplay": false,
-                                           "canEdit": false,
-                                           "allowedLength": 0
-                                       },
-                                       "phone": {
-                                           "isValid": false,
-                                           "isMandatory": false,
-                                           "isDisplay": false,
-                                           "canEdit": false,
-                                           "allowedLength": 0
-                                       }
-                                   }
-                               ],
-                               "address": {
-                                   "line1": "",
-                                   "city": "",
-                                   "country": "",
-                                   "countryCode": ""
-                               }
-                           },
-                           "endUser": {
-                               "isValid": false,
-                               "name": {
-                                   "isValid": false,
-                                   "isMandatory": false,
-                                   "isDisplay": false,
-                                   "canEdit": false,
-                                   "allowedLength": 0,
-                                   "text": "fsafsa"
-                               },
-                               "nameUpper": "fsafsa",
-                               "eaNumber": {
-                                   "isValid": false,
-                                   "isMandatory": false,
-                                   "isDisplay": false,
-                                   "canEdit": false,
-                                   "allowedLength": 0
-                               },
-                               "contact": [
-                                   {
-                                       "name": {
-                                           "isValid": false,
-                                           "isMandatory": false,
-                                           "isDisplay": false,
-                                           "canEdit": false,
-                                           "allowedLength": 0,
-                                           "text": "fsafsa"
-                                       },
-                                       "email": {
-                                           "isValid": false,
-                                           "isMandatory": false,
-                                           "isDisplay": false,
-                                           "canEdit": false,
-                                           "allowedLength": 0,
-                                           "text": "dsf dsf"
-                                       },
-                                       "phone": {
-                                           "isValid": false,
-                                           "isMandatory": false,
-                                           "isDisplay": false,
-                                           "canEdit": false,
-                                           "allowedLength": 0
-                                       }
-                                   }
-                               ],
-                               "address": {
-                                   "line1": {
-                                       "isValid": false,
-                                       "isMandatory": false,
-                                       "isDisplay": false,
-                                       "canEdit": false,
-                                       "allowedLength": 0,
-                                       "text": "sa"
-                                   },
-                                   "city": {
-                                       "isValid": false,
-                                       "isMandatory": false,
-                                       "isDisplay": false,
-                                       "canEdit": false,
-                                       "allowedLength": 0,
-                                       "text": "saf"
-                                   },
-                                   "postalCode": {
-                                       "isValid": false,
-                                       "isMandatory": false,
-                                       "isDisplay": false,
-                                       "canEdit": false,
-                                       "allowedLength": 0,
-                                       "text": "saf"
-                                   },
-                                   "country": {
-                                       "isValid": false,
-                                       "isMandatory": false,
-                                       "isDisplay": false,
-                                       "canEdit": false,
-                                       "allowedLength": 0,
-                                       "text": "Commercial"
-                                   },
-                                   "countryCode": {
-                                       "isValid": false,
-                                       "isMandatory": false,
-                                       "isDisplay": false,
-                                       "canEdit": false,
-                                       "allowedLength": 0
-                                   }
-                               }
-                           },
-                           "items": [
-                               {
-                                   "id": "1",
-                                   "product": [
-                                       {
-                                           "type": "TECHDATA"
-                                       },
-                                       {
-                                           "type": "MANUFACTURER",
-                                           "id": "30001555CA01A12",
-                                           "family": "Generative Credits Add-on for Enterprise"
-                                       }
-                                   ],
-                                   "quantity": "1.0",
-                                   "unitPriceCurrency": "NA",
-                                   "unitCostCurrency": "NA",
-                                   "totalPrice": "0.0",
-                                   "unitListPriceCurrency": "NA",
-                                   "agency": "CreateOrder",
-                                   "contract": {
-                                       "startDate": "8/19/2024 00:00:00",
-                                       "endDate": "9/16/2025 00:00:00",
-                                       "autoRenew": false
-                                   }
-                               }
-                           ],
-                           "currency": "NA",
-                           "totalSellPrice": "0",
-                           "renewalLevel": "Level 1 1 - 9",
-                           "feedBackMessages": [
-                               {
-                                   "ruleNumber": 100,
-                                   "errorCriticality": 3,
-                                   "message": "License level, list price, unit price and subtotal have been updated due to quantity change.",
-                                   "refId": "",
-                                   "type": "",
-                                   "jsonUrl": ""
-                               }
-                           ],
-                           "canEditQuantity": true,
-                           "canEditReselerPrice": false,
-                           "expiry": "0001-01-01T00:00:00"
-                       },
-                       "error": {
-                           "code": 0,
-                           "messages": [],
-                           "isError": false
-                       }
-                   };
+  const success = {
+    content: {
+      reseller: {
+        id: "",
+        isValid: true,
+        incumbent: false,
+        vendorAccountNumber: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: false,
+          allowedLength: 0,
+        },
+        name: "",
+        nameUpper: "",
+        contact: [
+          {
+            name: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            email: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            phone: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+          },
+        ],
+        address: {
+          line1: "",
+          city: "",
+          country: "",
+          countryCode: "",
+        },
+      },
+      endUser: {
+        isValid: false,
+        name: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: false,
+          allowedLength: 0,
+          text: "123",
+        },
+        nameUpper: "123",
+        eaNumber: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: false,
+          allowedLength: 0,
+        },
+        contact: [
+          {
+            name: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+              text: "123",
+            },
+            email: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+              text: "Andrzej Pruszynski",
+            },
+            phone: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+          },
+        ],
+        address: {
+          line1: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+            text: "Mickiewicza 61",
+          },
+          city: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+            text: "asd",
+          },
+          postalCode: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+            text: "52-651",
+          },
+          country: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+            text: "VN",
+          },
+          countryCode: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+        },
+      },
+      items: [
+        {
+          id: "1",
+          product: [
+            {
+              type: "TECHDATA",
+              id: "ADB30001555CA01A12",
+            },
+            {
+              type: "MANUFACTURER",
+              id: "30001555CA01A12",
+              name: "Generative Credits Add-on for Enterprise ALL Other Multi Asian Languages Enterprise Hosted Subscription New",
+              family: "Generative Credits Add-on for Enterprise",
+            },
+          ],
+          quantity: "1.0",
+          unitPrice: "1221000.0",
+          unitPriceCurrency: "VND",
+          unitCost: "45.96",
+          unitCostCurrency: "USD",
+          totalPrice: "1221000.0",
+          unitListPrice: "1245000.0",
+          unitListPriceCurrency: "VND",
+          agency: "CreateOrder",
+          contract: {
+            startDate: "8/22/2024 00:00:00",
+            endDate: "8/21/2025 00:00:00",
+            autoRenew: false,
+          },
+          minimumQuantity: 1.0,
+          maximumQuantity: 99999.0,
+        },
+      ],
+      currency: "VND",
+      totalSellPrice: "1221000",
+      renewalLevel: "Level 1 1 - 9",
+      feedBackMessages: [
+        {
+          ruleNumber: 100,
+          errorCriticality: 3,
+          message:
+            "License level, list price, unit price and subtotal have been updated due to quantity change.",
+          refId: "",
+          type: "",
+          jsonUrl: "",
+        },
+      ],
+      canEditQuantity: true,
+      canEditReselerPrice: true,
+      expiry: "0001-01-01T00:00:00",
+      canOrder: true,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
 
   //mockResponses.failedResponse
 
   setTimeout(() => {
-    return res.status(200).json(success2);
+    return res.status(200).json(success);
   }, 1000);
 });
 

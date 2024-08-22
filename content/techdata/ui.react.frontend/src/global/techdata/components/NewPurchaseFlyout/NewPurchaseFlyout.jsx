@@ -113,7 +113,7 @@ function NewPurchaseFlyout({
   const [endUserCountryError, setEndUserCountryError] = useState('');
 
   // Currency and total price state
-  const [subtotalValue, setSubtotalValue] = useState('111');
+  const [subtotalValue, setSubtotalValue] = useState('');
   const [currency, setCurrency] = useState('');
 
   // Buttons state
