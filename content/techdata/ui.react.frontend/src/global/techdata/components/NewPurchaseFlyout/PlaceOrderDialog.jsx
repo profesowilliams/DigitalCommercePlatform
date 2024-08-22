@@ -77,6 +77,17 @@ function PlaceOrderDialog({
   const transformedPayload = transformItemsPayload(itemsPayload);
   // Create order
 
+  const countryCodeCheck = (countryName) => {
+    if (countryName === 'Vietnam') {
+      return 'VN';
+    }
+    if (countryName === 'Cambodia') {
+      return 'KH';
+    }
+    if (countryName === 'Laos') {
+      return 'LA';
+    }
+  };
   const handleCreateOrder = async () => {
     const renewalDetailsPayload = {
       quoteId: detailsData?.source?.id,
