@@ -151,47 +151,49 @@ function FormPart2({
   // Filter out null values from the array
   const filteredItemsPayload = existingItems.filter((item) => item !== null);
 
-  const addProductPayload = isAddMore ? {
-    reseller: {
-      id: resellerId || '',
-    },
-    endUser: {
-      name: endUserData.nameUpper,
-      contact: {
-        name: `${endUserData?.contact?.name}`,
-        email: endUserData?.contact?.email,
-      },
-      address: {
-        line1: endUserData?.address?.line1,
-        line2: endUserData?.address?.line2,
-        city: endUserData?.address?.city,
-        postalCode: endUserData?.address?.postalCode,
-        country: endUserData?.address?.country,
-      },
-    },
+  const addProductPayload = isAddMore
+    ? {
+        reseller: {
+          id: data?.reseller?.id || '',
+        },
+        endUser: {
+          name: endUserData.nameUpper,
+          contact: {
+            name: `${endUserData?.contact?.name}`,
+            email: endUserData?.contact?.email,
+          },
+          address: {
+            line1: endUserData?.address?.line1,
+            line2: endUserData?.address?.line2,
+            city: endUserData?.address?.city,
+            postalCode: endUserData?.address?.postalCode,
+            country: endUserData?.address?.countryCode,
+          },
+        },
 
-    items: filteredItemsPayload,
-  } : {
-    reseller: {
-      id: resellerId || '',
-    },
-    endUser: {
-      name: endUserCompanyName,
-      contact: {
-        name: `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
-        email: endUserEmail,
-      },
-      address: {
-        line1: endUserAddress1,
-        line2: endUserAddress2,
-        city: endUserCity,
-        postalCode: endUserAreaCode,
-        country: endUserCountry,
-      },
-    },
+        items: filteredItemsPayload,
+      }
+    : {
+        reseller: {
+          id: resellerId || '',
+        },
+        endUser: {
+          name: endUserCompanyName,
+          contact: {
+            name: `${endUserCompanyFirstName} ${endUserCompanyLastName}`,
+            email: endUserEmail,
+          },
+          address: {
+            line1: endUserAddress1,
+            line2: endUserAddress2,
+            city: endUserCity,
+            postalCode: endUserAreaCode,
+            country: endUserCountry,
+          },
+        },
 
-    items: filteredItemsPayload,
-  };
+        items: filteredItemsPayload,
+      };
   const handleAddProductToGrid = async () => {
     setErrorMessage('');
     setBannerOpen(false);
