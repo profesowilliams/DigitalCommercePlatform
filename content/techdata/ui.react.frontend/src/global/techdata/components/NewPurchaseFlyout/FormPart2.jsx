@@ -84,7 +84,7 @@ function FormPart2({
   const startDate = today.format('MM/DD/YYYY');
   const [pickedEndDate, setPickedEndDate] = useState(defaultEndDate);
   const [duration, setDuration] = useState('364');
-  const licensePriceLevel = '1 (Qty: 1-9)';
+  const durationDisplay = duration + 1;
 
   // Grid
   const { productId, manufacturerPartNumber, globalManufacturer } =
@@ -621,7 +621,8 @@ function FormPart2({
               {getDictionaryValueOrKey(newPurchaseFlyout?.duration)}
             </span>
             <span className="cmp-flyout-newPurchase__form-date__text">
-              {duration} {getDictionaryValueOrKey(newPurchaseFlyout?.days)}
+              {durationDisplay}{' '}
+              {getDictionaryValueOrKey(newPurchaseFlyout?.days)}
             </span>
           </div>
           <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
