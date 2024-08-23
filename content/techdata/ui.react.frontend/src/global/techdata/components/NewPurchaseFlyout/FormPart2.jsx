@@ -22,6 +22,7 @@ import PlaceOrderDialog from './PlaceOrderDialog';
 function FormPart2({
   userData,
   externalUser,
+  newPurchaseFlyoutConfig,
   newPurchaseFlyout,
   formPart1States,
   pickedResellerQuote,
@@ -641,6 +642,7 @@ function FormPart2({
             setDuration={setDuration}
             setBannerOpen={setBannerOpen}
             setPlaceOrderActive={setPlaceOrderActive}
+            newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}
           />
         )}
         {bannerOpen &&

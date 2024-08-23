@@ -436,6 +436,7 @@ function NewPurchaseFlyout({
             <FormPart2
               userData={userData}
               externalUser={externalUser}
+              newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}
               newPurchaseFlyout={newPurchaseFlyout}
               formPart1States={formPart1States}
               pickedResellerQuote={selectedQuote}

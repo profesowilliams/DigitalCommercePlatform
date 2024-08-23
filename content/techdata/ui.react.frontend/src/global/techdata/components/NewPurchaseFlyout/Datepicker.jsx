@@ -18,6 +18,7 @@ export default function DatePicker({
   setDuration,
   setBannerOpen,
   setPlaceOrderActive,
+  newPurchaseFlyoutConfig,
 }) {
   const [focusedInput, setFocusedInput] = React.useState(
     isOpen ? 'endDate' : 'startDate'
@@ -60,6 +61,15 @@ export default function DatePicker({
   function getDisplayFormatBasedOnLocale() {
     return 'MM/DD/YYYY';
   }
+
+  useEffect(() => {
+    if (!newPurchaseFlyoutConfig?.show) {
+      effects.setCustomState({
+        key: 'customEndDate',
+        value: momentEndDate?.toISOString() || undefined,
+      });
+    }
+  }, [newPurchaseFlyoutConfig?.show, momentEndDate, effects]);
 
   useEffect(() => {
     setDuration(
