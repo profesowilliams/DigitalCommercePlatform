@@ -94,6 +94,7 @@ function FormPart2({
   const [vendorProductId, setVendorProductId] = useState(productId);
   // Add Product to Grid
   const [items, setItems] = useState([]);
+  const [isFocusAutocompleteInput, setIsFocusAutocompleteInput] = useState(false)
   const resellerResponseAsObj =
     typeof data?.reseller?.vendorAccountNumber === 'object';
   const resellerData = resellerResponseAsObj
@@ -343,6 +344,14 @@ function FormPart2({
     }
   };
 
+  const handleOnFocus = () => {
+    setIsFocusAutocompleteInput(true);
+  }
+
+  const handleOnBlur = () => {
+    setIsFocusAutocompleteInput(false);
+  }
+
   const selectVendor = () => {
     const newInput = vendorPartNumbers.find(
       (vendorPart) => vendorPart.productId === vendorNumber
@@ -573,6 +582,8 @@ function FormPart2({
                   value={vendorNumber}
                   variant="standard"
                   onChange={handleVendorPartNoChange}
+                  onFocus={handleOnFocus}
+                  onBlur={handleOnBlur}
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: (
@@ -582,7 +593,11 @@ function FormPart2({
                           variant="standard"
                           onClick={selectVendor}
                         >
-                          <AutoCompleteSearchIcon />
+                          {isFocusAutocompleteInput ? (
+                            <AutoCompleteSearchIcon className="autocomplete-search-icon-brandgreen" />
+                          ) : (
+                            <AutoCompleteSearchIcon />
+                          )}
                         </Button>
                       </div>
                     ),

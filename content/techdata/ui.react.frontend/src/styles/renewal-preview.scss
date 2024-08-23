@@ -280,6 +280,24 @@
   background-color: $td-neutral-gray;
 }
 
+.cmp-flyout-newPurchase__form-search {
+  div.MuiInput-root.MuiInput-underline.MuiInputBase-root.MuiInputBase-colorPrimary.MuiInputBase-fullWidth.Mui-focused.MuiInputBase-formControl.MuiInputBase-adornedEnd.MuiAutocomplete-inputRoot:after {
+    border-bottom-color: $brand-green;
+  }
+
+  .cmp-flyout-newPurchase__form-search>div.MuiAutocomplete-root .MuiInput-root .MuiInput-input {
+    padding-bottom: 0;
+  }
+
+  .cmp-flyout-newPurchase__form-search>div.cmp-flyout-newPurchase__form-search .MuiAutocomplete-root .MuiFormControl-root .MuiInput-root.MuiAutocomplete-inputRoot.Mui-focused {
+    padding-bottom: 0;
+  }
+  
+  input.MuiInput-input .MuiInput-root {
+    padding-bottom: 0;
+  }
+}
+
 .cmp-renewals-details
   .ag-theme-alpine
   .ag-root-wrapper
