@@ -23,7 +23,8 @@ function NewPurchaseFlyout({
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
-  const internalUser = userData?.isHouseAccount;
+  const internalUser = true;
+  // const internalUser = userData?.isHouseAccount;
   const defaultCurrency = userData?.activeCustomer?.defaultCurrency;
   const externalUser = !internalUser;
 
@@ -36,6 +37,7 @@ function NewPurchaseFlyout({
       },
     });
     window.history.replaceState(null, '', pathname + search);
+    !isAddMore && handleBack();
   };
   const [placeOrderFlyoutOpen, setPlaceOrderFlyoutOpen] = useState(false);
   const closePlaceOrderFlyout = () => {
@@ -463,7 +465,6 @@ function NewPurchaseFlyout({
               data={data}
               store={store}
               closeFlyout={closeFlyout}
-              handleBack={handleBack}
               onQueryChanged={onQueryChanged}
               detailsEndUserType={detailsEndUserType}
               getDetailsAPI={getDetailsAPI}

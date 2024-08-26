@@ -45,7 +45,6 @@ function FormPart2({
   bottomContent,
   store,
   closeFlyout,
-  handleBack,
   onQueryChanged,
   detailsEndUserType,
   buttonSection,
@@ -94,7 +93,8 @@ function FormPart2({
   const [vendorProductId, setVendorProductId] = useState(productId);
   // Add Product to Grid
   const [items, setItems] = useState([]);
-  const [isFocusAutocompleteInput, setIsFocusAutocompleteInput] = useState(false)
+  const [isFocusAutocompleteInput, setIsFocusAutocompleteInput] =
+    useState(false);
   const resellerResponseAsObj =
     typeof data?.reseller?.vendorAccountNumber === 'object';
   const resellerData = resellerResponseAsObj
@@ -346,11 +346,11 @@ function FormPart2({
 
   const handleOnFocus = () => {
     setIsFocusAutocompleteInput(true);
-  }
+  };
 
   const handleOnBlur = () => {
     setIsFocusAutocompleteInput(false);
-  }
+  };
 
   const selectVendor = () => {
     const newInput = vendorPartNumbers.find(
@@ -730,7 +730,6 @@ function FormPart2({
           resellerName={resellerName}
           formPart1States={formPart1States}
           closeFlyout={closeFlyout}
-          handleBack={handleBack}
           onQueryChanged={onQueryChanged}
           isAddMore={isAddMore}
         />
