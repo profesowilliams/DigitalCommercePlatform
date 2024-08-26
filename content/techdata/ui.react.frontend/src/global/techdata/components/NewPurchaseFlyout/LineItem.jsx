@@ -41,12 +41,14 @@ const LineItem = ({
     let value = event.target.value;
     value = parseFloat(value).toFixed(2);
     setUnitPrice(value);
+    const isOverride = value !== parseFloat(item?.unitPrice).toFixed(2);
     const newTotalPrice = (quantity * parseFloat(value)).toFixed(2);
     setTotalPrice(newTotalPrice);
     const changes = {
       quantity: quantity.toString(),
       unitPrice: value,
       totalPrice: (quantity * parseFloat(value)).toFixed(2),
+      isResellerPriceOverride: isOverride,
     };
     updateItem(itemId, changes);
     setPlaceOrderActive(false);

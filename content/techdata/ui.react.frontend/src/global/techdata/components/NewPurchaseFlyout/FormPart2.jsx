@@ -123,6 +123,8 @@ function FormPart2({
         ...item.contract,
         startDate: pickedStartDateFormatted,
         endDate: pickedEndDateFormatted,
+        isContractDatesOverride:
+          pickedEndDateFormatted !== dataTable?.items[0]?.contract?.endDate,
       },
     };
   });
