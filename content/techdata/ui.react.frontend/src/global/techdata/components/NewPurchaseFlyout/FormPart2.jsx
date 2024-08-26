@@ -106,28 +106,35 @@ function FormPart2({
     ? getModifiedEndUserData(endUserResponseAsObj, data?.endUser)
     : null;
 
-  const pickedEndDateFormatted = moment(pickedEndDate, 'MM/DD/YYYY').format(
-    'YYYY-MM-DD[T]HH:mm:ss[Z]'
-  );
-  const pickedStartDateFormatted = moment(startDate, 'MM/DD/YYYY').format(
-    'YYYY-MM-DD[T]HH:mm:ss[Z]'
-  );
-  const resellerId = pickedResellerQuote?.accountNumber;
-  const resellerName = pickedResellerQuote?.name;
+    const pickedEndDateFormatted = moment(pickedEndDate, 'MM/DD/YYYY').format(
+      'YYYY-MM-DD[T]HH:mm:ss[Z]'
+    );
+    const pickedStartDateFormatted = moment(startDate, 'MM/DD/YYYY').format(
+      'YYYY-MM-DD[T]HH:mm:ss[Z]'
+    );
 
-  const itemsChecked = items && Array.isArray(items) ? items : [];
-  const itemsPayload = itemsChecked?.map((item) => {
-    return {
-      ...item,
-      contract: {
-        ...item.contract,
-        startDate: pickedStartDateFormatted,
-        endDate: pickedEndDateFormatted,
-        isContractDatesOverride:
-          pickedEndDateFormatted !== dataTable?.items[0]?.contract?.endDate,
-      },
-    };
-  });
+    const resellerId = pickedResellerQuote?.accountNumber;
+    const resellerName = pickedResellerQuote?.name;
+
+    const itemsChecked = items && Array.isArray(items) ? items : [];
+    const itemsPayload = itemsChecked?.map((item) => {
+      const originalDateFormatted = moment(
+        dataTable?.items[0]?.contract?.endDate,
+        'M/D/YYYY HH:mm:ss'
+      ).format('YYYY-MM-DDTHH:mm:ss[Z]');
+
+      return {
+        ...item,
+        contract: {
+          ...item.contract,
+          startDate: pickedStartDateFormatted,
+          endDate: pickedEndDateFormatted,
+          isContractDatesOverride:
+            pickedEndDateFormatted !== originalDateFormatted,
+        },
+      };
+    });
+
   const newItem = !payloadWithoutNewItem
     ? {
         id: '',
