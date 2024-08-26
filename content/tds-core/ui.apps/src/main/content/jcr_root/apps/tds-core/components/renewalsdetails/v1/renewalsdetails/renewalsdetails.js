@@ -54,11 +54,14 @@ use(["../../../common/utils.js"], function(utils) {
             "menuCsvExport",
             "menuExcelExport",
             "menuOpenLink",
-            "menuCopyLink"
+            "menuCopyLink",
+            "hideCopyHeaderOption",
+            "hideExportOption",
+            "shopURL"
         ];
 
         productLinesList.map((productLinesItem) =>
-            (productLines[productLinesItem] = properties[productLinesItem])
+            (productLines[productLinesItem] = properties["./productLines/" + productLinesItem])
         );
 
         if (productLines != null) {
@@ -73,8 +76,8 @@ use(["../../../common/utils.js"], function(utils) {
             "quoteOpportunityRequestLabel"
         ];
 
-        if (properties["renewalsUrl"]) {
-            quotePreview["renewalsUrl"] = utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["renewalsUrl"]));
+        if (properties["./quotePreview/renewalsUrl"]) {
+            quotePreview["renewalsUrl"] = utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./quotePreview/renewalsUrl"]));
         }
 
         if (this.addressesEndpoint && this.serviceData.uiServiceDomain) {
@@ -82,7 +85,7 @@ use(["../../../common/utils.js"], function(utils) {
         }
 
         quotePreviewList.map((quotePreviewItem) =>
-            (quotePreview[quotePreviewItem] = properties[quotePreviewItem])
+            (quotePreview[quotePreviewItem] = properties["./quotePreview/" + quotePreviewItem])
         );
 
         // Reseller
@@ -103,7 +106,7 @@ use(["../../../common/utils.js"], function(utils) {
         ];
 
         ResellerList.map((resellerItem) =>
-            (reseller[resellerItem] = properties[resellerItem])
+            (reseller[resellerItem] = properties["./reseller/" + resellerItem])
         );
 
         if (reseller != null) {
@@ -148,7 +151,7 @@ use(["../../../common/utils.js"], function(utils) {
         }
 
         agreementInfoList.map((agreementInfoItem) =>
-            (agreementInfo[agreementInfoItem] = properties[agreementInfoItem])
+            (agreementInfo[agreementInfoItem] = properties["./agreementInfo/" + agreementInfoItem])
         );
 
         if (agreementInfo != null) {
@@ -169,7 +172,7 @@ use(["../../../common/utils.js"], function(utils) {
         ];
 
         errorMessagesList.map((errorMessagesItem) =>
-            (errorMessages[errorMessagesItem] = properties[errorMessagesItem])
+            (errorMessages[errorMessagesItem] = properties["./errorMessages/" + errorMessagesItem])
         );
 
         if (errorMessages != null) {
@@ -187,7 +190,7 @@ use(["../../../common/utils.js"], function(utils) {
         ];
 
         quoteEditingList.map((quoteEditingItem) =>
-            (quoteEditing[quoteEditingItem] = properties[quoteEditingItem])
+            (quoteEditing[quoteEditingItem] = properties["./quoteEditing/" + quoteEditingItem])
         );
 
         if (quoteEditing != null) {
@@ -195,31 +198,31 @@ use(["../../../common/utils.js"], function(utils) {
         }
 
         // Line item detail labels
-        if (properties["lineItemSerialNumberLabel"]) {
-            lineItemDetailLabels.serialNumberLabel = properties["lineItemSerialNumberLabel"];
+        if (properties["./lineItemDetailLabels/lineItemSerialNumberLabel"]) {
+            lineItemDetailLabels.serialNumberLabel = properties["./lineItemDetailLabels/lineItemSerialNumberLabel"];
         }
 
-        if (properties["lineItemSupportLevelLabel"]) {
-            lineItemDetailLabels.supportLevelLabel = properties["lineItemSupportLevelLabel"];
+        if (properties["./lineItemDetailLabels/lineItemSupportLevelLabel"]) {
+            lineItemDetailLabels.supportLevelLabel = properties["./lineItemDetailLabels/lineItemSupportLevelLabel"];
         }
 
-        if (properties["lineItemInstanceLabel"]) {
-            lineItemDetailLabels.instanceLabel = properties["lineItemInstanceLabel"];
+        if (properties["./lineItemDetailLabels/lineItemInstanceLabel"]) {
+            lineItemDetailLabels.instanceLabel = properties["./lineItemDetailLabels/lineItemInstanceLabel"];
         }
 
-        if (properties["lineItemDueDateLabel"]) {
-            lineItemDetailLabels.dueDateLabel = properties["lineItemDueDateLabel"];
+        if (properties["./lineItemDetailLabels/lineItemDueDateLabel"]) {
+            lineItemDetailLabels.dueDateLabel = properties["./lineItemDetailLabels/lineItemDueDateLabel"];
         }
 
-        if (properties["lineItemDurationLabel"]) {
-             lineItemDetailLabels.durationLabel = properties["lineItemDurationLabel"];
+        if (properties["./lineItemDetailLabels/lineItemDurationLabel"]) {
+             lineItemDetailLabels.durationLabel = properties["./lineItemDetailLabels/lineItemDurationLabel"];
         }
 
-        if (properties["lineItemUsagePeriodLabel"]) {
-             lineItemDetailLabels.usagePeriodLabel = properties["lineItemUsagePeriodLabel"];
+        if (properties["./lineItemDetailLabels/lineItemUsagePeriodLabel"]) {
+             lineItemDetailLabels.usagePeriodLabel = properties["./lineItemDetailLabels/lineItemUsagePeriodLabel"];
         }
-        if (properties["activeSubscriptionId"]) {
-             lineItemDetailLabels.subscriptionId = properties["activeSubscriptionId"];
+        if (properties["./lineItemDetailLabels/activeSubscriptionId"]) {
+             lineItemDetailLabels.subscriptionId = properties["./lineItemDetailLabels/activeSubscriptionId"];
         }
 
         if (lineItemDetailLabels != null) {
@@ -240,7 +243,7 @@ use(["../../../common/utils.js"], function(utils) {
         ];
 
         requestQuoteList.map((requestQuoteItem) =>
-            (requestQuote[requestQuoteItem] = properties[requestQuoteItem])
+            (requestQuote[requestQuoteItem] = properties["./requestQuote/" + requestQuoteItem])
         );
 
        if (this.requestQuoteEndpoint && this.serviceData.uiServiceDomain) {
@@ -269,7 +272,7 @@ use(["../../../common/utils.js"], function(utils) {
         ];
 
         copyFlyoutList.map((copyFlyoutItem) =>
-            (copyFlyout[copyFlyoutItem] = properties[copyFlyoutItem])
+            (copyFlyout[copyFlyoutItem] = properties["./copyFlyout/" + copyFlyoutItem])
         );
 
         if (this.accountLookUpEndpoint && this.serviceData.uiServiceDomain) {
@@ -284,16 +287,16 @@ use(["../../../common/utils.js"], function(utils) {
             copyFlyout["copyQuoteEndpoint"] = this.serviceData.uiServiceDomain + this.copyQuoteEndpoint;
         }
 
-        if (properties["copyFlyoutTitle"]) {
-            copyFlyout.title = properties["copyFlyoutTitle"];
+        if (properties["./copyFlyout/copyFlyoutTitle"]) {
+            copyFlyout.title = properties["./copyFlyout/copyFlyoutTitle"];
         }
 
-        if (properties["copyFlyoutDescription"]) {
-            copyFlyout.description = properties["copyFlyoutDescription"];
+        if (properties["./copyFlyout/copyFlyoutDescription"]) {
+            copyFlyout.description = properties["./copyFlyout/copyFlyoutDescription"];
         }
 
-        if (properties["copyFlyoutButton"]) {
-            copyFlyout.button = properties["copyFlyoutButton"];
+        if (properties["./copyFlyout/copyFlyoutButton"]) {
+            copyFlyout.button = properties["./copyFlyout/copyFlyoutButton"];
         }
 
         if (copyFlyout != null) {
@@ -384,7 +387,7 @@ use(["../../../common/utils.js"], function(utils) {
             ];
 
             newPurchaseFlyoutList.map(
-              (property) => (newPurchaseFlyout[property] = properties[property])
+              (property) => (newPurchaseFlyout[property] = properties["./newPurchaseFlyout/" + property])
             );
 
             if (newPurchaseFlyout != null) {
@@ -406,7 +409,7 @@ use(["../../../common/utils.js"], function(utils) {
                this.serviceData.uiServiceDomain +
                this.createNewPurchaseOrderEndpoint;
            }
-2
+
         // Share flyout
         const shareFlyoutList = [
             "shareFlyoutTitle",
@@ -440,7 +443,7 @@ use(["../../../common/utils.js"], function(utils) {
         ];
 
         shareFlyoutList.map((shareFlyoutItem) =>
-            (shareFlyout[shareFlyoutItem] = properties[shareFlyoutItem])
+            (shareFlyout[shareFlyoutItem] = properties["./shareFlyout/" + shareFlyoutItem])
         );
 
         if (this.shareQuoteEndpoint && this.serviceData.uiServiceDomain) {
@@ -469,6 +472,10 @@ use(["../../../common/utils.js"], function(utils) {
             "revisionRequestedMessage"
         ];
 
+        revisionFlyoutList.map((revisionFlyoutItem) =>
+            (revisionFlyout[revisionFlyoutItem] = properties["./revisionFlyout/" + revisionFlyoutItem])
+        );
+
         if (this.reviseQuoteEndpoint && this.serviceData.uiServiceDomain) {
             revisionFlyout.reviseQuoteEndpoint = this.serviceData.uiServiceDomain + this.reviseQuoteEndpoint;
         }
@@ -485,25 +492,12 @@ use(["../../../common/utils.js"], function(utils) {
         ];
 
         noResultsValuesList.map((noResultsValuesItem) =>
-            (noResultsValues[noResultsValuesItem] = properties[noResultsValuesItem])
+            (noResultsValues[noResultsValuesItem] = properties["./searchResultsError/" + noResultsValuesItem])
         );
 
         if (noResultsValues != null) {
             jsonObject["searchResultsError"] = noResultsValues;
         }
-
-        // Label list
-        const labelList = [
-            "hideCopyHeaderOption",
-            "hideExportOption",
-            "shopURL"
-        ];
-
-        labelList.map((labelListItem) => {
-            if (properties[labelListItem]) {
-                jsonObject[labelListItem] = properties[labelListItem];
-            }
-        });
 
         if (this.agGridLicenseKey) {
             jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
@@ -572,7 +566,7 @@ use(["../../../common/utils.js"], function(utils) {
           "noResponseMessage"
         ];
         const orderingFromDashboard =
-            utils.fillFieldsDialogProperties(orderingProperties);
+            utils.fillFieldsDialogProperties(orderingProperties, "./orderingProperties/");
         if (!!orderingFromDashboard) {
         orderingFromDashboard.termsAndConditionsLink = utils.addHtmlIfNeeded(
           utils.transformUrlGivenEnvironment(

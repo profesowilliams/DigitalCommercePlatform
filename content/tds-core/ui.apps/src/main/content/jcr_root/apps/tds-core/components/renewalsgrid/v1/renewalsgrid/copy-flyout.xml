@@ -11,82 +11,82 @@
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Copy Flyout Title"
-                    name="./copyFlyoutTitle"/>
+                    name="./copyFlyout/copyFlyoutTitle"/>
                 <copyFlyoutDescription
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Copy Flyout Description"
-                    name="./copyFlyoutDescription"/>
+                    name="./copyFlyout/copyFlyoutDescription"/>
                 <searchLabel
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Search Label"
-                    name="./searchLabel"/>
+                    name="./copyFlyout/searchLabel"/>
                 <searchPlaceholder
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Search Placeholder"
-                    name="./searchPlaceholder"/>
+                    name="./copyFlyout/searchPlaceholder"/>
                 <resellerAccountLabel
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Reseller Account Label"
-                    name="./resellerAccountLabel"/>
+                    name="./copyFlyout/resellerAccountLabel"/>
                 <selectedAccountLabel
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Selected Account Label"
-                    name="./selectedAccountLabel"/>
+                    name="./copyFlyout/selectedAccountLabel"/>
                 <accountNumberLabel
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Account Number Label"
-                    name="./accountNumberLabel"/>
+                    name="./copyFlyout/accountNumberLabel"/>
                 <accountNameLabel
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Account Name Label"
-                    name="./accountNameLabel"/>
+                    name="./copyFlyout/accountNameLabel"/>
                 <cityLabel
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="City Label"
-                    name="./cityLabel"/>
+                    name="./copyFlyout/cityLabel"/>
                 <permissionsWarning
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Permissions Warning"
-                    name="./permissionsWarning"/>
+                    name="./copyFlyout/permissionsWarning"/>
                 <unknownError
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Unknown Error"
-                    name="./unknownError"/>
+                    name="./copyFlyout/unknownError"/>
                 <quoteExistsError
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Quote Exists Error"
-                    name="./quoteExistsError"/>
+                    name="./copyFlyout/quoteExistsError"/>
                 <accountDoesntExistError
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Account Doesn't Exist Error"
-                    name="./accountDoesntExistError"/>
+                    name="./copyFlyout/accountDoesntExistError"/>
                 <copySuccessMessage
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Copy Success Message"
-                    name="./copySuccessMessage"/>
+                    name="./copyFlyout/copySuccessMessage"/>
                 <copyFailureMessage
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Copy Failure Message"
-                    name="./copyFailureMessage"/>
+                    name="./copyFlyout/copyFailureMessage"/>
                 <copyFlyoutButton
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Copy Flyout Button Label"
-                    name="./copyFlyoutButton"/>
+                    name="./copyFlyout/copyFlyoutButton"/>
             </items>
         </copyFlyoutGroup>
     </items>

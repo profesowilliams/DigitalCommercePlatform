@@ -52,7 +52,14 @@ use(function () {
         for (let field of fieldList){
             if (properties[field]) {fieldObject[field] = properties[field]};
         }
-        return fieldObject;         
+        return fieldObject;
+    }
+    function fillFieldsDialogPropertiesWithPrefix(fieldList, prefix){
+        const fieldObject = {};
+        for (let field of fieldList){
+            if (properties[prefix + field]) {fieldObject[field] = properties[prefix + field]};
+        }
+        return fieldObject;
     }
     function populateOutterProperty (obj, property, fieldList) {
         const populated = fillFieldsDialogProperties(fieldList);
@@ -88,6 +95,7 @@ use(function () {
         populateCommonConfigurations: populateCommonConfigurations,
         getCheckoutConfigurations: getCheckoutConfigurations,
         fillFieldsDialogProperties:fillFieldsDialogProperties,
+        fillFieldsDialogPropertiesWithPrefix:fillFieldsDialogPropertiesWithPrefix,
         populateOutterProperty:populateOutterProperty,
         addHtmlIfNeeded: addHtmlIfNeeded,
         transformUrlGivenEnvironment: transformUrlGivenEnvironment

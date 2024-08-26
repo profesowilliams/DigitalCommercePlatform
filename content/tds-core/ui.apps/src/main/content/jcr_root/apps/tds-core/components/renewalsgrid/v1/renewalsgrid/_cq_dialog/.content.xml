@@ -31,7 +31,7 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Items Per Page"
-                                                name="./itemsPerPage"
+                                                name="./labels/itemsPerPage"
                                                 required="{Boolean}true"/>
 											<multipleSPADealLabel
                                                 jcr:primaryType="nt:unstructured"
@@ -42,13 +42,13 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Shop Path"
-                                                name="./shopPath"
+                                                name="./labels/shopPath"
                                                 required="{Boolean}true"/>
 											<paginationStyle
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
                                                 fieldLabel="Select Pagination Style"
-                                                name="./paginationStyle">
+                                                name="./labels/paginationStyle">
 												<items jcr:primaryType="nt:unstructured">
 													<pages
                                                         jcr:primaryType="nt:unstructured"
@@ -70,13 +70,13 @@
                                                 sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Default Sorting Column Key"
                                                 fieldLabel="Default Sorting Column Key"
-                                                name="./defaultSortingColumnKey"/>
+                                                name="./optionData/defaultSortingColumnKey"/>
 											<defaultSortingDirection
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Sorting Direction"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
                                                 margin="{Boolean}true"
-                                                name="./defaultSortingDirection">
+                                                name="./optionData/defaultSortingDirection">
 												<items jcr:primaryType="nt:unstructured">
 													<asc
                                                         jcr:primaryType="nt:unstructured"
@@ -93,53 +93,53 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Copy Label"
-                                                name="./menuCopy"/>
+                                                name="./labels/menuCopy"/>
 											<menuCopyWithHeaders
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Copy with headers Label"
-                                                name="./menuCopyWithHeaders"/>
+                                                name="./labels/menuCopyWithHeaders"/>
 											<menuExport
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Export Label"
-                                                name="./menuExport"/>
+                                                name="./labels/menuExport"/>
 											<menuCsvExport
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu CSV Export Label"
-                                                name="./menuCsvExport"/>
+                                                name="./labels/menuCsvExport"/>
 											<menuExcelExport
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Excel Export Label"
-                                                name="./menuExcelExport"/>
+                                                name="./labels/menuExcelExport"/>
 											<menuOpenLink
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Open link Label"
-                                                name="./menuOpenLink"/>
+                                                name="./labels/menuOpenLink"/>
 											<menuCopyLink
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Copy link Label"
-                                                name="./menuCopyLink"/>
+                                                name="./labels/menuCopyLink"/>
 											<ofTextLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Of Text Label"
-                                                name="./ofTextLabel"/>
+                                                name="./labels/ofTextLabel"/>
 											<hideCopyHeaderOption
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                name="./hideCopyHeaderOption"
+                                                name="./labels/hideCopyHeaderOption"
                                                 text="Hide Copy Header Option"
                                                 uncheckedValue="false"
                                                 value="true"/>
 											<hideCopyHeaderOptionTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                name="./hideCopyHeaderOption@TypeHint"
+                                                name="./labels/hideCopyHeaderOption@TypeHint"
                                                 value="Boolean"/>
 											<hideExportOption
                                                 jcr:primaryType="nt:unstructured"
@@ -151,7 +151,7 @@
 											<hideExportOptionTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                name="./hideExportOption@TypeHint"
+                                                name="./labels/hideExportOption@TypeHint"
                                                 value="Boolean"/>         
 										</items>
 									</column>
@@ -245,7 +245,7 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                 fieldLabel="Details URL"
-                                                name="./detailUrl"
+                                                name="./labels/detailUrl"
                                                 rootPath="/content/techdata"/>
 											<detailUrlSuffix
                                                 jcr:primaryType="nt:unstructured"
@@ -256,26 +256,26 @@
 											<displayCurrencyName
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                name="./displayCurrencyName"
+                                                name="./labels/displayCurrencyName"
                                                 text="Display Currency Name"
                                                 uncheckedValue="false"
                                                 value="true"/>
 											<displayCurrencyNameTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                name="./displayCurrencyName@TypeHint"
+                                                name="./labels/displayCurrencyName@TypeHint"
                                                 value="Boolean"/>
 											<disableDefaultSort
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-												name="./disableDefaultSort"
+												name="./labels/disableDefaultSort"
 												text="Disable Default Sort"
 												uncheckedValue="false"
 												value="true"/>
 											<disableDefaultSortTypeHint
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-												name="./disableDefaultSort@TypeHint"
+												name="./labels/isableDefaultSort@TypeHint"
 												value="Boolean"/>
 											<quoteText
 													jcr:primaryType="nt:unstructured"
@@ -302,7 +302,7 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Filter Title"
-                                                name="./filterTitle"/>
+                                                name="./labels/filterTitle"/>
                                             <showResults
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -312,17 +312,17 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Clear All Filter Title"
-                                                name="./clearAllFilterTitle"/>
+                                                name="./labels/clearAllFilterTitle"/>
 											<showresultbtn
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Show Result Label"
-                                                name="./showResultLabel"/>
+                                                name="./labels/showResultLabel"/>
 											<filterType
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                 fieldLabel="Filter Type"
-                                                name="./filterType">
+                                                name="./labels/filterType">
 												<items jcr:primaryType="nt:unstructured">
 													<static
                                                         jcr:primaryType="nt:unstructured"
@@ -589,88 +589,88 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Quote Id Label"
                                                 fieldLabel="Quote Id Label"
-                                                name="./quoteIdLabel"
+                                                name="./productGrid/quoteIdLabel"
                                                 required="{Boolean}true"/>
 											<refNo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Ref No Label"
                                                 fieldLabel="Ref No Label"
-                                                name="./refNoLabel"
+                                                name="./productGrid/refNoLabel"
                                                 required="{Boolean}true"/>
 											<expiryDate
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Expiry Date Label"
                                                 fieldLabel="Expiry Date Label"
-                                                name="./expiryDateLabel"
+                                                name="./productGrid/expiryDateLabel"
                                                 required="{Boolean}true"/>
 											<downloadPDF
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Download PDF Label"
                                                 fieldLabel="Download PDF Label"
-                                                name="./downloadPDFLabel"
+                                                name="./productGrid/downloadPDFLabel"
                                                 required="{Boolean}true"/>
 											<showDownloadPDFButton
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 fieldDescription="Show the 'Download PDF' Button on the Expanded Renewal Plan."
-                                                name="./showDownloadPDFButton"
+                                                name="./productGrid/showDownloadPDFButton"
                                                 text="Show Download PDF Button"
                                                 uncheckedValue="false"
                                                 value="true"/>
 											<showDownloadPDFButtonTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                name="./showDownloadPDFButton@TypeHint"
+                                                name="./productGrid/showDownloadPDFButton@TypeHint"
                                                 value="Boolean"/>
 											<downloadXLS
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Download XLS Label"
                                                 fieldLabel="Enter Download XLS Label"
-                                                name="./downloadXLSLabel"
+                                                name="./productGrid/downloadXLSLabel"
                                                 required="{Boolean}true"/>
 											<showDownloadXLSButton
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 fieldDescription="Show the 'Download XLS' Button on the Expanded Renewal Plan."
-                                                name="./showDownloadXLSButton"
+                                                name="./productGrid/showDownloadXLSButton"
                                                 text="Show Download XLS Button"
                                                 uncheckedValue="false"
                                                 value="true"/>
 											<showDownloadXLSButtonTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                name="./showDownloadXLSButton@TypeHint"
+                                                name="./productGrid/showDownloadXLSButton@TypeHint"
                                                 value="Boolean"/>
 											<seeDetails
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter See Details Label"
                                                 fieldLabel="See Details Label"
-                                                name="./seeDetailsLabel"
+                                                name="./productGrid/seeDetailsLabel"
                                                 required="{Boolean}true"/>
 											<showSeeDetailsButton
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 fieldDescription="Show the 'See Details' button on the Expanded Renewal Plan."
-                                                name="./showSeeDetailsButton"
+                                                name="./productGrid/showSeeDetailsButton"
                                                 text="Show See Details Button"
                                                 uncheckedValue="false"
                                                 value="true"/>
 											<showSeeDetailsButtonTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                name="./showSeeDetailsButton@TypeHint"
+                                                name="./productGrid/showSeeDetailsButton@TypeHint"
                                                 value="Boolean"/>
 											<multipleLabel
 													jcr:primaryType="nt:unstructured"
 													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 													fieldDescription="Enter Multiple Label"
 													fieldLabel="Multiple Label"
-													name="./multipleLabel"
+													name="./productGrid/multipleLabel"
 													required="{Boolean}true"/>
 										</items>
 									</column>
@@ -730,132 +730,132 @@
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Title"
-															name="./shareFlyoutTitle"/>
+															name="./shareFlyout/shareFlyoutTitle"/>
 													<shareFlyoutDescription
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Description"
-															name="./shareFlyoutDescription"/>
+															name="./shareFlyout/shareFlyoutDescription"/>
 													<emailPreviewDescription
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Email Preview Description"
-															name="./emailPreviewDescription"/>
+															name="./shareFlyout/emailPreviewDescription"/>
 													<shareFlyoutButtonLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Button Label"
-															name="./shareFlyoutButtonLabel"/>
+															name="./shareFlyout/shareFlyoutButtonLabel"/>
 													<shareFlyoutButtonSharingLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Button Loading Label"
-															name="./shareFlyoutButtonSharingLabel"/>
+															name="./shareFlyout/shareFlyoutButtonSharingLabel"/>
 													<emailToLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Email To Label"
-															name="./emailToLabel"/>
+															name="./shareFlyout/emailToLabel"/>
 													<emailCCLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Email CC Label"
-															name="./emailCCLabel"/>
+															name="./shareFlyout/emailCCLabel"/>
 													<shareFlyoutSignatureLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Signature Label"
-															name="./shareFlyoutSignatureLabel"/>
+															name="./shareFlyout/shareFlyoutSignatureLabel"/>
 													<requiredText
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Field Required Text"
-															name="./requiredText"/>
+															name="./shareFlyout/requiredText"/>
 													<shareFlyoutCommentsLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Comments Label"
-															name="./shareFlyoutCommentsLabel"/>
+															name="./shareFlyout/shareFlyoutCommentsLabel"/>
 													<shareFlyoutQuoteDescription
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Quote Description"
-															name="./shareFlyoutQuoteDescription"/>
+															name="./shareFlyout/shareFlyoutQuoteDescription"/>
 													<shareFlyoutQuoteButtonLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Quote Button Label"
-															name="./shareFlyoutQuoteButtonLabel"/>
+															name="./shareFlyout/shareFlyoutQuoteButtonLabel"/>
 													<shareFlyoutCommentCountText
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Comment Count Text"
-															name="./shareFlyoutCommentCountText"/>
+															name="./shareFlyout/shareFlyoutCommentCountText"/>
 													<shareFlyoutCommentCount
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Comment Count"
-															name="./shareFlyoutCommentCount"/>
+															name="./shareFlyout/shareFlyoutCommentCount"/>
 													<shareFailedLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Failed Label"
-															name="./shareFailedLabel"/>
+															name="./shareFlyout/shareFailedLabel"/>
 													<shareFailedDescription
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
 															fieldLabel="Share Failed Description"
-															name="./shareFailedDescription"/>
+															name="./shareFlyout/shareFailedDescription"/>
 													<shareFailedCancelLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Failed Cancel Button Label"
-															name="./shareFailedCancelLabel"/>
+															name="./shareFlyout/shareFailedCancelLabel"/>
 													<shareFailedTryAgainLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Failed Try Again Button Label"
-															name="./shareFailedTryAgainLabel"/>
+															name="./shareFlyout/shareFailedTryAgainLabel"/>
 													<incorrectEmailLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Incorrect Email Label"
-															name="./incorrectEmailLabel"/>
+															name="./shareFlyout/incorrectEmailLabel"/>
 													<incorrectEmailDescription
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
 															fieldLabel="Incorrect Email Description"
-															name="./incorrectEmailDescription"/>
+															name="./shareFlyout/incorrectEmailDescription"/>
 													<incorrectEmailTryAgainLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Incorrect Email Try Again Button Label"
-															name="./incorrectEmailTryAgainLabel"/>
+															name="./shareFlyout/incorrectEmailTryAgainLabel"/>
 													<recipientNotFoundLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Recipient Not Found Label"
-															name="./recipientNotFoundLabel"/>
+															name="./shareFlyout/recipientNotFoundLabel"/>
 													<recipientNotFoundDescription
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
 															fieldLabel="Recipient Not Found Description"
-															name="./recipientNotFoundDescription"/>
+															name="./shareFlyout/recipientNotFoundDescription"/>
 													<recipientNotFoundCancelLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Recipient Not Found Cancel Button Label"
-															name="./recipientNotFoundCancelLabel"/>
+															name="./shareFlyout/recipientNotFoundCancelLabel"/>
 													<recipientNotFoundContinue
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Recipient Not Found Continue Button Label"
-															name="./recipientNotFoundContinueLabel"/>
+															name="./shareFlyout/recipientNotFoundContinueLabel"/>
 													<shareSuccessMessage
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
 															fieldLabel="Share Success Message"
-															name="./shareSuccessMessage"/>
+															name="./shareFlyout/shareSuccessMessage"/>
 												</items>
 											</shareFlyoutGroup>
 										</items>
@@ -886,7 +886,7 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match the desired font awesome class"
                                                                 fieldLabel="Select Icon Class"
-                                                                name="./overdueIcon"
+                                                                name="./icons/overdueIcon"
                                                                 required="{Boolean}true">
 																<items jcr:primaryType="nt:unstructured">
 																	<bell
@@ -912,7 +912,7 @@
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
                                                                 fieldLabel="Overdue Icon Color"
-                                                                name="./overdueIconColor"
+                                                                name="./icons/overdueIconColor"
                                                                 showDefaultColors="{Boolean}true"
                                                                 showProperties="{Boolean}true"
                                                                 showSwatches="{Boolean}true"
@@ -926,7 +926,7 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match with days return by the ui service"
                                                                 fieldLabel="Select days range"
-                                                                name="./overdueDaysRange"
+                                                                name="./icons/overdueDaysRange"
                                                                 required="{Boolean}true">
 																<items jcr:primaryType="nt:unstructured">
 																	<overdue
@@ -958,7 +958,7 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match the desired font awesome class"
                                                                 fieldLabel="Select Icon Class"
-                                                                name="./afterZeroIcon"
+                                                                name="./icons/afterZeroIcon"
                                                                 required="{Boolean}true">
 																<items jcr:primaryType="nt:unstructured">
 																	<bell
@@ -984,7 +984,7 @@
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
                                                                 fieldLabel="0-30 days Icon Color"
-                                                                name="./afterZeroIconColor"
+                                                                name="./icons/afterZeroIconColor"
                                                                 showDefaultColors="{Boolean}true"
                                                                 showProperties="{Boolean}true"
                                                                 showSwatches="{Boolean}true"
@@ -998,7 +998,7 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match with days return by the ui service"
                                                                 fieldLabel="Select days range"
-                                                                name="./afterZeroDaysRange"
+                                                                name="./icons/afterZeroDaysRange"
                                                                 required="{Boolean}true">
 																<items jcr:primaryType="nt:unstructured">
 																	<overdue
@@ -1030,7 +1030,7 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match the desired font awesome class"
                                                                 fieldLabel="Select Icon Class"
-                                                                name="./afterThirtyIcon"
+                                                                name="./icons/afterThirtyIcon"
                                                                 required="{Boolean}true">
 																<items jcr:primaryType="nt:unstructured">
 																	<bell
@@ -1056,7 +1056,7 @@
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
                                                                 fieldLabel="31-60 days Icon Color"
-                                                                name="./afterThirtyIconColor"
+                                                                name="./icons/afterThirtyIconColor"
                                                                 showDefaultColors="{Boolean}true"
                                                                 showProperties="{Boolean}true"
                                                                 showSwatches="{Boolean}true"
@@ -1070,7 +1070,7 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match with days return by the ui service"
                                                                 fieldLabel="Select days range"
-                                                                name="./afterThirtyDaysRange"
+                                                                name="./icons/afterThirtyDaysRange"
                                                                 required="{Boolean}true">
 																<items jcr:primaryType="nt:unstructured">
 																	<overdue
@@ -1106,7 +1106,7 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match the desired font awesome class"
                                                                 fieldLabel="Select Icon Class"
-                                                                name="./sixtyPlusIcon"
+                                                                name="./icons/sixtyPlusIcon"
                                                                 required="{Boolean}true">
 																<items jcr:primaryType="nt:unstructured">
 																	<bell
@@ -1132,7 +1132,7 @@
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
                                                                 fieldLabel="61+ days Icon Color"
-                                                                name="./sixtyPlusIconColor"
+                                                                name="./icons/sixtyPlusIconColor"
                                                                 showDefaultColors="{Boolean}true"
                                                                 showProperties="{Boolean}true"
                                                                 showSwatches="{Boolean}true"
@@ -1146,7 +1146,7 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match with days return by the ui service"
                                                                 fieldLabel="Select days range"
-                                                                name="./sixtyPlusDaysRange"
+                                                                name="./icons/sixtyPlusDaysRange"
                                                                 required="{Boolean}true">
 																<items jcr:primaryType="nt:unstructured">
 																	<overdue
@@ -1201,45 +1201,45 @@
 															<showOrderingIcon
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                                name="./showOrderingIcon"
+                                                                name="./orderingFromDashboard/showOrderingIcon"
                                                                 text="Show Ordering Icon"
                                                                 uncheckedValue="false"
                                                                 value="true"/>
 															<showOrderingIconTypehint
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                                name="./showOrderingIcon@TypeHint"
+                                                                name="./orderingFromDashboard/showOrderingIcon@TypeHint"
                                                                 value="Boolean"/>
 															<placeOrderDialogTitle
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Place Order Dialog Title"
-                                                                name="./placeOrderDialogTitle"/>
+                                                                name="./orderingFromDashboard/placeOrderDialogTitle"/>
 															<termsAndConditions
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Terms and Conditions"
-                                                                name="./termsAndConditions"/>
+                                                                name="./orderingFromDashboard/termsAndConditions"/>
 															<termsAndConditionsLink
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                                 fieldLabel="Terms and Conditions Link"
-                                                                name="./termsAndConditionsLink"/>
+                                                                name="./orderingFromDashboard/termsAndConditionsLink"/>
 															<successSubmission
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="On Success Submission"
-                                                                name="./successSubmission"/>
+                                                                name="./orderingFromDashboard/successSubmission"/>
 															<failedSubmission
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="On Failed Submission"
-                                                                name="./failedSubmission"/>
+                                                                name="./orderingFromDashboard/failedSubmission"/>
 															<failedSubmissionNoResponse
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="On Failed Submission (No Response)"
-                                                                name="./noResponseMessage"/>
+                                                                name="./orderingFromDashboard/noResponseMessage"/>
 														</items>
 													</orderingGroup>
 												</items>
@@ -1271,23 +1271,23 @@
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Title for No Records Found Search/Filtered"
-                                                                name="./noResultsTitle"/>
+                                                                name="./searchResultsError/noResultsTitle"/>
 															<noResultsDescription
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="Description for No Records Found Search/Filtered"
-                                                                name="./noResultsDescription"/>
+                                                                name="./searchResultsError/noResultsDescription"/>
 															<noResultsImage
 																jcr:primaryType="nt:unstructured"
 																sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
 																autoStart="{Boolean}false"
 																allowUpload="{Boolean}false"
 																class="cq-droptarget"
-																fileNameParameter="./noResultsImageFileName"
-																fileReferenceParameter="./noResultsImageFileReference"
+																fileNameParameter="./searchResultsError/noResultsImageFileName"
+																fileReferenceParameter="./searchResultsError/noResultsImageFileReference"
 																mimeTypes="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
 																multiple="{Boolean}false"
-																name="./noResultsImage"
+																name="./searchResultsError/noResultsImage"
 																title="Upload Image Asset"
                                                                 fieldLabel="Upload Image Asset"
 																uploadUrl="${suffix.path}"
@@ -1302,23 +1302,23 @@
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Title for No Reseller Data Available"
-                                                                name="./noDataTitle"/>
+                                                                name="./searchResultsError/noDataTitle"/>
 															<noDataDescription
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="Description for No Reseller Data Available"
-                                                                name="./noDataDescription"/>
+                                                                name="./searchResultsError/noDataDescription"/>
 															<noDataImage
 																jcr:primaryType="nt:unstructured"
 																sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
 																autoStart="{Boolean}false"
 																allowUpload="{Boolean}false"
 																class="cq-droptarget"
-																fileNameParameter="./noDataImageFileName"
-																fileReferenceParameter="./noDataImageFileReference"
+																fileNameParameter="./searchResultsError/noDataImageFileName"
+																fileReferenceParameter="./searchResultsError/noDataImageFileReference"
 																mimeTypes="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
 																multiple="{Boolean}false"
-																name="./noDataImage"
+																name="./searchResultsError/noDataImage"
 																title="Upload Image Asset"
                                                                 fieldLabel="Upload Image Asset"
 																uploadUrl="${suffix.path}"
@@ -1351,47 +1351,47 @@
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldDescription="Request Quote Heading"
 															fieldLabel="Request Quote Heading"
-															name="./requestQuoteHeading"/>
+															name="./requestQuote/requestQuoteHeading"/>
 													<requestQuoteDescription
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
 															fieldLabel="Request Quote Description"
-															name="./requestQuoteDescription"/>
+															name="./requestQuote/requestQuoteDescription"/>
 													<additionalInformationLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Additional Information Label"
-															name="./additionalInformationLabel"/>
+															name="./requestQuote/additionalInformationLabel"/>
 													<additionalInformationPlaceholderText
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Additional Information Placeholder Text"
-															name="./additionalInformationPlaceholderText"/>
+															name="./requestQuote/additionalInformationPlaceholderText"/>
 													<requestQuoteButtonLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Request Quote Button Label"
-															name="./requestQuoteButtonLabel"/>
+															name="./requestQuote/requestQuoteButtonLabel"/>
 													<successToastMessage
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
 															fieldLabel="Success Toast Message"
-															name="./successToastMessage"/>
+															name="./requestQuote/successToastMessage"/>
 													<requestQuoteCommentCountText
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Request Flyout Comment Count Text"
-															name="./requestQuoteCommentCountText"/>
+															name="./requestQuote/requestQuoteCommentCountText"/>
 													<errorToastMessage
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
 															fieldLabel="Error Toast Message"
-															name="./errorToastMessage"/>
+															name="./requestQuote/errorToastMessage"/>
 													<quoteRequestedMessage
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
 															fieldLabel="Quote Requested Message"
-															name="./quoteRequestedMessage"/>
+															name="./requestQuote/quoteRequestedMessage"/>
 												</items>
 											</column>
 										</items>
@@ -1418,52 +1418,52 @@
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldDescription="Request Revision Heading"
                                                             fieldLabel="Request Revision Heading"
-                                                            name="./requestRevisionHeading"/>
+                                                            name="./revisionFlyout/requestRevisionHeading"/>
                                                     <requestRevisionDescription
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                             fieldLabel="Request Revision Description"
-                                                            name="./requestRevisionDescription"/>
+                                                            name="./revisionFlyout/requestRevisionDescription"/>
                                                     <additionalInformationLabel
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldLabel="Additional Information Label"
-                                                            name="./additionalInformationLabel"/>
+                                                            name="./revisionFlyout/additionalInformationLabel"/>
                                                     <additionalInformationPlaceholderText
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldLabel="Additional Information Placeholder Text"
-                                                            name="./additionalInformationPlaceholderText"/>
+                                                            name="./revisionFlyout/additionalInformationPlaceholderText"/>
                                                     <requestRevisionCommentCountText
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldLabel="Request Revision Flyout Comment Count Text"
-                                                            name="./requestRevisionCommentCountText"/>
+                                                            name="./revisionFlyout/requestRevisionCommentCountText"/>
                                                     <requestRevisionCommentCount
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldLabel="Request Revision Flyout Comment Count"
-                                                            name="./requestRevisionCommentCount"/>
+                                                            name="./revisionFlyout/requestRevisionCommentCount"/>
                                                     <requestRevisionButtonLabel
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldLabel="Request Revision Button Label"
-                                                            name="./requestRevisionButtonLabel"/>
+                                                            name="./revisionFlyout/requestRevisionButtonLabel"/>
                                                     <successToastMessage
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                             fieldLabel="Success Toast Message"
-                                                            name="./successToastMessage"/>
+                                                            name="./revisionFlyout/successToastMessage"/>
                                                     <errorToastMessage
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                             fieldLabel="Error Toast Message"
-                                                            name="./errorToastMessage"/>
+                                                            name="./revisionFlyout/errorToastMessage"/>
                                                     <revisionRequestedMessage
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                             fieldLabel="Revision Requested Message"
-                                                            name="./revisionRequestedMessage"/>
+                                                            name="./revisionFlyout/revisionRequestedMessage"/>
                                                 </items>
                                             </column>
                                         </items>

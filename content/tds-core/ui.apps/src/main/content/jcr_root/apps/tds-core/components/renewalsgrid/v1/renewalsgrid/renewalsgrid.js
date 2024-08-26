@@ -23,7 +23,7 @@ use(["../../../common/utils.js"], function (utils) {
 
     optionDataList.map(
       (optionDataItem) =>
-        (optionData[optionDataItem] = properties[optionDataItem])
+        (optionData[optionDataItem] = properties["./optionData/" + optionDataItem])
     );
 
     if (optionData != null) {
@@ -47,7 +47,7 @@ use(["../../../common/utils.js"], function (utils) {
 
     productGridList.map(
       (productGridItem) =>
-        (productGrid[productGridItem] = properties[productGridItem])
+        (productGrid[productGridItem] = properties["./productGrid/" + productGridItem])
     );
 
     if (productGrid != null) {
@@ -72,18 +72,18 @@ use(["../../../common/utils.js"], function (utils) {
       propertyName: "sixtyPlusDaysRange",
     };
 
-    function populateOutterProperty(obj, prop) {
-      const populated = utils.fillFieldsDialogProperties(prop.values);
-      const daysPropertyName = properties[prop.propertyName];
+    function populateOutterProperty(obj, prop, prefix) {
+      const populated = utils.fillFieldsDialogPropertiesWithPrefix(prop.values, prefix);
+      const daysPropertyName = properties[prefix + prop.propertyName];
       if (populated && daysPropertyName) {
         obj[daysPropertyName] = populated;
       }
     }
 
-    populateOutterProperty(icons, overdueProperties);
-    populateOutterProperty(icons, thirtyDaysProperties);
-    populateOutterProperty(icons, sixtyOneDaysProperties);
-    populateOutterProperty(icons, sixtyOnePlusProperties);
+    populateOutterProperty(icons, overdueProperties, "./icons/");
+    populateOutterProperty(icons, thirtyDaysProperties, "./icons/");
+    populateOutterProperty(icons, sixtyOneDaysProperties, "./icons/");
+    populateOutterProperty(icons, sixtyOnePlusProperties, "./icons/");
 
     if (icons != null) {
       jsonObject["icons"] = icons;
@@ -100,8 +100,8 @@ use(["../../../common/utils.js"], function (utils) {
       "noResponseMessage",
     ];
 
-    const orderingFromDashboard = utils.fillFieldsDialogProperties(
-      orderingPropertiesList
+    const orderingFromDashboard = utils.fillFieldsDialogPropertiesWithPrefix(
+      orderingPropertiesList, "./orderingFromDashboard"
     );
     if (orderingFromDashboard != null) {
       orderingFromDashboard.termsAndConditionsLink = utils.addHtmlIfNeeded(
@@ -122,16 +122,16 @@ use(["../../../common/utils.js"], function (utils) {
 
     noResultsValuesList.map(
       (noResultsValuesItem) =>
-        (noResultsValues[noResultsValuesItem] = properties[noResultsValuesItem])
+        (noResultsValues[noResultsValuesItem] = properties["./searchResultsError/" + noResultsValuesItem])
     );
 
-    if (properties["noResultsImageFileReference"] != null) {
+    if (properties["./searchResultsError/noResultsImageFileReference"] != null) {
       noResultsValues.noResultsImage =
-        properties["noResultsImageFileReference"];
+        properties["./searchResultsError/noResultsImageFileReference"];
     }
 
-    if (properties["noDataImageFileReference"] != null) {
-      noResultsValues.noDataImage = properties["noDataImageFileReference"];
+    if (properties["./searchResultsError/noDataImageFileReference"] != null) {
+      noResultsValues.noDataImage = properties["./searchResultsError/noDataImageFileReference"];
     }
 
     if (noResultsValues != null) {
@@ -176,19 +176,19 @@ use(["../../../common/utils.js"], function (utils) {
 
     copyFlyoutList.map(
       (copyFlyoutItem) =>
-        (copyFlyout[copyFlyoutItem] = properties[copyFlyoutItem])
+        (copyFlyout[copyFlyoutItem] = properties["./copyFlyout/" + copyFlyoutItem])
     );
 
-    if (properties["copyFlyoutTitle"] != null) {
-      copyFlyout.title = properties["copyFlyoutTitle"];
+    if (properties["./copyFlyout/copyFlyoutTitle"] != null) {
+      copyFlyout.title = properties["./copyFlyout/copyFlyoutTitle"];
     }
 
-    if (properties["copyFlyoutDescription"] != null) {
-      copyFlyout.description = properties["copyFlyoutDescription"];
+    if (properties["./copyFlyout/copyFlyoutDescription"] != null) {
+      copyFlyout.description = properties["./copyFlyout/copyFlyoutDescription"];
     }
 
-    if (properties["copyFlyoutButton"] != null) {
-      copyFlyout.button = properties["copyFlyoutButton"];
+    if (properties["./copyFlyout/copyFlyoutButton"] != null) {
+      copyFlyout.button = properties["./copyFlyout/copyFlyoutButton"];
     }
 
     if (copyFlyout != null) {
@@ -279,7 +279,7 @@ use(["../../../common/utils.js"], function (utils) {
     ];
 
     newPurchaseFlyoutList.map(
-      (property) => (newPurchaseFlyout[property] = properties[property])
+      (property) => (newPurchaseFlyout[property] = properties["./newPurchaseFlyout/" + property])
     );
 
     if (newPurchaseFlyout != null) {
@@ -336,7 +336,7 @@ use(["../../../common/utils.js"], function (utils) {
 
     shareFlyoutList.map(
       (shareFlyoutItem) =>
-        (shareFlyout[shareFlyoutItem] = properties[shareFlyoutItem])
+        (shareFlyout[shareFlyoutItem] = properties["./shareFlyout/" + shareFlyoutItem])
     );
 
     if (shareFlyout != null) {
@@ -363,7 +363,7 @@ use(["../../../common/utils.js"], function (utils) {
 
     requestQuoteList.map(
       (requestQuoteItem) =>
-        (requestQuote[requestQuoteItem] = properties[requestQuoteItem])
+        (requestQuote[requestQuoteItem] = properties["./requestQuote/" + requestQuoteItem])
     );
 
     if (requestQuote != null) {
@@ -386,7 +386,7 @@ use(["../../../common/utils.js"], function (utils) {
 
     revisionFlyoutList.map(
       (revisionFlyoutItem) =>
-        (revisionFlyout[revisionFlyoutItem] = properties[revisionFlyoutItem])
+        (revisionFlyout[revisionFlyoutItem] = properties["./revisionFlyout/" + revisionFlyoutItem])
     );
 
     if (revisionFlyout != null) {
@@ -416,27 +416,27 @@ use(["../../../common/utils.js"], function (utils) {
 
     labelList.map((labelListItem) => {
       if (properties[labelListItem]) {
-        jsonObject[labelListItem] = properties[labelListItem];
+        jsonObject[labelListItem] = properties["./labels/" + labelListItem];
       }
     });
 
-    if (properties["detailUrl"] != null) {
+    if (properties["./labels/detailUrl"] != null) {
       jsonObject["detailUrl"] = utils.transformUrlGivenEnvironment(
-        properties["detailUrl"]
+        properties["./labels/detailUrl"]
       );
     }
 
-    if (properties["shopPath"] != null) {
-      jsonObject["shopURL"] = properties["shopPath"];
+    if (properties["./labels/shopPath"] != null) {
+      jsonObject["shopURL"] = properties["./labels/shopPath"];
     }
 
-    if (properties["disableDefaultSort"]) {
-      jsonObject["disableDefaultSort"] = properties["disableDefaultSort"];
+    if (properties["./labels/disableDefaultSort"]) {
+      jsonObject["disableDefaultSort"] = properties["./labels/disableDefaultSort"];
     } else if (
-      properties["disableDefaultSort"] == null ||
-      !properties["disableDefaultSort"]
+      properties["./labels/disableDefaultSort"] == null ||
+      !properties["./labels/disableDefaultSort"]
     ) {
-      jsonObject["disableDefaultSort"] = false;
+      jsonObject["./labels/disableDefaultSort"] = false;
     }
 
     if (this.serviceData && this.serviceData.enableShareOption) {
