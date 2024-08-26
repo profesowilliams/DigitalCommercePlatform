@@ -229,6 +229,7 @@ function NewPurchaseFlyout({
           <Button
             startIcon={
               <CircularArrowIcon
+                className="circular-arrow-icon"
               />
             }
             sx={{

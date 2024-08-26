@@ -1353,3 +1353,16 @@ li[id^='combo-box-demo-option-']:active {
 .autocomplete-search-icon-brandgreen {
   fill: $brand-green;
 }
+
+@keyframes spin-circular-arrows {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+span.MuiButton-startIcon.MuiButton-iconSizeMedium {
+  svg.circular-arrow-icon {
+    animation: spin-circular-arrows infinite;
+  }
+}
