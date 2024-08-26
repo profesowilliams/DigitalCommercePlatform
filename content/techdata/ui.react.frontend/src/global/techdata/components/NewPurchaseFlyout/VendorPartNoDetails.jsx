@@ -2,7 +2,7 @@ import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 export const VendorPartNoDetails = ({ quote, labels, currentlyTypedWord }) => {
-  const { productId, manufacturerPartNumber, globalManufacturer } = quote;
+  const { productId, manufacturerPartNumber, globalManufacturer, shortDescription } = quote;
   const isNumeric = (str) => {
     return /^[0-9]+$/.test(str);
   };
@@ -74,6 +74,25 @@ export const VendorPartNoDetails = ({ quote, labels, currentlyTypedWord }) => {
     );
   };
 
+  const VendorPartShortDescriptionWithHighlight = () => {
+    let string = shortDescription.substr(
+      0,
+      shortDescription.toLowerCase().indexOf(currentlyTypedWord.toLowerCase())
+    );
+    let endString = shortDescription.substr(
+      shortDescription.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()) +
+        currentlyTypedWord.length
+    );
+    let highlightedText = shortDescription.substr(
+      shortDescription.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()),
+      currentlyTypedWord.length
+    );
+    return isVendorNumFlag ? (
+      shortDescription) : (
+      shortDescription
+    );
+  };
+
   return (
     <div className="cmp-flyout__quotecmp-flyout__selected-quote ">
       {productId && (
@@ -104,6 +123,18 @@ export const VendorPartNoDetails = ({ quote, labels, currentlyTypedWord }) => {
             )}
             <VendorPartNumberWithHighlight />
           </div>
+
+          <div className="cmp-flyout__quotecmp-flyout__selected-quote__short-description">
+            {labels && (
+              <span className="cmp-flyout__quotecmp-flyout__selected-quote__label">
+                {getDictionaryValueOrKey(
+                  labels.accountShortDescription || 'Short Description:'
+                )}
+              </span>
+            )}
+            <VendorPartShortDescriptionWithHighlight />
+          </div>
+          
         </>
       )}
     </div>

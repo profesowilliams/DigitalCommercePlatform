@@ -603,13 +603,13 @@ li[id^='combo-box-demo-option-']:active {
   .cmp-flyout-autocomplete__option-name
   .cmp-flyout__quotecmp-flyout__selected-quote {
   font-family: $font-family-arial;
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 20px;
   font-weight: 400;
   color: $text-darker-grey;
   .cmp-flyout__quotecmp-flyout__selected-quote {
     &__account-number {
-      font-size: 1rem;
+      font-size: 0.875rem;
       line-height: 21px;
       color: map-get($color-palette, 'charcoal');
       font-family: $font-family-arial;
@@ -622,6 +622,13 @@ li[id^='combo-box-demo-option-']:active {
       span {
         font-family: $font-family-arial;
       }
+    }
+
+    &__short-description {
+      font-size: 0.875rem;
+      line-height: 21px;
+      color: $brand-text-gray;
+      font-family: $font-family-arial;
     }
 
     &__account-number,
@@ -1238,6 +1245,14 @@ li[id^='combo-box-demo-option-']:active {
       text-align: end;
     }
   }
+
+  .cmp-flyout-newPurchase__form-date__title {
+    line-height: 24px;
+  }
+
+  .cmp-flyout-newPurchase__form-date__title-start_date {
+    padding-right: 64px;
+  }
 }
 .new-purchase-footer-info {
   display: flex;
@@ -1254,9 +1269,38 @@ li[id^='combo-box-demo-option-']:active {
   }
 }
 .new-purchase-datepicker-container {
-  padding-left: 40px;
-  margin-bottom: 19rem;
-  margin-top: 30px;
+  .DateRangePickerInput {
+    border: none;
+    margin-left: 0;
+  }
+
+  .DateInput_input {
+    color: map-get($color-palette, 'charcoal');
+    line-height: 18px;
+    font-size: 1rem;
+
+    &:focus,
+    &:active {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-color: map-get($color-palette, 'neutral-gray-2');
+    }
+  }
+
+  .DateRangePicker.DateRangePicker_1 {
+    width: 100%;
+  }
+
+  .DateInput_input.DateInput_input_1 {
+    padding: 0;
+    border: 0;
+  }
+
+  .DateInput.DateInput_1 {
+    width: 85px;
+    height: 18px;
+    background-color: map-get($color-palette, 'white');
+  }
 
   input#start-date {
     pointer-events: none;

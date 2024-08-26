@@ -620,26 +620,23 @@ function FormPart2({
           )}
         </div>
         <div className="cmp-flyout-newPurchase__form-date">
-          <div className="cmp-flyout-newPurchase__form-date__display-column">
-            <span className="cmp-flyout-newPurchase__form-date__title">
-              {getDictionaryValueOrKey(newPurchaseFlyout?.startDate)}
-            </span>
-            <span className="cmp-flyout-newPurchase__form-date__text">
-              {startDate}
-            </span>
-          </div>
-          <div className="cmp-flyout-newPurchase__form-date__hyphen"></div>
-          <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
-            <span className="cmp-flyout-newPurchase__form-date__title">
-              {getDictionaryValueOrKey(newPurchaseFlyout?.endDate)}
-            </span>
-            <div
-              onClick={handleDatePickerOpen}
-              className="cmp-flyout-newPurchase__form-date__input"
-            >
-              {pickedEndDate ? pickedEndDate : defaultEndDate}
-            </div>
-          </div>
+          {datePickerOpen && (
+            <div>
+              <span class="cmp-flyout-newPurchase__form-date__title cmp-flyout-newPurchase__form-date__title-start_date">Start date</span>
+              <span class="cmp-flyout-newPurchase__form-date__title cmp-flyout-newPurchase__form-date__title-end_date">End date</span>
+            <DatePicker
+              isOpen={datePickerOpen}
+              startDate={startDate}
+              endDate={defaultEndDate}
+              setPickedEndDate={setPickedEndDate}
+              setDuration={setDuration}
+              setBannerOpen={setBannerOpen}
+              setPlaceOrderActive={setPlaceOrderActive}
+              newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}
+                />
+              </div>
+        )}
+          
           <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
             <span className="cmp-flyout-newPurchase__form-date__title">
               {getDictionaryValueOrKey(newPurchaseFlyout?.duration)}
@@ -658,18 +655,6 @@ function FormPart2({
             </span>
           </div>
         </div>
-        {datePickerOpen && (
-          <DatePicker
-            isOpen={datePickerOpen}
-            startDate={startDate}
-            endDate={defaultEndDate}
-            setPickedEndDate={setPickedEndDate}
-            setDuration={setDuration}
-            setBannerOpen={setBannerOpen}
-            setPlaceOrderActive={setPlaceOrderActive}
-            newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}
-          />
-        )}
         {bannerOpen &&
           dataTable?.feedBackMessages &&
           dataTable?.feedBackMessages?.length > 0 &&

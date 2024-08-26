@@ -20,9 +20,7 @@ export default function DatePicker({
   setPlaceOrderActive,
   newPurchaseFlyoutConfig,
 }) {
-  const [focusedInput, setFocusedInput] = React.useState(
-    isOpen ? 'endDate' : 'startDate'
-  );
+  const [focusedInput, setFocusedInput] = React.useState(null); // Initially set to null
   const effects = useRenewalGridState((state) => state.effects);
   const branding = useRenewalGridState((state) => state.branding || '');
   let customEndDate = useRenewalGridState((state) => state.customEndDate);
@@ -79,74 +77,64 @@ export default function DatePicker({
       )
     );
   }, [momentEndDate, momentCustomEndDate]);
+
   return (
     <>
       <div className="new-purchase-datepicker-container">
-        <If condition={isOpen}>
-          <DateRangePicker
-            startDate={momentStartDate}
-            startDateId="start-date"
-            startDatePlaceholderText="Add date"
-            endDatePlaceholderText="Add date"
-            endDate={momentCustomEndDate ? momentCustomEndDate : momentEndDate}
-            {...navIcons}
-            endDateId="end-date"
-            verticalHeight={468}
-            showDefaultInputIcon={false}
-            customArrowIcon={<div className="customHyphen"></div>}
-            reopenPickerOnClearDates
-            keepOpenOnDateSelect={true}
-            onDatesChange={({ startDate, endDate }) => {
-              effects.setCustomState({
-                key: 'customEndDate',
-                value: endDate?.toISOString() || undefined,
-              });
-              if ((startDate, endDate)) {
-                effects.setDatePickerState(endDate?.toDate());
-              }
-              setBannerOpen(false);
-              setPlaceOrderActive(false);
-            }}
-            isOutsideRange={(day) => {
-              // Check if momentStartDate is defined
-              if (momentStartDate) {
-                const threeYearsFromStart = momentStartDate
-                  .clone()
-                  .add(3, 'years')
-                  .subtract(1, 'day');
-                // If the day is after three years - 1 day from the start date, return true
-                if (day.isAfter(threeYearsFromStart, 'day')) {
-                  return true;
-                }
-              }
-
-              // Check if momentEndDate is defined
-              if (momentEndDate) {
-                // If the day is before the end date, return true
-                if (day.isBefore(momentEndDate, 'day')) {
-                  return true;
-                }
-              }
-
-              // If none of the conditions are met, return false
-              return false;
-            }}
-            numberOfMonths={1}
-            displayFormat={getDisplayFormatBasedOnLocale()}
-            noBorder={true}
-            regular={false}
-            transitionDuration={300}
-            daySize={30}
-            focusedInput={focusedInput}
-            onFocusChange={(focusedInput) => {
-              setFocusedInput(focusedInput || 'endDate');
-            }}
-            initialVisibleMonth={() =>
-              momentCustomEndDate ? momentCustomEndDate : momentEndDate
+        <DateRangePicker
+          startDate={momentStartDate}
+          startDateId="start-date"
+          startDatePlaceholderText="Add date"
+          endDatePlaceholderText="Add date"
+          endDate={momentCustomEndDate ? momentCustomEndDate : momentEndDate}
+          {...navIcons}
+          endDateId="end-date"
+          verticalHeight={468}
+          showDefaultInputIcon={false}
+          customArrowIcon={<div className="customHyphen"></div>}
+          onDatesChange={({ startDate, endDate }) => {
+            effects.setCustomState({
+              key: 'customEndDate',
+              value: endDate?.toISOString() || undefined,
+            });
+            if (startDate && endDate) {
+              effects.setDatePickerState(endDate?.toDate());
             }
-            appendToBody={false}
-          />
-        </If>
+            setBannerOpen(false);
+            setPlaceOrderActive(false);
+          }}
+          isOutsideRange={(day) => {
+            if (momentStartDate) {
+              const threeYearsFromStart = momentStartDate
+                .clone()
+                .add(3, 'years')
+                .subtract(1, 'day');
+              if (day.isAfter(threeYearsFromStart, 'day')) {
+                return true;
+              }
+            }
+            if (momentEndDate) {
+              if (day.isBefore(momentEndDate, 'day')) {
+                return true;
+              }
+            }
+            return false;
+          }}
+          numberOfMonths={1}
+          displayFormat={getDisplayFormatBasedOnLocale()}
+          noBorder={true}
+          regular={false}
+          transitionDuration={300}
+          daySize={30}
+          focusedInput={focusedInput} // Ensure controlled focus state
+          onFocusChange={(focusedInput) => {
+            setFocusedInput(focusedInput); // Handle focus changes
+          }}
+          initialVisibleMonth={() =>
+            momentCustomEndDate ? momentCustomEndDate : momentEndDate
+          }
+          appendToBody={false}
+        />
       </div>
     </>
   );
