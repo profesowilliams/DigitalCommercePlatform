@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import { ArrowBackIcon } from '../../../../fluentIcons/FluentIcons';
+import { ArrowBackIcon, CircularArrowIcon } from '../../../../fluentIcons/FluentIcons';
 import FormPart1 from './FormPart1';
 import FormPart2 from './FormPart2';
-import { CircularProgress } from '@mui/material';
 import Button from '@mui/material/Button';
 
 function NewPurchaseFlyout({
@@ -229,9 +228,7 @@ function NewPurchaseFlyout({
         validating ? (
           <Button
             startIcon={
-              <CircularProgress
-                size={20}
-                sx={{ color: '#888B8D', fontSize: '16px' }}
+              <CircularArrowIcon
               />
             }
             sx={{
