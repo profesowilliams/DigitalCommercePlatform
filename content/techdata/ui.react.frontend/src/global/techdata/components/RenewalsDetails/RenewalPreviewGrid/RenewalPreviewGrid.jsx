@@ -593,7 +593,10 @@ function RenewalPreviewGrid(
     };
     setIsPODialogOpen(false);
     setIsPAODialogOpen(false);
-    if (!isSuccess) return;
+    if (!isSuccess) {
+        setOrderIconDisable(false);
+        return;
+    }
     if (isSuccess) {
       if (adobeVendor) {
         effects.setCustomState({
@@ -606,7 +609,6 @@ function RenewalPreviewGrid(
         location.href = compProps.quotePreview.renewalsUrl;
       }
     }
-    setOrderIconDisable(false);
   };
 
   const getDefaultCopyValue = (params) => {
