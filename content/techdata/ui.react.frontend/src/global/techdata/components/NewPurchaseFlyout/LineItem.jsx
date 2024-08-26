@@ -15,11 +15,13 @@ const LineItem = ({
 }) => {
   // Initialize the state with the unit price as a string
   const initialQuantity = parseInt(item?.quantity || '1');
+  const initialPrice = parseFloat(item?.unitPrice).toFixed(2);
   const [quantity, setQuantity] = useState(parseInt(initialQuantity));
-  const [unitPrice, setUnitPrice] = useState(item?.unitPrice || '0');
+  const [unitPrice, setUnitPrice] = useState(initialPrice || '0.00');
   const [totalPrice, setTotalPrice] = useState(
     (quantity * parseFloat(unitPrice)).toFixed(2)
   );
+  const [enableResetPrice, setEnableResetPrice] = useState(false);
   const itemProduct = item?.product.find(
     (product) => product?.type === 'MANUFACTURER'
   );
@@ -38,16 +40,15 @@ const LineItem = ({
   };
 
   const handleChange = (event, itemId) => {
-    let value = event.target.value;
-    value = parseFloat(value).toFixed(2);
+    const value = parseFloat(event.target.value).toFixed(2);
+    const isOverride = value !== initialPrice;
     setUnitPrice(value);
-    const isOverride = value !== parseFloat(item?.unitPrice).toFixed(2);
     const newTotalPrice = (quantity * parseFloat(value)).toFixed(2);
     setTotalPrice(newTotalPrice);
     const changes = {
       quantity: quantity.toString(),
       unitPrice: value,
-      totalPrice: (quantity * parseFloat(value)).toFixed(2),
+      totalPrice: newTotalPrice,
       isResellerPriceOverride: isOverride,
     };
     updateItem(itemId, changes);
@@ -71,14 +72,14 @@ const LineItem = ({
   };
 
   const handleResetPrice = () => {
-    const originalPrice = parseFloat(item?.unitPrice).toFixed(2);
-    setUnitPrice(originalPrice);
-    const newTotalPrice = (quantity * parseFloat(originalPrice)).toFixed(2);
+    const newTotalPrice = (quantity * initialPrice).toFixed(2);
+    setUnitPrice(initialPrice);
     setTotalPrice(newTotalPrice);
     const changes = {
       quantity: quantity.toString(),
-      unitPrice: originalPrice,
-      totalPrice: (quantity * parseFloat(originalPrice)).toFixed(2),
+      unitPrice: initialPrice,
+      totalPrice: (quantity * initialPrice).toFixed(2),
+      isResellerPriceOverride: false,
     };
     updateItem(item?.id, changes);
     setPlaceOrderActive(false);
@@ -103,16 +104,19 @@ const LineItem = ({
 
   useEffect(() => {
     if (item) {
-      setQuantity(parseInt(item.quantity || '1'));
-      setUnitPrice(item.unitPrice || '0');
+      const quantityValue = parseInt(item.quantity || '1');
+      const priceValue = parseFloat(item.unitPrice || '0').toFixed(2);
+      setQuantity(quantityValue);
+      setUnitPrice(priceValue);
       setTotalPrice(
-        item.totalPrice ||
-          (
-            parseInt(item.quantity || '1') * parseFloat(item.unitPrice || '0')
-          ).toFixed(2)
+        item.totalPrice || (quantityValue * parseFloat(priceValue)).toFixed(2)
       );
     }
   }, [item]);
+
+  useEffect(() => {
+    setEnableResetPrice(initialPrice !== unitPrice);
+  }, [initialPrice, unitPrice]);
 
   return (
     <tr>
@@ -137,12 +141,20 @@ const LineItem = ({
               value={unitPrice}
               onChange={(e) => handleChange(e, item?.id)}
             />
-            <button onClick={handleResetPrice}>
+            <button
+              onClick={handleResetPrice}
+              disabled={!enableResetPrice}
+              className={
+                enableResetPrice
+                  ? 'new-purchase-reset--enable'
+                  : 'new-purchase-reset--disable'
+              }
+            >
               <ArrowResetIcon />
             </button>
           </div>
         ) : (
-          <div>{item?.unitPrice}</div>
+          <div>{initialPrice}</div>
         )}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-center">

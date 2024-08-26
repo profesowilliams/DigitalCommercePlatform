@@ -1141,11 +1141,20 @@ li[id^='combo-box-demo-option-']:active {
           width: 100px;
           text-align: right;
         }
-
         button {
           margin-left: 5px;
         }
-
+        .new-purchase-reset--enable {
+          svg {
+            fill: $brand-text-lightgray;
+          }
+        }
+        .new-purchase-reset--disable {
+          cursor: default;
+          svg {
+            fill: $brand-cool-gray-1;
+          }
+        }
         /* disabe input arrows */
         /* For Chrome, Safari, Edge, and other WebKit-based browsers */
         input[type='number']::-webkit-outer-spin-button,
