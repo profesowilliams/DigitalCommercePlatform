@@ -276,16 +276,20 @@ function NewPurchaseFlyout({
   const ResellerSubtotal = (classNameSuffix) => {
     return (
       <div className="new-purchase-footer-info">
-        <span className="new-purchase-footer-info__title">
-          {getDictionaryValueOrKey(
-            newPurchaseFlyout?.resellerSubtotal
-          )?.replace(
-            '{currency-code}',
-            currency ? currency : defaultCurrency || ''
-          )}{' '}
-          {subtotalValue}
-        </span>
-        <span>
+        <div>
+          <span className="new-purchase-footer-info__title">
+            {getDictionaryValueOrKey(
+              newPurchaseFlyout?.resellerSubtotal
+            )?.replace(
+              '{currency-code}',
+              currency ? currency : defaultCurrency || ''
+            )}
+          </span>
+          <span className="new-purchase-footer-info__title--offset">
+            {subtotalValue}
+          </span>
+        </div>
+        <span className="new-purchase-footer-info__text">
           {getDictionaryValueOrKey(newPurchaseFlyout?.taxesNotIncluded)}
         </span>
       </div>

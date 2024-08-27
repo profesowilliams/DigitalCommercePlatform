@@ -469,11 +469,11 @@
                     fieldDescription="details.renewal.orders.label.adobeResellerTermsAndConditionsLink"
                     fieldLabel="Adobe Reseller Terms And Conditions Link"
                     name="./newPurchaseFlyout/adobeResellerTermsAndConditionsLink"/>
-                <termsAndConditionsLink
+                <termsAndConditionsLinkNewPurchase
                     jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                     fieldLabel="Terms And Conditions Link"
-                    name="././newPurchaseFlyout/termsAndConditionsLink"/>
+                    name="./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"/>
                 <placeOrderSuccess
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

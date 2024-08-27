@@ -1272,6 +1272,13 @@ li[id^='combo-box-demo-option-']:active {
     line-height: 30px;
     font-weight: 700;
   }
+  &__title--offset {
+    margin-left: 20px;
+    color: $brand-green;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+  }
   &__text {
     color: $brand-charcoal;
     font-size: 14px;

@@ -265,7 +265,6 @@ function PlaceOrderDialog({
         </p>
         <div className="place-order-dialog__content__input">
           <TextField
-            required
             id="new-purchase-confirm-purchase-input"
             label={getDictionaryValueOrKey(config?.purchaseOrderNumber)}
             helperText={getDictionaryValueOrKey(config?.max35Characters)}
@@ -297,7 +296,9 @@ function PlaceOrderDialog({
           <label className="place-order-dialog__content__text">
             {getDictionaryValueOrKey(config?.iHaveReadAndAcceptThe)}{' '}
             <a
-              href={getDictionaryValueOrKey(config?.termsAndConditionsLink)}
+              href={getDictionaryValueOrKey(
+                config?.termsAndConditionsLinkNewPurchase
+              )}
               target="_blank"
               className="place-order-dialog__content__link"
             >
