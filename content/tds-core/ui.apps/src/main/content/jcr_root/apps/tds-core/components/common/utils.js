@@ -84,7 +84,7 @@ use(function () {
         let detailUrl = url;
 
         //UAT, Stage, Prod
-        if (isEnvWithDispatcher) {
+        if (isEnvWithDispatcher && url && url.replace) {
             detailUrl = url.replace(currentPageParentPath, "");
         }
 

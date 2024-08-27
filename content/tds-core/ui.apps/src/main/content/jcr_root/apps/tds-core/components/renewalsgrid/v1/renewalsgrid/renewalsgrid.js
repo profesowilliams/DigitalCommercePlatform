@@ -101,7 +101,7 @@ use(["../../../common/utils.js"], function (utils) {
     ];
 
     const orderingFromDashboard = utils.fillFieldsDialogPropertiesWithPrefix(
-      orderingPropertiesList, "./orderingFromDashboard"
+      orderingPropertiesList, "./orderingFromDashboard/"
     );
     if (orderingFromDashboard != null) {
       orderingFromDashboard.termsAndConditionsLink = utils.addHtmlIfNeeded(
