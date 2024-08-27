@@ -10,7 +10,7 @@
    */
   &.cmp-experiencefragment__header--sticky {
     position: fixed;
-    z-index: 9999;
+    z-index: 1200;
     top: 0;
     background-color: inherit;
     width: 100%;
@@ -22,7 +22,7 @@
    */
   &.cmp-experiencefragment__header--sticky--opaque {
     position: fixed;
-    z-index: 9999;
+    z-index: 1200;
     top: 0;
     width: 100%;
     left: 0;
