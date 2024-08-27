@@ -53,6 +53,7 @@ function FormPart2({
 }) {
   const {
     firstName,
+    accountNumber,
     lastName,
     email,
     endUserCompanyName,
@@ -186,7 +187,7 @@ function FormPart2({
       }
     : {
         reseller: {
-          id: resellerId || '',
+          id: accountNumber || '',
         },
         endUser: {
           name: endUserCompanyName,
@@ -446,7 +447,7 @@ function FormPart2({
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {isAddMore
                 ? resellerData?.id
-                : pickedResellerQuote?.accountNumber}
+                : accountNumber}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {isAddMore
