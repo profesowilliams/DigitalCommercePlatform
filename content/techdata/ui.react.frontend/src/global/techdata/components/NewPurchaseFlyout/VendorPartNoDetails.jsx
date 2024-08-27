@@ -113,17 +113,6 @@ export const VendorPartNoDetails = ({ quote, labels, currentlyTypedWord }) => {
             )}
             <VendorPartNameWithHighlight />
           </div>
-          <div className="cmp-flyout__quotecmp-flyout__selected-quote__account-number">
-            {labels && (
-              <span className="cmp-flyout__quotecmp-flyout__selected-quote__label">
-                {getDictionaryValueOrKey(
-                  labels.accountNumberLabel || 'Account number:'
-                )}
-              </span>
-            )}
-            <VendorPartNumberWithHighlight />
-          </div>
-
           <div className="cmp-flyout__quotecmp-flyout__selected-quote__short-description">
             {labels && (
               <span className="cmp-flyout__quotecmp-flyout__selected-quote__label">
