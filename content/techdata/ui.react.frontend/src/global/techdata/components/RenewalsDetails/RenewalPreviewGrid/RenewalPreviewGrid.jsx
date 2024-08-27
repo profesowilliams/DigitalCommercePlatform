@@ -593,10 +593,9 @@ function RenewalPreviewGrid(
     };
     setIsPODialogOpen(false);
     setIsPAODialogOpen(false);
-    if (!isSuccess) {
-        setOrderIconDisable(false);
+    if (!isSuccess)
         return;
-    }
+
     if (isSuccess) {
       if (adobeVendor) {
         effects.setCustomState({
@@ -608,6 +607,8 @@ function RenewalPreviewGrid(
         setLocalStorageData(TOASTER_LOCAL_STORAGE_KEY, toaster);
         location.href = compProps.quotePreview.renewalsUrl;
       }
+    } else if (!options?.toaster?.isSuccess) {
+        setOrderIconDisable(false);
     }
   };
 
