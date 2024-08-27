@@ -114,7 +114,7 @@ function FormPart2({
       'YYYY-MM-DD[T]HH:mm:ss[Z]'
     );
 
-    const resellerId = pickedResellerQuote?.accountNumber;
+    const resellerId = externalUser ? accountNumber : pickedResellerQuote?.accountNumber;
     const resellerName = pickedResellerQuote?.name;
 
     const itemsChecked = items && Array.isArray(items) ? items : [];
@@ -187,7 +187,7 @@ function FormPart2({
       }
     : {
         reseller: {
-          id: accountNumber || '',
+          id: resellerId || '',
         },
         endUser: {
           name: endUserCompanyName,
@@ -447,7 +447,7 @@ function FormPart2({
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {isAddMore
                 ? resellerData?.id
-                : accountNumber}
+                : resellerId}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {isAddMore
