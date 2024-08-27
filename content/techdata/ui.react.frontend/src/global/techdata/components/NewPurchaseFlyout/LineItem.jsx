@@ -154,7 +154,7 @@ const LineItem = ({
             </button>
           </div>
         ) : (
-          <div>{initialPrice}</div>
+          <div className="cmp-flyout-newPurchase-cannot-edit">{initialPrice}</div>
         )}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-center">

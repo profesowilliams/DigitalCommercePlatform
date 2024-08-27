@@ -1190,6 +1190,7 @@ li[id^='combo-box-demo-option-']:active {
 
           &--disabled {
             display: flex;
+            height: 16px;
             justify-content: center;
             align-items: center;
             background-color: $brand-cool-gray-1;
@@ -1262,6 +1263,9 @@ li[id^='combo-box-demo-option-']:active {
   .cmp-flyout-newPurchase__form-date__title-start_date {
     padding-right: 64px;
   }
+}
+.cmp-flyout-newPurchase-cannot-edit {
+  padding-right: 21px;
 }
 .new-purchase-footer-info {
   display: flex;
