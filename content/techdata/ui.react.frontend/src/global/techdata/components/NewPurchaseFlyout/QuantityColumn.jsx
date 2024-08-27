@@ -8,20 +8,30 @@ function QuantityColumn({ value, setValue, item }) {
   const MAX_DIGITS = MAX_VAL?.toString()?.length;
 
   const handleBtnClick = (addFlag = false) => {
-    const newValue = addFlag
+    let newValue = addFlag
       ? refInput.current.valueAsNumber + 1
       : refInput.current.valueAsNumber - 1;
 
-    const clampedValue = clampNumber(newValue);
-    setValue(clampedValue);
+    // Only clamp after the operation, allowing for proper increment/decrement
+    if (newValue < MIN_VAL) newValue = MIN_VAL;
+    if (newValue > MAX_VAL) newValue = MAX_VAL;
+
+    setValue(newValue);
   };
 
   const handleChange = (e) => {
-    const stringInput = e.target.value;
-    const clampedValue = clampNumber(Number(stringInput));
+    const inputValue = e.target.value;
+    let newValue = inputValue === '' ? '' : Number(inputValue);
+    if (newValue !== '') {
+      newValue = clampNumber(newValue);
+    }
+    setValue(newValue);
+  };
+  const handleBlur = () => {
+    // Clamp the value when the input field loses focus
+    let clampedValue = clampNumber(value);
     setValue(clampedValue);
   };
-
   const handleFocus = (e) => e.target.select();
 
   const clampNumber = (number) => {
@@ -58,6 +68,7 @@ function QuantityColumn({ value, setValue, item }) {
         style={{ width: `${Math.max(value.toString().length, 2)}ch` }}
         onFocus={handleFocus}
         onChange={handleChange}
+        onBlur={handleBlur}
         type="number"
         step={1}
         min={MIN_VAL}

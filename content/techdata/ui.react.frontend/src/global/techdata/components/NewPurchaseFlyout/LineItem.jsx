@@ -14,10 +14,11 @@ const LineItem = ({
   setBannerOpen,
 }) => {
   // Initialize the state with the unit price as a string
-  const initialQuantity = parseInt(item?.quantity || '1');
-  const initialPrice = parseFloat(item?.unitPrice).toFixed(2);
+  const initialQuantity = parseInt(item?.quantity) || 1;
+  const initialPriceFormatted = parseFloat(item?.unitPrice).toFixed(2);
+  const originalPrice = parseFloat(item?.unitPriceOriginal).toFixed(2);
   const [quantity, setQuantity] = useState(parseInt(initialQuantity));
-  const [unitPrice, setUnitPrice] = useState(initialPrice || '0.00');
+  const [unitPrice, setUnitPrice] = useState(initialPriceFormatted || '0.00');
   const [totalPrice, setTotalPrice] = useState(
     (quantity * parseFloat(unitPrice)).toFixed(2)
   );
@@ -41,7 +42,7 @@ const LineItem = ({
 
   const handleChange = (event, itemId) => {
     const value = parseFloat(event.target.value).toFixed(2);
-    const isOverride = value !== initialPrice;
+    const isOverride = value !== originalPrice;
     setUnitPrice(value);
     const newTotalPrice = (quantity * parseFloat(value)).toFixed(2);
     setTotalPrice(newTotalPrice);
@@ -72,13 +73,13 @@ const LineItem = ({
   };
 
   const handleResetPrice = () => {
-    const newTotalPrice = (quantity * initialPrice).toFixed(2);
-    setUnitPrice(initialPrice);
+    const newTotalPrice = (quantity * originalPrice).toFixed(2);
+    setUnitPrice(originalPrice);
     setTotalPrice(newTotalPrice);
     const changes = {
       quantity: quantity.toString(),
-      unitPrice: initialPrice,
-      totalPrice: (quantity * initialPrice).toFixed(2),
+      unitPrice: originalPrice,
+      totalPrice: (quantity * originalPrice).toFixed(2),
       isResellerPriceOverride: false,
     };
     updateItem(item?.id, changes);
@@ -115,8 +116,8 @@ const LineItem = ({
   }, [item]);
 
   useEffect(() => {
-    setEnableResetPrice(initialPrice !== unitPrice);
-  }, [initialPrice, unitPrice]);
+    setEnableResetPrice(originalPrice !== unitPrice);
+  }, [originalPrice, unitPrice]);
 
   return (
     <tr>
@@ -130,7 +131,7 @@ const LineItem = ({
         {itemProduct?.id}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-end">
-        {item?.unitListPrice}
+        {parseFloat(item?.unitListPrice).toFixed(2)}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-end">
         {canEditResellerPrice ? (
@@ -154,7 +155,7 @@ const LineItem = ({
             </button>
           </div>
         ) : (
-          <div className="cmp-flyout-newPurchase-cannot-edit">{initialPrice}</div>
+          <div>{initialPriceFormatted}</div>
         )}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-center">
@@ -168,7 +169,7 @@ const LineItem = ({
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-end">
         <div className="total-price-body">
-          <span>{totalPrice}</span>
+          <span>{parseFloat(totalPrice).toFixed(2)}</span>
           <button onClick={handleDeleteLine}>
             <TrashcanIcon />
           </button>
