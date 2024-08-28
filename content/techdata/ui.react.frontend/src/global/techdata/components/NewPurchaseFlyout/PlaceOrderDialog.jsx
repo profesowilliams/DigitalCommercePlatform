@@ -123,9 +123,9 @@ function PlaceOrderDialog({
           value: detailsData?.endUser?.eaNumber?.text,
         },
       },
-      venderReference: {
-        type: 'QuoteId',
-        value: detailsData?.vendorReference[0]?.value
+      VenderReference: {
+        Type: 'QuoteId',
+        Value: detailsData?.vendorReference[0]?.value
       },
       items: transformedPayload,
       customerPo: purchaseOrderNumber,
