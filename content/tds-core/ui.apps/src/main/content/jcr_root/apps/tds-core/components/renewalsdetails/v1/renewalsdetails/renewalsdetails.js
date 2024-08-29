@@ -303,112 +303,121 @@ use(["../../../common/utils.js"], function(utils) {
             jsonObject["copyFlyout"] = copyFlyout;
         }
 
-         // New Purchase Flyout
-            const newPurchaseFlyoutList = [
-              "resellerAccountNumber",
-              "search",
-              "required",
-              "exceeds35CharacterLimit",
-              "invalidEmail",
-              "exceeds40CharacterLimit",
-              "exceeds10CharacterLimit",
-              "next",
-              "cancel",
-              "newPurchase",
-              "newPurchaseBanner",
-              "agreementDetails",
-              "description",
-              "indicatedRequiredField",
-              "resellerContact",
-              "contactFirstName",
-              "contactLastName",
-              "contactEmail",
-              "endUserContact",
-              "endUserCompanyName",
-              "endUserContactFirstName",
-              "endUserContactLastName",
-              "endUserEmail",
-              "endUserType",
-              "endUserTypeComercial",
-              "endUserTypeEducation",
-              "endUserTypeGovernment",
-              "endUserAddress",
-              "endUserAdress1",
-              "endUserAdress2",
-              "endUserCity",
-              "endUserAreaCode",
-              "endUserCountry",
-              "endUserVietnam",
-              "endUserCambodia",
-              "endUserLaos",
-              "back",
-              "placeOrder",
-              "orderDetails",
-              "resellerDetails",
-              "endUserDetails",
-              "endUserAddress",
-              "addProducts",
-              "searchForAdditionalSoftware",
-              "searchVendorPartNo",
-              "startDate",
-              "endDate",
-              "duration",
-              "licensePriceLevel",
-              "productDetails",
-              "vendorPartNoNewPurchase",
-              "listPriceNewPurchase",
-              "unitPriceNewPurchase",
-              "qty",
-              "totalPriceNewPurchase",
-              "subtotal",
-              "resellerSubtotal",
-              "taxesNotIncluded",
-              "days",
-              "validateOrder",
-              "validating",
-              "unknownErrorNewPurchase",
-              "accountDoesntExistErrorNewPurchase",
-              "quoteExistsErrorNewPurchase",
-              "modifyOrder",
-              "completeOrder",
-              "toCompletePlacingYourOrderFor",
-              "pleaseProvideTheFollowingInformation",
-              "purchaseOrderNumber",
-              "max35Characters",
-              "iConfirmIAmAuthorizedByAdobe",
-              "iHaveReadAndAcceptThe",
-              "techDataTermsConditions",
-              "the",
-              "adobeTermsConditions",
-              "adobeResellerTermsAndConditionsLink",
-              "termsAndConditionsLinkNewPurchase",
-              "placeOrderSuccess",
-              "productNotFound",
-            ];
+        // New Purchase Flyout
+        const newPurchaseFlyoutList = [
+          "resellerAccountNumber",
+          "search",
+          "required",
+          "exceeds35CharacterLimit",
+          "invalidEmail",
+          "exceeds40CharacterLimit",
+          "exceeds10CharacterLimit",
+          "next",
+          "cancel",
+          "newPurchase",
+          "newPurchaseBanner",
+          "agreementDetails",
+          "description",
+          "indicatedRequiredField",
+          "resellerContact",
+          "contactFirstName",
+          "contactLastName",
+          "contactEmail",
+          "endUserContact",
+          "endUserCompanyName",
+          "endUserContactFirstName",
+          "endUserContactLastName",
+          "endUserEmail",
+          "endUserType",
+          "endUserTypeComercial",
+          "endUserTypeEducation",
+          "endUserTypeGovernment",
+          "endUserAddress",
+          "endUserAdress1",
+          "endUserAdress2",
+          "endUserCity",
+          "endUserAreaCode",
+          "endUserCountry",
+          "endUserVietnam",
+          "endUserCambodia",
+          "endUserLaos",
+          "back",
+          "placeOrder",
+          "orderDetails",
+          "resellerDetails",
+          "endUserDetails",
+          "endUserAddress",
+          "addProducts",
+          "searchForAdditionalSoftware",
+          "searchVendorPartNo",
+          "startDate",
+          "endDate",
+          "duration",
+          "licensePriceLevel",
+          "productDetails",
+          "vendorPartNoNewPurchase",
+          "listPriceNewPurchase",
+          "unitPriceNewPurchase",
+          "qty",
+          "totalPriceNewPurchase",
+          "subtotal",
+          "resellerSubtotal",
+          "taxesNotIncluded",
+          "days",
+          "validateOrder",
+          "validating",
+          "unknownErrorNewPurchase",
+          "accountDoesntExistErrorNewPurchase",
+          "quoteExistsErrorNewPurchase",
+          "modifyOrder",
+          "completeOrder",
+          "toCompletePlacingYourOrderFor",
+          "pleaseProvideTheFollowingInformation",
+          "purchaseOrderNumber",
+          "max35Characters",
+          "iConfirmIAmAuthorizedByAdobe",
+          "iHaveReadAndAcceptThe",
+          "techDataTermsConditions",
+          "the",
+          "adobeTermsConditions",
+          "placeOrderSuccess",
+          "productNotFound",
+        ];
 
-            newPurchaseFlyoutList.map(
-              (property) => (newPurchaseFlyout[property] = properties["./newPurchaseFlyout/" + property])
-            );
+        newPurchaseFlyoutList.map(
+          (property) => (newPurchaseFlyout[property] = properties["./newPurchaseFlyout/" + property])
+        );
 
-            if (newPurchaseFlyout != null) {
-              jsonObject["newPurchaseFlyout"] = newPurchaseFlyout;
-            }
-           if (this.vendorPartNoLookUpEndpoint && this.serviceData.uiServiceDomain) {
-             newPurchaseFlyout.vendorPartNoLookUpEndpoint =
-               this.serviceData.uiServiceDomain + this.vendorPartNoLookUpEndpoint;
-           }
-           if (this.addNewProductEndpoint && this.serviceData.uiServiceDomain) {
-             newPurchaseFlyout.addNewProductEndpoint =
-               this.serviceData.uiServiceDomain + this.addNewProductEndpoint;
-           }
-           if (
-             this.createNewPurchaseOrderEndpoint &&
-             this.serviceData.uiServiceDomain
-           ) {
-             newPurchaseFlyout.createNewPurchaseOrderEndpoint =
-               this.serviceData.uiServiceDomain +
-               this.createNewPurchaseOrderEndpoint;
-           }
+        if (properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLink"]) {
+            newPurchaseFlyout["adobeResellerTermsAndConditionsLink"] =
+                utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLink"]));
+        }
+
+        if (properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]) {
+            newPurchaseFlyout["termsAndConditionsLinkNewPurchase"] =
+                utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]));
+        }
+
+        if (newPurchaseFlyout != null) {
+          jsonObject["newPurchaseFlyout"] = newPurchaseFlyout;
+        }
+
+       if (this.vendorPartNoLookUpEndpoint && this.serviceData.uiServiceDomain) {
+         newPurchaseFlyout.vendorPartNoLookUpEndpoint =
+           this.serviceData.uiServiceDomain + this.vendorPartNoLookUpEndpoint;
+       }
+       if (this.addNewProductEndpoint && this.serviceData.uiServiceDomain) {
+         newPurchaseFlyout.addNewProductEndpoint =
+           this.serviceData.uiServiceDomain + this.addNewProductEndpoint;
+       }
+       if (
+         this.createNewPurchaseOrderEndpoint &&
+         this.serviceData.uiServiceDomain
+       ) {
+         newPurchaseFlyout.createNewPurchaseOrderEndpoint =
+           this.serviceData.uiServiceDomain +
+           this.createNewPurchaseOrderEndpoint;
+       }
 
         // Share flyout
         const shareFlyoutList = [

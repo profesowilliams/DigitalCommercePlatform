@@ -272,8 +272,6 @@ use(["../../../common/utils.js"], function (utils) {
       "techDataTermsConditions",
       "the",
       "adobeTermsConditions",
-      "adobeResellerTermsAndConditionsLink",
-      "termsAndConditionsLinkNewPurchase",
       "placeOrderSuccess",
       "productNotFound",
     ];
@@ -281,6 +279,16 @@ use(["../../../common/utils.js"], function (utils) {
     newPurchaseFlyoutList.map(
       (property) => (newPurchaseFlyout[property] = properties["./newPurchaseFlyout/" + property])
     );
+
+    if (properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLink"]) {
+        newPurchaseFlyout["adobeResellerTermsAndConditionsLink"] =
+            utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLink"]));
+    }
+
+    if (properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]) {
+        newPurchaseFlyout["termsAndConditionsLinkNewPurchase"] =
+            utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]));
+    }
 
     if (newPurchaseFlyout != null) {
       jsonObject["newPurchaseFlyout"] = newPurchaseFlyout;

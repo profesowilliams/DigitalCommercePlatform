@@ -274,6 +274,7 @@ function PlaceOrderDialog({
             helperText={getDictionaryValueOrKey(config?.max35Characters)}
             variant="standard"
             value={purchaseOrderNumber}
+            inputProps={{ maxLength: 35 }}
             onChange={(event) => {
               setPurchaseOrderNumber(event.target.value);
             }}
