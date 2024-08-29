@@ -123,7 +123,7 @@ function PlaceOrderDialog({
           value: detailsData?.endUser?.eaNumber?.text,
         },
       },
-      VenderReference: {
+      VendorReference: {
         Type: 'QuoteId',
         Value: detailsData?.vendorReference[0]?.value
       },
