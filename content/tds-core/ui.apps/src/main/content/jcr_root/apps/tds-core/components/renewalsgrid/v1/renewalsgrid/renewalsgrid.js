@@ -415,7 +415,7 @@ use(["../../../common/utils.js"], function (utils) {
     ];
 
     labelList.map((labelListItem) => {
-      if (properties[labelListItem]) {
+      if (properties["./labels/" + labelListItem]) {
         jsonObject[labelListItem] = properties["./labels/" + labelListItem];
       }
     });
