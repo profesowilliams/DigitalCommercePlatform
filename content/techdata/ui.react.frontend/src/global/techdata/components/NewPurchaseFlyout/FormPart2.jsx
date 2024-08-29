@@ -80,10 +80,26 @@ function FormPart2({
   const [datePickerOpen, setDatePickerOpen] = useState(true);
   const today = moment();
   const futureDate = moment(today).add(364, 'days');
-  const defaultEndDate = futureDate.format('MM/DD/YYYY');
+  let defaultEndDate = futureDate.format('MM/DD/YYYY');
+
+  if (isAddMore && data?.formattedExpiry) {
+    const [day, month, year] = data?.formattedExpiry?.split('/');
+    defaultEndDate = `${month}/${day}/${year}`;
+  }
   const startDate = today.format('MM/DD/YYYY');
   const [pickedEndDate, setPickedEndDate] = useState(defaultEndDate);
-  const [duration, setDuration] = useState('364');
+
+  let durationDiff = '365';
+
+  if (isAddMore) {
+    const date1 = new Date(startDate);
+    const date2 = new Date(defaultEndDate);
+
+    const timeDiff = date2 - date1;
+
+    durationDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  }
+  const [duration, setDuration] = useState(durationDiff);
   const durationDisplay = duration + 1;
 
   // Grid
@@ -168,6 +184,7 @@ function FormPart2({
         reseller: {
           id: data?.reseller?.id || '',
         },
+        ActiveLevel: data?.renewalLevelActive || '',
         endUser: {
           name: endUserData.nameUpper,
           contact: {
@@ -634,6 +651,7 @@ function FormPart2({
               setBannerOpen={setBannerOpen}
               setPlaceOrderActive={setPlaceOrderActive}
               newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}
+              readOnly={isAddMore}
                 />
               </div>
         )}

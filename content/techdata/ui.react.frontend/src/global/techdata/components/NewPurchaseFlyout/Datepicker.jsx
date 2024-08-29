@@ -19,6 +19,7 @@ export default function DatePicker({
   setBannerOpen,
   setPlaceOrderActive,
   newPurchaseFlyoutConfig,
+  readOnly = false
 }) {
   const [focusedInput, setFocusedInput] = React.useState(null); // Initially set to null
   const effects = useRenewalGridState((state) => state.effects);
@@ -124,6 +125,7 @@ export default function DatePicker({
           displayFormat={getDisplayFormatBasedOnLocale()}
           noBorder={true}
           regular={false}
+          disabled={readOnly}
           transitionDuration={300}
           daySize={30}
           focusedInput={focusedInput} // Ensure controlled focus state
