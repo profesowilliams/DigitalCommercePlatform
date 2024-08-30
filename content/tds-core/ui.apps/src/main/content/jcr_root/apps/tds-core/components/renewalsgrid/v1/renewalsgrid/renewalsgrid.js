@@ -335,6 +335,7 @@ use(["../../../common/utils.js"], function (utils) {
       "recipientNotFoundCancelLabel",
       "recipientNotFoundContinueLabel",
       "shareSuccessMessage",
+      "emailCCLabel",
     ];
 
     if (this.shareQuoteEndpoint && this.serviceData.uiServiceDomain) {

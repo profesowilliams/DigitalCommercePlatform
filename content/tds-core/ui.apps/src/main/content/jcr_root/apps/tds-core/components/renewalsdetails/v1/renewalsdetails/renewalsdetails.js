@@ -575,7 +575,7 @@ use(["../../../common/utils.js"], function(utils) {
           "noResponseMessage"
         ];
         const orderingFromDashboard =
-            utils.fillFieldsDialogProperties(orderingProperties, "./orderingProperties/");
+            utils.fillFieldsDialogPropertiesWithPrefix(orderingProperties, "./orderingProperties/");
         if (!!orderingFromDashboard) {
         orderingFromDashboard.termsAndConditionsLink = utils.addHtmlIfNeeded(
           utils.transformUrlGivenEnvironment(
