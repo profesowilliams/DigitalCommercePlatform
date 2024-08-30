@@ -29,13 +29,8 @@ export default function DatePicker({
   const momentEndDate = endDate ? moment(endDate) : null;
   const momentStartDate = startDate ? moment(startDate) : null;
 
-  const navIcons =
-    branding === 'td-synnex'
-      ? {
-          navPrev: <ChevronLeftIcon fill="#003031" />,
-          navNext: <ChevronRightIcon fill="#003031" />,
-        }
-      : null;
+  const navIcons = branding === 'td-synnex' ?
+    { navPrev: <ChevronLeftIcon fill="#003031" />, navNext: <ChevronRightIcon fill="#003031" /> } : null
 
   useEffect(() => {
     const brandingColor =
@@ -58,7 +53,7 @@ export default function DatePicker({
   }, [customEndDate, setPickedEndDate]);
 
   function getDisplayFormatBasedOnLocale() {
-    return 'MM/DD/YYYY';
+    return 'DD/MM/YYYY';
   }
 
   useEffect(() => {

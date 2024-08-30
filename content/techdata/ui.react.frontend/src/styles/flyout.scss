@@ -1296,15 +1296,20 @@ li[id^='combo-box-demo-option-']:active {
 
   .DateInput_input {
     color: map-get($color-palette, 'charcoal');
-    line-height: 18px;
+    line-height: 22px;
     font-size: 1rem;
 
-    &:focus,
-    &:active {
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      text-decoration-color: map-get($color-palette, 'neutral-gray-2');
-    }
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: map-get($color-palette, 'charcoal');
+  }
+
+  .DateInput_fang.DateInput_fang_1 {
+    top: 25px !important;
+  }
+
+  .DateRangePicker_picker.DateRangePicker_picker_1 {
+    top: 36px !important;
   }
 
   .DateRangePicker.DateRangePicker_1 {
