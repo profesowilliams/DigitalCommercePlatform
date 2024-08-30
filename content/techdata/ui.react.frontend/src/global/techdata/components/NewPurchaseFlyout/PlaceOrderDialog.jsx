@@ -210,6 +210,13 @@ function PlaceOrderDialog({
     handleCreateOrder();
   };
 
+  const handleOnBack = () => {
+    setConfirmPurchaseChecked(false);
+    setConfirmTermsChecked(false);
+    setPurchaseOrderNumber('');
+    onClose();
+  }
+
   const BottomContent = () => bottomContent('footer');
   const buttonSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
@@ -220,7 +227,7 @@ function PlaceOrderDialog({
       >
         {getDictionaryValueOrKey(config?.completeOrder)}
       </button>
-      <button className="secondary" onClick={onClose}>
+      <button className="secondary" onClick={handleOnBack}>
         <ArrowBackIcon />
         {getDictionaryValueOrKey(config?.modifyOrder)}
       </button>
