@@ -5,6 +5,7 @@ import { ArrowBackIcon, CircularArrowIcon } from '../../../../fluentIcons/Fluent
 import FormPart1 from './FormPart1';
 import FormPart2 from './FormPart2';
 import Button from '@mui/material/Button';
+import moment from 'moment';
 
 function NewPurchaseFlyout({
   store,
@@ -18,7 +19,7 @@ function NewPurchaseFlyout({
   data,
   onQueryChanged,
   detailsEndUserType,
-  getDetailsAPI
+  getDetailsAPI,
 }) {
   const effects = store((state) => state.effects);
   const { pathname, search } = window.location;
@@ -27,6 +28,10 @@ function NewPurchaseFlyout({
   const externalUser = !internalUser;
 
   const newPurchaseFlyoutConfig = store((state) => state.newPurchaseFlyout);
+  const today = moment();
+  const futureDate = moment(today).add(364, 'days');
+  const resettedEndDate = futureDate.format('YYYY-MM-DD[T]HH:mm:ss[Z]');
+
   const closeFlyout = () => {
     effects.setCustomState({
       key: 'newPurchaseFlyout',
@@ -36,6 +41,11 @@ function NewPurchaseFlyout({
     });
     window.history.replaceState(null, '', pathname + search);
     !isAddMore && handleBack();
+
+    effects.setCustomState({
+      key: 'customEndDate',
+      value: resettedEndDate || undefined,
+    });
   };
   const [placeOrderFlyoutOpen, setPlaceOrderFlyoutOpen] = useState(false);
   const closePlaceOrderFlyout = () => {
@@ -227,11 +237,7 @@ function NewPurchaseFlyout({
       {!placeOrderActive ? (
         validating ? (
           <Button
-            startIcon={
-              <CircularArrowIcon
-                className="circular-arrow-icon"
-              />
-            }
+            startIcon={<CircularArrowIcon className="circular-arrow-icon" />}
             sx={{
               textTransform: 'none',
             }}
@@ -439,7 +445,6 @@ function NewPurchaseFlyout({
             <FormPart2
               userData={userData}
               externalUser={externalUser}
-              newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}
               newPurchaseFlyout={newPurchaseFlyout}
               formPart1States={formPart1States}
               pickedResellerQuote={selectedQuote}

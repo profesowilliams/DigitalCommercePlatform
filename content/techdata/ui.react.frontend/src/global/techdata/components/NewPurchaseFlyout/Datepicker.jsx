@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { DateRangePicker } from 'react-dates-gte-react-17';
 import 'react-dates-gte-react-17/initialize';
-import { If } from '../../helpers/If';
-
-import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from '../../../../fluentIcons/FluentIcons';
 
 export default function DatePicker({
+  store,
   isOpen = false,
   startDate,
   endDate,
@@ -18,19 +16,23 @@ export default function DatePicker({
   setDuration,
   setBannerOpen,
   setPlaceOrderActive,
-  newPurchaseFlyoutConfig,
-  readOnly = false
+  readOnly = false,
 }) {
-  const [focusedInput, setFocusedInput] = React.useState(null); // Initially set to null
-  const effects = useRenewalGridState((state) => state.effects);
-  const branding = useRenewalGridState((state) => state.branding || '');
-  let customEndDate = useRenewalGridState((state) => state.customEndDate);
-  let momentCustomEndDate = customEndDate ? moment(customEndDate) : null;
+  const [focusedInput, setFocusedInput] = useState(null);
+  const effects = store((state) => state.effects);
+  const branding = store((state) => state.branding || '');
+  const customEndDate = store((state) => state.customEndDate);
+  const momentCustomEndDate = customEndDate ? moment(customEndDate) : null;
   const momentEndDate = endDate ? moment(endDate) : null;
   const momentStartDate = startDate ? moment(startDate) : null;
 
-  const navIcons = branding === 'td-synnex' ?
-    { navPrev: <ChevronLeftIcon fill="#003031" />, navNext: <ChevronRightIcon fill="#003031" /> } : null
+  const navIcons =
+    branding === 'td-synnex'
+      ? {
+          navPrev: <ChevronLeftIcon fill="#003031" />,
+          navNext: <ChevronRightIcon fill="#003031" />,
+        }
+      : null;
 
   useEffect(() => {
     const brandingColor =
@@ -55,15 +57,6 @@ export default function DatePicker({
   function getDisplayFormatBasedOnLocale() {
     return 'DD/MM/YYYY';
   }
-
-  useEffect(() => {
-    if (!newPurchaseFlyoutConfig?.show) {
-      effects.setCustomState({
-        key: 'customEndDate',
-        value: momentEndDate?.toISOString() || undefined,
-      });
-    }
-  }, [newPurchaseFlyoutConfig?.show, momentEndDate, effects]);
 
   useEffect(() => {
     setDuration(

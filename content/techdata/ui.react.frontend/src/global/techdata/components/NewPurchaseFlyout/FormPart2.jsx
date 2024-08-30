@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import { getModifiedResellerData, getModifiedEndUserData } from "./utils";
+import { getModifiedResellerData, getModifiedEndUserData } from './utils';
 
 import {
   AutoCompleteSearchIcon,
@@ -18,11 +18,9 @@ import DatePicker from './Datepicker';
 import moment from 'moment';
 import PlaceOrderDialog from './PlaceOrderDialog';
 
-
 function FormPart2({
   userData,
   externalUser,
-  newPurchaseFlyoutConfig,
   newPurchaseFlyout,
   formPart1States,
   pickedResellerQuote,
@@ -123,34 +121,36 @@ function FormPart2({
     ? getModifiedEndUserData(endUserResponseAsObj, data?.endUser)
     : null;
 
-    const pickedEndDateFormatted = moment(pickedEndDate, 'MM/DD/YYYY').format(
-      'YYYY-MM-DD[T]HH:mm:ss[Z]'
-    );
-    const pickedStartDateFormatted = moment(startDate, 'MM/DD/YYYY').format(
-      'YYYY-MM-DD[T]HH:mm:ss[Z]'
-    );
+  const pickedEndDateFormatted = moment(pickedEndDate, 'MM/DD/YYYY').format(
+    'YYYY-MM-DD[T]HH:mm:ss[Z]'
+  );
+  const pickedStartDateFormatted = moment(startDate, 'MM/DD/YYYY').format(
+    'YYYY-MM-DD[T]HH:mm:ss[Z]'
+  );
 
-    const resellerId = externalUser ? accountNumber : pickedResellerQuote?.accountNumber;
-    const resellerName = pickedResellerQuote?.name;
+  const resellerId = externalUser
+    ? accountNumber
+    : pickedResellerQuote?.accountNumber;
+  const resellerName = pickedResellerQuote?.name;
 
-    const itemsChecked = items && Array.isArray(items) ? items : [];
-    const itemsPayload = itemsChecked?.map((item) => {
-      const originalDateFormatted = moment(
-        dataTable?.items[0]?.contract?.endDate,
-        'M/D/YYYY HH:mm:ss'
-      ).format('YYYY-MM-DDTHH:mm:ss[Z]');
+  const itemsChecked = items && Array.isArray(items) ? items : [];
+  const itemsPayload = itemsChecked?.map((item) => {
+    const originalDateFormatted = moment(
+      dataTable?.items[0]?.contract?.endDate,
+      'M/D/YYYY HH:mm:ss'
+    ).format('YYYY-MM-DDTHH:mm:ss[Z]');
 
-      return {
-        ...item,
-        contract: {
-          ...item.contract,
-          startDate: pickedStartDateFormatted,
-          endDate: pickedEndDateFormatted,
-          isContractDatesOverride:
-            pickedEndDateFormatted !== originalDateFormatted,
-        },
-      };
-    });
+    return {
+      ...item,
+      contract: {
+        ...item.contract,
+        startDate: pickedStartDateFormatted,
+        endDate: pickedEndDateFormatted,
+        isContractDatesOverride:
+          pickedEndDateFormatted !== originalDateFormatted,
+      },
+    };
+  });
 
   const newItem = !payloadWithoutNewItem
     ? {
@@ -462,9 +462,7 @@ function FormPart2({
               {isAddMore ? resellerData?.name : pickedResellerQuote?.name}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
-              {isAddMore
-                ? resellerData?.id
-                : resellerId}
+              {isAddMore ? resellerData?.id : resellerId}
             </p>
             <p className="cmp-flyout-newPurchase__form-details__card-text">
               {isAddMore
@@ -640,22 +638,26 @@ function FormPart2({
         <div className="cmp-flyout-newPurchase__form-date">
           {datePickerOpen && (
             <div>
-              <span class="cmp-flyout-newPurchase__form-date__title cmp-flyout-newPurchase__form-date__title-start_date">Start date</span>
-              <span class="cmp-flyout-newPurchase__form-date__title cmp-flyout-newPurchase__form-date__title-end_date">End date</span>
-            <DatePicker
-              isOpen={datePickerOpen}
-              startDate={startDate}
-              endDate={defaultEndDate}
-              setPickedEndDate={setPickedEndDate}
-              setDuration={setDuration}
-              setBannerOpen={setBannerOpen}
-              setPlaceOrderActive={setPlaceOrderActive}
-              newPurchaseFlyoutConfig={newPurchaseFlyoutConfig}
-              readOnly={isAddMore}
-                />
-              </div>
-        )}
-          
+              <span class="cmp-flyout-newPurchase__form-date__title cmp-flyout-newPurchase__form-date__title-start_date">
+                Start date
+              </span>
+              <span class="cmp-flyout-newPurchase__form-date__title cmp-flyout-newPurchase__form-date__title-end_date">
+                End date
+              </span>
+              <DatePicker
+                store={store}
+                isOpen={datePickerOpen}
+                startDate={startDate}
+                endDate={defaultEndDate}
+                setPickedEndDate={setPickedEndDate}
+                setDuration={setDuration}
+                setBannerOpen={setBannerOpen}
+                setPlaceOrderActive={setPlaceOrderActive}
+                readOnly={isAddMore}
+              />
+            </div>
+          )}
+
           <div className="cmp-flyout-newPurchase__form-date__display-column--wide">
             <span className="cmp-flyout-newPurchase__form-date__title">
               {getDictionaryValueOrKey(newPurchaseFlyout?.duration)}

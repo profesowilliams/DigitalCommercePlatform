@@ -1,13 +1,13 @@
 import Create from "zustand";
 import { renewalsEffects } from "./RenewalsDetailsEffects";
 
-const INITIAL_STATE = {  
-  toaster:{
-    isOpen:false,
-    message:"",
-    origin:"details",
-    isSuccess:false,
-    isAutoClose:false,
+const INITIAL_STATE = {
+  toaster: {
+    isOpen: false,
+    message: '',
+    origin: 'details',
+    isSuccess: false,
+    isAutoClose: false,
   },
   isEditingDetails: false,
   endUser: null,
@@ -15,7 +15,8 @@ const INITIAL_STATE = {
   items: null,
   savedItems: null,
   showCopyFlyout: false,
-  analyticsCategory: "renewals"
+  analyticsCategory: 'renewals',
+  branding: '',
 };
 
 const store = (set,get) => ({
