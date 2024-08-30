@@ -1304,6 +1304,13 @@ li[id^='combo-box-demo-option-']:active {
     text-decoration-color: map-get($color-palette, 'charcoal');
   }
 
+  .DateRangePickerInput.DateRangePickerInput__disabled,
+  .DateInput__disabled,
+  .DateInput_input__disabled {
+    font-style: normal;
+    background: #fff;
+  }
+
   .DateInput_fang.DateInput_fang_1 {
     top: 25px !important;
   }
