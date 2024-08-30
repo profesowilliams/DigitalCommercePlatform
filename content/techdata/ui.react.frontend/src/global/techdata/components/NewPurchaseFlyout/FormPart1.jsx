@@ -90,6 +90,10 @@ function FormPart1({
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  if (!internalUser) {
+    setAccountNumber('');
+  }
+
   // Reseller change
   const handleResellerIdChange = async (event) => {
     setIsTyping(true);
@@ -483,7 +487,6 @@ function FormPart1({
               error={!!errorMessage}
               helperText={errorMessage}
               inputProps={{ maxLength: 35 }}
-              disabled={!internalUser}
             />
           )}
           <TextField
@@ -496,7 +499,6 @@ function FormPart1({
             error={!!firstNameError}
             helperText={firstNameError}
             inputProps={{ maxLength: 35 }}
-            disabled={!internalUser}
           />
           <TextField
             className="cmp-flyout-newPurchase__form__input-container"
@@ -508,7 +510,6 @@ function FormPart1({
             error={!!lastNameError}
             helperText={lastNameError}
             inputProps={{ maxLength: 35 }}
-            disabled={!internalUser}
           />
           <TextField
             className="cmp-flyout-newPurchase__form__input-container"
@@ -519,7 +520,6 @@ function FormPart1({
             onChange={handleEmailChange}
             error={!!emailError}
             helperText={emailError}
-            disabled={!internalUser}
           />
         </div>
       </div>
