@@ -42,10 +42,11 @@ function NewPurchaseFlyout({
     window.history.replaceState(null, '', pathname + search);
     !isAddMore && handleBack();
 
-    effects.setCustomState({
-      key: 'customEndDate',
-      value: resettedEndDate || undefined,
-    });
+    !isAddMore &&
+      effects.setCustomState({
+        key: 'customEndDate',
+        value: resettedEndDate || undefined,
+      });
   };
   const [placeOrderFlyoutOpen, setPlaceOrderFlyoutOpen] = useState(false);
   const closePlaceOrderFlyout = () => {
