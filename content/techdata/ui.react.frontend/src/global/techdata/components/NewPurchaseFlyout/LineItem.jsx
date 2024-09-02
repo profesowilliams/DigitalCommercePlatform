@@ -59,6 +59,7 @@ const LineItem = ({
 
   const handleQuantityChange = (newQuantity) => {
     const integerQuantity = parseInt(newQuantity);
+    const isOverride = unitPrice !== originalPrice;
     setQuantity(integerQuantity);
     const newTotalPrice = (integerQuantity * parseFloat(unitPrice)).toFixed(2);
     setTotalPrice(newTotalPrice);
@@ -66,6 +67,7 @@ const LineItem = ({
       quantity: integerQuantity.toString(),
       unitPrice: unitPrice,
       totalPrice: (integerQuantity * parseFloat(unitPrice)).toFixed(2),
+      isResellerPriceOverride: isOverride,
     };
     updateItem(item?.id, changes);
     setPlaceOrderActive(false);
