@@ -474,21 +474,8 @@ function FormPart1({
                 <div className="cmp-flyout__content--error">{errorMessage}</div>
               )}
             </div>
-          ) : (
-            <TextField
-              className="cmp-flyout-newPurchase__form__input-container"
-              id="account-number"
-              label={getDictionaryValueOrKey(
-                newPurchaseFlyout?.resellerAccountNumber
-              )}
-              value={accountNumber}
-              variant="standard"
-              onChange={handleResellerIdChange}
-              error={!!errorMessage}
-              helperText={errorMessage}
-              inputProps={{ maxLength: 35 }}
-            />
-          )}
+          ) : null
+          }
           <TextField
             className="cmp-flyout-newPurchase__form__input-container"
             id="first-name"

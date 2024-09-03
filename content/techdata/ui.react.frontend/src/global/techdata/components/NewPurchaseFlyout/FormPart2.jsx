@@ -648,10 +648,10 @@ function FormPart2({
         <div className="cmp-flyout-newPurchase__form-date">
           {datePickerOpen && (
             <div>
-              <span class="cmp-flyout-newPurchase__form-date__title cmp-flyout-newPurchase__form-date__title-start_date">
+              <span className="cmp-flyout-newPurchase__form-date__title cmp-flyout-newPurchase__form-date__title-start_date">
                 Start date
               </span>
-              <span class="cmp-flyout-newPurchase__form-date__title cmp-flyout-newPurchase__form-date__title-end_date">
+              <span className="cmp-flyout-newPurchase__form-date__title cmp-flyout-newPurchase__form-date__title-end_date">
                 End date
               </span>
               <DatePicker

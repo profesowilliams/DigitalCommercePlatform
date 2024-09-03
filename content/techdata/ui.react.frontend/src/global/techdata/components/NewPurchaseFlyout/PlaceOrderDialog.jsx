@@ -4,8 +4,9 @@ import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import { ArrowBackIcon } from '../../../../fluentIcons/FluentIcons';
+import { ArrowBackIcon, CircularArrowIcon } from '../../../../fluentIcons/FluentIcons';
 import { createOrder } from './api';
+import Button from '@mui/material/Button';
 
 function PlaceOrderDialog({
   userData,
@@ -30,6 +31,7 @@ function PlaceOrderDialog({
   const [confirmTermsChecked, setConfirmTermsChecked] = useState(false);
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState('');
   const [enablePlaceOrder, setEnablePlaceOrder] = useState(false);
+  const [completeBtnValidating, setCompleteBtnValidating] = useState(false);
   const effects = store((st) => st.effects);
 
   const {
@@ -88,6 +90,7 @@ function PlaceOrderDialog({
     }
   };
   const handleCreateOrder = async () => {
+    setCompleteBtnValidating(true);
     const renewalDetailsPayload = {
       quoteId: detailsData?.source?.id,
       reseller: {
@@ -188,6 +191,7 @@ function PlaceOrderDialog({
           key: 'toaster',
           value: { ...toasterFail },
         });
+        setCompleteBtnValidating(false);
       } else {
         effects.setCustomState({
           key: 'toaster',
@@ -204,6 +208,7 @@ function PlaceOrderDialog({
         key: 'toaster',
         value: { ...toasterFail },
       });
+      setCompleteBtnValidating(false);
     } finally {
     }
   };
@@ -222,13 +227,29 @@ function PlaceOrderDialog({
   const BottomContent = () => bottomContent('footer');
   const buttonSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
-      <button
-        disabled={!enablePlaceOrder}
-        className="primary"
-        onClick={handleCompleteOrder}
-      >
-        {getDictionaryValueOrKey(config?.completeOrder)}
-      </button>
+        {
+            completeBtnValidating ? (
+              <Button
+                startIcon={<CircularArrowIcon className="circular-arrow-icon" />}
+                sx={{
+                  textTransform: 'none',
+                }}
+                disabled={true}
+                className="primary"
+                onClick={handleCompleteOrder}
+              >
+                {getDictionaryValueOrKey(config?.completeOrder)}
+              </Button>
+            ) : (
+              <button
+                disabled={!enablePlaceOrder}
+                className="primary"
+                onClick={handleCompleteOrder}
+              >
+                {getDictionaryValueOrKey(config?.completeOrder)}
+              </button>
+            )
+        }
       <button className="secondary" onClick={handleOnBack}>
         <ArrowBackIcon />
         {getDictionaryValueOrKey(config?.modifyOrder)}

@@ -5700,7 +5700,7 @@ app.post("/ui-renewal/v1/Cart/CreateOrder", function (req, res) {
 
   setTimeout(() => {
     return res.status(200).json(success);
-  }, 1000);
+  }, 3000);
 });
 
 app.get("/ui-renewal/v1/SearchCheck", (req, res) => {
