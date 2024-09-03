@@ -81,13 +81,7 @@ public class ApjPageChangesProcessTest {
     private VersionHistory versionHistory;
 
     @Mock
-    private Version currentVersion;
-
-    @Mock
     private Version lastActivatedVersion;
-
-    @Mock
-    private Node currentFrozenNode;
 
     @Mock
     private Node lastActivatedFrozenNode;
@@ -126,9 +120,7 @@ public class ApjPageChangesProcessTest {
         Calendar replicationDate = Calendar.getInstance();
 
         when(workItem.getWorkflowData().getPayload()).thenReturn(PAGE_PATH);
-        when(versionManager.getBaseVersion(anyString())).thenReturn(currentVersion);
         when(versionManager.getVersionHistory(anyString())).thenReturn(versionHistory);
-        when(currentVersion.getFrozenNode()).thenReturn(currentFrozenNode);
         when(lastActivatedVersion.getFrozenNode()).thenReturn(lastActivatedFrozenNode);
         when(lastActivatedVersion.getCreated()).thenReturn(replicationDate);
 
@@ -148,7 +140,7 @@ public class ApjPageChangesProcessTest {
         NodeIterator lastActivatedChildNodes = mock(NodeIterator.class);
         when(lastActivatedChildNodes.hasNext()).thenReturn(false);
 
-        when(currentFrozenNode.getNodes()).thenReturn(currentChildNodes);
+        when(currentNodeChild.getNodes()).thenReturn(currentChildNodes);
         when(lastActivatedFrozenNode.getNodes()).thenReturn(lastActivatedChildNodes);
 
         apjPageChangesProcess.execute(workItem, workflowSession, args);
@@ -161,9 +153,7 @@ public class ApjPageChangesProcessTest {
         Calendar replicationDate = Calendar.getInstance();
 
         when(workItem.getWorkflowData().getPayload()).thenReturn(PAGE_PATH);
-        when(versionManager.getBaseVersion(anyString())).thenReturn(currentVersion);
         when(versionManager.getVersionHistory(anyString())).thenReturn(versionHistory);
-        when(currentVersion.getFrozenNode()).thenReturn(currentFrozenNode);
         when(lastActivatedVersion.getFrozenNode()).thenReturn(lastActivatedFrozenNode);
         when(lastActivatedVersion.getCreated()).thenReturn(replicationDate);
 
@@ -191,7 +181,7 @@ public class ApjPageChangesProcessTest {
         when(lastActivatedChildNodes.nextNode()).thenReturn(lastActivatedChildNode);
         when(lastActivatedChildNode.getName()).thenReturn(CHILD_NODE_NAME_1);
 
-        when(currentFrozenNode.getNodes()).thenReturn(currentChildNodes);
+        when(currentNodeChild.getNodes()).thenReturn(currentChildNodes);
         when(lastActivatedFrozenNode.getNodes()).thenReturn(lastActivatedChildNodes);
 
         apjPageChangesProcess.execute(workItem, workflowSession, args);

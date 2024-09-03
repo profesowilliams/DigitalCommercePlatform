@@ -56,9 +56,12 @@ public class ApjPageChangesProcess implements WorkflowProcess {
                 Page page = pageManager.getContainingPage(pageResource);
                 Node currentNode = page.adaptTo(Node.class);
 
-                Version currentVersion = getCurrentVersion(currentNode);
                 Version lastActivatedVersion = getLastActivatedVersion(currentNode);
-                boolean hasStructuralChanges = hasStructuralChanges(currentVersion, lastActivatedVersion);
+
+                boolean hasStructuralChanges = false;
+                if (lastActivatedVersion != null && lastActivatedVersion.getFrozenNode() != null) {
+                    hasStructuralChanges = hasStructuralChanges(currentNode, lastActivatedVersion.getFrozenNode());
+                }
 
                 if (hasStructuralChanges) {
                     workItem.getWorkflowData().getMetaDataMap().put(REQUIRES_VALIDATION, STRUCTURAL_CHANGES);
@@ -107,18 +110,12 @@ public class ApjPageChangesProcess implements WorkflowProcess {
         return differenceInMillis <= toleranceInMillis;
     }
 
-    private Version getCurrentVersion(Node node) throws RepositoryException {
-        VersionManager versionManager = node.getSession().getWorkspace().getVersionManager();
-
-        return versionManager.getBaseVersion(node.getPath() + SLASH_JCR_CONTENT);
-    }
-
-    private boolean hasStructuralChanges(Version currentVersion, Version lastActivatedVersion) throws RepositoryException {
-        if (lastActivatedVersion == null || currentVersion == null) {
+    private boolean hasStructuralChanges(Node currentNode, Node lastActivatedNode) throws RepositoryException {
+        if (currentNode == null || lastActivatedNode == null) {
             return false;
         }
 
-        return hasStructuralChangesInsideChildNodes(currentVersion.getFrozenNode(), lastActivatedVersion.getFrozenNode());
+        return hasStructuralChangesInsideChildNodes(currentNode.getNode(JCR_CONTENT), lastActivatedNode);
     }
 
     private boolean hasStructuralChangesInsideChildNodes(Node currentNode, Node lastActivatedNode) throws RepositoryException {
