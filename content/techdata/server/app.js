@@ -5659,7 +5659,7 @@ app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
       feedBackMessages: [
         {
           ruleNumber: 100,
-          errorCriticality: 3,
+          errorCriticality: 2,
           message:
             "License level, list price, unit price and subtotal have been updated due to quantity change.",
           refId: "",

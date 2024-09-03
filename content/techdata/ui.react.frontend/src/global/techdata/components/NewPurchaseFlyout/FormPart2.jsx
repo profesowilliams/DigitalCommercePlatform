@@ -235,11 +235,13 @@ function FormPart2({
       );
       if (response?.isError) {
         setErrorMessage(newPurchaseFlyout?.unknownErrorNewPurchase);
+        setPlaceOrderActive(false);
       } else {
         setDataTable(response);
       }
     } catch (error) {
       setErrorMessage(newPurchaseFlyout?.unknownErrorNewPurchase);
+      setPlaceOrderActive(false);
     } finally {
       setValidating(false);
       setPayloadWithoutNewItem(false);
@@ -248,12 +250,14 @@ function FormPart2({
 
   // Validation banner
   const hasFeedBackMessages = dataTable?.feedBackMessages?.length > 0;
+  const emptyFeedBackMessages = dataTable?.feedBackMessages?.length === 0;
   const errorCriticality = hasFeedBackMessages
     ? dataTable?.feedBackMessages[0]?.errorCriticality
     : 4;
   const bannerErrorMessage = hasFeedBackMessages
     ? dataTable?.feedBackMessages[0]?.message
     : '';
+  const errorCriticalityZero = errorCriticality === 0;
   const blueBanner = errorCriticality === 3;
   const orangeBanner = errorCriticality === 2;
   const redBanner = errorCriticality === 1;
@@ -413,7 +417,13 @@ function FormPart2({
   }, [items, calculateSubtotal]);
 
   useEffect(() => {
-    if (payloadWithoutNewItem && blueBanner) {
+    if (
+      payloadWithoutNewItem &&
+      (blueBanner ||
+        orangeBanner ||
+        errorCriticalityZero ||
+        emptyFeedBackMessages)
+    ) {
       setPlaceOrderActive(true);
       setBannerOpen(true);
     } else {
