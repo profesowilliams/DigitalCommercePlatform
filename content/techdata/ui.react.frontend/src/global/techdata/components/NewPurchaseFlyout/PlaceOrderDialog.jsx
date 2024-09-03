@@ -166,7 +166,9 @@ function PlaceOrderDialog({
       origin: 'placeNewPurchaseOrderFlyout',
       isAutoClose: true,
       isSuccess: true,
-      message: getDictionaryValueOrKey(config?.placeOrderSuccess),
+      message: `${getDictionaryValueOrKey(
+        config?.yourOrderFor)} ${purchaseOrderNumber} ${getDictionaryValueOrKey(
+        config?.hasBeenSuccessfullySubmittedForProcessing)}`,
     };
     const toasterFail = {
       isOpen: true,
