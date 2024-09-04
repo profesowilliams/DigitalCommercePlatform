@@ -392,6 +392,25 @@
                                                     uncheckedValue="false"
                                                     value="{Boolean}true"
                                                     name="./productLines/enableActiveLicence"/>
+                                            <autoRenew
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="details.renewal.properties.label.autoRenew"
+                                                    fieldLabel="Auto-renew"
+                                                    name="./productLines/autoRenew"/>
+                                            <permissionRequired
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="details.renewal.properties.label.permissionRequired"
+                                                    fieldLabel="Permission required"
+                                                    name="./productLines/permissionRequired"/>
+                                            <youDoNotHave
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="details.renewal.properties.label.youDoNotHave"
+                                                    fieldLabel="You do not have the proper credentials to place an order. Contact your Admin for more information."
+                                                    name="./productLines/youDoNotHave"/>
+                                            
                                         </items>
                                     </column>
                                 </items>

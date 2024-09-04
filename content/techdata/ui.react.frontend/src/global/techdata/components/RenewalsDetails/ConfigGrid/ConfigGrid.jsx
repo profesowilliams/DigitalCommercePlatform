@@ -3,8 +3,16 @@ import AgreementInfo from "./AgreementInfo";
 import EndUserInfo from "./EndUser/EndUserInfo";
 import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
-import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
-import { errorDetails, fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
+import {
+  generateFileFromPost as generateExcelFileFromPost,
+  getDictionaryValueOrKey,
+} from '../../../../../utils/utils';
+import {
+  errorDetails,
+  fileExtensions,
+  generateFileFromPost,
+  getDictionaryValue,
+} from '../../../../../utils/utils';
 import {
   CopyIcon,
   DownloadIcon,
@@ -15,6 +23,7 @@ import {
   WarningTriangleIcon,
   ProhibitedIcon,
   BannerInfoIcon,
+  SeparatorIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 import { useRenewalGridState } from '../../RenewalsGrid/store/RenewalsStore';
 import CopyFlyout from '../../CopyFlyout/CopyFlyout';
@@ -28,10 +37,14 @@ import {
   ANALYTIC_CONSTANTS,
   pushDataLayer,
 } from '../../Analytics/analytics';
+import CustomSwitchToggle from '../../Widgets/CustomSwitchToggle';
+import CustomTooltip from '../../Widgets/CustomTooltip';
 
 function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
     useState(false);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+
   const effects = useRenewalGridState((state) => state.effects);
   const analyticsCategory = useRenewalGridState(
     (state) => state.analyticsCategory
@@ -279,6 +292,17 @@ function GridHeader({ gridProps, data }) {
     buttons.length > 3 ? buttons.slice(0, 2) : buttons.slice(0, 3);
   const dropdownButtons = buttons.length > 3 ? buttons.slice(2) : [];
 
+  const tooltipText = (
+    <div className="auto-renew-tooltip">
+      <p className="auto-renew-tooltip__title">
+        {getDictionaryValueOrKey(gridProps?.productLines?.permissionRequired)}
+      </p>
+      <p className="auto-renew-tooltip__text">
+        {getDictionaryValueOrKey(gridProps?.productLines?.youDoNotHave)}
+      </p>
+    </div>
+  );
+
   return (
     <div
       className={
@@ -290,6 +314,33 @@ function GridHeader({ gridProps, data }) {
       <span className="cmp-product-lines-grid__header__title">
         {gridProps.lineItemDetailsLabel}
       </span>
+      {data?.displayAutoRenew && (
+        <CustomTooltip
+          title={tooltipText}
+          placement="bottom"
+          arrow
+          disableInteractive={true}
+          open={!data?.isAutoRenewEnabled && !data?.canOrder && isTooltipOpen}
+          onClose={() => setIsTooltipOpen(false)}
+        >
+          <div
+            className="auto-renew"
+            onMouseEnter={() => setIsTooltipOpen(true)}
+            onMouseLeave={() => setIsTooltipOpen(false)}
+          >
+            <CustomSwitchToggle
+              toggled={data?.autoRenew}
+              disabled={!data?.isAutoRenewEnabled}
+            />
+            <span className="auto-renew__text">
+              {getDictionaryValueOrKey(gridProps?.productLines?.autoRenew)}
+            </span>
+            <span className="auto-renew__separator">
+              <SeparatorIcon />
+            </span>
+          </div>
+        </CustomTooltip>
+      )}
       <div className="cmp-renewal-preview__download">
         {directlyShownButtons}
         {dropdownButtons.length > 0 && (
@@ -348,9 +399,9 @@ function GridHeader({ gridProps, data }) {
         subheaderReference={document.querySelector('.subheader > div > div')}
       />
       <ErrorFlyout
-          store={useRenewalGridState}
-          subheaderReference={document.querySelector('.subheader > div > div')}
-        />
+        store={useRenewalGridState}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+      />
     </div>
   );
 }

@@ -1,12 +1,24 @@
 .tool-tip {
-    position: absolute;
-    height: 32px;
-    padding: 0 12px;
-    border-radius: 2px;
-    background-color: #30343B;
-    color: #FFFFFF;
-    font-size: 12px;
-    letter-spacing: 0;
-    line-height: 32px;
-    text-align: center;
+  position: absolute;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 2px;
+  background-color: #30343b;
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 32px;
+  text-align: center;
+}
+.auto-renew-tooltip {
+  display: flex;
+  flex-direction: column;
+  &__title {
+    margin-bottom: 8px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+  &__text {
+    font-size: 14px;
+  }
 }

@@ -82,6 +82,7 @@
       top: 30px;
     }
   }
+
   .cmp-product-lines-grid__header {
     display: flex;
     justify-content: space-between;
@@ -89,6 +90,21 @@
       font-size: 22px;
       font-weight: 500;
       text-shadow: 0px 0px 0px #000c21;
+    }
+
+    .auto-renew {
+      display: flex;
+      align-items: center;
+      &__text {
+        margin-left: 10px;
+        color: $brand-charcoal;
+        font-size: 16px;
+        line-height: 24px;
+      }
+      &__separator {
+        margin-left: 8px;
+        margin-right: 8px;
+      }
     }
   }
   .cmp-product-lines-grid__item-information__box-text {
@@ -262,10 +278,10 @@
     }
 
     a {
-        font-size: 16px;
-        line-height: 24px;
-        color: $brand-cobalt;
-        text-decoration: none;
+      font-size: 16px;
+      line-height: 24px;
+      color: $brand-cobalt;
+      text-decoration: none;
     }
   }
 }
@@ -285,14 +301,21 @@
     border-bottom-color: $brand-green;
   }
 
-  .cmp-flyout-newPurchase__form-search>div.MuiAutocomplete-root .MuiInput-root .MuiInput-input {
+  .cmp-flyout-newPurchase__form-search
+    > div.MuiAutocomplete-root
+    .MuiInput-root
+    .MuiInput-input {
     padding-bottom: 0;
   }
 
-  .cmp-flyout-newPurchase__form-search>div.cmp-flyout-newPurchase__form-search .MuiAutocomplete-root .MuiFormControl-root .MuiInput-root.MuiAutocomplete-inputRoot.Mui-focused {
+  .cmp-flyout-newPurchase__form-search
+    > div.cmp-flyout-newPurchase__form-search
+    .MuiAutocomplete-root
+    .MuiFormControl-root
+    .MuiInput-root.MuiAutocomplete-inputRoot.Mui-focused {
     padding-bottom: 0;
   }
-  
+
   input.MuiInput-input .MuiInput-root {
     padding-bottom: 0;
   }
@@ -308,8 +331,7 @@
   .ag-root-wrapper
   .ag-root-wrapper-body
   .ag-body-viewport {
-
-  }
+}
 
 .cmp-renewals-details .cmp-renewal-search-error {
   img {
@@ -408,25 +430,24 @@
 }
 
 .cmp-product-lines-grid__item-information__box-text {
-    span {
-        color: $brand-charcoal !important;
-    }
+  span {
+    color: $brand-charcoal !important;
+  }
 }
 
 .details-preview-add-more {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: $brand-green;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: $brand-green;
+  cursor: pointer;
 
-    svg path {
-        fill: $brand-green;
-    }
+  svg path {
+    fill: $brand-green;
+  }
 
-    span {
-        font-size: 16px;
-        line-height: 24px;
-    }
+  span {
+    font-size: 16px;
+    line-height: 24px;
+  }
 }
-
