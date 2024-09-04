@@ -307,7 +307,7 @@ function RenewalsDetails(props) {
                         {renewalsDetails.renewalLevelActive}
                       </span>
                     </span>
-                    {renewalsDetails?.canAddMore && (
+                    {componentProp?.enableNewPurchaseAction && renewalsDetails?.canAddMore && (
                       <div
                         className="details-preview-add-more"
                         onClick={openNewPurchaseFlyout}

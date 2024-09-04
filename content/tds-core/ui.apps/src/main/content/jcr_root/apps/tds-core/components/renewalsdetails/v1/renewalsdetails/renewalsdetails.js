@@ -527,6 +527,11 @@ use(["../../../common/utils.js"], function(utils) {
             jsonObject["enableShareOption"] = this.serviceData.enableShareOption;
         }
 
+        if (this.serviceData && this.serviceData.enableNewPurchaseAction) {
+            jsonObject["enableNewPurchaseAction"] =
+            this.serviceData.enableNewPurchaseAction;
+        }
+
         if (this.serviceData && this.serviceData.enableReviseOption) {
                 jsonObject["enableReviseOption"] = this.serviceData.enableReviseOption;
         }
