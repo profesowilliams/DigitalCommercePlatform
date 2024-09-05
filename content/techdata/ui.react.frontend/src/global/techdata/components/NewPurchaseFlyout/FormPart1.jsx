@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BannerInfoIcon,
   AutoCompleteSearchIcon,
@@ -89,10 +89,6 @@ function FormPart1({
   } = formPart1States;
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!internalUser) {
-    setAccountNumber('');
-  }
 
   // Reseller change
   const handleResellerIdChange = async (event) => {
@@ -474,8 +470,7 @@ function FormPart1({
                 <div className="cmp-flyout__content--error">{errorMessage}</div>
               )}
             </div>
-          ) : null
-          }
+          ) : null}
           <TextField
             className="cmp-flyout-newPurchase__form__input-container"
             id="first-name"

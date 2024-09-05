@@ -407,7 +407,6 @@ function NewPurchaseFlyout({
     selectedQuote,
     internalUser,
   ]);
-
   return (
     <BaseFlyout
       open={newPurchaseFlyoutConfig?.show}
