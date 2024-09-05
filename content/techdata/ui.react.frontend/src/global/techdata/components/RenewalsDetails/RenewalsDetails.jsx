@@ -307,20 +307,21 @@ function RenewalsDetails(props) {
                         {renewalsDetails.renewalLevelActive}
                       </span>
                     </span>
-                    {componentProp?.enableNewPurchaseAction && renewalsDetails?.canAddMore && (
-                      <div
-                        className="details-preview-add-more"
-                        onClick={openNewPurchaseFlyout}
-                      >
-                        <AddIcon width="17" />
-                        <span>
-                          {getDictionaryValueOrKey(
-                            componentProp?.productLines?.addMoreButton,
-                            'Add More'
-                          )}
-                        </span>
-                      </div>
-                    )}
+                    {componentProp?.enableNewPurchaseAction &&
+                      renewalsDetails?.canAddMore && (
+                        <div
+                          className="details-preview-add-more"
+                          onClick={openNewPurchaseFlyout}
+                        >
+                          <AddIcon width="17" />
+                          <span>
+                            {getDictionaryValueOrKey(
+                              componentProp?.productLines?.addMoreButton,
+                              'Add More'
+                            )}
+                          </span>
+                        </div>
+                      )}
                   </div>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -448,6 +449,7 @@ function RenewalsDetails(props) {
         store={useRenewalsDetailsStore}
         copyFlyout={componentProp.copyFlyout}
         newPurchaseFlyout={componentProp.newPurchaseFlyout}
+        getStatusEndpoint={componentProp.getStatusEndpoint}
         subheaderReference={document.querySelector('.subheader > div > div')}
         userData={userData}
         data={renewalsDetails}

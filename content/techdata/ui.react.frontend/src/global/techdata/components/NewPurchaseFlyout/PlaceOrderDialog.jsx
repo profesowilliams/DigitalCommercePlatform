@@ -7,6 +7,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { ArrowBackIcon, CircularArrowIcon } from '../../../../fluentIcons/FluentIcons';
 import { createOrder } from './api';
 import Button from '@mui/material/Button';
+import { getStatusLoopUntilStatusIsActive } from '../RenewalsGrid/Orders/orderingRequests';
 
 function PlaceOrderDialog({
   userData,
@@ -18,6 +19,7 @@ function PlaceOrderDialog({
   open,
   bottomContent,
   config,
+  getStatusEndpoint,
   store,
   resellerId,
   resellerName,
@@ -78,17 +80,6 @@ function PlaceOrderDialog({
   const transformedPayload = transformItemsPayload(itemsPayload);
   // Create order
 
-  const countryCodeCheck = (countryName) => {
-    if (countryName === 'Vietnam') {
-      return 'VN';
-    }
-    if (countryName === 'Cambodia') {
-      return 'KH';
-    }
-    if (countryName === 'Laos') {
-      return 'LA';
-    }
-  };
   const handleCreateOrder = async () => {
     setCompleteBtnValidating(true);
     const renewalDetailsPayload = {
@@ -128,7 +119,7 @@ function PlaceOrderDialog({
       },
       VendorReference: {
         Type: 'QuoteId',
-        Value: detailsData?.vendorReference[0]?.value
+        Value: detailsData?.vendorReference[0]?.value,
       },
       items: transformedPayload,
       customerPo: purchaseOrderNumber,
@@ -170,8 +161,10 @@ function PlaceOrderDialog({
       isAutoClose: true,
       isSuccess: true,
       message: `${getDictionaryValueOrKey(
-        config?.yourOrderFor)} ${purchaseOrderNumber} ${getDictionaryValueOrKey(
-        config?.hasBeenSuccessfullySubmittedForProcessing)}`,
+        config?.yourOrderFor
+      )} ${purchaseOrderNumber} ${getDictionaryValueOrKey(
+        config?.hasBeenSuccessfullySubmittedForProcessing
+      )}`,
     };
     const toasterFail = {
       isOpen: true,
@@ -193,14 +186,31 @@ function PlaceOrderDialog({
         });
         setCompleteBtnValidating(false);
       } else {
-        effects.setCustomState({
-          key: 'toaster',
-          value: { ...toasterSuccess },
-        });
-        onClose();
-        closeFlyout();
-
-        isAddMore ? getDetailsAPI() : onQueryChanged();
+        if (isAddMore) {
+          const isActiveQuote = await getStatusLoopUntilStatusIsActive({
+            getStatusEndpoint: getStatusEndpoint,
+            id: detailsData.source.id,
+            delay: 2000,
+            iterations: 7,
+          });
+          if (isActiveQuote) {
+            effects.setCustomState({
+              key: 'toaster',
+              value: { ...toasterSuccess },
+            });
+            onClose();
+            closeFlyout();
+            getDetailsAPI();
+          }
+        } else {
+          effects.setCustomState({
+            key: 'toaster',
+            value: { ...toasterSuccess },
+          });
+          onClose();
+          closeFlyout();
+          onQueryChanged();
+        }
         return response;
       }
     } catch (error) {
@@ -222,34 +232,32 @@ function PlaceOrderDialog({
     setConfirmTermsChecked(false);
     setPurchaseOrderNumber('');
     onClose();
-  }
+  };
 
   const BottomContent = () => bottomContent('footer');
   const buttonSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
-        {
-            completeBtnValidating ? (
-              <Button
-                startIcon={<CircularArrowIcon className="circular-arrow-icon" />}
-                sx={{
-                  textTransform: 'none',
-                }}
-                disabled={true}
-                className="primary"
-                onClick={handleCompleteOrder}
-              >
-                {getDictionaryValueOrKey(config?.completeOrder)}
-              </Button>
-            ) : (
-              <button
-                disabled={!enablePlaceOrder}
-                className="primary"
-                onClick={handleCompleteOrder}
-              >
-                {getDictionaryValueOrKey(config?.completeOrder)}
-              </button>
-            )
-        }
+      {completeBtnValidating ? (
+        <Button
+          startIcon={<CircularArrowIcon className="circular-arrow-icon" />}
+          sx={{
+            textTransform: 'none',
+          }}
+          disabled={true}
+          className="primary"
+          onClick={handleCompleteOrder}
+        >
+          {getDictionaryValueOrKey(config?.completeOrder)}
+        </Button>
+      ) : (
+        <button
+          disabled={!enablePlaceOrder}
+          className="primary"
+          onClick={handleCompleteOrder}
+        >
+          {getDictionaryValueOrKey(config?.completeOrder)}
+        </button>
+      )}
       <button className="secondary" onClick={handleOnBack}>
         <ArrowBackIcon />
         {getDictionaryValueOrKey(config?.modifyOrder)}

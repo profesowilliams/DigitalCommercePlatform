@@ -11,6 +11,7 @@ function NewPurchaseFlyout({
   store,
   copyFlyout,
   newPurchaseFlyout,
+  getStatusEndpoint,
   subheaderReference,
   userData,
   componentProp,
@@ -446,6 +447,7 @@ function NewPurchaseFlyout({
               userData={userData}
               externalUser={externalUser}
               newPurchaseFlyout={newPurchaseFlyout}
+              getStatusEndpoint={getStatusEndpoint}
               formPart1States={formPart1States}
               pickedResellerQuote={selectedQuote}
               currency={currency}

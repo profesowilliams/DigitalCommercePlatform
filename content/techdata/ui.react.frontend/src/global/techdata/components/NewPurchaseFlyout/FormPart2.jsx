@@ -22,6 +22,7 @@ function FormPart2({
   userData,
   externalUser,
   newPurchaseFlyout,
+  getStatusEndpoint,
   formPart1States,
   pickedResellerQuote,
   currency,
@@ -744,6 +745,7 @@ function FormPart2({
           addProductPayload={addProductPayload}
           itemsPayload={itemsPayload}
           config={newPurchaseFlyout}
+          getStatusEndpoint={getStatusEndpoint}
           getDetailsAPI={getDetailsAPI}
           onClose={onClose}
           open={open}

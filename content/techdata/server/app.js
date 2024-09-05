@@ -4795,7 +4795,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           canOrder: false,
           canEditQty: false,
           canEditResellerPrice: false,
-          canEditLines: false,
+          canEditLines: true,
           canCopy: false,
           customerPO: {
             text: "P1005118597",
