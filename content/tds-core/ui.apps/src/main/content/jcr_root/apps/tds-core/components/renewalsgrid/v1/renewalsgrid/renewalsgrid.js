@@ -272,8 +272,9 @@ use(["../../../common/utils.js"], function (utils) {
       "techDataTermsConditions",
       "the",
       "adobeTermsConditions",
-      "placeOrderSuccess",
       "productNotFound",
+      "yourOrderFor",
+      "hasBeenSuccessfullySubmittedForProcessing",
     ];
 
     newPurchaseFlyoutList.map(
