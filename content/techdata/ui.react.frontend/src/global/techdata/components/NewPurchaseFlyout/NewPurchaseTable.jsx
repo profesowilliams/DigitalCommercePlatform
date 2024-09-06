@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import LineItem from './LineItem.jsx';
+import { thousandSeparator } from "../../helpers/formatting";
 
 const NewPurchaseTable = ({
   data,
@@ -97,7 +98,7 @@ const NewPurchaseTable = ({
           {getDictionaryValueOrKey(subtotal)}
         </span>
         <span className="cmp-flyout-newPurchase__form-table__subtotal__text">
-          {subtotalValue}
+          {thousandSeparator(subtotalValue?.split('.')[0], 0)}
         </span>
       </div>
     </div>

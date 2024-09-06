@@ -6,6 +6,7 @@ import FormPart1 from './FormPart1';
 import FormPart2 from './FormPart2';
 import Button from '@mui/material/Button';
 import moment from 'moment';
+import { thousandSeparator } from "../../helpers/formatting";
 
 function NewPurchaseFlyout({
   store,
@@ -294,7 +295,7 @@ function NewPurchaseFlyout({
             )}
           </span>
           <span className="new-purchase-footer-info__title--offset">
-            {subtotalValue}
+            {thousandSeparator(subtotalValue?.split('.')[0], 0)}
           </span>
         </div>
         <span className="new-purchase-footer-info__text">

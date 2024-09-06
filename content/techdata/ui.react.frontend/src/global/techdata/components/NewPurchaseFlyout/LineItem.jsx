@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import QuantityColumn from './QuantityColumn.jsx';
+import { thousandSeparator } from "../../helpers/formatting";
 import {
   ArrowResetIcon,
   TrashcanIcon,
@@ -133,7 +134,7 @@ const LineItem = ({
         {itemProduct?.id}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-end">
-        {parseFloat(item?.unitListPrice).toFixed(2)}
+        {thousandSeparator(item?.unitListPrice.split('.')[0], 0)}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-end">
         {canEditResellerPrice ? (
@@ -157,7 +158,7 @@ const LineItem = ({
             </button>
           </div>
         ) : (
-          <div>{initialPriceFormatted}</div>
+          <div>{thousandSeparator(initialPriceFormatted.split('.')[0], 0)}</div>
         )}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-center">
@@ -171,7 +172,7 @@ const LineItem = ({
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-end">
         <div className="total-price-body">
-          <span>{parseFloat(totalPrice).toFixed(2)}</span>
+          <span>{thousandSeparator(totalPrice.split('.')[0], 0)}</span>
           <button onClick={handleDeleteLine}>
             <TrashcanIcon />
           </button>
