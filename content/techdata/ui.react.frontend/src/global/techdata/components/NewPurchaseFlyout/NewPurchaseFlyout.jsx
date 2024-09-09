@@ -62,6 +62,8 @@ function NewPurchaseFlyout({
   // Enable next button
   const [enableNext, setEnableNext] = useState(false);
 
+  const [placeOrderDisable, setPlaceOrderDisable] = useState(false);
+
   // Reseller state
   const [quotes, setQuotes] = useState([]);
   const [accountNumber, setAccountNumber] = useState('');
@@ -256,9 +258,13 @@ function NewPurchaseFlyout({
           </button>
         )
       ) : (
-        <button className="primary" onClick={handlePlaceOrder}>
+        <Button
+          disabled={placeOrderDisable}
+          className="primary"
+          onClick={handlePlaceOrder}
+        >
           {getDictionaryValueOrKey(newPurchaseFlyout?.placeOrder)}
-        </button>
+        </Button>
       )}
 
       {isAddMore ? (
@@ -456,6 +462,7 @@ function NewPurchaseFlyout({
               setCurrency={setCurrency}
               subtotalValue={subtotalValue}
               setSubtotalValue={setSubtotalValue}
+              setPlaceOrderDisable={setPlaceOrderDisable}
               validating={validating}
               setValidating={setValidating}
               setPlaceOrderActive={setPlaceOrderActive}

@@ -723,6 +723,7 @@ li[id^='combo-box-demo-option-']:active {
     color: $brand-white;
     background-color: $brand-green;
     margin-left: 20px;
+    text-transform: none;
   }
   .secondary {
     color: $brand-green;

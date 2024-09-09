@@ -30,6 +30,7 @@ function FormPart2({
   setCurrency,
   subtotalValue,
   setSubtotalValue,
+  setPlaceOrderDisable,
   validating,
   setValidating,
   setPlaceOrderActive,
@@ -402,6 +403,11 @@ function FormPart2({
       return sum + parseFloat(item.totalPrice || '0');
     }, 0);
     setSubtotalValue(subtotal?.toFixed(2));
+    if (parseInt(subtotal) === 0) {
+        setPlaceOrderDisable(true);
+    } else {
+        setPlaceOrderDisable(false);
+    }
   }, [items, setSubtotalValue]);
 
   // Handl date picker open and close
@@ -434,6 +440,14 @@ function FormPart2({
       setPlaceOrderActive(false);
     }
   }, [blueBanner, validating]);
+
+  useEffect(() => {
+    if (parseInt(subtotalValue) === 0) {
+        setPlaceOrderDisable(true);
+    } else {
+        setPlaceOrderDisable(false);
+    }
+  }, [subtotalValue]);
 
   // Trigger Validate request from useEffect
   useEffect(() => {
@@ -752,6 +766,7 @@ function FormPart2({
           bottomContent={bottomContent}
           buttonSection={buttonSection}
           setEnablePlaceOrder={setEnablePlaceOrder}
+          subtotalValue={subtotalValue}
           store={store}
           resellerId={resellerId}
           resellerName={resellerName}
