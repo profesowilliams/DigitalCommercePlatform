@@ -107,7 +107,9 @@ function FormPart1({
         copyFlyout?.accountLookUpEndpoint
       );
       if (response.isError) {
-        setErrorMessage(newPurchaseFlyout?.unknownErrorNewPurchase);
+        setErrorMessage(
+          getDictionaryValueOrKey(newPurchaseFlyout?.unknownErrorNewPurchase)
+        );
         setQuotes([]);
       } else {
         setQuotes(response);
