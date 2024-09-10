@@ -5200,6 +5200,8 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
       "Adobe Terms & Conditions",
     "mainDashboard.renewal.newPurchaseFlyout.label.productNotFound":
       "Product not found",
+    "mainDashboard.renewal.newPurchaseFlyout.label.noMatchFoundPleaseTryAgain":
+      "No match found, please try again.",
   });
 });
 

@@ -492,6 +492,12 @@
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.productNotFound"
                     fieldLabel="Product not found"
                     name="./newPurchaseFlyout/productNotFound"/>
+                <noMatchFoundPleaseTryAgain
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.noMatchFoundPleaseTryAgain"
+                    fieldLabel="No match found, please try again."
+                    name="./newPurchaseFlyout/noMatchFoundPleaseTryAgain"/>
             </items>
         </newPyrchaseFlyoutGroup>
     </items>
