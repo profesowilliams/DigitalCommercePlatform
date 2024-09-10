@@ -386,16 +386,12 @@ use(["../../../common/utils.js"], function(utils) {
           "productNotFound",
           "yourOrderFor",
           "hasBeenSuccessfullySubmittedForProcessing",
+          "adobeResellerTermsAndConditionsLinkNewPurchase",
         ];
 
         newPurchaseFlyoutList.map(
           (property) => (newPurchaseFlyout[property] = properties["./newPurchaseFlyout/" + property])
         );
-
-        if (properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLink"]) {
-            newPurchaseFlyout["adobeResellerTermsAndConditionsLink"] =
-                utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLink"]));
-        }
 
         if (properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]) {
             newPurchaseFlyout["termsAndConditionsLinkNewPurchase"] =

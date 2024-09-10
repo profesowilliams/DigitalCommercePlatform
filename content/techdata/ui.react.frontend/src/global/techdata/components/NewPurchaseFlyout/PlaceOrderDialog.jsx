@@ -350,7 +350,7 @@ function PlaceOrderDialog({
             {getDictionaryValueOrKey(config?.the)}{' '}
             <a
               href={getDictionaryValueOrKey(
-                config?.adobeResellerTermsAndConditionsLink
+                config?.adobeResellerTermsAndConditionsLinkNewPurchase
               )}
               target="_blank"
               className="place-order-dialog__content__link"
