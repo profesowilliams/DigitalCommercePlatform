@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef  } from "react";
 import AgreementInfo from "./AgreementInfo";
+import AutoRenewModal from './AutoRenewModal';
 import EndUserInfo from "./EndUser/EndUserInfo";
 import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
+import Modal from '../../Modal/Modal';
 import {
   generateFileFromPost as generateExcelFileFromPost,
-  getDictionaryValueOrKey,
+  getDictionaryValueOrKey
 } from '../../../../../utils/utils';
 import {
   errorDetails,
@@ -44,6 +46,9 @@ function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
     useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+  const [autoRenewToggle, setAutoRenewToggle] = useState(data?.autoRenew);
+
+  const [modal, setModal] = useState(null);
 
   const effects = useRenewalGridState((state) => state.effects);
   const analyticsCategory = useRenewalGridState(
@@ -303,6 +308,26 @@ function GridHeader({ gridProps, data }) {
     </div>
   );
 
+  const handleAutoRenewModalClose = () => {
+    setAutoRenewToggle(data?.autoRenew);
+    setModal(null);
+  };
+
+  const handleAutoRenewChange = (isToggled) => {
+    setModal({
+      content: (
+        <AutoRenewModal
+          data={data}
+          gridProps={gridProps}
+          isToggled={isToggled}
+        ></AutoRenewModal>
+      ),
+     properties: {
+       title: isToggled ? gridProps?.productLines?.turnOnAutoRenewTitle : gridProps?.productLines?.turnOFFAutoRenewTitle,
+     }
+    });
+  };
+
   return (
     <div
       className={
@@ -329,8 +354,9 @@ function GridHeader({ gridProps, data }) {
             onMouseLeave={() => setIsTooltipOpen(false)}
           >
             <CustomSwitchToggle
-              toggled={data?.autoRenew}
+              toggled={autoRenewToggle}
               disabled={!data?.isAutoRenewEnabled}
+              onToggleChanged={handleAutoRenewChange}
             />
             <span className="auto-renew__text">
               {getDictionaryValueOrKey(gridProps?.productLines?.autoRenew)}
@@ -402,6 +428,16 @@ function GridHeader({ gridProps, data }) {
         store={useRenewalGridState}
         subheaderReference={document.querySelector('.subheader > div > div')}
       />
+      {modal && (
+          <Modal
+            modalAction={modal.action}
+            modalContent={modal.content}
+            modalProperties={modal.properties}
+            actionErrorMessage={modal.errorMessage}
+            onModalClosed={handleAutoRenewModalClose}
+            customClass="cmp-auto-renew-modal"
+          ></Modal>
+        )}
     </div>
   );
 }

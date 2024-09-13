@@ -223,4 +223,8 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Revise Quote Endpoint", description = "Revise Quote Endpoint")
     String reviseQuoteEndpoint();
+
+    @Property(label = "Manage Subscription Endpoint", description = "Manage Subscription Endpoint")
+    String manageSubscriptionEndpoint();
+
 }

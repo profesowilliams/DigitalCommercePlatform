@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 
@@ -61,14 +61,19 @@ const CustomSwitch = styled(Switch)(({ disabled }) => ({
   },
 }));
 
-function CustomSwitchToggle({ toggled, onToggleChanged, disabled }) {
-  const [isToggled, setIsToggled] = useState(toggled ?? false);
+function CustomSwitchToggle({ toggled = false, onToggleChanged, disabled }) {
+  const [isToggled, setIsToggled] = useState(toggled);
 
-  useEffect(() => {
-    if (typeof onToggleChanged === 'function') {
-      onToggleChanged(isToggled);
-    }
-  }, [isToggled, onToggleChanged]);
+const firstUpdate = useRef(true);
+    useLayoutEffect(() => {
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
+        if (typeof onToggleChanged === 'function') {
+          onToggleChanged(isToggled);
+        }
+    }, [isToggled]);
 
   const handleChange = () => {
     if (!disabled) {

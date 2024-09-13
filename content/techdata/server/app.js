@@ -4865,7 +4865,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           renewalLevelActive: "Level 1 1 - 9",
           canAddMore: true,
           autoRenew: false,
-          isAutoRenewEnabled: false,
+          isAutoRenewEnabled: true,
           displayAutoRenew: true,
           revision: 1.0,
           subRevision: 0.0,
@@ -4932,6 +4932,72 @@ app.post("/ui-renewal/v1/RequestQuoteEmail", function (req, res) {
       isError: false,
     },
   };
+
+  const error = {
+    content: {
+      success: false,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: true,
+    },
+  };
+
+  //mockResponses.failedResponse
+
+  setTimeout(() => {
+    return res.status(200).json(success);
+  }, 1000);
+});
+
+
+app.post("/ui-export/ui-renewal/v1/ManageSubscription", function (req, res) {
+  const success =
+[
+    {
+        "subscription_id": "2a815c63904fdf9197b5f0e5364289NA",
+        "errorMessage": "",
+        "errorCode": "",
+        "autoRenewal": {
+            "enabled": true,
+            "renewalQuantity": 2
+        },
+        "creationDate": "2024-09-11T05:18:01Z",
+        "currentQuantity": 1,
+        "status": "Active",
+        "isSuccess": true,
+        "links": {
+            "self": {
+                "headers": [],
+                "method": "GET",
+                "uri": "/v3/customers/P1005126298/subscriptions/2a815c63904fdf9197b5f0e5364289NA"
+            }
+        },
+        "statusCode": 0
+    },
+    {
+        "subscription_id": "ce934527af45498c1edc36139c898bNA",
+        "errorMessage": "",
+        "errorCode": "",
+        "autoRenewal": {
+            "enabled": true,
+            "renewalQuantity": 2
+        },
+        "creationDate": "2024-09-11T05:18:01Z",
+        "currentQuantity": 1,
+        "status": "Active",
+        "isSuccess": true,
+        "links": {
+            "self": {
+                "headers": [],
+                "method": "GET",
+                "uri": "/v3/customers/P1005126298/subscriptions/ce934527af45498c1edc36139c898bNA"
+            }
+        },
+        "statusCode": 0
+    }
+];
 
   const error = {
     content: {

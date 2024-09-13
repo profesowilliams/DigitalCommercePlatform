@@ -275,3 +275,62 @@
   border-top: 3px solid map-get($color-palette, 'charcoal');
   border-bottom: 2px solid map-get($color-palette, 'charcoal');
 }
+
+.cmp-modal {
+  &.cmp-auto-renew-modal {
+    .cmp-modal_title {
+      font-size: 28px;
+      line-height: 35px;
+      color: #262626;
+      margin: 0;
+    }
+
+    .cmp-modal_content {
+      padding: 24px;
+      max-width: 360px;
+    }
+
+    .cmp-modal_body {
+      margin: 0;
+    }
+
+    .cmp-modal_close {
+      display: none;
+    }
+
+    .cmp-auto-renew-modal--desc {
+      font-size: 20px;
+      line-height: 30px;
+      color: #262626;
+      text-align: left;
+    }
+
+    .cmp-auto-renew-modal__button-section {
+      display: flex;
+      gap: 10px;
+      justify-content: end;
+
+      button:disabled {
+        background-color: #e4e5e6;
+        color: #888b8d;
+        cursor: default;
+      }
+
+      .primary {
+        padding: 12px 10px;
+        background-color: #005758;
+        border-radius: 2px;
+        color: white;
+        cursor: pointer;
+      }
+
+      .secondary {
+        padding: 12px 10px;
+        color: #005758;
+        cursor: pointer;
+      }
+    }
+  }
+
+}
+

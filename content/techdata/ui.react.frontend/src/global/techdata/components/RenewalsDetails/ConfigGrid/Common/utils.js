@@ -1,6 +1,8 @@
 import produce from "immer";
 import set from "lodash.set";
 import { getInvalidEmailText, getRequiredFieldText, getRequiredMaxLengthFieldText, getMaxLengthFieldText } from "../EndUser/utils";
+import axios from 'axios';
+import { post } from '../../../../../../utils/api';
 
 // Helper function that uses a setState function and calls it using immer produce.
 // Uses lodash set to be able to use a path instead of manually navigating the draft object.
@@ -85,3 +87,8 @@ export const populateFieldConfigsFromService = (field) => ({
   value: field?.text || '',
   inputProps: getInputProps(field),
 });
+
+export const manageSubscription = async (endpoint, payload) => {
+    const response = await post(endpoint, payload);
+    return response.data[0].isError ? response.data[0].errorMessage : response.data[0];
+};

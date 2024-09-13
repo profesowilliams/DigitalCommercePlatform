@@ -164,7 +164,7 @@ function RenewalPreviewGrid(
       data?.canOrder,
       compProps?.orderingFromDashboard?.showOrderingIcon
     ) && !isRequestQuoteFlag;
-    const [orderIconDisable, setOrderIconDisable] = useState(!isIconEnabled);
+    const [orderIconDisable, setOrderIconDisable] = useState(false);
 
   function onAfterGridInit({ api }) {
     setGridApi(api);

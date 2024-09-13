@@ -61,6 +61,15 @@ use(["../../../common/utils.js"], function(utils) {
           "autoRenew",
           "permissionRequired",
           "youDoNotHave",
+          "turnOnAutoRenewTitle",
+          "turnOFFAutoRenewTitle",
+          "autoRenewOnDescription",
+          "autoRenewOffDescription",
+          "yesTurnOffAutoRenew",
+          "noLeaveOnAutoRenew",
+          "yesTurnOnAutoRenew",
+          "noLeaveOffAutoRenew",
+          "savingAutoRenew"
         ];
 
         productLinesList.map((productLinesItem) =>
@@ -518,6 +527,11 @@ use(["../../../common/utils.js"], function(utils) {
 
         if (this.serviceData.renewalDetailLineItemEndpoint) {
             jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.renewalDetailLineItemEndpoint || "";
+        }
+
+
+        if (this.serviceData.manageSubscriptionEndpoint) {
+            jsonObject["manageSubscriptionEndpoint"] = this.serviceData.uiServiceDomain + this.serviceData.manageSubscriptionEndpoint || "";
         }
 
         if (this.serviceData && this.serviceData.enableShareOption) {

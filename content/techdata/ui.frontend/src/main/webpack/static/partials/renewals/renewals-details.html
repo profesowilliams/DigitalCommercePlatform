@@ -59,6 +59,15 @@
       autoRenew: "details.renewal.properties.label.autoRenew",
       permissionRequired: "details.renewal.properties.label.permissionRequired",
       youDoNotHave: "details.renewal.properties.label.youDoNotHave",
+      autoRenewOffDescription: 'When Auto-renew is off, agreements must be manually renewed to avoid cancelation.',
+      autoRenewOnDescription: 'When Auto-renew is on, agreements will auto-renew on <date>. An invoice will be automatically generated.',
+      yesTurnOffAutoRenew: "Yes, turn off",
+      yesTurnOnAutoRenew: "Yes, turn on",
+      turnOFFAutoRenewTitle: "Turn off Auto-renew",
+      turnOnAutoRenewTitle: "Turn On Auto-renew",
+      savingAutoRenew: "Saving",
+      noLeaveOffAutoRenew: "No, leave off",
+      noLeaveOnAutoRenew: "No, leave on"
     },
     quotePreview: {
       renewalsUrl: 'http://localhost:8080/renewals-grid.html',
@@ -299,6 +308,7 @@
     getStatusEndpoint: 'http://localhost:3000/ui-renewal/v1/getStatus',
     orderRenewalEndpoint: 'http://localhost:3000/ui-renewal/v1/order',
     exportXLSRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuoteDetails',
+    manageSubscriptionEndpoint: 'http://localhost:3000/ui-export/ui-renewal/v1/ManageSubscription',
     hideCopyHeaderOption: false,
     hideExportOption: false,
     enableShareOption: true,
