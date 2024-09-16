@@ -17,13 +17,6 @@ function AutoRenewModal({ data, isToggled, gridProps }) {
     const manageSubscriptionAPI = async () => {
         setSaveLoader(true);
         const subscriptions = [];
-        data?.itemsActive?.forEach((item) => {
-            subscriptions.push({
-              "AutorenewalEnabled": isToggled,
-              "RenewalQuantity": item?.quantity,
-              "SubscriptionId": item?.subscriptionId
-            })
-        });
 
         data?.items?.forEach((item) => {
             subscriptions.push({
