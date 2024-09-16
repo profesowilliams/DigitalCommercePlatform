@@ -341,7 +341,7 @@ function RenewalsDetails(props) {
                   />
                 </AccordionDetails>
               </Accordion>
-              <Accordion defaultExpanded>
+              <Accordion>
                 <AccordionSummary>
                   <div className="details-container">
                     <span className="details-preview">
