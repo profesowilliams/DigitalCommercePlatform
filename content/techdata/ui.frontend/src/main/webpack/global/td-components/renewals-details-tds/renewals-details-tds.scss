@@ -322,12 +322,23 @@
         border-radius: 2px;
         color: white;
         cursor: pointer;
+
+        &:hover,
+        &:active {
+          background-color: rgba(228, 229, 230, 1);
+          color: #888B8D;
+        }
       }
 
       .secondary {
         padding: 12px 10px;
         color: #005758;
         cursor: pointer;
+
+        &:hover,
+        &:active {
+          background-color: rgba(0, 87, 88, 0.2);
+        }
       }
     }
   }

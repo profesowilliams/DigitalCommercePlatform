@@ -27,11 +27,9 @@ function AutoRenewModal({ data, isToggled, gridProps }) {
         });
 
         const payload = {
-            data: {
-                "CustomerId": data?.customerPO?.text || '',
-                "QuoteId": data?.source?.id || '',
-                "Subscriptions": subscriptions
-            }
+            "CustomerId": data?.customerPO?.text || '',
+            "QuoteId": data?.source?.id || '',
+            "Subscriptions": subscriptions
         }
 
         const response = await manageSubscription(gridProps?.manageSubscriptionEndpoint, payload);

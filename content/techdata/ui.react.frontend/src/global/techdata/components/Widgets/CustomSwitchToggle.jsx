@@ -65,15 +65,16 @@ function CustomSwitchToggle({ toggled = false, onToggleChanged, disabled }) {
   const [isToggled, setIsToggled] = useState(toggled);
 
 const firstUpdate = useRef(true);
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (firstUpdate.current) {
             firstUpdate.current = false;
             return;
         }
-        if (typeof onToggleChanged === 'function') {
+        if (typeof onToggleChanged === 'function' && toggled !== isToggled) {
           onToggleChanged(isToggled);
+            setIsToggled(toggled);
         }
-    }, [isToggled]);
+    }, [isToggled, onToggleChanged, toggled]);
 
   const handleChange = () => {
     if (!disabled) {
