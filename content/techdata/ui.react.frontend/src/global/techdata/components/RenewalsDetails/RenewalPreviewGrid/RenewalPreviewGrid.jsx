@@ -6,8 +6,6 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from 'react';
-import { Button } from '@mui/material';
-import sanitizeHtml from 'sanitize-html';
 import PlaceOrderDialog from '../../RenewalsGrid/Orders/PlaceOrderDialog';
 import PlaceAdobeOrderDialog from '../../RenewalsGrid/Orders/PlaceAdobeOrderDialog';
 import Grid from '../../Grid/Grid';
@@ -31,76 +29,12 @@ import {
 import { useRenewalsDetailsStore } from '../store/RenewalsDetailsStore';
 import Toaster from '../../Widgets/Toaster';
 import { TOASTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
-import useIsIconEnabled from '../../RenewalsGrid/Orders/hooks/useIsIconEnabled';
 import {
   copyToClipboardAction,
   getContextMenuItems,
   setLocalStorageData,
 } from '../../RenewalsGrid/utils/renewalUtils';
-import useComputeBranding from '../../../hooks/useComputeBranding';
 import { getDictionaryValue } from '../../../../../utils/utils';
-
-function GridSubTotal({ subtotal, data, gridProps, compProps, adobeVendor }) {
-  const migrationQuoteType = data?.quoteType === 'Migration';
-  const renewalQuoteType = data?.quoteType === 'Renewal';
-  const autoRenewQuoteType = data?.quoteType === 'AutoRenew';
-  const isRequestQuoteFlag =
-    data?.canRequestQuote && compProps?.enableRequestQuote;
-  return (
-    <div className="cmp-renewal-preview__subtotal">
-      {migrationQuoteType && adobeVendor ? (
-        <div className="cmp-renewal-preview__subtotal--note">
-          {getDictionaryValue(
-            'details.renewal.label.migrationNote',
-            'Note: Pricing displayed is subject to vendor price changes and exchange rate fluctuations. Adobe: price displayed in migration quotes is for reference purpose only. VIP and VIP MP Renewals pricing will differ.'
-          )}
-        </div>
-      ) : (renewalQuoteType || autoRenewQuoteType) && adobeVendor ? (
-        <div className="cmp-renewal-preview__subtotal--note">
-          {getDictionaryValue(
-            'details.renewal.label.adobeNote',
-            'Please note that pricing is subject to change and is only valid in the same calendar month that this quote has been supplied. The vendor retains rights to implement pricing changes at the start of each month.'
-          )}
-        </div>
-      ) : (
-        <div
-          className="cmp-renewal-preview__subtotal--note"
-          dangerouslySetInnerHTML={{
-            __html: sanitizeHtml(gridProps?.note),
-          }}
-        ></div>
-      )}
-      <div className="cmp-renewal-preview__subtotal--price-note">
-        <b className="cmp-renewal-preview__subtotal--description">
-          {getDictionaryValue(
-            'details.renewal.label.subtotal',
-            'Quote Subtotal'
-          )}
-        </b>
-        <span className="cmp-renewal-preview__subtotal--value">
-          <span className="cmp-renewal-preview__subtotal--currency-symbol">
-            {gridProps?.quoteSubtotalCurrencySymbol || ''}
-          </span>
-          <span>
-            {isRequestQuoteFlag
-              ? '-'
-              : thousandSeparator(subtotal || data?.price)}
-          </span>
-          {gridProps?.quoteSubtotalCurrency?.length > 0 && (
-            <span className="cmp-renewal-preview__subtotal--currency-code">
-              {isRequestQuoteFlag
-                ? ''
-                : gridProps.quoteSubtotalCurrency?.replace(
-                    '{currency-code}',
-                    data?.currency || ''
-                  )}
-            </span>
-          )}
-        </span>
-      </div>
-    </div>
-  );
-}
 
 function Price({ value }, data, compProps) {
   const isRequestQuoteFlag =
@@ -113,13 +47,28 @@ function Price({ value }, data, compProps) {
 }
 
 function RenewalPreviewGrid(
-  { data, gridProps, shopDomainPage, isEditing, compProps, isActiveLicense, activeLicenseEdit, getUpdatedMutableGrid },
+  {
+    data,
+    gridProps,
+    shopDomainPage,
+    isEditing,
+    compProps,
+    isActiveLicense,
+    activeLicenseEdit,
+    getUpdatedMutableGrid,
+    isPODialogOpen,
+    isPAODialogOpen,
+    adobeVendor,
+    subtotal,
+    setSubtotal,
+    resultArray,
+    setIsPODialogOpen,
+    setIsPAODialogOpen,
+  },
   ref
 ) {
   const [modal, setModal] = useState(null);
   const [multipleFlag, setMultipleFlag] = useState(false);
-  const [isPODialogOpen, setIsPODialogOpen] = useState(false);
-  const [isPAODialogOpen, setIsPAODialogOpen] = useState(false);
   const [PONumber, setPONumber] = useState('');
 
   const orderEndpoints = {
@@ -127,13 +76,10 @@ function RenewalPreviewGrid(
     getStatusEndpoint: compProps.getStatusEndpoint,
     orderRenewalEndpoint: compProps.orderRenewalEndpoint,
   };
-  const { computeClassName } = useComputeBranding(useRenewalsDetailsStore);
-  const [subtotal, setSubtotal] = useState(null);
   const [orderButtonLabel, setOrderButtonLabel] = useState(
     gridProps?.orderButtonLabel
   );
   const gridData = isActiveLicense ? data.itemsActive : data.items;
-  const adobeVendor = data?.vendor?.name === 'Adobe';
   const orignalGridData = JSON.parse(JSON.stringify(gridData));
   const dataObj = data;
   const gridConfig = {
@@ -158,13 +104,6 @@ function RenewalPreviewGrid(
   // Get gridApi, save also as ref to be used on imperative handle
   const [gridApi, setGridApi] = useState(null);
   const gridApiRef = useRef(null);
-  const isIconEnabled =
-    useIsIconEnabled(
-      data?.firstAvailableOrderDate,
-      data?.canOrder,
-      compProps?.orderingFromDashboard?.showOrderingIcon
-    ) && !isRequestQuoteFlag;
-    const [orderIconDisable, setOrderIconDisable] = useState(false);
 
   function onAfterGridInit({ api }) {
     setGridApi(api);
@@ -192,8 +131,8 @@ function RenewalPreviewGrid(
 
   useEffect(() => {
     if (gridApiRef.current) {
-        getUpdatedMutableGrid(orignalGridData);
-        gridApiRef.current.setRowData(orignalGridData);
+      getUpdatedMutableGrid(orignalGridData);
+      gridApiRef.current.setRowData(orignalGridData);
     }
   }, [data]);
 
@@ -213,13 +152,6 @@ function RenewalPreviewGrid(
     () => ({
       cancelEdit() {
         // Copy original grid data
-        /* let copyGridData = JSON.parse(JSON.stringify(gridData));
-      if (gridSavedItems) {
-        copyGridData.map((item, index) => {
-          item.id = gridSavedItems[index].id;
-          item.quantity = gridSavedItems[index].quantity;
-          item.unitPrice = gridSavedItems[index].unitPrice;
-        })*/
         orignalGridData.forEach((item, index) => {
           resultArray.map((resultItem, resultIndex) => {
             if (
@@ -264,7 +196,6 @@ function RenewalPreviewGrid(
     contractMap.get(contractId).push(item);
   });
 
-  const resultArray = [];
   contractMap?.forEach((contractGroup, index) => {
     if (contractGroup.length >= 1 && contractMap?.size > 1) {
       let dueDateFlag = 0;
@@ -566,12 +497,6 @@ function RenewalPreviewGrid(
   function invokeModal(modal) {
     setModal(modal);
   }
-  const onOrderButtonClicked = () => {
-    effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
-    setIsPODialogOpen(true);
-    setIsPAODialogOpen(true);
-    setOrderIconDisable(true);
-  };
 
   const successToaster = {
     isOpen: true,
@@ -593,8 +518,7 @@ function RenewalPreviewGrid(
     };
     setIsPODialogOpen(false);
     setIsPAODialogOpen(false);
-    if (!isSuccess)
-        return;
+    if (!isSuccess) return;
 
     if (isSuccess) {
       if (adobeVendor) {
@@ -608,7 +532,7 @@ function RenewalPreviewGrid(
         location.href = compProps.quotePreview.renewalsUrl;
       }
     } else if (!options?.toaster?.isSuccess) {
-        setOrderIconDisable(false);
+      setOrderIconDisable(false);
     }
   };
 
@@ -648,34 +572,6 @@ function RenewalPreviewGrid(
           contextMenuItems={contextMenuItems}
           processCustomClipboardAction={processCustomClipboardAction}
         />
-        {/* <AgGridReact
-          rowData={mutableGridData}
-          columnDefs={columnDefs}
-
-        /> */}
-        {!isActiveLicense && resultArray?.length > 0 ? (
-          <>
-            <GridSubTotal
-              data={data}
-              gridProps={gridProps}
-              subtotal={subtotal}
-              compProps={compProps}
-              adobeVendor={adobeVendor}
-            />
-            <div className="place-cmp-order-dialog-container">
-              <p className="cmp-place-order-actions">
-                <Button
-                  disabled={orderIconDisable}
-                  className={computeClassName('cmp-detail-order-button')}
-                  onClick={onOrderButtonClicked}
-                  variant="contained"
-                >
-                  {getDictionaryValue('button.common.label.order', 'Order')}
-                </Button>
-              </p>
-            </div>
-          </>
-        ) : null}
       </section>
       {modal && (
         <Modal
