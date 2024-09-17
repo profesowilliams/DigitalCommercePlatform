@@ -8,6 +8,8 @@ import { getStatusLoopUntilStatusIsActive } from '../../RenewalsGrid/Orders/orde
 function AutoRenewModal({ data, isToggled, gridProps }) {
 
     const [saveLoader, setSaveLoader] = useState(false);
+    const date = data?.items?.[0]?.contract?.formattedNewAgreementStartDate;
+    const renewONText = gridProps?.productLines?.autoRenewOnDescription.replace('<date>', date);
 
     const closeModal = (e) => {
         const modalClose = e.target.closest('.cmp-modal').querySelector('.cmp-modal_close');
@@ -53,7 +55,7 @@ function AutoRenewModal({ data, isToggled, gridProps }) {
   return (
     <div className="cmp-auto-renew-modal--container">
         <p className="cmp-auto-renew-modal--desc">
-            {isToggled ? `${gridProps?.productLines?.autoRenewOnDescription}` :
+            {isToggled ? `${renewONText}` :
             `${gridProps?.productLines?.autoRenewOffDescription}`}
         </p>
         <div className="cmp-auto-renew-modal__button-section">
