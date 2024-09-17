@@ -265,14 +265,25 @@ function PlaceOrderDialog({
     </div>
   );
   useEffect(() => {
-    if (
-      confirmPurchaseChecked &&
-      confirmTermsChecked &&
-      purchaseOrderNumber?.length > 0
-    ) {
-      setEnablePlaceOrder(true);
+    if (endUserType === 'Education') {
+      if (
+        confirmPurchaseChecked &&
+        confirmTermsChecked &&
+        purchaseOrderNumber?.length > 0
+      ) {
+        setEnablePlaceOrder(true);
+      } else {
+        setEnablePlaceOrder(false);
+      }
     } else {
-      setEnablePlaceOrder(false);
+      if (
+        confirmTermsChecked &&
+        purchaseOrderNumber?.length > 0
+      ) {
+        setEnablePlaceOrder(true);
+      } else {
+        setEnablePlaceOrder(false);
+      }
     }
   }, [confirmPurchaseChecked, confirmTermsChecked, purchaseOrderNumber]);
 
@@ -319,46 +330,48 @@ function PlaceOrderDialog({
             fullWidth
           />
         </div>
-        <div className="place-order-dialog__content__checkbox">
-          <Checkbox
-            id="new-purchase-confirm-purchase-checkbox"
-            checked={confirmPurchaseChecked}
-            onChange={(e) => setConfirmPurchaseChecked(e.target.checked)}
-          />
-          {''}
-          <label className="place-order-dialog__content__text">
-            {getDictionaryValueOrKey(config?.iConfirmIAmAuthorizedByAdobe)}
-          </label>
-        </div>
-        <div className="place-order-dialog__content__checkbox--single-line">
-          <Checkbox
-            id="new-purchase-confirm-terms-checkbox-single-line"
-            checked={confirmTermsChecked}
-            onChange={(e) => setConfirmTermsChecked(e.target.checked)}
-          />
-          <label className="place-order-dialog__content__text">
-            {getDictionaryValueOrKey(config?.iHaveReadAndAcceptThe)}{' '}
-            <a
-              href={getDictionaryValueOrKey(
-                config?.termsAndConditionsLinkNewPurchase
-              )}
-              target="_blank"
-              className="place-order-dialog__content__link"
-            >
-              {getDictionaryValueOrKey(config?.techDataTermsConditions)}
-            </a>{' '}
-            {getDictionaryValueOrKey(config?.the)}{' '}
-            <a
-              href={getDictionaryValueOrKey(
-                config?.adobeResellerTermsAndConditionsLinkNewPurchase
-              )}
-              target="_blank"
-              className="place-order-dialog__content__link"
-            >
-              {getDictionaryValueOrKey(config?.adobeTermsConditions)}.
-            </a>
-          </label>
-        </div>
+        {endUserType === 'Education' && (
+          <div className="place-order-dialog__content__checkbox">
+            <Checkbox
+              id="new-purchase-confirm-purchase-checkbox"
+              checked={confirmPurchaseChecked}
+              onChange={(e) => setConfirmPurchaseChecked(e.target.checked)}
+            />
+            {''}
+            <label className="place-order-dialog__content__text">
+              {getDictionaryValueOrKey(config?.iConfirmIAmAuthorizedByAdobe)}
+            </label>
+          </div>
+        )}
+          <div className="place-order-dialog__content__checkbox--single-line">
+            <Checkbox
+              id="new-purchase-confirm-terms-checkbox-single-line"
+              checked={confirmTermsChecked}
+              onChange={(e) => setConfirmTermsChecked(e.target.checked)}
+            />
+            <label className="place-order-dialog__content__text">
+              {getDictionaryValueOrKey(config?.iHaveReadAndAcceptThe)}{' '}
+              <a
+                href={getDictionaryValueOrKey(
+                  config?.termsAndConditionsLinkNewPurchase
+                )}
+                target="_blank"
+                className="place-order-dialog__content__link"
+              >
+                {getDictionaryValueOrKey(config?.techDataTermsConditions)}
+              </a>{' '}
+              {getDictionaryValueOrKey(config?.the)}{' '}
+              <a
+                href={getDictionaryValueOrKey(
+                  config?.adobeResellerTermsAndConditionsLinkNewPurchase
+                )}
+                target="_blank"
+                className="place-order-dialog__content__link"
+              >
+                {getDictionaryValueOrKey(config?.adobeTermsConditions)}.
+              </a>
+            </label>
+          </div>
       </div>
 
       <DialogActions>
