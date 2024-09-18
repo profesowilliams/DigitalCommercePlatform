@@ -288,6 +288,11 @@ use(["../../../common/utils.js"], function (utils) {
             utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]));
     }
 
+    if (properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"]) {
+        newPurchaseFlyout["adobeResellerTermsAndConditionsLinkNewPurchase"] =
+            utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"]));
+    }
+
     if (newPurchaseFlyout != null) {
       jsonObject["newPurchaseFlyout"] = newPurchaseFlyout;
     }

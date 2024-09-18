@@ -465,8 +465,7 @@
                     name="./newPurchaseFlyout/adobeTermsConditions"/>
                 <adobeResellerTermsAndConditionsLinkNewPurchase
                     jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldDescription="details.renewal.orders.label.adobeResellerTermsAndConditionsLink"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                     fieldLabel="Adobe Reseller Terms And Conditions Link"
                     name="./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"/>
                 <termsAndConditionsLinkNewPurchase

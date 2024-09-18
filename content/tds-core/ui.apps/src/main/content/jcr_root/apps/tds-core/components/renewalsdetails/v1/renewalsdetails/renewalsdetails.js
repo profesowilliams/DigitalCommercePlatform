@@ -396,6 +396,7 @@ use(["../../../common/utils.js"], function(utils) {
           "yourOrderFor",
           "hasBeenSuccessfullySubmittedForProcessing",
           "adobeResellerTermsAndConditionsLinkNewPurchase",
+          "termsAndConditionsLinkNewPurchase",
         ];
 
         newPurchaseFlyoutList.map(
@@ -405,6 +406,11 @@ use(["../../../common/utils.js"], function(utils) {
         if (properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]) {
             newPurchaseFlyout["termsAndConditionsLinkNewPurchase"] =
                 utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]));
+        }
+
+        if (properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"]) {
+            newPurchaseFlyout["adobeResellerTermsAndConditionsLinkNewPurchase"] =
+                utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"]));
         }
 
         if (newPurchaseFlyout != null) {
@@ -596,11 +602,18 @@ use(["../../../common/utils.js"], function(utils) {
         const orderingFromDashboard =
             utils.fillFieldsDialogPropertiesWithPrefix(orderingProperties, "./orderingProperties/");
         if (!!orderingFromDashboard) {
-        orderingFromDashboard.termsAndConditionsLink = utils.addHtmlIfNeeded(
-          utils.transformUrlGivenEnvironment(
-            orderingFromDashboard.termsAndConditionsLink
-          )
-        );
+            orderingFromDashboard.termsAndConditionsLink = utils.addHtmlIfNeeded(
+                utils.transformUrlGivenEnvironment(
+                    orderingFromDashboard.termsAndConditionsLink
+                )
+            );
+
+            orderingFromDashboard.adobeResellerTermsAndConditionsLink = utils.addHtmlIfNeeded(
+                utils.transformUrlGivenEnvironment(
+                    orderingFromDashboard.adobeResellerTermsAndConditionsLink
+                )
+            );
+
             jsonObject["orderingFromDashboard"] = orderingFromDashboard;
         }
     }

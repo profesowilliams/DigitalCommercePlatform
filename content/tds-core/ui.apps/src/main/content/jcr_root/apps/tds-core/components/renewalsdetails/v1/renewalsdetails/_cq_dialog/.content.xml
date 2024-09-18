@@ -583,7 +583,6 @@
                                                             <adobeResellerTermsAndConditionsLink
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                                fieldDescription="details.renewal.orders.label.adobeResellerTermsAndConditionsLink"
                                                                 fieldLabel="Adobe Reseller Terms and Conditions Link"
                                                                 name="./orderingProperties/adobeResellerTermsAndConditionsLink"/>
                                                             <successSubmission
