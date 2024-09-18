@@ -265,7 +265,7 @@ function PlaceOrderDialog({
     </div>
   );
   useEffect(() => {
-    if (endUserType === 'Education') {
+    if (detailsData?.endUserType === 'Education') {
       if (
         confirmPurchaseChecked &&
         confirmTermsChecked &&
@@ -276,10 +276,7 @@ function PlaceOrderDialog({
         setEnablePlaceOrder(false);
       }
     } else {
-      if (
-        confirmTermsChecked &&
-        purchaseOrderNumber?.length > 0
-      ) {
+      if (confirmTermsChecked && purchaseOrderNumber?.length > 0) {
         setEnablePlaceOrder(true);
       } else {
         setEnablePlaceOrder(false);
