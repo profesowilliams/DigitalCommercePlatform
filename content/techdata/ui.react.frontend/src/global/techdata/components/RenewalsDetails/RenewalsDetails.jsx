@@ -365,7 +365,7 @@ function RenewalsDetails(props) {
                   />
                 </AccordionDetails>
               </Accordion>
-              <Accordion>
+              <Accordion defaultExpanded>
                 <AccordionSummary>
                   <div className="details-container">
                     <span className="details-preview">
@@ -413,29 +413,29 @@ function RenewalsDetails(props) {
                   />
                 </AccordionDetails>
               </Accordion>
-                <GridSubTotal
-                  data={renewalsDetails}
-                  gridProps={{
-                    ...componentProp.productLines,
-                    ...componentProp.quoteEditing,
-                    excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
-                  }}
-                  subtotal={subtotal}
-                  compProps={componentProp}
-                  adobeVendor={adobeVendor}
-                />
-                <div className="place-cmp-order-dialog-container">
-                  <p className="cmp-place-order-actions">
-                    <Button
-                      disabled={orderIconDisable}
-                      className={computeClassName('cmp-detail-order-button')}
-                      onClick={onOrderButtonClicked}
-                      variant="contained"
-                    >
-                      {getDictionaryValue('button.common.label.order', 'Order')}
-                    </Button>
-                  </p>
-                </div>
+              <GridSubTotal
+                data={renewalsDetails}
+                gridProps={{
+                  ...componentProp.productLines,
+                  ...componentProp.quoteEditing,
+                  excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
+                }}
+                subtotal={subtotal}
+                compProps={componentProp}
+                adobeVendor={adobeVendor}
+              />
+              <div className="place-cmp-order-dialog-container">
+                <p className="cmp-place-order-actions">
+                  <Button
+                    disabled={orderIconDisable}
+                    className={computeClassName('cmp-detail-order-button')}
+                    onClick={onOrderButtonClicked}
+                    variant="contained"
+                  >
+                    {getDictionaryValue('button.common.label.order', 'Order')}
+                  </Button>
+                </p>
+              </div>
             </div>
           ) : (
             <div div className="details-upper-wrapper">
