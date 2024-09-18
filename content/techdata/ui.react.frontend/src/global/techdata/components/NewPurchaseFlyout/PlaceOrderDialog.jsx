@@ -327,7 +327,7 @@ function PlaceOrderDialog({
             fullWidth
           />
         </div>
-        {endUserType === 'Education' && (
+        {detailsData?.endUserType === 'Education' && (
           <div className="place-order-dialog__content__checkbox">
             <Checkbox
               id="new-purchase-confirm-purchase-checkbox"
@@ -340,35 +340,35 @@ function PlaceOrderDialog({
             </label>
           </div>
         )}
-          <div className="place-order-dialog__content__checkbox--single-line">
-            <Checkbox
-              id="new-purchase-confirm-terms-checkbox-single-line"
-              checked={confirmTermsChecked}
-              onChange={(e) => setConfirmTermsChecked(e.target.checked)}
-            />
-            <label className="place-order-dialog__content__text">
-              {getDictionaryValueOrKey(config?.iHaveReadAndAcceptThe)}{' '}
-              <a
-                href={getDictionaryValueOrKey(
-                  config?.termsAndConditionsLinkNewPurchase
-                )}
-                target="_blank"
-                className="place-order-dialog__content__link"
-              >
-                {getDictionaryValueOrKey(config?.techDataTermsConditions)}
-              </a>{' '}
-              {getDictionaryValueOrKey(config?.the)}{' '}
-              <a
-                href={getDictionaryValueOrKey(
-                  config?.adobeResellerTermsAndConditionsLinkNewPurchase
-                )}
-                target="_blank"
-                className="place-order-dialog__content__link"
-              >
-                {getDictionaryValueOrKey(config?.adobeTermsConditions)}.
-              </a>
-            </label>
-          </div>
+        <div className="place-order-dialog__content__checkbox--single-line">
+          <Checkbox
+            id="new-purchase-confirm-terms-checkbox-single-line"
+            checked={confirmTermsChecked}
+            onChange={(e) => setConfirmTermsChecked(e.target.checked)}
+          />
+          <label className="place-order-dialog__content__text">
+            {getDictionaryValueOrKey(config?.iHaveReadAndAcceptThe)}{' '}
+            <a
+              href={getDictionaryValueOrKey(
+                config?.termsAndConditionsLinkNewPurchase
+              )}
+              target="_blank"
+              className="place-order-dialog__content__link"
+            >
+              {getDictionaryValueOrKey(config?.techDataTermsConditions)}
+            </a>{' '}
+            {getDictionaryValueOrKey(config?.the)}{' '}
+            <a
+              href={getDictionaryValueOrKey(
+                config?.adobeResellerTermsAndConditionsLinkNewPurchase
+              )}
+              target="_blank"
+              className="place-order-dialog__content__link"
+            >
+              {getDictionaryValueOrKey(config?.adobeTermsConditions)}.
+            </a>
+          </label>
+        </div>
       </div>
 
       <DialogActions>
