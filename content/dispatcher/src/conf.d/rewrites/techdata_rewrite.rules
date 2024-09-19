@@ -15,22 +15,22 @@ RewriteRule ^/(my)/(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1/$2 [PT
 RewriteRule ^/content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/my/(.*)$ http://www.mytecd.com/$1 [R=301,L]
 
 RewriteRule ^/(ar|br|ca|cl|co|ec|mx|pe|us)/sitemap.xml$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/americas/$1/en.sitemap.xml [PT,L]
-RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)/sitemap.xml(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1/en.sitemap.xml [PT,L]
-RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr|uk)/sitemap.xml(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/europe/$1/en.sitemap.xml [PT,L]
+RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn|jp)/sitemap.xml(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1/en.sitemap.xml [PT,L]
+RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr|uk|al|ba|bg|xk|mk|md|me)/sitemap.xml(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/europe/$1/en.sitemap.xml [PT,L]
 
 RewriteCond %{REQUEST_URI} !(/|.jpe?g|.html|.svg|.json|.png|.txt|.xml|.cache)$
 
 # apac
 RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn|jp)/(en|ja)/?$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1/$2.html [PT,L,NC]
-RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)/?$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1/en.html [PT,L,NC]
+RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn|jp)/?$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1/en.html [PT,L,NC]
 
 # americas
 RewriteRule ^/(ar|ca|cl|co|ec|pe|us|br|mx)/(en|pt|es|fr)/?$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/americas/$1/$2.html [PT,L,NC]
 RewriteRule ^/(ar|ca|cl|co|ec|pe|us)/?$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/americas/$1/en.html [PT,L,NC]
 
 # europe
-RewriteRule ^/(at|be|ch|cs|de|dk|es|fi|hr|hu|ie|nl|no|pl|pt|ro|se|sk|tr|uk|cz|fr|it)/(en|cz|fr|it)/?$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/europe/$1/$2.html [PT,L,NC]
-RewriteRule ^/(at|be|ch|cs|de|dk|es|fi|hr|hu|ie|nl|no|pl|pt|ro|se|sk|tr|uk)/?$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/europe/$1/en.html [PT,L,NC]
+RewriteRule ^/(at|be|ch|cs|de|dk|es|fi|hr|hu|ie|nl|no|pl|pt|ro|se|sk|tr|uk|al|ba|bg|xk|mk|md|me|cz|fr|it)/(en|cz|fr|it)/?$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/europe/$1/$2.html [PT,L,NC]
+RewriteRule ^/(at|be|ch|cs|de|dk|es|fi|hr|hu|ie|nl|no|pl|pt|ro|se|sk|tr|uk|al|ba|bg|xk|mk|md|me)/?$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/europe/$1/en.html [PT,L,NC]
 
 RewriteCond %{REQUEST_URI} !^/apps
 RewriteCond %{REQUEST_URI} !^/bin
@@ -43,7 +43,7 @@ RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
 RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
-RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr|uk)(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/europe/$1$2 [PT,L]
+RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr|uk|al|ba|bg|xk|mk|md|me)(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/europe/$1$2 [PT,L]
 
 RewriteCond %{REQUEST_URI} !^/apps
 RewriteCond %{REQUEST_URI} !^/bin
@@ -69,7 +69,7 @@ RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
 RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
-RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1$2 [PT,L]
+RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn|jp)(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/$1$2 [PT,L]
 
 # Google Site Verification
 RewriteRule ^/google(.*).html$ /content/dam/${CONTENT_FOLDER_NAME_TECHDATA}/site-root-files/google$1.html [PT,L]
