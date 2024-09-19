@@ -265,7 +265,10 @@ function PlaceOrderDialog({
     </div>
   );
   useEffect(() => {
-    if (detailsData?.endUserType === 'Education') {
+    if (
+      detailsData?.endUserType === 'Education' ||
+      endUserType === 'Education'
+    ) {
       if (
         confirmPurchaseChecked &&
         confirmTermsChecked &&
@@ -327,7 +330,8 @@ function PlaceOrderDialog({
             fullWidth
           />
         </div>
-        {detailsData?.endUserType === 'Education' && (
+        {(detailsData?.endUserType === 'Education' ||
+          endUserType === 'Education') && (
           <div className="place-order-dialog__content__checkbox">
             <Checkbox
               id="new-purchase-confirm-purchase-checkbox"
