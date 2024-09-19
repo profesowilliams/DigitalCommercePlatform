@@ -266,24 +266,13 @@ function PlaceOrderDialog({
   );
   useEffect(() => {
     if (
-      detailsData?.endUserType === 'Education' ||
-      endUserType === 'Education'
+      confirmPurchaseChecked &&
+      confirmTermsChecked &&
+      purchaseOrderNumber?.length > 0
     ) {
-      if (
-        confirmPurchaseChecked &&
-        confirmTermsChecked &&
-        purchaseOrderNumber?.length > 0
-      ) {
-        setEnablePlaceOrder(true);
-      } else {
-        setEnablePlaceOrder(false);
-      }
+      setEnablePlaceOrder(true);
     } else {
-      if (confirmTermsChecked && purchaseOrderNumber?.length > 0) {
-        setEnablePlaceOrder(true);
-      } else {
-        setEnablePlaceOrder(false);
-      }
+      setEnablePlaceOrder(false);
     }
   }, [confirmPurchaseChecked, confirmTermsChecked, purchaseOrderNumber]);
 
@@ -330,20 +319,17 @@ function PlaceOrderDialog({
             fullWidth
           />
         </div>
-        {(detailsData?.endUserType === 'Education' ||
-          endUserType === 'Education') && (
-          <div className="place-order-dialog__content__checkbox">
-            <Checkbox
-              id="new-purchase-confirm-purchase-checkbox"
-              checked={confirmPurchaseChecked}
-              onChange={(e) => setConfirmPurchaseChecked(e.target.checked)}
-            />
-            {''}
-            <label className="place-order-dialog__content__text">
-              {getDictionaryValueOrKey(config?.iConfirmIAmAuthorizedByAdobe)}
-            </label>
-          </div>
-        )}
+        <div className="place-order-dialog__content__checkbox">
+          <Checkbox
+            id="new-purchase-confirm-purchase-checkbox"
+            checked={confirmPurchaseChecked}
+            onChange={(e) => setConfirmPurchaseChecked(e.target.checked)}
+          />
+          {''}
+          <label className="place-order-dialog__content__text">
+            {getDictionaryValueOrKey(config?.iConfirmIAmAuthorizedByAdobe)}
+          </label>
+        </div>
         <div className="place-order-dialog__content__checkbox--single-line">
           <Checkbox
             id="new-purchase-confirm-terms-checkbox-single-line"

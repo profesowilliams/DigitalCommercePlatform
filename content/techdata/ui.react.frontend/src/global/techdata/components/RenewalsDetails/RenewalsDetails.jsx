@@ -14,22 +14,22 @@ import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
 import { useStore } from "../../../../utils/useStore"
 import { isAuthormodeAEM, isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import { If } from "../../helpers/If";
+import Edit from "./Edit";
+import CancelAndSave from "./CancelAndSave";
 import Saving from "./Saving";
 import CancelDialog from "./Cancel/CancelDialog";
 import { get, post } from '../../../../utils/api';
 import { getStatusLoopUntilStatusIsActive, mapRenewalForUpdateDetails } from '../RenewalsGrid/Orders/orderingRequests';
 import { useRenewalsDetailsStore } from "./store/RenewalsDetailsStore";
 import EditFlow from './ConfigGrid/Common/EditFlow'; 
-import { getDictionaryValueOrKey, getDictionaryValue } from "../../../../utils/utils";
+import { removeDashboardSeparator, getDictionaryValueOrKey } from "../../../../utils/utils";
 import useAuth from "../../hooks/useAuth";
 import { getSessionInfo } from "../../../../utils/intouch/user/get";
 import { enableIntouchLogin } from "../../../../utils/intouch/intouchUtils";
 import {
   AddIcon
 } from '../../../../fluentIcons/FluentIcons';
-import { Button } from "@mui/material";
-import GridSubTotal from "./RenewalPreviewGrid/GridSubTotal";
-import useComputeBranding from "../../hooks/useComputeBranding";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -67,15 +67,6 @@ function RenewalsDetails(props) {
   const [openCancelDialog, setOpenCancelDialog] = useState(false);
 
   const [mutableData, setMutableData] = useState(null);
-
-  const [isPODialogOpen, setIsPODialogOpen] = useState(false);
-  const [isPAODialogOpen, setIsPAODialogOpen] = useState(false);
-  const [orderIconDisable, setOrderIconDisable] = useState(false);
-  const { computeClassName } = useComputeBranding(useRenewalsDetailsStore);
-  const adobeVendor = renewalsDetails?.vendor?.name === 'Adobe';
-  const [subtotal, setSubtotal] = useState(null);
-  const isActiveLicense = true;
-  const resultArray = [];
 
   const redirectToShop = () => {
     window.location = shopURL;
@@ -281,12 +272,6 @@ function RenewalsDetails(props) {
       },
     });
   };
-  const onOrderButtonClicked = () => {
-    effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
-    setIsPODialogOpen(true);
-    setIsPAODialogOpen(true);
-    setOrderIconDisable(true);
-  };
 
   const isEditable = ({ canEditLines }) => canEditLines && !saving;
   return (
@@ -351,21 +336,12 @@ function RenewalsDetails(props) {
                     }}
                     isEditing={false}
                     shopDomainPage={componentProp.shopDomainPage}
-                    isActiveLicense={isActiveLicense}
+                    isActiveLicense={true}
                     getUpdatedMutableGrid={getUpdatedMutableGrid}
-                    isPODialogOpen={isPODialogOpen}
-                    isPAODialogOpen={isPAODialogOpen}
-                    orderIconDisable={orderIconDisable}
-                    adobeVendor={adobeVendor}
-                    subtotal={subtotal}
-                    setSubtotal={setSubtotal}
-                    resultArray={resultArray}
-                    setIsPODialogOpen={setIsPODialogOpen}
-                    setIsPAODialogOpen={setIsPAODialogOpen}
                   />
                 </AccordionDetails>
               </Accordion>
-              <Accordion defaultExpanded>
+              <Accordion>
                 <AccordionSummary>
                   <div className="details-container">
                     <span className="details-preview">
@@ -401,41 +377,9 @@ function RenewalsDetails(props) {
                     shopDomainPage={componentProp.shopDomainPage}
                     activeLicenseEdit={renewalsDetails?.itemsActive?.length > 0}
                     getUpdatedMutableGrid={getUpdatedMutableGrid}
-                    isPODialogOpen={isPODialogOpen}
-                    isPAODialogOpen={isPAODialogOpen}
-                    orderIconDisable={orderIconDisable}
-                    adobeVendor={adobeVendor}
-                    subtotal={subtotal}
-                    setSubtotal={setSubtotal}
-                    resultArray={resultArray}
-                    setIsPODialogOpen={setIsPODialogOpen}
-                    setIsPAODialogOpen={setIsPAODialogOpen}
                   />
                 </AccordionDetails>
               </Accordion>
-              <GridSubTotal
-                data={renewalsDetails}
-                gridProps={{
-                  ...componentProp.productLines,
-                  ...componentProp.quoteEditing,
-                  excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
-                }}
-                subtotal={subtotal}
-                compProps={componentProp}
-                adobeVendor={adobeVendor}
-              />
-              <div className="place-cmp-order-dialog-container">
-                <p className="cmp-place-order-actions">
-                  <Button
-                    disabled={orderIconDisable}
-                    className={computeClassName('cmp-detail-order-button')}
-                    onClick={onOrderButtonClicked}
-                    variant="contained"
-                  >
-                    {getDictionaryValue('button.common.label.order', 'Order')}
-                  </Button>
-                </p>
-              </div>
             </div>
           ) : (
             <div div className="details-upper-wrapper">
@@ -470,15 +414,6 @@ function RenewalsDetails(props) {
                 isEditing={!toggleEdit}
                 shopDomainPage={componentProp.shopDomainPage}
                 getUpdatedMutableGrid={getUpdatedMutableGrid}
-                isPODialogOpen={isPODialogOpen}
-                isPAODialogOpen={isPAODialogOpen}
-                orderIconDisable={orderIconDisable}
-                adobeVendor={adobeVendor}
-                subtotal={subtotal}
-                setSubtotal={setSubtotal}
-                resultArray={resultArray}
-                setIsPODialogOpen={setIsPODialogOpen}
-                setIsPAODialogOpen={setIsPAODialogOpen}
               />
             </div>
           )}
