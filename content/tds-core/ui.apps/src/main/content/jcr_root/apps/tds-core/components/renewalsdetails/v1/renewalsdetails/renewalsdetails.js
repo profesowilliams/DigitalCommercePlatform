@@ -23,6 +23,8 @@ use(["../../../common/utils.js"], function(utils) {
           "line",
           "lineItemDetailsLabel",
           "lineActiveLicenceLabel",
+          "changesNotSavedRedBanner",
+          "zeroQuantityBlueBanner",
           "addMoreButton",
           "lineRenewalDetailsLabel",
           "downloadPDFLabel",

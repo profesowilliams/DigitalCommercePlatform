@@ -39,6 +39,7 @@ import {
 } from '../../RenewalsGrid/utils/renewalUtils';
 import useComputeBranding from '../../../hooks/useComputeBranding';
 import { getDictionaryValue } from '../../../../../utils/utils';
+import { StatusProhibitedIcon } from '../../../../../fluentIcons/FluentIcons';
 
 function GridSubTotal({ subtotal, data, gridProps, compProps, adobeVendor }) {
   const migrationQuoteType = data?.quoteType === 'Migration';
@@ -112,8 +113,22 @@ function Price({ value }, data, compProps) {
   );
 }
 
+
+  let transformedArray = [];
+
 function RenewalPreviewGrid(
-  { data, gridProps, shopDomainPage, isEditing, compProps, isActiveLicense, activeLicenseEdit, getUpdatedMutableGrid },
+  {
+    data,
+    gridProps,
+    shopDomainPage,
+    isEditing,
+    compProps,
+    isActiveLicense,
+    activeLicenseEdit,
+    getUpdatedMutableGrid,
+    errorMessagesUpdate,
+    closeCancelDialog
+  },
   ref
 ) {
   const [modal, setModal] = useState(null);
@@ -164,7 +179,7 @@ function RenewalPreviewGrid(
       data?.canOrder,
       compProps?.orderingFromDashboard?.showOrderingIcon
     ) && !isRequestQuoteFlag;
-    const [orderIconDisable, setOrderIconDisable] = useState(false);
+  const [orderIconDisable, setOrderIconDisable] = useState(!isIconEnabled);
 
   function onAfterGridInit({ api }) {
     setGridApi(api);
@@ -192,8 +207,8 @@ function RenewalPreviewGrid(
 
   useEffect(() => {
     if (gridApiRef.current) {
-        getUpdatedMutableGrid(orignalGridData);
-        gridApiRef.current.setRowData(orignalGridData);
+      getUpdatedMutableGrid(orignalGridData);
+      gridApiRef.current.setRowData(orignalGridData);
     }
   }, [data]);
 
@@ -359,6 +374,22 @@ function RenewalPreviewGrid(
     total: '100px',
   });
 
+    useEffect(() => {
+        if (errorMessagesUpdate) {
+            transformedArray = errorMessagesUpdate?.map((message) => {
+               const lineMatch = message?.match(/Line=(\d+)/);
+               const subscriptionIdMatch = message?.match(/SubscriptionId=([\w\d]+)/);
+               return {
+                 line: lineMatch ? lineMatch[1] : null,
+                 subscriptionId: subscriptionIdMatch ? subscriptionIdMatch[1] : null,
+               };
+             });
+             if (closeCancelDialog) {
+                closeCancelDialog(true);
+             }
+        }
+    }, [errorMessagesUpdate]);
+
   const columnDefinitionsOverride = [
     {
       field: 'id',
@@ -368,8 +399,22 @@ function RenewalPreviewGrid(
         if (contractMap.size > 1) {
           setMultipleFlag(true);
         }
+        //TODO: transformedArray is not passed properly to cellRenderer from agGrid
+        const iconShown = transformedArray?.some(
+          ({ subscriptionId, line }) =>
+            data?.subscriptionId === subscriptionId && data?.id === line
+        );
+
         return !data?.id?.includes('Agreement') ? (
-          data.id
+          // TODO: add some styling to icon display
+          <div className="error-id-column">
+            {iconShown && (
+              <span className="error-icon">
+                <StatusProhibitedIcon />
+              </span>
+            )}
+            <span>{data.id}</span>
+          </div>
         ) : (
           <div className="row-header">
             <div>
@@ -593,8 +638,7 @@ function RenewalPreviewGrid(
     };
     setIsPODialogOpen(false);
     setIsPAODialogOpen(false);
-    if (!isSuccess)
-        return;
+    if (!isSuccess) return;
 
     if (isSuccess) {
       if (adobeVendor) {
@@ -608,7 +652,7 @@ function RenewalPreviewGrid(
         location.href = compProps.quotePreview.renewalsUrl;
       }
     } else if (!options?.toaster?.isSuccess) {
-        setOrderIconDisable(false);
+      setOrderIconDisable(false);
     }
   };
 

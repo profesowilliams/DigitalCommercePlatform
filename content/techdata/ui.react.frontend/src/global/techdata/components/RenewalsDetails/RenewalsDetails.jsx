@@ -28,8 +28,12 @@ import useAuth from "../../hooks/useAuth";
 import { getSessionInfo } from "../../../../utils/intouch/user/get";
 import { enableIntouchLogin } from "../../../../utils/intouch/intouchUtils";
 import {
-  AddIcon
+  AddIcon,
+  ProhibitedIcon,
+  DismissFilledSmallIcon
 } from '../../../../fluentIcons/FluentIcons';
+
+let redBanner = false;
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -61,12 +65,15 @@ function RenewalsDetails(props) {
   const [saving, setSaving] = useState(false);
   const [authenticated, setAuthenticated] = useState(true);
 
+  const [redBannerShow, setRedBannerShow] = useState(true);
+
   // Keep grid reference to cancel edit changes
   const gridRef = useRef();
 
   const [openCancelDialog, setOpenCancelDialog] = useState(false);
 
   const [mutableData, setMutableData] = useState(null);
+  const [errorMessagesUpdate, setErrorMessagesUpdate] = useState([]);
 
   const redirectToShop = () => {
     window.location = shopURL;
@@ -74,17 +81,25 @@ function RenewalsDetails(props) {
 
   const renewalsRef = useRef();
 
-  useEffect(()=>{
+  useEffect(() => {
     const renewalsNode = renewalsRef.current;
-    const parentRenewalsStyle = renewalsNode?.parentNode?.parentNode?.parentNode;
-    const isTDSynnex = parentRenewalsStyle?.classList.contains("cmp-renewals-details__tds");
-    const isTechdata = parentRenewalsStyle?.classList.contains("cmp-grid-techdata");
-    let branding = isTechdata ? 'cmp-grid-techdata' : (isTDSynnex ? 'td-synnex' : '');
-    effects.setCustomState({key:'branding', value:branding});
-  },[])
+    const parentRenewalsStyle =
+      renewalsNode?.parentNode?.parentNode?.parentNode;
+    const isTDSynnex = parentRenewalsStyle?.classList.contains(
+      'cmp-renewals-details__tds'
+    );
+    const isTechdata =
+      parentRenewalsStyle?.classList.contains('cmp-grid-techdata');
+    let branding = isTechdata
+      ? 'cmp-grid-techdata'
+      : isTDSynnex
+      ? 'td-synnex'
+      : '';
+    effects.setCustomState({ key: 'branding', value: branding });
+  }, []);
 
   useEffect(() => {
-    if(enableIntouchLogin()) {
+    if (enableIntouchLogin()) {
       getSessionInfo().then((data) => {
         setUserData(data[1]);
       });
@@ -94,20 +109,26 @@ function RenewalsDetails(props) {
   useEffect(() => {
     // Remove Dashboard separator(s) from only Renewal Details page
     // In case of don't have access redirect to shop
-    if(process.env.NODE_ENV === "development") return;
-    if(isAuthormodeAEM()) return; // Validation for Author ENV
+    if (process.env.NODE_ENV === 'development') return;
+    if (isAuthormodeAEM()) return; // Validation for Author ENV
 
-    const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : USER_DATA;
+    const currentUserData =
+      isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : USER_DATA;
 
     // If user not logged in
     const access_message = document.querySelector('.renewals-errormessage');
-    if(currentUserData &&
-    !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS })) {
-        if (access_message) {
-            setAuthenticated(false);
-            access_message.style.display = 'block';
-            document.querySelector('.subheader').style.display = 'none';
-        }
+    if (
+      currentUserData &&
+      !hasAccess({
+        user: currentUserData,
+        accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS,
+      })
+    ) {
+      if (access_message) {
+        setAuthenticated(false);
+        access_message.style.display = 'block';
+        document.querySelector('.subheader').style.display = 'none';
+      }
     }
   }, [
     USER_DATA,
@@ -115,32 +136,37 @@ function RenewalsDetails(props) {
     ACCESS_TYPES,
     isAuthormodeAEM,
     hasAccess,
-    redirectToShop
+    redirectToShop,
   ]);
 
   const getErrorMessage = (errorCode) => {
-    if(errorCode === 404) {
+    if (errorCode === 404) {
       return errorMessages?.notFoundErrorMessage;
     }
     return errorMessages?.unexpectedErrorMessage;
-  }
+  };
 
-  const getDetailsAPI  = () => {
+  const getDetailsAPI = () => {
     changeRefreshDetailApiState();
   };
 
-  const showSimpleModal = (title, content, onModalClosed=closeModal, buttonLabel, modalAction) =>
+  const showSimpleModal = (
+    title,
+    content,
+    onModalClosed = closeModal,
+    buttonLabel,
+    modalAction
+  ) =>
     setModal((previousInfo) => ({
       content: content,
       properties: {
-          title:  title,
-          buttonLabel
+        title: title,
+        buttonLabel,
       },
       onModalClosed,
       ...previousInfo,
-      modalAction
-    })
-  );
+      modalAction,
+    }));
 
   const closeModal = () => setModal(null);
 
@@ -148,12 +174,16 @@ function RenewalsDetails(props) {
     showSimpleModal(title, <div>{message}</div>, redirectPage || undefined);
 
   useEffect(() => {
-    if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+    if ((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()) {
       if (apiResponse?.content?.details) {
         setRenewalsDetails(apiResponse?.content?.details[0]);
-      } else if(apiResponse?.error?.isError) {// 200 Ok isError=true
-          showErrorModal(errorMessages?.errorLoadingPageTitle, getErrorMessage(apiResponse.error?.code),
-            () => window.location.href = errorMessages?.errorLoadingPageRedirect);
+      } else if (apiResponse?.error?.isError) {
+        // 200 Ok isError=true
+        showErrorModal(
+          errorMessages?.errorLoadingPageTitle,
+          getErrorMessage(apiResponse.error?.code),
+          () => (window.location.href = errorMessages?.errorLoadingPageRedirect)
+        );
       }
     }
   }, [apiResponse, isExtraReloadDisabled(), isLoggedIn]);
@@ -172,7 +202,7 @@ function RenewalsDetails(props) {
     } else {
       setEditMode(true);
     }
-  }
+  };
 
   const handleCancel = () => {
     setOpenCancelDialog(true);
@@ -182,9 +212,10 @@ function RenewalsDetails(props) {
 
   const handleSave = () => {
     setSaving(true);
+    redBanner = false;
     updateDetails()
       .then((result) => {
-        if(result) {
+        if (result) {
           effects.setCustomState({ key: 'savedItems', value: gridItems });
           setLockedEdit(false);
           setToggleEdit(true);
@@ -208,59 +239,101 @@ function RenewalsDetails(props) {
 
   const getUpdatedMutableGrid = (resultArr) => {
     setMutableData(resultArr);
-  }
+  };
 
-  const updateDetails = async (endUserDetails, resellerDetails, shipToDetails) => {
+  const updateDetails = async (
+    endUserDetails,
+    resellerDetails,
+    shipToDetails
+  ) => {
     try {
-        const data = mutableData && JSON.stringify(gridRef.current.getMutableGridData()) !== JSON.stringify(mutableData) ?
-            mutableData : gridRef.current.getMutableGridData();
+      const data =
+        mutableData &&
+        JSON.stringify(gridRef.current.getMutableGridData()) !==
+          JSON.stringify(mutableData)
+          ? mutableData
+          : gridRef.current.getMutableGridData();
       effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
       renewalsDetails.endUser = endUserDetails || renewalsDetails.endUser;
       renewalsDetails.reseller = resellerDetails || renewalsDetails.reseller;
       renewalsDetails.shipTo = shipToDetails || renewalsDetails.shipTo;
-      renewalsDetails.items = (data)?.filter(item => !(item.id.includes('Agreement')));
+      renewalsDetails.items = data?.filter(
+        (item) => !item.id.includes('Agreement')
+      );
 
       if (renewalsDetails.endUser?.eaNumber?.text) {
         renewalsDetails['EANumber'] = renewalsDetails.endUser?.eaNumber?.text;
       }
 
-
       const updated = await updateRenewalDetails(renewalsDetails);
-      if(updated) {
+      if (updated) {
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint: componentProp.getStatusEndpoint,
           id: renewalsDetails.source.id,
           delay: 2000,
-          iterations: 7})
-        if(isActiveQuote) {
-          const toaster = {isOpen:true, origin:'fromUpdate', isAutoClose:true, isSuccess: true, message:componentProp.quoteEditing.successUpdate}
+          iterations: 7,
+        });
+        if (isActiveQuote) {
+          const toaster = {
+            isOpen: true,
+            origin: 'fromUpdate',
+            isAutoClose: true,
+            isSuccess: true,
+            message: componentProp.quoteEditing.successUpdate,
+          };
           effects.setCustomState({ key: 'toaster', value: { ...toaster } });
-          if (endUserDetails || resellerDetails)
-            changeRefreshDetailApiState();
+          if (endUserDetails || resellerDetails) changeRefreshDetailApiState();
           return true;
         } else {
-          const toaster = {isOpen:true, origin:'fromUpdate', isAutoClose:true, isSuccess: false, message:componentProp.quoteEditing?.failedUpdate}
+          const toaster = {
+            isOpen: true,
+            origin: 'fromUpdate',
+            isAutoClose: true,
+            isSuccess: false,
+            message: componentProp.quoteEditing?.failedUpdate,
+          };
           effects.setCustomState({ key: 'toaster', value: { ...toaster } });
         }
       }
     } catch (ex) {
-      const errorTitle = "Could not save changes.";
-      let errorMessage = 'We are sorry, your update could not be processed, please try again later.';
-      if(ex.status === 200 && ex?.data?.salesContentEmail) {
-        errorMessage = componentProp.quoteEditing?.failedUpdate?.replace('{email}', ex.data.salesContentEmail)
+      const errorTitle = 'Could not save changes.';
+      let errorMessage =
+        'We are sorry, your update could not be processed, please try again later.';
+      if (ex.status === 200 && ex?.data?.salesContentEmail) {
+        errorMessage = componentProp.quoteEditing?.failedUpdate?.replace(
+          '{email}',
+          ex.data.salesContentEmail
+        );
       }
-      const errorToaster = {isOpen:true, origin:'fromUpdate', isSuccess: false, title: errorTitle, message: errorMessage}
+      const errorToaster = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isSuccess: false,
+        title: errorTitle,
+        message: errorMessage,
+      };
       effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });
     }
     return false;
-  }
+  };
 
   const updateRenewalDetails = async (details) => {
-    const { POAllowedLength, ...payload} = mapRenewalForUpdateDetails(details);
-    const updateResponse = await post(componentProp.updateRenewalOrderEndpoint, payload);
+    const { POAllowedLength, ...payload } = mapRenewalForUpdateDetails(details);
+    const updateResponse = await post(
+      componentProp.updateRenewalOrderEndpoint,
+      payload
+    );
     const updateError = updateResponse?.data?.error;
-    if(updateError?.isError) throw updateResponse;
+    const updateErrorMessages = updateError?.messages || [];
+    setErrorMessagesUpdate(updateErrorMessages);
+    setRedBannerShow(true);
+    if (updateError?.isError) throw updateResponse;
     return true;
+  };
+
+  const closeRedBanner = (e) => {
+    // e.target.closest('.details-error-red-banner').remove();
+    setRedBannerShow(false);
   }
 
   const openNewPurchaseFlyout = (e) => {
@@ -338,10 +411,11 @@ function RenewalsDetails(props) {
                     shopDomainPage={componentProp.shopDomainPage}
                     isActiveLicense={true}
                     getUpdatedMutableGrid={getUpdatedMutableGrid}
+                    errorMessagesUpdate={errorMessagesUpdate}
                   />
                 </AccordionDetails>
               </Accordion>
-              <Accordion>
+              <Accordion defaultExpanded>
                 <AccordionSummary>
                   <div className="details-container">
                     <span className="details-preview">
@@ -364,6 +438,23 @@ function RenewalsDetails(props) {
                   </div>
                 </AccordionSummary>
                 <AccordionDetails>
+                    {
+                        errorMessagesUpdate?.length !== 0 &&
+                        <div
+                          className={redBannerShow ? 'details-error-red-banner' : 'details-error-red-banner hide'}
+                        >
+                          <p>
+                            <ProhibitedIcon />
+                             {getDictionaryValueOrKey(
+                              componentProp?.productLines?.changesNotSavedRedBanner,
+                              'Changes didn`t save. Try again Banner Label'
+                              )}
+                          </p>
+                          <div className="close-icon" onClick={closeRedBanner}>
+                              <DismissFilledSmallIcon />
+                            </div>
+                        </div>
+                    }
                   <RenewalPreviewGrid
                     ref={gridRef}
                     data={renewalsDetails}
@@ -377,6 +468,8 @@ function RenewalsDetails(props) {
                     shopDomainPage={componentProp.shopDomainPage}
                     activeLicenseEdit={renewalsDetails?.itemsActive?.length > 0}
                     getUpdatedMutableGrid={getUpdatedMutableGrid}
+                    errorMessagesUpdate={errorMessagesUpdate}
+                    closeCancelDialog={closeCancelDialog}
                   />
                 </AccordionDetails>
               </Accordion>
@@ -414,6 +507,8 @@ function RenewalsDetails(props) {
                 isEditing={!toggleEdit}
                 shopDomainPage={componentProp.shopDomainPage}
                 getUpdatedMutableGrid={getUpdatedMutableGrid}
+                errorMessagesUpdate={errorMessagesUpdate}
+                closeCancelDialog={closeCancelDialog}
               />
             </div>
           )}

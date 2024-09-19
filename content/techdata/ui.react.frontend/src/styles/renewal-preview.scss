@@ -451,3 +451,46 @@
     line-height: 24px;
   }
 }
+
+.cmp-renewals-details__tds .ag-cell[col-id="id"] {
+    text-align: center;
+}
+
+.cmp-renewals-details__tds .ag-cell[col-id="id"] .ag-cell-wrapper {
+    justify-content: center;
+}
+
+.cmp-renewals-details__tds .ag-cell[col-id="id"] .error-icon {
+    position: absolute;
+    left: 0px;
+    bottom: 6px;
+}
+
+.details-error-red-banner {
+    padding: 20px;
+  background-color: $banner-cherry;
+  border-left: 4px solid $brand-cherry;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    &.hide {
+        display: none;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      color: $brand-charcoal;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex: 0 0 80%;
+    }
+
+    .close-icon {
+        cursor: pointer;
+    }
+}
