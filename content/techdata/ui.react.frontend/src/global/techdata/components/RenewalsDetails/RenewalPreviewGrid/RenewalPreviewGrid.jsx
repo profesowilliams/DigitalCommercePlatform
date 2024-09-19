@@ -204,21 +204,21 @@ function RenewalPreviewGrid(
       let serviceLevelFlag = 0;
       contractGroup.forEach((val, i) => {
         serviceLevelFlag =
-          contractGroup[0].contract.serviceLevel == val.contract.serviceLevel
+          contractGroup[0].contract?.serviceLevel == val?.contract?.serviceLevel
             ? serviceLevelFlag + 1
             : serviceLevelFlag;
         dueDateFlag =
-          contractGroup[0].contract.dueDate == val.contract.dueDate
+          contractGroup[0]?.contract?.dueDate == val?.contract?.dueDate
             ? dueDateFlag + 1
             : dueDateFlag;
         agreementDurationFlag =
           contractGroup[0]?.contract?.agreementDuration ===
-          val.contract.agreementDuration
+          val?.contract?.agreementDuration
             ? agreementDurationFlag + 1
             : agreementDurationFlag;
         usagePeriodFlag =
-          contractGroup[0].contract.formattedUsagePeriod ===
-          val.contract.formattedUsagePeriod
+          contractGroup[0]?.contract?.formattedUsagePeriod ===
+          val?.contract?.formattedUsagePeriod
             ? usagePeriodFlag + 1
             : usagePeriodFlag;
       });
@@ -241,7 +241,7 @@ function RenewalPreviewGrid(
         }
       });
       const activeGridData = gridData.filter((data) => {
-        return data.contract.id === index;
+        return data?.contract?.id === index;
       });
       resultArray.push({
         ...activeGridData[0],
@@ -256,7 +256,7 @@ function RenewalPreviewGrid(
         usagePeriodFlag: usagePeriodFlag === contractGroup.length,
         serviceLevelHeaderFlag:
           data.quoteSupportLevel?.indexOf('see line') > -1,
-        dueDateHeaderFlag: data.formattedDueDate?.indexOf('see line') > -1,
+        dueDateHeaderFlag: data?.formattedDueDate?.indexOf('see line') > -1,
         agreementDurationHeaderFlag:
           data.agreementDuration?.indexOf('see line') > -1,
         usagePeriodHeaderFlag:
