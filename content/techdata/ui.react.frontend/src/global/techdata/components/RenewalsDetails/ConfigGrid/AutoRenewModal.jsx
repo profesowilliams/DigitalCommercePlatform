@@ -12,8 +12,10 @@ function AutoRenewModal({ data, isToggled, gridProps }) {
     const renewONText = gridProps?.productLines?.autoRenewOnDescription.replace('<date>', date);
 
     const closeModal = (e) => {
-        const modalClose = e.target.closest('.cmp-modal').querySelector('.cmp-modal_close');
-        modalClose.click();
+        const modalClose = document.querySelector('.cmp-auto-renew-modal .cmp-modal_close');
+        if (modalClose) {
+            modalClose.click();
+        }
     };
 
     const manageSubscriptionAPI = async () => {
@@ -47,7 +49,7 @@ function AutoRenewModal({ data, isToggled, gridProps }) {
                 window.location.reload();
               }
         } else {
-            modalClose.click();
+            closeModal();
         }
         setSaveLoader(false);
     }

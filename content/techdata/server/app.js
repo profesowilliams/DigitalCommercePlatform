@@ -4968,6 +4968,9 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           ],
           renewalLevelActive: "Level 4 100+",
           "canAddMore": true,
+          autoRenew: false,
+          isAutoRenewEnabled: true,
+          displayAutoRenew: true,
           revision: 1.0,
           subRevision: 0.0,
           activeFlag: "Y",
@@ -5145,7 +5148,17 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "details.renewal.label.subtotal": "Quote Subtotal",
     "details.renewal.label.backTo": "Back to all Renewals",
     "details.renewal.label.title": "Quote Preview",
-
+    "details.renewal.label.yourOrderFor": "Your order for",
+    "details.renewal.label.hasBeenSuccessfullySubmittedForProcessing":
+     "has been successfully submitted for processing.",
+     "details.renewal.newPurchaseFlyout.label.addMore": "Add more",
+     "details.renewal.orders.label.adobeResellerTermsAndConditionsLink":
+     "https://uat.dc.tdebusiness.cloud/vn/en/terms-and-conditions/vendor-pass-through-terms.html",
+     "details.renewal.properties.label.autoRenew": "Auto-renew",
+     "details.renewal.properties.label.permissionRequired":
+      "Permission required",
+     "details.renewal.properties.label.youDoNotHave":
+     "You do not have the proper credentials to place an order. Contact your Admin for more information.",
     "grids.common.label.results": "{0}-{1} of {2} results",
     "grids.common.label.of": "of",
     "grids.renewal.label.selectedPlan": "Selected Plan",
@@ -5290,6 +5303,84 @@ app.get("/ui-commerce/v1/quote/canConvertToOrder", function (req, res) {
   };
   console.log(`Verifying UAN Qty for Quote #${req.query.id}`);
   req.query.s === "1" ? res.json(success) : res.json(fail);
+});
+
+
+app.post("/ui-export/ui-renewal/v1/ManageSubscription", function (req, res) {
+  const success =
+[
+    {
+        "subscription_id": "2a815c63904fdf9197b5f0e5364289NA",
+        "errorMessage": "",
+        "errorCode": "",
+        "autoRenewal": {
+            "enabled": true,
+            "renewalQuantity": 2
+        },
+        "creationDate": "2024-09-11T05:18:01Z",
+        "currentQuantity": 1,
+        "status": "Active",
+        "isSuccess": true,
+        "links": {
+            "self": {
+                "headers": [],
+                "method": "GET",
+                "uri": "/v3/customers/P1005126298/subscriptions/2a815c63904fdf9197b5f0e5364289NA"
+            }
+        },
+        "statusCode": 0
+    },
+    {
+        "subscription_id": "ce934527af45498c1edc36139c898bNA",
+        "errorMessage": "",
+        "errorCode": "",
+        "autoRenewal": {
+            "enabled": true,
+            "renewalQuantity": 2
+        },
+        "creationDate": "2024-09-11T05:18:01Z",
+        "currentQuantity": 1,
+        "status": "Active",
+        "isSuccess": true,
+        "links": {
+            "self": {
+                "headers": [],
+                "method": "GET",
+                "uri": "/v3/customers/P1005126298/subscriptions/ce934527af45498c1edc36139c898bNA"
+            }
+        },
+        "statusCode": 0
+    }
+];
+
+  const error = [
+    {
+        "subscription_id": "",
+        "errorMessage": "Invalid Customer or Subscription ID",
+        "errorCode": "3115",
+        "autoRenewal": {
+            "enabled": false,
+            "renewalQuantity": 0
+        },
+        "currentQuantity": 0,
+        "status": "",
+        "isSuccess": false,
+        "links": {
+            "self": {
+                "headers": [],
+                "method": "",
+                "uri": ""
+            }
+        },
+        "statusCode": 0
+    }
+];
+
+  //mockResponses.failedResponse
+
+  setTimeout(() => {
+    return res.status(200).json(error);
+  }, 1000);
 });
 
 app.post("/ui-renewal/v1/Update", function (req, res) {
