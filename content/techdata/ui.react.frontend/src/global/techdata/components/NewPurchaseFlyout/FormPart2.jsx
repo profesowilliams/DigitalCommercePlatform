@@ -774,6 +774,7 @@ function FormPart2({
           closeFlyout={closeFlyout}
           onQueryChanged={onQueryChanged}
           isAddMore={isAddMore}
+          detailsEndUserType={detailsEndUserType}
         />
       </div>
     </>

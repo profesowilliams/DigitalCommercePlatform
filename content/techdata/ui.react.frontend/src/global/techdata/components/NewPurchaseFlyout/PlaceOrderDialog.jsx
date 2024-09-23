@@ -27,6 +27,7 @@ function PlaceOrderDialog({
   closeFlyout,
   onQueryChanged,
   isAddMore,
+  detailsEndUserType,
   getDetailsAPI,
 }) {
   const [confirmPurchaseChecked, setConfirmPurchaseChecked] = useState(false);
@@ -51,6 +52,10 @@ function PlaceOrderDialog({
     endUserAreaCode,
     endUserCountry,
   } = formPart1States;
+
+  const enableFirstCheckbox =
+    (endUserType || detailsEndUserType) === 'Education';
+
   // Add manufacturer: 'Adobe',and format quantity to int
 
   const programName = `VIP MP ${endUserType}`;
@@ -266,7 +271,7 @@ function PlaceOrderDialog({
   );
   useEffect(() => {
     if (
-      confirmPurchaseChecked &&
+      (enableFirstCheckbox ? confirmPurchaseChecked : true) &&
       confirmTermsChecked &&
       purchaseOrderNumber?.length > 0
     ) {
@@ -319,17 +324,19 @@ function PlaceOrderDialog({
             fullWidth
           />
         </div>
-        <div className="place-order-dialog__content__checkbox">
-          <Checkbox
-            id="new-purchase-confirm-purchase-checkbox"
-            checked={confirmPurchaseChecked}
-            onChange={(e) => setConfirmPurchaseChecked(e.target.checked)}
-          />
-          {''}
-          <label className="place-order-dialog__content__text">
-            {getDictionaryValueOrKey(config?.iConfirmIAmAuthorizedByAdobe)}
-          </label>
-        </div>
+        {enableFirstCheckbox && (
+          <div className="place-order-dialog__content__checkbox">
+            <Checkbox
+              id="new-purchase-confirm-purchase-checkbox"
+              checked={confirmPurchaseChecked}
+              onChange={(e) => setConfirmPurchaseChecked(e.target.checked)}
+            />
+            {''}
+            <label className="place-order-dialog__content__text">
+              {getDictionaryValueOrKey(config?.iConfirmIAmAuthorizedByAdobe)}
+            </label>
+          </div>
+        )}
         <div className="place-order-dialog__content__checkbox--single-line">
           <Checkbox
             id="new-purchase-confirm-terms-checkbox-single-line"
