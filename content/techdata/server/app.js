@@ -5177,6 +5177,9 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "grids.common.label.filterSearch": "Show results",
     "grids.common.label.filterDate": "Date",
 
+    "mainDashboard.renewal.newPurchaseFlyout.label.vendorPartNoLookUpEndpoint":
+      "http://localhost:3000/ui-renewal/v1/PartNumbers/Find",
+
     "mainDashboard.renewal.newPurchaseFlyout.label.resellerAccountNumber":
       "* Reseller account number",
     "mainDashboard.renewal.newPurchaseFlyout.label.search": "Search",
@@ -5260,6 +5263,53 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "mainDashboard.renewal.newPurchaseFlyout.label.duration": "Duration",
     "mainDashboard.renewal.newPurchaseFlyout.label.licensePriceLevel":
       "License/price level",
+    "mainDashboard.renewal.newPurchaseFlyout.label.productDetails":
+      "Product details",
+    "mainDashboard.renewal.newPurchaseFlyout.label.vendorPartNo":
+      "Vendor part Nº",
+    "mainDashboard.renewal.newPurchaseFlyout.label.listPrice": "List price",
+    "mainDashboard.renewal.newPurchaseFlyout.label.unitPrice": "Unit price",
+    "mainDashboard.renewal.newPurchaseFlyout.label.qty": "Qty",
+    "mainDashboard.renewal.newPurchaseFlyout.label.totalPrice": "Total price",
+    "mainDashboard.renewal.newPurchaseFlyout.label.subtotal": "Subtotal:",
+    "mainDashboard.renewal.newPurchaseFlyout.label.resellerSubtotal":
+      "Reseller subtotal ({currency-code}):",
+    "mainDashboard.renewal.newPurchaseFlyout.label.taxesNotIncluded":
+      "Taxes not included.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.days": "days",
+    "mainDashboard.renewal.newPurchaseFlyout.label.validateOrder":
+      "Validate order",
+    "mainDashboard.renewal.newPurchaseFlyout.label.validating": "Validating",
+    "mainDashboard.renewal.newPurchaseFlyout.label.unknownError":
+      "Unknown error has occurred. Please try again.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.accountDoesntExistError":
+      "Account doesn't exist!",
+    "mainDashboard.renewal.newPurchaseFlyout.label.quoteExistsError":
+      "Quote exists, please try again with another account.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.modifyOrder": "Modify order",
+    "mainDashboard.renewal.newPurchaseFlyout.label.completeOrder":
+      "Complete order",
+    "mainDashboard.renewal.newPurchaseFlyout.label.toCompletePlacingYourOrderFor":
+      "To complete placing your order for",
+    "mainDashboard.renewal.newPurchaseFlyout.label.pleaseProvideTheFollowingInformation":
+      "please provide the following information.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.purchaseOrderNumber":
+      "Purchase order number",
+    "mainDashboard.renewal.newPurchaseFlyout.label.max35Characters":
+      "Max 35 characters",
+    "mainDashboard.renewal.newPurchaseFlyout.label.iConfirmIAmAuthorizedByAdobe":
+      "I confirm I am authorized by Adobe to purchase and sell Education licenses. Should my account no longer be authorized I agree that my order will be cancelled by Tech Data.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.iHaveReadAndAcceptThe":
+      "I have read and accept the",
+    "mainDashboard.renewal.newPurchaseFlyout.label.techDataTermsConditions":
+      "TechData Terms & Conditions",
+    "mainDashboard.renewal.newPurchaseFlyout.label.the": "& the",
+    "mainDashboard.renewal.newPurchaseFlyout.label.adobeTermsConditions":
+      "Adobe Terms & Conditions",
+    "mainDashboard.renewal.newPurchaseFlyout.label.productNotFound":
+      "Product not found",
+    "mainDashboard.renewal.newPurchaseFlyout.label.noMatchFoundPleaseTryAgain":
+      "No match found, please try again.",
   });
 });
 
@@ -5516,6 +5566,327 @@ app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
   };
 
   return res.status(200).json(SearchInput.includes("err") ? fail : success);
+});
+
+app.post("/ui-renewal/v1/PartNumbers/Find", function (req, res) {
+  const { MaxParts, PartialManufacturerPartNumber, Properties } = req.body;
+
+  console.log("PartNumbers", req.body);
+  const success = {
+    foundParts: [
+      {
+        productId: "ADB30001555CA01A12",
+        manufacturerPartNumber: "30001555CA01A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Enterprise ALL Other Multi Asian Languages Enterprise Hosted Subscription New",
+      },
+      {
+        productId: "ADB30001555CA02A12",
+        manufacturerPartNumber: "30001555CA02A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Enterprise ALL Other Multi Asian Languages Enterprise Hosted Subscription New",
+      },
+      {
+        productId: "ADB30001555CA03A12",
+        manufacturerPartNumber: "30001555CA03A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Enterprise ALL Other Multi Asian Languages Enterprise Hosted Subscription New",
+      },
+      {
+        productId: "ADB30001563CA02A12",
+        manufacturerPartNumber: "30001563CA02A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Teams ALL Other Multi Asian Languages Hosted Subscription",
+      },
+      {
+        productId: "ADB30001563CA01A12",
+        manufacturerPartNumber: "30001563CA01A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Teams ALL Other Multi Asian Languages Hosted Subscription",
+      },
+      {
+        productId: "ADB30001555CA04A12",
+        manufacturerPartNumber: "30001555CA04A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Enterprise ALL Other Multi Asian Languages Enterprise Hosted Subscription New",
+      },
+      {
+        productId: "ADB30001563CA04A12",
+        manufacturerPartNumber: "30001563CA04A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Teams ALL Other Multi Asian Languages Hosted Subscription",
+      },
+      {
+        productId: "ADB30001563CA03A12",
+        manufacturerPartNumber: "30001563CA03A12",
+        globalManufacturer: "ADOBE",
+        shortDescription:
+          "Generative Credits Add-on for Teams ALL Other Multi Asian Languages Hosted Subscription",
+      },
+    ],
+  };
+
+  //mockResponses.failedResponse
+
+  return res.status(200).json(success);
+});
+
+app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
+  const success = {
+    content: {
+      reseller: {
+        id: "",
+        isValid: true,
+        incumbent: false,
+        vendorAccountNumber: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: false,
+          allowedLength: 0,
+        },
+        name: "",
+        nameUpper: "",
+        contact: [
+          {
+            name: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            email: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+            phone: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+          },
+        ],
+        address: {
+          line1: "",
+          city: "",
+          country: "",
+          countryCode: "",
+        },
+      },
+      endUser: {
+        isValid: false,
+        name: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: false,
+          allowedLength: 0,
+          text: "123",
+        },
+        nameUpper: "123",
+        eaNumber: {
+          isValid: false,
+          isMandatory: false,
+          isDisplay: false,
+          canEdit: false,
+          allowedLength: 0,
+        },
+        contact: [
+          {
+            name: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+              text: "123",
+            },
+            email: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+              text: "Andrzej Pruszynski",
+            },
+            phone: {
+              isValid: false,
+              isMandatory: false,
+              isDisplay: false,
+              canEdit: false,
+              allowedLength: 0,
+            },
+          },
+        ],
+        address: {
+          line1: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+            text: "Mickiewicza 61",
+          },
+          city: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+            text: "asd",
+          },
+          postalCode: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+            text: "52-651",
+          },
+          country: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+            text: "VN",
+          },
+          countryCode: {
+            isValid: false,
+            isMandatory: false,
+            isDisplay: false,
+            canEdit: false,
+            allowedLength: 0,
+          },
+        },
+      },
+      items: [
+        {
+          id: "1",
+          product: [
+            {
+              type: "TECHDATA",
+              id: "ADB30001555CA01A12",
+            },
+            {
+              type: "MANUFACTURER",
+              id: "30001555CA01A12",
+              name: "Generative Credits Add-on for Enterprise ALL Other Multi Asian Languages Enterprise Hosted Subscription New",
+              family: "Generative Credits Add-on for Enterprise",
+            },
+          ],
+          quantity: "4.0",
+          unitPrice: "1223000.0",
+          unitPriceOriginal: "50000.0",
+          unitPriceCurrency: "VND",
+          unitCost: "45.96",
+          unitCostCurrency: "USD",
+          totalPrice: "1223000.0",
+          unitListPrice: "1247000.0",
+          unitListPriceCurrency: "VND",
+          agency: "CreateOrder",
+          contract: {
+            startDate: "8/26/2024 00:00:00",
+            endDate: "8/25/2025 00:00:00",
+            autoRenew: false,
+          },
+          minimumQuantity: 4.0,
+          maximumQuantity: 20.0,
+        },
+        {
+          id: "2",
+          product: [
+            {
+              type: "TECHDATA",
+              id: "ADB30001563CA01A12",
+            },
+            {
+              type: "MANUFACTURER",
+              id: "30001563CA01A12",
+              name: "Generative Credits Add-on for Teams ALL Other Multi Asian Languages Hosted Subscription",
+              family: "Generative Credits Add-on for Teams",
+            },
+          ],
+          quantity: "2.0",
+          unitPrice: "1223000.0",
+          unitPriceOriginal: "50000.0",
+          unitPriceCurrency: "VND",
+          unitCost: "45.96",
+          unitCostCurrency: "USD",
+          totalPrice: "1223000.0",
+          unitListPrice: "1247000.0",
+          unitListPriceCurrency: "VND",
+          agency: "CreateOrder",
+          contract: {
+            startDate: "8/26/2024 00:00:00",
+            endDate: "8/25/2025 00:00:00",
+            autoRenew: false,
+          },
+          minimumQuantity: 2.0,
+          maximumQuantity: 9.0,
+        },
+      ],
+      currency: "VND",
+      totalSellPrice: "2446000",
+      renewalLevel: "Level 1 1 - 9",
+      feedBackMessages: [
+        {
+          ruleNumber: 100,
+          errorCriticality: 2,
+          message:
+            "License level, list price, unit price and subtotal have been updated due to quantity change.",
+          refId: "",
+          type: "",
+          jsonUrl: "",
+        },
+      ],
+      canEditQuantity: true,
+      canEditReselerPrice: true,
+      expiry: "0001-01-01T00:00:00",
+      canOrder: true,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+
+  //mockResponses.failedResponse
+
+  setTimeout(() => {
+    return res.status(200).json(success);
+  }, 1000);
+});
+
+app.post("/ui-renewal/v1/Cart/CreateOrder", function (req, res) {
+  const success = {
+    content: {
+      success: true,
+    },
+    error: {
+      code: 0,
+      messages: ["string"],
+      isError: false,
+    },
+  };
+
+  setTimeout(() => {
+    return res.status(200).json(success);
+  }, 3000);
 });
 
 app.get("/ui-renewal/v1/SearchCheck", (req, res) => {
