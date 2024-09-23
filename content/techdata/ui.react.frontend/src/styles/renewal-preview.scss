@@ -468,8 +468,8 @@
 
 .details-error-red-banner {
     padding: 20px;
-  background-color: $banner-cherry;
-  border-left: 4px solid $brand-cherry;
+    background-color: $banner-cherry;
+    border-left: 4px solid $brand-cherry;
     display: flex;
     align-items: start;
     justify-content: space-between;
@@ -492,5 +492,26 @@
 
     .close-icon {
         cursor: pointer;
+    }
+}
+
+.details-error-blue-banner {
+    padding: 20px;
+      background-color: $light-blue;
+    border-left: 4px solid $brand-cobalt;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      color: $brand-charcoal;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex: 0 0 80%;
     }
 }

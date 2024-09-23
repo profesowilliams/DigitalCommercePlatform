@@ -39,7 +39,7 @@ import {
 } from '../../RenewalsGrid/utils/renewalUtils';
 import useComputeBranding from '../../../hooks/useComputeBranding';
 import { getDictionaryValue } from '../../../../../utils/utils';
-import { StatusProhibitedIcon } from '../../../../../fluentIcons/FluentIcons';
+import { StatusProhibitedIcon, BannerInfoIcon } from '../../../../../fluentIcons/FluentIcons';
 
 function GridSubTotal({ subtotal, data, gridProps, compProps, adobeVendor }) {
   const migrationQuoteType = data?.quoteType === 'Migration';
@@ -127,7 +127,8 @@ function RenewalPreviewGrid(
     activeLicenseEdit,
     getUpdatedMutableGrid,
     errorMessagesUpdate,
-    closeCancelDialog
+    closeCancelDialog,
+    setErrorBlueBanner
   },
   ref
 ) {
@@ -404,15 +405,22 @@ function RenewalPreviewGrid(
           ({ subscriptionId, line }) =>
             data?.subscriptionId === subscriptionId && data?.id === line
         );
+        if (data?.quantity === 0)
+            setErrorBlueBanner(true);
 
         return !data?.id?.includes('Agreement') ? (
           // TODO: add some styling to icon display
           <div className="error-id-column">
-            {iconShown && (
+            {iconShown ? (
               <span className="error-icon">
                 <StatusProhibitedIcon />
               </span>
-            )}
+            ) : null}
+            { (!iconShown && data?.quantity === 0) ? (
+                <span className="error-icon">
+                   <BannerInfoIcon width="18" height="18" />
+                </span>
+            ) : null}
             <span>{data.id}</span>
           </div>
         ) : (

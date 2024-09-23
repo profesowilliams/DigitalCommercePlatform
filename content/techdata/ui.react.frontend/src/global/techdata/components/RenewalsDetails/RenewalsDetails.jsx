@@ -30,7 +30,8 @@ import { enableIntouchLogin } from "../../../../utils/intouch/intouchUtils";
 import {
   AddIcon,
   ProhibitedIcon,
-  DismissFilledSmallIcon
+  DismissFilledSmallIcon,
+  BannerInfoIcon
 } from '../../../../fluentIcons/FluentIcons';
 
 let redBanner = false;
@@ -66,6 +67,7 @@ function RenewalsDetails(props) {
   const [authenticated, setAuthenticated] = useState(true);
 
   const [redBannerShow, setRedBannerShow] = useState(true);
+  const [blueBannerShow, setBlueBannerShow] = useState(false);
 
   // Keep grid reference to cancel edit changes
   const gridRef = useRef();
@@ -336,6 +338,10 @@ function RenewalsDetails(props) {
     setRedBannerShow(false);
   }
 
+  const setErrorBlueBanner = () => {
+    setBlueBannerShow(true);
+  }
+
   const openNewPurchaseFlyout = (e) => {
     e.stopPropagation();
     setCustomState({
@@ -455,6 +461,20 @@ function RenewalsDetails(props) {
                             </div>
                         </div>
                     }
+                    {
+                        blueBannerShow &&
+                        <div
+                          className='details-error-blue-banner'
+                        >
+                          <p>
+                            <BannerInfoIcon />
+                             {getDictionaryValueOrKey(
+                              componentProp?.productLines?.zeroQuantityBlueBanner,
+                              'Zero Quantity Blue Banner Label'
+                              )}
+                          </p>
+                        </div>
+                    }
                   <RenewalPreviewGrid
                     ref={gridRef}
                     data={renewalsDetails}
@@ -464,6 +484,7 @@ function RenewalsDetails(props) {
                       ...componentProp.quoteEditing,
                       excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
                     }}
+                    setErrorBlueBanner={setErrorBlueBanner}
                     isEditing={!toggleEdit}
                     shopDomainPage={componentProp.shopDomainPage}
                     activeLicenseEdit={renewalsDetails?.itemsActive?.length > 0}
