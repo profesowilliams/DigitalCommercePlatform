@@ -537,6 +537,9 @@ function RenewalPreviewGrid(
         ? ''
         : gridProps.listPrice?.replace('{currency-code}', data?.currency || ''),
       cellRenderer: (props) => {
+      if (props?.data?.quantity === 0 && !isActiveLicense)
+        return '-';
+      else
         return !props?.data?.id?.includes('Agreement') && !isActiveLicense
           ? Price(props, data, compProps)
           : '';
@@ -561,7 +564,10 @@ function RenewalPreviewGrid(
       suppressKeyboardEvent: (params) => suppressNavigation(params),
       cellRenderer: (props) => {
         const isEditing = isEditingRef.current && data?.canEditResellerPrice;
-        return !props?.data?.id?.includes('Agreement') && !isActiveLicense
+        if (props?.data?.quantity === 0 && !isActiveLicense)
+           return '-';
+        else
+            return !props?.data?.id?.includes('Agreement') && !isActiveLicense
           ? UnitPriceColumn({ ...props, isEditing })
           : '';
       },
@@ -587,10 +593,14 @@ function RenewalPreviewGrid(
             '{currency-code}',
             data?.currency || ''
           ),
-      cellRenderer: (props) =>
-        !props?.data?.id?.includes('Agreement') && !isActiveLicense
-          ? Price(props, data, compProps)
-          : '',
+      cellRenderer: (props) => {
+        if (props?.data?.quantity === 0 && !isActiveLicense)
+          return '-';
+        else
+            return !props?.data?.id?.includes('Agreement') && !isActiveLicense
+              ? Price(props, data, compProps)
+              : ''
+      },
       valueGetter: 'data.quantity * data.unitPrice',
       // Use sum aggFunc to also update subtotal value.
       // Function is triggered on internal grid updates.
@@ -696,6 +706,7 @@ function RenewalPreviewGrid(
           columnDefinition={columnDefs}
           config={gridConfig}
           data={resultArray}
+          isActiveLicense={isActiveLicense}
           getDefaultCopyValue={getDefaultCopyValue}
           contextMenuItems={contextMenuItems}
           processCustomClipboardAction={processCustomClipboardAction}

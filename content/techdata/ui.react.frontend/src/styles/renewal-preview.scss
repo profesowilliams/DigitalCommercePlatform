@@ -495,6 +495,12 @@
     }
 }
 
+.zero-quantity-row div,
+.zero-quantity-row span,
+.zero-quantity-row p {
+    color: #888B8D !important;
+}
+
 .details-error-blue-banner {
     padding: 20px;
       background-color: $light-blue;

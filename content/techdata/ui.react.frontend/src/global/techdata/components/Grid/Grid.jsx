@@ -32,6 +32,7 @@ function Grid(props) {
     onSortChanged,
     handlerIsRowMaster,
     icons,
+    isActiveLicense,
     sortingOrder,
     omitCreatedQuery = false,
     contextMenuItems = undefined,
@@ -614,7 +615,7 @@ function Grid(props) {
 
   function getRowClass(row) {
     if (row?.data) {
-      let classes = "";
+      let classes = (!isActiveLicense && row?.data?.quantity === 0) ? "zero-quantity-row" : "";
       const columnKeys = Object.keys(row.data);
       columnKeys.forEach((key) => {
         const columnDef = filteredColumns.find((el) => {
