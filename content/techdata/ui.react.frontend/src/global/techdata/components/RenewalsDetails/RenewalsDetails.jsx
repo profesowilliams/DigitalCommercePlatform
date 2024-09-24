@@ -1,47 +1,58 @@
-import React, { useState, useEffect, useRef } from "react";
-import ConfigGrid from "./ConfigGrid/ConfigGrid";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import RenewalPreviewGrid from "./RenewalPreviewGrid/RenewalPreviewGrid";
+import React, { useState, useEffect, useRef } from 'react';
+import ConfigGrid from './ConfigGrid/ConfigGrid';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import RenewalPreviewGrid from './RenewalPreviewGrid/RenewalPreviewGrid';
 import NewPurchaseFlyout from '../NewPurchaseFlyout/NewPurchaseFlyout';
-import useGet from "../../hooks/useGet";
-import Loader from "../Widgets/Loader";
+import useGet from '../../hooks/useGet';
+import Loader from '../Widgets/Loader';
 import Modal from '../Modal/Modal';
-import { getUrlParams } from "../../../../utils";
-import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
-import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
-import { useStore } from "../../../../utils/useStore"
-import { isAuthormodeAEM, isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import { If } from "../../helpers/If";
-import Edit from "./Edit";
-import CancelAndSave from "./CancelAndSave";
-import Saving from "./Saving";
-import CancelDialog from "./Cancel/CancelDialog";
+import { getUrlParams } from '../../../../utils';
+import { ACCESS_TYPES, hasAccess } from '../../../../utils/user-utils';
+import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../utils/constants';
+import { useStore } from '../../../../utils/useStore';
+import {
+  isAuthormodeAEM,
+  isExtraReloadDisabled,
+  isHttpOnlyEnabled,
+} from '../../../../utils/featureFlagUtils';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Saving from './Saving';
+import CancelDialog from './Cancel/CancelDialog';
 import { get, post } from '../../../../utils/api';
-import { getStatusLoopUntilStatusIsActive, mapRenewalForUpdateDetails } from '../RenewalsGrid/Orders/orderingRequests';
-import { useRenewalsDetailsStore } from "./store/RenewalsDetailsStore";
-import EditFlow from './ConfigGrid/Common/EditFlow'; 
-import { removeDashboardSeparator, getDictionaryValueOrKey } from "../../../../utils/utils";
-import useAuth from "../../hooks/useAuth";
-import { getSessionInfo } from "../../../../utils/intouch/user/get";
-import { enableIntouchLogin } from "../../../../utils/intouch/intouchUtils";
+import {
+  getStatusLoopUntilStatusIsActive,
+  mapRenewalForUpdateDetails,
+} from '../RenewalsGrid/Orders/orderingRequests';
+import { useRenewalsDetailsStore } from './store/RenewalsDetailsStore';
+import EditFlow from './ConfigGrid/Common/EditFlow';
+import {
+  getDictionaryValue,
+  getDictionaryValueOrKey,
+} from '../../../../utils/utils';
+import useAuth from '../../hooks/useAuth';
+import { getSessionInfo } from '../../../../utils/intouch/user/get';
+import { enableIntouchLogin } from '../../../../utils/intouch/intouchUtils';
 import {
   AddIcon,
   ProhibitedIcon,
   DismissFilledSmallIcon,
-  BannerInfoIcon
+  BannerInfoIcon,
 } from '../../../../fluentIcons/FluentIcons';
+import GridSubTotal from './GridSubTotal';
+import { Button } from '@mui/material';
+import useComputeBranding from '../../hooks/useComputeBranding';
+import useIsIconEnabled from '../RenewalsGrid/Orders/hooks/useIsIconEnabled';
 
 let redBanner = false;
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
   const errorMessages = componentProp?.errorMessages;
-  const effects = useRenewalsDetailsStore(state => state.effects);
+  const effects = useRenewalsDetailsStore((state) => state.effects);
   const { setCustomState } = effects;
-  const { id = "U100000008378", type = "renewal" } = getUrlParams();
+  const { id = 'U100000008378', type = 'renewal' } = getUrlParams();
   const [modal, setModal] = useState(null);
   let [apiResponse, isLoading, error] = useGet(
     `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`
@@ -50,18 +61,44 @@ function RenewalsDetails(props) {
 
   const setUserData = useStore((state) => state.setUserData);
 
-  const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
+  const USER_DATA = JSON.parse(
+    localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
+  );
+  const { computeClassName } = useComputeBranding(useRenewalsDetailsStore);
   const shopURL = componentProp.shopURL;
-  const { isUserLoggedIn:isLoggedIn } = useAuth();
-  const changeRefreshDetailApiState = useStore((state) => state.changeRefreshDetailApiState)  
-  const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
-  const gridItems = useRenewalsDetailsStore(state => state.items);
+  const { isUserLoggedIn: isLoggedIn } = useAuth();
+  const changeRefreshDetailApiState = useStore(
+    (state) => state.changeRefreshDetailApiState
+  );
+  const isEditingDetails = useRenewalsDetailsStore(
+    (state) => state.isEditingDetails
+  );
+  const gridItems = useRenewalsDetailsStore((state) => state.items);
 
+  const [subtotal, setSubtotal] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [renewalsDetails, setRenewalsDetails] = useState(null);
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
 
+  const adobeVendor = renewalsDetails?.vendor?.name === 'Adobe';
+  const isRequestQuoteFlag =
+    renewalsDetails?.canRequestQuote && componentProp?.enableRequestQuote;
+  const isIconEnabled =
+    useIsIconEnabled(
+      renewalsDetails?.firstAvailableOrderDate,
+      renewalsDetails?.canOrder,
+      componentProp?.orderingFromDashboard?.showOrderingIcon
+    ) && !isRequestQuoteFlag;
+  const [isPODialogOpen, setIsPODialogOpen] = useState(false);
+  const [isPAODialogOpen, setIsPAODialogOpen] = useState(false);
+  const [orderIconDisable, setOrderIconDisable] = useState(!isIconEnabled);
+  const onOrderButtonClicked = () => {
+    effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
+    setIsPODialogOpen(true);
+    setIsPAODialogOpen(true);
+    setOrderIconDisable(true);
+  };
   const [toggleEdit, setToggleEdit] = useState(true);
   const [saving, setSaving] = useState(false);
   const [authenticated, setAuthenticated] = useState(true);
@@ -336,11 +373,11 @@ function RenewalsDetails(props) {
   const closeRedBanner = (e) => {
     // e.target.closest('.details-error-red-banner').remove();
     setRedBannerShow(false);
-  }
+  };
 
   const setErrorBlueBanner = () => {
     setBlueBannerShow(true);
-  }
+  };
 
   const openNewPurchaseFlyout = (e) => {
     e.stopPropagation();
@@ -418,6 +455,15 @@ function RenewalsDetails(props) {
                     isActiveLicense={true}
                     getUpdatedMutableGrid={getUpdatedMutableGrid}
                     errorMessagesUpdate={errorMessagesUpdate}
+                    subtotal={subtotal}
+                    setSubtotal={setSubtotal}
+                    adobeVendor={adobeVendor}
+                    setOrderIconDisable={setOrderIconDisable}
+                    isPODialogOpen={isPODialogOpen}
+                    setIsPODialogOpen={setIsPODialogOpen}
+                    isPAODialogOpen={isPAODialogOpen}
+                    setIsPAODialogOpen={setIsPAODialogOpen}
+                    isRequestQuoteFlag={isRequestQuoteFlag}
                   />
                 </AccordionDetails>
               </Accordion>
@@ -444,37 +490,37 @@ function RenewalsDetails(props) {
                   </div>
                 </AccordionSummary>
                 <AccordionDetails>
-                    {
-                        errorMessagesUpdate?.length !== 0 &&
-                        <div
-                          className={redBannerShow ? 'details-error-red-banner' : 'details-error-red-banner hide'}
-                        >
-                          <p>
-                            <ProhibitedIcon />
-                             {getDictionaryValueOrKey(
-                              componentProp?.productLines?.changesNotSavedRedBanner,
-                              'Changes didn`t save. Try again Banner Label'
-                              )}
-                          </p>
-                          <div className="close-icon" onClick={closeRedBanner}>
-                              <DismissFilledSmallIcon />
-                            </div>
-                        </div>
-                    }
-                    {
-                        blueBannerShow &&
-                        <div
-                          className='details-error-blue-banner'
-                        >
-                          <p>
-                            <BannerInfoIcon />
-                             {getDictionaryValueOrKey(
-                              componentProp?.productLines?.zeroQuantityBlueBanner,
-                              'Zero Quantity Blue Banner Label'
-                              )}
-                          </p>
-                        </div>
-                    }
+                  {errorMessagesUpdate?.length !== 0 && (
+                    <div
+                      className={
+                        redBannerShow
+                          ? 'details-error-red-banner'
+                          : 'details-error-red-banner hide'
+                      }
+                    >
+                      <p>
+                        <ProhibitedIcon />
+                        {getDictionaryValueOrKey(
+                          componentProp?.productLines?.changesNotSavedRedBanner,
+                          'Changes didn`t save. Try again Banner Label'
+                        )}
+                      </p>
+                      <div className="close-icon" onClick={closeRedBanner}>
+                        <DismissFilledSmallIcon />
+                      </div>
+                    </div>
+                  )}
+                  {blueBannerShow && (
+                    <div className="details-error-blue-banner">
+                      <p>
+                        <BannerInfoIcon />
+                        {getDictionaryValueOrKey(
+                          componentProp?.productLines?.zeroQuantityBlueBanner,
+                          'Zero Quantity Blue Banner Label'
+                        )}
+                      </p>
+                    </div>
+                  )}
                   <RenewalPreviewGrid
                     ref={gridRef}
                     data={renewalsDetails}
@@ -491,6 +537,15 @@ function RenewalsDetails(props) {
                     getUpdatedMutableGrid={getUpdatedMutableGrid}
                     errorMessagesUpdate={errorMessagesUpdate}
                     closeCancelDialog={closeCancelDialog}
+                    subtotal={subtotal}
+                    setSubtotal={setSubtotal}
+                    adobeVendor={adobeVendor}
+                    setOrderIconDisable={setOrderIconDisable}
+                    isPODialogOpen={isPODialogOpen}
+                    setIsPODialogOpen={setIsPODialogOpen}
+                    isPAODialogOpen={isPAODialogOpen}
+                    setIsPAODialogOpen={setIsPAODialogOpen}
+                    isRequestQuoteFlag={isRequestQuoteFlag}
                   />
                 </AccordionDetails>
               </Accordion>
@@ -530,6 +585,15 @@ function RenewalsDetails(props) {
                 getUpdatedMutableGrid={getUpdatedMutableGrid}
                 errorMessagesUpdate={errorMessagesUpdate}
                 closeCancelDialog={closeCancelDialog}
+                subtotal={subtotal}
+                setSubtotal={setSubtotal}
+                adobeVendor={adobeVendor}
+                setOrderIconDisable={setOrderIconDisable}
+                isPODialogOpen={isPODialogOpen}
+                setIsPODialogOpen={setIsPODialogOpen}
+                isPAODialogOpen={isPAODialogOpen}
+                setIsPAODialogOpen={setIsPAODialogOpen}
+                isRequestQuoteFlag={isRequestQuoteFlag}
               />
             </div>
           )}
@@ -537,6 +601,33 @@ function RenewalsDetails(props) {
       ) : (
         isLoading && <Loader visible={isLoading} />
       )}
+      {renewalsDetails ? (
+        <>
+          <GridSubTotal
+            data={renewalsDetails}
+            gridProps={{
+              ...componentProp.productLines,
+              ...componentProp.quoteEditing,
+              excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
+            }}
+            subtotal={subtotal}
+            compProps={componentProp}
+            adobeVendor={adobeVendor}
+          />
+          <div className="place-cmp-order-dialog-container">
+            <p className="cmp-place-order-actions">
+              <Button
+                disabled={orderIconDisable}
+                className={computeClassName('cmp-detail-order-button')}
+                onClick={onOrderButtonClicked}
+                variant="contained"
+              >
+                {getDictionaryValue('button.common.label.order', 'Order')}
+              </Button>
+            </p>
+          </div>
+        </>
+      ) : null}
       {error && (
         <ErrorMessage
           error={error}
@@ -579,5 +670,3 @@ function RenewalsDetails(props) {
 }
 
 export default RenewalsDetails;
-
-
