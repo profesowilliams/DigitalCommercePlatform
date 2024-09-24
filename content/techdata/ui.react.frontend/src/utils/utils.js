@@ -132,9 +132,9 @@ const validateBlobResponseWithoutModal = async (response) => {
     }
 };
 
-export const errorDetails = async (endpoint, data) => {
+export const errorDetails = async (endpoint, message) => {
   const response = await get(
-    `${endpoint}refId=${data.feedBackMessages?.[0]?.refId}&type=${data.feedBackMessages?.[0]?.type}`
+    `${endpoint}refId=${message?.refId}&type=${message?.type}`
   );
   return response.data;
 };

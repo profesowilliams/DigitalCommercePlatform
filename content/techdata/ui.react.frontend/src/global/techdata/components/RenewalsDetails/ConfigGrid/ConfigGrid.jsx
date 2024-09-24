@@ -479,13 +479,6 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
     }
   });
 
-  const errorCriticality = data.feedBackMessages[0]?.errorCriticality;
-  const errorMessage = data.feedBackMessages[0]?.message;
-  const blueBanner = errorCriticality === 3;
-  const orangeBanner = errorCriticality === 2;
-  const redBanner = errorCriticality === 1;
-  const noBanner = errorCriticality === 4 || errorMessage === null;
-
   const openRequestFlyOut = () => {
     const flyoutData = {
       ...data,
@@ -495,23 +488,6 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
       key: 'requestFlyout',
       value: { data: flyoutData, show: true },
     });
-  };
-
-  const openErrorFlyOut = async (e) => {
-    e.preventDefault();
-
-    const response = await errorDetails(
-        `${gridProps.uiServiceDomain}/${data.feedBackMessages?.[0]?.jsonUrl}`,
-        data
-      );
-
-      const flyoutData = {
-       details: response?.details,
-      };
-      effects.setCustomState({
-        key: 'errorFlyout',
-        value: { data: flyoutData, show: true },
-      });
   };
 
   return (
@@ -549,41 +525,65 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           </div>
         )}
         {data.feedBackMessages &&
-          data.feedBackMessages[0] &&
-          errorCriticality &&
-          !noBanner &&
-          (redBanner || orangeBanner || blueBanner) &&
-          errorMessage && (
-            <div
-              className={
-                blueBanner
-                  ? 'renewal-feedback-banner blue-banner'
-                  : orangeBanner
-                  ? 'renewal-feedback-banner orange-banner'
-                  : redBanner
-                  ? 'renewal-feedback-banner red-banner'
-                  : 'renewal-feedback-banner'
-              }
-            >
-              <p>
-                {blueBanner ? (
-                  <BannerInfoIcon />
-                ) : orangeBanner ? (
-                  <WarningTriangleIcon />
-                ) : redBanner ? (
-                  <ProhibitedIcon />
-                ) : (
-                  ''
-                )}
-                {errorMessage}
-              </p>
-              {redBanner && data.feedBackMessages?.[0]?.jsonUrlMessage && (
-                <a href="#error" target="_blank" onClick={openErrorFlyOut}>
-                  {data.feedBackMessages?.[0]?.jsonUrlMessage}
-                </a>
-              )}
-            </div>
-          )}
+          data.feedBackMessages.map((message, index) => {
+            const errorCriticality = message?.errorCriticality;
+            const errorMessage = message?.message;
+            const blueBanner = errorCriticality === 3;
+            const orangeBanner = errorCriticality === 2;
+            const redBanner = errorCriticality === 1;
+            const noBanner = errorCriticality === 4 || !errorMessage;
+
+            const openErrorFlyOut = async (e) => {
+              e.preventDefault();
+
+              const response = await errorDetails(
+                `${gridProps.uiServiceDomain}/${message?.jsonUrl}`,
+                message
+              );
+
+              const flyoutData = {
+                details: response?.details,
+              };
+              effects.setCustomState({
+                key: 'errorFlyout',
+                value: { data: flyoutData, show: true },
+              });
+            };
+            return (
+              !noBanner && (
+                <div
+                  key={index}
+                  className={
+                    blueBanner
+                      ? 'renewal-feedback-banner blue-banner'
+                      : orangeBanner
+                      ? 'renewal-feedback-banner orange-banner'
+                      : redBanner
+                      ? 'renewal-feedback-banner red-banner'
+                      : 'renewal-feedback-banner'
+                  }
+                >
+                  <p>
+                    {blueBanner ? (
+                      <BannerInfoIcon />
+                    ) : orangeBanner ? (
+                      <WarningTriangleIcon />
+                    ) : redBanner ? (
+                      <ProhibitedIcon />
+                    ) : (
+                      ''
+                    )}
+                    {errorMessage}
+                  </p>
+                  {redBanner && message?.jsonUrlMessage && (
+                    <a href="#error" target="_blank" onClick={openErrorFlyOut}>
+                      {message.jsonUrlMessage}
+                    </a>
+                  )}
+                </div>
+              )
+            );
+          })}
       </div>
       <div className="info-container">
         <ResellerInfo
