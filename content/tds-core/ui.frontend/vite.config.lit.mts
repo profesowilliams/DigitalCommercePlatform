@@ -1,5 +1,6 @@
 import path from 'path';
 import { defineConfig } from 'vite';
+import terser from '@rollup/plugin-terser';
 import fs from 'fs';
 
 // Define the base path for the js.txt file and output directory
@@ -38,25 +39,58 @@ function updateJsTxtPlugin() {
           }
         });
       });
-    }
-  }
+    },
+  };
 }
 
-export default defineConfig({
+// Common configuration
+const commonConfig = {
   build: {
-    chunkSizeWarningLimit: 1000, // Adjust this value as needed
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
+      external: ['bootstrap'],
       input: {
         lit: path.resolve(__dirname, 'src/main/webpack/webcomponents/components/Lit/index.ts'),
       },
       output: [
         {
           dir: path.join(basePath, 'js'),
-          format: 'umd',
+          format: 'iife',
           entryFileNames: 'components.js',
         },
       ],
     },
   },
   plugins: [updateJsTxtPlugin()],
+};
+
+// Development configuration
+const devConfig = {
+  ...commonConfig,
+  build: {
+    ...commonConfig.build,
+    sourcemap: true,
+    minify: false,
+  },
+};
+
+// Production configuration
+const prodConfig = {
+  ...commonConfig,
+  build: {
+    ...commonConfig.build,
+    sourcemap: false,
+    minify: 'terser',
+    rollupOptions: {
+      ...commonConfig.build.rollupOptions,
+      plugins: [terser()],
+    },
+  },
+};
+
+export default defineConfig(({ mode }) => {
+  if (mode === 'development') {
+    return devConfig;
+  }
+  return prodConfig;
 });
