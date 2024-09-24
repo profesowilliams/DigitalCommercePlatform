@@ -31,7 +31,7 @@ function AutoRenewModal({ data, isToggled, gridProps }) {
         });
 
         const payload = {
-            "CustomerId": data?.customerPO?.text || '',
+            "CustomerId": data?.endUser?.eaNumber?.text || '',
             "QuoteId": data?.source?.id || '',
             "Subscriptions": subscriptions
         }
