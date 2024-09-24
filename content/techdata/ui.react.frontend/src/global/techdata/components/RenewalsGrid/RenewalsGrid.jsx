@@ -414,7 +414,7 @@ function RenewalsGrid(props) {
     const checkUrl = () => {
       if (
         enableNewPurchaseAction &&
-        window.location.hash.includes('#action-renewals-new-purchase')
+        window.location.hash.includes('#open-new-purchase')
       ) {
         setCustomState({
           key: 'newPurchaseFlyout',
