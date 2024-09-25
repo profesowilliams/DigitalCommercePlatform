@@ -263,6 +263,7 @@ function RenewalsDetails(props) {
             componentProp?.productLines?.enableActiveLicence === 'true' &&
             renewalsDetails?.itemsActive?.length > 0
           ) {
+            setBlueBannerShow(false);
             changeRefreshDetailApiState();
           }
         }
