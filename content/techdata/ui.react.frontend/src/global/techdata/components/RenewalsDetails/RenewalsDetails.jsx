@@ -92,7 +92,7 @@ function RenewalsDetails(props) {
     ) && !isRequestQuoteFlag;
   const [isPODialogOpen, setIsPODialogOpen] = useState(false);
   const [isPAODialogOpen, setIsPAODialogOpen] = useState(false);
-  const [orderIconDisable, setOrderIconDisable] = useState(!isIconEnabled);
+  const [orderIconDisable, setOrderIconDisable] = useState(isIconEnabled ? isIconEnabled : false);
   const onOrderButtonClicked = () => {
     effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
     setIsPODialogOpen(true);
