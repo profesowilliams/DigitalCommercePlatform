@@ -50,8 +50,6 @@ function Price({ value }, data, compProps) {
   );
 }
 
-let transformedArray = [];
-
 function RenewalPreviewGrid(
   {
     data,
@@ -80,6 +78,9 @@ function RenewalPreviewGrid(
   const [modal, setModal] = useState(null);
   const [multipleFlag, setMultipleFlag] = useState(false);
   const [PONumber, setPONumber] = useState('');
+  const [transformedArray, setTransformedArray] = useState([]);
+  const transformedArrayRef = useRef();
+  transformedArrayRef.current = transformedArray;
 
   const orderEndpoints = {
     updateRenewalOrderEndpoint: compProps.updateRenewalOrderEndpoint,
@@ -308,14 +309,18 @@ function RenewalPreviewGrid(
 
   useEffect(() => {
     if (errorMessagesUpdate) {
-      transformedArray = errorMessagesUpdate?.map((message) => {
-        const lineMatch = message?.match(/Line=(\d+)/);
-        const subscriptionIdMatch = message?.match(/SubscriptionId=([\w\d]+)/);
-        return {
-          line: lineMatch ? lineMatch[1] : null,
-          subscriptionId: subscriptionIdMatch ? subscriptionIdMatch[1] : null,
-        };
-      });
+      setTransformedArray(
+        errorMessagesUpdate?.map((message) => {
+          const lineMatch = message?.match(/Line=(\d+)/);
+          const subscriptionIdMatch = message?.match(
+            /SubscriptionId=([\w\d]+)/
+          );
+          return {
+            line: lineMatch ? lineMatch[1] : null,
+            subscriptionId: subscriptionIdMatch ? subscriptionIdMatch[1] : null,
+          };
+        })
+      );
       if (closeCancelDialog) {
         closeCancelDialog(true);
       }
@@ -331,13 +336,13 @@ function RenewalPreviewGrid(
         if (contractMap.size > 1) {
           setMultipleFlag(true);
         }
-        //TODO: transformedArray is not passed properly to cellRenderer from agGrid
-        const iconShown = transformedArray?.some(
-          ({ subscriptionId, line }) =>
-            data?.subscriptionId === subscriptionId && data?.id === line
+
+        const iconShown = transformedArrayRef?.current?.some(
+          ({ subscriptionId, line }) => {
+            return data?.subscriptionId === subscriptionId && data?.id === line;
+          }
         );
         if (data?.quantity === 0) setErrorBlueBanner(true);
-
         return !data?.id?.includes('Agreement') ? (
           // TODO: add some styling to icon display
           <div className="error-id-column">
@@ -467,12 +472,11 @@ function RenewalPreviewGrid(
         ? ''
         : gridProps.listPrice?.replace('{currency-code}', data?.currency || ''),
       cellRenderer: (props) => {
-      if (props?.data?.quantity === 0 && !isActiveLicense)
-        return '-';
-      else
-        return !props?.data?.id?.includes('Agreement') && !isActiveLicense
-          ? Price(props, data, compProps)
-          : '';
+        if (props?.data?.quantity === 0 && !isActiveLicense) return '-';
+        else
+          return !props?.data?.id?.includes('Agreement') && !isActiveLicense
+            ? Price(props, data, compProps)
+            : '';
       },
       width: gridColumnWidths.listPrice,
     },
@@ -494,12 +498,11 @@ function RenewalPreviewGrid(
       suppressKeyboardEvent: (params) => suppressNavigation(params),
       cellRenderer: (props) => {
         const isEditing = isEditingRef.current && data?.canEditResellerPrice;
-        if (props?.data?.quantity === 0 && !isActiveLicense)
-           return '-';
+        if (props?.data?.quantity === 0 && !isActiveLicense) return '-';
         else
-            return !props?.data?.id?.includes('Agreement') && !isActiveLicense
-          ? UnitPriceColumn({ ...props, isEditing })
-          : '';
+          return !props?.data?.id?.includes('Agreement') && !isActiveLicense
+            ? UnitPriceColumn({ ...props, isEditing })
+            : '';
       },
       width: gridColumnWidths.unitPrice,
     },
@@ -524,12 +527,11 @@ function RenewalPreviewGrid(
             data?.currency || ''
           ),
       cellRenderer: (props) => {
-        if (props?.data?.quantity === 0 && !isActiveLicense)
-          return '-';
+        if (props?.data?.quantity === 0 && !isActiveLicense) return '-';
         else
-            return !props?.data?.id?.includes('Agreement') && !isActiveLicense
-              ? Price(props, data, compProps)
-              : ''
+          return !props?.data?.id?.includes('Agreement') && !isActiveLicense
+            ? Price(props, data, compProps)
+            : '';
       },
       valueGetter: 'data.quantity * data.unitPrice',
       // Use sum aggFunc to also update subtotal value.

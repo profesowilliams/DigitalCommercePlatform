@@ -501,8 +501,7 @@ function RenewalsDetails(props) {
                       <p>
                         <ProhibitedIcon />
                         {getDictionaryValueOrKey(
-                          componentProp?.productLines?.changesNotSavedRedBanner,
-                          'Changes didn`t save. Try again Banner Label'
+                          componentProp?.productLines?.changesNotSavedRedBanner
                         )}
                       </p>
                       <div className="close-icon" onClick={closeRedBanner}>
@@ -515,8 +514,7 @@ function RenewalsDetails(props) {
                       <p>
                         <BannerInfoIcon />
                         {getDictionaryValueOrKey(
-                          componentProp?.productLines?.zeroQuantityBlueBanner,
-                          'Zero Quantity Blue Banner Label'
+                          componentProp?.productLines?.zeroQuantityBlueBanner
                         )}
                       </p>
                     </div>

@@ -50,15 +50,15 @@
                                             <changesNotSavedRedBanner
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="Enter Changes didn`t save Label"
-                                                    fieldLabel="Changes didn`t save. Try again Banner Label"
+                                                    fieldDescription="details.renewal.properties.label.changesNotSavedRedBanner"
+                                                    fieldLabel="Changes didn`t save. Try again."
                                                     name="./productLines/changesNotSavedRedBanner"
                                                     required="{Boolean}false"/>
                                             <zeroQuantityBlueBanner
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="Zero Quantity Blue Banner Label"
-                                                    fieldLabel="Enter zero Quantity Blue Banner Label "
+                                                    fieldDescription="details.renewal.properties.label.zeroQuantityBlueBanner"
+                                                    fieldLabel="SKU will not be included in your renewal order as quantity is set to 0."
                                                     name="./productLines/zeroQuantityBlueBanner"
                                                     required="{Boolean}false"/>
                                             <addMoreButton
