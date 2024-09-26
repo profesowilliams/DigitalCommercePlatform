@@ -26,6 +26,7 @@ import {
   ProhibitedIcon,
   BannerInfoIcon,
   SeparatorIcon,
+  DismissFilledSmallIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 import { useRenewalGridState } from '../../RenewalsGrid/store/RenewalsStore';
 import CopyFlyout from '../../CopyFlyout/CopyFlyout';
@@ -49,6 +50,8 @@ function GridHeader({ gridProps, data }) {
   const [autoRenewToggle, setAutoRenewToggle] = useState(data?.autoRenew);
 
   const [modal, setModal] = useState(null);
+  const [enableAutoRenewError, setEnableAutoRenewError] = useState(false);
+  const [disableAutoRenewError, setDisableAutoRenewError] = useState(false);
 
   const effects = useRenewalGridState((state) => state.effects);
   const analyticsCategory = useRenewalGridState(
@@ -313,6 +316,13 @@ function GridHeader({ gridProps, data }) {
     setModal(null);
   };
 
+  const tryAutoRenewToggle = (flag) => {
+    setAutoRenewToggle(flag);
+    setEnableAutoRenewError(false);
+    setDisableAutoRenewError(false);
+  }
+
+
   const handleAutoRenewChange = (isToggled) => {
     setModal({
       content: (
@@ -320,6 +330,8 @@ function GridHeader({ gridProps, data }) {
           data={data}
           gridProps={gridProps}
           isToggled={isToggled}
+          setEnableAutoRenewError={setEnableAutoRenewError}
+          setDisableAutoRenewError={setDisableAutoRenewError}
         ></AutoRenewModal>
       ),
      properties: {
@@ -438,8 +450,42 @@ function GridHeader({ gridProps, data }) {
             customClass="cmp-auto-renew-modal"
           ></Modal>
         )}
+       {
+        enableAutoRenewError && (
+            <AutoRenewError
+                errorMessage={gridProps?.productLines?.errorAutoRenewEnabled}
+                tryAgainHandler={tryAutoRenewToggle}
+                closeHandler={setEnableAutoRenewError}
+            />
+        )
+       }
+       {
+         disableAutoRenewError && (
+               <AutoRenewError
+                   errorMessage={gridProps?.productLines?.errorAutoRenewNotEnabled}
+                   tryAgainHandler={tryAutoRenewToggle}
+                   closeHandler={setDisableAutoRenewError}
+               />
+           )
+       }
     </div>
   );
+}
+
+function AutoRenewError({ errorMessage, tryAgainHandler, closeHandler }) {
+    return (
+        <div className="details-auto-renew-banner">
+        <ProhibitedIcon />
+          <p>
+            {getDictionaryValueOrKey(
+              errorMessage
+            )}
+          </p>
+           <div className="close-icon" onClick={() => closeHandler(false)}>
+              <DismissFilledSmallIcon />
+           </div>
+        </div>
+    )
 }
 
 function ConfigGrid({ data, gridProps, updateDetails }) {

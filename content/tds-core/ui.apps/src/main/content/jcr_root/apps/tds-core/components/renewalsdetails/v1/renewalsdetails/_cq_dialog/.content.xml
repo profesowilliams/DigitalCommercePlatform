@@ -478,6 +478,19 @@
                                                     fieldDescription="Saving AutoRenew"
                                                     fieldLabel="Saving AutoRenew Label"
                                                     name="./productLines/savingAutoRenew"/>
+                                            <errorAutoRenewNotEnabled
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="details.renewal.properties.label.errorAutoRenewNotEnabled"
+                                                    fieldLabel="Error AutoRenew NotEnabled Label"
+                                                    name="./productLines/errorAutoRenewNotEnabled"/>
+                                            <errorAutoRenewEnabled
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="details.renewal.properties.label.errorAutoRenewEnabled"
+                                                    fieldLabel="Error AutoRenewEnabled Label"
+                                                    name="./productLines/errorAutoRenewEnabled"/>
+
                                         </items>
                                     </column>
                                 </items>

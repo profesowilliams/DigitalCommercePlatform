@@ -466,7 +466,8 @@
   bottom: 6px;
 }
 
-.details-error-red-banner {
+.details-error-red-banner,
+.details-auto-renew-banner {
   padding: 20px;
   background-color: $banner-cherry;
   border-left: 4px solid $brand-cherry;
@@ -493,6 +494,44 @@
   .close-icon {
     cursor: pointer;
   }
+}
+
+.cmp-renewals-qp__config-grid .header-container {
+    position: relative;
+}
+
+.cmp-product-lines-grid__header .details-auto-renew-banner {
+    width: 448px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    padding-right: 45px;
+
+    p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 24px
+    }
+
+    .try-again {
+        padding-left: 39px;
+        margin-top: 16px;
+        display: inline-block;
+        color: #006FBA;
+    }
+
+    .close-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 16px;
+        height: 16px;
+    }
+
+
 }
 
 .zero-quantity-row div,

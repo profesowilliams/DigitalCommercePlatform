@@ -5165,6 +5165,10 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
       "SKU will not be included in your renewal order as quantity is set to 0.",
     "details.renewal.properties.label.changesNotSavedRedBanner":
       "Changes didn`t save. Try again.",
+    "details.renewal.properties.label.errorAutoRenewEnabled":
+    "Due to an unexpected issue activating auto-renew is not possible. Try again and if the error persists contact your TD Account manager.",
+    "details.renewal.properties.label.errorAutoRenewNotEnabled":
+    "Due to an unexpected issue deactivating auto-renew is not possible. Try again and if the error persists contact your TD Account manager.",
 
     "grids.common.label.results": "{0}-{1} of {2} results",
     "grids.common.label.of": "of",

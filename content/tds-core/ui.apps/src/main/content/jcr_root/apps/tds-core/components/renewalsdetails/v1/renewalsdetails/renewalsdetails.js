@@ -71,7 +71,10 @@ use(["../../../common/utils.js"], function(utils) {
           "noLeaveOnAutoRenew",
           "yesTurnOnAutoRenew",
           "noLeaveOffAutoRenew",
-          "savingAutoRenew"
+          "savingAutoRenew",
+          "errorAutoRenewNotEnabled",
+          "errorAutoRenewEnabled"
+
         ];
 
         productLinesList.map((productLinesItem) =>

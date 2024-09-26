@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { CircularArrowIcon } from '../../../../../fluentIcons/FluentIcons';
 import { getStatusLoopUntilStatusIsActive } from '../../RenewalsGrid/Orders/orderingRequests';
 
-function AutoRenewModal({ data, isToggled, gridProps }) {
+function AutoRenewModal({ data, isToggled, gridProps, setEnableAutoRenewError, setDisableAutoRenewError }) {
 
     const [saveLoader, setSaveLoader] = useState(false);
     const date = data?.items?.[0]?.contract?.formattedNewAgreementStartDate;
@@ -48,10 +48,15 @@ function AutoRenewModal({ data, isToggled, gridProps }) {
               if(isActiveQuote) {
                 window.location.reload();
               }
+            setSaveLoader(false);
         } else {
+            if (isToggled) {
+                setEnableAutoRenewError(true);
+            } else {
+                setDisableAutoRenewError(true);
+            }
             closeModal();
         }
-        setSaveLoader(false);
     }
 
   return (
