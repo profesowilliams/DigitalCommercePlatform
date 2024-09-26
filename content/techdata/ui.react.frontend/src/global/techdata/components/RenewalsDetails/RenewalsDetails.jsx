@@ -92,7 +92,7 @@ function RenewalsDetails(props) {
     ) && !isRequestQuoteFlag;
   const [isPODialogOpen, setIsPODialogOpen] = useState(false);
   const [isPAODialogOpen, setIsPAODialogOpen] = useState(false);
-  const [orderIconDisable, setOrderIconDisable] = useState(isIconEnabled ? isIconEnabled : false);
+  const [orderIconDisable, setOrderIconDisable] = useState(!isIconEnabled);
   const onOrderButtonClicked = () => {
     effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
     setIsPODialogOpen(true);
@@ -119,6 +119,10 @@ function RenewalsDetails(props) {
   };
 
   const renewalsRef = useRef();
+
+  useEffect(() => {
+    setOrderIconDisable(!isIconEnabled)
+  }, [isIconEnabled]);
 
   useEffect(() => {
     const renewalsNode = renewalsRef.current;
