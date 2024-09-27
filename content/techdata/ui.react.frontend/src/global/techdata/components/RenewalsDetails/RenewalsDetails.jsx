@@ -104,7 +104,7 @@ function RenewalsDetails(props) {
   const [authenticated, setAuthenticated] = useState(true);
 
   const [redBannerShow, setRedBannerShow] = useState(true);
-  const [blueBannerShow, setBlueBannerShow] = useState(false);
+  const blueBannerShowRef = useRef(false);
 
   // Keep grid reference to cancel edit changes
   const gridRef = useRef();
@@ -121,7 +121,7 @@ function RenewalsDetails(props) {
   const renewalsRef = useRef();
 
   useEffect(() => {
-    setOrderIconDisable(!isIconEnabled)
+    setOrderIconDisable(!isIconEnabled);
   }, [isIconEnabled]);
 
   useEffect(() => {
@@ -267,7 +267,7 @@ function RenewalsDetails(props) {
             componentProp?.productLines?.enableActiveLicence === 'true' &&
             renewalsDetails?.itemsActive?.length > 0
           ) {
-            setBlueBannerShow(false);
+            blueBannerShowRef.current = false;
             changeRefreshDetailApiState();
           }
         }
@@ -283,6 +283,44 @@ function RenewalsDetails(props) {
 
   const getUpdatedMutableGrid = (resultArr) => {
     setMutableData(resultArr);
+  };
+
+  const updateRenewalDetails = async (details) => {
+    const { POAllowedLength, ...payload } = mapRenewalForUpdateDetails(details);
+    try {
+      const updateResponse = await post(
+        componentProp.updateRenewalOrderEndpoint,
+        payload
+      );
+
+      const updateError = updateResponse?.data?.error;
+      const updateErrorMessages = updateError?.messages || [];
+
+      if (updateError?.isError) {
+        setErrorMessagesUpdate(updateErrorMessages);
+        setRedBannerShow(true);
+        throw updateResponse;
+      }
+      return true;
+    } catch (error) {
+      if (error.response) {
+        const updateError = error.response.data?.error;
+        const updateErrorMessages = updateError?.messages || [];
+        setErrorMessagesUpdate(updateErrorMessages);
+        setRedBannerShow(true);
+
+        throw error.response;
+      } else {
+        throw error;
+      }
+    }
+  };
+
+  const handleUpdateError = async (ex) => {
+    const updateError = ex?.data?.error;
+    const updateErrorMessages = updateError?.messages || [];
+    setErrorMessagesUpdate(updateErrorMessages);
+    setRedBannerShow(true);
   };
 
   const updateDetails = async (
@@ -340,6 +378,8 @@ function RenewalsDetails(props) {
         }
       }
     } catch (ex) {
+      await handleUpdateError(ex);
+
       const errorTitle = 'Could not save changes.';
       let errorMessage =
         'We are sorry, your update could not be processed, please try again later.';
@@ -361,27 +401,9 @@ function RenewalsDetails(props) {
     return false;
   };
 
-  const updateRenewalDetails = async (details) => {
-    const { POAllowedLength, ...payload } = mapRenewalForUpdateDetails(details);
-    const updateResponse = await post(
-      componentProp.updateRenewalOrderEndpoint,
-      payload
-    );
-    const updateError = updateResponse?.data?.error;
-    const updateErrorMessages = updateError?.messages || [];
-    setErrorMessagesUpdate(updateErrorMessages);
-    setRedBannerShow(true);
-    if (updateError?.isError) throw updateResponse;
-    return true;
-  };
-
   const closeRedBanner = (e) => {
     // e.target.closest('.details-error-red-banner').remove();
     setRedBannerShow(false);
-  };
-
-  const setErrorBlueBanner = () => {
-    setBlueBannerShow(true);
   };
 
   const openNewPurchaseFlyout = (e) => {
@@ -514,7 +536,7 @@ function RenewalsDetails(props) {
                       </div>
                     </div>
                   )}
-                  {blueBannerShow && (
+                  {blueBannerShowRef.current === true && (
                     <div className="details-error-blue-banner">
                       <p>
                         <BannerInfoIcon />
@@ -533,7 +555,7 @@ function RenewalsDetails(props) {
                       ...componentProp.quoteEditing,
                       excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
                     }}
-                    setErrorBlueBanner={setErrorBlueBanner}
+                    blueBannerShowRef={blueBannerShowRef}
                     isEditing={!toggleEdit}
                     shopDomainPage={componentProp.shopDomainPage}
                     activeLicenseEdit={renewalsDetails?.itemsActive?.length > 0}

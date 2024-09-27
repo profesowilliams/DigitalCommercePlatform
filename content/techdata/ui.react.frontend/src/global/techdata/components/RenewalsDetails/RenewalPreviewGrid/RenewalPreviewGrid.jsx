@@ -37,7 +37,7 @@ import {
 import { getDictionaryValue } from '../../../../../utils/utils';
 import {
   StatusProhibitedIcon,
-  BannerInfoIcon,
+  StatusInfoIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 
 function Price({ value }, data, compProps) {
@@ -71,7 +71,7 @@ function RenewalPreviewGrid(
     isPAODialogOpen,
     setIsPAODialogOpen,
     isRequestQuoteFlag,
-    setErrorBlueBanner,
+    blueBannerShowRef,
   },
   ref
 ) {
@@ -342,7 +342,7 @@ function RenewalPreviewGrid(
             return data?.subscriptionId === subscriptionId && data?.id === line;
           }
         );
-        if (data?.quantity === 0) setErrorBlueBanner(true);
+        if (data?.quantity === 0) blueBannerShowRef.current = true;
         return !data?.id?.includes('Agreement') ? (
           // TODO: add some styling to icon display
           <div className="error-id-column">
@@ -353,7 +353,7 @@ function RenewalPreviewGrid(
             ) : null}
             {!iconShown && data?.quantity === 0 ? (
               <span className="error-icon">
-                <BannerInfoIcon width="18" height="18" />
+                <StatusInfoIcon />
               </span>
             ) : null}
             <span>{data.id}</span>
