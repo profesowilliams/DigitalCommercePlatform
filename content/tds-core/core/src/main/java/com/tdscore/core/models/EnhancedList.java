@@ -57,6 +57,7 @@ public class EnhancedList implements List {
                 ValueMap pageMap = page.getProperties();
                 EnhancedListItem item = new EnhancedListItem();
                 item.setTitle(page.getTitle());
+                item.setPath(brandListItem.getPath());
                 if("true".equals(linkItems) && "srpPage".equals(urlType)){
                     item.setLink(srpPageLink(pageMap, resource));
                 } else if (linkItems.equals("true")){

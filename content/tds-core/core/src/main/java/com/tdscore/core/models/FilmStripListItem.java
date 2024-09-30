@@ -26,6 +26,7 @@ public class FilmStripListItem implements ListItem {
     private final String name;
     private final String position;
     private final String profileLink;
+    private final String path;
     private final String bio;
 
     public String getProfileLink() {
@@ -35,6 +36,11 @@ public class FilmStripListItem implements ListItem {
 
     public String getImagePath() {
         return imagePath;
+    }
+
+    @Override
+    public String getPath() {
+        return profileLink;
     }
 
     @Override
@@ -55,6 +61,7 @@ public class FilmStripListItem implements ListItem {
         this.name = name;
         this.position = position;
         this.profileLink = profileLink;
+        this.path = profileLink;
         this.bio = bio;
     }
 

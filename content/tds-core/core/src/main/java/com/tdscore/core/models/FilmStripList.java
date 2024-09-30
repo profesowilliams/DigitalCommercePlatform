@@ -2,6 +2,7 @@ package com.tdscore.core.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -34,27 +35,30 @@ public class FilmStripList implements List {
     @Via(type = ResourceSuperType.class)
     List delegateList;
 
-    public Collection<ListItem> getProfileItems() {
+    @Override
+    public Collection<ListItem> getListItems() {
         Collection<ListItem> listOfProfileItems = new ArrayList<>();
         Resource resource = request.getResource();
         PageManager pageManager = resource.getResourceResolver().adaptTo(PageManager.class);
         Collection<ListItem> cfProfileItems = delegateList.getListItems();
+
         log.debug(" Content Fragment List Item Size  {}", cfProfileItems.size());
         for (ListItem cfProfileItem : cfProfileItems) {
-            log.debug("Inside CF for loop {}", cfProfileItem.getPath());
-            Page page = pageManager.getPage(cfProfileItem.getPath());
-            ValueMap pageMap = page.getProperties();
-            if(pageMap.containsKey(PAGE_PROPERTY_CF_PATH)){
-                String cfPath = pageMap.get(PAGE_PROPERTY_CF_PATH, StringUtils.EMPTY);
-                log.debug(" Content Fragment Path  {}", cfPath);
-                Resource cfResource = resource.getResourceResolver().getResource(cfPath);
-                ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
-                if(contentFragment != null){
-                    FilmStripListItem vi = FilmStripListItem.getProfileListItem(contentFragment, cfProfileItem.getPath());
-                    listOfProfileItems.add(vi);
+            if (Objects.nonNull(cfProfileItem) && Objects.nonNull(cfProfileItem.getPath())) {
+                log.debug("Inside CF for loop {}", cfProfileItem.getPath());
+                Page page = pageManager.getPage(cfProfileItem.getPath());
+                ValueMap pageMap = page.getProperties();
+                if (pageMap.containsKey(PAGE_PROPERTY_CF_PATH)) {
+                    String cfPath = pageMap.get(PAGE_PROPERTY_CF_PATH, StringUtils.EMPTY);
+                    log.debug(" Content Fragment Path  {}", cfPath);
+                    Resource cfResource = resource.getResourceResolver().getResource(cfPath);
+                    ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
+                    if (contentFragment != null) {
+                        FilmStripListItem vi = FilmStripListItem.getProfileListItem(contentFragment, cfProfileItem.getPath());
+                        listOfProfileItems.add(vi);
+                    }
                 }
             }
-
         }
         return listOfProfileItems;
     }

@@ -131,7 +131,7 @@ class FilmStripListTest {
         when(ce.getName()).thenReturn("vendor-name");
 //        when(ce.getContent()).thenReturn("ce-content");
 
-        assertEquals(1, underTest.getProfileItems().size());
+        assertEquals(1, underTest.getListItems().size());
     }
 
 }
