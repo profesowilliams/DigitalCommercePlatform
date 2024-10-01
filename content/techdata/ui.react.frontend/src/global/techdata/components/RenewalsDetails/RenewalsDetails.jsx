@@ -262,7 +262,6 @@ function RenewalsDetails(props) {
           effects.setCustomState({ key: 'savedItems', value: gridItems });
           setLockedEdit(false);
           setToggleEdit(true);
-          effects.clearItems();
           if (
             componentProp?.productLines?.enableActiveLicence === 'true' &&
             renewalsDetails?.itemsActive?.length > 0
