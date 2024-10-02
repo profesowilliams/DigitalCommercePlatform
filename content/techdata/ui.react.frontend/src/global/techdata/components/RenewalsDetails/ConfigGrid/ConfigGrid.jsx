@@ -357,7 +357,7 @@ function GridHeader({ gridProps, data }) {
           placement="bottom"
           arrow
           disableInteractive={true}
-          open={!data?.isAutoRenewEnabled && !data?.canOrder && isTooltipOpen}
+          open={!data?.isAutoRenewEnabled && data?.showToolTip && isTooltipOpen}
           onClose={() => setIsTooltipOpen(false)}
         >
           <div
@@ -441,33 +441,29 @@ function GridHeader({ gridProps, data }) {
         subheaderReference={document.querySelector('.subheader > div > div')}
       />
       {modal && (
-          <Modal
-            modalAction={modal.action}
-            modalContent={modal.content}
-            modalProperties={modal.properties}
-            actionErrorMessage={modal.errorMessage}
-            onModalClosed={handleAutoRenewModalClose}
-            customClass="cmp-auto-renew-modal"
-          ></Modal>
-        )}
-       {
-        enableAutoRenewError && (
-            <AutoRenewError
-                errorMessage={gridProps?.productLines?.errorAutoRenewEnabled}
-                tryAgainHandler={tryAutoRenewToggle}
-                closeHandler={setEnableAutoRenewError}
-            />
-        )
-       }
-       {
-         disableAutoRenewError && (
-               <AutoRenewError
-                   errorMessage={gridProps?.productLines?.errorAutoRenewNotEnabled}
-                   tryAgainHandler={tryAutoRenewToggle}
-                   closeHandler={setDisableAutoRenewError}
-               />
-           )
-       }
+        <Modal
+          modalAction={modal.action}
+          modalContent={modal.content}
+          modalProperties={modal.properties}
+          actionErrorMessage={modal.errorMessage}
+          onModalClosed={handleAutoRenewModalClose}
+          customClass="cmp-auto-renew-modal"
+        ></Modal>
+      )}
+      {enableAutoRenewError && (
+        <AutoRenewError
+          errorMessage={gridProps?.productLines?.errorAutoRenewEnabled}
+          tryAgainHandler={tryAutoRenewToggle}
+          closeHandler={setEnableAutoRenewError}
+        />
+      )}
+      {disableAutoRenewError && (
+        <AutoRenewError
+          errorMessage={gridProps?.productLines?.errorAutoRenewNotEnabled}
+          tryAgainHandler={tryAutoRenewToggle}
+          closeHandler={setDisableAutoRenewError}
+        />
+      )}
     </div>
   );
 }
