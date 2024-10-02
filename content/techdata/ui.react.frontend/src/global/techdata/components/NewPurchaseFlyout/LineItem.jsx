@@ -16,12 +16,12 @@ const LineItem = ({
 }) => {
   // Initialize the state with the unit price as a string
   const initialQuantity = parseInt(item?.quantity) || 1;
-  const initialPriceFormatted = parseFloat(item?.unitPrice).toFixed(2);
-  const originalPrice = parseFloat(item?.unitPriceOriginal).toFixed(2);
+  const initialPriceFormatted = parseFloat(item?.unitPrice).toFixed(0);
+  const originalPrice = parseFloat(item?.unitPriceOriginal).toFixed(0);
   const [quantity, setQuantity] = useState(parseInt(initialQuantity));
-  const [unitPrice, setUnitPrice] = useState(initialPriceFormatted || '0.00');
+  const [unitPrice, setUnitPrice] = useState(initialPriceFormatted || '0');
   const [totalPrice, setTotalPrice] = useState(
-    (quantity * parseFloat(unitPrice)).toFixed(2)
+    (quantity * parseFloat(unitPrice)).toFixed(0)
   );
   const [enableResetPrice, setEnableResetPrice] = useState(false);
   const itemProduct = item?.product.find(
@@ -42,10 +42,10 @@ const LineItem = ({
   };
 
   const handleChange = (event, itemId) => {
-    const value = parseFloat(event.target.value).toFixed(2);
+    const value = parseFloat(event.target.value).toFixed(0);
     const isOverride = value !== originalPrice;
     setUnitPrice(value);
-    const newTotalPrice = (quantity * parseFloat(value)).toFixed(2);
+    const newTotalPrice = (quantity * parseFloat(value)).toFixed(0);
     setTotalPrice(newTotalPrice);
     const changes = {
       quantity: quantity.toString(),
@@ -62,12 +62,12 @@ const LineItem = ({
     const integerQuantity = parseInt(newQuantity);
     const isOverride = unitPrice !== originalPrice;
     setQuantity(integerQuantity);
-    const newTotalPrice = (integerQuantity * parseFloat(unitPrice)).toFixed(2);
+    const newTotalPrice = (integerQuantity * parseFloat(unitPrice)).toFixed(0);
     setTotalPrice(newTotalPrice);
     const changes = {
       quantity: integerQuantity.toString(),
       unitPrice: unitPrice,
-      totalPrice: (integerQuantity * parseFloat(unitPrice)).toFixed(2),
+      totalPrice: (integerQuantity * parseFloat(unitPrice)).toFixed(0),
       isResellerPriceOverride: isOverride,
     };
     updateItem(item?.id, changes);
@@ -76,13 +76,13 @@ const LineItem = ({
   };
 
   const handleResetPrice = () => {
-    const newTotalPrice = (quantity * originalPrice).toFixed(2);
+    const newTotalPrice = (quantity * originalPrice).toFixed(0);
     setUnitPrice(originalPrice);
     setTotalPrice(newTotalPrice);
     const changes = {
       quantity: quantity.toString(),
       unitPrice: originalPrice,
-      totalPrice: (quantity * originalPrice).toFixed(2),
+      totalPrice: (quantity * originalPrice).toFixed(0),
       isResellerPriceOverride: false,
     };
     updateItem(item?.id, changes);
@@ -102,18 +102,18 @@ const LineItem = ({
   };
 
   useEffect(() => {
-    const newTotalPrice = (quantity * parseFloat(unitPrice)).toFixed(2);
+    const newTotalPrice = (quantity * parseFloat(unitPrice)).toFixed(0);
     setTotalPrice(newTotalPrice);
   }, [quantity, unitPrice]);
 
   useEffect(() => {
     if (item) {
       const quantityValue = parseInt(item.quantity || '1');
-      const priceValue = parseFloat(item.unitPrice || '0').toFixed(2);
+      const priceValue = parseFloat(item.unitPrice || '0').toFixed(0);
       setQuantity(quantityValue);
       setUnitPrice(priceValue);
       setTotalPrice(
-        item.totalPrice || (quantityValue * parseFloat(priceValue)).toFixed(2)
+        item.totalPrice || (quantityValue * parseFloat(priceValue)).toFixed(0)
       );
     }
   }, [item]);
