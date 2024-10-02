@@ -21,10 +21,12 @@ import {
     ANALYTIC_CONSTANTS,
 } from "../../Analytics/analytics.js";
 
-export const secondLevelOptions = {
-    colId: "total",
-    sort: "desc",
-};
+export const secondLevelOptions = [
+    {
+        colId: 'total',
+        sort: 'desc'
+    }
+];
 
 export function isFirstTimeSortParameters(sortingList) {
     const { colId } = secondLevelOptions;
@@ -91,23 +93,6 @@ export function mapSortIdByPrice(gridApiRef, request) {
         return true;
     }
     return false;
-}
-
-export function priceDescendingByDefaultHandle(sortingFields, mappedResponse) {
-    const { dueDateKey, dueDateDir, secondLevelOptions } = sortingFields;
-
-    const sortModel = [
-        { colId: dueDateKey, sort: dueDateDir },
-        { ...secondLevelOptions },
-    ];
-    const query = {
-        SortBy: `${sortModel?.[0]?.colId ?? "id"}:${sortModel?.[0]?.sort ?? ""}${sortModel?.[1] ? "," : ""
-            }${sortModel?.[1]?.colId ?? ""}:${sortModel?.[1]?.sort ?? ""}`,
-    };
-
-    const multiSorting =
-        sortRenewalObjects(mappedResponse?.data?.content?.items, query) ?? 0;
-    return [...multiSorting];
 }
 
 export function urlStrToMapStruc(urlStr = "") {
@@ -396,6 +381,12 @@ export async function fetchRenewalsByGet(config) {
         hasSortChanged.current?.sortData
     );
 
+    mapUrl.push({ key: "SortBy", value: sortStrValue });
+    if (isColReseted) {
+        const sortByIndex = mapUrl.findIndex((item) => item.key === "SortBy");
+        if (sortByIndex !== -1) mapUrl.splice(sortByIndex, 1);
+    }
+
     if (secondLevelSort && !secondLevelSort.includes("undefined")) {
         mapUrl.push({ key: "SortBySecondLevel", value: secondLevelSort });
         if (secondLevelSort.includes("renewedduration")) {
@@ -408,12 +399,6 @@ export async function fetchRenewalsByGet(config) {
                 value: renewedWithSupport,
             });
         }
-    }
-
-    mapUrl.push({ key: "SortBy", value: sortStrValue });
-    if (isColReseted) {
-        const sortByIndex = mapUrl.findIndex((item) => item.key === "SortBy");
-        if (sortByIndex !== -1) mapUrl.splice(sortByIndex, 1);
     }
 
     const sortDirectionIndex = mapUrl.findIndex(
