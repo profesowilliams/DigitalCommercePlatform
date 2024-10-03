@@ -72,6 +72,7 @@ function RenewalPreviewGrid(
     setIsPAODialogOpen,
     isRequestQuoteFlag,
     blueBannerShowRef,
+    redBannerShow,
   },
   ref
 ) {
@@ -109,6 +110,7 @@ function RenewalPreviewGrid(
 
   // Keep track of isEditing on rerenders, will be used by quantity cell on redraw
   const isEditingRef = useRef(isEditing);
+  const redBannerShowRef = useRef(redBannerShow);
 
   // Get gridApi, save also as ref to be used on imperative handle
   const [gridApi, setGridApi] = useState(null);
@@ -137,6 +139,15 @@ function RenewalPreviewGrid(
       });
     }
   }, [isEditing]);
+  useEffect(() => {
+    redBannerShowRef.current = redBannerShow;
+    if (gridApi) {
+      gridApi.refreshCells({
+        columns: ['id'],
+        force: true,
+      });
+    }
+  }, [redBannerShow, gridApi]);
 
   useEffect(() => {
     if (gridApiRef.current) {
@@ -346,7 +357,7 @@ function RenewalPreviewGrid(
         return !data?.id?.includes('Agreement') ? (
           // TODO: add some styling to icon display
           <div className="error-id-column">
-            {iconShown ? (
+            {iconShown && redBannerShowRef?.current ? (
               <span className="error-icon">
                 <StatusProhibitedIcon />
               </span>

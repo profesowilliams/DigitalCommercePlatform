@@ -555,6 +555,7 @@ function RenewalsDetails(props) {
                       excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
                     }}
                     blueBannerShowRef={blueBannerShowRef}
+                    redBannerShow={redBannerShow}
                     isEditing={!toggleEdit}
                     shopDomainPage={componentProp.shopDomainPage}
                     activeLicenseEdit={renewalsDetails?.itemsActive?.length > 0}

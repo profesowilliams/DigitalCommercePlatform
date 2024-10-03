@@ -4536,11 +4536,11 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           source: {
             salesOrg: "VN91",
             targetSystem: "R3",
-            key: "U100000005941",
+            key: "U100000006024",
             system: "RQEu",
-            id: "U100000005941",
+            id: "U100000006024",
           },
-          published: "2024-10-01T08:00:08.025Z",
+          published: "2024-10-01T10:34:18.941Z",
           reseller: {
             id: "90005",
             isValid: true,
@@ -4568,7 +4568,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                   allowedLength: 100000,
                 },
                 email: {
-                  text: "ana-paz@test2.com",
+                  text: "",
                   isValid: true,
                   isMandatory: false,
                   isDisplay: true,
@@ -4596,16 +4596,16 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
             isValid: true,
             canEdit: false,
             name: {
-              text: "Company21",
+              text: "Company23",
               isValid: true,
               isMandatory: false,
               isDisplay: true,
               canEdit: false,
               allowedLength: 100000,
             },
-            nameUpper: "COMPANY21",
+            nameUpper: "COMPANY23",
             eaNumber: {
-              text: "P1005109338",
+              text: "P1005109332",
               isValid: true,
               isMandatory: false,
               isDisplay: true,
@@ -4615,7 +4615,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
             contact: [
               {
                 name: {
-                  text: "Name21 LastName21",
+                  text: "Name23 LastName23",
                   isValid: true,
                   isMandatory: false,
                   isDisplay: true,
@@ -4623,7 +4623,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                   allowedLength: 100000,
                 },
                 email: {
-                  text: "namelastname21+1719252477913@customer21.com",
+                  text: "namelastname21+1719252483530@customer23.com",
                   isValid: true,
                   isMandatory: false,
                   isDisplay: true,
@@ -4717,100 +4717,28 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               product: [
                 {
                   type: "TECHDATA",
-                  id: "ADB65304470CA02A12",
-                  name: "-",
-                  family: "Acrobat",
-                },
-                {
-                  type: "MANUFACTURER",
-                  id: "65304470CA02A12",
-                  name: "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                  manufacturer: "Adobe",
-                  manufacturerId: "3",
-                  family: "Acrobat",
-                },
-              ],
-              quantity: 10.0,
-              qty: 0.0,
-              confirmedQuantity: 0.0,
-              references: [],
-              updated: "0001-01-01T00:00:00",
-              unitPrice: 6010000.0,
-              unitCost: 229.68,
-              totalPrice: 60100000.0,
-              unitListPrice: 6719000.0,
-              unitPriceCurrency: "VND",
-              unitCostCurrency: "USD",
-              unitListPriceCurrency: "VND",
-              extendedListPrice: 0.0,
-              requested: "0001-01-01T00:00:00",
-              femAmount: 0.0,
-              pomAmount: 0.0,
-              samAmount: 0.0,
-              nsmAmount: 0.0,
-              femPercentage: 0.0,
-              pomPercentage: 0.0,
-              samPercentage: 0.0,
-              nsmPercentage: 0.0,
-              agreements: [],
-              attributes: [],
-              serialNumbers: [null],
-              discounts: [
-                {
-                  type: "Standard",
-                  value: "10.55",
-                },
-              ],
-              contract: {
-                id: "P1005109338",
-                renewedDuration: "1 Year",
-                endDate: "2024-09-27T00:00:00Z",
-                newAgreementStartDate: "2024-09-28T00:00:00Z",
-                newAgreementEndDate: "2025-09-27T00:00:00Z",
-                formattedEndDate: "27/09/2024",
-                formattedNewAgreementStartDate: "28/09/2024",
-                formattedNewAgreementEndDate: "27/09/2025",
-                dueDate: "2024-09-27T00:00:00Z",
-                hasMultipleSupportLevelForThisAgreement: false,
-                hasMultipleDueDateForThisAgreement: false,
-                hasMultipleDurationForThisAgreement: false,
-                agreementDuration: "28/09/2024 - 27/09/2025",
-                formattedDueDate: "27/09/2024",
-                autoRenew: true,
-              },
-              subscriptionId: "dfc5ce11334309b29ad3e2e63ee932NA",
-              agency: "AutoRenew",
-              minimumQuantity: 0.0,
-              maximumQuantity: 99999.0,
-              isResellerPriceOverride: false,
-            },
-            {
-              id: "2",
-              product: [
-                {
-                  type: "TECHDATA",
-                  id: "ADB65304752CA02A12",
+                  id: "ADB65304752CA01A12",
                   name: "-",
                   family: "Captivate for teams",
                 },
                 {
                   type: "MANUFACTURER",
-                  id: "65304752CA02A12",
+                  id: "65304752CA01A12",
                   name: "Captivate for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
                   manufacturer: "Adobe",
                   manufacturerId: "3",
                   family: "Captivate for teams",
                 },
               ],
-              quantity: 2.0,
+              quantity: 0.0,
               qty: 0.0,
               confirmedQuantity: 0.0,
               references: [],
               updated: "0001-01-01T00:00:00",
-              unitPrice: 9476000.0,
-              unitCost: 362.16,
-              totalPrice: 18952000.0,
-              unitListPrice: 9670000.0,
+              unitPrice: 9818000.0,
+              unitCost: 375.24,
+              totalPrice: 9818000.0,
+              unitListPrice: 10021000.0,
               unitPriceCurrency: "VND",
               unitCostCurrency: "USD",
               unitListPriceCurrency: "VND",
@@ -4830,27 +4758,27 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               discounts: [
                 {
                   type: "Standard",
-                  value: "2.01",
+                  value: "2.03",
                 },
               ],
               contract: {
-                id: "P1005109338",
+                id: "P1005109332",
                 renewedDuration: "1 Year",
-                endDate: "2024-09-27T00:00:00Z",
-                newAgreementStartDate: "2024-09-28T00:00:00Z",
-                newAgreementEndDate: "2025-09-27T00:00:00Z",
-                formattedEndDate: "27/09/2024",
-                formattedNewAgreementStartDate: "28/09/2024",
-                formattedNewAgreementEndDate: "27/09/2025",
-                dueDate: "2024-09-27T00:00:00Z",
+                endDate: "2025-06-24T00:00:00Z",
+                newAgreementStartDate: "2025-06-25T00:00:00Z",
+                newAgreementEndDate: "2026-06-24T00:00:00Z",
+                formattedEndDate: "24/06/2025",
+                formattedNewAgreementStartDate: "25/06/2025",
+                formattedNewAgreementEndDate: "24/06/2026",
+                dueDate: "2025-06-24T00:00:00Z",
                 hasMultipleSupportLevelForThisAgreement: false,
                 hasMultipleDueDateForThisAgreement: false,
                 hasMultipleDurationForThisAgreement: false,
-                agreementDuration: "28/09/2024 - 27/09/2025",
-                formattedDueDate: "27/09/2024",
+                agreementDuration: "25/06/2025 - 24/06/2026",
+                formattedDueDate: "24/06/2025",
                 autoRenew: true,
               },
-              subscriptionId: "9ef05af0fd4d28a9a0c92704fd3b59NA",
+              subscriptionId: "1f1e1ba4ed440bb638301bf6303ebfNAT",
               agency: "AutoRenew",
               minimumQuantity: 0.0,
               maximumQuantity: 99999.0,
@@ -4860,11 +4788,11 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           attributes: [],
           programName: "VIP MP Commercial",
           quoteCurrent: false,
-          firstAvailableOrderDate: "2024-08-28T00:00:00Z",
-          lastOrderDate: "2025-09-27T00:00:00Z",
+          firstAvailableOrderDate: "2025-05-25T00:00:00Z",
+          lastOrderDate: "2026-06-24T00:00:00Z",
           amountSaved: 0.0,
           linkedRenewals: [],
-          dueDate: "2024-09-27T00:00:00Z",
+          dueDate: "2025-06-24T00:00:00Z",
           endUserType: "Commercial",
           vendorLogo:
             "https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=30",
@@ -4873,12 +4801,12 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           previousResellerPO: "Auto-migration - Jun 2024",
           isValid: true,
           canOrder: false,
-          canEditQty: false,
-          canEditResellerPrice: false,
-          canEditLines: false,
+          canEditQty: true,
+          canEditResellerPrice: true,
+          canEditLines: true,
           canCopy: false,
           customerPO: {
-            text: "Auto-renew - 28/9/2024",
+            text: "Auto-renew - 25/6/2025",
             isValid: true,
             isMandatory: false,
             isDisplay: true,
@@ -4886,25 +4814,25 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
             allowedLength: 35,
           },
           formattedPublished: "01/10/2024",
-          formattedFirstAvailableOrderDate: "28/08/2024",
-          formattedLastOrderDate: "27/09/2025",
-          formattedDueDate: "27/09/2024",
+          formattedFirstAvailableOrderDate: "25/05/2025",
+          formattedLastOrderDate: "24/06/2026",
+          formattedDueDate: "24/06/2025",
           formattedCreated: "01/10/2024",
           formattedUpdated: "01/10/2024",
-          formattedExpiry: "27/09/2024",
+          formattedExpiry: "24/06/2025",
           vendor: {
             id: "3",
             name: "Adobe",
             vendorsTDName: "Adobe",
           },
-          renewalLevel: "Level 2 10 - 49",
+          renewalLevel: "Level 1 1 - 9",
           hasMultipleSupportLevel: false,
           hasMultipleAgreements: false,
           hasMultipleRenewedDuration: false,
           hasMultipleDueDates: false,
-          agreementNumber: "P1005109338",
+          agreementNumber: "P1005109332",
           renewedDuration: "1 Year",
-          agreementDuration: "28/09/2024 - 27/09/2025",
+          agreementDuration: "25/06/2025 - 24/06/2026",
           hasMultipleAgreementDuration: false,
           canDownloadExcel: true,
           canShareQuote: false,
@@ -4913,8 +4841,9 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           feedBackMessages: [
             {
               ruleNumber: 108,
-              errorCriticality: 3,
-              message: "Auto-renew on 28/9/2024",
+              errorCriticality: 2,
+              message:
+                "This agreement can be renewed beginning on 25/6/2025. Contact your Account Manager for more information.",
               refId: "",
               type: "",
               jsonUrl: "",
@@ -4926,64 +4855,44 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               product: [
                 {
                   type: "TECHDATA",
-                  id: "ADB65304470CA02A12",
-                  family: "Acrobat",
-                },
-                {
-                  type: "MANUFACTURER",
-                  id: "65304470CA02A12",
-                  name: "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                  manufacturer: "Adobe",
-                  manufacturerId: "3",
-                  family: "Acrobat",
-                },
-              ],
-              quantity: 10.0,
-              subscriptionId: "dfc5ce11334309b29ad3e2e63ee932NA",
-            },
-            {
-              id: "2",
-              product: [
-                {
-                  type: "TECHDATA",
-                  id: "ADB65304752CA02A12",
+                  id: "ADB65304752CA01A12",
                   family: "Captivate for teams",
                 },
                 {
                   type: "MANUFACTURER",
-                  id: "65304752CA02A12",
+                  id: "65304752CA01A12",
                   name: "Captivate for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
                   manufacturer: "Adobe",
                   manufacturerId: "3",
                   family: "Captivate for teams",
                 },
               ],
-              quantity: 2.0,
-              subscriptionId: "9ef05af0fd4d28a9a0c92704fd3b59NA",
+              quantity: 3.0,
+              subscriptionId: "1f1e1ba4ed440bb638301bf6303ebfNAT",
             },
           ],
           additionalInfo: [{}, {}],
-          renewalLevelActive: "Level 2 10 - 49",
-          canAddMore: false,
-          autoRenew: true,
+          renewalLevelActive: "Level 1 1 - 9",
+          canAddMore: true,
+          autoRenew: false,
           isAutoRenewEnabled: false,
-          displayAutoRenew: true,
+          displayAutoRenew: false,
           showToolTip: false,
           revision: 1.0,
           subRevision: 0.0,
           activeFlag: "Y",
-          price: 79052000.0,
+          price: 9818000.0,
           currency: "VND",
           quoteType: "AutoRenew",
-          created: "2024-10-01T08:00:08.025Z",
-          updated: "2024-10-01T08:00:08.025Z",
-          expiry: "2024-09-27T00:00:00Z",
+          created: "2024-10-01T10:34:18.941Z",
+          updated: "2024-10-01T10:34:18.941Z",
+          expiry: "2025-06-24T00:00:00Z",
           status: "Active",
           orders: [],
           vendorReference: [
             {
               type: "QuoteId",
-              value: "P1005109338",
+              value: "P1005109332",
             },
           ],
           femAmount: 0.0,
@@ -5162,9 +5071,9 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "details.renewal.properties.label.changesNotSavedRedBanner":
       "Changes didn`t save. Try again.",
     "details.renewal.properties.label.errorAutoRenewEnabled":
-    "Due to an unexpected issue activating auto-renew is not possible. Try again and if the error persists contact your TD Account manager.",
+      "Due to an unexpected issue activating auto-renew is not possible. Try again and if the error persists contact your TD Account manager.",
     "details.renewal.properties.label.errorAutoRenewNotEnabled":
-    "Due to an unexpected issue deactivating auto-renew is not possible. Try again and if the error persists contact your TD Account manager.",
+      "Due to an unexpected issue deactivating auto-renew is not possible. Try again and if the error persists contact your TD Account manager.",
 
     "grids.common.label.results": "{0}-{1} of {2} results",
     "grids.common.label.of": "of",
@@ -5362,76 +5271,74 @@ app.get("/ui-commerce/v1/quote/canConvertToOrder", function (req, res) {
   req.query.s === "1" ? res.json(success) : res.json(fail);
 });
 
-
 app.post("/ui-export/ui-renewal/v1/ManageSubscription", function (req, res) {
-  const success =
-[
+  const success = [
     {
-        "subscription_id": "2a815c63904fdf9197b5f0e5364289NA",
-        "errorMessage": "",
-        "errorCode": "",
-        "autoRenewal": {
-            "enabled": true,
-            "renewalQuantity": 2
+      subscription_id: "2a815c63904fdf9197b5f0e5364289NA",
+      errorMessage: "",
+      errorCode: "",
+      autoRenewal: {
+        enabled: true,
+        renewalQuantity: 2,
+      },
+      creationDate: "2024-09-11T05:18:01Z",
+      currentQuantity: 1,
+      status: "Active",
+      isSuccess: true,
+      links: {
+        self: {
+          headers: [],
+          method: "GET",
+          uri: "/v3/customers/P1005126298/subscriptions/2a815c63904fdf9197b5f0e5364289NA",
         },
-        "creationDate": "2024-09-11T05:18:01Z",
-        "currentQuantity": 1,
-        "status": "Active",
-        "isSuccess": true,
-        "links": {
-            "self": {
-                "headers": [],
-                "method": "GET",
-                "uri": "/v3/customers/P1005126298/subscriptions/2a815c63904fdf9197b5f0e5364289NA"
-            }
-        },
-        "statusCode": 0
+      },
+      statusCode: 0,
     },
     {
-        "subscription_id": "ce934527af45498c1edc36139c898bNA",
-        "errorMessage": "",
-        "errorCode": "",
-        "autoRenewal": {
-            "enabled": true,
-            "renewalQuantity": 2
+      subscription_id: "ce934527af45498c1edc36139c898bNA",
+      errorMessage: "",
+      errorCode: "",
+      autoRenewal: {
+        enabled: true,
+        renewalQuantity: 2,
+      },
+      creationDate: "2024-09-11T05:18:01Z",
+      currentQuantity: 1,
+      status: "Active",
+      isSuccess: true,
+      links: {
+        self: {
+          headers: [],
+          method: "GET",
+          uri: "/v3/customers/P1005126298/subscriptions/ce934527af45498c1edc36139c898bNA",
         },
-        "creationDate": "2024-09-11T05:18:01Z",
-        "currentQuantity": 1,
-        "status": "Active",
-        "isSuccess": true,
-        "links": {
-            "self": {
-                "headers": [],
-                "method": "GET",
-                "uri": "/v3/customers/P1005126298/subscriptions/ce934527af45498c1edc36139c898bNA"
-            }
-        },
-        "statusCode": 0
-    }
-];
+      },
+      statusCode: 0,
+    },
+  ];
 
   const error = [
     {
-        "subscription_id": "",
-        "errorMessage": "Invalid Customer or Subscription ID",
-        "errorCode": "3115",
-        "autoRenewal": {
-            "enabled": false,
-            "renewalQuantity": 0
+      subscription_id: "",
+      errorMessage: "Invalid Customer or Subscription ID",
+      errorCode: "3115",
+      autoRenewal: {
+        enabled: false,
+        renewalQuantity: 0,
+      },
+      currentQuantity: 0,
+      status: "",
+      isSuccess: false,
+      links: {
+        self: {
+          headers: [],
+          method: "",
+          uri: "",
         },
-        "currentQuantity": 0,
-        "status": "",
-        "isSuccess": false,
-        "links": {
-            "self": {
-                "headers": [],
-                "method": "",
-                "uri": ""
-            }
-        },
-        "statusCode": 0
-    }
-];
+      },
+      statusCode: 0,
+    },
+  ];
 
   //mockResponses.failedResponse
 
@@ -5443,14 +5350,12 @@ app.post("/ui-export/ui-renewal/v1/ManageSubscription", function (req, res) {
 app.post("/ui-renewal/v1/Update", function (req, res) {
   const fail = {
     content: {
-      subscriptionStatus: [
-        "Line=3 SubscriptionId=dfc5ce11334309b29ad3e2e63ee932N3 update Successful at Adobe Side",
-      ],
+      successStatus: [],
     },
     error: {
       code: 400,
       messages: [
-        "Line=1 SubscriptionId=8efcc178354552b03e9299f98eda5cNAT Failed to update at Adobe Side, ErrorMessage Invalid Customer or Subscription ID",
+        "Line=1 SubscriptionId=1f1e1ba4ed440bb638301bf6303ebfNAT Failed to update at Adobe Side, ErrorMessage Invalid Customer or Subscription ID",
       ],
       isError: true,
     },
