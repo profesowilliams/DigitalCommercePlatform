@@ -43,7 +43,7 @@ import {
 import CustomSwitchToggle from '../../Widgets/CustomSwitchToggle';
 import CustomTooltip from '../../Widgets/CustomTooltip';
 
-function GridHeader({ gridProps, data }) {
+function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
     useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
@@ -320,8 +320,7 @@ function GridHeader({ gridProps, data }) {
     setAutoRenewToggle(flag);
     setEnableAutoRenewError(false);
     setDisableAutoRenewError(false);
-  }
-
+  };
 
   const handleAutoRenewChange = (isToggled) => {
     setModal({
@@ -332,11 +331,14 @@ function GridHeader({ gridProps, data }) {
           isToggled={isToggled}
           setEnableAutoRenewError={setEnableAutoRenewError}
           setDisableAutoRenewError={setDisableAutoRenewError}
+          changeRefreshDetailApiState={changeRefreshDetailApiState}
         ></AutoRenewModal>
       ),
-     properties: {
-       title: isToggled ? gridProps?.productLines?.turnOnAutoRenewTitle : gridProps?.productLines?.turnOFFAutoRenewTitle,
-     }
+      properties: {
+        title: isToggled
+          ? gridProps?.productLines?.turnOnAutoRenewTitle
+          : gridProps?.productLines?.turnOFFAutoRenewTitle,
+      },
     });
   };
 
@@ -469,22 +471,23 @@ function GridHeader({ gridProps, data }) {
 }
 
 function AutoRenewError({ errorMessage, tryAgainHandler, closeHandler }) {
-    return (
-        <div className="details-auto-renew-banner">
-        <ProhibitedIcon />
-          <p>
-            {getDictionaryValueOrKey(
-              errorMessage
-            )}
-          </p>
-           <div className="close-icon" onClick={() => closeHandler(false)}>
-              <DismissFilledSmallIcon />
-           </div>
-        </div>
-    )
+  return (
+    <div className="details-auto-renew-banner">
+      <ProhibitedIcon />
+      <p>{getDictionaryValueOrKey(errorMessage)}</p>
+      <div className="close-icon" onClick={() => closeHandler(false)}>
+        <DismissFilledSmallIcon />
+      </div>
+    </div>
+  );
 }
 
-function ConfigGrid({ data, gridProps, updateDetails }) {
+function ConfigGrid({
+  data,
+  gridProps,
+  updateDetails,
+  changeRefreshDetailApiState,
+}) {
   const {
     reseller,
     endUser,
@@ -553,7 +556,11 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           <span className="quote-preview">
             {getDictionaryValue('details.renewal.label.title', 'Quote Preview')}
           </span>
-          <GridHeader data={data} gridProps={gridProps} />
+          <GridHeader
+            data={data}
+            gridProps={gridProps}
+            changeRefreshDetailApiState={changeRefreshDetailApiState}
+          />
         </div>
         {gridProps.enableRequestQuote && data.canRequestQuote && (
           <div className="opportunity-quote">

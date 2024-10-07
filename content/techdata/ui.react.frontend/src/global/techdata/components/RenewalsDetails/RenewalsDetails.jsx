@@ -435,6 +435,7 @@ function RenewalsDetails(props) {
               ...componentProp,
               excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
             }}
+            changeRefreshDetailApiState={changeRefreshDetailApiState}
           />
           {componentProp?.productLines?.enableActiveLicence === 'true' &&
           renewalsDetails?.itemsActive?.length > 0 ? (
