@@ -1,33 +1,29 @@
 import React, { useState } from "react";
-import { getDictionaryValue, getDictionaryValueOrKey } from "../../../../../utils/utils";
-import { manageSubscription } from './Common/utils';
-import Button from '@mui/material/Button';
-import { CircularArrowIcon } from '../../../../../fluentIcons/FluentIcons';
-import { getStatusLoopUntilStatusIsActive } from '../../RenewalsGrid/Orders/orderingRequests';
+import {
+  getDictionaryValue,
+  getDictionaryValueOrKey,
+} from "../../../../../utils/utils";
+import { manageSubscription } from "./Common/utils";
+import Button from "@mui/material/Button";
+import { CircularArrowIcon } from "../../../../../fluentIcons/FluentIcons";
+import { getStatusLoopUntilStatusIsActive } from "../../RenewalsGrid/Orders/orderingRequests";
 
 function AutoRenewModal({
   data,
   isToggled,
   gridProps,
+  setAutoRenewToggle,
   setEnableAutoRenewError,
+  renewModalClose,
   setDisableAutoRenewError,
   changeRefreshDetailApiState,
 }) {
   const [saveLoader, setSaveLoader] = useState(false);
   const date = data?.items?.[0]?.contract?.formattedNewAgreementStartDate;
   const renewONText = gridProps?.productLines?.autoRenewOnDescription.replace(
-    '<date>',
+    "<date>",
     date
   );
-
-  const closeModal = (e) => {
-    const modalClose = document.querySelector(
-      '.cmp-auto-renew-modal .cmp-modal_close'
-    );
-    if (modalClose) {
-      modalClose.click();
-    }
-  };
 
   const manageSubscriptionAPI = async () => {
     setSaveLoader(true);
@@ -42,8 +38,8 @@ function AutoRenewModal({
     });
 
     const payload = {
-      CustomerId: data?.endUser?.eaNumber?.text || '',
-      QuoteId: data?.source?.id || '',
+      CustomerId: data?.endUser?.eaNumber?.text || "",
+      QuoteId: data?.source?.id || "",
       Subscriptions: subscriptions,
     };
 
@@ -61,16 +57,22 @@ function AutoRenewModal({
       });
       if (isActiveQuote) {
         changeRefreshDetailApiState();
-        setSaveLoader(false);
-        closeModal();
+        renewModalClose(isToggled);
+      } else {
+        if (isToggled) {
+          setEnableAutoRenewError(true);
+        } else {
+          setDisableAutoRenewError(true);
+        }
       }
+      renewModalClose();
     } else {
       if (isToggled) {
         setEnableAutoRenewError(true);
       } else {
         setDisableAutoRenewError(true);
       }
-      closeModal();
+      renewModalClose();
     }
   };
 
@@ -84,7 +86,7 @@ function AutoRenewModal({
       <div className="cmp-auto-renew-modal__button-section">
         {isToggled ? (
           <>
-            <button className="secondary" onClick={closeModal}>
+            <button className="secondary" onClick={() => renewModalClose(true)}>
               {getDictionaryValueOrKey(
                 gridProps?.productLines?.noLeaveOffAutoRenew
               )}
@@ -95,7 +97,7 @@ function AutoRenewModal({
                   <CircularArrowIcon className="circular-arrow-icon" />
                 }
                 sx={{
-                  textTransform: 'none',
+                  textTransform: "none",
                 }}
                 disabled={true}
                 className="primary"
@@ -120,7 +122,7 @@ function AutoRenewModal({
                   <CircularArrowIcon className="circular-arrow-icon" />
                 }
                 sx={{
-                  textTransform: 'none',
+                  textTransform: "none",
                 }}
                 disabled={true}
                 className="secondary"
@@ -136,7 +138,7 @@ function AutoRenewModal({
                 )}
               </button>
             )}
-            <button className="primary" onClick={closeModal}>
+            <button className="primary" onClick={() => renewModalClose(true)}>
               {getDictionaryValueOrKey(
                 gridProps?.productLines?.noLeaveOnAutoRenew
               )}

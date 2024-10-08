@@ -311,16 +311,19 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
     </div>
   );
 
-  const handleAutoRenewModalClose = () => {
-    setAutoRenewToggle(data?.autoRenew);
-    setModal(null);
-  };
-
   const tryAutoRenewToggle = (flag) => {
     setAutoRenewToggle(flag);
     setEnableAutoRenewError(false);
     setDisableAutoRenewError(false);
-  };
+  }
+
+  const renewModalClose = (isDefault) => {
+      if (typeof isDefault === 'boolean') {
+        setAutoRenewToggle(typeof isDefault === 'boolean' ? isDefault : data?.autoRenew);
+      }
+      setModal(null);
+  }
+
 
   const handleAutoRenewChange = (isToggled) => {
     setModal({
@@ -331,6 +334,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
           isToggled={isToggled}
           setEnableAutoRenewError={setEnableAutoRenewError}
           setDisableAutoRenewError={setDisableAutoRenewError}
+          renewModalClose={renewModalClose}
           changeRefreshDetailApiState={changeRefreshDetailApiState}
         ></AutoRenewModal>
       ),
@@ -451,7 +455,6 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
           modalContent={modal.content}
           modalProperties={modal.properties}
           actionErrorMessage={modal.errorMessage}
-          onModalClosed={handleAutoRenewModalClose}
           customClass="cmp-auto-renew-modal"
         ></Modal>
       )}
