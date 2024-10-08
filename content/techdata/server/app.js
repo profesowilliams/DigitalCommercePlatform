@@ -5074,6 +5074,8 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
       "Due to an unexpected issue activating auto-renew is not possible. Try again and if the error persists contact your TD Account manager.",
     "details.renewal.properties.label.errorAutoRenewNotEnabled":
       "Due to an unexpected issue deactivating auto-renew is not possible. Try again and if the error persists contact your TD Account manager.",
+    "details.renewal.quoteEditing.label.weAreSorry":
+      "We are sorry, your update could not be processed, please try again later.",
 
     "grids.common.label.results": "{0}-{1} of {2} results",
     "grids.common.label.of": "of",
@@ -5349,15 +5351,10 @@ app.post("/ui-export/ui-renewal/v1/ManageSubscription", function (req, res) {
 
 app.post("/ui-renewal/v1/Update", function (req, res) {
   const fail = {
-    content: {
-      successStatus: [],
-    },
     error: {
-      code: 400,
-      messages: [
-        "Line=1 SubscriptionId=1f1e1ba4ed440bb638301bf6303ebfNAT Failed to update at Adobe Side, ErrorMessage Invalid Customer or Subscription ID",
-      ],
-      isError: true,
+      code: 0,
+      messages: [],
+      isError: false,
     },
   };
 

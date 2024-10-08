@@ -198,12 +198,13 @@ use(["../../../common/utils.js"], function(utils) {
 
         // Quote Editing
         const quoteEditingList = [
-            "cancelDialogTitle",
-            "cancelDialogDescription",
-            "successUpdate",
-            "failedUpdate",
-            "orderButtonLabel",
-            "saveAndOrderButtonLabel"
+          "cancelDialogTitle",
+          "cancelDialogDescription",
+          "successUpdate",
+          "failedUpdate",
+          "weAreSorry",
+          "orderButtonLabel",
+          "saveAndOrderButtonLabel",
         ];
 
         quoteEditingList.map((quoteEditingItem) =>

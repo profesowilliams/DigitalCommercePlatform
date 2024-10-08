@@ -380,13 +380,21 @@ function RenewalsDetails(props) {
       await handleUpdateError(ex);
 
       const errorTitle = 'Could not save changes.';
-      let errorMessage =
-        'We are sorry, your update could not be processed, please try again later.';
-      if (ex.status === 200 && ex?.data?.salesContentEmail) {
-        errorMessage = componentProp.quoteEditing?.failedUpdate?.replace(
-          '{email}',
-          ex.data.salesContentEmail
-        );
+      let errorMessage = getDictionaryValueOrKey(
+        componentProp.quoteEditing?.weAreSorry
+      );
+
+      if (ex.status === 200) {
+        if (ex?.data?.salesContentEmail) {
+          errorMessage = componentProp.quoteEditing?.failedUpdate?.replace(
+            '{email}',
+            ex.data.salesContentEmail
+          );
+        } else {
+          errorMessage = getDictionaryValueOrKey(
+            componentProp.quoteEditing?.weAreSorry
+          );
+        }
       }
       const errorToaster = {
         isOpen: true,
