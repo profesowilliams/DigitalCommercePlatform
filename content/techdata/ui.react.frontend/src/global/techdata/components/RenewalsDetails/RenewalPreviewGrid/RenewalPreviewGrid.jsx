@@ -71,7 +71,7 @@ function RenewalPreviewGrid(
     isPAODialogOpen,
     setIsPAODialogOpen,
     isRequestQuoteFlag,
-    blueBannerShowRef,
+    setErrorBlueBanner,
     redBannerShow,
   },
   ref
@@ -353,7 +353,7 @@ function RenewalPreviewGrid(
             return data?.subscriptionId === subscriptionId && data?.id === line;
           }
         );
-        if (data?.quantity === 0) blueBannerShowRef.current = true;
+        if (data?.quantity === 0) setErrorBlueBanner(true);
         return !data?.id?.includes('Agreement') ? (
           // TODO: add some styling to icon display
           <div className="error-id-column">

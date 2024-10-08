@@ -104,7 +104,7 @@ function RenewalsDetails(props) {
   const [authenticated, setAuthenticated] = useState(true);
 
   const [redBannerShow, setRedBannerShow] = useState(true);
-  const blueBannerShowRef = useRef(false);
+  const [blueBannerShow, setBlueBannerShow] = useState(false);
 
   // Keep grid reference to cancel edit changes
   const gridRef = useRef();
@@ -266,7 +266,7 @@ function RenewalsDetails(props) {
             componentProp?.productLines?.enableActiveLicence === 'true' &&
             renewalsDetails?.itemsActive?.length > 0
           ) {
-            blueBannerShowRef.current = false;
+            setBlueBannerShow(false);
             changeRefreshDetailApiState();
           }
         }
@@ -405,6 +405,10 @@ function RenewalsDetails(props) {
     setRedBannerShow(false);
   };
 
+  const setErrorBlueBanner = () => {
+      setBlueBannerShow(true);
+    };
+
   const openNewPurchaseFlyout = (e) => {
     e.stopPropagation();
     setCustomState({
@@ -536,7 +540,7 @@ function RenewalsDetails(props) {
                       </div>
                     </div>
                   )}
-                  {blueBannerShowRef.current === true && (
+                  {blueBannerShow && (
                     <div className="details-error-blue-banner">
                       <p>
                         <BannerInfoIcon />
@@ -555,7 +559,7 @@ function RenewalsDetails(props) {
                       ...componentProp.quoteEditing,
                       excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
                     }}
-                    blueBannerShowRef={blueBannerShowRef}
+                    setErrorBlueBanner={setErrorBlueBanner}
                     redBannerShow={redBannerShow}
                     isEditing={!toggleEdit}
                     shopDomainPage={componentProp.shopDomainPage}
