@@ -342,6 +342,9 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
     });
   };
 
+  useEffect(() => {
+    setAutoRenewToggle(data?.autoRenew);
+  }, [data?.autoRenew]);
   return (
     <div
       className={
