@@ -14,14 +14,14 @@ const LineItem = ({
   setPayloadWithoutNewItem,
   setBannerOpen,
 }) => {
-  // Initialize the state with the unit price as a string
-  const initialQuantity = parseInt(item?.quantity) || 1;
-  const initialPriceFormatted = parseFloat(item?.unitPrice).toFixed(0);
-  const originalPrice = parseFloat(item?.unitPriceOriginal).toFixed(0);
-  const [quantity, setQuantity] = useState(parseInt(initialQuantity));
+  const initialQuantity = parseInt(item?.quantity, 10) || 1;
+  const initialPriceFormatted = parseInt(item?.unitPrice, 10).toString();
+  const originalPrice = parseInt(item?.unitPriceOriginal, 10).toString();
+  const [quantity, setQuantity] = useState(initialQuantity);
   const [unitPrice, setUnitPrice] = useState(initialPriceFormatted || '0');
+  const [formattedUnitPrice, setFormattedUnitPrice] = useState(thousandSeparator(initialPriceFormatted) || '0');
   const [totalPrice, setTotalPrice] = useState(
-    (quantity * parseFloat(unitPrice)).toFixed(0)
+    (initialQuantity * parseInt(unitPrice, 10)).toString()
   );
   const [enableResetPrice, setEnableResetPrice] = useState(false);
   const itemProduct = item?.product.find(
@@ -42,33 +42,46 @@ const LineItem = ({
   };
 
   const handleChange = (event, itemId) => {
-    const value = parseFloat(event.target.value).toFixed(0);
-    const isOverride = value !== originalPrice;
-    setUnitPrice(value);
-    const newTotalPrice = (quantity * parseFloat(value)).toFixed(0);
-    setTotalPrice(newTotalPrice);
-    const changes = {
-      quantity: quantity.toString(),
-      unitPrice: value,
-      totalPrice: newTotalPrice,
-      isResellerPriceOverride: isOverride,
-    };
-    updateItem(itemId, changes);
-    setPlaceOrderActive(false);
-    setBannerOpen(false);
+    const inputValue = event.target.value.replace(/,/g, ''); // Remove commas
+    if (inputValue === '' || /^[0-9]*$/.test(inputValue)) {
+      // Allow empty input or numbers only
+      setUnitPrice(inputValue); // Update raw unitPrice without formatting
+      setFormattedUnitPrice(inputValue); // Update displayed value
+
+      const numericValue = inputValue === '' ? 0 : parseInt(inputValue, 10);
+      const newTotalPrice = (quantity * numericValue).toString();
+      setTotalPrice(newTotalPrice);
+
+      const changes = {
+        quantity: quantity.toString(),
+        unitPrice: numericValue.toString(),
+        totalPrice: newTotalPrice,
+        isResellerPriceOverride: numericValue !== parseInt(originalPrice, 10),
+      };
+      updateItem(itemId, changes);
+      setPlaceOrderActive(false);
+      setBannerOpen(false);
+    }
+  };
+
+  const handleBlur = () => {
+    // Format unitPrice with commas on blur
+    if (unitPrice !== '') {
+      setFormattedUnitPrice(thousandSeparator(parseInt(unitPrice, 10).toString(),0));
+    }
   };
 
   const handleQuantityChange = (newQuantity) => {
-    const integerQuantity = parseInt(newQuantity);
-    const isOverride = unitPrice !== originalPrice;
+    const integerQuantity = parseInt(newQuantity, 10);
     setQuantity(integerQuantity);
-    const newTotalPrice = (integerQuantity * parseFloat(unitPrice)).toFixed(0);
+    const numericUnitPrice = parseInt(unitPrice, 10) || 0;
+    const newTotalPrice = (integerQuantity * numericUnitPrice).toString();
     setTotalPrice(newTotalPrice);
     const changes = {
       quantity: integerQuantity.toString(),
-      unitPrice: unitPrice,
-      totalPrice: (integerQuantity * parseFloat(unitPrice)).toFixed(0),
-      isResellerPriceOverride: isOverride,
+      unitPrice: numericUnitPrice.toString(),
+      totalPrice: newTotalPrice,
+      isResellerPriceOverride: numericUnitPrice !== parseInt(originalPrice, 10),
     };
     updateItem(item?.id, changes);
     setPlaceOrderActive(false);
@@ -76,13 +89,14 @@ const LineItem = ({
   };
 
   const handleResetPrice = () => {
-    const newTotalPrice = (quantity * originalPrice).toFixed(0);
     setUnitPrice(originalPrice);
+    setFormattedUnitPrice(thousandSeparator(originalPrice,0));
+    const newTotalPrice = (quantity * parseInt(originalPrice, 10)).toString();
     setTotalPrice(newTotalPrice);
     const changes = {
       quantity: quantity.toString(),
       unitPrice: originalPrice,
-      totalPrice: (quantity * originalPrice).toFixed(0),
+      totalPrice: newTotalPrice,
       isResellerPriceOverride: false,
     };
     updateItem(item?.id, changes);
@@ -93,33 +107,33 @@ const LineItem = ({
   const handleDeleteLine = () => {
     setPayloadWithoutNewItem(true);
     setItems((prevItems) =>
-      prevItems.filter((i) => {
-        return i.id !== item?.id;
-      })
+      prevItems.filter((i) => i.id !== item?.id)
     );
     setPlaceOrderActive(false);
     setBannerOpen(false);
   };
 
   useEffect(() => {
-    const newTotalPrice = (quantity * parseFloat(unitPrice)).toFixed(0);
+    const numericUnitPrice = parseInt(unitPrice, 10) || 0;
+    const newTotalPrice = (quantity * numericUnitPrice).toString();
     setTotalPrice(newTotalPrice);
   }, [quantity, unitPrice]);
 
   useEffect(() => {
     if (item) {
-      const quantityValue = parseInt(item.quantity || '1');
-      const priceValue = parseFloat(item.unitPrice || '0').toFixed(0);
+      const quantityValue = parseInt(item.quantity || '1', 10);
+      const priceValue = parseInt(item.unitPrice || '0', 10).toString();
       setQuantity(quantityValue);
       setUnitPrice(priceValue);
+      setFormattedUnitPrice(thousandSeparator(priceValue,0));
       setTotalPrice(
-        item.totalPrice || (quantityValue * parseFloat(priceValue)).toFixed(0)
+        item.totalPrice || (quantityValue * parseInt(priceValue, 10)).toString()
       );
     }
   }, [item]);
 
   useEffect(() => {
-    setEnableResetPrice(originalPrice !== unitPrice);
+    setEnableResetPrice(parseInt(originalPrice, 10) !== parseInt(unitPrice, 10));
   }, [originalPrice, unitPrice]);
 
   return (
@@ -140,10 +154,12 @@ const LineItem = ({
         {canEditResellerPrice ? (
           <div className="cmp-flyout-newPurchase__form-table__body__input">
             <input
-              type="number"
+              type="text"
               name="unitPrice"
-              value={unitPrice}
+              value={formattedUnitPrice}
               onChange={(e) => handleChange(e, item?.id)}
+              onBlur={handleBlur}
+              placeholder="0"
             />
             <button
               onClick={handleResetPrice}
@@ -158,7 +174,7 @@ const LineItem = ({
             </button>
           </div>
         ) : (
-          <div>{thousandSeparator(initialPriceFormatted.split('.')[0], 0)}</div>
+          <div>{thousandSeparator(initialPriceFormatted, 0)}</div>
         )}
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-center">
@@ -172,7 +188,7 @@ const LineItem = ({
       </td>
       <td className="cmp-flyout-newPurchase__form-table__body__text text-align-end">
         <div className="total-price-body">
-          <span>{thousandSeparator(totalPrice.split('.')[0], 0)}</span>
+          <span>{thousandSeparator(totalPrice, 0)}</span>
           <button onClick={handleDeleteLine}>
             <TrashcanIcon />
           </button>
