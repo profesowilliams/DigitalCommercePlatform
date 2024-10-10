@@ -4530,388 +4530,483 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
   const { id } = req.query;
 
   const response = {
-    content: {
-      details: [
-        {
-          source: {
-            salesOrg: "VN91",
-            targetSystem: "R3",
-            key: "U100000006024",
-            system: "RQEu",
-            id: "U100000006024",
-          },
-          published: "2024-10-01T10:34:18.941Z",
-          reseller: {
-            id: "90005",
-            isValid: true,
-            canEdit: false,
-            incumbent: false,
-            vendorAccountNumber: {
-              text: "P1000054039",
-              isValid: true,
-              isMandatory: false,
-              isDisplay: true,
-              canEdit: false,
-              allowedLength: 100000,
-            },
-            paymentTerms: "20% Deposit & Balance by COD",
-            name: "CONG TY TNHH BAT DONG SAN",
-            nameUpper: "CONG TY TNHH BAT DONG SAN",
-            contact: [
-              {
-                name: {
-                  text: "Ana Paz",
-                  isValid: true,
-                  isMandatory: false,
-                  isDisplay: true,
-                  canEdit: false,
-                  allowedLength: 100000,
-                },
-                email: {
-                  text: "",
-                  isValid: true,
-                  isMandatory: false,
-                  isDisplay: true,
-                  canEdit: false,
-                  allowedLength: 100000,
-                },
-                phone: {
-                  text: "4042156",
-                  isValid: true,
-                  isMandatory: false,
-                  isDisplay: true,
-                  canEdit: false,
-                  allowedLength: 100000,
-                },
-              },
-            ],
-            address: {
-              line1: "59 CAO THANG, QUAN 3, TP. HCM ",
-              city: "Thanh Pho Ho Chi Minh, Viet Nam",
-              postalCode: "700000",
-              country: "VN",
-            },
-          },
-          endUser: {
-            isValid: true,
-            canEdit: false,
-            name: {
-              text: "Company23",
-              isValid: true,
-              isMandatory: false,
-              isDisplay: true,
-              canEdit: false,
-              allowedLength: 100000,
-            },
-            nameUpper: "COMPANY23",
-            eaNumber: {
-              text: "P1005109332",
-              isValid: true,
-              isMandatory: false,
-              isDisplay: true,
-              canEdit: false,
-              allowedLength: 100000,
-            },
-            contact: [
-              {
-                name: {
-                  text: "Name23 LastName23",
-                  isValid: true,
-                  isMandatory: false,
-                  isDisplay: true,
-                  canEdit: false,
-                  allowedLength: 100000,
-                },
-                email: {
-                  text: "namelastname21+1719252483530@customer23.com",
-                  isValid: true,
-                  isMandatory: false,
-                  isDisplay: true,
-                  canEdit: false,
-                  allowedLength: 100000,
-                },
-                phone: {
-                  text: "",
-                  isValid: true,
-                  isMandatory: false,
-                  isDisplay: true,
-                  canEdit: false,
-                  allowedLength: 100000,
-                },
-              },
-            ],
-            address: {
-              line1: {
-                text: "Tuoi Tre Tower, No. 60A,",
-                isValid: true,
-                isMandatory: false,
-                isDisplay: true,
-                canEdit: false,
-                allowedLength: 100000,
-              },
-              line2: {
-                text: "Hoang Van Thu Street, Ward 9, Phu Nhuan ",
-                isValid: true,
-                isMandatory: false,
-                isDisplay: true,
-                canEdit: false,
-                allowedLength: 100000,
-              },
-              line3: {
-                isValid: true,
-                isMandatory: false,
-                isDisplay: false,
-                canEdit: false,
-                allowedLength: 100000,
-              },
-              city: {
-                text: "Ho Chi Minh City",
-                isValid: true,
-                isMandatory: false,
-                isDisplay: true,
-                canEdit: false,
-                allowedLength: 100000,
-              },
-              postalCode: {
-                text: "700000",
-                isValid: true,
-                isMandatory: false,
-                isDisplay: true,
-                canEdit: false,
-                allowedLength: 100000,
-              },
-              country: {
-                text: "Vietnam",
-                isValid: true,
-                isMandatory: false,
-                isDisplay: true,
-                canEdit: false,
-                allowedLength: 100000,
-              },
-              countryCode: {
-                text: "VN",
-                isValid: true,
-                isMandatory: false,
-                isDisplay: true,
-                canEdit: false,
-                allowedLength: 100000,
-              },
-            },
-            preferredLanguage: "en-US",
-          },
-          shipTo: {
-            id: {
-              isValid: true,
-              isMandatory: false,
-              isDisplay: false,
-              canEdit: false,
-              allowedLength: 100000,
-            },
-            nameUpper: "",
-            contact: [],
-            address: {},
-          },
-          items: [
-            {
-              id: "1",
-              product: [
-                {
-                  type: "TECHDATA",
-                  id: "ADB65304752CA01A12",
-                  name: "-",
-                  family: "Captivate for teams",
-                },
-                {
-                  type: "MANUFACTURER",
-                  id: "65304752CA01A12",
-                  name: "Captivate for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                  manufacturer: "Adobe",
-                  manufacturerId: "3",
-                  family: "Captivate for teams",
-                },
-              ],
-              quantity: 0.0,
-              qty: 0.0,
-              confirmedQuantity: 0.0,
-              references: [],
-              updated: "0001-01-01T00:00:00",
-              unitPrice: 9818000.0,
-              unitCost: 375.24,
-              totalPrice: 9818000.0,
-              unitListPrice: 10021000.0,
-              unitPriceCurrency: "VND",
-              unitCostCurrency: "USD",
-              unitListPriceCurrency: "VND",
-              extendedListPrice: 0.0,
-              requested: "0001-01-01T00:00:00",
-              femAmount: 0.0,
-              pomAmount: 0.0,
-              samAmount: 0.0,
-              nsmAmount: 0.0,
-              femPercentage: 0.0,
-              pomPercentage: 0.0,
-              samPercentage: 0.0,
-              nsmPercentage: 0.0,
-              agreements: [],
-              attributes: [],
-              serialNumbers: [null],
-              discounts: [
-                {
-                  type: "Standard",
-                  value: "2.03",
-                },
-              ],
-              contract: {
-                id: "P1005109332",
-                renewedDuration: "1 Year",
-                endDate: "2025-06-24T00:00:00Z",
-                newAgreementStartDate: "2025-06-25T00:00:00Z",
-                newAgreementEndDate: "2026-06-24T00:00:00Z",
-                formattedEndDate: "24/06/2025",
-                formattedNewAgreementStartDate: "25/06/2025",
-                formattedNewAgreementEndDate: "24/06/2026",
-                dueDate: "2025-06-24T00:00:00Z",
-                hasMultipleSupportLevelForThisAgreement: false,
-                hasMultipleDueDateForThisAgreement: false,
-                hasMultipleDurationForThisAgreement: false,
-                agreementDuration: "25/06/2025 - 24/06/2026",
-                formattedDueDate: "24/06/2025",
-                autoRenew: true,
-              },
-              subscriptionId: "1f1e1ba4ed440bb638301bf6303ebfNAT",
-              agency: "AutoRenew",
-              minimumQuantity: 0.0,
-              maximumQuantity: 99999.0,
-              isResellerPriceOverride: false,
-            },
-          ],
-          attributes: [],
-          programName: "VIP MP Commercial",
-          quoteCurrent: false,
-          firstAvailableOrderDate: "2025-05-25T00:00:00Z",
-          lastOrderDate: "2026-06-24T00:00:00Z",
-          amountSaved: 0.0,
-          linkedRenewals: [],
-          dueDate: "2025-06-24T00:00:00Z",
-          endUserType: "Commercial",
-          vendorLogo:
-            "https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=30",
-          vendorLogoPdf:
-            "https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=20",
-          previousResellerPO: "Auto-migration - Jun 2024",
-          isValid: true,
-          canOrder: false,
-          canEditQty: true,
-          canEditResellerPrice: true,
-          canEditLines: true,
-          canCopy: false,
-          customerPO: {
-            text: "Auto-renew - 25/6/2025",
-            isValid: true,
-            isMandatory: false,
-            isDisplay: true,
-            canEdit: true,
-            allowedLength: 35,
-          },
-          formattedPublished: "01/10/2024",
-          formattedFirstAvailableOrderDate: "25/05/2025",
-          formattedLastOrderDate: "24/06/2026",
-          formattedDueDate: "24/06/2025",
-          formattedCreated: "01/10/2024",
-          formattedUpdated: "01/10/2024",
-          formattedExpiry: "24/06/2025",
-          vendor: {
-            id: "3",
-            name: "Adobe",
-            vendorsTDName: "Adobe",
-          },
-          renewalLevel: "Level 1 1 - 9",
-          hasMultipleSupportLevel: false,
-          hasMultipleAgreements: false,
-          hasMultipleRenewedDuration: false,
-          hasMultipleDueDates: false,
-          agreementNumber: "P1005109332",
-          renewedDuration: "1 Year",
-          agreementDuration: "25/06/2025 - 24/06/2026",
-          hasMultipleAgreementDuration: false,
-          canDownloadExcel: true,
-          canShareQuote: false,
-          canRequestQuote: false,
-          canRequestRevision: false,
-          feedBackMessages: [
-            {
-              ruleNumber: 108,
-              errorCriticality: 2,
-              message:
-                "This agreement can be renewed beginning on 25/6/2025. Contact your Account Manager for more information.",
-              refId: "",
-              type: "",
-              jsonUrl: "",
-            },
-          ],
-          itemsActive: [
-            {
-              id: "1",
-              product: [
-                {
-                  type: "TECHDATA",
-                  id: "ADB65304752CA01A12",
-                  family: "Captivate for teams",
-                },
-                {
-                  type: "MANUFACTURER",
-                  id: "65304752CA01A12",
-                  name: "Captivate for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                  manufacturer: "Adobe",
-                  manufacturerId: "3",
-                  family: "Captivate for teams",
-                },
-              ],
-              quantity: 3.0,
-              subscriptionId: "1f1e1ba4ed440bb638301bf6303ebfNAT",
-            },
-          ],
-          additionalInfo: [{}, {}],
-          renewalLevelActive: "Level 1 1 - 9",
-          canAddMore: true,
-          autoRenew: false,
-          isAutoRenewEnabled: true,
-          displayAutoRenew: true,
-          showToolTip: false,
-          revision: 1.0,
-          subRevision: 0.0,
-          activeFlag: "Y",
-          price: 9818000.0,
-          currency: "VND",
-          quoteType: "AutoRenew",
-          created: "2024-10-01T10:34:18.941Z",
-          updated: "2024-10-01T10:34:18.941Z",
-          expiry: "2025-06-24T00:00:00Z",
-          status: "Active",
-          orders: [],
-          vendorReference: [
-            {
-              type: "QuoteId",
-              value: "P1005109332",
-            },
-          ],
-          femAmount: 0.0,
-          pomAmount: 0.0,
-          samAmount: 0.0,
-          nsmAmount: 0.0,
-          femPercentage: 0.0,
-          pomPercentage: 0.0,
-          samPercentage: 0.0,
-          nsmPercentage: 0.0,
-        },
-      ],
-    },
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  };
+                       "content": {
+                           "details": [
+                               {
+                                   "source": {
+                                       "salesOrg": "VN91",
+                                       "targetSystem": "R3",
+                                       "key": "U878234265752",
+                                       "system": "RQEu",
+                                       "id": "U878234265752"
+                                   },
+                                   "published": "2024-10-04T10:11:20.178Z",
+                                   "reseller": {
+                                       "id": "90005",
+                                       "isValid": true,
+                                       "canEdit": false,
+                                       "incumbent": false,
+                                       "vendorAccountNumber": {
+                                           "text": "P1005108534",
+                                           "isValid": true,
+                                           "isMandatory": false,
+                                           "isDisplay": true,
+                                           "canEdit": false,
+                                           "allowedLength": 100000
+                                       },
+                                       "name": "CONG TY TNHH BAT DONG SAN",
+                                       "nameUpper": "CONG TY TNHH BAT DONG SAN",
+                                       "contact": [
+                                           {
+                                               "name": {
+                                                   "text": "Luis Mora",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": true,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               },
+                                               "email": {
+                                                   "text": "luis.mora@test3.com",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": true,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               },
+                                               "phone": {
+                                                   "text": "0974674547 MS CHINH",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": true,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               }
+                                           }
+                                       ],
+                                       "address": {
+                                           "line1": "59 CAO THANG, QUAN 3, TP. HCM ",
+                                           "city": "Thành Phố Hồ Chí Minh, Việt Nam",
+                                           "postalCode": "700000",
+                                           "country": "VN"
+                                       }
+                                   },
+                                   "endUser": {
+                                       "isValid": true,
+                                       "canEdit": false,
+                                       "name": {
+                                           "text": "ExternalUser7",
+                                           "isValid": true,
+                                           "isMandatory": false,
+                                           "isDisplay": true,
+                                           "canEdit": false,
+                                           "allowedLength": 100000
+                                       },
+                                       "nameUpper": "EXTERNALUSER7",
+                                       "eaNumber": {
+                                           "text": "P2005108534",
+                                           "isValid": true,
+                                           "isMandatory": false,
+                                           "isDisplay": true,
+                                           "canEdit": false,
+                                           "allowedLength": 100000
+                                       },
+                                       "contact": [
+                                           {
+                                               "name": {
+                                                   "text": "Name10 LastName10",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": true,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               },
+                                               "email": {
+                                                   "text": "test.email10+1718719580953@test.email10.com",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": true,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               },
+                                               "phone": {
+                                                   "text": "",
+                                                   "isValid": true,
+                                                   "isMandatory": false,
+                                                   "isDisplay": true,
+                                                   "canEdit": false,
+                                                   "allowedLength": 100000
+                                               }
+                                           }
+                                       ],
+                                       "address": {
+                                           "line1": {
+                                               "text": "Tuoi Tre Tower, No. 60A,",
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": true,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "line2": {
+                                               "text": "Hoang Van Thu Street, Ward 9, Phu Nhuan",
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": true,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "line3": {
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": false,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "city": {
+                                               "text": "Ho Chi Minh City",
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": true,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "postalCode": {
+                                               "text": "700000",
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": true,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "country": {
+                                               "text": "Vietnam",
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": true,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           },
+                                           "countryCode": {
+                                               "text": "VN",
+                                               "isValid": true,
+                                               "isMandatory": false,
+                                               "isDisplay": true,
+                                               "canEdit": false,
+                                               "allowedLength": 100000
+                                           }
+                                       },
+                                       "preferredLanguage": "en-US"
+                                   },
+                                   "shipTo": {
+                                       "id": {
+                                           "isValid": true,
+                                           "isMandatory": false,
+                                           "isDisplay": false,
+                                           "canEdit": false,
+                                           "allowedLength": 100000
+                                       },
+                                       "nameUpper": "",
+                                       "contact": [],
+                                       "address": {}
+                                   },
+                                   "items": [
+                                       {
+                                           "id": "1",
+                                           "product": [
+                                               {
+                                                   "type": "TECHDATA",
+                                                   "id": "ADB65304883CA03A12",
+                                                   "name": "-",
+                                                   "family": "Acrobat"
+                                               },
+                                               {
+                                                   "type": "MANUFACTURER",
+                                                   "id": "65304883CA03A12",
+                                                   "name": "Acrobat Standard DC for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
+                                                   "manufacturer": "Adobe",
+                                                   "manufacturerId": "3",
+                                                   "family": "Acrobat"
+                                               }
+                                           ],
+                                           "quantity": 5.0,
+                                           "qty": 0.0,
+                                           "confirmedQuantity": 0.0,
+                                           "references": [],
+                                           "updated": "0001-01-01T00:00:00",
+                                           "unitPrice": 3584000.0,
+                                           "unitCost": 135.96,
+                                           "totalPrice": 17920000.0,
+                                           "unitListPrice": 4006000.0,
+                                           "unitPriceCurrency": "VND",
+                                           "unitCostCurrency": "USD",
+                                           "unitListPriceCurrency": "VND",
+                                           "extendedListPrice": 0.0,
+                                           "requested": "0001-01-01T00:00:00",
+                                           "femAmount": 0.0,
+                                           "pomAmount": 0.0,
+                                           "samAmount": 0.0,
+                                           "nsmAmount": 0.0,
+                                           "femPercentage": 0.0,
+                                           "pomPercentage": 0.0,
+                                           "samPercentage": 0.0,
+                                           "nsmPercentage": 0.0,
+                                           "agreements": [],
+                                           "attributes": [],
+                                           "serialNumbers": [
+                                               null
+                                           ],
+                                           "discounts": [
+                                               {
+                                                   "type": "Standard",
+                                                   "value": "10.53"
+                                               }
+                                           ],
+                                           "contract": {
+                                               "id": "P2005108534",
+                                               "renewedDuration": "1 Year",
+                                               "endDate": "2025-07-07T00:00:00Z",
+                                               "newAgreementStartDate": "2025-07-08T00:00:00Z",
+                                               "newAgreementEndDate": "2026-07-07T00:00:00Z",
+                                               "formattedEndDate": "07/07/2025",
+                                               "formattedNewAgreementStartDate": "08/07/2025",
+                                               "formattedNewAgreementEndDate": "07/07/2026",
+                                               "dueDate": "2025-07-07T00:00:00Z",
+                                               "hasMultipleSupportLevelForThisAgreement": false,
+                                               "hasMultipleDueDateForThisAgreement": false,
+                                               "hasMultipleDurationForThisAgreement": false,
+                                               "agreementDuration": "08/07/2025 - 07/07/2026",
+                                               "formattedDueDate": "07/07/2025",
+                                               "autoRenew": false
+                                           },
+                                           "subscriptionId": "18653a6be341be86dd4756d05db667NA",
+                                           "agency": "CreateOrder",
+                                           "minimumQuantity": 0.0,
+                                           "maximumQuantity": 99999.0,
+                                           "isResellerPriceOverride": false
+                                       },
+                                       {
+                                           "id": "2",
+                                           "product": [
+                                               {
+                                                   "type": "TECHDATA",
+                                                   "id": "ADB65304470CA03A12",
+                                                   "name": "-",
+                                                   "family": "Acrobat"
+                                               },
+                                               {
+                                                   "type": "MANUFACTURER",
+                                                   "id": "65304470CA03A12",
+                                                   "name": "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
+                                                   "manufacturer": "Adobe",
+                                                   "manufacturerId": "3",
+                                                   "family": "Acrobat"
+                                               }
+                                           ],
+                                           "quantity": 70.0,
+                                           "qty": 0.0,
+                                           "confirmedQuantity": 0.0,
+                                           "references": [],
+                                           "updated": "0001-01-01T00:00:00",
+                                           "unitPrice": 5738000.0,
+                                           "unitCost": 217.68,
+                                           "totalPrice": 401660000.0,
+                                           "unitListPrice": 6412000.0,
+                                           "unitPriceCurrency": "VND",
+                                           "unitCostCurrency": "USD",
+                                           "unitListPriceCurrency": "VND",
+                                           "extendedListPrice": 0.0,
+                                           "requested": "0001-01-01T00:00:00",
+                                           "femAmount": 0.0,
+                                           "pomAmount": 0.0,
+                                           "samAmount": 0.0,
+                                           "nsmAmount": 0.0,
+                                           "femPercentage": 0.0,
+                                           "pomPercentage": 0.0,
+                                           "samPercentage": 0.0,
+                                           "nsmPercentage": 0.0,
+                                           "agreements": [],
+                                           "attributes": [],
+                                           "serialNumbers": [
+                                               null
+                                           ],
+                                           "discounts": [
+                                               {
+                                                   "type": "Standard",
+                                                   "value": "10.51"
+                                               }
+                                           ],
+                                           "contract": {
+                                               "id": "P2005108534",
+                                               "renewedDuration": "1 Year",
+                                               "endDate": "2025-07-07T00:00:00Z",
+                                               "newAgreementStartDate": "2025-07-08T00:00:00Z",
+                                               "newAgreementEndDate": "2026-07-07T00:00:00Z",
+                                               "formattedEndDate": "07/07/2025",
+                                               "formattedNewAgreementStartDate": "08/07/2025",
+                                               "formattedNewAgreementEndDate": "07/07/2026",
+                                               "dueDate": "2025-07-07T00:00:00Z",
+                                               "hasMultipleSupportLevelForThisAgreement": false,
+                                               "hasMultipleDueDateForThisAgreement": false,
+                                               "hasMultipleDurationForThisAgreement": false,
+                                               "agreementDuration": "08/07/2025 - 07/07/2026",
+                                               "formattedDueDate": "07/07/2025",
+                                               "autoRenew": false
+                                           },
+                                           "subscriptionId": "b0890122364f9680f5daa4db93135fNA",
+                                           "agency": "CreateOrder",
+                                           "minimumQuantity": 0.0,
+                                           "maximumQuantity": 99999.0,
+                                           "isResellerPriceOverride": false
+                                       }
+                                   ],
+                                   "attributes": [],
+                                   "programName": "VIP MP Commercial",
+                                   "quoteCurrent": false,
+                                   "firstAvailableOrderDate": "2025-06-07T00:00:00Z",
+                                   "lastOrderDate": "2026-07-07T00:00:00Z",
+                                   "amountSaved": 0.0,
+                                   "linkedRenewals": [],
+                                   "dueDate": "2025-07-07T00:00:00Z",
+                                   "endUserType": "Commercial",
+                                   "vendorLogo": "https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=30",
+                                   "vendorLogoPdf": "https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=20",
+                                   "previousResellerPO": "PreviousResellerPO",
+                                   "isValid": true,
+                                   "canOrder": false,
+                                   "canEditQty": false,
+                                   "canEditResellerPrice": true,
+                                   "canEditLines": true,
+                                   "canCopy": false,
+                                   "customerPO": {
+                                       "text": "P2005108534",
+                                       "isValid": true,
+                                       "isMandatory": false,
+                                       "isDisplay": true,
+                                       "canEdit": true,
+                                       "allowedLength": 35
+                                   },
+                                   "formattedPublished": "04/10/2024",
+                                   "formattedFirstAvailableOrderDate": "07/06/2025",
+                                   "formattedLastOrderDate": "07/07/2026",
+                                   "formattedDueDate": "07/07/2025",
+                                   "formattedCreated": "04/10/2024",
+                                   "formattedUpdated": "04/10/2024",
+                                   "formattedExpiry": "07/07/2025",
+                                   "vendor": {
+                                       "id": "3",
+                                       "name": "Adobe",
+                                       "vendorsTDName": "Adobe"
+                                   },
+                                   "renewalLevel": "Level 3 50 - 99",
+                                   "hasMultipleSupportLevel": false,
+                                   "hasMultipleAgreements": false,
+                                   "hasMultipleRenewedDuration": false,
+                                   "hasMultipleDueDates": false,
+                                   "agreementNumber": "P2005108534",
+                                   "renewedDuration": "1 Year",
+                                   "agreementDuration": "08/07/2025 - 07/07/2026",
+                                   "hasMultipleAgreementDuration": false,
+                                   "canDownloadExcel": true,
+                                   "canShareQuote": false,
+                                   "canRequestQuote": false,
+                                   "canRequestRevision": false,
+                                   "feedBackMessages": [
+                                       {
+                                           "ruleNumber": 108,
+                                           "errorCriticality": 2,
+                                           "message": "Auto renew is currently off. If not turned on at least 3 days before the agreement end date you will need to process an order via this page after the due date.",
+                                           "refId": "",
+                                           "type": "",
+                                           "jsonUrl": ""
+                                       }
+                                   ],
+                                   "itemsActive": [
+                                       {
+                                           "id": "1",
+                                           "product": [
+                                               {
+                                                   "type": "TECHDATA",
+                                                   "id": "ADB65304883CA03A12",
+                                                   "family": "Acrobat"
+                                               },
+                                               {
+                                                   "type": "MANUFACTURER",
+                                                   "id": "65304883CA03A12",
+                                                   "name": "Acrobat Standard DC for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
+                                                   "manufacturer": "Adobe",
+                                                   "manufacturerId": "3",
+                                                   "family": "Acrobat"
+                                               }
+                                           ],
+                                           "quantity": 5.0,
+                                           "subscriptionId": "18653a6be341be86dd4756d05db667NA"
+                                       },
+                                       {
+                                           "id": "2",
+                                           "product": [
+                                               {
+                                                   "type": "TECHDATA",
+                                                   "id": "ADB65304470CA03A12",
+                                                   "family": "Acrobat"
+                                               },
+                                               {
+                                                   "type": "MANUFACTURER",
+                                                   "id": "65304470CA03A12",
+                                                   "name": "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
+                                                   "manufacturer": "Adobe",
+                                                   "manufacturerId": "3",
+                                                   "family": "Acrobat"
+                                               }
+                                           ],
+                                           "quantity": 70.0,
+                                           "subscriptionId": "b0890122364f9680f5daa4db93135fNA"
+                                       }
+                                   ],
+                                   "additionalInfo": [
+                                       {},
+                                       {}
+                                   ],
+                                   "renewalLevelActive": "Level 3 50 - 99",
+                                   "canAddMore": true,
+                                   "autoRenew": false,
+                                   "isAutoRenewEnabled": true,
+                                   "displayAutoRenew": true,
+                                   "showToolTip": false,
+                                   "revision": 1.0,
+                                   "subRevision": 0.0,
+                                   "activeFlag": "Y",
+                                   "price": 419580000.0,
+                                   "currency": "VND",
+                                   "quoteType": "Renewal",
+                                   "created": "2024-10-04T10:11:20.178Z",
+                                   "updated": "2024-10-04T10:11:20.178Z",
+                                   "expiry": "2025-07-07T00:00:00Z",
+                                   "status": "Active",
+                                   "orders": [],
+                                   "vendorReference": [
+                                       {
+                                           "type": "QuoteId",
+                                           "value": "P2005108534"
+                                       }
+                                   ],
+                                   "femAmount": 0.0,
+                                   "pomAmount": 0.0,
+                                   "samAmount": 0.0,
+                                   "nsmAmount": 0.0,
+                                   "femPercentage": 0.0,
+                                   "pomPercentage": 0.0,
+                                   "samPercentage": 0.0,
+                                   "nsmPercentage": 0.0
+                               }
+                           ]
+                       },
+                       "error": {
+                           "code": 0,
+                           "messages": [],
+                           "isError": false
+                       }
+                   };
   res.json(response);
 });
 
@@ -5350,13 +5445,7 @@ app.post("/ui-export/ui-renewal/v1/ManageSubscription", function (req, res) {
 });
 
 app.post("/ui-renewal/v1/Update", function (req, res) {
-  const fail = {
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  };
+  const fail = {"error":{"code":0,"messages":[],"isError":false}}
 
   return res.status(200).json(fail);
 });

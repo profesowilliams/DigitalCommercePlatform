@@ -15,7 +15,7 @@ export const suppressNavigation = (params) => {
     ]; 
     const key = params.event.key;
     const suppress = keysToSuppress.some(function (suppressedKey) {
-      return suppressedKey === key || key.toUpperCase() === suppressedKey;
+      return suppressedKey === key || key?.toUpperCase() === suppressedKey;
     });
     return suppress;
   };

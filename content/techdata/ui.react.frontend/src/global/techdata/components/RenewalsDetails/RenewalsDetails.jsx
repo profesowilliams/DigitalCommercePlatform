@@ -78,6 +78,7 @@ function RenewalsDetails(props) {
   const [subtotal, setSubtotal] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [renewalsDetails, setRenewalsDetails] = useState(null);
+  const renewalsDetailsOriginal = {...apiResponse?.content?.details[0]};
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
 
@@ -283,9 +284,11 @@ function RenewalsDetails(props) {
   const getUpdatedMutableGrid = (resultArr) => {
     setMutableData(resultArr);
   };
-
-  const updateRenewalDetails = async (details) => {
-    const { POAllowedLength, ...payload } = mapRenewalForUpdateDetails(details);
+  const updateRenewalDetails = async (details, renewalsDetailsOriginal) => {
+    const { POAllowedLength, ...payload } = await mapRenewalForUpdateDetails(
+      details,
+      renewalsDetailsOriginal
+    );
     try {
       const updateResponse = await post(
         componentProp.updateRenewalOrderEndpoint,
@@ -321,7 +324,6 @@ function RenewalsDetails(props) {
     setErrorMessagesUpdate(updateErrorMessages);
     setRedBannerShow(true);
   };
-
   const updateDetails = async (
     endUserDetails,
     resellerDetails,
@@ -346,7 +348,10 @@ function RenewalsDetails(props) {
         renewalsDetails['EANumber'] = renewalsDetails.endUser?.eaNumber?.text;
       }
 
-      const updated = await updateRenewalDetails(renewalsDetails);
+      const updated = await updateRenewalDetails(
+        renewalsDetails,
+        renewalsDetailsOriginal
+      );
       if (updated) {
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint: componentProp.getStatusEndpoint,
@@ -414,8 +419,8 @@ function RenewalsDetails(props) {
   };
 
   const setErrorBlueBanner = () => {
-      setBlueBannerShow(true);
-    };
+    setBlueBannerShow(true);
+  };
 
   const openNewPurchaseFlyout = (e) => {
     e.stopPropagation();

@@ -59,18 +59,53 @@ const extractRenewalData = (quote) => {
   }
 }
 
-export const mapRenewalItemProducts = (items = []) => {
-  const mapProduct = product => ({type:product?.type, id: product?.id });
-  return items.map(item => ({
-    id: item?.id,
-    product: Array.isArray(item?.product) ? mapProduct(item?.product[1]) || {} : {},
-    quantity: item?.quantity,
-    unitPrice: item?.unitPrice,
-    AgreementNumber: item?.contract?.id
-  }));
-}
+export const mapRenewalItemProducts = async (
+  items = [],
+  renewalsDetailsOriginal = []
+) => {
+  const mapProduct = (product) => ({ type: product?.type, id: product?.id });
+  const parseUnitPrice = (price) => {
+    const parsedPrice = parseFloat(price);
+    return isNaN(parsedPrice) ? undefined : parsedPrice;
+  };
 
-export const fetchQuoteRenewalDetails = async (renewalDetailsEndpoint, id , type) => {
+  return items.map((item) => {
+    const originalItem = renewalsDetailsOriginal?.find((orig) => {
+      return (
+        Array.isArray(orig.product) &&
+        Array.isArray(item.product) &&
+        orig.product[1]?.type === item.product[1]?.type &&
+        orig.product[1]?.id === item.product[1]?.id
+      );
+    });
+
+    const originalPrice = parseUnitPrice(originalItem?.unitPrice);
+    const itemUnitPrice = parseUnitPrice(item?.unitPrice);
+    const isResellerPriceOverride =
+      originalPrice !== undefined && originalPrice !== itemUnitPrice
+        ? true
+        : false;
+
+    return {
+      id: item?.id,
+      product: Array.isArray(item?.product)
+        ? mapProduct(item?.product[1]) || {}
+        : {},
+      quantity: item?.quantity,
+      unitPrice: itemUnitPrice,
+      AgreementNumber: item?.contract?.id,
+      ...(isResellerPriceOverride !== false && {
+        isResellerPriceOverride,
+      }),
+    };
+  });
+};
+
+export const fetchQuoteRenewalDetails = async (
+  renewalDetailsEndpoint,
+  id,
+  type
+) => {
   try {
     const details = await get(`${renewalDetailsEndpoint}?id=${id}`);
     if (!details) return false;
@@ -78,7 +113,7 @@ export const fetchQuoteRenewalDetails = async (renewalDetailsEndpoint, id , type
   } catch (error) {
     console.log('error >>', error);
   }
-}
+};
 
 export const mapRenewalForUpdateDashboard = (renewalQuote) => {
   const { source, reseller, endUser, customerPO } = renewalQuote;
@@ -91,9 +126,9 @@ export const mapRenewalForUpdateDashboard = (renewalQuote) => {
     customerPO,
     reseller: { ...resellerData },
     endUser: { ...endUserData, name: endUser?.name },
-    items
-  }
-}
+    items,
+  };
+};
 
 export const extractDetailRenewalData = (quote) => {
   const { id, contact, address } = quote;
@@ -114,10 +149,10 @@ export const extractDetailRenewalData = (quote) => {
       postalCode: address?.postalCode?.text,
       country: address?.country?.text,
       county: address?.county?.text,
-      countryCode: address?.countryCode?.text
-    }
-  }
-}
+      countryCode: address?.countryCode?.text,
+    },
+  };
+};
 
 export const extractDetailResellerData = (quote) => {
   const { id, contact, address, vendorAccountNumber } = quote;
@@ -138,11 +173,11 @@ export const extractDetailResellerData = (quote) => {
       postalCode: address?.postalCode,
       country: address?.country,
       county: address?.county,
-      countryCode: address?.countryCode
+      countryCode: address?.countryCode,
     },
     vendorAccountNumber: vendorAccountNumber?.text,
-  }
-}
+  };
+};
 
 export const extractDetailShipToData = (shipTo) => {
   if (shipTo) {
@@ -167,7 +202,7 @@ export const extractDetailShipToData = (shipTo) => {
   return null;
 };
 
-export const mapAddressToShipTo = (address) => {  
+export const mapAddressToShipTo = (address) => {
   return {
     id: address?.id,
     name: address?.name,
@@ -184,9 +219,9 @@ export const mapAddressToShipTo = (address) => {
       countryCode: address?.countryCode,
     },
   };
-}
+};
 
-export const mapShipToDetailsToAddress = (shipTo) => {  
+export const mapShipToDetailsToAddress = (shipTo) => {
   return {
     id: shipTo?.id?.text,
     name: shipTo?.name,
@@ -201,10 +236,16 @@ export const mapShipToDetailsToAddress = (shipTo) => {
     county: shipTo?.address?.county,
     countryCode: shipTo?.address?.countryCode,
   };
-}
+};
 
-export const mapRenewalForUpdateDetails = (renewalQuote) => {
-  const items = mapRenewalItemProducts(renewalQuote.items);
+export const mapRenewalForUpdateDetails = async (
+  renewalQuote,
+  renewalsDetailsOriginal
+) => {
+  const items = await mapRenewalItemProducts(
+    renewalQuote?.items,
+    renewalsDetailsOriginal?.items
+  );
   const { endUser, reseller, shipTo, customerPO, source } = renewalQuote;
   const resellerData = extractDetailResellerData(reseller);
   const endUserData = extractDetailRenewalData(endUser);
@@ -216,12 +257,12 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
     customerPO: customerPO?.text || customerPO,
     endUser: { ...endUserData, name: endUser?.name?.text },
     shipTo: { ...shipToData },
-    items,  
+    items,
     POAllowedLength: customerPO?.allowedLength,
     EANumber,
     orderSource: 'Details',
-  }
-}
+  };
+};
 
 export async function handleOrderRequesting({ orderEndpoints, renewalData, purchaseOrderNumber, isDetails, userData }) {
   let currentResponse = {};
