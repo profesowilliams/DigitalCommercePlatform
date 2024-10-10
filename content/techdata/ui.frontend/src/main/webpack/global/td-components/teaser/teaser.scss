@@ -936,6 +936,9 @@
       min-width: 25%;
       text-align: center;
       text-align: -webkit-center;
+      align-items: center;
+      justify-content: center;
+      display: flex;
     }
 
     figure.dp-figure .cmp-image {
