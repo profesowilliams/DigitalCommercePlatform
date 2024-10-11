@@ -124,7 +124,7 @@ function NewPurchaseFlyout({
   const [endUserAreaCodeError, setEndUserAreaCodeError] = useState('');
 
   // End User Country state
-  const [endUserCountry, setEndUserCountry] = useState('');
+  const [endUserCountry, setEndUserCountry] = useState('VN');
   const [endUserCountryError, setEndUserCountryError] = useState('');
 
   // Currency and total price state
@@ -382,6 +382,7 @@ function NewPurchaseFlyout({
       endUserAddress1?.length > 0 &&
       endUserCity?.length > 0 &&
       endUserAreaCode?.length > 0 &&
+      endUserAreaCodeError?.length === 0 &&
       endUserCountry?.length > 0;
 
     const isInternalUserValid = internalUser
@@ -409,6 +410,7 @@ function NewPurchaseFlyout({
     endUserAddress1,
     endUserCity,
     endUserAreaCode,
+    endUserAreaCodeError,
     endUserCountry,
     errorMessage,
     isAutocompleteOpen,

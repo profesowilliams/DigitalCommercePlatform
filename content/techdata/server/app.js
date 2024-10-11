@@ -5323,6 +5323,8 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
       "Product not found",
     "mainDashboard.renewal.newPurchaseFlyout.label.noMatchFoundPleaseTryAgain":
       "No match found, please try again.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.pleaseEnterAValidPostalCode":
+      "Please enter a valid postal code",
   });
 });
 

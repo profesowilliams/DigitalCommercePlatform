@@ -497,6 +497,12 @@
                     fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.noMatchFoundPleaseTryAgain"
                     fieldLabel="No match found, please try again."
                     name="./newPurchaseFlyout/noMatchFoundPleaseTryAgain"/>
+                <pleaseEnterAValidPostalCode
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.newPurchaseFlyout.label.pleaseEnterAValidPostalCode"
+                    fieldLabel="Please enter a valid postal code"
+                    name="./newPurchaseFlyout/pleaseEnterAValidPostalCode"/>
             </items>
         </newPyrchaseFlyoutGroup>
     </items>

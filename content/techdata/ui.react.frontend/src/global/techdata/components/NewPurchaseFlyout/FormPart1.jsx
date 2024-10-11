@@ -356,14 +356,34 @@ function FormPart1({
   };
 
   // End user Area Code
+  const vietnamPattern = /^\d{1,6}$/; // Matches 1 to 6 digits for Vietnam
+  const cambodiaPattern = /^12\d{4}$/; // Matches 6 digits starting with "12" for Cambodia
+  const laosPattern = /^\d{5}$/; // Matches exactly 5 digits for Laos
+  const validatePostalCode = (postalCode, country) => {
+    switch (country) {
+      case 'VN':
+        return vietnamPattern.test(postalCode);
+      case 'KH':
+        return cambodiaPattern.test(postalCode);
+      case 'LA':
+        return laosPattern.test(postalCode);
+      default:
+        return false;
+    }
+  };
   const handleEndUserAreaCodeChange = (event) => {
     const value = event.target.value;
-    setEndUserAreaCode(value);
-    if (value.length === 0) {
+    const numericValue = value.replace(/[^0-9]/g, '');
+    setEndUserAreaCode(numericValue);
+    if (numericValue.length === 0) {
       setEndUserAreaCodeError(
         getDictionaryValueOrKey(newPurchaseFlyout?.required)
       );
-    } else if (value.length > 10) {
+    } else if (!validatePostalCode(numericValue, endUserCountry)) {
+      setEndUserAreaCodeError(
+        getDictionaryValueOrKey(newPurchaseFlyout?.pleaseEnterAValidPostalCode)
+      );
+    } else if (numericValue.length > 10) {
       setEndUserAreaCodeError(
         getDictionaryValueOrKey(newPurchaseFlyout?.exceeds10CharacterLimit)
       );
@@ -376,6 +396,8 @@ function FormPart1({
   const handleEndUserCountryChange = (event) => {
     const value = event.target.value;
     setEndUserCountry(value);
+    setEndUserAreaCode('');
+    setEndUserAreaCodeError('');
     if (value.length === 0) {
       setEndUserCountryError(
         getDictionaryValueOrKey(newPurchaseFlyout?.required)
@@ -384,7 +406,6 @@ function FormPart1({
       setEndUserCountryError('');
     }
   };
-
   return (
     <>
       <div className="cmp-flyout-newPurchase__banner">
@@ -624,17 +645,6 @@ function FormPart1({
           helperText={endUserCityError}
           inputProps={{ maxLength: 40 }}
         />
-        <TextField
-          className="cmp-flyout-newPurchase__form__input-container"
-          id="end-user-area-code"
-          label={getDictionaryValueOrKey(newPurchaseFlyout?.endUserAreaCode)}
-          variant="standard"
-          value={endUserAreaCode}
-          onChange={handleEndUserAreaCodeChange}
-          error={!!endUserAreaCodeError}
-          helperText={endUserAreaCodeError}
-          inputProps={{ maxLength: 10 }}
-        />
         <FormControl
           className="cmp-flyout-newPurchase__form__input-container"
           variant="standard"
@@ -664,6 +674,27 @@ function FormPart1({
             <p style={{ color: 'red' }}>{endUserCountryError}</p>
           )}
         </FormControl>
+        <TextField
+          className="cmp-flyout-newPurchase__form__input-container"
+          id="end-user-area-code"
+          label={getDictionaryValueOrKey(newPurchaseFlyout?.endUserAreaCode)}
+          variant="standard"
+          value={endUserAreaCode}
+          onChange={handleEndUserAreaCodeChange}
+          error={!!endUserAreaCodeError}
+          helperText={endUserAreaCodeError}
+          inputProps={{
+            maxLength:
+              endUserCountry === 'LA'
+                ? 5
+                : endUserCountry === 'KH' || endUserCountry === 'VN'
+                ? 6
+                : 10,
+            pattern: '[0-9]*',
+            inputMode: 'numeric',
+            type: 'text',
+          }}
+        />
       </div>
     </>
   );

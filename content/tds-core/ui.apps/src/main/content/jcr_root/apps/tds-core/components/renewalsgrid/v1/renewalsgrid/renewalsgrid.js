@@ -277,6 +277,7 @@ use(["../../../common/utils.js"], function (utils) {
       "hasBeenSuccessfullySubmittedForProcessing",
       "adobeResellerTermsAndConditionsLinkNewPurchase",
       "noMatchFoundPleaseTryAgain",
+      "pleaseEnterAValidPostalCode",
     ];
 
     newPurchaseFlyoutList.map(
