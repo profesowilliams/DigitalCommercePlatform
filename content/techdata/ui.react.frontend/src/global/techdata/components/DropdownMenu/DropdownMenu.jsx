@@ -241,7 +241,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
               </span>
             </p>
             <p className="ec-id">
-              <span>EC ID: {userId}</span>
+              <span>{userId}</span>
             </p>
             <ul className="cmp-sign-in-list-content">
               {items.map(({ linkTitle, dcpLink, linkUrl, iconUrl, linkTarget }) => (
