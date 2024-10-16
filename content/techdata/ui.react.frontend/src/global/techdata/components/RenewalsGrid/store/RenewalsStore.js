@@ -8,11 +8,28 @@ import { basicGridState, filterState, getLocalSelectedDateRange, getLocalValueOr
 
 const INITIAL_STATE = {
   ...basicGridState,
-  filterList: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "filterList", null), 
+  filterList: getLocalValueOrDefault(
+    FILTER_LOCAL_STORAGE_KEY,
+    'filterList',
+    null
+  ),
   isFilterModalOpen: false,
-  appliedFilterCount: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "count", 0),
-  dateOptionsList: DATE_DEFAULT_OPTIONS.map(item => ({ ...item, checked: item.field === getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected })),
-  dateSelected: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "dateSelected", null),
+  appliedFilterCount: getLocalValueOrDefault(
+    FILTER_LOCAL_STORAGE_KEY,
+    'count',
+    0
+  ),
+  dateOptionsList: DATE_DEFAULT_OPTIONS.map((item) => ({
+    ...item,
+    checked:
+      item.field ===
+      getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected,
+  })),
+  dateSelected: getLocalValueOrDefault(
+    FILTER_LOCAL_STORAGE_KEY,
+    'dateSelected',
+    null
+  ),
   datePickerState: getLocalSelectedDateRange(FILTER_LOCAL_STORAGE_KEY, null),
   finalResults: [],
   ...paginationState,
@@ -23,25 +40,38 @@ const INITIAL_STATE = {
     show: false,
   },
   ...filterState,
-  customStartDate: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "customStartDate", undefined),
-  customEndDate: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "customEndDate", undefined),
-  detailRender: getLocalValueOrDefault(PLANS_ACTIONS_LOCAL_STORAGE_KEY, "detailRender", "primary"),
-  renewalOptionState:null,
-  resetFilter:false,
-  rowCollapsedIndexList:null,
+  customStartDate: getLocalValueOrDefault(
+    FILTER_LOCAL_STORAGE_KEY,
+    'customStartDate',
+    undefined
+  ),
+  customEndDate: getLocalValueOrDefault(
+    FILTER_LOCAL_STORAGE_KEY,
+    'customEndDate',
+    undefined
+  ),
+  detailRender: getLocalValueOrDefault(
+    PLANS_ACTIONS_LOCAL_STORAGE_KEY,
+    'detailRender',
+    'primary'
+  ),
+  renewalOptionState: null,
+  resetFilter: false,
+  rowCollapsedIndexList: null,
   dueDaysIcons: null,
   openedActionMenu: null,
-  toaster:{
-    isOpen:false,
-    title: "",
-    message:"",
-    origin:"dashboard",
-    isSuccess:false
+  toaster: {
+    isOpen: false,
+    title: '',
+    message: '',
+    origin: 'dashboard',
+    isSuccess: false,
   },
-  isTDSynnex:false,
-  branding:'',
+  isTDSynnex: false,
+  branding: '',
   showCopyFlyout: false,
-  analyticsCategory: "renewals"
+  analyticsCategory: 'renewals',
+  showImportButton: false,
 };
 
 const store = (set, get, a) => ({

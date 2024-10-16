@@ -425,6 +425,7 @@ use(["../../../common/utils.js"], function (utils) {
       "filterType",
       "hideCopyHeaderOption",
       "hideExportOption",
+      "import",
     ];
 
     labelList.map((labelListItem) => {

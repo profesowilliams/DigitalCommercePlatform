@@ -3,6 +3,7 @@ import { LOCAL_STORAGE_KEY_USER_DATA, TOASTER_LOCAL_STORAGE_KEY } from "../../..
 import { ACCESS_TYPES, hasAccess } from '../../../../utils/user-utils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import RenewalFilter from '../RenewalFilter/RenewalFilter';
+import RenewalImport from '../RenewalImport/RenewalImport';
 import VerticalSeparator from '../Widgets/VerticalSeparator';
 import RenewalDetailRenderers from './Columns/RenewalDetailRenderers';
 import {
@@ -88,11 +89,14 @@ function RenewalsGrid(props) {
     useExtendGridOperations(useRenewalGridState);
   const effects = useRenewalGridState((state) => state.effects);
   const category = useRenewalGridState((state) => state.analyticsCategory);
+  const showImportButton = useRenewalGridState(
+    (state) => state.showImportButton
+  );
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
   const userData = useStore((state) => state.userData);
   const setUserData = useStore((state) => state.setUserData);
-  const [isNewPurchaseEnabled, setIsNewPurchaseEnabled]  = useState(false);
+  const [isNewPurchaseEnabled, setIsNewPurchaseEnabled] = useState(false);
 
   const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
 
@@ -240,9 +244,16 @@ function RenewalsGrid(props) {
       gridApiRef,
     };
     response = await handleFetchDataStrategy(renewalOperations);
+
+    setCustomState({
+      key: 'showImportButton',
+      value: response?.data?.content?.importHeader?.isDisplay,
+    });
+
     if (response?.data?.content?.canDoNewPurchase) {
-        setIsNewPurchaseEnabled(true);
+      setIsNewPurchaseEnabled(true);
     }
+
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;
     const pageSize = gridConfig.itemsPerPage;
@@ -406,9 +417,6 @@ function RenewalsGrid(props) {
     data['link'] = '';
     setCustomState({ key: 'requestFlyout', value: { data, show: true } });
   };
-  
-  
-
 
   useEffect(() => {
     const checkUrl = () => {
@@ -452,7 +460,6 @@ function RenewalsGrid(props) {
   }, []);
 
   useEffect(() => {
-
     const newPurchaseButton = document.getElementById(
       'action-renewals-new-purchase'
     );
@@ -488,6 +495,10 @@ function RenewalsGrid(props) {
           <RenewalFilter
             aemData={componentProp}
             onQueryChanged={onQueryChanged}
+          />,
+          <RenewalImport
+            aemData={componentProp}
+            showImportButton={showImportButton}
           />,
         ]}
       />

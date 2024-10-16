@@ -5189,6 +5189,7 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "grids.common.label.filterCustom": "Custom date range",
     "grids.common.label.filterSearch": "Show results",
     "grids.common.label.filterDate": "Date",
+    "grids.common.label.import": "Import",
 
     "mainDashboard.renewal.newPurchaseFlyout.label.vendorPartNoLookUpEndpoint":
       "http://localhost:3000/ui-renewal/v1/PartNumbers/Find",

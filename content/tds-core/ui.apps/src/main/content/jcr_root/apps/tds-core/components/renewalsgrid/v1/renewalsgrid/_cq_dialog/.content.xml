@@ -152,7 +152,13 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./labels/hideExportOption@TypeHint"
-                                                value="Boolean"/>         
+                                                value="Boolean"/>   
+                                            <import
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="grids.common.label.import"
+                                                fieldLabel="Import"
+                                                name="./labels/import"/>      
 										</items>
 									</column>
 								</items>

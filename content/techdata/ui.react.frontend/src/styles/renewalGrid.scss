@@ -205,7 +205,7 @@
     justify-content: flex-end;
     font-size: 14px;
     line-height: 16px;
-    color: #006FBA;
+    color: #006fba;
     cursor: pointer;
     svg {
       margin-right: 5px;
@@ -969,9 +969,9 @@ svg {
       svg {
         width: 1rem;
       }
-      
+
       svg path {
-        fill: map-get($color-palette, "charcoal");
+        fill: map-get($color-palette, 'charcoal');
         color: $brand-icon-gray-color;
         transition: all 0.5 ease;
       }
@@ -983,14 +983,26 @@ svg {
       pointer-events: none;
       color: $brand-text-lightgray;
 
-      svg, path {
+      svg,
+      path {
         fill: $brand-text-lightgray;
       }
     }
   }
 }
 
-
+.cmp-renewals-import {
+  .cmp-renewals-import-container {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    cursor: pointer;
+    &__button {
+      background: none;
+      color: $brand-green;
+    }
+  }
+}
 
 $flyout-padding: 1.3rem;
 $flyout-small-height: 780px;
