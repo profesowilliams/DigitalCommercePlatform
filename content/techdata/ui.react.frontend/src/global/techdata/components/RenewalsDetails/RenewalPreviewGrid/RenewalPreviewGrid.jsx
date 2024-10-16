@@ -353,7 +353,7 @@ function RenewalPreviewGrid(
             return data?.subscriptionId === subscriptionId && data?.id === line;
           }
         );
-        if (data?.quantity === 0) setErrorBlueBanner(true);
+        if (data?.quantity === 0 && setErrorBlueBanner) setErrorBlueBanner(true);
         return !data?.id?.includes('Agreement') ? (
           // TODO: add some styling to icon display
           <div className="error-id-column">
