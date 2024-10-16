@@ -356,6 +356,7 @@ function NewPurchaseFlyout({
       setEndUserAreaCodeError('');
 
       setEndUserCountry('');
+      setEndUserCountry('VN');
       setEndUserCountryError('');
     } else {
       if (externalUser && !isAddMore) {
