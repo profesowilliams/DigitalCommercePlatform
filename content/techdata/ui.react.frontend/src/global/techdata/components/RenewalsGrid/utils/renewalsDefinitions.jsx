@@ -39,8 +39,8 @@ export const renewalsDefinitions = (componentProp, triggerRequestFlyout) => {
     agreementNumber: 148,
     renewedduration: 186,
     dueDays: 127,
-    dueDate: 115,
-    total: 131,
+    dueDate: 110,
+    total: 110,
     actions: 100,
   };
 
@@ -52,8 +52,8 @@ export const renewalsDefinitions = (componentProp, triggerRequestFlyout) => {
     agreementNumber: '130px',
     renewedduration: '200.632px',
     dueDays: '143.737px',
-    dueDate: '139.526px',
-    total: '122.526px',
+    dueDate: '110.526px',
+    total: '110.526px',
     actions: '100px',
   };
 

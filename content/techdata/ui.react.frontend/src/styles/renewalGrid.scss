@@ -374,6 +374,7 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+    margin-right: 28px;
   }
   .cmp-renewals-filter-container {
     display: flex;
@@ -592,12 +593,16 @@ span.ag-group-value {
   display: flex;
   width: 100%;
   height: 100%;
-  gap: 3px;
+  gap: 6px;
   justify-content: center;
   align-items: center;
   padding-right: 2rem;
   > * {
     cursor: pointer;
+  }
+
+  .btn-common {
+    width: auto !important;
   }
   .cmp-renewals-cart-icon {
     @include cart-icon;
