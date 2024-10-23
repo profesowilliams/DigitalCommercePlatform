@@ -11,7 +11,7 @@ export default function ResellerReadOnly({
 }) {
   const { id, contact, address, vendorAccountNumber } = resellerData;
 
-  const { shipToLabel, paymentTerms } = resellerLabels;
+  const { shipToLabel, paymentTerms, previousPurchaseOrderNoEndLabel } = resellerLabels;
 
   const addSeparator = (items) => {
     return items?.filter(Boolean)?.join(', ');
@@ -51,9 +51,8 @@ export default function ResellerReadOnly({
           {vendorAccountNumber}
         </Info>
         <Info
-          label={getDictionaryValue(
-            'details.renewal.label.previousPurchaseOrderNoEndLabel',
-            'Previous purchase order No'
+          label={getDictionaryValueOrKey(
+            previousPurchaseOrderNoEndLabel
           )}
         >
           {previousResellerPO}
