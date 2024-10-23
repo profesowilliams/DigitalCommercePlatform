@@ -5,9 +5,10 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import VerticalSeparator from '../Widgets/VerticalSeparator';
 
 export default function RenewalImport({ aemData, showImportButton }) {
+  const enableImport = aemData?.enableImport;
   return (
     <>
-      {showImportButton && (
+      {showImportButton && enableImport && (
         <>
           <VerticalSeparator />
           <div className="cmp-renewals-import">

@@ -462,6 +462,10 @@ use(["../../../common/utils.js"], function (utils) {
         this.serviceData.enableNewPurchaseAction;
     }
 
+    if (this.serviceData && this.serviceData.enableImport) {
+      jsonObject["enableImport"] = this.serviceData.enableImport;
+    }
+
     if (this.serviceData && this.serviceData.enableReviseOption) {
       jsonObject["enableReviseOption"] = this.serviceData.enableReviseOption;
     }

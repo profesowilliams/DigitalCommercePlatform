@@ -28,6 +28,9 @@ public @interface FeatureFlagsConfiguration {
     
     @Property(label = "Enable New Purchase Button Action", description = "Helps to enable New purchase button in Renewals grid.")
     boolean enableNewPurchaseAction() default false;
+    
+    @Property(label = "Enable Import", description = "Helps to enable Import button in Renewals grid.")
+    boolean enableImport() default false;
 
     @Property(label = "Enable Request Quote Option", description = "Helps to enable Request Quote Option in Renewals grid and Renewals details.")
     boolean enableRequestQuote() default false;
