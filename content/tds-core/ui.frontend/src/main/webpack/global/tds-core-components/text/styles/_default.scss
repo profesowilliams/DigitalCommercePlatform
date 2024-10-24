@@ -6,7 +6,7 @@
 .cmp-text {
   ul,
   ol {
-    padding-top: rem(15px);
+    padding-top: rem-convert(15px);
     list-style: none;
 
     li {
@@ -24,25 +24,25 @@
 
     li {
       counter-increment: li;
-      line-height: rem(22px);
-      padding-bottom: rem(5.44px);
+      line-height: rem-convert(22px);
+      padding-bottom: rem-convert(5.44px);
 
       &::before {
         content: counter(li);
-        width: rem(20.8px);
+        width: rem-convert(20.8px);
       }
     }
   }
   ul {
     li {
-      line-height: rem(20px);
-      padding-bottom: rem(5.12px);
+      line-height: rem-convert(20px);
+      padding-bottom: rem-convert(5.12px);
       display: flex;
 
       &::before {
         content: '\2022';
         font-weight: bold;
-        width: rem(20px);
+        width: rem-convert(20px);
         font-size: $font-size-custom-medium;
       }
     }
@@ -54,11 +54,11 @@
 }
 
 .cmp-aem-alert {
-  border: rem(1px) solid get-color(td-primary-blue);
-  padding: rem(32px);
+  border: rem-convert(1px) solid get-color(td-primary-blue);
+  padding: rem-convert(32px);
   background-color: get-color(brand-white);
   color: get-color(text-mid-gray);
-  box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue) !important;
+  box-shadow: 0px 0px rem-convert(5px) 0px get-color(td-primary-blue) !important;
 }
 
 .cmp-text-color {
@@ -78,8 +78,8 @@
 
 .cmp-text-input {
   width: 100%;
-  height: rem(30px);
-  box-shadow: inset 0 0 0 rem(1px) get-color(brand-light-gray2);
+  height: rem-convert(30px);
+  box-shadow: inset 0 0 0 rem-convert(1px) get-color(brand-light-gray2);
   border: 0;
   &::placeholder {
     font-size: $font-size-custom-xxsmall;
@@ -102,14 +102,14 @@
 .dp-text--xsmall {
   &,
   .cmp-text li {
-    font-size: rem($font-size-xxsmall);
+    font-size: rem-convert($font-size-xxsmall);
   }
 }
 
 .dp-text--small {
   &,
   .cmp-text li {
-    font-size: rem($font-size-small);
+    font-size: rem-convert($font-size-small);
   }
 }
 

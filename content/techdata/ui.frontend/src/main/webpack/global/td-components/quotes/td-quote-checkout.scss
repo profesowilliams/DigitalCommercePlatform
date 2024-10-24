@@ -10,10 +10,10 @@
     }
   }
   &__dropdown {
-    width: rem(250px);
+    width: rem-convert(250px);
   }
 
-  &__pdf-download-link{
+  &__pdf-download-link {
     display: none;
   }
 }

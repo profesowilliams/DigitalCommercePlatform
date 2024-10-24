@@ -3,143 +3,142 @@
  *
  * @class cmp-list
  */
- .cmp-list {
-    /**
+.cmp-list {
+  /**
      * Link list component within the list.
      *
      * @class cmp-link-list
      */
-    .cmp-link-list {
-      display: flex;
-      flex-wrap: wrap;
-      list-style-type: none;
-      font-size: rem(11px);
-      letter-spacing: 0;
-      line-height: normal;
-      color: get-color(brand-white);
-  
-      li:not(:last-child) {
-        border-right: rem(1px) solid get-color(brand-white);
-      }
-  
-      /**
+  .cmp-link-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    font-size: rem-convert(11px);
+    letter-spacing: 0;
+    line-height: normal;
+    color: get-color(brand-white);
+
+    li:not(:last-child) {
+      border-right: rem-convert(1px) solid get-color(brand-white);
+    }
+
+    /**
        * Link list item within the link list component.
        *
        * @class cmp-link-list__item
        */
-      .cmp-link-list__item {
-        padding: 0 rem(10px);
-  
-        a {
-          text-decoration: none;
-          color: get-color(brand-white);
-          cursor: pointer;
-  
-          /**
+    .cmp-link-list__item {
+      padding: 0 rem-convert(10px);
+
+      a {
+        text-decoration: none;
+        color: get-color(brand-white);
+        cursor: pointer;
+
+        /**
            * CSS class for disabling link interaction.
            *
            * @class nolink
            */
-          &.nolink {
-            cursor: default;
-  
-            &[data-displaylocation='true'] {
-              cursor: pointer;
-            }
-          }
-  
-          article {
-            display: flex;
-            align-items: center;
-            flex-direction: row;
+        &.nolink {
+          cursor: default;
+
+          &[data-displaylocation='true'] {
+            cursor: pointer;
           }
         }
+
+        article {
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+        }
       }
-  
-      /**
+    }
+
+    /**
        * Image component within the link list component.
        *
        * @class cmp-image
        */
-      .cmp-image {
-        margin-right: rem(4px);
-      }
-  
-      /**
+    .cmp-image {
+      margin-right: rem-convert(4px);
+    }
+
+    /**
        * Image element within the image component.
        *
        * @class cmp-image__image
        */
-      .cmp-image__image {
-        width: rem(14.4px);
-        margin-top: 0.5vh;
-      }
-  
-      /**
+    .cmp-image__image {
+      width: rem-convert(14.4px);
+      margin-top: 0.5vh;
+    }
+
+    /**
        * Title element within the link list item.
        *
        * @class cmp-link-list__item-title
        */
-      .cmp-link-list__item-title {
-        padding-top: rem(2px);
-      }
+    .cmp-link-list__item-title {
+      padding-top: rem-convert(2px);
     }
-  
-    /**
+  }
+
+  /**
      * Link list component within the list.
      *
      * @class cmp-link-list
      */
-    .cmp-link-list {
-      justify-content: center;
-      align-items: center;
-      justify-items: center;
-      align-content: center;
-      padding-inline-start: 0px;
-      margin: 0px;
-    }
-  
-    /**
+  .cmp-link-list {
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    padding-inline-start: 0px;
+    margin: 0px;
+  }
+
+  /**
      * Color pill element within the list.
      *
      * @class cmp-list__color-pill
      */
-    &__color-pill {
-      background-color: get-color(deep-teal) !important;
-      border-radius: 25px;
-  
-      /**
+  &__color-pill {
+    background-color: get-color(deep-teal) !important;
+    border-radius: 25px;
+
+    /**
        * Width variant for the color pill.
        *
        * @class cmp-list__color-pill-width
        */
-      &-width {
-        width: 573px !important;
-      }
-  
-      .cmp-link-list {
-        padding-top: rem(14px) !important;
-        padding-bottom: rem(14px) !important;
-      }
-  
-      span {
-        font-family: $font-family-everett;
-        font-size: 20px;
-        line-height: 26px;
-      }
-  
-      /**
+    &-width {
+      width: 573px !important;
+    }
+
+    .cmp-link-list {
+      padding-top: rem-convert(14px) !important;
+      padding-bottom: rem-convert(14px) !important;
+    }
+
+    span {
+      font-family: $font-family-everett;
+      font-size: 20px;
+      line-height: 26px;
+    }
+
+    /**
        * Link list item within the link list component.
        *
        * @class cmp-link-list__item
        */
-      .cmp-link-list__item {
-        width: 50%;
-        display: flex;
-        justify-content: center;
-        justify-items: center;
-        align-items: center;
-      }
+    .cmp-link-list__item {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+      align-items: center;
     }
   }
-  
+}

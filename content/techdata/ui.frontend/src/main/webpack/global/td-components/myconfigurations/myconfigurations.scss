@@ -25,53 +25,53 @@
       }
 
       & canvas {
-        padding-bottom: rem(5px);
-        width: rem(154px) !important;
+        padding-bottom: 0.3125rem;
+        width: rem-convert(154px) !important;
       }
     }
 
     &__sub-title {
       font-size: $font-size-xxsmall;
       color: get-color(text-light-charcoal);
-      padding: rem(0px) rem(12px) rem(0px) rem(2.5px);
+      padding: 0 0.75rem 0 rem-convert(2.5px);
 
       &-wrapp {
         padding-bottom: 10px;
       }
 
       &-color-1 {
-        border-right: rem(6px) solid get-color(brand-primary-text);
+        border-right: 0.375rem solid get-color(brand-primary-text);
         display: inline-block;
         vertical-align: top;
-        height: rem(14px);
+        height: 0.875rem;
       }
 
       &-color-2 {
-        border-right: rem(6px) solid get-color(td-lightblue);
+        border-right: 0.375rem solid get-color(td-lightblue);
         display: inline-block;
         vertical-align: top;
-        height: rem(14px);
+        height: 0.875rem;
       }
 
       &-color-3 {
-        border-right: rem(6px) solid get-color(brand-blue);
+        border-right: 0.375rem solid get-color(brand-blue);
         display: inline-block;
         vertical-align: top;
-        height: rem(14px);
+        height: 0.875rem;
       }
 
       &-color-4 {
-        border-right: rem(6px) solid get-color(td-primary-blue);
+        border-right: 0.375rem solid get-color(td-primary-blue);
         display: inline-block;
         vertical-align: top;
-        height: rem(14px);
+        height: 0.875rem;
       }
 
       &-color-5 {
-        border-right: rem(6px) solid get-color(td-lightblue);
+        border-right: 0.375rem solid get-color(td-lightblue);
         display: inline-block;
         vertical-align: top;
-        height: rem(14px);
+        height: 0.875rem;
       }
     }
   }
@@ -82,14 +82,14 @@
 
   .cmp-dcp-widget-chart__title {
     margin: 0;
-    padding-bottom: rem(15px);
+    padding-bottom: 0.9375rem;
     display: flex;
     -ms-flex-direction: row;
     flex-direction: row;
     justify-content: space-between;
 
     @include mobile {
-      padding: 0px 0px rem(15px) rem(15px);
+      padding: 0px 0px 0.9375rem 0.9375rem;
     }
 
     span {
@@ -108,7 +108,7 @@
   }
 
   .cmp-dcp-widget-chart__legend {
-    margin-top: rem(20px);
+    margin-top: 1.25rem;
 
     @include mobile {
       display: flex;
@@ -123,8 +123,8 @@
     }
 
     & canvas {
-      padding-bottom: rem(5px);
-      width: rem(112px) !important;
+      padding-bottom: 0.3125rem;
+      width: rem-convert(112px) !important;
       height: auto !important;
     }
   }

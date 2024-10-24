@@ -1,36 +1,36 @@
-.cmp-widget__search-list{
+.cmp-widget__search-list {
   position: relative;
 }
-.cmp-widget-list__list-wrapper{
+.cmp-widget-list__list-wrapper {
   position: absolute;
   top: 110%;
   width: 100%;
   background-color: get-color(brand-white);
   z-index: 2;
-  padding-top: rem(7px);
+  padding-top: 0.4375rem;
   visibility: hidden;
   opacity: 0;
-  transition: all .3s;
-  &--open{
+  transition: all 0.3s;
+  &--open {
     top: 100%;
     visibility: visible;
     opacity: 1;
   }
-  &-content{
-    max-height: rem(150px);
+  &-content {
+    max-height: 9.375rem;
     overflow: auto;
 
     /**** Scrollbar styles for Opera,Edge and Chrome ****/
     &::-webkit-scrollbar {
-      width: rem(10px);
+      width: 0.625rem;
     }
     &::-webkit-scrollbar-track {
       background: $gray-5;
     }
     &::-webkit-scrollbar-thumb {
       background: get-color(brand-scrollbar);
-      border-radius: rem(4px);
-      border: rem(2px) solid $gray-5;;
+      border-radius: 0.25rem;
+      border: 0.125rem solid $gray-5;
     }
     /********** Scrollbar Styles for FireFox *****************/
 
@@ -38,36 +38,37 @@
     scrollbar-width: thin;
 
     /******************************************************/
-
   }
-  ul{
+  ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    margin-bottom: rem(10px);
-    a{
+    margin-bottom: 0.625rem;
+    a {
       display: block;
-      padding: rem(2px 15px);
+      padding: rem-convert(2px 15px);
       color: get-color(text-mid-gray);
       background-color: get-color(brand-white);
-      margin: rem(5px 0);
+      margin: rem-convert(5px 0);
       cursor: pointer;
       font-size: $font-size-custom-xxsmall;
-      transition: all .2s;
-      &:hover{
+      transition: all 0.2s;
+      &:hover {
         color: get-color(brand-white);
         background-color: get-color(td-dark-blue);
       }
-      i,svg{
+      i,
+      svg {
         color: get-color(brand-success);
         display: inline-block;
-        margin-right: rem(4px);
+        margin-right: 0.25rem;
         opacity: 0;
       }
-      &.cmp-widget-list__list-item--active{
+      &.cmp-widget-list__list-item--active {
         color: get-color(text-mid-gray);
         background-color: get-color(brand-white);
-        i,svg{
+        i,
+        svg {
           opacity: 1;
         }
       }

@@ -15,150 +15,156 @@
 }
 
 .cmp-button--background-enabled {
-	& .cmp-button {
-		border-radius: rem(3px);
-		background-color: get-color(header-links-blue);
-		&:hover {
-			background-color: get-color(td-lightblue);
-		}
-	}
-	.cmp-button__icon {
-		color: get-color(brand-white);
-	}
-	& .cmp-button__text {
-		color: get-color(brand-white);
-	}
+    & .cmp-button {
+        border-radius: 0.1875rem; // 3px / 16
+        background-color: get-color(header-links-blue);
+
+        &:hover {
+            background-color: get-color(td-lightblue);
+        }
+    }
+    .cmp-button__icon {
+        color: get-color(brand-white);
+    }
+    & .cmp-button__text {
+        color: get-color(brand-white);
+    }
 }
 
 .cmp-button__clear {
-	background-color: transparent !important;
-	cursor: pointer !important;
+    background-color: transparent !important;
+    cursor: pointer !important;
 }
+
 .cmp-button__text--disabled {
-	& .cmp-button__text {
-		display: none;
-	}
-	& .cmp-button__icon {
-		display: unset;
-	}
+    & .cmp-button__text {
+        display: none;
+    }
+    & .cmp-button__icon {
+        display: unset;
+    }
 }
 
 .cmp-button__icon--disabled {
-	& .cmp-button__text {
-		display: unset;
-	}
-	& .cmp-button__icon {
-		display: none;
-	}
+    & .cmp-button__text {
+        display: unset;
+    }
+    & .cmp-button__icon {
+        display: none;
+    }
 }
 
 .cmp-button {
-	border: unset;
-	padding: rem(1px) rem(6px);
-	color: unset;
-	text-decoration: none;
-	background: none;
+    border: unset;
+    padding: 0.0625rem 0.375rem; // 1px / 16, 6px / 16
+    color: unset;
+    text-decoration: none;
+    background: none;
 
-	&.btn-xxsmall {
-		font-size: $font-size-custom-xxsmall;
-		width: 100%;
-		padding: rem(6px);
-		margin-top: rem(18px);
-	}
+    &.btn-xxsmall {
+        font-size: $font-size-custom-xxsmall;
+        width: 100%;
+        padding: 0.375rem; // 6px / 16
+        margin-top: 1.125rem; // 18px / 16
+    }
 
-	&:active,
-	&:focus {
-		outline: none;
-		border: none;
-	}
+    &:active,
+    &:focus {
+        outline: none;
+        border: none;
+    }
 
-	&__disabled {
-		color: get-color(text-light-charcoal);
-		background-color: get-color(td-lighter-gray);
-		width: rem(240px);
-		height: rem(40px);
-		box-shadow: inset 0 0 0 rem(1px) get-color(brand-light-gray2);
+    &__disabled {
+        color: get-color(text-light-charcoal);
+        background-color: get-color(td-lighter-gray);
+        width: 15rem; // 240px / 16
+        height: 2.5rem; // 40px / 16
+        box-shadow: inset 0 0 0 0.0625rem get-color(brand-light-gray2); // 1px / 16
 
-		&.btn-xxsmall {
-			font-size: $font-size-custom-xxsmall;
-			width: 100%;
-			padding: rem(6px);
-			margin-top: rem(18px);
-		}
-	}
+        &.btn-xxsmall {
+            font-size: $font-size-custom-xxsmall;
+            width: 100%;
+            padding: 0.375rem; // 6px / 16
+            margin-top: 1.125rem; // 18px / 16
+        }
+    }
 
-	&__primary {
-		color: get-color(brand-white);
-		background-color: get-color(td-dark-blue);
-		width: rem(240px);
-		height: rem(40px);
-	}
-	&__outlined {
-		color: get-color(td-dark-blue);
-		background-color: get-color(brand-white);
-		width: rem(240px);
-		height: rem(40px);
-		box-shadow: inset 0 0 0 rem(2px) get-color(td-dark-blue);
-	}
-	&__region-select {
-		color: get-color(brand-white);
-		background-color: get-color(td-primary-blue);
-		font-size: 1rem;
-		width: 100%;
-		cursor: pointer;
-	}
+    &__primary {
+        color: get-color(brand-white);
+        background-color: get-color(td-dark-blue);
+        width: 15rem; // 240px / 16
+        height: 2.5rem; // 40px / 16
+    }
+
+    &__outlined {
+        color: get-color(td-dark-blue);
+        background-color: get-color(brand-white);
+        width: 15rem; // 240px / 16
+        height: 2.5rem; // 40px / 16
+        box-shadow: inset 0 0 0 0.125rem get-color(td-dark-blue); // 2px / 16
+    }
+
+    &__region-select {
+        color: get-color(brand-white);
+        background-color: get-color(td-primary-blue);
+        font-size: 1rem;
+        width: 100%;
+        cursor: pointer;
+    }
 }
 
 .cmp-radio-btn {
 	display: block;
 	position: relative;
-	padding-left: rem(22px);
+	padding-left: 1.375rem; // 22px / 16
 	cursor: pointer;
 	font-size: $font-size-custom-xxsmall;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+
 	&:last-of-type {
 		margin-bottom: 0;
 	}
+
 	input {
 		position: absolute;
 		opacity: 0;
 		cursor: pointer;
-		width: rem(24px);
-		height: rem(24px);
-		left: rem(-2px);
-		top: rem(-2px);
-		&:checked {
-			~ {
-				.checkmark {
-					background-color: get-color(td-primary-blue);
-					box-shadow: inset 0 0 0 0;
-					&:after {
-						display: block;
-					}
-				}
+		width: 1.5rem; // 24px / 16
+		height: 1.5rem; // 24px / 16
+		left: -0.125rem; // -2px / 16
+		top: -0.125rem; // -2px / 16
+
+		&:checked ~ .checkmark {
+			background-color: get-color(td-primary-blue);
+			box-shadow: inset 0 0 0 0;
+
+			&:after {
+				display: block;
 			}
 		}
 	}
+
 	.checkmark {
 		position: absolute;
 		top: 0;
 		left: 0;
-		height: 20px;
-		width: 20px;
+		height: 1.25rem; // 20px / 16
+		width: 1.25rem; // 20px / 16
 		background-color: get-color(brand-white);
 		border-radius: 50%;
-		box-shadow: inset 0 0 0 rem(2px) get-color(text-light-charcoal);
+		box-shadow: inset 0 0 0 0.125rem get-color(text-light-charcoal); // 2px / 16
+
 		&:after {
 			content: "";
 			position: absolute;
 			display: none;
-			top: rem(3.6px);
-			left: rem(3.5px);
-			width: rem(6px);
-			height: rem(6px);
+			top: 0.225rem; // 3.6px / 16
+			left: 0.21875rem; // 3.5px / 16
+			width: 0.375rem; // 6px / 16
+			height: 0.375rem; // 6px / 16
 			border-radius: 50%;
 			background-color: get-color(brand-white);
 		}
@@ -174,7 +180,7 @@
 	&--light-blue,
 	&--white,
 	&--grey {
-		padding-top: rem(20px);
+		padding-top: 1.25rem; // 20px / 16
 
 		.cmp-button {
 			padding-left: 0;
@@ -182,9 +188,8 @@
 
 			.cmp-button__text::after {
 				@include font-awesome-custom-icon;
-
 				content: "\f054";
-				padding-left: rem(10px);
+				padding-left: 0.625rem; // 10px / 16
 			}
 		}
 	}
@@ -212,8 +217,8 @@
 }
 
 .cmp-class-for-uiFrontend-only {
-	width: rem(450px);
-	padding: rem(16px);
+	width: 28.125rem; // 450px / 16
+	padding: 1rem; // 16px / 16
 	margin: 75vh auto;
 	font-size: $font-size-large;
 	font-weight: $font-weight-normal;
@@ -224,11 +229,11 @@
 .cmp-jump-to-top {
 	display: none;
 	box-sizing: border-box;
-	height: rem(60px);
-	width: rem(60px);
-	border: rem(1px) solid get-color(brand-light-gray2);
+	height: 3.75rem; // 60px / 16
+	width: 3.75rem; // 60px / 16
+	border: 0.0625rem solid get-color(brand-light-gray2); // 1px / 16
 	background-color: get-color(brand-white);
-	box-shadow: 0 rem(2px) rem(4px) 0 get-color(brand-box-shadow);
+	box-shadow: 0 0.125rem 0.25rem 0 get-color(brand-box-shadow); // 2px / 16, 4px / 16
 	text-align: center;
 	font-size: 30px;
 	color: get-color(brand-blue);
@@ -237,20 +242,19 @@
 	bottom: 0;
 	right: 0;
 	z-index: 9999;
-	transition: all .25s;
-
+	transition: all 0.25s;
 	cursor: pointer;
 	align-items: center;
 	justify-content: center;
-	margin: 0 rem(48px) rem(48px) 0;
+	margin: 0 3rem 3rem 0; // 48px / 16
 
 	a {
-		height: rem(60px);
-		width: rem(60px);
+		height: 3.75rem; // 60px / 16
+		width: 3.75rem; // 60px / 16
 		color: get-color(brand-blue) !important;
 		text-decoration: none;
 		display: contents;
-		transition: all .25s;
+		transition: all 0.25s;
 
 		&:before {
 			content: auto;
@@ -258,6 +262,6 @@
 	}
 
 	&:hover {
-		box-shadow: 0 rem(4px) rem(4px) 0 get-color(brand-box-shadow);
+		box-shadow: 0 0.25rem 0.25rem 0 get-color(brand-box-shadow); // 4px / 16
 	}
 }

@@ -168,9 +168,10 @@
 
 .cmp-teaser--carousel .cmp-teaser {
   position: relative;
+
   &__image {
     img {
-      height: rem(520px);
+      height: 32.5rem;  // 520px / 16
       object-fit: cover;
       vertical-align: middle;
     }
@@ -178,10 +179,10 @@
 
   &__content {
     position: absolute;
-    margin: rem(15px);
-    padding: rem(15px 20px 36px 20px);
-    border-radius: rem(4px);
-    min-width: rem(300px);
+    margin: 0.9375rem;  // 15px / 16
+    padding: 0.9375rem 1.25rem 2.25rem 1.25rem;  // 15px, 20px, 36px, 20px / 16
+    border-radius: 0.25rem;  // 4px / 16
+    min-width: 18.75rem;  // 300px / 16
     top: 50%;
     transform: translateY(-50%);
   }

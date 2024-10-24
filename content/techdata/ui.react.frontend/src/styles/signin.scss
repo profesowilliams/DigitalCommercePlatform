@@ -46,7 +46,7 @@
 
       > i,
       svg {
-        font-size: rem(12.8px) !important;
+        font-size: rem-convert(12.8px) !important;
       }
 
       &.active {

@@ -9,153 +9,152 @@
  * @class dp-figure
  * @class cmp-image
  */
- .dp-figure,
- .cmp-image {
-   margin: 0;
- 
-   /**
+.dp-figure,
+.cmp-image {
+  margin: 0;
+
+  /**
     * Header spacing variant.
     *
     * @class cmp-image--spacing-header
     */
-   &--spacing-header {
-     padding: rem(17px) rem(20px) rem(16px) rem(10px);
-   }
- 
-   /**
+  &--spacing-header {
+    padding: rem-convert(17px) rem-convert(20px) rem-convert(16px) rem-convert(10px);
+  }
+
+  /**
     * Footer spacing variant.
     *
     * @class cmp-image--spacing-footer
     */
-   &--spacing-footer {
-     padding: rem(6px) 0 rem(8px);
-   }
- 
-   /**
+  &--spacing-footer {
+    padding: rem-convert(6px) 0 rem-convert(8px);
+  }
+
+  /**
     * Auto-resize variant.
     *
     * @class cmp-image--auto-resize
     */
-   &--auto-resize {
-     svg {
-       height: 100%;
-       width: 100%;
-     }
-   }
- }
- 
- /**
+  &--auto-resize {
+    svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+/**
   * Teaser image variant.
   *
   * @class cmp-teaser__image
   */
- .cmp-teaser__image {
-   .cmp-image {
-     display: block;
-   }
- }
- 
- /**
+.cmp-teaser__image {
+  .cmp-image {
+    display: block;
+  }
+}
+
+/**
   * Image component.
   *
   * @class cmp-image
   */
- .cmp-image {
-   margin: 0;
-   display: flex;
-   width: 100%;
- 
-   /**
+.cmp-image {
+  margin: 0;
+  display: flex;
+  width: 100%;
+
+  /**
     * Image element.
     *
     * @class cmp-image__image
     */
-   &__image {
-     width: 100%;
-   }
- 
-   /**
+  &__image {
+    width: 100%;
+  }
+
+  /**
     * Left alignment variant.
     *
     * @class cmp-image-left
     */
-   &-left {
-     .cmp-image {
-       display: flex;
-       justify-content: flex-start;
-     }
-   }
- 
-   /**
+  &-left {
+    .cmp-image {
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+
+  /**
     * Right alignment variant.
     *
     * @class cmp-image-right
     */
-   &-right {
-     .cmp-image {
-       display: flex;
-       justify-content: flex-end;
-     }
-   }
- 
-   /**
+  &-right {
+    .cmp-image {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  /**
     * Center alignment variant.
     *
     * @class cmp-image-center
     */
-   &-center {
-     .cmp-image {
-       display: flex;
-       justify-content: center;
-     }
-   }
- }
- 
- /**
+  &-center {
+    .cmp-image {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+/**
   * TD logo component.
   *
   * @class cmp-td-logo
   */
- .cmp-td-logo {
-   /**
+.cmp-td-logo {
+  /**
     * Header variant.
     *
     * @class cmp-td-logo--header
     */
-   &--header {
-     width: rem(196px) !important;
-     padding: rem(21px) rem(26px) rem(21px) rem(10px);
- 
-     @include mobile {
-       width: rem(132px) !important;
-       padding: rem(8px);
-     }
-   }
- 
-   /**
+  &--header {
+    width: rem-convert(196px) !important;
+    padding: rem-convert(21px) rem-convert(26px) rem-convert(21px) rem-convert(10px);
+
+    @include mobile {
+      width: rem-convert(132px) !important;
+      padding: rem-convert(8px);
+    }
+  }
+
+  /**
     * Header variant without left padding.
     *
     * @class cmp-td-logo--header-without-left
     */
-   &--header-without-left {
-     width: rem(186px) !important;
-     padding: rem(21px) rem(26px) rem(21px) rem(0px);
-     box-sizing: border-box;
- 
-     @include mobile {
-       width: rem(132px) !important;
-       padding: rem(8px) rem(8px) rem(8px) rem(0px);
-     }
-   }
- 
-   /**
+  &--header-without-left {
+    width: rem-convert(186px) !important;
+    padding: rem-convert(21px) rem-convert(26px) rem-convert(21px) rem-convert(0px);
+    box-sizing: border-box;
+
+    @include mobile {
+      width: rem-convert(132px) !important;
+      padding: rem-convert(8px) rem-convert(8px) rem-convert(8px) rem-convert(0px);
+    }
+  }
+
+  /**
     * Footer variant.
     *
     * @class cmp-td-logo--footer
     */
-   &--footer {
-     width: rem(128px) !important;
-     padding: rem(0px) rem(0px) rem(8px);
-   }
- }
- 
+  &--footer {
+    width: rem-convert(128px) !important;
+    padding: rem-convert(0px) rem-convert(0px) rem-convert(8px);
+  }
+}

@@ -5,7 +5,7 @@
     border: none;
   }
   .li,
-  [role="tab"] {
+  [role='tab'] {
     padding: 0 1rem;
     font-size: 0.9rem;
     border-bottom: transparent 3px solid;
@@ -70,7 +70,7 @@
   height: 36px;
   width: 133px;
 
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
   font-size: 16px;
   letter-spacing: 0;
   line-height: 16px;
@@ -101,7 +101,7 @@
       padding: 0;
 
       &:not(:first-child):before {
-        content: "|";
+        content: '|';
         font-weight: $font-weight-normal;
         padding: 0 2rem;
       }
@@ -156,16 +156,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: rem(100px);
-      height: rem(100px);
+      width: rem-convert(100px);
+      height: rem-convert(100px);
       border-radius: 50%;
       border: 0 solid transparent;
       padding: 0;
-      margin-top: rem(14px);
-      margin-bottom: rem(18px);
+      margin-top: rem-convert(14px);
+      margin-bottom: rem-convert(18px);
       transition: border-color 0.3s;
       background-color: get-color(brand-white);
-      padding: rem(10px);
+      padding: rem-convert(10px);
       img {
         width: auto;
         margin: 0 auto;
@@ -174,25 +174,25 @@
       &:active,
       &:focus {
         background-color: get-color(brand-light-blue) !important;
-        padding: rem(10px);
+        padding: rem-convert(10px);
       }
     }
     &__tabpanel--text {
-      height: rem(36px);
+      height: rem-convert(36px);
       width: 100%;
       font-family: $font-family-sans-serif;
-      font-size: rem(16px);
+      font-size: rem-convert(16px);
       letter-spacing: 0;
-      line-height: rem(16px);
+      line-height: rem-convert(16px);
       text-align: center;
       font-weight: 600;
     }
     &__tab {
       text-align: center;
-      padding: 0 rem(8px);
+      padding: 0 rem-convert(8px);
       border-bottom: 0;
       font-size: $font-size-medium;
-      width: rem(230px);
+      width: rem-convert(230px);
       &.cmp-tabs__tab--active,
       &:hover,
       &:active {

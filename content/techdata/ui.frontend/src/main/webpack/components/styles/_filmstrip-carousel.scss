@@ -1,13 +1,13 @@
 .cmp-filmstrip-carousel {
-  width: rem(720px);
-  padding: 0 rem(40px);
+  width: 45rem;
+  padding: 0 2.5rem;
   font-family: $font-family;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   &__title {
-    font-size: rem(24px);
+    font-size: 1.5rem;
     color: get-color(brand-blue);
     font-weight: normal;
     width: 100%;
@@ -22,12 +22,12 @@
     width: 100%;
 
     &--card {
-      width: rem(172px);
-      height: rem(270px);
-      margin-top: rem(25px);
-      margin-bottom: rem(25px);
+      width: 10.75rem;
+      height: 16.875rem;
+      margin-top: 1.5625rem;
+      margin-bottom: 1.5625rem;
       background-color: get-color(brand-white);
-      box-shadow: rem(2px) rem(2px) rem(4px) 0 get-color(box-shadow);
+      box-shadow: 0.125rem 0.125rem 0.25rem 0 get-color(box-shadow);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -35,15 +35,15 @@
 
       &img {
         width: 100%;
-        height: rem(170px);
+        height: 10.625rem;
       }
 
       &--name {
         width: 100%;
-        height: rem(35px);
+        height: 2.1875rem;
         color: get-color(brand-white);
         background-color: get-color(brand-blue);
-        font-size: rem(16px);
+        font-size: 1rem;
         text-align: center;
         display: flex;
         justify-content: center;
@@ -52,9 +52,9 @@
 
       &--position {
         font-size: $font-size-xsmall;
-        line-height: rem(14px);
+        line-height: 0.875rem;
         text-align: center;
-        padding: rem(15px) rem(5px) rem(8px);
+        padding: 0.9375rem 0.3125rem 0.5rem;
         height: 65px;
       }
     }
@@ -74,12 +74,12 @@
 }
 
 .cmp-filmstrip-slider {
-  width: rem(640px);
-  height: rem(305px);
+  width: 40rem;
+  height: 19.0625rem;
   margin: 0 auto;
 }
 .slick-slide {
-  margin: 0 rem(20px);
+  margin: 0 1.25rem;
   width: auto !important;
   a {
     text-decoration: none !important;
@@ -88,7 +88,7 @@
   img {
     display: block;
     width: 100%;
-    height: rem(170px);
+    height: 10.625rem;
     border: 0 solid transparent;
     box-shadow: 0 0 0 0 transparent;
   }
@@ -102,7 +102,7 @@
     img {
       display: block;
       width: 100%;
-      height: rem(170px);
+      height: 10.625rem;
       border: 0 solid transparent;
       box-shadow: 0 0 0 0 transparent;
     }
@@ -114,38 +114,38 @@
     margin: 0 !important;
     button {
       &:before {
-        font-family: "Font Awesome 5 Free" !important;
-        font-size: rem(10px) !important;
-        border: solid rem(1px) get-color(text-light-charcoal) !important;
+        font-family: 'Font Awesome 5 Free' !important;
+        font-size: 0.625rem !important;
+        border: solid 0.0625rem get-color(text-light-charcoal) !important;
         border-radius: 50% !important;
-        line-height: rem(10px) !important;
-        width: rem(10px) !important;
-        height: rem(10px) !important;
+        line-height: 0.625rem !important;
+        width: 0.625rem !important;
+        height: 0.625rem !important;
         opacity: unset !important;
         color: transparent !important;
       }
       &:hover::before {
         border: solid 0 get-color(text-light-charcoal) !important;
-        line-height: rem(14px) !important;
+        line-height: 0.875rem !important;
         opacity: unset !important;
         color: transparent !important;
-        top: rem(-0.022px) !important;
-        box-shadow: inset 0 0 0 rem(7px) get-color(brand-blue) !important;
-        width: rem(10px) !important;
-        height: rem(10px) !important;
+        top: -0.001375rem !important;
+        box-shadow: inset 0 0 0 0.4375rem get-color(brand-blue) !important;
+        width: 0.625rem !important;
+        height: 0.625rem !important;
       }
     }
     &.slick-active {
       button {
         &:before {
           border: solid 0 get-color(text-light-charcoal) !important;
-          line-height: rem(14px) !important;
+          line-height: 0.875rem !important;
           opacity: unset !important;
           color: transparent !important;
-          top: rem(-0.022px) !important;
-          box-shadow: inset 0 0 0 rem(7px) get-color(brand-blue) !important;
-          width: rem(10px) !important;
-          height: rem(10px) !important;
+          top: -0.001375rem !important;
+          box-shadow: inset 0 0 0 0.4375rem get-color(brand-blue) !important;
+          width: 0.625rem !important;
+          height: 0.625rem !important;
         }
       }
     }

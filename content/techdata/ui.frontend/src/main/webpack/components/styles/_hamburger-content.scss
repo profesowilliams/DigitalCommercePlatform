@@ -1,471 +1,469 @@
 #cmp-techdata-header {
-    &.cmp-container {
-        .megamenu {
-            @include tablet {
-                display: none;
-            }
-        }
-    }
-
-    .aem-Grid > .languagenavigation,
-    .masthead .masthead,
-    .button .headerutility {
+  &.cmp-container {
+    .megamenu {
+      @include tablet {
         display: none;
+      }
+    }
+  }
+
+  .aem-Grid > .languagenavigation,
+  .masthead .masthead,
+  .button .headerutility {
+    display: none;
+  }
+
+  .hub .cmp-button__text,
+  .minicart .cmp-button__text {
+    display: none;
+  }
+
+  &.cmp-experiencefragment--header-mobile.cmp-container {
+    .megamenu {
+      display: none;
+      height: 100vh;
+      left: 0;
+      position: fixed;
+      top: 2.75rem;
+      width: 100%;
+
+      &--open.aem-GridColumn {
+        display: block;
+        width: 100%;
+        float: unset;
+        margin: unset;
+      }
     }
 
-    .hub .cmp-button__text,
-    .minicart .cmp-button__text {
+    .cmp-megamenu {
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 1px solid #707070;
+      height: 100%;
+      overflow-y: auto;
+      padding: 0 0.9375rem;
+      position: relative;
+
+      &__body {
+        background-color: get-color(brand-white);
+        border: 1px solid #707070;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        max-height: 100%;
+        padding: 1.875rem;
+        padding-top: 0;
+        position: absolute;
+        width: 100%;
+        max-width: 19.375rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+        // disable scrollbar, but retain scroll.
+        &::-webkit-scrollbar {
+          width: 0;
+        }
+        // disable scrollbar for other browsers - not tested
+        overflow: -moz-scrollbars-none;
+        -ms-overflow-style: none;
+      }
+
+      &__primary {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+
+        li {
+          display: flex;
+          justify-content: space-between;
+          padding: 0.75rem 0;
+
+          &:after {
+            content: '\f054';
+            font-family: 'Font Awesome 5 Free';
+            font-size: 1rem;
+            font-weight: 900;
+            color: get-color(border-lighter-gray);
+          }
+
+          a {
+            text-decoration: none;
+            color: inherit;
+          }
+        }
+      }
+    }
+
+    &.cmp-techdata-header {
+      .header-active.cmp-container {
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: map-get($color-palette, 'td-dark-blue') !important; // To override the desktop inline style
+        width: 100vw;
+        flex-direction: column;
+        justify-content: unset;
+        align-items: unset;
+        max-height: 100vh;
+        overflow-y: auto;
+        color: white;
+      }
+
+      .header-active.cmp-container .cmp-image svg path {
+        fill: white;
+      }
+
+      .header-active .megamenu #navigation {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 0 2pc;
+
+        & > ul {
+          display: block;
+          height: auto;
+          border-top: 1px solid white;
+          padding: 10px 0;
+
+          li {
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 21px;
+
+            a {
+              margin: 0;
+              display: block;
+              width: 100%;
+              padding: 0 10px;
+            }
+
+            .fa-chevron-right {
+              display: none;
+            }
+          }
+        }
+      }
+
+      .header-active.cmp-container .cmp-button__text {
+        display: inline;
+      }
+
+      .header-active.cmp-container .minicart .cmp-button__text {
+        margin-left: 11px;
+      }
+
+      .header-active.cmp-container .extrabutton .cmp-button__text {
+        margin-left: 2px;
+        color: map-get($color-palette, 'white');
+      }
+
+      .header-active.cmp-container .extrabutton {
+        padding: 2px 0;
+      }
+
+      .header-active.cmp-container .extrabutton .fa-handshake:before {
+        color: map-get($color-palette, 'white');
+      }
+
+      .masthead .header-active .masthead #mobile-header-container {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      .header-active.cmp-container .aem-Grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: unset;
+        align-items: unset;
+      }
+
+      .headerutility .headerutility.signin {
+        order: 0;
+      }
+
+      .headerutility .headerutility.hub {
+        order: 1;
+      }
+
+      .headerutility .headerutility.button {
+        order: 3;
+      }
+
+      .headerutility .headerutility.minicart {
+        order: 3;
+      }
+
+      .masthead .header-active .masthead {
+        display: block;
+      }
+
+      .masthead .header-active .masthead .aem-Grid > .languagenavigation {
+        display: block;
+        padding: 0 15px;
+      }
+
+      .header-active.cmp-container .masthead .regionSelectDropdown .language-modal__content__row .language-modal__content__column {
         display: none;
+      }
+
+      .header-active.cmp-container .masthead .regionSelectDropdown .language-modal__content__row .language-modal__content__column {
+        display: block;
+      }
+
+      .masthead .header-active .masthead .aem-Grid > .languagenavigation .cmp-dropbtn {
+        margin-bottom: 10px;
+      }
+
+      .header-active.cmp-container .masthead .cmp-container {
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 0;
+        background-color: map-get($color-palette, 'td-dark-blue') !important; // To override the desktop inline style
+      }
+
+      .header-active.cmp-container .masthead .cmp-container .cmp-dropbtn {
+        margin: 0;
+        min-height: auto;
+      }
+
+      .cmp-container {
+        height: auto !important; // Need to override the inline style getting appended from JS
+        width: 100%;
+      }
+
+      .cmp-image {
+        min-height: 36px;
+      }
+
+      .aem-Grid {
+        border: none;
+      }
+
+      .dp-figure img {
+        vertical-align: middle;
+      }
+
+      .header-active.cmp-container .masthead {
+        order: 4;
+        display: block;
+        margin: 0 2pc;
+        width: calc(100% - 64px);
+        border-top: 1px solid #d9d8d7;
+        padding: 24px 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+      }
+
+      .header-active.cmp-container .mobile-bottom-section .cmp-masthead--mobile-links {
+        display: block;
+        padding: 0 15px;
+      }
+
+      .header-active.cmp-container .mobile-bottom-section a {
+        display: block;
+        margin-bottom: 10px;
+        text-decoration: none;
+      }
+
+      .header-active.cmp-container .aem-Grid > .languagenavigation svg path {
+        // Removed by ryan.williams@tdsynnex.com on 01/31/2023 - style was breaking flags
+      }
+
+      .aem-Grid > .headerutility {
+        display: none !important; // Need to override the other important style given earlier
+      }
+
+      .header-active .megamenu {
+        display: block;
+        width: 100%;
+        position: relative;
+        height: auto;
+        top: auto;
+        left: auto;
+        float: none;
+        order: 2;
+      }
+
+      .header-active .cmp-megamenu__body {
+        position: relative;
+        width: 100%;
+        max-width: none;
+        border: 0;
+        background-color: transparent;
+        padding: 0;
+      }
+
+      .header-active .cmp-megamenu {
+        padding: 0 16px;
+        border: 0;
+        background: transparent;
+        order: 3;
+      }
+
+      .header-active .cmp-megamenu__body {
+        border-top: 1px solid #d9d8d7;
+      }
+
+      .header-active .aem-Grid > .headerutility {
+        float: none;
+        width: 100%;
+        display: flex !important; // Need to override the important gieven earlier at other place
+        order: 1;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 24px 32px !important;
+        border-top: 1px solid #d9d9d9 !important;
+      }
+
+      &.cmp-experiencefragment__header--sticky {
+        padding: 0;
+        height: 47px;
+      }
+
+      &.cmp-experiencefragment__header--sticky .aem-Grid {
+        background: transparent;
+      }
+
+      &.cmp-container > div .header-active .search {
+        display: none;
+      }
+
+      .header-active .cmp-td-logo--header {
+        clear: both;
+        float: none;
+      }
+
+      .header-active .headerutility .languagenavigation {
+        display: none;
+      }
+
+      &.cmp-container .header-active .megamenu .cmp-megamenu__title {
+        display: none;
+      }
+
+      &.cmp-container > div {
+        width: 100vw;
+      }
+
+      .header-active .headerutility .hub button,
+      .header-active .headerutility .languagenavigation button,
+      .header-active .headerutility .minicart button,
+      .header-active .headerutility .signin button {
+        color: white;
+        font-size: 16px;
+      }
+
+      .header-active .headerutility .minicart .cmp-cart__active .cmp-cart__number span {
+        color: map-get($color-palette, 'charcoal');
+      }
+
+      .dp-figure {
+        padding-left: 2px;
+      }
+
+      &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--title,
+      &.cmp-container .header-active .languagenavigation span {
+        color: white;
+      }
+
+      &.cmp-container .header-active .languagenavigation .cmp-form-options__field-description {
+        color: map-get($color-palette, 'charcoal');
+      }
+
+      .header-active.cmp-container .masthead .regionSelectDropdown {
+        position: absolute;
+        top: auto;
+        bottom: 50px;
+        left: 0;
+        width: 100%;
+      }
+
+      .header-active.cmp-container .masthead .regionSelectDropdown.cmp-show {
+        .language-modal {
+          display: block !important; // Overriding the inline style without effecting the desktop style
+        }
+
+        .languageselection-button,
+        .options {
+          display: none !important; // Overriding the inline style without effecting the desktop style
+        }
+      }
+
+      &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--sub-title {
+        color: white;
+      }
+
+      &.cmp-container .header-active .megamenu #navigation li a {
+        color: white;
+      }
+
+      .search {
+        margin: unset;
+        margin-left: auto;
+      }
+
+      .hub svg g path {
+        fill: white;
+      }
+
+      .headerutility .headerutility {
+        padding: 5px 5px;
+      }
+
+      .signin svg g,
+      .signin svg path,
+      .minicart svg g,
+      .minicart svg path {
+        fill: white;
+      }
+
+      .minicart .minicart {
+        padding: 0;
+      }
+
+      .cmp-sign-in-button.active,
+      .cmp-sign-in-button:active,
+      .cmp-sign-in-button:hover {
+        border: none;
+        box-shadow: none;
+      }
+
+      .headerutility .signin span {
+        display: inline-block;
+        padding-left: 8px;
+      }
+
+      &.cmp-container .header-active .headerutility .signin button svg {
+        margin-right: 10px;
+        text-align: center;
+        display: block;
+      }
+
+      &.cmp-container .minicart .cmp-cart__icon {
+        width: 26px;
+      }
+
+      &.cmp-container .minicart .cmp-cart {
+        width: 28px;
+        margin-top: 0;
+      }
+
+      &.cmp-container .minicart .cmp-cart-link {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+      }
     }
-
-    &.cmp-experiencefragment--header-mobile.cmp-container {
-        .megamenu {
-            display: none;
-            height: 100vh;
-            left: 0;
-            position: fixed;
-            top: rem(44px);
-            width: 100%;
-
-            &--open.aem-GridColumn {
-                display: block;
-                width: 100%;
-                float: unset;
-                margin: unset;
-            }
-        }
-
-        .cmp-megamenu {
-            background-color: rgba(0, 0, 0, 0.5);
-            border: 1px solid #707070;
-            height: 100%;
-            overflow-y: auto;
-            padding: rem(0 15px);
-            position: relative;
-
-            &__body {
-                background-color: get-color(brand-white);
-                border: 1px solid #707070;
-                display: flex;
-                flex-direction: column;
-                margin: auto;
-                max-height: 100%;
-                padding: rem(30px);
-                padding-top: 0;
-                position: absolute;
-                width: 100%;
-                max-width: rem(310px);
-                overflow-x: hidden;
-                overflow-y: auto;
-                // disable scrollbar, but retain scroll.
-                &::-webkit-scrollbar {
-                    width: 0;
-                }
-                // disable scrollbar for other browsers - not tested
-                overflow: -moz-scrollbars-none;
-                -ms-overflow-style: none;
-            }
-
-            &__primary {
-                display: flex;
-                flex-wrap: wrap;
-                flex-direction: column;
-
-                li {
-                    display: flex;
-                    justify-content: space-between;
-                    padding: rem(12px 0);
-
-                    &:after {
-                        content: '\f054';
-                        font-family: 'Font Awesome 5 Free';
-                        font-size: rem(16px);
-                        font-weight: 900;
-                        color: get-color(border-lighter-gray);
-                    }
-
-                    a {
-                        text-decoration: none;
-                        color: inherit;
-                    }
-                }
-            }
-        }
-
-        &.cmp-techdata-header {
-            .header-active.cmp-container {
-                height: 100vh;
-                position: fixed;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                right: 0;
-                background-color: map-get($color-palette, "td-dark-blue") !important; // To override the desktop inline style
-                width: 100vw;
-                flex-direction: column;
-                justify-content: unset;
-                align-items: unset;
-                max-height: 100vh;
-                overflow-y: auto;
-                color: white;
-            }
-
-            .header-active.cmp-container .cmp-image svg path {
-                fill: white;
-            }
-
-            .header-active .megamenu #navigation {
-                display: block;
-                width: 100%;
-                text-align: left;
-                padding: 0 2pc;
-
-                & > ul {
-                    display: block;
-                    height: auto;
-                    border-top: 1px solid white;
-                    padding: 10px 0;
-
-                    li {
-                        text-align: left;
-                        display: flex;
-                        justify-content: space-between;
-                        padding: 0.75rem 21px;
-
-                        a {
-                            margin: 0;
-                            display: block;
-                            width: 100%;
-                            padding: 0 10px;
-                        }
-
-                        .fa-chevron-right {
-                            display: none;
-                        }
-                    }
-                }
-            }
-
-            .header-active.cmp-container .cmp-button__text {
-                display: inline;
-            }
-
-            .header-active.cmp-container .minicart .cmp-button__text {
-                margin-left: 11px;
-            }
-
-            .header-active.cmp-container .extrabutton .cmp-button__text {
-                margin-left: 2px;
-                color: map-get($color-palette, 'white');
-            }
-
-            .header-active.cmp-container .extrabutton {
-                padding: 2px 0;
-            }
-
-            .header-active.cmp-container .extrabutton .fa-handshake:before {
-                color: map-get($color-palette, 'white');
-            }
-
-            .masthead .header-active .masthead #mobile-header-container {
-                display: flex;
-                flex-direction: column-reverse;
-            }
-
-            .header-active.cmp-container .aem-Grid {
-                display: flex;
-                flex-direction: column;
-                justify-content: unset;
-                align-items: unset;
-            }
-
-            .headerutility .headerutility.signin {
-                order: 0;
-            }
-
-            .headerutility .headerutility.hub {
-                order: 1;
-            }
-
-            .headerutility .headerutility.button {
-                order: 3;
-            }
-
-            .headerutility .headerutility.minicart {
-                order: 3;
-            }
-
-            .masthead .header-active .masthead {
-                display: block;
-            }
-
-            .masthead .header-active .masthead .aem-Grid > .languagenavigation {
-                display: block;
-                padding: 0 15px;
-            }
-
-            .header-active.cmp-container .masthead .regionSelectDropdown .language-modal__content__row .language-modal__content__column {
-                display: none;
-            }
-
-            .header-active.cmp-container .masthead .regionSelectDropdown .language-modal__content__row .language-modal__content__column {
-                display: block;
-            }
-
-            .masthead .header-active .masthead .aem-Grid > .languagenavigation .cmp-dropbtn {
-                margin-bottom: 10px;
-            }
-
-            .header-active.cmp-container .masthead .cmp-container {
-                display: flex;
-                flex-direction: column-reverse;
-                padding: 0;
-                background-color: map-get($color-palette, "td-dark-blue") !important; // To override the desktop inline style
-            }
-
-            .header-active.cmp-container .masthead .cmp-container .cmp-dropbtn {
-                margin: 0;
-                min-height: auto;
-            }
-
-            .cmp-container {
-                height: auto !important; // Need to override the inline style getting appended from JS
-                width: 100%;
-            }
-
-            .cmp-image {
-                min-height: 36px;
-            }
-
-            .aem-Grid {
-                border: none;
-            }
-
-            .dp-figure img {
-                vertical-align: middle;
-            }
-
-            .header-active.cmp-container .masthead {
-                order: 4;
-                display: block;
-                margin: 0 2pc;
-                width: calc(100% - 64px);
-                border-top: 1px solid #d9d8d7;
-                padding: 24px 0;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                z-index: 999;
-            }
-
-            .header-active.cmp-container .mobile-bottom-section .cmp-masthead--mobile-links {
-                display: block;
-                padding: 0 15px;
-            }
-
-            .header-active.cmp-container .mobile-bottom-section a {
-                display: block;
-                margin-bottom: 10px;
-                text-decoration: none;
-            }
-
-            .header-active.cmp-container .aem-Grid > .languagenavigation svg path {
-                // Removed by ryan.williams@tdsynnex.com on 01/31/2023 - style was breaking flags
-            }
-
-            .aem-Grid > .headerutility {
-                display: none !important; // Need to override the other important style given earlier
-            }
-
-            .header-active .megamenu {
-                display: block;
-                width: 100%;
-                position: relative;
-                height: auto;
-                top: auto;
-                left: auto;
-                float: none;
-                order: 2;
-            }
-
-            .header-active .cmp-megamenu__body {
-                position: relative;
-                width: 100%;
-                max-width: none;
-                border: 0;
-                background-color: transparent;
-                padding: 0;
-            }
-
-            .header-active .cmp-megamenu {
-                padding: 0 16px;
-                border: 0;
-                background: transparent;
-                order: 3;
-            }
-
-            .header-active .cmp-megamenu__body {
-                border-top: 1px solid #D9D8D7;
-            }
-
-            .header-active .aem-Grid > .headerutility {
-                float: none;
-                width: 100%;
-                display: flex !important; // Need to override the important gieven earlier at other place
-                order: 1;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 24px 32px !important;
-                border-top: 1px solid #D9D9D9 !important;
-            }
-
-            &.cmp-experiencefragment__header--sticky {
-                padding: 0;
-                height: 47px;
-            }
-
-            &.cmp-experiencefragment__header--sticky .aem-Grid {
-                background: transparent;
-            }
-
-            &.cmp-container > div .header-active .search {
-                display: none;
-            }
-
-            .header-active .cmp-td-logo--header {
-                clear: both;
-                float: none;
-            }
-
-            .header-active .headerutility .languagenavigation {
-                display: none;
-            }
-
-            &.cmp-container .header-active .megamenu .cmp-megamenu__title {
-                display: none;
-            }
-
-            &.cmp-container > div {
-                width: 100vw;
-            }
-
-            .header-active .headerutility .hub button,
-            .header-active .headerutility .languagenavigation button,
-            .header-active .headerutility .minicart button,
-            .header-active .headerutility .signin button {
-                color: white;
-                font-size: 16px;
-            }
-
-            .header-active .headerutility .minicart .cmp-cart__active .cmp-cart__number span {
-                color: map-get($color-palette, 'charcoal');
-            }
-
-            .dp-figure {
-                padding-left: 2px;
-            }
-
-            &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--title,
-            &.cmp-container .header-active .languagenavigation span {
-                color: white;
-            }
-
-            &.cmp-container .header-active .languagenavigation .cmp-form-options__field-description {
-                color: map-get($color-palette, 'charcoal');
-            }
-
-            .header-active.cmp-container .masthead .regionSelectDropdown {
-                position: absolute;
-                top: auto;
-                bottom: 50px;
-                left: 0;
-                width: 100%;
-            }
-
-            .header-active.cmp-container .masthead .regionSelectDropdown.cmp-show {
-                .language-modal {
-                    display: block !important; // Overriding the inline style without effecting the desktop style
-                }
-
-                .languageselection-button,
-                .options {
-                    display: none !important; // Overriding the inline style without effecting the desktop style
-                }
-            }
-
-            &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--sub-title {
-                color: white;
-            }
-
-            &.cmp-container .header-active .megamenu #navigation li a {
-                color: white;
-            }
-
-            .search {
-                margin: unset;
-                margin-left: auto;
-            }
-
-            .hub svg g path {
-                fill: white;
-            }
-
-            .headerutility .headerutility {
-                padding: 5px 5px;
-            }
-
-            .signin svg g,
-            .signin svg path,
-            .minicart svg g,
-            .minicart svg path {
-                fill: white;
-            }
-
-            .minicart .minicart {
-                padding: 0;
-            }
-
-            .cmp-sign-in-button.active,
-            .cmp-sign-in-button:active,
-            .cmp-sign-in-button:hover {
-                border: none;
-                box-shadow: none;
-            }
-
-            .headerutility .signin span {
-                display: inline-block;
-                padding-left: 8px;
-            }
-
-            &.cmp-container .header-active .headerutility .signin button svg {
-                margin-right: 10px;
-                text-align: center;
-                display: block;
-            }
-
-            &.cmp-container .minicart .cmp-cart__icon {
-                width: 26px;
-            }
-
-            &.cmp-container .minicart .cmp-cart {
-                width: 28px;
-                margin-top: 0;
-            }
-
-            &.cmp-container .minicart .cmp-cart-link {
-                display: flex;
-                align-items: center;
-                text-decoration: none;
-            }
-        }
-    }
+  }
 }
 
 .aem-AuthorLayer-Edit #cmp-techdata-header .aem-Grid > .languagenavigation,
 .aem-AuthorLayer-Edit #cmp-techdata-header .button .headerutility,
 .aem-AuthorLayer-Edit #cmp-techdata-header .masthead .masthead {
-    display: block;
+  display: block;
 }
-
-

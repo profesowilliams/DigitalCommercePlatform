@@ -3,11 +3,11 @@
 //Olivera (01/14/2022)
 
 // .cmp-email-template {
-//     width: rem(612px);
+//     width: 38.25rem;
 //     display: flex;
 //     -ms-flex-direction: column;
 //     flex-direction: column;
-//     padding: rem(54px) rem(40px) rem(46px) rem(40px);
+//     padding: rem-convert(54px) 2.5rem 2.875rem 2.5rem;
 //     margin: 0 auto;
 //     background-color: get-color(brand-light-gray3);
 
@@ -15,7 +15,7 @@
 //         display: flex;
 //         -ms-flex-direction: column;
 //         flex-direction: column;
-//         padding: rem(30px) rem(68px) rem(40px);
+//         padding: 1.875rem 4.25rem 2.5rem;
 //         background-color: gray;
 //         font-size: $font-size-base;
 
@@ -34,7 +34,7 @@
 //     }
 
 //     &-body {
-//         padding: rem(40px) rem(34px);
+//         padding: 2.5rem 2.125rem;
 //         background-color: get-color(brand-white);
 //         font-size: $font-size-xsmall;
 //         display: flex;
@@ -43,7 +43,7 @@
 //     }
 
 //     &-footer {
-//         margin-top: rem(34px);
+//         margin-top: 2.125rem;
 //         font-size: $font-size-xsmall;
 //         display: flex;
 //         -ms-flex-direction: column;

@@ -3,3 +3,4 @@ src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-dependencies
 src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site-global
 src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site-us
 src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-react
+src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-web-components

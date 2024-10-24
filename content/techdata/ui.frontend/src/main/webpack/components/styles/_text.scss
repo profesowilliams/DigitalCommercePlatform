@@ -31,9 +31,9 @@
           line-height: -10rem;
           padding-top: 0rem !important;
           li {
-            padding: rem(24px) rem(16px) 0 rem(44px);
+            padding: 1.5rem 1rem 0 2.75rem;
             position: relative;
-            line-height: rem(24px);
+            line-height: 1.5rem;
 
             b {
               width: auto;
@@ -53,7 +53,7 @@
       }
     }
     p {
-      margin: rem(16px) rem(24px);
+      margin: 1rem 1.5rem;
     }
   }
 
@@ -62,12 +62,12 @@
 
     li {
       counter-increment: li;
-      line-height: rem(22px);
-      padding-bottom: rem(5.44px);
+      line-height: 1.375rem;
+      padding-bottom: 0.34rem;
 
       &::before {
         content: counter(li);
-        width: rem(20.8px);
+        width: 1.3rem;
       }
     }
   }
@@ -76,8 +76,8 @@
     padding-left: 15px;
 
     li {
-      line-height: rem(20px);
-      padding-bottom: rem(5.12px);
+      line-height: 1.25rem;
+      padding-bottom: 0.32rem;
       display: flex;
 
       &::before {
@@ -85,7 +85,7 @@
         font-weight: bold;
         width: auto;
         font-size: $font-size-custom-medium;
-        margin-right: rem(10px);
+        margin-right: 0.625rem;
       }
     }
   }
@@ -157,11 +157,11 @@
 }
 
 .cmp-aem-alert {
-  border: rem(1px) solid get-color(td-primary-blue);
-  padding: rem(32px);
+  border: 0.0625rem solid get-color(td-primary-blue);
+  padding: 2rem;
   background-color: get-color(brand-white);
   color: get-color(text-mid-gray);
-  box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue) !important;
+  box-shadow: 0px 0px 0.3125rem 0px get-color(td-primary-blue) !important;
 }
 
 .dp-text--white * {
@@ -195,14 +195,14 @@
 .dp-text--xsmall {
   &,
   .cmp-text li {
-    font-size: rem($font-size-xxsmall);
+    font-size: rem-convert($font-size-xxsmall);
   }
 }
 
 .dp-text--small {
   &,
   .cmp-text li {
-    font-size: rem($font-size-small);
+    font-size: rem-convert($font-size-small);
   }
 }
 

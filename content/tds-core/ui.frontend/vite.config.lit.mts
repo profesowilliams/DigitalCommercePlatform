@@ -13,24 +13,20 @@ function updateJsTxtPlugin() {
     writeBundle() {
       const filePath = path.join(basePath, 'js.txt');
 
-      // Read the existing contents of js.txt
       fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
           console.error(`Error reading ${filePath}:`, err);
           return;
         }
 
-        // Check if '#base=js' exists, if not, add it
         if (!data.includes('#base=js')) {
           data = '#base=js\n' + data;
         }
 
-        // Append 'components.js' to the file
         if (!data.includes('components.js')) {
           data += 'components.js\n';
         }
 
-        // Write the updated contents back to js.txt
         fs.writeFile(filePath, data, 'utf8', (err) => {
           if (err) {
             console.error(`Error writing to ${filePath}:`, err);
@@ -46,6 +42,7 @@ function updateJsTxtPlugin() {
 // Common configuration
 const commonConfig = {
   build: {
+    emptyOutDir: true,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       external: ['bootstrap'],
@@ -59,6 +56,16 @@ const commonConfig = {
           entryFileNames: 'components.js',
         },
       ],
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        quietDeps: true, // Suppress warnings from dependencies
+        quiet: true, // Suppresses all warnings
+        silenceDeprecations: ['legacy-js-api', 'import', 'global-builtin'],
+      },
     },
   },
   plugins: [updateJsTxtPlugin()],

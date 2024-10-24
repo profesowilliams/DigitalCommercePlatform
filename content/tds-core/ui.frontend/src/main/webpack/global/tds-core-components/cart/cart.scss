@@ -6,78 +6,77 @@
  * Represents a cart icon in the navbar.
  */
 .cmp-cart {
-    width: rem(36px);
-    height: rem(36px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    margin-top: 0.4rem;
+  width: rem-convert(36px);
+  height: rem-convert(36px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin-top: 0.4rem;
 
-    /**
+  /**
      * The cart icon.
      */
-    &__icon {
-        position: absolute;
-        color: get_color('brand-blue');
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: rem(36px);
-        height: rem(32px);
-        margin-bottom: rem(4px);
-    }
+  &__icon {
+    position: absolute;
+    color: get_color('brand-blue');
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: rem-convert(36px);
+    height: rem-convert(32px);
+    margin-bottom: rem-convert(4px);
+  }
 
-    /**
+  /**
      * The number of items in the cart.
      * Hidden by default.
      */
-    &__number {
-        display: none;
+  &__number {
+    display: none;
+  }
+
+  /**
+     * Styles when the cart is active.
+     */
+  &__active {
+    /**
+         * Color and positioning of the cart icon when active.
+         */
+    .cmp-cart__icon {
+      color: get_color('brand-blue');
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: rem-convert(36px);
+      height: rem-convert(32px);
     }
 
     /**
-     * Styles when the cart is active.
-     */
-    &__active {
-
-        /**
-         * Color and positioning of the cart icon when active.
-         */
-        .cmp-cart__icon {
-            color: get_color('brand-blue');
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: rem(36px);
-            height: rem(32px);
-        }
-
-        /**
          * Styles and positioning of the number of items when the cart is active.
          */
-        .cmp-cart__number {
-            position: relative;
-            width: 0.9rem;
-            height: 0.9rem;
-            z-index: 1;
-            margin-top: -8px;
-            padding: 0.3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            text-align: center;
-            font-size: 11px;
-            
-            /**
+    .cmp-cart__number {
+      position: relative;
+      width: 0.9rem;
+      height: 0.9rem;
+      z-index: 1;
+      margin-top: -8px;
+      padding: 0.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      text-align: center;
+      font-size: 11px;
+
+      /**
              * Styles for the span that displays the number of items in the cart.
              */
-            span {
-                margin-left: 100%;
-                text-decoration: none;
-                color: get-color(brand-white);
-            }
-        }
+      span {
+        margin-left: 100%;
+        text-decoration: none;
+        color: get-color(brand-white);
+      }
     }
+  }
 }

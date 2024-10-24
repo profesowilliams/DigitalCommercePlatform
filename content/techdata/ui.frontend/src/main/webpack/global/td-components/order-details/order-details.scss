@@ -1,14 +1,12 @@
-
 .status {
   display: flex;
 }
 .icon {
   display: flex;
-  margin-top: rem(11px);
-  margin-right: rem(5px);
+  margin-top: 0.6875rem;
+  margin-right: 0.3125rem;
 }
 .cmp-td-order-details {
-
   &__parent-container {
     background-color: #f6f6f6;
   }
@@ -19,63 +17,71 @@
     display: flex;
 
     &__card {
-
-      width:100%;
+      width: 100%;
       padding: 2rem;
-      min-height: rem(400px);
+      min-height: 25rem;
 
       &__container {
         padding: 2rem;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         transition: 0.3s;
         min-height: inherit;
 
         &__label {
-          margin-top: rem(0);
-          margin-bottom: rem(16px);
+          margin-top: 0;
+          margin-bottom: 1rem;
         }
 
         &__status-title {
-
         }
         &__status-body {
           display: flex;
           flex-direction: column;
           text-align: center;
           &__status-heading {
-            padding-top: rem(16px);
-            padding-bottom: rem(16px);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
             font-weight: bold;
           }
 
-          &__status-icon, &__status-icon-inprocess, &__status-icon-open, &__status-icon-shipped, &__status-icon-inreview, &__status-icon-cancelled {
-
-            svg, .fas {
+          &__status-icon,
+          &__status-icon-inprocess,
+          &__status-icon-open,
+          &__status-icon-shipped,
+          &__status-icon-inreview,
+          &__status-icon-cancelled {
+            svg,
+            .fas {
               border-radius: 50%;
-              padding: rem(7px);
-              width: rem(30px) !important;
-              height: rem(30px);
+              padding: 0.4375rem;
+              width: 1.875rem !important;
+              height: 1.875rem;
             }
           }
 
-          &__status-icon, &__status-icon-open, &__status-icon-inprocess, &__status-icon-shipped {
-            svg, .fas {
+          &__status-icon,
+          &__status-icon-open,
+          &__status-icon-inprocess,
+          &__status-icon-shipped {
+            svg,
+            .fas {
               background-color: get-color(button-open);
               color: get-color(brand-white);
             }
           }
 
-
           &__status-icon-inreview {
-            svg, .fas {
+            svg,
+            .fas {
               background-color: get-color(brand-orange);
               color: get-color(td-dark-blue);
             }
           }
 
           &__status-icon-cancelled {
-            svg, .fas {
-              font-size: rem(25px);
+            svg,
+            .fas {
+              font-size: 1.5625rem;
               background-color: get-color(brand-white);
               color: get-color(brand-text-gray);
               padding: 0;
@@ -83,22 +89,23 @@
           }
         }
 
-
-
-        &__ship-to, &__end-user, &__payment {
-        color : get-color(brand-text-gray);
-        line-height: rem(24px);
-        font-size: $font-size-custom-xxsmall;
-           p {
-             margin-top: rem(0);
-             margin-bottom: rem(0);
-           }
-      }
+        &__ship-to,
+        &__end-user,
+        &__payment {
+          color: get-color(brand-text-gray);
+          line-height: 1.5rem;
+          font-size: $font-size-custom-xxsmall;
+          p {
+            margin-top: 0;
+            margin-bottom: 0;
+          }
+        }
 
         &__payment {
           flex-direction: row;
 
-          &__line-item, &__total {
+          &__line-item,
+          &__total {
             display: flex;
             &__left {
               line-height: inherit;
@@ -119,30 +126,26 @@
 
           &__total {
             font-weight: bold;
-            margin-top: rem(16px);
-            border-top: rem(2px) solid get-color(black) ;
+            margin-top: 1rem;
+            border-top: 0.125rem solid get-color(black);
           }
-
-
-
         }
 
-        &__ship-to, &__end-user {
-
+        &__ship-to,
+        &__end-user {
           &__address-name {
             font-weight: bold;
           }
 
           &__contact-info-name {
-            margin-top: rem(16px);
+            margin-top: 1rem;
             font-weight: bold;
           }
 
           &__packaging {
-            margin-top: rem(32px);
+            margin-top: 2rem;
             font-weight: bold;
           }
-
         }
       }
     }
@@ -152,10 +155,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-left: rem(16px);
-    padding-right: rem(16px);
-
-    
+    padding-left: 1rem;
+    padding-right: 1rem;
 
     &__details,
     &__status {
@@ -166,16 +167,16 @@
       &--icon {
         background-color: transparent;
         font-size: 20px;
-        margin-right: rem(-25px);
+        margin-right: rem-convert(-25px);
         z-index: 1;
 
-        &:hover{
+        &:hover {
           cursor: pointer;
         }
       }
 
       div {
-        padding: 0 rem(25px);
+        padding: 0 1.5625rem;
       }
 
       &__order-number {
@@ -185,14 +186,20 @@
         position: relative;
       }
 
-      &__open, &__cancelled, &__in-review, &__open-in-process, &__shipped {
+      &__open,
+      &__cancelled,
+      &__in-review,
+      &__open-in-process,
+      &__shipped {
         font-size: $font-size-small;
-        padding: rem(7px) rem(10px);
+        padding: 0.4375rem 0.625rem;
         border: 0;
         font-weight: 600;
       }
 
-      &__open, &__shipped, &__open-in-process {
+      &__open,
+      &__shipped,
+      &__open-in-process {
         color: get-color(brand-white);
         background-color: get-color(button-open);
       }
@@ -211,10 +218,7 @@
         color: get-color(brand-white);
         background-color: red;
       }
-
-
     }
-
 
     &__details {
       font-size: $font-size-xsmall;
@@ -227,21 +231,20 @@
       align-items: center;
 
       a {
-        border-right: rem(1px) solid get-color(brand-light-gray2);
+        border-right: 0.0625rem solid get-color(brand-light-gray2);
         text-decoration: none;
         color: get-color(brand-button-blue);
-        padding-right: rem(24px);
+        padding-right: 1.5rem;
 
         &:hover {
           text-decoration: underline;
         }
       }
     }
-
   }
 }
 .cmp-order-details .ag-cell-wrapper.ag-row-group {
-	justify-content: start;
+  justify-content: start;
 }
 .cmp-column-checkbox-info {
   display: flex;
@@ -249,20 +252,20 @@
   border-bottom: 1px solid lightgray;
   color: #515050;
   margin-bottom: 1rem;
-  padding-bottom: .4rem;
-  p{
-      margin: 0;
+  padding-bottom: 0.4rem;
+  p {
+    margin: 0;
   }
-  &__deselect{
-      color: rgb(31, 73, 151);
-      text-decoration: underline;
-      cursor:pointer;
+  &__deselect {
+    color: rgb(31, 73, 151);
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
 
 .cmp-column-checkbox-export {
   @media (min-width: 768px) {
-      width: calc(100vw / 4);
+    width: calc(100vw / 4);
   }
   margin-bottom: 5rem;
   &__checkbox {
@@ -282,7 +285,7 @@
         background-color: get-color(td-dark-blue);
         color: get-color(brand-white);
       }
-      span.columnLabel{
+      span.columnLabel {
         margin-left: 12px;
       }
       span.checkbox {
@@ -295,7 +298,7 @@
         background-color: #eee;
         border-radius: 3px;
         &::after {
-          content: "";
+          content: '';
           left: 7px;
           top: 4px;
           width: 4.5px;
@@ -327,4 +330,3 @@
   padding: 6px 5px;
   width: 100%;
 }
-

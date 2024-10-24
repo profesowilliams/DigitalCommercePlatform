@@ -111,7 +111,7 @@
   @mixin background-cool-gray-9 {
     background-color: get-color(cool-gray-9) !important;
   }
-  
+
   @mixin background-cobalt {
     background-color: get-color(cobalt) !important;
   }
@@ -137,7 +137,7 @@
     background-color: get-color(legacy-gray) !important;
   }
 
-  
+
   // TDS Primary text colors
   @mixin text-teal {
     color: map-get($color-palette, "teal") !important;
@@ -285,7 +285,7 @@
   }
 
 
-  
+
   // TDS Primary border colors
   @mixin border-teal {
     border-color: map-get($color-palette, "teal") !important;
@@ -364,7 +364,7 @@
   @mixin border-cool-gray-9 {
     border-color: get-color(cool-gray-9) !important;
   }
-  
+
   @mixin border-cobalt {
     border-color: get-color(cobalt) !important;
   }
@@ -545,7 +545,7 @@
     font-size: $size;
     line-height: $line-height;
   }
-    
+
   @mixin font-everett-medium-bold($weight: 500, $size: 16px, $line-height: 21px) {
     font-family: 'TWKEverett-Medium-web';
     font-style: normal;
@@ -553,7 +553,7 @@
     font-size: $size;
     line-height: $line-height;
   }
-  
+
   @mixin font-arial-normal($weight: 400, $size: 16px, $line-height: 18px) {
     font-family: 'Arial';
     font-style: normal;
@@ -561,7 +561,7 @@
     font-size: $size;
     line-height: $line-height;
   }
-  
+
   @mixin font-arial-medium-bold($weight: 600, $size: 16px, $line-height: 21px) {
     font-family: 'Arial';
     font-style: normal;

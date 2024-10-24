@@ -1,6 +1,6 @@
 .pt-responsive {
-    padding-top: rem(60px);
-    @include media(">=lg") {
-        padding-top: rem(100px);
-    }
+  padding-top: rem-convert(60px);
+  @include media('>=lg') {
+    padding-top: rem-convert(100px);
+  }
 }

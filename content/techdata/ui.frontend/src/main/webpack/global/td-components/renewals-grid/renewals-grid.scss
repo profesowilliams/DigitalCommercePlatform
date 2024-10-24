@@ -4,7 +4,7 @@
 .cmp-base-grid {
   width: 100%;
   overflow: auto;
-  margin-right: rem(10px);
+  margin-right: 0.625rem;
   .ag-row .ag-cell {
     display: flex;
   }
@@ -13,8 +13,8 @@
   }
   & .icon {
     display: flex;
-    margin-top: rem(20px);
-    margin-right: rem(5px);
+    margin-top: 1.25rem;
+    margin-right: 0.3125rem;
   }
   .cmp-renewal-plan-column {
     display: grid;

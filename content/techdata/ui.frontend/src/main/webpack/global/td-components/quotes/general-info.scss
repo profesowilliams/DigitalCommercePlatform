@@ -4,35 +4,35 @@
     justify-content: end;
     margin-right: 4vh;
     span {
-      cursor:pointer;
-      color:blue;
-      text-decoration:underline;
- }
+      cursor: pointer;
+      color: blue;
+      text-decoration: underline;
+    }
   }
 
   .cmp-qp__general-info {
     display: inline-grid;
     width: 33%;
-    margin: rem(30px) 0;
-    padding-left: rem(65px);
-    box-shadow: rem(1px) 0 0 0 get-color(v-divider-gray);
+    margin: 1.875rem 0;
+    padding-left: 4.0625rem;
+    box-shadow: 0.0625rem 0 0 0 get-color(v-divider-gray);
     &--title {
-        margin-bottom: 0.75rem;
-        cursor: auto;
-        position: unset;
-        &::before {
-            content: none;
-        }
+      margin-bottom: 0.75rem;
+      cursor: auto;
+      position: unset;
+      &::before {
+        content: none;
+      }
     }
     &--address-group {
-        .cmp-qp__information-row--readonly {
-          height: unset;
-          padding-bottom: rem(2px);
-          
-          & > span {
-            font-weight: 600;
-          }
+      .cmp-qp__information-row--readonly {
+        height: unset;
+        padding-bottom: 0.125rem;
+
+        & > span {
+          font-weight: 600;
         }
+      }
     }
 
     @include tablet {
@@ -48,26 +48,24 @@
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      justify-content:space-around;
+      justify-content: space-around;
     }
     @include tablet {
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      justify-content:space-around;
+      justify-content: space-around;
     }
-    
   }
 }
 
 .cmp-quote-preview {
-
   div .errorDeal {
     width: 60%;
   }
 
-
-  .errorDeal, .cmp-qp__pricing-required {
+  .errorDeal,
+  .cmp-qp__pricing-required {
     color: get-color(brand-secondary-text);
     text-decoration: underline;
     animation: error 1s ease-in-out both;
@@ -75,7 +73,13 @@
   }
 
   @keyframes error {
-    0% {background-color: get-color(brand-secondary-text); color: get-color(brand-white);}
-    100% {background-color: transparent; color: get-color(brand-secondary-text)}
+    0% {
+      background-color: get-color(brand-secondary-text);
+      color: get-color(brand-white);
+    }
+    100% {
+      background-color: transparent;
+      color: get-color(brand-secondary-text);
+    }
   }
 }

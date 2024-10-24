@@ -50,9 +50,9 @@
 
   &--teal {
     .cmp-separator__horizontal-rule {
-      color: map-get($color-palette, "teal") !important;
-      border-color: map-get($color-palette, "teal") !important;
-      background-color: map-get($color-palette, "teal") !important;
+      color: map-get($color-palette, 'teal') !important;
+      border-color: map-get($color-palette, 'teal') !important;
+      background-color: map-get($color-palette, 'teal') !important;
     }
   }
 
@@ -74,9 +74,9 @@
 
   &--green {
     .cmp-separator__horizontal-rule {
-      color: map-get($color-palette, "green") !important;
-      border-color: map-get($color-palette, "green") !important;
-      background-color: map-get($color-palette, "green") !important;
+      color: map-get($color-palette, 'green') !important;
+      border-color: map-get($color-palette, 'green') !important;
+      background-color: map-get($color-palette, 'green') !important;
     }
   }
 
@@ -98,9 +98,9 @@
 
   &--aqua {
     .cmp-separator__horizontal-rule {
-      color: map-get($color-palette, "aqua") !important;
-      border-color: map-get($color-palette, "aqua") !important;
-      background-color: map-get($color-palette, "aqua") !important;
+      color: map-get($color-palette, 'aqua') !important;
+      border-color: map-get($color-palette, 'aqua') !important;
+      background-color: map-get($color-palette, 'aqua') !important;
     }
   }
 
@@ -116,19 +116,19 @@
 
     &-small {
       .cmp-separator {
-        margin: rem(16px) 0;
+        margin: rem-convert(16px) 0;
       }
     }
 
     &-medium {
       .cmp-separator {
-        margin: rem(32px) 0;
+        margin: rem-convert(32px) 0;
       }
     }
 
     &-large {
       .cmp-separator {
-        margin: rem(64px) 0;
+        margin: rem-convert(64px) 0;
       }
     }
   }
@@ -170,19 +170,19 @@
   }
 
   &--navy {
-    border-color: map-get($color-palette, "navy") !important;
+    border-color: map-get($color-palette, 'navy') !important;
   }
 
   &--aqua-blue {
-    border-color: map-get($color-palette, "aqua") !important;
+    border-color: map-get($color-palette, 'aqua') !important;
   }
 
   &--planet {
-    border-color: map-get($color-palette, "chartreuse")chartreuse !important;
+    border-color: map-get($color-palette, 'chartreuse') chartreuse !important;
   }
 
   &--copper {
-    border-color: map-get($color-palette, "copper") !important;
+    border-color: map-get($color-palette, 'copper') !important;
   }
 }
 
@@ -198,6 +198,6 @@
 
 .tds-separator-horizontal {
   hr {
-    border-top-width: rem(2px) !important;
+    border-top-width: rem-convert(2px) !important;
   }
 }

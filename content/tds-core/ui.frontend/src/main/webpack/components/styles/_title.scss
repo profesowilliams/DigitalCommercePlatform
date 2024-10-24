@@ -47,7 +47,7 @@
     h2 {
       font-weight: bold;
       font-size: $font-size-digital-h2-card !important;
-      line-height: rem(42px);
+      line-height: rem-convert(42px);
     }
   }
 }

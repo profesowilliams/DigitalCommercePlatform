@@ -1,49 +1,49 @@
-.cmp-list{
-    .cmp-link-list {
-        display: flex;
-        flex-wrap: wrap;
-        list-style-type: none;
-        font-size: rem(11px); 
-        letter-spacing: 0;
-        line-height: normal;
-        color: get-color(brand-white);
-        font-family: $open-sans;
-        
-        li:not(:last-child) {
-            border-right: rem(1px) solid get-color(brand-white);
-        }
-        .cmp-link-list__item {
-            padding: 0 rem(10px);
-            a {
-                text-decoration: none;
-                color: get-color(brand-white);
-                cursor: pointer;
-                &.nolink {
-                    cursor: default;
-                    &[data-displaylocation="true"] {
-                        cursor: pointer;
-                    }
-                }
+.cmp-list {
+  .cmp-link-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    font-size: 0.6875rem;
+    letter-spacing: 0;
+    line-height: normal;
+    color: get-color(brand-white);
+    font-family: $open-sans;
 
-                article {    
-                    display: flex;
-                    align-items: center;
-                    flex-direction: row;
-                }
-            }
-        }
-        
-        .cmp-image{
-            margin-right: rem(4px);
-        }
-        
-        .cmp-image__image{
-            width: rem(14.4px);
-            margin-top: 0.5vh;
-        }
-        
-        .cmp-link-list__item-title {
-            padding-top: rem(2px);
-        }
+    li:not(:last-child) {
+      border-right: 0.0625rem solid get-color(brand-white);
     }
+    .cmp-link-list__item {
+      padding: 0 0.625rem;
+      a {
+        text-decoration: none;
+        color: get-color(brand-white);
+        cursor: pointer;
+        &.nolink {
+          cursor: default;
+          &[data-displaylocation='true'] {
+            cursor: pointer;
+          }
+        }
+
+        article {
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+        }
+      }
+    }
+
+    .cmp-image {
+      margin-right: 0.25rem;
+    }
+
+    .cmp-image__image {
+      width: 0.875rem;
+      margin-top: 0.5vh;
+    }
+
+    .cmp-link-list__item-title {
+      padding-top: 0.125rem;
+    }
+  }
 }

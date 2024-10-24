@@ -4,7 +4,7 @@
     animation: a-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     transform-origin: 40px 40px;
     &:after {
-      content: " ";
+      content: ' ';
       display: block;
       position: absolute;
       width: 7px;
@@ -90,7 +90,7 @@
   position: relative;
   border: 1px solid get-color(brand-light-gray2);
   min-width: fit-content;
-  height: rem(30px);
+  height: 1.875rem;
   cursor: pointer;
   &--expanded {
     svg,
@@ -108,12 +108,12 @@
     justify-content: space-between;
     padding-left: 0.5rem;
     min-width: fit-content;
-    width: rem(140px);
+    width: 8.75rem;
     svg,
     i {
       color: get-color(td-primary-blue);
-      margin-right: rem(5px);
-      margin-top: rem(3.2px);
+      margin-right: 0.3125rem;
+      margin-top: 0.2rem;
       &:before {
         display: inline-block;
       }
@@ -123,11 +123,11 @@
     position: absolute;
     top: 100%;
     min-width: fit-content;
-    width: rem(140px);
+    width: 8.75rem;
     background-color: get-color(brand-white);
     border: 1px solid get-color(brand-light-gray2);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
-    max-height: rem(300px);
+    max-height: 18.75rem;
     overflow: auto;
     z-index: 80;
     &__content {
@@ -162,10 +162,10 @@
   &__input {
     color: get-color(text-mid-gray);
     border: 1px solid get-color(brand-light-gray2);
-    min-width: rem(140px);
-    height: rem(30px);
+    min-width: 8.75rem;
+    height: 1.875rem;
     &::placeholder {
-      padding-left: rem(5px);
+      padding-left: 0.3125rem;
       font-size: $font-size-custom-xxsmall;
       font-style: italic;
     }
@@ -174,11 +174,11 @@
 
 //base button style
 .cmp-quote-button {
-  border: rem(1px) solid get-color(td-dark-blue);
+  border: 0.0625rem solid get-color(td-dark-blue);
   background-color: get-color(td-dark-blue);
   color: get-color(brand-white);
-  font-size: rem(13px);
-  padding: rem(6px) rem(25px);
+  font-size: 0.8125rem;
+  padding: 0.375rem 1.5625rem;
   width: 100%;
   transition: all 0.3s;
   cursor: pointer;
@@ -192,16 +192,16 @@
     cursor: default;
     color: get-color(brand-text-gray);
     background-color: get-color(v-divider-gray);
-    border: rem(1px) solid get-color(brand-light-gray2);
+    border: 0.0625rem solid get-color(brand-light-gray2);
   }
 }
 
 //slide toggle style
 .cmp-slide-toggle {
-  $height: rem(14px);
-  $width: rem(22px);
-  $slider-diameter: rem(14px);
-  $border-width: rem(2px);
+  $height: 0.875rem;
+  $width: 1.375rem;
+  $slider-diameter: 0.875rem;
+  $border-width: 0.125rem;
   width: $width;
   height: $height;
   &--read-only {
@@ -241,7 +241,7 @@
       &:before {
         box-sizing: border-box;
         position: absolute;
-        content: "";
+        content: '';
         top: calc((#{$height} - #{$slider-diameter}) / 2 - #{$border-width});
         left: -#{$border-width};
         height: $slider-diameter;
@@ -264,29 +264,29 @@
 .cmp-simple-date-picker {
   display: flex;
   color: get-color(text-mid-gray);
-  height: rem(30px);
+  height: 1.875rem;
   &__label {
-    margin-right: rem(8px);
+    margin-right: 0.5rem;
     align-self: center;
   }
   &__picker {
     .react-datepicker__input-container input {
       border: 1px solid get-color(brand-light-gray2);
       color: get-color(text-mid-gray);
-      height: rem(30px);
-      width: rem(100px);
+      height: 1.875rem;
+      width: 6.25rem;
       font-size: $font-size-custom-xxsmall;
     }
   }
   &__icon {
     align-self: center;
-    padding-left: rem(8px);
+    padding-left: 0.5rem;
     transform: scale(1.6);
     cursor: pointer;
     & svg,
     i {
       color: get-color(brand-blue);
-      margin-right: rem(5px);
+      margin-right: 0.3125rem;
       margin-top: 0.2rem;
     }
   }
@@ -298,11 +298,11 @@
   display: flex;
   flex-direction: column;
   width: fit-content;
-  padding: rem(16px);
+  padding: 1rem;
   margin: auto;
-  margin-top: rem(16px);
+  margin-top: 1rem;
   &__header {
-    margin-bottom: rem(16px);
+    margin-bottom: 1rem;
   }
   &__message {
     margin: unset;

@@ -37,7 +37,7 @@ module.exports = {
         exclude: [/node_modules/, /webcomponents/],
         loader: 'babel-loader',
         options: {
-          presets: ['@babel/preset-env', '@babel/preset-typescript', ],
+          presets: ['@babel/preset-env', '@babel/preset-typescript'],
         },
       },
       {

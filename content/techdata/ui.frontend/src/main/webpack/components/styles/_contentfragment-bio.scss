@@ -3,11 +3,11 @@
     clear: both;
     overflow: hidden;
     width: 50%;
-    margin: 0 auto rem(15px);
+    margin: 0 auto 0.9375rem;
     @include mobile {
       width: 100%;
-      padding: 0 rem(30px);
-      margin-top: rem(20px);
+      padding: 0 1.875rem;
+      margin-top: 1.25rem;
     }
     &__title,
     &__element-title,
@@ -16,16 +16,16 @@
     }
     &__element--photo {
       float: left;
-      margin-right: rem(20px);
-      margin-bottom: rem(40px);
+      margin-right: 1.25rem;
+      margin-bottom: 2.5rem;
       @include mobile {
-        margin: 0 auto rem(40px);
+        margin: 0 auto 2.5rem;
         float: none;
         display: flex;
         justify-content: center;
       }
       img {
-        max-width: rem(150px);
+        max-width: 9.375rem;
         @include mobile {
           border-radius: 50%;
         }
@@ -33,24 +33,24 @@
     }
     &__element--title {
       .cmp-contentfragment__element-value {
-        font-size: rem(20px);
+        font-size: 1.25rem;
         color: gray;
         @include mobile {
-          font-size: rem(16px);
-          line-height: rem(22px);
+          font-size: 1rem;
+          line-height: 1.375rem;
         }
       }
     }
     &__element--name {
-      padding-top: rem(40px);
+      padding-top: 2.5rem;
       @include mobile {
         padding-top: 0;
       }
       .cmp-contentfragment__element-value {
-        font-size: rem(30px);
-        margin-bottom: rem(10px);
+        font-size: 1.875rem;
+        margin-bottom: 0.625rem;
         @include mobile {
-          font-size: rem(24px);
+          font-size: 1.5rem;
           font-weight: bold;
           margin-bottom: 0;
         }
@@ -60,26 +60,26 @@
     &__element--bio {
       display: block;
       clear: both;
-      margin-top: rem(10px);
+      margin-top: 0.625rem;
       margin-left: 0;
-      border-top: rem(1px) solid lightgray;
-      padding-top: rem(30px);
+      border-top: 0.0625rem solid lightgray;
+      padding-top: 1.875rem;
       @include mobile {
         border-top: none;
-        padding-top: rem(16px);
+        padding-top: 1rem;
       }
       .cmp-contentfragment__element-value {
         margin-inline-start: 0;
-        font-size: rem(15px);
+        font-size: 0.9375rem;
         @include mobile {
-          font-size: rem(14px);
-          line-height: rem(19px);
+          font-size: 0.875rem;
+          line-height: 1.1875rem;
         }
       }
     }
     &__element--name,
     &__element--title {
-      margin-left: rem(20px);
+      margin-left: 1.25rem;
       @include mobile {
         margin-left: 0;
       }

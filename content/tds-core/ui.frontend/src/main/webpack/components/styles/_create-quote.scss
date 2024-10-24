@@ -1,41 +1,41 @@
-.cmp-widget .cmp-title--small{
-  font-size: rem(14px);
-  margin-bottom: rem(15.5px);
+.cmp-widget .cmp-title--small {
+  font-size: rem-convert(14px);
+  margin-bottom: rem-convert(15.5px);
   font-weight: normal;
   text-transform: uppercase;
   color: get-color(text-mid-gray);
-  a{
+  a {
     color: get-color(text-mid-gray);
     cursor: pointer;
   }
 }
 
-.cmp-widget .cmp-quote-button{
-  border: rem(1px) solid map-get($color-palette, 'teal');
+.cmp-widget .cmp-quote-button {
+  border: rem-convert(1px) solid map-get($color-palette, 'teal');
   // color: get-color(td-dark-blue);
   // background-color: get-color(brand-white);
   background-color: map-get($color-palette, 'teal');
   color: get-color(brand-white);
-  font-size: rem(13px);
-  padding: rem(6px) rem(25px);
+  font-size: rem-convert(13px);
+  padding: rem-convert(6px) rem-convert(25px);
   width: 100%;
-  transition: all .3s;
+  transition: all 0.3s;
   cursor: pointer;
   &--active,
-  &:hover{
+  &:hover {
     background-color: get-color(td-dark-blue);
     color: get-color(brand-white);
   }
-  &:disabled{
-    opacity: .7;
+  &:disabled {
+    opacity: 0.7;
     cursor: not-allowed;
     color: get-color(brand-text-gray);
     background-color: get-color(v-divider-gray);
-    border: rem(1px) solid get-color(brand-light-gray2);
+    border: rem-convert(1px) solid get-color(brand-light-gray2);
   }
 }
 
-.cmp-quote-error-modal{
+.cmp-quote-error-modal {
   display: flex;
   justify-content: center;
   font-weight: bold;
@@ -43,131 +43,131 @@
   align-items: center;
 }
 
-.cmp-widget .cmp-dropdown-custom{
-  margin-bottom: rem(18px);
+.cmp-widget .cmp-dropdown-custom {
+  margin-bottom: rem-convert(18px);
   position: relative;
   z-index: 2;
-  &__input{
+  &__input {
     display: block;
-    padding: rem(6.5px);
-    border: rem(1px) solid get-color(brand-light-gray2);
+    padding: rem-convert(6.5px);
+    border: rem-convert(1px) solid get-color(brand-light-gray2);
     color: get-color(text-mid-gray);
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    i, svg{
+    i,
+    svg {
       color: get-color(td-lightblue);
-      font-size: rem(16px);
+      font-size: rem-convert(16px);
       vertical-align: middle;
     }
-    .fa-chevron-down{
+    .fa-chevron-down {
       display: none;
     }
   }
-  &__list-wrapper{
+  &__list-wrapper {
     position: absolute;
-    top: calc( 100% - 15px );
+    top: calc(100% - 15px);
     left: 0;
     width: 100%;
-    border: rem(1px) solid get-color(brand-light-gray2);
-    transition: all .3s;
+    border: rem-convert(1px) solid get-color(brand-light-gray2);
+    transition: all 0.3s;
     visibility: hidden;
     opacity: 0;
   }
-  &__list{
+  &__list {
     padding: 0;
     list-style: none;
     background-color: get-color(brand-white);
     margin: 0;
-    li{
-      font-size: rem(13px);
+    li {
+      font-size: rem-convert(13px);
       color: get-color(text-mid-gray);
-      transition: background-color .3s;
-      padding: rem(8px) rem(10px);
+      transition: background-color 0.3s;
+      padding: rem-convert(8px) rem-convert(10px);
       cursor: pointer;
-      &:hover{
+      &:hover {
         color: get-color(brand-white);
         background-color: get-color(td-dark-blue);
       }
     }
   }
-  &.cmp-dropdown-custom--open{
-    .cmp-dropdown-custom__list-wrapper{
+  &.cmp-dropdown-custom--open {
+    .cmp-dropdown-custom__list-wrapper {
       visibility: visible;
       opacity: 1;
-      top: calc( 100% - 1px );
+      top: calc(100% - 1px);
     }
-    .fa-chevron-down{
+    .fa-chevron-down {
       display: inline-block;
     }
-    .fa-chevron-right{
+    .fa-chevron-right {
       display: none;
     }
   }
 }
 
-.cmp-widget{
-
-  .cmp-text-input{
+.cmp-widget {
+  .cmp-text-input {
     width: 100%;
     display: block;
-    border: rem(1px) solid get-color(brand-light-gray2);
-    font-size: rem(12px);
-    padding: rem( 7px 10px );
+    border: rem-convert(1px) solid get-color(brand-light-gray2);
+    font-size: rem-convert(12px);
+    padding: rem-convert(7px 10px);
     color: get-color(text-mid-gray);
-    margin-bottom: rem(18px);
+    margin-bottom: rem-convert(18px);
 
-    &_bottom-margin{
-      margin-bottom: rem(18px);
+    &_bottom-margin {
+      margin-bottom: rem-convert(18px);
     }
   }
 
-  .cmp-radio-buttons{
-    margin-bottom: rem(12px);
+  .cmp-radio-buttons {
+    margin-bottom: rem-convert(12px);
   }
-  .cmp-radio-buttons__input{
-    padding: rem(2px 0);
+  .cmp-radio-buttons__input {
+    padding: rem-convert(2px 0);
     position: relative;
-    input{
-      margin: rem(0 15px 0 10px);
+    input {
+      margin: rem-convert(0 15px 0 10px);
       position: absolute;
       opacity: 0;
       visibility: hidden;
     }
-    label{
+    label {
       color: get-color(text-mid-gray);
-      &:before{
+      &:before {
         content: '';
         position: relative;
         display: inline-block;
-        width: rem(13px);
-        height: rem(13px);
-        margin: rem(4px 14px 0 10px);
+        width: rem-convert(13px);
+        height: rem-convert(13px);
+        margin: rem-convert(4px 14px 0 10px);
         border-radius: 50%;
-        border: rem(1px) solid get-color(text-mid-gray);
-        transition: all .15s;
+        border: rem-convert(1px) solid get-color(text-mid-gray);
+        transition: all 0.15s;
         background-color: get-color(brand-white);
         box-sizing: border-box;
       }
     }
-    input:checked + label:before{
-      border: rem(5px) solid get-color(td-lightblue);
+    input:checked + label:before {
+      border: rem-convert(5px) solid get-color(td-lightblue);
     }
   }
-  .cmp-error-message{
+  .cmp-error-message {
     text-align: center;
     font-size: $font-size-xsmall;
     margin: 0px;
-    margin-bottom: rem(26px);
+    margin-bottom: rem-convert(26px);
 
-    &__red{
+    &__red {
       color: get-color(brand-red-brilliant);
     }
-    &__gray{
+    &__gray {
       color: get-color(text-mid-gray);
     }
-    &__link{
+    &__link {
       color: get-color(brand-button-blue);
       text-decoration: underline;
       cursor: pointer;

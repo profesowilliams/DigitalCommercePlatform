@@ -2,11 +2,11 @@
 @import '../../../site/variables';
 
 .cmp-quotes-grid {
-	width: 100%;
-	overflow: auto;
-	&__checkout-icon {
-		color: get-color(brand-light-blue-icon);
-		margin-left: rem(20px);
-		cursor: pointer;
-	}
+  width: 100%;
+  overflow: auto;
+  &__checkout-icon {
+    color: get-color(brand-light-blue-icon);
+    margin-left: 1.25rem;
+    cursor: pointer;
+  }
 }

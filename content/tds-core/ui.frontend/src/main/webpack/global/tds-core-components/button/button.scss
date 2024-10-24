@@ -1,437 +1,433 @@
 .cmp-button {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .button {
-	>.cmp-button {
-		border: none;
-	}
+  > .cmp-button {
+    border: none;
+  }
 }
 
 @include aem-only {
-	button {
-		border: none;
-	}
+  button {
+    border: none;
+  }
 }
 
 .cmp-button--background-enabled {
-	& .cmp-button {
-		border-radius: rem(3px);
-		background-color: get-color(header-links-blue);
+  & .cmp-button {
+    border-radius: rem-convert(3px);
+    background-color: get-color(header-links-blue);
 
-		&:hover {
-			background-color: get-color(td-lightblue);
-		}
-	}
+    &:hover {
+      background-color: get-color(td-lightblue);
+    }
+  }
 
-	.cmp-button__icon {
-		color: get-color(brand-white);
-	}
+  .cmp-button__icon {
+    color: get-color(brand-white);
+  }
 
-	& .cmp-button__text {
-		color: get-color(brand-white);
-	}
+  & .cmp-button__text {
+    color: get-color(brand-white);
+  }
 }
 
 .cmp-button__clear {
-	background-color: transparent !important;
-	cursor: pointer !important;
+  background-color: transparent !important;
+  cursor: pointer !important;
 }
 
 .cmp-button__text--disabled {
-	& .cmp-button__text {
-		display: none;
-	}
+  & .cmp-button__text {
+    display: none;
+  }
 
-	& .cmp-button__icon {
-		display: unset;
-	}
+  & .cmp-button__icon {
+    display: unset;
+  }
 }
 
 .cmp-button__icon--disabled {
-	& .cmp-button__text {
-		display: unset;
-	}
+  & .cmp-button__text {
+    display: unset;
+  }
 
-	& .cmp-button__icon {
-		display: none;
-	}
+  & .cmp-button__icon {
+    display: none;
+  }
 }
 
 .cmp-button {
-	border: unset;
-	padding: rem(1px) rem(6px);
-	color: unset;
-	text-decoration: none;
-	background: none;
+  border: unset;
+  padding: rem-convert(1px) rem-convert(6px);
+  color: unset;
+  text-decoration: none;
+  background: none;
 
-	&.btn-xxsmall {
-		font-size: $font-size-custom-xxsmall;
-		width: 100%;
-		padding: rem(6px);
-		margin-top: rem(18px);
-	}
+  &.btn-xxsmall {
+    font-size: $font-size-custom-xxsmall;
+    width: 100%;
+    padding: rem-convert(6px);
+    margin-top: rem-convert(18px);
+  }
 
-	&:active,
-	&:focus {
-		outline: none;
-		border: none;
-	}
+  &:active,
+  &:focus {
+    outline: none;
+    border: none;
+  }
 
-	&__disabled {
-		color: get-color(text-light-charcoal);
-		background-color: get-color(td-lighter-gray);
-		width: rem(240px);
-		height: rem(40px);
-		box-shadow: inset 0 0 0 rem(1px) get-color(brand-light-gray2);
+  &__disabled {
+    color: get-color(text-light-charcoal);
+    background-color: get-color(td-lighter-gray);
+    width: rem-convert(240px);
+    height: rem-convert(40px);
+    box-shadow: inset 0 0 0 rem-convert(1px) get-color(brand-light-gray2);
 
-		&.btn-xxsmall {
-			font-size: $font-size-custom-xxsmall;
-			width: 100%;
-			padding: rem(6px);
-			margin-top: rem(18px);
-		}
-	}
+    &.btn-xxsmall {
+      font-size: $font-size-custom-xxsmall;
+      width: 100%;
+      padding: rem-convert(6px);
+      margin-top: rem-convert(18px);
+    }
+  }
 
-	&__primary {
-		color: get-color(brand-white);
-		background-color: get-color(td-dark-blue);
-		width: rem(240px);
-		height: rem(40px);
-	}
+  &__primary {
+    color: get-color(brand-white);
+    background-color: get-color(td-dark-blue);
+    width: rem-convert(240px);
+    height: rem-convert(40px);
+  }
 
-	&__outlined {
-		color: get-color(td-dark-blue);
-		background-color: get-color(brand-white);
-		width: rem(240px);
-		height: rem(40px);
-		box-shadow: inset 0 0 0 rem(2px) get-color(td-dark-blue);
-	}
+  &__outlined {
+    color: get-color(td-dark-blue);
+    background-color: get-color(brand-white);
+    width: rem-convert(240px);
+    height: rem-convert(40px);
+    box-shadow: inset 0 0 0 rem-convert(2px) get-color(td-dark-blue);
+  }
 
-	&__region-select {
-		color: get-color(brand-white);
-		background-color: get-color(td-primary-blue);
-		font-size: 1rem;
-		width: 100%;
-		cursor: pointer;
-	}
+  &__region-select {
+    color: get-color(brand-white);
+    background-color: get-color(td-primary-blue);
+    font-size: 1rem;
+    width: 100%;
+    cursor: pointer;
+  }
 }
 
 .cmp-radio-btn {
-	display: block;
-	position: relative;
-	padding-left: rem(22px);
-	cursor: pointer;
-	font-size: $font-size-custom-xxsmall;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+  display: block;
+  position: relative;
+  padding-left: rem-convert(22px);
+  cursor: pointer;
+  font-size: $font-size-custom-xxsmall;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
-	&:last-of-type {
-		margin-bottom: 0;
-	}
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 
-	input {
-		position: absolute;
-		opacity: 0;
-		cursor: pointer;
-		width: rem(24px);
-		height: rem(24px);
-		left: rem(-2px);
-		top: rem(-2px);
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: rem-convert(24px);
+    height: rem-convert(24px);
+    left: rem-convert(-2px);
+    top: rem-convert(-2px);
 
-		&:checked {
-			~ {
-				.checkmark {
-					background-color: get-color(td-primary-blue);
-					box-shadow: inset 0 0 0 0;
+    &:checked {
+      ~ {
+        .checkmark {
+          background-color: get-color(td-primary-blue);
+          box-shadow: inset 0 0 0 0;
 
-					&:after {
-						display: block;
-					}
-				}
-			}
-		}
-	}
+          &:after {
+            display: block;
+          }
+        }
+      }
+    }
+  }
 
-	.checkmark {
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: rem(14px);
-		width: rem(14px);
-		background-color: get-color(brand-white);
-		border-radius: 50%;
-		box-shadow: inset 0 0 0 rem(2px) get-color(text-light-charcoal);
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: rem-convert(14px);
+    width: rem-convert(14px);
+    background-color: get-color(brand-white);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 rem-convert(2px) get-color(text-light-charcoal);
 
-		&:after {
-			content: '';
-			position: absolute;
-			display: none;
-			top: rem(3.6px);
-			left: rem(3.5px);
-			width: rem(6px);
-			height: rem(6px);
-			border-radius: 50%;
-			background-color: get-color(brand-white);
-		}
-	}
+    &:after {
+      content: '';
+      position: absolute;
+      display: none;
+      top: rem-convert(3.6px);
+      left: rem-convert(3.5px);
+      width: rem-convert(6px);
+      height: rem-convert(6px);
+      border-radius: 50%;
+      background-color: get-color(brand-white);
+    }
+  }
 }
 
 .cmp-button__text--align-right {
-	text-align: right;
+  text-align: right;
 }
 
 .cmp-button__text {
+  &--dark-blue,
+  &--light-blue,
+  &--white,
+  &--grey {
+    .cmp-button {
+      padding-left: 0;
+      padding-right: 0;
 
-	&--dark-blue,
-	&--light-blue,
-	&--white,
-	&--grey {
+      .cmp-button__text::after {
+        @include font-awesome-custom-icon;
 
-		.cmp-button {
-			padding-left: 0;
-			padding-right: 0;
+        content: '\f054';
+        padding-left: rem-convert(10px);
+      }
+    }
+  }
 
-			.cmp-button__text::after {
-				@include font-awesome-custom-icon;
+  &--dark-blue {
+    .cmp-button__text {
+      color: get-color(td-dark-blue);
+    }
+  }
 
-				content: '\f054';
-				padding-left: rem(10px);
-			}
-		}
-	}
+  &--light-blue {
+    .cmp-button__text {
+      color: get-color(brand-light-blue);
+    }
+  }
 
-	&--dark-blue {
-		.cmp-button__text {
-			color: get-color(td-dark-blue);
-		}
-	}
+  &--white {
+    .cmp-button__text {
+      color: get-color(brand-white);
+    }
+  }
 
-	&--light-blue {
-		.cmp-button__text {
-			color: get-color(brand-light-blue);
-		}
-	}
-
-	&--white {
-		.cmp-button__text {
-			color: get-color(brand-white);
-		}
-	}
-
-	&--grey {
-		.cmp-button__text {
-			color: get-color(brand-text-gray);
-		}
-	}
+  &--grey {
+    .cmp-button__text {
+      color: get-color(brand-text-gray);
+    }
+  }
 }
 
 .cmp-class-for-uiFrontend-only {
-	width: rem(450px);
-	padding: rem(16px);
-	margin: 75vh auto;
-	font-size: $font-size-large;
-	font-weight: $font-weight-normal;
-	line-height: 1.2;
-	text-align: center;
+  width: rem-convert(450px);
+  padding: rem-convert(16px);
+  margin: 75vh auto;
+  font-size: $font-size-large;
+  font-weight: $font-weight-normal;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .cmp-jump-to-top {
-	display: none;
-	box-sizing: border-box;
-	height: rem(60px);
-	width: rem(60px);
-	border: rem(1px) solid get-color(brand-light-gray2);
-	background-color: get-color(brand-white);
-	box-shadow: 0 rem(2px) rem(4px) 0 get-color(brand-box-shadow);
-	text-align: center;
-	font-size: 30px;
-	color: get-color(brand-blue);
-	transition: all 0.05s ease-in-out;
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	z-index: 9999;
-	transition: all 0.25s;
+  display: none;
+  box-sizing: border-box;
+  height: rem-convert(60px);
+  width: rem-convert(60px);
+  border: rem-convert(1px) solid get-color(brand-light-gray2);
+  background-color: get-color(brand-white);
+  box-shadow: 0 rem-convert(2px) rem-convert(4px) 0 get-color(brand-box-shadow);
+  text-align: center;
+  font-size: 30px;
+  color: get-color(brand-blue);
+  transition: all 0.05s ease-in-out;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  transition: all 0.25s;
 
-	cursor: pointer;
-	align-items: center;
-	justify-content: center;
-	margin: 0 rem(48px) rem(48px) 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin: 0 rem-convert(48px) rem-convert(48px) 0;
 
-	a {
-		height: rem(60px);
-		width: rem(60px);
-		color: get-color(brand-blue) !important;
-		text-decoration: none;
-		display: contents;
-		transition: all 0.25s;
+  a {
+    height: rem-convert(60px);
+    width: rem-convert(60px);
+    color: get-color(brand-blue) !important;
+    text-decoration: none;
+    display: contents;
+    transition: all 0.25s;
 
-		&:before {
-			content: auto;
-		}
-	}
+    &:before {
+      content: auto;
+    }
+  }
 
-	&:hover {
-		box-shadow: 0 rem(4px) rem(4px) 0 get-color(brand-box-shadow);
-	}
+  &:hover {
+    box-shadow: 0 rem-convert(4px) rem-convert(4px) 0 get-color(brand-box-shadow);
+  }
 }
 
 .cmp-tds-button {
-	&-dark-mode {
-		background-color: map-get($color-palette, "navy");
-		font-size: 15px;
-	}
+  &-dark-mode {
+    background-color: map-get($color-palette, 'navy');
+    font-size: 15px;
+  }
 
-	&-light-mode {
-		background-color: get-color(neutral-gray-2);
-		font-size: 15px;
+  &-light-mode {
+    background-color: get-color(neutral-gray-2);
+    font-size: 15px;
 
-		&:hover {
-			background-color: map-get($color-palette, 'aqua') !important;
-			color: map-get($color-palette, 'charcoal') !important;
-		}
-	}
+    &:hover {
+      background-color: map-get($color-palette, 'aqua') !important;
+      color: map-get($color-palette, 'charcoal') !important;
+    }
+  }
 
-	&.primary {
-		background-color: red;
-	}
+  &.primary {
+    background-color: red;
+  }
 
-	.cmp-button {
-		font-size: rem(16px);
-		padding: rem(16px) rem(57.5px);
-		gap: rem(10px);
-		border: 0;
-		font-family: $font-family-everett;
-		transition: all 0.24s;
-		text-decoration: none;
+  .cmp-button {
+    font-size: rem-convert(16px);
+    padding: rem-convert(16px) rem-convert(57.5px);
+    gap: rem-convert(10px);
+    border: 0;
+    font-family: $font-family-everett;
+    transition: all 0.24s;
+    text-decoration: none;
 
-		background-color: map-get($color-palette, 'teal');
-		color: map-get($color-palette, 'white');
+    background-color: map-get($color-palette, 'teal');
+    color: map-get($color-palette, 'white');
 
-		&:hover {
-			background-color: map-get($color-palette, 'aqua');
-			color: map-get($color-palette, 'charcoal');
-		}
+    &:hover {
+      background-color: map-get($color-palette, 'aqua');
+      color: map-get($color-palette, 'charcoal');
+    }
 
-		&:disabled {
-			background-color: get-color(cool-gray-1) !important;
-			color: map-get($color-palette, 'charcoal') !important;
-		}
-	}
+    &:disabled {
+      background-color: get-color(cool-gray-1) !important;
+      color: map-get($color-palette, 'charcoal') !important;
+    }
+  }
 
-	// TDS Primary background colors
-	&.btn-teal {
-		background-color: map-get($color-palette, 'teal');
+  // TDS Primary background colors
+  &.btn-teal {
+    background-color: map-get($color-palette, 'teal');
 
-		&:hover {
-			background-color: map-get($color-palette, 'aqua');
-			color: map-get($color-palette, 'charcoal');
-		}
-	}
+    &:hover {
+      background-color: map-get($color-palette, 'aqua');
+      color: map-get($color-palette, 'charcoal');
+    }
+  }
 
+  &.btn-deep-teal {
+    background-color: get-color(deep-teal);
+  }
 
+  &.btn-aqua {
+    background-color: map-get($color-palette, 'aqua');
+  }
 
-	&.btn-deep-teal {
-		background-color: get-color(deep-teal);
-	}
+  &.btn-chartreuse {
+    .cmp-button {
+      background-color: map-get($color-palette, 'chartreuse');
+    }
+  }
 
-	&.btn-aqua {
-		background-color: map-get($color-palette, 'aqua');
-	}
+  &.btn-cool-gray-8 {
+    background-color: get-color(cool-gray-8);
+  }
 
-	&.btn-chartreuse {
-		.cmp-button {
-			background-color: map-get($color-palette, 'chartreuse');
-		}
-	}
+  &.btn-cool-gray-10 {
+    background-color: get-color(cool-gray-10);
+  }
 
-	&.btn-cool-gray-8 {
-		background-color: get-color(cool-gray-8);
-	}
+  &.btn-green {
+    background-color: map-get($color-palette, 'green');
+  }
 
-	&.btn-cool-gray-10 {
-		background-color: get-color(cool-gray-10);
-	}
+  &.btn-black {
+    background-color: map-get($color-palette, 'black');
+  }
 
-	&.btn-green {
-		background-color: map-get($color-palette, 'green');
-	}
+  &.btn-white {
+    background-color: map-get($color-palette, 'white');
+  }
 
-	&.btn-black {
-		background-color: map-get($color-palette, 'black');
-	}
+  //TDS Secondary background colors
+  &.btn-steel-blue {
+    background-color: get-color(steel-blue);
+  }
 
-	&.btn-white {
-		background-color: map-get($color-palette, 'white');
-	}
+  &.btn-navy {
+    background-color: map-get($color-palette, 'navy');
+  }
 
-	//TDS Secondary background colors
-	&.btn-steel-blue {
-		background-color: get-color(steel-blue);
-	}
+  &.btn-copper {
+    background-color: map-get($color-palette, 'copper');
+  }
 
-	&.btn-navy {
-		background-color: map-get($color-palette, 'navy');
-	}
+  &.btn-stone {
+    background-color: get-color(stone);
+  }
 
-	&.btn-copper {
-		background-color: map-get($color-palette, 'copper');
-	}
+  &.btn-cool-gray-1 {
+    background-color: get-color(cool-gray-1);
+  }
 
-	&.btn-stone {
-		background-color: get-color(stone);
-	}
+  //TDS Digital background colors
+  &.btn-cherry {
+    background-color: get-color(cherry);
+  }
 
-	&.btn-cool-gray-1 {
-		background-color: get-color(cool-gray-1);
-	}
+  &.btn-amber {
+    background-color: get-color(amber);
+  }
 
-	//TDS Digital background colors
-	&.btn-cherry {
-		background-color: get-color(cherry);
-	}
+  &.btn-forest {
+    background-color: map-get($color-palette, 'forest');
+  }
 
-	&.btn-amber {
-		background-color: get-color(amber);
-	}
+  &.btn-charcoal {
+    background-color: map-get($color-palette, 'charcoal');
+  }
 
-	&.btn-forest {
-		background-color: map-get($color-palette, 'forest');
-	}
+  &.btn-cool-gray-9 {
+    background-color: get-color(cool-gray-9);
+  }
 
-	&.btn-charcoal {
-		background-color: map-get($color-palette, 'charcoal');
-	}
+  &.btn-cobalt {
+    background-color: get-color(cobalt);
+  }
 
-	&.btn-cool-gray-9 {
-		background-color: get-color(cool-gray-9);
-	}
+  &.btn-neutral-gray-1 {
+    background-color: get-color(neutral-gray-1);
+  }
 
-	&.btn-cobalt {
-		background-color: get-color(cobalt);
-	}
+  &.btn-neutral-gray-2 {
+    background-color: get-color(neutral-gray-2);
+  }
 
-	&.btn-neutral-gray-1 {
-		background-color: get-color(neutral-gray-1);
-	}
+  //Legacy background colors
+  &.btn-dark-blue {
+    background-color: get-color(dark-blue);
+  }
 
-	&.btn-neutral-gray-2 {
-		background-color: get-color(neutral-gray-2);
-	}
+  &.btn-sky-blue {
+    background-color: get-color(sky-blue);
+  }
 
-	//Legacy background colors
-	&.btn-dark-blue {
-		background-color: get-color(dark-blue);
-	}
-
-	&.btn-sky-blue {
-		background-color: get-color(sky-blue);
-	}
-
-	&.btn-legacy-gray {
-		background-color: get-color(legacy-gray);
-	}
+  &.btn-legacy-gray {
+    background-color: get-color(legacy-gray);
+  }
 }

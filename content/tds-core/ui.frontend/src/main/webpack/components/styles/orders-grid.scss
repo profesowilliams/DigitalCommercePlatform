@@ -1,17 +1,17 @@
 .cmp-orders-grid {
-	width: 100%;
-	overflow: auto;
-	& .status {
-		display: flex;
-	}
-	& .icon {
-		display: flex;
-		margin-top: rem(11px);
-		margin-right: rem(5px);
-	}
-	&__search {
-		display: flex;
-		gap: rem(20px);
-		width: 100%;
-	}
+  width: 100%;
+  overflow: auto;
+  & .status {
+    display: flex;
+  }
+  & .icon {
+    display: flex;
+    margin-top: rem-convert(11px);
+    margin-right: rem-convert(5px);
+  }
+  &__search {
+    display: flex;
+    gap: rem-convert(20px);
+    width: 100%;
+  }
 }

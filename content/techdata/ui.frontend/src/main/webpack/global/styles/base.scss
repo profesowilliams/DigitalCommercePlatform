@@ -3,25 +3,28 @@
 * {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;    
-    font-family:  $font-family;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: $font-family;
 }
 
 html {
     font-size: 16px;
 }
+
 body {
     margin: 0;
     font-family: $font-family;
-    font-size: rem(14px);
-    line-height: rem(24px);
+    font-size: 0.875rem;  // 14px / 16
+    line-height: 1.5rem;  // 24px / 16
     color: map-get($color-palette, "charcoal");
+
     @include media(">=lg") {
-        font-size: rem(16px);
+        font-size: 1rem;  // 16px / 16
     }
 }
 
 a {
+    // Style your links here (if needed)
 }
 
 button,
@@ -31,6 +34,7 @@ select,
 textarea {
     font: inherit;
 }
+
 img {
     vertical-align: middle;
 }

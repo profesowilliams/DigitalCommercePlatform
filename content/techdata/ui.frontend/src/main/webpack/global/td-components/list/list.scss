@@ -1,10 +1,9 @@
 .dp-list,
 .cmp-list {
-
-  &--svg-size{
+  &--svg-size {
     figure > svg {
-      width: rem(72px);
-      height: rem(72px);
+      width: 4.5rem;
+      height: 4.5rem;
     }
   }
 
@@ -18,24 +17,24 @@
 
     .cmp-list__item {
       text-align: center;
-      padding: rem(4px);
+      padding: 0.25rem;
       > article {
         display: flex;
         flex-direction: column;
         font-weight: 300;
-        font-size: rem(20px);
-        margin-top: rem(16px);
-        margin-bottom: rem(16px);
-        width: rem(180px);
+        font-size: 1.25rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        width: 11.25rem;
         max-width: 100%;
         justify-content: space-between;
         align-items: center;
       }
     }
     .cmp-image__image-figure {
-      height: rem(144px);
+      height: 9rem;
       margin: 0;
-      margin-bottom: rem(20px);
+      margin-bottom: 1.25rem;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -57,13 +56,13 @@
     }
     .cmp-list__item-link {
       color: get-color(brand-blue);
-      font-size: rem(20px);
+      font-size: 1.25rem;
       font-weight: 300;
       text-decoration: none;
-      padding: rem(16px);
+      padding: 1rem;
       transition: box-shadow 0.3s;
       &:hover {
-        box-shadow: 0 0 rem(4px) rem(1.5px) get-color(brand-light-blue);
+        box-shadow: 0 0 0.25rem 0.09375rem get-color(brand-light-blue);
       }
     }
     &-fixed {
@@ -80,7 +79,7 @@
 
         article {
           margin: 0 auto;
-          max-width: rem(180px);
+          max-width: 11.25rem;
           width: 100%;
         }
       }
@@ -93,13 +92,13 @@
       }
       .cmp-list__item-link {
         color: get-color(brand-blue);
-        font-size: rem(20px);
+        font-size: 1.25rem;
         font-weight: 300;
         text-decoration: none;
-        padding: rem(16px);
+        padding: 1rem;
         transition: box-shadow 0.3s;
         &:hover {
-          box-shadow: 0 0 rem(4px) rem(1.5px) get-color(brand-light-blue);
+          box-shadow: 0 0 0.25rem 0.09375rem get-color(brand-light-blue);
         }
       }
     }
@@ -118,8 +117,8 @@
         width: 150px;
       }
       article {
-        margin-top: rem(8px);
-        margin-bottom: rem(8px);
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
       }
     }
     .cmp-list__item-title {
@@ -136,9 +135,9 @@
     .cmp-list__item-link {
       text-decoration: none;
       transition: box-shadow 0.3s;
-      padding: rem(4px);
+      padding: 0.25rem;
       &:hover {
-        box-shadow: 0 0 rem(4px) rem(1.5px) get-color(brand-light-blue);
+        box-shadow: 0 0 0.25rem 0.09375rem get-color(brand-light-blue);
       }
     }
   }
@@ -156,8 +155,8 @@
         width: 150px;
       }
       article {
-        margin-top: rem(8px);
-        margin-bottom: rem(8px);
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
       }
     }
     .cmp-list__item-title {
@@ -183,7 +182,7 @@
   &--brand-grid-3 {
     .cmp-list {
       list-style-type: none;
-      line-height: rem(12px);
+      line-height: 0.75rem;
       padding: 0;
       @include tablet {
         justify-content: space-evenly;
@@ -195,13 +194,13 @@
         width: 150px;
       }
       article {
-        margin-top: rem(8px);
-        margin-bottom: rem(8px);
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
       }
     }
     .cmp-list__item-title {
       font-weight: $font-weight-normal;
-      font-size: rem(13px);
+      font-size: 0.8125rem;
       color: get-color(brand-text-gray);
     }
     .cmp-image__image-figure {
@@ -267,7 +266,6 @@
       }
     }
 
-
     .cmp-image__image {
       max-width: 100%;
       max-height: 100%;
@@ -276,10 +274,10 @@
     }
     .cmp-list__item-link {
       color: get-color(text-mid-charcoal);
-      font-size: rem(20px);
+      font-size: 1.25rem;
       font-weight: 500;
       text-decoration: none;
-      padding: rem(16px);
+      padding: 1rem;
       transition: all 0.3s;
     }
     .cmp-list__item {
@@ -305,7 +303,7 @@
 
         article {
           margin: 0 auto;
-          max-width: rem(180px);
+          max-width: 11.25rem;
           width: 100%;
           align-items: center;
         }
@@ -321,10 +319,10 @@
       }
       .cmp-list__item-link {
         color: get-color(secondary-light-grey);
-        font-size: rem(20px);
+        font-size: 1.25rem;
         font-weight: 300;
         text-decoration: none;
-        padding: rem(16px);
+        padding: 1rem;
         transition: all 0.3s;
       }
       .cmp-list__item {
@@ -388,17 +386,17 @@
             justify-content: center;
             display: flex;
             img.cmp-image__image {
-              width: rem(75px);
-              height: rem(75px);
+              width: 4.6875rem;
+              height: 4.6875rem;
             }
           }
           span.cmp-list__item-title {
             text-decoration: none;
-            font-size: rem(13px);
-            line-height: rem(15px);
+            font-size: 0.8125rem;
+            line-height: 0.9375rem;
             text-align: center;
             color: get-color(text-mid-charcoal);
-            margin: 0 rem(5px);
+            margin: 0 0.3125rem;
           }
         }
       }

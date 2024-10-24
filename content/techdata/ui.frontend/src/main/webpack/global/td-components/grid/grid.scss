@@ -2,10 +2,11 @@
   position: relative;
   height: 100%;
   width: 100%;
-  min-width: rem(1376px);
+  min-width: 86rem;
   overflow: auto;
 
-  .ag-root-wrapper {}
+  .ag-root-wrapper {
+  }
 
   .ag-root {
     font-size: $font-size-xsmall;
@@ -15,25 +16,30 @@
     border-top: 2px solid get-color(brand-blue);
     border-bottom: 1px solid get-color(brand-blue);
     color: get-color(td-dark-blue);
-    height: rem(34px) !important;
-    min-height: rem(34px) !important;
+    height: 2.125rem !important;
+    min-height: 2.125rem !important;
   }
 
-  .ag-header-viewport {}
+  .ag-header-viewport {
+  }
 
-  .ag-header-container {}
+  .ag-header-container {
+  }
 
   .ag-header-row {
-    height: rem(34px) !important;
+    height: 2.125rem !important;
     color: get-color(td-dark-blue);
     font-weight: normal;
   }
 
-  .ag-header-cell {}
+  .ag-header-cell {
+  }
 
-  .ag-body-viewport {}
+  .ag-body-viewport {
+  }
 
-  .ag-body {}
+  .ag-body {
+  }
 
   .ag-row {
     color: get-color(brand-text-gray);
@@ -45,10 +51,10 @@
   .ag-cell {
     display: grid;
     align-content: center;
-    line-height: rem(32px);
+    line-height: 2rem;
 
     button {
-      line-height: rem(16px);
+      line-height: 1rem;
       height: 50%;
       width: 100%;
       text-align: center;
@@ -59,7 +65,7 @@
       align-content: center;
       justify-content: center;
       align-items: center;
-      font-size: rem(16px);
+      font-size: 1rem;
       box-sizing: border-box;
       background-color: inherit;
     }
@@ -86,7 +92,7 @@
   }
 
   .ag-root-wrapper-body {
-    margin-top: rem(30px);
+    margin-top: 1.875rem;
   }
 
   .ag-paging-panel {
@@ -94,7 +100,7 @@
     top: 0;
     right: 0;
     border-top: none;
-    height: rem(30px) !important;
+    height: 1.875rem !important;
   }
 
   .ag-icon-previous,
@@ -104,7 +110,6 @@
 
   // *** custom sorting arrows *** //
   .ag-header-cell-sortable {
-
     .ag-icon,
     .ag-header-icon {
       display: none;
@@ -118,21 +123,21 @@
         top: 0.7rem;
         left: 1rem;
         display: block;
-        font-family: "Font Awesome 5 Free";
+        font-family: 'Font Awesome 5 Free';
         font-weight: 900;
       }
     }
 
     & .ag-header-cell-sorted-none .ag-header-cell-text::before {
-      content: "\f0dc";
+      content: '\f0dc';
     }
 
     & .ag-header-cell-sorted-asc .ag-header-cell-text::before {
-      content: "\f0de";
+      content: '\f0de';
     }
 
     & .ag-header-cell-sorted-desc .ag-header-cell-text::before {
-      content: "\f0dd";
+      content: '\f0dd';
     }
   }
 
@@ -162,9 +167,9 @@
     &::before {
       padding-right: 0.3rem;
       display: block;
-      font-family: "Font Awesome 5 Free";
+      font-family: 'Font Awesome 5 Free';
       font-weight: 900;
-      content: "\f078" !important;
+      content: '\f078' !important;
     }
   }
 
@@ -174,9 +179,9 @@
     &::before {
       padding-right: 0.5rem;
       display: block;
-      font-family: "Font Awesome 5 Free";
+      font-family: 'Font Awesome 5 Free';
       font-weight: 900;
-      content: "\f054" !important;
+      content: '\f054' !important;
     }
   }
 
@@ -186,7 +191,7 @@
       padding-right: 1rem;
       font-size: 1.2rem;
       display: block;
-      font-family: "Font Awesome 5 Free";
+      font-family: 'Font Awesome 5 Free';
       content: $unchecked-state-content;
       color: get-color(td-dark-blue);
     }
@@ -194,7 +199,7 @@
 
   .ag-checkbox-input-wrapper.ag-indeterminate {
     &::after {
-      font-family: "Font Awesome 5 Free";
+      font-family: 'Font Awesome 5 Free';
       font-weight: $font-weight-semi-bold;
     }
   }
@@ -206,7 +211,7 @@
   .ag-checkbox-input-wrapper.ag-checked {
     &::after {
       color: get-color(td-dark-blue);
-      content: "\f14a";
+      content: '\f14a';
     }
   }
 }
@@ -233,4 +238,3 @@
     }
   }
 }
- 

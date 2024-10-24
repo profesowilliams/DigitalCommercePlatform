@@ -11,8 +11,8 @@
       outline: none !important;
       cursor: pointer;
       svg {
-        height: rem(26px);
-        margin-right: rem(10px);
+        height: rem-convert(26px);
+        margin-right: rem-convert(10px);
         &.sign-in {
           fill: get-color(header-links-blue);
         }
@@ -26,7 +26,7 @@
     &__link {
       font-size: $font-size-small;
       color: get-color(header-links-blue);
-      padding-top: rem(4px);
+      padding-top: rem-convert(4px);
       outline: none !important;
     }
   }
@@ -82,7 +82,7 @@
 
       > i,
       svg {
-        font-size: rem(12.8px) !important;
+        font-size: rem-convert(12.8px) !important;
       }
 
       &.active {
@@ -182,7 +182,7 @@
           }
 
           &--icon {
-            color: map-get($color-palette, 'teal' );
+            color: map-get($color-palette, 'teal');
 
             @include desktop {
               position: absolute;

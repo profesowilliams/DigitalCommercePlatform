@@ -3,7 +3,7 @@
  *
  * @class notification
  */
- .notification {
+.notification {
   margin: 1rem;
   display: flex;
   align-items: center;
@@ -32,7 +32,7 @@
     align-items: center;
 
     a {
-      margin: 0 rem(10px);
+      margin: 0 rem-convert(10px);
     }
   }
 
@@ -47,7 +47,7 @@
       width: 100%;
       height: 100%;
     }
-    height: rem(64px);
+    height: rem-convert(64px);
     width: auto;
     background-color: rgba(255, 255, 255, 0.15);
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.12);
@@ -69,8 +69,8 @@
     .close-notification:after {
       display: inline-block;
       content: '\00d7'; /* This will render the 'X' */
-      margin-right: rem(20px);
-      margin-bottom: rem(15px);
+      margin-right: rem-convert(20px);
+      margin-bottom: rem-convert(15px);
       font-size: 25px;
     }
 
@@ -84,7 +84,7 @@
      * @class cmp-notification_text
      */
     .cmp-notification_text {
-      color: map-get($color-palette, "charcoal");
+      color: map-get($color-palette, 'charcoal');
     }
 
     a > span.cmp-notification_text {
@@ -99,32 +99,32 @@
      */
     .cmp-notification_icon {
       color: $color;
-      width: rem(20px);
-      height: rem(18.5px);
+      width: rem-convert(20px);
+      height: rem-convert(18.5px);
     }
 
     .cmp-notification-link {
-      margin-right: rem(20px);
+      margin-right: rem-convert(20px);
       margin-left: auto;
     }
 
     // Tablet screen
-    @media only screen and (min-width: 768px) and (max-width: 1023px) {  
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
       width: 96% !important;
-      margin-left: rem(16px) !important;
-      margin-right: rem(16px) !important;
-      .cmp-notification-message-container { 
+      margin-left: rem-convert(16px) !important;
+      margin-right: rem-convert(16px) !important;
+      .cmp-notification-message-container {
         width: 85%;
         justify-content: space-evenly;
       }
     }
 
     // Mobile screen
-    @media only screen and (min-width: 5px) and (max-width: 767px) {  
+    @media only screen and (min-width: 5px) and (max-width: 767px) {
       height: auto;
       width: 92% !important;
-      margin-left: rem(16px) !important;
-      margin-right: rem(16px) !important;
+      margin-left: rem-convert(16px) !important;
+      margin-right: rem-convert(16px) !important;
       .cmp-notification {
         flex-direction: column;
         position: relative;
@@ -137,8 +137,8 @@
 
       .cmp-notification-message-container {
         display: flex;
-        align-items: flex-start !important; 
-        margin-right: rem(40px);
+        align-items: flex-start !important;
+        margin-right: rem-convert(40px);
       }
 
       .cmp-notification-link-container {
@@ -156,8 +156,8 @@
 
       .cmp-notification-link {
         margin-right: auto;
-        margin-left: rem(48px);
-        padding-top: rem(20px);
+        margin-left: rem-convert(48px);
+        padding-top: rem-convert(20px);
       }
     }
   }
@@ -235,7 +235,7 @@
    * @class cmp-notification-message-container
    */
   .cmp-notification-message-container {
-    margin-left: rem(22px);
+    margin-left: rem-convert(22px);
     display: flex;
     align-items: center;
   }
@@ -250,7 +250,7 @@
   }
 
   .cmp-notification_text {
-    color: map-get($color-palette, "charcoal");
-    margin-left: rem(18px);
+    color: map-get($color-palette, 'charcoal');
+    margin-left: rem-convert(18px);
   }
 }

@@ -1,37 +1,36 @@
-.cmp-cart{
-  width: rem(36px);
-  height: rem(36px);
+.cmp-cart {
+  width: 2.25rem;
+  height: 2.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   margin-top: 0.4rem;
 
-  &__icon{
+  &__icon {
     position: absolute;
     color: get_color('brand-blue');
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: rem(36px);
-    height: rem(32px);
-    margin-bottom: rem(4px);
-
+    width: 2.25rem;
+    height: 2rem;
+    margin-bottom: 0.25rem;
   }
-  &__number{
+  &__number {
     display: none;
   }
 
-  &__active{
-    .cmp-cart__icon{
+  &__active {
+    .cmp-cart__icon {
       color: get_color('brand-blue');
       display: flex;
       justify-content: space-around;
       align-items: center;
-      width: rem(36px);
-      height: rem(32px);
+      width: 2.25rem;
+      height: 2rem;
     }
-    .cmp-cart__number{
+    .cmp-cart__number {
       position: relative;
       width: 0.9rem;
       height: 0.9rem;

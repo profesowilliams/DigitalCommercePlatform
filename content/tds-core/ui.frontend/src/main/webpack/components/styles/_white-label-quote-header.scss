@@ -3,7 +3,7 @@
 .cmp-whitelabelquoteheader {
   display: flex;
   align-items: center;
-  padding: rem(12px);
+  padding: rem-convert(12px);
   width: 100%;
 
   @include mobile {
@@ -27,30 +27,30 @@
     &__title {
       color: get-color(td-dark-blue);
       font-family: $open-sans;
-      font-size: rem(14px);
+      font-size: rem-convert(14px);
       font-weight: 600;
       letter-spacing: 0;
-      line-height: rem(19px);
-      margin-bottom: rem(12px);
+      line-height: rem-convert(19px);
+      margin-bottom: rem-convert(12px);
     }
 
     &__company-name {
       color: get-color(text-light-charcoal);
       font-family: $open-sans;
-      font-size: rem(13px);
+      font-size: rem-convert(13px);
       font-weight: 600;
       letter-spacing: 0;
-      line-height: rem(18px);
-      margin-bottom: rem(12px);
+      line-height: rem-convert(18px);
+      margin-bottom: rem-convert(12px);
     }
 
     &__company-info {
       color: get-color(border-light-gray);
       font-family: $open-sans;
-      font-size: rem(13px);
+      font-size: rem-convert(13px);
       letter-spacing: 0;
-      line-height: rem(18px);
-      
+      line-height: rem-convert(18px);
+
       &--name {
       }
       &--street {
@@ -58,7 +58,7 @@
       &--city-state-zip {
       }
       &--state {
-        margin-bottom: rem(12px);
+        margin-bottom: rem-convert(12px);
       }
     }
   }

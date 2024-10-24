@@ -22,7 +22,7 @@
       height: 100vh;
       left: 0;
       position: fixed;
-      top: rem(44px);
+      top: rem-convert(44px);
       width: 100%;
       &--open.aem-GridColumn {
         display: block;
@@ -36,7 +36,7 @@
       border: 1px solid #707070;
       height: 100%;
       overflow-y: auto;
-      padding: rem(0 15px);
+      padding: rem-convert(0 15px);
       position: relative;
       &__body {
         background-color: get-color(brand-white);
@@ -45,11 +45,11 @@
         flex-direction: column;
         margin: auto;
         max-height: 100%;
-        padding: rem(30px);
+        padding: rem-convert(30px);
         padding-top: 0;
         position: absolute;
         width: 100%;
-        max-width: rem(310px);
+        max-width: rem-convert(310px);
         overflow-x: hidden;
         overflow-y: auto;
         // disable scrollbar, but retain scroll.
@@ -67,11 +67,11 @@
         li {
           display: flex;
           justify-content: space-between;
-          padding: rem(12px 0);
+          padding: rem-convert(12px 0);
           &:after {
             content: '\f054';
             font-family: 'Font Awesome 5 Free';
-            font-size: rem(16px);
+            font-size: rem-convert(16px);
             font-weight: 900;
             color: get-color(border-lighter-gray);
           }

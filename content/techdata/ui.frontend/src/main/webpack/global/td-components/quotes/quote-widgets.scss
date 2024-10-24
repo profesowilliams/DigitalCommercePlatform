@@ -1,8 +1,7 @@
 .cmp-widget {
-    padding: rem(14px) rem(20px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 0 0 0 get-color(brand-light-gray2);
-
+  padding: 0.875rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 0 0 0 get-color(brand-light-gray2);
 }

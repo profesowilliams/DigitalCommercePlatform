@@ -1,24 +1,20 @@
-
-
 .m-0 {
   margin: 0;
 }
 
 .ml-10 {
-  margin-left: 10%;
+  margin-left: 10%;  // Percentage value does not change to rem
 }
 
-
-.v-divider {  
-  box-shadow: rem(1px) 0 0 0 get-color(v-divider-gray);
-  &:last-of-type {    
-    box-shadow: 0 0 0 0 get-color(v-divider-gray);
+.v-divider {
+  box-shadow: 0.0625rem 0 0 0 get-color(v-divider-gray);  // 1px / 16
+  &:last-of-type {
+    box-shadow: 0 0 0 0 get-color(v-divider-gray);  // No change needed for all-zero values
   }
 }
 
-
-.vx-divider {  
-  border-left: rem(1px) solid get-color(v-divider-darkgray);
-  border-right: rem(1px) solid get-color(v-divider-darkgray);
-  padding: 0 rem(35px);
+.vx-divider {
+  border-left: 0.0625rem solid get-color(v-divider-darkgray);  // 1px / 16
+  border-right: 0.0625rem solid get-color(v-divider-darkgray);  // 1px / 16
+  padding: 0 2.1875rem;  // 35px / 16
 }

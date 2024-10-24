@@ -5,7 +5,7 @@
   .cmp-tabs {
     color: map-get($color-palette, 'charcoal');
     box-sizing: border-box;
-    line-height: rem(25px);
+    line-height: rem-convert(25px);
 
     &__tablist {
       display: flex;
@@ -21,18 +21,16 @@
       &--active,
       &:hover {
         text-decoration: none !important;
-        border-bottom: rem(2px) solid;
+        border-bottom: rem-convert(2px) solid;
         border-color: inherit;
       }
     }
   }
 
   &-active-tab {
-
     // TDS Primary text colors
     &__teal {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-teal;
@@ -42,7 +40,6 @@
 
     &__deep-teal {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-deep-teal;
@@ -52,7 +49,6 @@
 
     &__aqua {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-aqua;
@@ -62,7 +58,6 @@
 
     &__cool-gray-8 {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-cool-gray-8;
@@ -72,7 +67,6 @@
 
     &__cool-gray-10 {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-cool-gray-10;
@@ -82,7 +76,6 @@
 
     &__green {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-green;
@@ -92,7 +85,6 @@
 
     &__chartreuse {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-chartreuse;
@@ -102,7 +94,6 @@
 
     &__black {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-black;
@@ -112,7 +103,6 @@
 
     &__white {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-white;
@@ -123,7 +113,6 @@
     //TDS Secondary text colors
     &__steel-blue {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-steel-blue;
@@ -133,7 +122,6 @@
 
     &__navy {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-navy;
@@ -143,7 +131,6 @@
 
     &__copper {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-copper;
@@ -153,7 +140,6 @@
 
     &__stone {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-stone;
@@ -163,7 +149,6 @@
 
     &__cool-gray-1 {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-cool-gray-1;
@@ -174,7 +159,6 @@
     //TDS Digital text colors
     &__cherry {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-cherry;
@@ -184,7 +168,6 @@
 
     &__amber {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-amber;
@@ -194,7 +177,6 @@
 
     &__cobalt {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-cobalt;
@@ -204,7 +186,6 @@
 
     &__neutral-gray-1 {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-neutral-gray-1;
@@ -214,7 +195,6 @@
 
     &__forest {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-forest;
@@ -224,7 +204,6 @@
 
     &__charcoal {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-charcoal;
@@ -234,7 +213,6 @@
 
     &__cool-gray-9 {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-cool-gray-9;
@@ -244,7 +222,6 @@
 
     &__neutral-gray-2 {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-neutral-gray-2;
@@ -255,7 +232,6 @@
     //Legacy text colors
     &__dark-blue {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-dark-blue;
@@ -265,7 +241,6 @@
 
     &__sky-blue {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-sky-blue;
@@ -275,7 +250,6 @@
 
     &__legacy-gray {
       .cmp-tabs__tab {
-
         &--active,
         &:hover {
           @include text-legacy-gray;
@@ -609,154 +583,154 @@
   &-border {
     &--teal {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'teal') !important;
+        box-shadow: 0 rem-convert(1px) 0 0 map-get($color-palette, 'teal') !important;
       }
     }
 
     &--deep-teal {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(deep-teal) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(deep-teal) !important;
       }
     }
 
     &--aqua {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'aqua') !important;
+        box-shadow: 0 rem-convert(1px) 0 0 map-get($color-palette, 'aqua') !important;
       }
     }
 
     &--chartreuse {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'chartreuse') !important;
+        box-shadow: 0 rem-convert(1px) 0 0 map-get($color-palette, 'chartreuse') !important;
       }
     }
 
     &--cool-gray-8 {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-8) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(cool-gray-8) !important;
       }
     }
 
     &--cool-gray-10 {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-10) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(cool-gray-10) !important;
       }
     }
 
     &--green {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'green') !important;
+        box-shadow: 0 rem-convert(1px) 0 0 map-get($color-palette, 'green') !important;
       }
     }
 
     &--black {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'black') !important;
+        box-shadow: 0 rem-convert(1px) 0 0 map-get($color-palette, 'black') !important;
       }
     }
 
     &--white {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'white') !important;
+        box-shadow: 0 rem-convert(1px) 0 0 map-get($color-palette, 'white') !important;
       }
     }
 
     //TDS Secondary border colors
     &--steel-blue {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(steel-blue) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(steel-blue) !important;
       }
     }
 
     &--navy {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(steel-blue) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(steel-blue) !important;
       }
     }
 
     &--copper {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'copper') !important;
+        box-shadow: 0 rem-convert(1px) 0 0 map-get($color-palette, 'copper') !important;
       }
     }
 
     &--stone {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(stone) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(stone) !important;
       }
     }
 
     &--cool-gray-1 {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-1) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(cool-gray-1) !important;
       }
     }
 
     //TDS Digital border colors
     &--cherry {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(cherry) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(cherry) !important;
       }
     }
 
     &--amber {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(amber) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(amber) !important;
       }
     }
 
     &--forest {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'forest') !important;
+        box-shadow: 0 rem-convert(1px) 0 0 map-get($color-palette, 'forest') !important;
       }
     }
 
     &--charcoal {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'charcoal') !important;
+        box-shadow: 0 rem-convert(1px) 0 0 map-get($color-palette, 'charcoal') !important;
       }
     }
 
     &--cool-gray-9 {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-9) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(cool-gray-9) !important;
       }
     }
 
     &--cobalt {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(cobalt) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(cobalt) !important;
       }
     }
 
     &--neutral-gray-1 {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(neutral-gray-1) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(neutral-gray-1) !important;
       }
     }
 
     &--neutral-gray-2 {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(neutral-gray-2) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(neutral-gray-2) !important;
       }
     }
 
     //Legacy border colors
     &--dark-blue {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(dark-blue) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(dark-blue) !important;
       }
     }
 
     &--sky-blue {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(sky-blue) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(sky-blue) !important;
       }
     }
 
     &--legacy-gray {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 get-color(legacy-gray) !important;
+        box-shadow: 0 rem-convert(1px) 0 0 get-color(legacy-gray) !important;
       }
     }
   }

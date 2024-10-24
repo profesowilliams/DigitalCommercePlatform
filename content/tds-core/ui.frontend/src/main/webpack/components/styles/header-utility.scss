@@ -53,10 +53,10 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 150%;
-      padding-left: rem(6.25px);
-      padding-right: rem(48px);
-      padding-top: rem(16px);
-      padding-bottom: rem(16px);
+      padding-left: rem-convert(6.25px);
+      padding-right: rem-convert(48px);
+      padding-top: rem-convert(16px);
+      padding-bottom: rem-convert(16px);
       .cmp-image {
         display: inline;
         &__image {

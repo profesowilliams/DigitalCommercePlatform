@@ -18,27 +18,27 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      padding: rem(20px);
-      padding-top: rem(70px);
+      padding: rem-convert(20px);
+      padding-top: rem-convert(70px);
 
       @include desktop {
-        padding-left: rem(60px);
-        padding-top: rem(78px);
+        padding-left: rem-convert(60px);
+        padding-top: rem-convert(78px);
       }
     }
 
     &__title {
       margin: 0;
-      font-size: rem(24px);
+      font-size: rem-convert(24px);
       font-weight: bold;
       letter-spacing: 0;
-      line-height: rem(30px);
+      line-height: rem-convert(30px);
       text-shadow: 0 2px 4px get-color(brand-black);
-      margin-bottom: rem(30px);
+      margin-bottom: rem-convert(30px);
 
       &:after {
         font-weight: 600;
-        padding: rem(0px 6px);
+        padding: rem-convert(0px 6px);
         position: relative;
         top: -8px;
         text-shadow: none;
@@ -47,11 +47,11 @@
       }
 
       @include desktop {
-        font-size: rem(40px);
-        line-height: rem(60px);
+        font-size: rem-convert(40px);
+        line-height: rem-convert(60px);
 
         &:after {
-          padding: rem(1px 9px);
+          padding: rem-convert(1px 9px);
           font-size: 20px;
           top: -27px;
         }
@@ -68,12 +68,12 @@
       font-size: 16px;
       letter-spacing: 0;
       line-height: 20px;
-      margin-bottom: rem(30px);
+      margin-bottom: rem-convert(30px);
       text-shadow: 0 2px 4px #000000;
 
       @include desktop {
-        font-size: rem(22px);
-        line-height: rem(33px);
+        font-size: rem-convert(22px);
+        line-height: rem-convert(33px);
         max-width: 400px;
       }
 
@@ -101,7 +101,7 @@
 @mixin teaser-synnex-color($brand-color) {
   .cmp-teaser {
     &:hover {
-      outline: rem(2px) solid $brand-color !important;
+      outline: rem-convert(2px) solid $brand-color !important;
     }
     .cmp-teaser__title {
       background-color: $brand-color !important;
@@ -161,15 +161,15 @@
   .cmp-teaser {
     display: flex;
     flex-direction: column;
-    margin: rem(35px) rem(10px);
-    box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    margin: rem-convert(35px) rem-convert(10px);
+    box-shadow: 0 0 0 rem-convert(1px) get-color(brand-box-shadow);
     width: min-content;
 
     &:hover {
       .cmp-teaser__title {
         background-color: get-color(brand-light-blue);
         width: 100%;
-        height: rem(70px);
+        height: rem-convert(70px);
       }
     }
 
@@ -178,8 +178,8 @@
     }
 
     &__content {
-      width: rem(460px);
-      height: rem(70px);
+      width: rem-convert(460px);
+      height: rem-convert(70px);
       position: relative;
     }
 
@@ -188,7 +188,7 @@
 
       img {
         object-fit: cover;
-        width: rem(460px);
+        width: rem-convert(460px);
       }
     }
 
@@ -201,7 +201,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      height: rem(70px);
+      height: rem-convert(70px);
       position: absolute;
       bottom: 0;
       padding: 0;
@@ -219,15 +219,15 @@
   .cmp-teaser {
     display: flex;
     flex-direction: column;
-    margin: rem(35px) rem(10px);
-    box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    margin: rem-convert(35px) rem-convert(10px);
+    box-shadow: 0 0 0 rem-convert(1px) get-color(brand-box-shadow);
     width: min-content;
 
     &:hover {
       .cmp-teaser__title {
         background-color: get-color(brand-light-blue);
         width: 100%;
-        height: rem(70px);
+        height: rem-convert(70px);
       }
     }
 
@@ -236,8 +236,8 @@
     }
 
     &__content {
-      width: rem(460px);
-      height: rem(70px);
+      width: rem-convert(460px);
+      height: rem-convert(70px);
       position: relative;
     }
 
@@ -246,7 +246,7 @@
 
       img {
         object-fit: fill;
-        width: rem(460px);
+        width: rem-convert(460px);
       }
     }
 
@@ -259,7 +259,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      height: rem(70px);
+      height: rem-convert(70px);
       position: absolute;
       bottom: 0;
       padding: 0;
@@ -282,7 +282,7 @@
       @include teaser-synnex-color(get-color(brand-green-synnex));
       .cmp-teaser {
         &:hover {
-          box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+          box-shadow: 0 0 rem-convert(4px) rem-convert(4px) get-color(brand-box-shadow);
 
           .cmp-teaser__title {
             background-color: get-color(brand-green-synnex) !important;
@@ -306,10 +306,10 @@
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  padding: rem(32px);
+  padding: rem-convert(32px);
 
   .cmp-teaser {
-    box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    box-shadow: 0 0 0 rem-convert(1px) get-color(brand-box-shadow);
     background-color: get-color(brand-white);
     display: flex;
     flex-direction: column;
@@ -317,8 +317,8 @@
     align-items: center;
 
     &:hover {
-      outline: rem(2px) solid get-color(brand-blue) !important;
-      box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+      outline: rem-convert(2px) solid get-color(brand-blue) !important;
+      box-shadow: 0 0 rem-convert(4px) rem-convert(4px) get-color(brand-box-shadow);
 
       .cmp-teaser__title {
         background-color: get-color(brand-white) !important;
@@ -338,13 +338,13 @@
 
     .cmp-teaser__title {
       width: 100%;
-      min-height: rem(45px);
+      min-height: rem-convert(45px);
       background-color: get-color(brand-blue);
       color: get-color(brand-white);
       text-align: center;
       font-size: $font-size-custom-medium;
       font-weight: $font-weight-bold;
-      padding-top: rem(5px);
+      padding-top: rem-convert(5px);
 
       .cmp-teaser__title-link {
         text-decoration: none;
@@ -364,7 +364,7 @@
     .cmp-teaser__content {
       font-size: $font-size-custom-xxsmall;
       color: map-get($color-palette, 'charcoal');
-      //   min-height: rem(390px);
+      //   min-height: rem-convert(390px);
       min-height: auto;
 
       &-title {
@@ -373,8 +373,8 @@
       }
 
       .cmp-teaser__description {
-        padding: rem(25px);
-        line-height: rem(16px);
+        padding: rem-convert(25px);
+        line-height: rem-convert(16px);
       }
     }
 
@@ -390,20 +390,20 @@
   .cmp-teaser {
     display: flex;
     flex-direction: column;
-    margin: rem(35px) rem(10px);
-    box-shadow: 0 0 rem(4px) rem(1px) get-color(brand-box-shadow);
-    width: rem(215px);
-    height: rem(353px);
+    margin: rem-convert(35px) rem-convert(10px);
+    box-shadow: 0 0 rem-convert(4px) rem-convert(1px) get-color(brand-box-shadow);
+    width: rem-convert(215px);
+    height: rem-convert(353px);
 
     &:hover {
-      box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+      box-shadow: 0 0 rem-convert(4px) rem-convert(4px) get-color(brand-box-shadow);
       outline: solid #000c21 !important;
       box-sizing: content-box;
     }
 
     &__content {
       height: 100%;
-      line-height: rem(14px);
+      line-height: rem-convert(14px);
       position: relative;
     }
 
@@ -411,8 +411,8 @@
     h2 {
       color: get-color(brand-blue);
       font-size: $font-size-small !important;
-      margin-bottom: rem(8px);
-      padding: rem(14px) rem(18px);
+      margin-bottom: rem-convert(8px);
+      padding: rem-convert(14px) rem-convert(18px);
       font-weight: 600 !important;
       margin: 0 !important;
 
@@ -427,7 +427,7 @@
       color: get-color(text-light-charcoal);
       font-size: $font-size-xsmall;
       font-weight: normal;
-      padding: 0 rem(18px);
+      padding: 0 rem-convert(18px);
     }
 
     &__action-link,
@@ -439,8 +439,8 @@
     &__image {
       img {
         object-fit: fill;
-        width: rem(215px);
-        height: rem(134px);
+        width: rem-convert(215px);
+        height: rem-convert(134px);
       }
     }
 
@@ -452,8 +452,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: rem(215px);
-      height: rem(35px);
+      width: rem-convert(215px);
+      height: rem-convert(35px);
       position: absolute;
       bottom: 0;
       padding: 0;
@@ -462,8 +462,8 @@
 
       &:hover {
         background-color: get-color(brand-light-blue);
-        width: rem(215px);
-        height: rem(35px);
+        width: rem-convert(215px);
+        height: rem-convert(35px);
       }
     }
   }
@@ -481,15 +481,15 @@
 .cmp-quadriptych-teaser-reverse {
   &.cmp-quadriptych-teaser {
     .cmp-teaser {
-      box-shadow: 0 rem(3px) rem(4px) rgba(0, 0, 0, 0.3);
+      box-shadow: 0 rem-convert(3px) rem-convert(4px) rgba(0, 0, 0, 0.3);
       border: none;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: rem(380px);
+      height: rem-convert(380px);
 
       &:hover {
-        box-shadow: 0 rem(3px) rem(4px) rgba(0, 0, 0, 0.3);
+        box-shadow: 0 rem-convert(3px) rem-convert(4px) rgba(0, 0, 0, 0.3);
 
         .cmp-teaser__title {
           background-color: get-color(brand-blue) !important;
@@ -508,20 +508,20 @@
         .cmp-teaser__description {
           //min-height: 17rem;
           min-height: auto;
-          max-height: rem(144px);
+          max-height: rem-convert(144px);
           text-overflow: ellipsis;
           overflow: hidden;
           display: -webkit-box;
           -webkit-line-clamp: 8;
           -webkit-box-orient: vertical;
           padding-bottom: 0;
-          margin-bottom: rem(14px);
+          margin-bottom: rem-convert(14px);
         }
       }
 
       &__title {
-        font-size: rem(22px);
-        line-height: rem(45px);
+        font-size: rem-convert(22px);
+        line-height: rem-convert(45px);
         font-weight: normal;
         padding: 0;
       }
@@ -530,7 +530,7 @@
         order: 2;
         width: 100%;
         overflow: hidden;
-        height: rem(155px);
+        height: rem-convert(155px);
       }
     }
   }
@@ -592,21 +592,21 @@
 // US 188398 Teaser style update "Services" for 3 teasers
 
 .cmp-three-teasers-apac {
-  padding: rem(32px);
+  padding: rem-convert(32px);
   .cmp-teaser {
-    width: rem(365px);
-    height: rem(490.37px);
+    width: rem-convert(365px);
+    height: rem-convert(490.37px);
     padding: 0;
-    box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    box-shadow: 0 0 0 rem-convert(1px) get-color(brand-box-shadow);
     background-color: get-color(brand-white);
     display: grid;
     align-content: space-between;
-    grid-template-rows: rem(188.21px) rem(302.16px);
+    grid-template-rows: rem-convert(188.21px) rem-convert(302.16px);
     transition: all 0.3s;
 
     &:hover {
-      outline: rem(2px) solid get-color(brand-blue) !important;
-      box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+      outline: rem-convert(2px) solid get-color(brand-blue) !important;
+      box-shadow: 0 0 rem-convert(4px) rem-convert(4px) get-color(brand-box-shadow);
       transition: all 0.3s;
 
       .cmp-teaser__title {
@@ -628,13 +628,13 @@
 
     .cmp-teaser__title {
       width: 100%;
-      min-height: rem(45px);
+      min-height: rem-convert(45px);
       background-color: get-color(brand-blue);
       color: get-color(brand-white);
       text-align: center;
       font-size: $font-size-custom-medium;
       font-weight: $font-weight-bold;
-      padding-top: rem(5px);
+      padding-top: rem-convert(5px);
       margin: 0;
 
       .cmp-teaser__title-link {
@@ -646,7 +646,7 @@
     .cmp-teaser__content {
       font-size: $font-size-custom-xxsmall;
       color: map-get($color-palette, 'charcoal');
-      //   min-height: rem(390px);
+      //   min-height: rem-convert(390px);
       min-height: auto;
 
       &-title {
@@ -655,14 +655,14 @@
       }
 
       .cmp-teaser__description {
-        padding: rem(20px) rem(30px);
-        line-height: rem(16px);
+        padding: rem-convert(20px) rem-convert(30px);
+        line-height: rem-convert(16px);
       }
     }
 
     &__image {
       width: 100%;
-      height: rem(202.21px);
+      height: rem-convert(202.21px);
       object-fit: fill;
       overflow: hidden;
     }

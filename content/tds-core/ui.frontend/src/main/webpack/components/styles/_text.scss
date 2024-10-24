@@ -35,9 +35,9 @@
           line-height: -10rem;
           padding-top: 0rem !important;
           li {
-            padding: rem(24px) rem(16px) 0 rem(44px);
+            padding: rem-convert(24px) rem-convert(16px) 0 rem-convert(44px);
             position: relative;
-            line-height: rem(24px);
+            line-height: rem-convert(24px);
 
             b {
               width: auto;
@@ -57,7 +57,7 @@
       }
     }
     p {
-      margin: rem(16px) rem(24px);
+      margin: rem-convert(16px) rem-convert(24px);
     }
   }
 
@@ -66,12 +66,12 @@
 
     li {
       counter-increment: li;
-      line-height: rem(22px);
-      padding-bottom: rem(5.44px);
+      line-height: rem-convert(22px);
+      padding-bottom: rem-convert(5.44px);
 
       &::before {
         content: counter(li);
-        width: rem(20.8px);
+        width: rem-convert(20.8px);
       }
     }
   }
@@ -80,8 +80,8 @@
     padding-left: 15px;
 
     li {
-      line-height: rem(20px);
-      padding-bottom: rem(5.12px);
+      line-height: rem-convert(20px);
+      padding-bottom: rem-convert(5.12px);
       display: flex;
 
       &::before {
@@ -89,7 +89,7 @@
         font-weight: bold;
         width: auto;
         font-size: $font-size-custom-medium;
-        margin-right: rem(10px);
+        margin-right: rem-convert(10px);
       }
     }
   }
@@ -161,11 +161,11 @@
 }
 
 .cmp-aem-alert {
-  border: rem(1px) solid get-color(td-primary-blue);
-  padding: rem(32px);
+  border: rem-convert(1px) solid get-color(td-primary-blue);
+  padding: rem-convert(32px);
   background-color: get-color(brand-white);
   color: get-color(text-mid-gray);
-  box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue) !important;
+  box-shadow: 0px 0px rem-convert(5px) 0px get-color(td-primary-blue) !important;
 }
 
 .dp-text--white * {
@@ -195,14 +195,14 @@
 .dp-text--xsmall {
   &,
   .cmp-text li {
-    font-size: rem($font-size-xxsmall);
+    font-size: rem-convert($font-size-xxsmall);
   }
 }
 
 .dp-text--small {
   &,
   .cmp-text li {
-    font-size: rem($font-size-small);
+    font-size: rem-convert($font-size-small);
   }
 }
 

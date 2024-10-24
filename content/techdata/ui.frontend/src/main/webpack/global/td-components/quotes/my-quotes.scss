@@ -2,74 +2,74 @@
 @import '../../../site/variables';
 
 .cmp-quotes {
-    font-family: 'Open Sans', sans-serif;
-    height: rem(55px);
-    align-items: center;
-    margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  height: 3.4375rem;
+  align-items: center;
+  margin: 0;
+  @include mobile {
+    display: block;
+    height: auto;
+  }
+  &__title {
+    font-size: $font-size-small;
+    text-transform: uppercase;
+    color: get-color(text-mid-gray);
+    align-self: baseline;
+    display: flex;
+    justify-content: space-between;
     @include mobile {
-        display: block;
-        height: auto;
+      width: 100%;
+      margin-bottom: 0.625rem;
     }
-    &__title {
-        font-size: $font-size-small;
-        text-transform: uppercase;
-        color: get-color(text-mid-gray);
-        align-self: baseline;
-        display: flex;
-        justify-content: space-between;
-        @include mobile {
-            width: 100%;
-            margin-bottom: rem(10px);
-        }
-    }
-    &__label {
-        text-transform: none;
-        white-space: pre;
-    }
-    &__sub-title {
-        font-size: $font-size-xxsmall;
-        color: get-color(text-light-charcoal);
-        width: 33%;
-        text-align: center;
-        box-shadow: rem(1px) 0 0 0 get-color(v-divider-gray);
-        &:last-of-type {
-            box-shadow: none;
-        }
-
-        &--digits {
-            font-size: $font-size-large;
-        }
-    }
-    &__all-myQuotes {
-        width: rem(340px);
-        display: flex;
-        justify-content: space-between;
-        margin: 0 auto;
-        @include mobile {
-            margin-bottom: rem(10px);
-        }
+  }
+  &__label {
+    text-transform: none;
+    white-space: pre;
+  }
+  &__sub-title {
+    font-size: $font-size-xxsmall;
+    color: get-color(text-light-charcoal);
+    width: 33%;
+    text-align: center;
+    box-shadow: 0.0625rem 0 0 0 get-color(v-divider-gray);
+    &:last-of-type {
+      box-shadow: none;
     }
 
-    &__active-value {
-        justify-content: space-between;
-        align-items: center;
-        display: flex;
-        flex-wrap: wrap;
-        width: auto;
-        flex-direction: column;
-        margin: rem(30px) auto 0;
-        &--price {
-            font-size: $font-size-custom-xxlarge;
-            color: get-color(td-primary-blue);
-            margin-right: rem(20px);
-        }
-        &--title {
-            font-size: $font-size-custom-medium;
-        }
+    &--digits {
+      font-size: $font-size-large;
     }
+  }
+  &__all-myQuotes {
+    width: rem-convert(340px);
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    @include mobile {
+      margin-bottom: 0.625rem;
+    }
+  }
+
+  &__active-value {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    flex-direction: column;
+    margin: 1.875rem auto 0;
+    &--price {
+      font-size: $font-size-custom-xxlarge;
+      color: get-color(td-primary-blue);
+      margin-right: 1.25rem;
+    }
+    &--title {
+      font-size: $font-size-custom-medium;
+    }
+  }
 }
 
 #cmp-quotes {
-    width: 450px;
-    margin: 0 auto;
+  width: 450px;
+  margin: 0 auto;
 }

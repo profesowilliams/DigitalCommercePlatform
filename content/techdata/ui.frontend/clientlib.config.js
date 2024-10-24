@@ -18,23 +18,23 @@ const path = require('path');
 
 const BUILD_DIR = path.join(__dirname, 'dist');
 const CLIENTLIB_DIR = path.join(
-    __dirname,
-    '..',
-    'ui.apps',
-    'src',
-    'main',
-    'content',
-    'jcr_root',
-    'apps',
-    'techdata',
-    'clientlibs'
+  __dirname,
+  '..',
+  'ui.apps',
+  'src',
+  'main',
+  'content',
+  'jcr_root',
+  'apps',
+  'techdata',
+  'clientlibs',
 );
 
 const libsBaseConfig = {
   allowProxy: true,
   serializationFormat: 'xml',
   cssProcessor: ['default:none', 'min:none'],
-  jsProcessor: ['default:none', 'min:none']
+  jsProcessor: ['default:none', 'min:none'],
 };
 
 // Config for `aem-clientlib-generator`
@@ -46,21 +46,21 @@ module.exports = {
       ...libsBaseConfig,
       name: 'clientlib-dependencies',
       categories: ['techdata.dependencies'],
-      dependencies:['techdata.grid', 'techdata.scene7.dynamicmedia'],
+      dependencies: ['techdata.grid', 'techdata.scene7.dynamicmedia'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories
         js: {
           cwd: 'clientlib-dependencies',
           files: ['**/*.js'],
-          flatten: false
+          flatten: false,
         },
         css: {
           cwd: 'clientlib-dependencies',
           files: ['**/*.css'],
-          flatten: false
-        }
-      }
+          flatten: false,
+        },
+      },
     },
     {
       ...libsBaseConfig,
@@ -73,12 +73,12 @@ module.exports = {
         js: {
           cwd: 'clientlib-site-site',
           files: ['**/*.js'],
-          flatten: false
+          flatten: false,
         },
         css: {
           cwd: 'clientlib-site-site/css',
           files: ['**/*.css'],
-          flatten: false
+          flatten: false,
         },
 
         // Copy all other files into the `resources` ClientLib directory
@@ -86,18 +86,37 @@ module.exports = {
           cwd: 'clientlib-site-site/resources',
           files: ['**/*.*'],
           flatten: false,
-          ignore: ['**/*.js', '**/*.css']
-        }
-      }
+          ignore: ['**/*.js', '**/*.css'],
+        },
+      },
+    },
+    {
+      ...libsBaseConfig,
+      name: 'clientlib-web-components',
+      categories: ['techdata.web.components'],
+      assets: {
+        // Copy entrypoint scripts and stylesheets into the respective ClientLib
+        // directories
+        js: {
+          cwd: 'clientlib-web-components',
+          files: ['**/*.js'],
+          flatten: false,
+        },
+        css: {
+          cwd: 'clientlib-web-components/css',
+          files: ['**/*.css'],
+          flatten: false,
+        },
+      },
     },
     {
       ...libsBaseConfig,
       name: 'clientlib-site-global',
       categories: ['techdata.site.global'],
       dependencies: ['techdata.dependencies'],
-      embed: ['core.wcm.components.accordion.v1','core.wcm.components.tabs.v1','core.wcm.components.carousel.v1',
-        'core.wcm.components.image.v2','core.wcm.components.breadcrumb.v2','core.wcm.components.search.v1',
-        'core.wcm.components.form.text.v2','core.wcm.components.pdfviewer.v1','core.wcm.components.commons.datalayer.v1',
+      embed: ['core.wcm.components.accordion.v1', 'core.wcm.components.tabs.v1', 'core.wcm.components.carousel.v1',
+        'core.wcm.components.image.v2', 'core.wcm.components.breadcrumb.v2', 'core.wcm.components.search.v1',
+        'core.wcm.components.form.text.v2', 'core.wcm.components.pdfviewer.v1', 'core.wcm.components.commons.datalayer.v1',
         'techdata.grid'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
@@ -105,12 +124,12 @@ module.exports = {
         js: {
           cwd: 'clientlib-site-global',
           files: ['**/*.js'],
-          flatten: false
+          flatten: false,
         },
         css: {
           cwd: 'clientlib-site-global/css',
           files: ['**/*.css'],
-          flatten: false
+          flatten: false,
         },
 
         // Copy all other files into the `resources` ClientLib directory
@@ -118,9 +137,9 @@ module.exports = {
           cwd: 'clientlib-site-global/resources',
           files: ['**/*.*'],
           flatten: false,
-          ignore: ['**/*.js', '**/*.css']
-        }
-      }
+          ignore: ['**/*.js', '**/*.css'],
+        },
+      },
     },
     {
       ...libsBaseConfig,
@@ -133,12 +152,12 @@ module.exports = {
         js: {
           cwd: 'clientlib-site-us',
           files: ['**/*.js'],
-          flatten: false
+          flatten: false,
         },
         css: {
           cwd: 'clientlib-site-us/css',
           files: ['**/*.css'],
-          flatten: false
+          flatten: false,
         },
 
         // Copy all other files into the `resources` ClientLib directory
@@ -146,9 +165,9 @@ module.exports = {
           cwd: 'clientlib-site-us/resources',
           files: ['**/*.*'],
           flatten: false,
-          ignore: ['**/*.js', '**/*.css']
-        }
-      }
-    }
-  ]
+          ignore: ['**/*.js', '**/*.css'],
+        },
+      },
+    },
+  ],
 };

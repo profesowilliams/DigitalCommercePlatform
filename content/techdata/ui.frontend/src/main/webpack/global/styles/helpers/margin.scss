@@ -1,14 +1,14 @@
 .mb-responsive-100-50 {
-    margin-bottom: rem(50px);
+    margin-bottom: 3.125rem;  // 50px / 16
     @include media(">=lg") {
-        margin-bottom: rem(100px);
+        margin-bottom: 6.25rem; // 100px / 16
     }
 }
 
 .mx-10 {
-    margin-left: rem(10px);
+    margin-left: 0.625rem;  // 10px / 16
 }
 
 .m-2 {
-    margin: rem(32px);
+    margin: 2rem;  // 32px / 16
 }

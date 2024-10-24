@@ -1,4 +1,4 @@
-@import "../../abstracts/mixins";
+@import '../../abstracts/mixins';
 
 .dp-carousel {
   position: relative;
@@ -9,7 +9,7 @@
       width: 100%;
       position: absolute;
       bottom: 0;
-      padding: rem(8px) rem(24px);
+      padding: rem-convert(8px) rem-convert(24px);
       box-sizing: border-box;
 
       @include tablet {
@@ -31,8 +31,8 @@
       font-size: 0.75rem;
       cursor: pointer;
       color: get-color(secondary-light-grey) !important;
-      padding: rem(4px) 0;
-      margin: 0 rem(16px);
+      padding: rem-convert(4px) 0;
+      margin: 0 rem-convert(16px);
       position: relative;
       text-decoration: none;
 
@@ -57,11 +57,11 @@
       }
 
       &::before {
-        content: "";
+        content: '';
         position: absolute;
         left: 0;
         bottom: 0;
-        height: rem(2px);
+        height: rem-convert(2px);
         width: 0;
         background-color: get-color(brand-nav-blue);
         transition: width 0.3s;
@@ -78,7 +78,7 @@
 
       &.cmp-carousel__indicator--active,
       &:hover {
-        background-color: rgba(0,0,0,0);
+        background-color: rgba(0, 0, 0, 0);
         color: get-color(brand-white);
         opacity: 1;
         cursor: pointer;
@@ -90,15 +90,14 @@
         &::before {
           width: 100%;
         }
-
       }
     }
 
     .dp-carousel__nav-label-separator {
       color: get-color(secondary-light-grey);
-      padding: rem(4px) 0;
+      padding: rem-convert(4px) 0;
       position: absolute;
-      left: rem(-20px);
+      left: rem-convert(-20px);
       top: 0;
       display: inline-block;
 
@@ -119,14 +118,14 @@
   &.dp-carousel__alert--hero1 {
     .dp-carousel__alert {
       //px-4 py-3 mt-1 position-absolute w-100
-      padding: rem(16px) rem(24px);
+      padding: rem-convert(16px) rem-convert(24px);
       position: absolute;
       width: 100%;
-      bottom: rem(47px);
+      bottom: rem-convert(47px);
       left: 0;
 
       &::before {
-        content: "";
+        content: '';
         position: absolute;
         width: 100%;
         height: 100%;
@@ -162,16 +161,16 @@
       //col position-relative h5 m-0 text-shadow-1
       flex: 1 0 0%;
       position: relative;
-      font-size: rem(22px);
+      font-size: rem-convert(22px);
       font-weight: 500;
       color: get-color(brand-white);
-      text-shadow: 0 rem(2px) rem(4px) rgba(0, 0, 0, 0.5);
-      margin-bottom: rem(10px);
+      text-shadow: 0 rem-convert(2px) rem-convert(4px) rgba(0, 0, 0, 0.5);
+      margin-bottom: rem-convert(10px);
 
       @include tablet {
-        font-size: rem(13px);
+        font-size: rem-convert(13px);
         font-weight: bold;
-        line-height: rem(18px);
+        line-height: rem-convert(18px);
       }
     }
 
@@ -183,9 +182,9 @@
       align-items: flex-end;
 
       @include tablet {
-        font-size: rem(12px);
+        font-size: rem-convert(12px);
         letter-spacing: 0;
-        line-height: rem(13px);
+        line-height: rem-convert(13px);
         flex-direction: column;
         align-items: flex-start;
       }
@@ -198,8 +197,8 @@
       border: 0 none;
       text-decoration: none;
       vertical-align: middle;
-      padding: rem(4.8px) rem(12px);
-      margin-right: rem(24px);
+      padding: rem-convert(4.8px) rem-convert(12px);
+      margin-right: rem-convert(24px);
       font-weight: bold;
       text-transform: uppercase;
       display: flex;
@@ -208,12 +207,12 @@
       justify-content: space-between;
 
       @include tablet {
-        margin-top: rem(10px);
+        margin-top: rem-convert(10px);
         margin-right: 0;
       }
 
       @include mobile {
-        margin-top: rem(10px);
+        margin-top: rem-convert(10px);
         margin-right: 0;
       }
     }
@@ -226,11 +225,9 @@
       .cmp-carousel {
         .cmp-carousel__content {
           &::after {
-            background: linear-gradient(180deg,
-                rgba(0, 12, 33, 0) 0%,
-                get-color(brand-blue) 100%);
-            height: rem(135px);
-            content: " ";
+            background: linear-gradient(180deg, rgba(0, 12, 33, 0) 0%, get-color(brand-blue) 100%);
+            height: rem-convert(135px);
+            content: ' ';
             width: 100%;
             position: absolute;
             bottom: 0;
@@ -244,7 +241,7 @@
 
 .dp-carousel:not(.dp-carousel__navigation--hero1) .dp-carousel__nav {
   display: flex;
-  padding: rem(10px) rem(36px);
+  padding: rem-convert(10px) rem-convert(36px);
   z-index: 2;
 
   .dp-carousel__nav-label {
@@ -254,13 +251,13 @@
 
     font-size: 0;
     opacity: 0.7;
-    width: rem(10px);
-    height: rem(10px);
+    width: rem-convert(10px);
+    height: rem-convert(10px);
     color: transparent;
     border-radius: 50%;
     box-sizing: border-box;
-    margin: 0 rem(6.4px);
-    box-shadow: inset 0 0 0 rem(1px) get-color(cool-gray-1);
+    margin: 0 rem-convert(6.4px);
+    box-shadow: inset 0 0 0 rem-convert(1px) get-color(cool-gray-1);
     cursor: pointer;
     text-indent: -3000px;
     flex: 0 1 auto;
@@ -268,9 +265,9 @@
 
     &.cmp-carousel__indicator--active,
     &:hover {
-      color: map-get($color-palette, "black");
+      color: map-get($color-palette, 'black');
       opacity: 1;
-      background-color: map-get($color-palette, "black");
+      background-color: map-get($color-palette, 'black');
     }
   }
 }
@@ -318,7 +315,6 @@
   }
 }
 
-
 // New nav dots styling
 .cmp-carousel__indicators {
   align-self: center;
@@ -345,7 +341,6 @@
   }
 }
 
-
 .cmp-carousel-slide {
   display: flex;
   flex-direction: row;
@@ -363,16 +358,15 @@
 
   &--left {
     .cmp-carousel__actions {
-      left: rem(24px) !important;
+      left: rem-convert(24px) !important;
     }
   }
 
   &--right {
     .cmp-carousel__actions {
-      right: rem(24px) !important;
+      right: rem-convert(24px) !important;
     }
   }
-
 
   .cmp-carousel__action {
     width: 1.875rem;
@@ -409,7 +403,6 @@
         transform: translateY(-50%) translateX(-4px) rotate(45deg);
         cursor: pointer;
       }
-
     }
 
     &--next {
@@ -433,16 +426,13 @@
         cursor: pointer;
       }
     }
-
-
-
   }
 
   .cmp-carousel__action-icon {
     &:before {
       display: inline-block;
       vertical-align: top;
-      font-family: "Material Icons";
+      font-family: 'Material Icons';
       font-weight: normal;
       font-style: normal;
       font-size: 1.125rem;
@@ -455,25 +445,23 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       -moz-osx-font-smoothing: grayscale;
-      font-feature-settings: "liga";
+      font-feature-settings: 'liga';
     }
   }
 
   .cmp-carousel__action-text {
     display: none;
   }
-
-
 }
 
 .tds-alertcarousel {
   &.dp-carousel {
     &.dp-carousel__navigation--hero1 .dp-carousel__nav-label {
-      font-size: rem(14px);
+      font-size: rem-convert(14px);
       background-color: rgba(0, 0, 0, 0) !important;
 
       &::before {
-        background-color: map-get($color-palette, "green") !important;
+        background-color: map-get($color-palette, 'green') !important;
       }
     }
 
@@ -499,12 +487,9 @@
   }
 }
 
-
-
 .cmp-courousel-control {
   display: none;
 }
-
 
 .cmp-courousel-control {
   display: block;
@@ -556,7 +541,6 @@
     right: 20px;
     border: none;
   }
-
 }
 
 .cmp-d-flex {
@@ -565,15 +549,15 @@
   justify-content: flex-start;
   flex-direction: row;
   width: 100%;
-
 }
 
 .cmp-carousel__action {
-  &--previous, &--next {
-      &:disabled {
-          .cmp-carousel__action-icon {
-              border-color: map-get($color-palette,"neutral-gray-2");
-          }
+  &--previous,
+  &--next {
+    &:disabled {
+      .cmp-carousel__action-icon {
+        border-color: map-get($color-palette, 'neutral-gray-2');
       }
+    }
   }
 }

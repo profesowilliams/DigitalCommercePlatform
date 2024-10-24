@@ -3,7 +3,7 @@
 @mixin nav-button {
   background-color: transparent;
   color: get-color(brand-text-gray);
-  padding: rem(10px) rem(14px);
+  padding: rem-convert(10px) rem-convert(14px);
   transition: all 200ms ease;
   text-align: left;
   width: 100%;
@@ -26,9 +26,9 @@
 
 @mixin chevron-icon {
   color: get-color(brand-nav-blue);
-  margin-left: rem(8px);
+  margin-left: rem-convert(8px);
   transition: all 200ms ease;
-  width: rem(24px);
+  width: rem-convert(24px);
 }
 
 .cmp-search-icon-hidden {
@@ -43,7 +43,7 @@
   top: 0;
   left: 0;
   .cmp-searchbar__container {
-    margin-top: rem(80px);
+    margin-top: rem-convert(80px);
     margin-bottom: 1vh;
     justify-content: space-between;
   }
@@ -60,7 +60,7 @@
     top: 69px;
   }
   .cmp-icon-input svg {
-    right: rem(26px);
+    right: rem-convert(26px);
   }
   .cmp-button__icon {
     position: absolute;
@@ -69,7 +69,7 @@
     left: 78%;
     top: 85px;
   }
-  .cmp-searchbar__remove-icon--mobile{
+  .cmp-searchbar__remove-icon--mobile {
     position: relative;
     margin: unset;
     top: 0;
@@ -79,23 +79,23 @@
     box-shadow: 0px;
   }
   .cmp-searcharea__selectedarea-button {
-    padding-left: rem(61px);
+    padding-left: rem-convert(61px);
   }
   .cmp-searchsuggestions__suggestion.cmp-searchsuggestions__suggestion-withRefinement {
-    padding-left: rem(61px);
+    padding-left: rem-convert(61px);
   }
   .cmp-searcharea__area {
     .cmp-searcharea__button {
-      margin-left: rem(61px);
+      margin-left: rem-convert(61px);
     }
   }
-  
+
   .cmp-searchbar__arrow {
     height: 24px;
     width: 24px;
 
     &::before {
-      content: "";
+      content: '';
       mask: url('/content/dam/global-shared/icons/regular/back-arrow.svg');
       -webkit-mask: url('/content/dam/global-shared/icons/regular/back-arrow.svg');
       background: no-repeat;
@@ -106,7 +106,7 @@
       background-color: map-get($color-palette, 'black');
       display: inline-block;
       align-items: center;
-      vertical-align: middle
+      vertical-align: middle;
     }
   }
 
@@ -117,10 +117,9 @@
   .cmp-searchbar__input--mobile {
     width: 95%;
     border: transparent;
-    background: linear-gradient(#000, #000) center bottom 5px /
-      calc(100% - 10px) 2px no-repeat;
+    background: linear-gradient(#000, #000) center bottom 5px / calc(100% - 10px) 2px no-repeat;
     &:focus {
-      border: rem(0px) solid transparent;
+      border: rem-convert(0px) solid transparent;
     }
   }
   .cmp-searcharea__selectedarea {
@@ -135,11 +134,10 @@
 }
 //Search Bar styles
 .cmp-searchbar {
-  min-width: rem(250px);
+  min-width: rem-convert(250px);
   position: relative;
   width: 100%;
   padding: 10px 0;
-
 
   @include mobile {
     display: flex;
@@ -153,15 +151,15 @@
 
   &--checked {
     @include mobile {
-        background-color: get-color(brand-white);
-        margin-left: 0;
-        margin-top: 0;
-        width: 100%;
-        left: 0;
-        top: rem(45px);
-        z-index: -1;
-        max-height: 80px;
-        position: fixed;
+      background-color: get-color(brand-white);
+      margin-left: 0;
+      margin-top: 0;
+      width: 100%;
+      left: 0;
+      top: rem-convert(45px);
+      z-index: -1;
+      max-height: 80px;
+      position: fixed;
     }
   }
 
@@ -172,37 +170,37 @@
     margin: 0 auto;
     width: 100%;
     height: 40px;
-    padding: 0 rem(8px);
+    padding: 0 rem-convert(8px);
 
-    .input-icon{
-      .cmp-icon-input{
+    .input-icon {
+      .cmp-icon-input {
         .cmp-searchbar__remove-icon {
           position: relative;
           right: 25px;
-          top: 5px;  
+          top: 5px;
         }
       }
     }
 
-    div:first-child{
+    div:first-child {
       width: 100%;
       display: flex;
     }
   }
 
   &__input {
-    border: rem(1px) solid get-color(text-shadow);
-    border-radius: rem(6px) 0 0 rem(6px);
+    border: rem-convert(1px) solid get-color(text-shadow);
+    border-radius: rem-convert(6px) 0 0 rem-convert(6px);
     border-right: 0;
     box-sizing: border-box;
     outline: none;
-    padding: rem(10px) rem(14px);
+    padding: rem-convert(10px) rem-convert(14px);
     transition: all 400ms ease;
     width: 100%;
     height: 100%;
 
     &:focus {
-      border: rem(1px) solid get-color(td-dark-blue);
+      border: rem-convert(1px) solid get-color(td-dark-blue);
     }
 
     &::placeholder {
@@ -210,28 +208,28 @@
       font-style: italic;
     }
 
-      border: rem(1px) solid get-color(border-light-gray);
-      border-radius: 0;
-      padding: 0;
-      display: none;
-      min-width: 0;
-      width: 0;
+    border: rem-convert(1px) solid get-color(border-light-gray);
+    border-radius: 0;
+    padding: 0;
+    display: none;
+    min-width: 0;
+    width: 0;
 
-      &--mobile {
-        padding: rem(6px) rem(10px);
-        visibility: visible;
-        display: flex;
-        width: 86%;
-      }
+    &--mobile {
+      padding: rem-convert(6px) rem-convert(10px);
+      visibility: visible;
+      display: flex;
+      width: 86%;
+    }
   }
 
   &__button {
     background-color: get-color(brand-white);
-    border-right: rem(1px) solid get-color(text-shadow) !important;
-    border-top: rem(1px) solid get-color(text-shadow) !important;
-    border-bottom: rem(1px) solid get-color(text-shadow) !important;
+    border-right: rem-convert(1px) solid get-color(text-shadow) !important;
+    border-top: rem-convert(1px) solid get-color(text-shadow) !important;
+    border-bottom: rem-convert(1px) solid get-color(text-shadow) !important;
     border-left: 0 !important;
-    border-radius: 0 rem(6px) rem(6px) 0;
+    border-radius: 0 rem-convert(6px) rem-convert(6px) 0;
     box-sizing: border-box;
     padding: 3.8px 8px;
     transition: all 200ms ease;
@@ -245,15 +243,15 @@
       }
     }
 
-      background-color: transparent;
-      border: none !important;
-      padding: 0;
-      margin: 0 rem(8px);
+    background-color: transparent;
+    border: none !important;
+    padding: 0;
+    margin: 0 rem-convert(8px);
 
     &--mobile {
       padding: 0;
-      margin-left: rem(8px);
-      margin-right: rem(8px);
+      margin-left: rem-convert(8px);
+      margin-right: rem-convert(8px);
       .cmp-searchbar__icon {
         @include stroke-aqua;
       }
@@ -267,7 +265,7 @@
 
   &__icon {
     @include stroke-cool-gray-10;
-    margin-top: rem(9.6px);
+    margin-top: rem-convert(9.6px);
 
     @include mobile {
       @include stroke-cool-gray-10;
@@ -283,7 +281,7 @@
   }
 
   &__context-menu {
-    box-shadow: rem(1px) rem(1px) rem(5px) rgba(0, 0, 0, 0.2);
+    box-shadow: rem-convert(1px) rem-convert(1px) rem-convert(5px) rgba(0, 0, 0, 0.2);
     background-color: get-color(brand-white);
     position: absolute;
     width: 100%;
@@ -292,8 +290,8 @@
     @include mobile {
       box-shadow: none;
       position: relative;
-      margin-bottom: rem(12px);
-      min-width: rem(350px);
+      margin-bottom: rem-convert(12px);
+      min-width: rem-convert(350px);
     }
   }
 }
@@ -302,14 +300,14 @@
 .cmp-searcharea {
   @include reset-list-styles;
   @include reset-spacing-styles;
-  box-shadow: rem(1px) rem(1px) rem(5px) rgba(0, 0, 0, 0.2);
-  margin: 0 rem(10px) 0 rem(10px);
+  box-shadow: rem-convert(1px) rem-convert(1px) rem-convert(5px) rgba(0, 0, 0, 0.2);
+  margin: 0 rem-convert(10px) 0 rem-convert(10px);
   max-height: 0;
   transition: all 200ms ease;
 
   &--checked {
     background-color: get-color(brand-white);
-    max-height: rem(350px);
+    max-height: rem-convert(350px);
     position: relative;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -329,20 +327,20 @@
     @include nav-button;
 
     &:hover {
-      background-color: map-get($color-palette, "td-lighter-gray");
+      background-color: map-get($color-palette, 'td-lighter-gray');
       color: get-color(brand-text-gray);
     }
   }
 
   &__selectedarea {
-    border-bottom: rem(2px) solid get-color(brand-black);
+    border-bottom: rem-convert(2px) solid get-color(brand-black);
     margin-left: 0;
     margin-right: 0;
     transition: all 200ms ease;
 
     &--checked {
-      margin-left: rem(10px);
-      margin-right: rem(10px);
+      margin-left: rem-convert(10px);
+      margin-right: rem-convert(10px);
 
       @include mobile {
         margin-left: 0;
@@ -354,17 +352,17 @@
       @include nav-button;
       display: flex;
       align-items: center;
-      padding: rem(10px) rem(14px);
+      padding: rem-convert(10px) rem-convert(14px);
 
       @include mobile {
-        min-width: rem(350px);
+        min-width: rem-convert(350px);
       }
 
       &:hover,
       &:active {
-        background-color: map-get($color-palette, "td-lighter-gray");
+        background-color: map-get($color-palette, 'td-lighter-gray');
         color: get-color(brand-text-gray);
-        
+
         svg {
           color: get-color(brand-nav-blue);
         }
@@ -381,7 +379,7 @@
 
 /* Width */
 .cmp-searcharea::-webkit-scrollbar {
-  width: rem(8px);
+  width: rem-convert(8px);
 }
 /* Track */
 .cmp-searcharea::-webkit-scrollbar-track {
@@ -390,8 +388,8 @@
 /* Handle */
 .cmp-searcharea::-webkit-scrollbar-thumb {
   background: get-color(brand-black);
-  border-radius: rem(8px);
-  max-height: rem(4px);
+  border-radius: rem-convert(8px);
+  max-height: rem-convert(4px);
 }
 /* Buttons */
 .cmp-searcharea::-webkit-scrollbar-button {
@@ -417,15 +415,14 @@
       @include reset-list-styles;
       @include reset-spacing-styles;
       color: get-color(brand-text-gray);
-      padding-left: rem(61px);
+      padding-left: rem-convert(61px);
     }
   }
 
   &__suggestion {
     display: flex;
     transition: all 200ms ease;
-    padding: rem(8px) rem(16px);
-
+    padding: rem-convert(8px) rem-convert(16px);
 
     &.cmp-searchsuggestions__suggestion-withRefinement {
       flex-direction: column;
@@ -438,13 +435,13 @@
       }
 
       .cmp-searchrefinements {
-        padding-top: rem(8px);
-        padding-left: rem(5px);
+        padding-top: rem-convert(8px);
+        padding-left: rem-convert(5px);
       }
     }
 
     &:hover {
-      background-color: map-get($color-palette, "td-lighter-gray");
+      background-color: map-get($color-palette, 'td-lighter-gray');
       color: get-color(brand-white);
     }
   }
@@ -463,7 +460,7 @@
   }
 
   &__item {
-    padding-left: rem(4px);
+    padding-left: rem-convert(4px);
 
     &-icon {
       @include chevron-icon;
@@ -490,11 +487,7 @@
 }
 
 //AEM overriding Styling
-.experiencefragment.cmp-experiencefragment--header
-  .cmp-experiencefragment
-  > .cmp-container
-  .aem-Grid
-  .search {
+.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment > .cmp-container .aem-Grid .search {
   margin-left: auto !important;
   width: 35% !important;
 

@@ -1,6 +1,6 @@
 .pt-responsive {
-    padding-top: rem(60px);
+    padding-top: 3.75rem;  // 60px / 16
     @include media(">=lg") {
-        padding-top: rem(100px);
+        padding-top: 6.25rem;  // 100px / 16
     }
 }

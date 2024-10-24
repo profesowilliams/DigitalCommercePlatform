@@ -2,3 +2,8 @@
 	path = content/tds-core/ui.frontend/src/main/webpack/webcomponents
 	url = ../ReactComponents
 	branch = main
+	
+[submodule "content/techdata/ui.frontend/src/main/webpack/webcomponents"]
+	path = content/techdata/ui.frontend/src/main/webpack/webcomponents
+	url = ../ReactComponents
+	branch = main

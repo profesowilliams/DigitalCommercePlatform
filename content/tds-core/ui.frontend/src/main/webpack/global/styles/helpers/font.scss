@@ -1,97 +1,97 @@
 .font-xxsmall {
-    font-size: $font-size-xxsmall;
+  font-size: $font-size-xxsmall;
 }
 
 .cmp-tds-font {
-    &-everett {
-        font-family: $font-family-marketing;
+  &-everett {
+    font-family: $font-family-marketing;
 
-        &-bold {
-            font-family: $font-family-marketing-md;
-        }
+    &-bold {
+      font-family: $font-family-marketing-md;
+    }
+  }
+
+  &-georgia-pro-reg {
+    font-family: $font-family-georgia;
+  }
+
+  &-georgia-pro-bold {
+    font-family: $font-family-georgia-bold;
+  }
+
+  &-legacy {
+    font-family: $open-sans;
+  }
+
+  &-arial {
+    font-family: 'Arial';
+    font-style: normal;
+  }
+
+  &-align {
+    &__center {
+      text-align: center;
     }
 
-    &-georgia-pro-reg {
-        font-family: $font-family-georgia;
+    &__left {
+      text-align: left;
     }
 
-    &-georgia-pro-bold {
-        font-family: $font-family-georgia-bold;
+    &__right {
+      text-align: right;
     }
-
-    &-legacy {
-        font-family: $open-sans;
-    }
-
-    &-arial {
-        font-family: 'Arial';
-        font-style: normal;
-    }
-
-    &-align {
-        &__center {
-            text-align: center;
-        }
-
-        &__left {
-            text-align: left;
-        }
-
-        &__right {
-            text-align: right;
-        }
-    }
+  }
 }
 
 .cmp-h3 * {
-    font-size: rem(28px);
-    line-height: rem(42px);
+  font-size: rem-convert(28px);
+  line-height: rem-convert(42px);
 }
 
 .cmp-h4 * {
-    font-size: rem(20px);
-    line-height: rem(30px);
+  font-size: rem-convert(20px);
+  line-height: rem-convert(30px);
 }
 
 .cmp-h5 * {
-    font-size: rem(16px);
-    line-height: rem(24px);
+  font-size: rem-convert(16px);
+  line-height: rem-convert(24px);
 }
 
 .cmp-h6 * {
-    font-size: rem(14px);
-    line-height: rem(19.92px);
+  font-size: rem-convert(14px);
+  line-height: rem-convert(19.92px);
 }
 
 .cmp-paragraph {
-    &-reg * {
-        font-size: rem(16px);
-        line-height: rem(24px);
-    }
+  &-reg * {
+    font-size: rem-convert(16px);
+    line-height: rem-convert(24px);
+  }
 
-    &-large * {
-        font-size: rem(20px);
-        line-height: rem(30px);
-    }
+  &-large * {
+    font-size: rem-convert(20px);
+    line-height: rem-convert(30px);
+  }
 
-    &-small * {
-        font-size: rem(14px);
-        line-height: rem(16.8px);
-    }
+  &-small * {
+    font-size: rem-convert(14px);
+    line-height: rem-convert(16.8px);
+  }
 }
 
 .cmp-extra-small * {
-    font-size: $font-size-xxsmall;
+  font-size: $font-size-xxsmall;
 }
 
 .cmp-small * {
-    font-size: $font-size-small;
+  font-size: $font-size-small;
 }
 
 .cmp-medium * {
-    font-size: $font-size-medium;
+  font-size: $font-size-medium;
 }
 
 .cmp-large * {
-    font-size: $font-size-custom-midi;
+  font-size: $font-size-custom-midi;
 }

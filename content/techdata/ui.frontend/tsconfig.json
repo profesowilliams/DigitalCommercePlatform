@@ -1,13 +1,49 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "es6",
-        "baseUrl": "../ui.frontend",
-        "removeComments": true,
-        "allowJs": true,
-        "preserveConstEnums": true,
-        "allowSyntheticDefaultImports": true,
-        "sourceMap": true
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "esnext",
+    "jsx": "react",
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationDir": "types",
+
+    "noEmit": false,
+    "baseUrl": "./src",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "paths": {
+      "*": [
+        "*",
+      ]
     },
-    "include": [ "./src/**/*.ts" ]
+    "removeComments": true,
+    "allowJs": true,
+    "isolatedModules": true,
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "downlevelIteration": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+  },
+  "include": [ "./src/**/*.ts", "*.tsx", "*.ts"],
+  "exclude": [
+    "coverage",
+    "config",
+    "dist",
+    "node_modules/**",
+    "src/**/*.stories.tsx",
+    "src/**/*.test.tsx",
+    "src/main/webpack/webcomponents/components/Lit/**/*",
+    "src/main/webpack/webcomponents/components/React/**/*",
+  ]
 }

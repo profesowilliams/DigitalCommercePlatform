@@ -2,7 +2,7 @@ $font-size-container: 16px;
 $z-index-value-up-of-popup: $pop-up-z-index-value + 1;
 $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
 
-@include mobile{
+@include mobile {
   .cmp-popup__modal {
   }
 }
@@ -14,7 +14,7 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
   z-index: 100;
 }
 .cmp-navigation--us #navigation > ul > li > ul > li > ul {
-    height: auto;
+  height: auto;
 }
 
 .headerutility .languagenavigation .regionSelectDropdown {
@@ -22,18 +22,18 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
 }
 
 .headerutility {
-    z-index: 100;
+  z-index: 100;
 }
 
 .hub .cmp-button__dropdown {
   z-index: 100;
 }
 @include desktop {
-    #navigation > ul > li:hover > ul,
-    #navigation > ul > li > ul > li:hover > ul,
-    #navigation > ul > li > ul > li > ul > li:hover > ul {
-      z-index: $z-index-value-up-subheader;
-    }
+  #navigation > ul > li:hover > ul,
+  #navigation > ul > li > ul > li:hover > ul,
+  #navigation > ul > li > ul > li > ul > li:hover > ul {
+    z-index: $z-index-value-up-subheader;
+  }
 }
 
 .cmp-popup__modal__content {
@@ -83,14 +83,14 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
 
   .cmp-form_icon {
     color: get-color(cherry);
-    margin-right: rem(6px);
+    margin-right: rem-convert(6px);
     font-size: $font-size-container;
-    margin-top: rem(3px);
+    margin-top: rem-convert(3px);
   }
 
   .cmp-form_error-message {
     color: get-color(cherry);
-    margin-left: rem(6px);
+    margin-left: rem-convert(6px);
     font-size: $font-size-container;
   }
 
@@ -108,10 +108,10 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
     align-items: center;
     justify-content: space-evenly;
     height: inherit;
-    width: rem(461px);
-    height: rem(374px);
+    width: rem-convert(461px);
+    height: rem-convert(374px);
     background-color: map-get($color-palette, 'white') !important;
-    padding: rem(46px) rem(40px);
+    padding: rem-convert(46px) rem-convert(40px);
 
     input[type='password'] {
       -webkit-text-security: square;
@@ -184,17 +184,17 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
     background-color: get-color(neutral-gray-2) !important;
     color: get-color(cool-gray-8) !important;
     border: none;
-    font-size: rem(16px);
+    font-size: rem-convert(16px);
     font-weight: 300;
   }
 
   .cmp-error {
     color: get-color(cherry) !important;
-    font-size: rem(16px);
+    font-size: rem-convert(16px);
     &::before {
       content: '\f071';
       font-family: 'FontAwesome';
-      margin: 0 rem(12px) 0 0;
+      margin: 0 rem-convert(12px) 0 0;
     }
   }
 

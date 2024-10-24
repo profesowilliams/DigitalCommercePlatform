@@ -19,12 +19,12 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      padding: rem(20px);
-      padding-top: rem(70px);
+      padding: 1.25rem;
+      padding-top: 4.375rem;
 
       @include desktop {
-        padding-left: rem(60px);
-        padding-top: rem(78px);
+        padding-left: 3.75rem;
+        padding-top: rem-convert(78px);
       }
     }
 
@@ -32,11 +32,11 @@
       margin: 0;
       letter-spacing: 0;
       text-shadow: 0 2px 4px get-color(brand-black);
-      margin-bottom: rem(30px);
+      margin-bottom: 1.875rem;
 
       &:after {
         font-weight: 600;
-        padding: rem(0px 6px);
+        padding: rem-convert(0px 6px);
         position: relative;
         top: -8px;
         text-shadow: none;
@@ -45,7 +45,7 @@
 
       @include desktop {
         &:after {
-          padding: rem(1px 9px);
+          padding: rem-convert(1px 9px);
           top: -27px;
         }
       }
@@ -59,7 +59,7 @@
     &__description {
       color: get-color(brand-white);
       letter-spacing: 0;
-      margin-bottom: rem(30px);
+      margin-bottom: 1.875rem;
       text-shadow: 0 2px 4px #000000;
 
       @include desktop {
@@ -90,7 +90,7 @@
 @mixin teaser-synnex-color($brand-color) {
   .cmp-teaser {
     &:hover {
-      outline: rem(2px) solid $brand-color !important;
+      outline: 0.125rem solid $brand-color !important;
     }
     .cmp-teaser__title {
       background-color: $brand-color !important;
@@ -150,15 +150,15 @@
   .cmp-teaser {
     display: flex;
     flex-direction: column;
-    margin: rem(35px) rem(10px);
-    box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    margin: 2.1875rem 0.625rem;
+    box-shadow: 0 0 0 0.0625rem get-color(brand-box-shadow);
     width: min-content;
 
     &:hover {
       .cmp-teaser__title {
         background-color: get-color(brand-light-blue);
         width: 100%;
-        height: rem(70px);
+        height: 4.375rem;
       }
     }
 
@@ -167,8 +167,8 @@
     }
 
     &__content {
-      width: rem(460px);
-      height: rem(70px);
+      width: 28.75rem;
+      height: 4.375rem;
       position: relative;
     }
 
@@ -177,7 +177,7 @@
 
       img {
         object-fit: cover;
-        width: rem(460px);
+        width: 28.75rem;
       }
     }
 
@@ -189,7 +189,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      height: rem(70px);
+      height: 4.375rem;
       position: absolute;
       bottom: 0;
       padding: 0;
@@ -207,15 +207,15 @@
   .cmp-teaser {
     display: flex;
     flex-direction: column;
-    margin: rem(35px) rem(10px);
-    box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    margin: 2.1875rem 0.625rem;
+    box-shadow: 0 0 0 0.0625rem get-color(brand-box-shadow);
     width: min-content;
 
     &:hover {
       .cmp-teaser__title {
         background-color: get-color(brand-light-blue);
         width: 100%;
-        height: rem(70px);
+        height: 4.375rem;
       }
     }
 
@@ -224,8 +224,8 @@
     }
 
     &__content {
-      width: rem(460px);
-      height: rem(70px);
+      width: 28.75rem;
+      height: 4.375rem;
       position: relative;
     }
 
@@ -234,7 +234,7 @@
 
       img {
         object-fit: fill;
-        width: rem(460px);
+        width: 28.75rem;
       }
     }
 
@@ -246,7 +246,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      height: rem(70px);
+      height: 4.375rem;
       position: absolute;
       bottom: 0;
       padding: 0;
@@ -269,7 +269,7 @@
       @include teaser-synnex-color(get-color(brand-green-synnex));
       .cmp-teaser {
         &:hover {
-          box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+          box-shadow: 0 0 0.25rem 0.25rem get-color(brand-box-shadow);
 
           .cmp-teaser__title {
             background-color: get-color(brand-green-synnex) !important;
@@ -293,10 +293,10 @@
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  padding: rem(32px);
+  padding: 2rem;
 
   .cmp-teaser {
-    box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    box-shadow: 0 0 0 0.0625rem get-color(brand-box-shadow);
     background-color: get-color(brand-white);
     display: flex;
     flex-direction: column;
@@ -304,8 +304,8 @@
     align-items: center;
 
     &:hover {
-      outline: rem(2px) solid map-get($color-palette, 'teal') !important;
-      box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+      outline: 0.125rem solid map-get($color-palette, 'teal') !important;
+      box-shadow: 0 0 0.25rem 0.25rem get-color(brand-box-shadow);
 
       .cmp-teaser__title {
         background-color: get-color(brand-white) !important;
@@ -325,12 +325,12 @@
 
     .cmp-teaser__title {
       width: 100%;
-      min-height: rem(45px);
+      min-height: 2.8125rem;
       background-color: map-get($color-palette, 'teal');
       color: get-color(brand-white);
       text-align: center;
       font-weight: $font-weight-bold;
-      padding-top: rem(5px);
+      padding-top: 0.3125rem;
 
       .cmp-teaser__title-link {
         text-decoration: none;
@@ -345,7 +345,7 @@
       }
 
       .cmp-teaser__description {
-        padding: rem(25px);
+        padding: 1.5625rem;
       }
     }
 
@@ -370,32 +370,32 @@
   .cmp-teaser {
     display: flex;
     flex-direction: column;
-    margin: rem(35px) rem(10px);
-    box-shadow: 0 0 rem(4px) rem(1px) get-color(brand-box-shadow);
-    width: rem(215px);
-    height: rem(353px);
+    margin: 2.1875rem 0.625rem;
+    box-shadow: 0 0 0.25rem 0.0625rem get-color(brand-box-shadow);
+    width: 13.4375rem;
+    height: rem-convert(353px);
 
     &:hover {
-      box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+      box-shadow: 0 0 0.25rem 0.25rem get-color(brand-box-shadow);
       outline: solid #000c21 !important;
       box-sizing: content-box;
     }
 
     &__content {
       height: 100%;
-      line-height: rem(14px);
+      line-height: 0.875rem;
       position: relative;
     }
 
     &__title,
     h2 {
-      margin-bottom: rem(8px);
-      padding: rem(14px) rem(18px);
+      margin-bottom: 0.5rem;
+      padding: 0.875rem 1.125rem;
       margin: 0 !important;
     }
 
     &__description {
-      padding: 0 rem(18px);
+      padding: 0 1.125rem;
     }
 
     &__action-link,
@@ -407,8 +407,8 @@
     &__image {
       img {
         object-fit: fill;
-        width: rem(215px);
-        height: rem(134px);
+        width: 13.4375rem;
+        height: rem-convert(134px);
       }
     }
 
@@ -419,8 +419,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: rem(215px);
-      height: rem(35px);
+      width: 13.4375rem;
+      height: 2.1875rem;
       position: absolute;
       bottom: 0;
       padding: 0;
@@ -429,8 +429,8 @@
 
       &:hover {
         background-color: get-color(brand-light-blue);
-        width: rem(215px);
-        height: rem(35px);
+        width: 13.4375rem;
+        height: 2.1875rem;
       }
     }
   }
@@ -447,15 +447,15 @@
 .cmp-quadriptych-teaser-reverse {
   &.cmp-quadriptych-teaser {
     .cmp-teaser {
-      box-shadow: 0 rem(3px) rem(4px) rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0.1875rem 0.25rem rgba(0, 0, 0, 0.3);
       border: none;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: rem(380px);
+      height: rem-convert(380px);
 
       &:hover {
-        box-shadow: 0 rem(3px) rem(4px) rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0.1875rem 0.25rem rgba(0, 0, 0, 0.3);
 
         .cmp-teaser__title {
           background-color: get-color(brand-blue) !important;
@@ -474,14 +474,14 @@
         .cmp-teaser__description {
           //min-height: 17rem;
           min-height: auto;
-          max-height: rem(144px);
+          max-height: 9rem;
           text-overflow: ellipsis;
           overflow: hidden;
           display: -webkit-box;
           -webkit-line-clamp: 8;
           -webkit-box-orient: vertical;
           padding-bottom: 0;
-          margin-bottom: rem(14px);
+          margin-bottom: 0.875rem;
         }
       }
 
@@ -493,7 +493,7 @@
         order: 2;
         width: 100%;
         overflow: hidden;
-        height: rem(155px);
+        height: rem-convert(155px);
       }
     }
   }
@@ -555,21 +555,21 @@
 // US 188398 Teaser style update "Services" for 3 teasers
 
 .cmp-three-teasers-apac {
-  padding: rem(32px);
+  padding: 2rem;
   .cmp-teaser {
-    width: rem(365px);
-    height: rem(490.37px);
+    width: rem-convert(365px);
+    height: rem-convert(490.37px);
     padding: 0;
-    box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    box-shadow: 0 0 0 0.0625rem get-color(brand-box-shadow);
     background-color: get-color(brand-white);
     display: grid;
     align-content: space-between;
-    grid-template-rows: rem(188.21px) rem(302.16px);
+    grid-template-rows: rem-convert(188.21px) rem-convert(302.16px);
     transition: all 0.3s;
 
     &:hover {
-      outline: rem(2px) solid get-color(brand-blue) !important;
-      box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+      outline: 0.125rem solid get-color(brand-blue) !important;
+      box-shadow: 0 0 0.25rem 0.25rem get-color(brand-box-shadow);
       transition: all 0.3s;
 
       .cmp-teaser__title {
@@ -591,11 +591,11 @@
 
     .cmp-teaser__title {
       width: 100%;
-      min-height: rem(45px);
+      min-height: 2.8125rem;
       background-color: get-color(brand-blue);
       color: get-color(brand-white);
       text-align: center;
-      padding-top: rem(5px);
+      padding-top: 0.3125rem;
       margin: 0;
 
       .cmp-teaser__title-link {
@@ -611,13 +611,13 @@
       }
 
       .cmp-teaser__description {
-        padding: rem(20px) rem(30px);
+        padding: 1.25rem 1.875rem;
       }
     }
 
     &__image {
       width: 100%;
-      height: rem(202.21px);
+      height: rem-convert(202.21px);
       object-fit: fill;
       overflow: hidden;
     }

@@ -3,9 +3,9 @@
 .cmp-quote-address-info {
   display: inline-grid;
   width: 33%;
-  margin: rem(30px) 0;
-  padding-left: rem(65px);
-  box-shadow: rem(1px) 0 0 0 get-color(v-divider-gray);
+  margin: 1.875rem 0;
+  padding-left: 4.0625rem;
+  box-shadow: 0.0625rem 0 0 0 get-color(v-divider-gray);
 
   @include tablet {
     border-bottom: 1px solid get-color(v-divider-gray);
@@ -14,49 +14,52 @@
     width: 100%;
   }
 
-  &:last-of-type {    
+  &:last-of-type {
     box-shadow: 0 0 0 0;
   }
 
   &:first-of-type {
-    padding-left: rem(40px);
+    padding-left: 2.5rem;
   }
 
-    &__title {
-        // height: rem(19px);
-        // width: rem(184px);
-        color: get-color(td-dark-blue);
-        font-family: $open-sans;
-        font-size: rem(14px);
-        font-weight: 600;
-        letter-spacing: 0;
-        line-height: rem(19px);
-        margin-bottom: rem(12px);
+  &__title {
+    // height: 1.1875rem;
+    // width: 11.5rem;
+    color: get-color(td-dark-blue);
+    font-family: $open-sans;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.1875rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__company-name {
+    color: get-color(text-light-charcoal);
+    font-family: $open-sans;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.125rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__company-info {
+    color: get-color(border-light-gray);
+    font-family: $open-sans;
+    font-size: 0.8125rem;
+    letter-spacing: 0;
+    line-height: 1.125rem;
+    &--name {
     }
-
-    &__company-name {
-        color: get-color(text-light-charcoal);
-        font-family: $open-sans;
-        font-size: rem(13px);
-        font-weight: 600;
-        letter-spacing: 0;
-        line-height: rem(18px);
-        margin-bottom: rem(12px);
-      }
-
-      &__company-info {
-        color: get-color(border-light-gray);
-        font-family: $open-sans;
-        font-size: rem(13px);
-        letter-spacing: 0;
-        line-height: rem(18px);
-        &--name {}
-        &--street {}
-        &--city-state-zip {}
-        &--state {
-          margin-bottom: rem(12px);
-        }
-      }
+    &--street {
+    }
+    &--city-state-zip {
+    }
+    &--state {
+      margin-bottom: 0.75rem;
+    }
+  }
 }
 
 /// End User Information

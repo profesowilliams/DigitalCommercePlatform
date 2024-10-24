@@ -4,33 +4,32 @@
 
 // Ported from ui.frontend/src/main/webpack/components/_icons.scss
 .info-icon {
-    color: get-color(brand-light-blue);
+  color: get-color(brand-light-blue);
 }
 
 .cmp-td-quote-subtotal {
-    display: flex;
-    // flex-direction: column;
-    // justify-content: space-between;
-    // align-content: flex-end;
+  display: flex;
+  // flex-direction: column;
+  // justify-content: space-between;
+  // align-content: flex-end;
 
-    &__price-area {
-        display: inline-flex;    
-        display: inline-flex;
-        flex-direction: row;
-        align-items: flex-end;
+  &__price-area {
+    display: inline-flex;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: flex-end;
 
-        &--title {
-            font-size: rem(20px);
-        }
-
-        &--price {
-            font-size: rem(24px);
-            margin-left: rem(30px);
-        }
+    &--title {
+      font-size: 1.25rem;
     }
 
-    &__checkout-area {        
-        width: rem(240px);    
+    &--price {
+      font-size: 1.5rem;
+      margin-left: 1.875rem;
     }
+  }
 
+  &__checkout-area {
+    width: 15rem;
+  }
 }

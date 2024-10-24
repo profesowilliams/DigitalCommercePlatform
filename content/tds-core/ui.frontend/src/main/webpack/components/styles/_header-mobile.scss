@@ -46,7 +46,7 @@ $header-height: 47px;
           @include mobile {
             margin: 0 5.5px;
             .cmp-button__icon {
-              margin-top: rem(0px);
+              margin-top: rem-convert(0px);
             }
           }
         }

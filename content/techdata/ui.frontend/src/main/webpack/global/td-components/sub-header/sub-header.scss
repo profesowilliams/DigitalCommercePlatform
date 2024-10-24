@@ -21,11 +21,11 @@
       color: get-color(brand-white);
 
       li {
-        padding: 0 rem(13px) !important;
+        padding: 0 0.8125rem !important;
         line-height: normal;
 
         & + li {
-          border-left: rem(1px) solid get-color(brand-white);
+          border-left: 0.0625rem solid get-color(brand-white);
         }
 
         a,
@@ -56,17 +56,17 @@
       &__menu {
         position: absolute;
         z-index: 999;
-        top: rem(60px);
-        left: rem(0);
+        top: 3.75rem;
+        left: 0;
         background-color: get-color(brand-white);
         width: 1440px;
-        height: rem(417px);
+        height: rem-convert(417px);
         display: flex;
         justify-content: space-evenly;
 
         &__item {
-          padding-left: rem(15px);
-          padding-right: rem(30px);
+          padding-left: 0.9375rem;
+          padding-right: 1.875rem;
 
           h2 {
             font-size: $font-size-custom-xxsmall;
@@ -75,8 +75,8 @@
           }
 
           img {
-            width: rem(392px);
-            height: rem(280px);
+            width: rem-convert(392px);
+            height: rem-convert(280px);
           }
         }
       }
@@ -145,7 +145,7 @@
       &.cmp-tabs__tablist li {
         &:first-child,
         &.dashboard {
-          //margin-right: rem(54px);
+          //margin-right: rem-convert(54px);
         }
       }
 
@@ -154,7 +154,7 @@
         position: relative;
         padding: 0 !important;
         z-index: 10;
-        margin-right: rem(28px);
+        margin-right: 1.75rem;
 
         span,
         a {
@@ -190,7 +190,7 @@
         }
 
         &:first-child {
-          //margin-right: rem(54px);
+          //margin-right: rem-convert(54px);
         }
       }
     }
@@ -200,7 +200,7 @@
 
       .cmp-sub-header__wrapper ul li + li {
         display: none !important;
-        border-left: rem(0px) solid get-color(brand-white);
+        border-left: 0 solid get-color(brand-white);
       }
     }
   }
@@ -217,11 +217,11 @@
     > li {
       a,
       span.cmp-sub-header__span {
-        height: rem(40px);
+        height: 2.5rem;
         box-shadow: unset;
 
         &:hover {
-          border-bottom-width: rem(2px);
+          border-bottom-width: 0.125rem;
           border-bottom-style: solid;
           border-bottom-color: inherit;
         }
@@ -230,14 +230,14 @@
       &.cmp-tabs__tab--active {
         a,
         span.cmp-sub-header__span {
-          border-bottom-width: rem(2px);
+          border-bottom-width: 0.125rem;
           border-bottom-style: solid;
           border-bottom-color: inherit;
         }
       }
 
       &:first-child {
-        margin-left: rem(48px);
+        margin-left: 3rem;
       }
     }
   }
@@ -246,7 +246,7 @@
 .cmp-sub-header {
   &--sub-nav {
     &.new-sub {
-      height: rem(44px);
+      height: 2.75rem;
       @include subheader-span-border-bottom;
 
       & > .cmp-sub-header--content {
@@ -254,14 +254,14 @@
         margin: auto !important;
         max-width: 90rem;
         width: 100%;
-        padding-left: rem(42px);
+        padding-left: 2.625rem;
 
         @media (max-width: 1023px) {
-          padding-left: rem(73px);
+          padding-left: rem-convert(73px);
         }
 
         @include mobile {
-          padding-left: rem(39px);
+          padding-left: 2.4375rem;
         }
 
         .cmp-tabs__tablist {
@@ -315,13 +315,13 @@
 
       span.cmp-sub-header__span {
         line-height: 2.5;
-        padding-right: rem(48px) !important;
+        padding-right: 3rem !important;
         @media (max-width: 1023px) {
-          padding-right: rem(40px) !important;
+          padding-right: 2.5rem !important;
         }
 
         @include mobile {
-          padding-right: rem(7px) !important;
+          padding-right: 0.4375rem !important;
         }
       }
     }
@@ -329,11 +329,11 @@
     &__image {
       padding-right: 48px;
       @media (max-width: 1023px) {
-        padding-right: rem(40px);
+        padding-right: 2.5rem;
       }
 
       @include mobile {
-        padding-right: rem(7px);
+        padding-right: 0.4375rem;
       }
 
       img {

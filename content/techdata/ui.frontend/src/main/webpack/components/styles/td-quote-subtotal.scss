@@ -6,15 +6,15 @@
   font-family: $open-sans;
 
   &__section {
-    font-size: rem(16px);
+    font-size: 1rem;
     font-weight: $font-weight-bold;
     white-space: nowrap;
-    border-bottom: rem(1px) solid get-color(secondary-light-grey);
+    border-bottom: 0.0625rem solid get-color(secondary-light-grey);
     color: get-color(border-light-gray);
     width: fit-content;
-    width: rem(300px);
+    width: 18.75rem;
     &__line {
-      margin: rem(12px) 0;
+      margin: 0.75rem 0;
       text-align: right;
       display: grid;
       grid-template-columns: 60% 40%;
@@ -28,22 +28,22 @@
         justify-content: flex-end;
         &__new {
           cursor: pointer;
-          font-size: rem(12px);
+          font-size: 0.75rem;
           &::before {
-            margin-right: rem(12px);
+            margin-right: 0.75rem;
             color: get-color(tertiary-dark-blue);
-            font-family: "Font Awesome 5 Free";
+            font-family: 'Font Awesome 5 Free';
             font-weight: 900;
-            content: "\f067";
+            content: '\f067';
           }
         }
         &__value {
           &__input {
-            border: rem(1px) solid get-color(secondary-light-grey);
-            width: rem(120px);
-            margin-right: rem(2px);
+            border: 0.0625rem solid get-color(secondary-light-grey);
+            width: rem-convert(120px);
+            margin-right: 0.125rem;
             &::placeholder {
-              font-size: rem(14px);
+              font-size: 0.875rem;
               color: get-color(border-light-gray);
             }
           }
@@ -55,7 +55,7 @@
         }
       }
       &__label {
-        margin-right: rem(16px);
+        margin-right: 1rem;
         &__ancillary {
           &__remove {
             visibility: hidden;
@@ -63,9 +63,9 @@
             &::before {
               cursor: pointer;
               color: get-color(tertiary-dark-blue);
-              font-family: "Font Awesome 5 Free";
+              font-family: 'Font Awesome 5 Free';
               font-weight: 900;
-              content: "\f057";
+              content: '\f057';
             }
           }
           display: inline-flex;
@@ -78,19 +78,19 @@
           }
         }
         &__icon {
-          margin-right: rem(16px);
+          margin-right: 1rem;
           cursor: pointer;
           color: get-color(tertiary-dark-blue);
           &::before {
-            font-family: "Font Awesome 5 Free";
+            font-family: 'Font Awesome 5 Free';
             font-weight: 900;
-            content: "\f055";
+            content: '\f055';
           }
           &--expanded {
             &::before {
-              font-family: "Font Awesome 5 Free";
+              font-family: 'Font Awesome 5 Free';
               font-weight: 900;
-              content: "\f056";
+              content: '\f056';
             }
           }
         }
@@ -108,16 +108,16 @@
     align-items: flex-end;
 
     &--title {
-      font-size: rem(20px);
+      font-size: 1.25rem;
     }
 
     &--price {
-      font-size: rem(24px);
-      margin-left: rem(30px);
+      font-size: 1.5rem;
+      margin-left: 1.875rem;
     }
   }
 
   &__checkout-area {
-    width: rem(240px);
+    width: 15rem;
   }
 }

@@ -1,8 +1,7 @@
-
 .enhanced-list {
   .cmp-list {
     list-style-type: none;
-    line-height: rem(12px);
+    line-height: 0.75rem;
     padding: 0;
     @include tablet {
       justify-content: space-evenly;
@@ -14,13 +13,13 @@
       width: 150px;
     }
     article {
-      margin-top: rem(8px);
-      margin-bottom: rem(8px);
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
     }
   }
   .cmp-list__item-title {
     font-weight: $font-weight-normal;
-    font-size: rem(13px);
+    font-size: 0.8125rem;
     color: get-color(brand-text-gray);
   }
   .cmp-image__image-figure {

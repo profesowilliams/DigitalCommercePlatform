@@ -9,7 +9,7 @@
     display: flex;
     align-content: baseline;
     flex-wrap: wrap;
-    border-right: 1px solid #D9D9D9;
+    border-right: 1px solid #d9d9d9;
     .vendor-icon {
       text-align: center;
       svg {
@@ -34,14 +34,14 @@
         font-size: 14px;
         line-height: 19px;
         font-weight: bold;
-        color: #000C21;
+        color: #000c21;
         &:last-child {
           margin-right: 0;
         }
         &::before {
           @include font-awesome-custom-icon;
 
-          content: "\f00c";
+          content: '\f00c';
           font-size: 10px;
           position: absolute;
           top: calc(50% - 10px);
@@ -91,53 +91,53 @@
         position: absolute;
         right: 0;
         top: 2px;
-        color: #00B1E2;
+        color: #00b1e2;
       }
     }
   }
 }
 
 .vendor-custom-column {
-    .vendor-listing {
-        // new variation for vendor listing
-        &--container {
-            margin: 10px;
-        }
-        &--left-section {
-            flex: 0 0 75%;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, 100px);
-            grid-gap: 1rem;
-            justify-content: space-between;
-            align-content: baseline;
-        }
-        &--right-section {
-            flex: 0 0 25%;
-            align-items: center;
-            align-self: flex-start;
-            min-height: 300px;
-            max-height: 500px;
-            overflow-y: scroll;
-            /**** Scrollbar styles for Opera,Edge and Chrome ****/
-            &::-webkit-scrollbar {
-                width: rem(6px);
-            }
-            &::-webkit-scrollbar-track {
-                background: get-color(brand-white);
-            }
-            &::-webkit-scrollbar-thumb {
-                background: get-color(td-dark-blue);
-                border-radius: rem(4px);
-                border: rem(2px) solid get-color(td-color-blue);
-            }
-            /********** Scrollbar Styles for FireFox *****************/
-
-            scrollbar-color: get-color(brand-scrollbar) get-color(td-dark-blue);
-            scrollbar-width: thin;
-
-            /******************************************************/
-        }
+  .vendor-listing {
+    // new variation for vendor listing
+    &--container {
+      margin: 10px;
     }
+    &--left-section {
+      flex: 0 0 75%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 100px);
+      grid-gap: 1rem;
+      justify-content: space-between;
+      align-content: baseline;
+    }
+    &--right-section {
+      flex: 0 0 25%;
+      align-items: center;
+      align-self: flex-start;
+      min-height: 300px;
+      max-height: 500px;
+      overflow-y: scroll;
+      /**** Scrollbar styles for Opera,Edge and Chrome ****/
+      &::-webkit-scrollbar {
+        width: 0.375rem;
+      }
+      &::-webkit-scrollbar-track {
+        background: get-color(brand-white);
+      }
+      &::-webkit-scrollbar-thumb {
+        background: get-color(td-dark-blue);
+        border-radius: 0.25rem;
+        border: 0.125rem solid get-color(td-color-blue);
+      }
+      /********** Scrollbar Styles for FireFox *****************/
+
+      scrollbar-color: get-color(brand-scrollbar) get-color(td-dark-blue);
+      scrollbar-width: thin;
+
+      /******************************************************/
+    }
+  }
 }
 
 .vendor-left-align {
@@ -158,11 +158,12 @@
   }
   .vendor-listing--left-section {
     border-right: none;
-    border-left: 1px solid #D9D9D9;
+    border-left: 1px solid #d9d9d9;
   }
 }
 
-.vendor-five-column, .vendor-custom-column {
+.vendor-five-column,
+.vendor-custom-column {
   .vendor-listing--container {
     .vendor-listing--left-section {
       .vendor-icon {
@@ -189,7 +190,7 @@
                 path,
                 rect,
                 polygon {
-                  fill: #000C21 !important;
+                  fill: #000c21 !important;
                 }
               }
             }
@@ -205,7 +206,7 @@
           path,
           rect,
           polygon {
-            fill: #000C21 !important;
+            fill: #000c21 !important;
           }
         }
       }
@@ -222,21 +223,21 @@
         cursor: pointer;
         &:hover {
           .vendor-icon__container {
-            border-color: #000C21;
+            border-color: #000c21;
           }
         }
         .vendor-icon__container {
           background-color: white;
-          border: 1px solid #D9D9D9;
+          border: 1px solid #d9d9d9;
           box-sizing: border-box;
-          box-shadow:  2px 2px 4px 0 rgba(0,0,0,0.5);
+          box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.5);
           width: 244px;
           height: 111px;
           display: flex;
           justify-content: center;
           align-items: center;
           &.activeIcon {
-            border-color: #000C21;
+            border-color: #000c21;
           }
         }
         svg {
@@ -260,12 +261,12 @@
   .cmp-image {
     &__image {
       border-radius: 50%;
-      box-shadow: 5px 5px 3px -1px rgba(0,0,0,0.3);
+      box-shadow: 5px 5px 3px -1px rgba(0, 0, 0, 0.3);
       transition: all 100ms linear;
       width: 100%;
     }
   }
-  
+
   .vendor-listing {
     &--container {
       @include mobile {
@@ -279,7 +280,7 @@
       .vendor-icon {
         max-width: 11rem;
         padding: 1rem;
-        
+
         @include mobile {
           max-width: 100%;
         }
@@ -307,15 +308,15 @@
       }
       .vendor-section-exec-title {
         color: get-color(text-mid-gray);
-        font-size: .8rem;
+        font-size: 0.8rem;
         -webkit-font-smoothing: antialiased;
       }
     }
 
     &--right-section {
       display: flex;
-      
-      .vendor-content{
+
+      .vendor-content {
         &-section.active {
           display: flex;
           align-items: center;
@@ -340,11 +341,11 @@
             text-align: center;
           }
         }
-        &-title{
+        &-title {
           color: get-color(text-mid-gray);
           font-size: 1rem;
         }
-        &-desc{
+        &-desc {
           -webkit-font-smoothing: antialiased;
           margin-bottom: 0;
           max-height: 22rem;
@@ -353,17 +354,17 @@
           overflow-y: scroll;
 
           &::-webkit-scrollbar {
-              width: rem(6px);
+            width: 0.375rem;
           }
 
           &::-webkit-scrollbar-track {
-              background: get-color(brand-white);
+            background: get-color(brand-white);
           }
 
           &::-webkit-scrollbar-thumb {
-              background: get-color(td-dark-blue);
-              border-radius: rem(4px);
-              border: rem(2px) solid get-color(td-color-blue);
+            background: get-color(td-dark-blue);
+            border-radius: 0.25rem;
+            border: 0.125rem solid get-color(td-color-blue);
           }
 
           &::-webkit-scrollbar-button {
@@ -402,7 +403,8 @@
 }
 
 @include mobile {
-  .vendor-five-column, .vendor-custom-column {
+  .vendor-five-column,
+  .vendor-custom-column {
     .vendor-listing {
       &--container {
         display: block;
@@ -421,14 +423,14 @@
         .vendor-section-title {
           font-size: 16px;
           font-weight: normal;
-          color: #000C21;
+          color: #000c21;
           line-height: 22px;
           margin-bottom: 5px;
           position: relative;
           &::after {
             @include font-awesome-custom-icon;
 
-            content: "\f054";
+            content: '\f054';
             font-size: 12px;
             position: absolute;
             color: #555555;

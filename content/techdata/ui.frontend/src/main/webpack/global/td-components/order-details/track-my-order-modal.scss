@@ -1,103 +1,100 @@
-
 ///track order details info modal content style///
 .cmp-track-my-order-modal {
-	max-width: rem(500px);
-	&__info {
-	  font-size: $font-size-small;
-	  margin-bottom: rem(20px);
-	  color: get-color("brand-text-gray");
-	}
-	&__line {
-		min-width: rem(400px);
-	  display: flex;
-      align-items: center;
-	  justify-content: space-between;
-	//   grid-template-columns: 10% 25% 35% 30%;
-	  min-height: rem(53px);
-	//   height: fit-content;
-	  align-items: center;
-	  padding-top: rem(16px);
-	  border-top: 1px solid get-color("secondary-light-grey");
-	  text-align: left;
-	  color: get-color("brand-text-gray");
-	//   justify-items: stretch;
-	  & .value {
-		text-align: right;
-	  }
-	  &__tracking-number {
-		width: rem(200px);
-		text-decoration: underline;
-		color: get-color(brand-button-blue);
-		cursor: pointer;
-	  }
-	  &:last-child {
-		border-bottom: 1px solid get-color("secondary-light-grey");
-	  }
-	  &__logo {
-		width: rem(95px);
-      	font-size: $font-size-xsmall;
-		//font-size: $font-size-custom-logo-large; // do not delete this size. it is for fontAwesome logo ones we get data
-		color: get-color(text-light-charcoal);
-		display: flex;
-		  padding: rem(10px);
-
-		  img {
-			  width: 100%;
-		  }
-	  }
-	  &__status {
-		width: rem(90px);;
-		text-align: right;
-	  }
-		&__show-more {
-			width: rem(42px);
-			&__label {
-				cursor: pointer;
-				&__icon {
-					margin-left: rem(5px);
-					color: get-color("td-primary-blue");
-					& i:before {
-						display: inline-block;
-					}
-				}
-				& .expanded {
-					& svg,
-					i:before {
-						transform: rotate(90deg);
-					}
-				}
-			}
-			&__content {
-				//margin-top: rem(10px);
-				//margin-bottom: rem(5px);
-				font-size: $font-size-xsmall;
-			}
-		}
-	}
-
-	.cmp-show-more {
-		&__label {
-			cursor: pointer;
-			& .icon {
-				margin-left: rem(5px);
-				color: get-color('td-primary-blue');
-				& i:before {
-					display: inline-block;
-				}
-			}
-			& .expanded {
-				& svg,
-				i:before {
-					transform: rotate(90deg);
-				}
-			}
-		}
-		&__content {
-			margin-top: rem(10px);
-			margin-bottom: rem(5px);
-			font-size: $font-size-xsmall;
-		}
-	}
-
+  max-width: 31.25rem;
+  &__info {
+    font-size: $font-size-small;
+    margin-bottom: 1.25rem;
+    color: get-color('brand-text-gray');
   }
-  
+  &__line {
+    min-width: 25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    //   grid-template-columns: 10% 25% 35% 30%;
+    min-height: 3.3125rem;
+    //   height: fit-content;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid get-color('secondary-light-grey');
+    text-align: left;
+    color: get-color('brand-text-gray');
+    //   justify-items: stretch;
+    & .value {
+      text-align: right;
+    }
+    &__tracking-number {
+      width: rem-convert(200px);
+      text-decoration: underline;
+      color: get-color(brand-button-blue);
+      cursor: pointer;
+    }
+    &:last-child {
+      border-bottom: 1px solid get-color('secondary-light-grey');
+    }
+    &__logo {
+      width: rem-convert(95px);
+      font-size: $font-size-xsmall;
+      //font-size: $font-size-custom-logo-large; // do not delete this size. it is for fontAwesome logo ones we get data
+      color: get-color(text-light-charcoal);
+      display: flex;
+      padding: 0.625rem;
+
+      img {
+        width: 100%;
+      }
+    }
+    &__status {
+      width: rem-convert(90px);
+      text-align: right;
+    }
+    &__show-more {
+      width: 2.625rem;
+      &__label {
+        cursor: pointer;
+        &__icon {
+          margin-left: 0.3125rem;
+          color: get-color('td-primary-blue');
+          & i:before {
+            display: inline-block;
+          }
+        }
+        & .expanded {
+          & svg,
+          i:before {
+            transform: rotate(90deg);
+          }
+        }
+      }
+      &__content {
+        //margin-top: 0.625rem;
+        //margin-bottom: 0.3125rem;
+        font-size: $font-size-xsmall;
+      }
+    }
+  }
+
+  .cmp-show-more {
+    &__label {
+      cursor: pointer;
+      & .icon {
+        margin-left: 0.3125rem;
+        color: get-color('td-primary-blue');
+        & i:before {
+          display: inline-block;
+        }
+      }
+      & .expanded {
+        & svg,
+        i:before {
+          transform: rotate(90deg);
+        }
+      }
+    }
+    &__content {
+      margin-top: 0.625rem;
+      margin-bottom: 0.3125rem;
+      font-size: $font-size-xsmall;
+    }
+  }
+}

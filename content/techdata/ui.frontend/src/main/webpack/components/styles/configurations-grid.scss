@@ -3,12 +3,12 @@
   overflow: auto;
   &__checkout-icon {
     color: get-color(brand-light-blue-icon);
-    margin-left: rem(20px);
+    margin-left: 1.25rem;
     cursor: pointer;
   }
 
   .cmp-simple-drop-down__selection {
-    width: rem(153px);
+    width: 9.5625rem;
   }
 
   .cmp-details-info {
@@ -29,8 +29,8 @@
       grid-template-columns: 30% 40% 30%;
       text-align: left;
 
-      .cmp-modal_quote-details{
-        padding-right: rem(4px);
+      .cmp-modal_quote-details {
+        padding-right: 0.25rem;
       }
 
       .cmp-modal_btn {
@@ -45,7 +45,7 @@
   align-items: center;
   text-align: center;
   background: $white;
-  padding: rem(8px);
+  padding: 0.5rem;
   box-shadow: 0px 8px 12px 0px rgba(0, 0, 0, 0.1);
 }
 
@@ -53,5 +53,5 @@
   color: $pink;
   font-size: $font-size-medium;
   font-weight: bold;
-  margin-left: rem(4px);
+  margin-left: 0.25rem;
 }
