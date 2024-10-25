@@ -55,8 +55,10 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
 
   if (aemData.filterType === "dynamic" && filterData?.refinements) {
     aemFilterData = normaliseAPIData(filterData.refinements);
-  } else {
+  } else if (aemData.filterType === "static") {
     aemFilterData = normaliseState(aemData.filterListValues);
+  } else {
+    aemFilterData = [];
   }
 
   const { setFilterList, toggleFilterModal, clearUnappliedDateRange, setCustomState, resetFilterToState } = effects;
