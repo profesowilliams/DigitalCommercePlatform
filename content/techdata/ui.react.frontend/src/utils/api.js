@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getHeaderInfoFromUrl, getConsumerRequestHeader, isEnvironmentEnabled, getEnvironmentHeader } from '../utils';
-
+import {getDictionaryValueOrKey} from '../utils/utils';
 const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
 
 export const generateTraceId = (userData) => 
@@ -62,3 +62,35 @@ export const checkApiErrorMessage = (apiResponse) => {
   } 
   return [...errorMessagesList];
 }
+
+/**
+ * Generic wrapper for service call.
+
+ * @param callback Callback function.
+ * @param endpoint Endpoint.
+ * @param payload Payload.
+ * @return Response with retrieved data or errors.
+ */
+export const callServiceWrapper = async (callback, endpoint, payload) => {
+  const response = { data: null, errors: [] };
+
+  const setGenericError = () => {
+    response.errors.push({
+       code: getDictionaryValueOrKey('mainDashboard.renewal.properties.label.genericErrorCode'),
+       message: getDictionaryValueOrKey('mainDashboard.renewal.properties.label.genericError')
+    });
+  };
+
+  try {
+    response.data = await callback(endpoint, payload);
+
+   if (!response.data || Object.keys(response.data).length === 0 || response.data.isError) {
+     setGenericError();
+   }
+
+  } catch (error) {
+    setGenericError();
+  }
+
+  return response;
+};

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getModifiedResellerData, getModifiedEndUserData } from './utils';
+import { callServiceWrapper } from '../../../../utils/api';
 
 import {
   AutoCompleteSearchIcon,
@@ -8,6 +9,7 @@ import {
   ProhibitedIcon,
   BannerInfoIcon,
   CloseXButtonIcon,
+  LoaderIcon,
 } from '../../../../fluentIcons/FluentIcons';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import { Autocomplete, Button, TextField } from '@mui/material';
@@ -75,6 +77,7 @@ function FormPart2({
   const [selectedVendorPartNo, setSelectedVendorPartNo] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Date
   const [datePickerOpen, setDatePickerOpen] = useState(true);
@@ -225,29 +228,33 @@ function FormPart2({
 
         items: filteredItemsPayload,
       };
+
   const handleAddProductToGrid = async () => {
     setErrorMessage('');
     setBannerOpen(false);
     setPlaceOrderActive(false);
 
-    try {
-      const response = await addProductToGrid(
-        newPurchaseFlyout?.addNewProductEndpoint,
-        addProductPayload
-      );
-      if (response?.isError) {
-        setErrorMessage(newPurchaseFlyout?.unknownErrorNewPurchase);
+    const response = await callServiceWrapper(
+      addProductToGrid,
+      newPurchaseFlyout?.addNewProductEndpoint,
+      addProductPayload,
+    );
+
+    processResponse(response);
+
+    setValidating(false);
+    setPayloadWithoutNewItem(false);
+    setIsLoading(false);
+  };
+
+
+  const processResponse = (response) => {
+      if (response.errors.length > 0) {
+        setErrorMessage(response.errors[0].message);
         setPlaceOrderActive(false);
       } else {
-        setDataTable(response);
+        setDataTable(response.data);
       }
-    } catch (error) {
-      setErrorMessage(newPurchaseFlyout?.unknownErrorNewPurchase);
-      setPlaceOrderActive(false);
-    } finally {
-      setValidating(false);
-      setPayloadWithoutNewItem(false);
-    }
   };
 
   // Validation banner
@@ -293,6 +300,7 @@ function FormPart2({
 
     if (resellerId?.length >= 3) {
       setIsAutocompleteOpen(true);
+      setIsLoading(true);
 
       const payload = {
         MaxParts: 25,
@@ -334,6 +342,7 @@ function FormPart2({
       setIsAutocompleteOpen(false);
       setVendorPartNumbers([]);
     }
+    setIsLoading(false);
   };
 
   const findSelectedVendorPartNo = async (newInput) => {
@@ -346,6 +355,10 @@ function FormPart2({
         getDictionaryValueOrKey(newPurchaseFlyout?.productNotFound)
       );
       return;
+    }
+
+    if(selectedVendorPartNo && selectedVendorPartNo.productId === newInput.productId) {
+        setIsLoading(false);
     }
 
     const vendorPartNoExists = vendorPartNumbers?.length > 0;
@@ -363,6 +376,7 @@ function FormPart2({
   };
 
   const handleVendorSelectedChange = (event, newInput) => {
+    setIsLoading(true);
     findSelectedVendorPartNo(newInput);
     setSelectedVendorPartNo(newInput);
     setErrorMessage('');
@@ -371,6 +385,7 @@ function FormPart2({
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
+      setIsLoading(true);
       selectVendor();
       event.preventDefault();
       event.stopPropagation();
@@ -643,11 +658,16 @@ function FormPart2({
                           variant="standard"
                           onClick={selectVendor}
                         >
-                          {isFocusAutocompleteInput ? (
-                            <AutoCompleteSearchIcon className="autocomplete-search-icon-brandgreen" />
-                          ) : (
-                            <AutoCompleteSearchIcon />
-                          )}
+                        {!isLoading ? (
+                              isFocusAutocompleteInput ? (
+                                <AutoCompleteSearchIcon className="autocomplete-search-icon-brandgreen" />
+                              ) : (
+                                <AutoCompleteSearchIcon />
+                              )
+                            ) : (
+                              <LoaderIcon className="loadingIcon-search-rotate" />
+                            )
+                        }
                         </Button>
                       </div>
                     ),

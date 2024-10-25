@@ -158,7 +158,19 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="grids.common.label.import"
                                                 fieldLabel="Import"
-                                                name="./labels/import"/>      
+                                                name="./labels/import"/>
+											<genericError
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldDescription="mainDashboard.renewal.properties.label.genericError"
+												fieldLabel="Unknown error has occurred. Please try again."
+												name="./labels/genericError"/>
+											<genericErrorCode
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldDescription="mainDashboard.renewal.properties.label.genericErrorCode"
+												fieldLabel="Unknown error code"
+												name="./labels/genericErrorCode"/>
 										</items>
 									</column>
 								</items>

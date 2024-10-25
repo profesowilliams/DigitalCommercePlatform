@@ -73,8 +73,9 @@ use(["../../../common/utils.js"], function(utils) {
           "noLeaveOffAutoRenew",
           "savingAutoRenew",
           "errorAutoRenewNotEnabled",
-          "errorAutoRenewEnabled"
-
+          "errorAutoRenewEnabled",
+          "genericError",
+          "genericErrorCode"
         ];
 
         productLinesList.map((productLinesItem) =>

@@ -5296,6 +5296,8 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "mainDashboard.renewal.newPurchaseFlyout.label.validating": "Validating",
     "mainDashboard.renewal.newPurchaseFlyout.label.unknownError":
       "Unknown error has occurred. Please try again.",
+    "mainDashboard.renewal.newPurchaseFlyout.label.unknownErrorCode":
+      "500",
     "mainDashboard.renewal.newPurchaseFlyout.label.accountDoesntExistError":
       "Account doesn't exist!",
     "mainDashboard.renewal.newPurchaseFlyout.label.quoteExistsError":
@@ -5326,6 +5328,10 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
       "No match found, please try again.",
     "mainDashboard.renewal.newPurchaseFlyout.label.pleaseEnterAValidPostalCode":
       "Please enter a valid postal code",
+     "mainDashboard.renewal.properties.label.genericError":
+      "Unknown error has occurred. Please try again.",
+    "mainDashboard.renewal.properties.label.genericErrorCode":
+       "500",
   });
 });
 
@@ -5635,8 +5641,9 @@ app.post("/ui-renewal/v1/PartNumbers/Find", function (req, res) {
   };
 
   //mockResponses.failedResponse
-
-  return res.status(200).json(success);
+    setTimeout(() => {
+      return res.status(200).json(success);
+    }, 1000);
 });
 
 app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {

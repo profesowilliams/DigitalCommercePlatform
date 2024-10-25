@@ -426,6 +426,8 @@ use(["../../../common/utils.js"], function (utils) {
       "hideCopyHeaderOption",
       "hideExportOption",
       "import",
+      "genericError",
+      "genericErrorCode"
     ];
 
     labelList.map((labelListItem) => {

@@ -490,7 +490,18 @@
                                                     fieldDescription="details.renewal.properties.label.errorAutoRenewEnabled"
                                                     fieldLabel="Error AutoRenewEnabled Label"
                                                     name="./productLines/errorAutoRenewEnabled"/>
-
+                                            <genericError
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="mainDashboard.renewal.properties.label.genericError"
+                                                    fieldLabel="Unknown error has occurred. Please try again."
+                                                    name="./productLines/genericError"/>
+                                            <genericErrorCode
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="mainDashboard.renewal.properties.label.genericErrorCode"
+                                                    fieldLabel="Unknown error code"
+                                                    name="./productLines/genericErrorCode"/>
                                         </items>
                                     </column>
                                 </items>
