@@ -4,11 +4,10 @@ import { AddIcon, SubtractIcon } from "../../../../../fluentIcons/FluentIcons";
 
 function QuantityColumn(props) {
     const { value, setValue, isEditing, rowIndex, data, activeLicenseEdit, dataObj } = props;
+
     const refInput = useRef();
-    const MIN_VAL = 0;
-    const MAX_VAL = activeLicenseEdit
-      ? dataObj?.itemsActive?.[props.rowIndex]?.quantity
-      : 999998;
+    const MIN_VAL = Number(data?.minimumQuantity) || 0;
+    const MAX_VAL = Number(data?.maximumQuantity) || 999998;
     const MAX_DIGITS = MAX_VAL?.toString()?.length;
 
     // Return simple render label when edit flag is false

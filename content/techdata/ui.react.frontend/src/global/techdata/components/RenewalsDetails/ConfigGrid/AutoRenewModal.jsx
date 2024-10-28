@@ -86,7 +86,7 @@ function AutoRenewModal({
       <div className="cmp-auto-renew-modal__button-section">
         {isToggled ? (
           <>
-            <button className="secondary" onClick={() => renewModalClose(true)}>
+            <button className="secondary" onClick={() => renewModalClose(false)}>
               {getDictionaryValueOrKey(
                 gridProps?.productLines?.noLeaveOffAutoRenew
               )}
