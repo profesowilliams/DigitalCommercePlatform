@@ -1,4 +1,6 @@
 /* stylelint-disable -- ryan.williams@tdsynnex.com: Too many errors to resolve right now */
+@use "sass:map";
+
 .filter-modal-container {
   position: fixed;
   background: rgba(0, 12, 33, 0.28);
@@ -107,10 +109,10 @@
     justify-content: space-between;
     padding: 35px 25px;
     padding-bottom: 15px;
-    border-bottom: 2px solid map-get($color-palette, 'cool-gray-1');
+    border-bottom: 2px solid map.get($color-palette, 'cool-gray-1');
 
     h3 {
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
       font-size: 1.25rem;
       font-weight: 700;
       letter-spacing: 0;
@@ -173,7 +175,7 @@
 
   .cmp-quote-button:disabled {
     opacity: 0.8;
-    background-color: map-get($color-palette, 'teal');
+    background-color: map.get($color-palette, 'teal');
     color: $brand-white;
     cursor: none;
   }
@@ -193,7 +195,7 @@
 
 .filter-option {
   &__checkbox {
-    accent-color: map-get($color-palette, 'teal');
+    accent-color: map.get($color-palette, 'teal');
     cursor: pointer;
     margin-right: 6px;
     vertical-align: middle;
@@ -294,7 +296,7 @@ div.filter-accordion {
     margin: 14px 0;
 
     &.active {
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
       font-weight: bold;
 
       &:before {
@@ -358,7 +360,7 @@ div.filter-accordion {
     margin: 14px 0;
 
     &.active {
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
       font-weight: bold;
 
       &:before {
@@ -441,7 +443,7 @@ div.filter-accordion {
 
   .filter-tags {
     border-radius: 14px;
-    background-color: map-get($color-palette, 'teal');
+    background-color: map.get($color-palette, 'teal');
     color: $brand-white;
     padding: 0 10px;
     margin-bottom: 10px;
@@ -501,7 +503,7 @@ div.filter-accordion {
 
   .filter-tags {
     border-radius: 14px;
-    background-color: map-get($color-palette, 'teal');
+    background-color: map.get($color-palette, 'teal');
     color: white;
     padding: 0 10px;
     margin-bottom: 10px;
@@ -585,7 +587,7 @@ div.filter-accordion {
 
 .count {
   border-radius: 9.5px;
-  background-color: map-get($color-palette, 'deep-teal');
+  background-color: map.get($color-palette, 'deep-teal');
   color: $brand-white;
   text-align: center;
   padding: 0px 12px;
@@ -602,7 +604,7 @@ div.filter-accordion {
   .filter-modal-content {
     &__close {
       &::before {
-        color: map-get($color-palette, 'teal');
+        color: map.get($color-palette, 'teal');
       }
     }
 
@@ -617,7 +619,7 @@ div.filter-accordion {
     }
 
     .cmp-quote-button {
-      background-color: map-get($color-palette, 'teal');
+      background-color: map.get($color-palette, 'teal');
       color: $td-neutral-gray;
 
       &:disabled {
@@ -630,7 +632,7 @@ div.filter-accordion {
   .filter-modal-bottom {
     .filter-tags-container {
       .filter-tags {
-        background-color: map-get($color-palette, 'deep-teal');
+        background-color: map.get($color-palette, 'deep-teal');
       }
     }
   }

@@ -1,3 +1,5 @@
+@use "sass:map";
+
 .place-cmp-order-dialog-container {
   padding: 1.6rem 2rem;
   padding-top: 2.8rem;
@@ -102,7 +104,7 @@
       }
     }
     &.cmp-grid-techdata {
-      background-color: map-get($color-palette, 'deep-teal');
+      background-color: map.get($color-palette, 'deep-teal');
       &.Mui-disabled {
         background-color: #0000001f;
       }
@@ -129,7 +131,7 @@
       }
     }
     &.cmp-grid-techdata {
-      background-color: map-get($color-palette, 'deep-teal');
+      background-color: map.get($color-palette, 'deep-teal');
       &.Mui-disabled {
         background-color: #0000001f;
       }
@@ -161,7 +163,7 @@
     padding-top: 2px;
 
     svg {
-        fill: $brand-green;
+      fill: $brand-green;
     }
   }
 
@@ -175,7 +177,7 @@
       font-family: 'Arial';
     }
     a.cmp-place-order-link {
-      color: map-get($color-palette, 'teal');
+      color: map.get($color-palette, 'teal');
       text-decoration: none;
     }
     color: $brand-charcoal;
@@ -196,10 +198,10 @@
 }
 
 .cmp-place-order-terms {
-    a,
-    span {
-        font-size: 14px;
-        line-height: 21px;
-        font-weight: 400;
-    }
+  a,
+  span {
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 400;
+  }
 }

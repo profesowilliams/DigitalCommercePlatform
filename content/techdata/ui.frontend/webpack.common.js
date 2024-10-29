@@ -52,23 +52,9 @@ module.exports = {
           },
           {
             loader: 'postcss-loader',
-            options: {
-              plugins() {
-                return [require('autoprefixer')];
-              },
-            },
           },
           {
             loader: 'sass-loader',
-            options: {
-              url: false,
-              sassOptions: {
-                api: 'modern-compiler',
-                quietDeps: true, // Suppress warnings from dependencies
-                quiet: true, // Suppresses all warnings
-                silenceDeprecations: ['legacy-js-api', 'import', 'global-builtin'],
-              },
-            },
           },
           {
             loader: 'webpack-import-glob-loader',

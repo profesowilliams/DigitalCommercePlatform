@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $brand-blue: #000c21;
 $secondary-link-blue: #006bae;
 $font-family-search: 'Open Sans', sans-serif;
@@ -62,7 +64,7 @@ $brand-green-dark: #003031;
   // width: 100%;
   height: 17.5px;
   width: 170px;
-  color: map-get($color-palette, 'teal');
+  color: map.get($color-palette, 'teal');
   font-family: 'Open Sans';
   top: 45px;
   font-size: 14px;
@@ -75,7 +77,7 @@ $brand-green-dark: #003031;
   padding: 0.5em;
   height: 50px;
   &__button {
-    background-color: map-get($color-palette, 'teal');
+    background-color: map.get($color-palette, 'teal');
     cursor: pointer;
     i,
     svg {
@@ -152,10 +154,10 @@ $brand-green-dark: #003031;
   gap: 0.7rem;
   align-items: center;
   &__text {
-    color: map-get($color-palette, 'teal');
+    color: map.get($color-palette, 'teal');
   }
   &__icon {
-    color: map-get($color-palette, 'teal');
+    color: map.get($color-palette, 'teal');
   }
   &-dnone {
     display: none;
@@ -235,7 +237,7 @@ $brand-green-dark: #003031;
   & .cmp-renewal-search {
     & .search-icon {
       &__dark {
-        fill: map-get($color-palette, 'teal');
+        fill: map.get($color-palette, 'teal');
       }
     }
   }
@@ -246,7 +248,7 @@ $brand-green-dark: #003031;
       & .search-icon {
         height: 24px;
         &__dark {
-          fill: map-get($color-palette, 'teal');
+          fill: map.get($color-palette, 'teal');
         }
         &__light {
           fill: white;
@@ -255,7 +257,7 @@ $brand-green-dark: #003031;
     }
   }
   & .cmp-search-options {
-    border-top: 2px solid map-get($color-palette, 'teal');
+    border-top: 2px solid map.get($color-palette, 'teal');
     top: 25px;
     width: 100%;
     // padding: 6px 0;
@@ -278,7 +280,10 @@ $brand-green-dark: #003031;
     padding: 0.62rem 1rem;
     color: $brand-charcoal;
     &:hover {
-      background-color: var(--Neutral-Gray-2, map-get($color-palette, 'neutral-gray-2'));
+      background-color: var(
+        --Neutral-Gray-2,
+        map.get($color-palette, 'neutral-gray-2')
+      );
     }
   }
 
@@ -303,7 +308,7 @@ $brand-green-dark: #003031;
 .cmp-grid-techdata {
   .cmp-search-tooltip {
     &__button {
-      background-color: map-get($color-palette, 'teal');
+      background-color: map.get($color-palette, 'teal');
     }
   }
 }

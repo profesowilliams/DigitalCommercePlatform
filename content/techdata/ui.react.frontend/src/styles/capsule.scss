@@ -1,5 +1,7 @@
+@use "sass:map";
+
 .td-capsule {
-  background-color: map-get($color-palette, 'deep-teal');
+  background-color: map.get($color-palette, 'deep-teal');
   min-width: 25px;
   border-radius: 20px;
   padding: 0 17px 0 17px;

@@ -1,3 +1,5 @@
+@use "sass:map";
+
 .fluent {
   &.people-filled {
     &::before {
@@ -9,7 +11,7 @@
       width: 24px;
       -webkit-mask-size: cover;
       mask-size: cover;
-      background-color: map-get($color-palette, 'black');
+      background-color: map.get($color-palette, 'black');
       display: inline-block;
       align-items: center;
       vertical-align: middle;
@@ -26,7 +28,7 @@
       width: 24px;
       -webkit-mask-size: cover;
       mask-size: cover;
-      background-color: map-get($color-palette, 'black');
+      background-color: map.get($color-palette, 'black');
       display: inline-block;
       align-items: center;
       vertical-align: middle;
@@ -43,7 +45,7 @@
       width: 24px;
       -webkit-mask-size: cover;
       mask-size: cover;
-      background-color: map-get($color-palette, 'black');
+      background-color: map.get($color-palette, 'black');
       display: inline-block;
       align-items: center;
       vertical-align: middle;
@@ -60,7 +62,7 @@
       width: 1rem;
       -webkit-mask-size: cover;
       mask-size: cover;
-      background-color: map-get($color-palette, 'black');
+      background-color: map.get($color-palette, 'black');
       display: inline-block;
       align-items: center;
       vertical-align: middle;

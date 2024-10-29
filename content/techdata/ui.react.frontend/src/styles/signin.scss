@@ -1,4 +1,7 @@
 /* stylelint-disable -- Too much to fix, will delete file later. */
+@use "sass:map";
+@use "~sass-rem" as rem;
+
 .cmp-sign-in {
   display: flex;
   &:hover {
@@ -46,7 +49,7 @@
 
       > i,
       svg {
-        font-size: rem-convert(12.8px) !important;
+        font-size: rem.convert(12.8px) !important;
       }
 
       &.active {
@@ -105,7 +108,7 @@
     }
 
     p {
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
       font-family: 'Open Sans', sans-serif;
       font-size: 1rem;
       letter-spacing: 0;
@@ -147,7 +150,7 @@
           }
 
           &--icon {
-            color: map-get($color-palette, 'teal');
+            color: map.get($color-palette, 'teal');
 
             @include desktop {
               position: absolute;
@@ -165,7 +168,7 @@
           }
 
           span {
-            color: map-get($color-palette, 'teal');
+            color: map.get($color-palette, 'teal');
             font-size: 1rem;
 
             @include desktop {
@@ -189,7 +192,7 @@
     color: white;
     font-family: 'Open Sans', sans-serif;
     letter-spacing: 0;
-    background-color: map-get($color-palette, 'teal');
+    background-color: map.get($color-palette, 'teal');
 
     @include tablet {
       background-color: #f6f6f6;

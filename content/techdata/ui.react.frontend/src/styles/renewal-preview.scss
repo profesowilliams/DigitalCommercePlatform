@@ -1,4 +1,6 @@
 // overriding styles applied over grid in quote preview.
+@use "sass:map";
+
 .cmp-renewal-preview
   .ag-header-container
   .ag-header-row
@@ -24,7 +26,7 @@
       line-height: 33px;
     }
     .details-price-level {
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
       font-family: inherit;
       padding-left: 1.25rem;
       font-size: 16px;
@@ -497,41 +499,39 @@
 }
 
 .cmp-renewals-qp__config-grid .header-container {
-    position: relative;
+  position: relative;
 }
 
 .cmp-product-lines-grid__header .details-auto-renew-banner {
-    width: 448px;
+  width: 448px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  padding-right: 45px;
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .try-again {
+    padding-left: 39px;
+    margin-top: 16px;
+    display: inline-block;
+    color: #006fba;
+  }
+
+  .close-icon {
     position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    justify-content: flex-start;
-    gap: 20px;
-    padding-right: 45px;
-
-    p {
-        margin: 0;
-        font-size: 16px;
-        line-height: 24px
-    }
-
-    .try-again {
-        padding-left: 39px;
-        margin-top: 16px;
-        display: inline-block;
-        color: #006FBA;
-    }
-
-    .close-icon {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 16px;
-        height: 16px;
-    }
-
-
+    top: 20px;
+    right: 20px;
+    width: 16px;
+    height: 16px;
+  }
 }
 
 .zero-quantity-row div,

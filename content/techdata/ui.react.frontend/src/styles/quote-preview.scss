@@ -1,3 +1,5 @@
+@use "sass:map";
+
 .cmp-quote-preview {
   .cmp-loader-roller {
     display: block;
@@ -180,7 +182,7 @@
 
 .cmp-renewals-details__tds .cmp-renewals-qp__agreement-info p span i {
   font-style: italic;
-  color: map-get($color-palette, 'cool-gray-8');
+  color: map.get($color-palette, 'cool-gray-8');
   line-height: 20px;
 }
 .cmp-qp__company-info,
@@ -211,13 +213,13 @@
     cursor: default;
   }
   &--sub-title {
-    color: map-get($color-palette, 'charcoal');
+    color: map.get($color-palette, 'charcoal');
     font-size: 13px;
     font-weight: 600;
     line-height: 18px;
   }
   &--address-group {
-    color: map-get($color-palette, 'charcoal');
+    color: map.get($color-palette, 'charcoal');
     font-size: 13px;
     line-height: 18px;
     span {
@@ -299,7 +301,7 @@
 
 /* Styles for the dropdown container */
 .dropdown-content {
-  border-top: 2px solid map-get($color-palette, 'teal');
+  border-top: 2px solid map.get($color-palette, 'teal');
   display: block;
   position: absolute;
   background-color: #f9f9f9;
@@ -310,10 +312,10 @@
   width: 12rem; /* Adjust width as necessary */
 
   &:hover button:hover span {
-      text-decoration: underline;
-      text-decoration-color: map-get($color-palette, 'teal');
-      text-underline-offset: 4px;
-    }
+    text-decoration: underline;
+    text-decoration-color: map.get($color-palette, 'teal');
+    text-underline-offset: 4px;
+  }
 }
 
 .dropdown-content button {
@@ -331,14 +333,18 @@
   }
 
   &:hover {
-    background: var(--Neutral-Gray-2, map-get($color-palette, 'neutral-gray-2'));
+    background: var(
+      --Neutral-Gray-2,
+      map.get($color-palette, 'neutral-gray-2')
+    );
   }
 
   &:active {
-    background: map-get($color-palette, 'teal');
+    background: map.get($color-palette, 'teal');
 
-    span, .separator {
-      color: map-get($color-palette, 'white') !important;
+    span,
+    .separator {
+      color: map.get($color-palette, 'white') !important;
     }
 
     svg {
@@ -346,7 +352,7 @@
     }
 
     svg path {
-      fill: map-get($color-palette, 'white') !important;
+      fill: map.get($color-palette, 'white') !important;
     }
   }
 }
