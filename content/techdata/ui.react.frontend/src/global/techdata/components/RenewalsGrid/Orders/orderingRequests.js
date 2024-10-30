@@ -59,7 +59,7 @@ const extractRenewalData = (quote) => {
   }
 }
 
-export const mapRenewalItemProducts = async (
+export const mapRenewalItemProducts = (
   items = [],
   renewalsDetailsOriginal = []
 ) => {
@@ -238,11 +238,11 @@ export const mapShipToDetailsToAddress = (shipTo) => {
   };
 };
 
-export const mapRenewalForUpdateDetails = async (
+export const mapRenewalForUpdateDetails = (
   renewalQuote,
   renewalsDetailsOriginal
 ) => {
-  const items = await mapRenewalItemProducts(
+  const items = mapRenewalItemProducts(
     renewalQuote?.items,
     renewalsDetailsOriginal?.items
   );

@@ -285,7 +285,7 @@ function RenewalsDetails(props) {
     setMutableData(resultArr);
   };
   const updateRenewalDetails = async (details, renewalsDetailsOriginal) => {
-    const { POAllowedLength, ...payload } = await mapRenewalForUpdateDetails(
+    const { POAllowedLength, ...payload } = mapRenewalForUpdateDetails(
       details,
       renewalsDetailsOriginal
     );
