@@ -1,0 +1,29 @@
+{
+  "resources": [
+    {
+      "type": "react_css",
+      "directory": "../ui.apps/src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-react/css",
+      "pattern": "https://(dev|dit|sit|uat|stage)(-\\w*)?\\.dc\\.tdebusiness\\.cloud/etc\\.clientlibs/(techdata|tds-site)/clientlibs/clientlib-(react)\\.min(\\.[a-f0-9]{32})?\\.css",
+      "filename": "bundle.css"
+    },
+    {
+      "type": "react_js",
+      "directory": "../ui.apps/src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-react/js",
+      "pattern": "https://(dev|dit|sit|uat|stage)(-\\w*)?\\.dc\\.tdebusiness\\.cloud/etc\\.clientlibs/techdata/clientlibs/clientlib-(react)\\.min(\\.[a-f0-9]{32})?\\.js",
+      "filename": "bundle.js"
+    },
+    {
+      "type": "web_components_css",
+      "directory": "../ui.apps/src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-web-components/css",
+      "pattern": "https://(dev|dit|sit|uat|stage)(-\\w*)?\\.dc\\.tdebusiness\\.cloud/etc\\.clientlibs/techdata/clientlibs/clientlib-(web-components)\\.min(\\.[a-f0-9]{32})?\\.css",
+      "filename": "components.css"
+    },
+    {
+      "type": "web_components_js",
+      "directory": "../ui.apps/src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-web-components/js",
+      "pattern": "https://(dev|dit|sit|uat|stage)(-\\w*)?\\.dc\\.tdebusiness\\.cloud/etc\\.clientlibs/techdata/clientlibs/clientlib-(web-components)\\.min(\\.[a-f0-9]{32})?\\.js",
+      "filename": "components.js"
+    }
+  ],
+  "blockedDomains": ["assets.msn.com", "typeahead.cstenet.com"]
+}

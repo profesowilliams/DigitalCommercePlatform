@@ -1,0 +1,31 @@
+{
+  "resources": [
+    {
+      "type": "site_css",
+      "directory": "../ui.apps/src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-site/css",
+      "pattern": "https://(dev|dit|sit|uat|stage)(-\\w*)?\\.dc\\.tdebusiness\\.cloud/etc\\.clientlibs/(tds-core|tds-site)/clientlibs/clientlib-(site)\\.min(\\.[a-f0-9]{32})?\\.css",
+      "filename": "site.css"
+    },
+    {
+      "type": "site_js",
+      "directory": "../ui.apps/src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-site/js",
+      "pattern": "https://(dev|dit|sit|uat|stage)(-\\w*)?\\.dc\\.tdebusiness\\.cloud/etc\\.clientlibs/(tds-core|tds-site)/clientlibs/clientlib-(site)\\.min(\\.[a-f0-9]{32})?\\.js",
+      "filename": "site.js"
+    },
+    {
+      "type": "web_components_css",
+      "directory": "../ui.apps/src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-web-components/css",
+      "pattern": "https://(dev|dit|sit|uat|stage)(-\\w*)?\\.dc\\.tdebusiness\\.cloud/etc\\.clientlibs/(tds-core|tds-site)/clientlibs/clientlib-(web-components)\\.min(\\.[a-f0-9]{32})?\\.css",
+      "filename": "components.css"
+    },
+    {
+      "type": "web_components_js",
+      "directory": "../ui.apps/src/main/content/jcr_root/apps/tds-core/clientlibs/clientlib-web-components/js",
+      "pattern": "https://(dev|dit|sit|uat|stage)(-\\w*)?\\.dc\\.tdebusiness\\.cloud/etc\\.clientlibs/(tds-core|tds-site)/clientlibs/clientlib-(web-components)\\.min(\\.[a-f0-9]{32})?\\.js",
+      "filename": "components.js"
+    }
+  ],
+  "blockedDomains": [
+    "typeahead.cstenet.com"
+  ]
+}

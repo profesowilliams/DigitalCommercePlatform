@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+git fetch -p ; git branch -r | awk '{print }' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print }' | xargs git branch -D
