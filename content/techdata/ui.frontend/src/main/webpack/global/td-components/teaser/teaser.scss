@@ -1,4 +1,6 @@
 /* stylelint-disable -- ryan.williams@tdsynnex.com: Too many errors to resolve right now */
+// @use 'sass-rem' as rem;
+
 @mixin teaser-default {
   .cmp-teaser {
     position: relative;

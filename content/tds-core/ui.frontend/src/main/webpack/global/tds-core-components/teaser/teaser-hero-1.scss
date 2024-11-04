@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .hero-style-1 {
   @include teaser-default();
@@ -6,14 +6,14 @@
   @include desktop {
     .cmp-teaser {
       &__pretitle {
-        font-size: rem.convert(45px);
+        font-size: rem-convert(45px);
       }
 
       &__title {
-        font-size: rem.convert(70px);
+        font-size: rem-convert(70px);
         font-weight: 600;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        padding-left: rem.convert(34px);
+        padding-left: rem-convert(34px);
         order: 1;
         margin: 0;
       }
@@ -30,14 +30,14 @@
   @include tablet {
     .cmp-teaser {
       &__pretitle {
-        font-size: rem.convert(24px);
+        font-size: rem-convert(24px);
         font-weight: bold;
         letter-spacing: 0;
         line-height: 30px;
       }
 
       &__title {
-        font-size: rem.convert(24px);
+        font-size: rem-convert(24px);
         font-weight: bold;
         line-height: 30px;
         order: 1;
@@ -45,7 +45,7 @@
 
       &__description {
         margin: 0;
-        font-size: rem.convert(24px);
+        font-size: rem-convert(24px);
         font-weight: bold;
         line-height: 30px;
       }

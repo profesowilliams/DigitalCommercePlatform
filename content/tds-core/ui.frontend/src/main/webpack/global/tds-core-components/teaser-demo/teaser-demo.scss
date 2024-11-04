@@ -1,15 +1,15 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 @import './../teaser/teaser.scss';
 
 .cmp-teaser-demo {
   // Add "cmp-teaser--solution" class for solution Variation
   &--solution {
-    margin-bottom: rem.convert(100px);
-    margin-top: rem.convert(100px);
+    margin-bottom: rem-convert(100px);
+    margin-top: rem-convert(100px);
 
     @include media('<lg') {
-      margin-bottom: rem.convert(60px);
+      margin-bottom: rem-convert(60px);
     }
     .cmp-teaser-demo__image {
       position: relative;
@@ -29,17 +29,17 @@
       }
     }
     .cmp-teaser-demo__content {
-      padding: rem.convert(64px) rem.convert(54px) rem.convert(45px) rem.convert(50px);
-      border: rem.convert(1px) solid get-color(secondary-light-grey);
-      min-height: rem.convert(250px);
+      padding: rem-convert(64px) rem-convert(54px) rem-convert(45px) rem-convert(50px);
+      border: rem-convert(1px) solid get-color(secondary-light-grey);
+      min-height: rem-convert(250px);
 
       @include media('<lg') {
-        padding: rem.convert(64px) rem.convert(12px) rem.convert(10px) rem.convert(12px);
+        padding: rem-convert(64px) rem-convert(12px) rem-convert(10px) rem-convert(12px);
       }
     }
     .cmp-teaser-demo__description {
       color: get-color(secondary-dark-grey);
-      font-size: rem.convert(14px);
+      font-size: rem-convert(14px);
       line-height: 1.45;
       font-weight: 300;
       text-align: center;
@@ -47,7 +47,7 @@
     }
     .cmp-teaser-demo__title {
       color: get-color(brand-black);
-      font-size: rem.convert(24px);
+      font-size: rem-convert(24px);
       line-height: 1.45;
       font-weight: 300;
       text-align: center;
@@ -56,11 +56,11 @@
   }
   // Add "cmp-teaser-demo--about-us" class for about us Variation
   &--about-us {
-    margin-bottom: rem.convert(100px);
-    margin-top: rem.convert(148px);
+    margin-bottom: rem-convert(100px);
+    margin-top: rem-convert(148px);
 
     @include media('<lg') {
-      margin-bottom: rem.convert(60px);
+      margin-bottom: rem-convert(60px);
     }
     .cmp-teaser-demo__image {
       position: relative;
@@ -81,17 +81,17 @@
       }
     }
     .cmp-teaser-demo__content {
-      padding: rem.convert(192px) rem.convert(54px) rem.convert(16px) rem.convert(50px);
-      border: rem.convert(1px) solid get-color(secondary-light-grey);
-      min-height: rem.convert(350px);
+      padding: rem-convert(192px) rem-convert(54px) rem-convert(16px) rem-convert(50px);
+      border: rem-convert(1px) solid get-color(secondary-light-grey);
+      min-height: rem-convert(350px);
 
       @include media('<lg') {
-        padding: rem.convert(192px) rem.convert(12px) rem.convert(10px) rem.convert(12px);
+        padding: rem-convert(192px) rem-convert(12px) rem-convert(10px) rem-convert(12px);
       }
     }
     .cmp-teaser-demo__description {
       color: get-color(secondary-dark-grey);
-      font-size: rem.convert(14px);
+      font-size: rem-convert(14px);
       line-height: 1.45;
       font-weight: 300;
       text-align: center;
@@ -99,7 +99,7 @@
     }
     .cmp-teaser-demo__title {
       color: get-color(secondary-link-blue);
-      font-size: rem.convert(24px);
+      font-size: rem-convert(24px);
       line-height: 1.45;
       font-weight: 300;
       text-align: center;
@@ -110,15 +110,15 @@
 
 $teaser-headings: (
   //  tag  size      weight line-height
-  'h1' rem.convert(54px) bold rem.convert(56px),
-  'h2' rem.convert(36px) bold rem.convert(40px),
-  'h3' rem.convert(36px) normal rem.convert(40px),
-  'h4' rem.convert(24px) bold rem.convert(32px),
-  'h5' rem.convert(24px) normal rem.convert(28px),
-  'h6' rem.convert(16px) bold rem.convert(24px)
+  'h1' rem-convert(54px) bold rem-convert(56px),
+  'h2' rem-convert(36px) bold rem-convert(40px),
+  'h3' rem-convert(36px) normal rem-convert(40px),
+  'h4' rem-convert(24px) bold rem-convert(32px),
+  'h5' rem-convert(24px) normal rem-convert(28px),
+  'h6' rem-convert(16px) bold rem-convert(24px)
 );
 
-$teaser-headings-mobile: ('h1' rem.convert(36px) bold rem.convert(40px), 'h2' rem.convert(28px) bold rem.convert(32px), 'h3' rem.convert(28px) normal rem.convert(32px), 'h4' rem.convert(20px) bold rem.convert(24px), 'h5' rem.convert(20px) normal rem.convert(24px), 'h6' rem.convert(16px) bold rem.convert(24px));
+$teaser-headings-mobile: ('h1' rem-convert(36px) bold rem-convert(40px), 'h2' rem-convert(28px) bold rem-convert(32px), 'h3' rem-convert(28px) normal rem-convert(32px), 'h4' rem-convert(20px) bold rem-convert(24px), 'h5' rem-convert(20px) normal rem-convert(24px), 'h6' rem-convert(16px) bold rem-convert(24px));
 
 .cmp-teaser-demo__content {
   text-align: left;
@@ -140,10 +140,10 @@ $teaser-headings-mobile: ('h1' rem.convert(36px) bold rem.convert(40px), 'h2' re
     }
   }
   &__text {
-    margin: 0 0 rem.convert(40px) 0;
-    letter-spacing: rem.convert(-0.15px);
+    margin: 0 0 rem-convert(40px) 0;
+    letter-spacing: rem-convert(-0.15px);
     @include media('>=lg') {
-      margin: 0 0 rem.convert(50px) 0;
+      margin: 0 0 rem-convert(50px) 0;
     }
   }
 }

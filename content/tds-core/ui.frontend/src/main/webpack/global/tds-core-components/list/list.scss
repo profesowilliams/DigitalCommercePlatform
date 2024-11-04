@@ -1,12 +1,12 @@
 @use 'sass:map';
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .dp-list,
 .cmp-list {
   &--svg-size {
     figure > svg {
-      width: rem.convert(72px);
-      height: rem.convert(72px);
+      width: rem-convert(72px);
+      height: rem-convert(72px);
     }
   }
 
@@ -20,16 +20,16 @@
 
     .cmp-list__item {
       text-align: center;
-      padding: rem.convert(4px);
+      padding: rem-convert(4px);
 
       > article {
         display: flex;
         flex-direction: column;
         font-weight: 300;
-        font-size: rem.convert(20px);
-        margin-top: rem.convert(16px);
-        margin-bottom: rem.convert(16px);
-        width: rem.convert(180px);
+        font-size: rem-convert(20px);
+        margin-top: rem-convert(16px);
+        margin-bottom: rem-convert(16px);
+        width: rem-convert(180px);
         max-width: 100%;
         justify-content: space-between;
         align-items: center;
@@ -37,9 +37,9 @@
     }
 
     .cmp-image__image-figure {
-      height: rem.convert(144px);
+      height: rem-convert(144px);
       margin: 0;
-      margin-bottom: rem.convert(20px);
+      margin-bottom: rem-convert(20px);
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -64,14 +64,14 @@
 
     .cmp-list__item-link {
       color: inherit;
-      font-size: rem.convert(20px);
+      font-size: rem-convert(20px);
       font-weight: 300;
       text-decoration: none;
-      padding: rem.convert(16px);
+      padding: rem-convert(16px);
       transition: box-shadow 0.3s;
 
       &:hover {
-        box-shadow: 0 0 rem.convert(4px) rem.convert(1.5px) get-color(brand-light-blue);
+        box-shadow: 0 0 rem-convert(4px) rem-convert(1.5px) get-color(brand-light-blue);
       }
     }
 
@@ -91,7 +91,7 @@
 
         article {
           margin: 0 auto;
-          max-width: rem.convert(180px);
+          max-width: rem-convert(180px);
           width: 100%;
         }
       }
@@ -107,14 +107,14 @@
 
       .cmp-list__item-link {
         color: inherit;
-        font-size: rem.convert(20px);
+        font-size: rem-convert(20px);
         font-weight: 300;
         text-decoration: none;
-        padding: rem.convert(16px);
+        padding: rem-convert(16px);
         transition: box-shadow 0.3s;
 
         &:hover {
-          box-shadow: 0 0 rem.convert(4px) rem.convert(1.5px) get-color(brand-light-blue);
+          box-shadow: 0 0 rem-convert(4px) rem-convert(1.5px) get-color(brand-light-blue);
         }
       }
     }
@@ -137,8 +137,8 @@
       }
 
       article {
-        margin-top: rem.convert(8px);
-        margin-bottom: rem.convert(8px);
+        margin-top: rem-convert(8px);
+        margin-bottom: rem-convert(8px);
       }
     }
 
@@ -159,10 +159,10 @@
     .cmp-list__item-link {
       text-decoration: none;
       transition: box-shadow 0.3s;
-      padding: rem.convert(4px);
+      padding: rem-convert(4px);
 
       &:hover {
-        box-shadow: 0 0 rem.convert(4px) rem.convert(1.5px) get-color(brand-light-blue);
+        box-shadow: 0 0 rem-convert(4px) rem-convert(1.5px) get-color(brand-light-blue);
       }
     }
   }
@@ -184,8 +184,8 @@
       }
 
       article {
-        margin-top: rem.convert(8px);
-        margin-bottom: rem.convert(8px);
+        margin-top: rem-convert(8px);
+        margin-bottom: rem-convert(8px);
       }
     }
 
@@ -216,7 +216,7 @@
   &--brand-grid-3 {
     .cmp-list {
       list-style-type: none;
-      line-height: rem.convert(12px);
+      line-height: rem-convert(12px);
       padding: 0;
 
       @include tablet {
@@ -232,14 +232,14 @@
       }
 
       article {
-        margin-top: rem.convert(8px);
-        margin-bottom: rem.convert(8px);
+        margin-top: rem-convert(8px);
+        margin-bottom: rem-convert(8px);
       }
     }
 
     .cmp-list__item-title {
       font-weight: $font-weight-normal;
-      font-size: rem.convert(13px);
+      font-size: rem-convert(13px);
       color: inherit;
     }
 
@@ -319,10 +319,10 @@
 
     .cmp-list__item-link {
       color: inherit;
-      font-size: rem.convert(20px);
+      font-size: rem-convert(20px);
       font-weight: 300;
       text-decoration: none;
-      padding: rem.convert(16px);
+      padding: rem-convert(16px);
       transition: all 0.3s;
     }
 
@@ -354,7 +354,7 @@
 
         article {
           margin: 0 auto;
-          max-width: rem.convert(180px);
+          max-width: rem-convert(180px);
           width: 100%;
           align-items: center;
         }
@@ -373,10 +373,10 @@
 
       .cmp-list__item-link {
         color: inherit;
-        font-size: rem.convert(20px);
+        font-size: rem-convert(20px);
         font-weight: 500;
         text-decoration: none;
-        padding: rem.convert(16px);
+        padding: rem-convert(16px);
         transition: all 0.3s;
         opacity: 0.5;
       }
@@ -407,25 +407,25 @@
       justify-content: center;
       list-style-type: none;
       li {
-        width: rem.convert(410.12px);
-        height: rem.convert(483.2px);
+        width: rem-convert(410.12px);
+        height: rem-convert(483.2px);
         background-color: white;
         flex: 0 0 30%;
         margin-right: auto;
         margin-left: auto;
         margin-bottom: 6rem;
         @include tablet {
-          width: rem.convert(298.12px);
-          height: rem.convert(419.2px);
+          width: rem-convert(298.12px);
+          height: rem-convert(419.2px);
         }
 
         article {
           background-color: get-color(neutral-gray-2);
-          width: rem.convert(410px);
-          height: rem.convert(263px);
+          width: rem-convert(410px);
+          height: rem-convert(263px);
 
           @include tablet {
-            width: rem.convert(298px);
+            width: rem-convert(298px);
           }
         }
       }
@@ -444,8 +444,8 @@
         }
       }
       span.cmp-list__item-title {
-        height: rem.convert(50px);
-        width: rem.convert(354px);
+        height: rem-convert(50px);
+        width: rem-convert(354px);
         font-family: 'Arial Regular';
         font-size: 20px;
         font-weight: 700;
@@ -455,10 +455,10 @@
         color: map.get($color-palette, 'teal');
         background-color: white;
         padding-bottom: 2.5rem;
-        padding-top: rem.convert(15px);
+        padding-top: rem-convert(15px);
 
         @include tablet {
-          width: rem.convert(242px);
+          width: rem-convert(242px);
           font-size: 13px;
           margin-top: 3px;
         }
@@ -469,24 +469,24 @@
       display: block;
       position: relative;
       background-color: white;
-      padding-bottom: rem.convert(38px);
-      padding-top: rem.convert(0px);
-      padding-right: rem.convert(27px);
-      padding-left: rem.convert(27px);
+      padding-bottom: rem-convert(38px);
+      padding-top: rem-convert(0px);
+      padding-right: rem-convert(27px);
+      padding-left: rem-convert(27px);
       position: relative;
-      top: rem.convert(-30px);
+      top: rem-convert(-30px);
       font-family: 'Arial Regular';
       font-size: 16px;
       font-weight: 400;
       line-height: 24px;
       margin-left: auto;
       margin-right: auto;
-      height: rem.convert(186px);
-      width: rem.convert(354px);
+      height: rem-convert(186px);
+      width: rem-convert(354px);
 
       @include tablet {
-        width: rem.convert(242px);
-        height: rem.convert(195px);
+        width: rem-convert(242px);
+        height: rem-convert(195px);
         font-size: 10px;
       }
     }
@@ -549,18 +549,18 @@
             display: flex;
 
             img.cmp-image__image {
-              width: rem.convert(75px);
-              height: rem.convert(75px);
+              width: rem-convert(75px);
+              height: rem-convert(75px);
             }
           }
 
           span.cmp-list__item-title {
             text-decoration: none;
-            font-size: rem.convert(13px);
-            line-height: rem.convert(15px);
+            font-size: rem-convert(13px);
+            line-height: rem-convert(15px);
             text-align: center;
             color: inherit;
-            margin: 0 rem.convert(5px);
+            margin: 0 rem-convert(5px);
           }
         }
       }

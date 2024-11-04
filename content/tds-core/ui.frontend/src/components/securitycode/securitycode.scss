@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 $font-size-container: 16px;
 $z-index-value-up-of-popup: $pop-up-z-index-value + 1;
@@ -86,14 +86,14 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
 
   .cmp-form_icon {
     color: get-color(cherry);
-    margin-right: rem.convert(6px);
+    margin-right: rem-convert(6px);
     font-size: $font-size-container;
-    margin-top: rem.convert(3px);
+    margin-top: rem-convert(3px);
   }
 
   .cmp-form_error-message {
     color: get-color(cherry);
-    margin-left: rem.convert(6px);
+    margin-left: rem-convert(6px);
     font-size: $font-size-container;
   }
 
@@ -111,10 +111,10 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
     align-items: center;
     justify-content: space-evenly;
     height: inherit;
-    width: rem.convert(461px);
-    height: rem.convert(374px);
+    width: rem-convert(461px);
+    height: rem-convert(374px);
     background-color: map.get($color-palette, 'white') !important;
-    padding: rem.convert(46px) rem.convert(40px);
+    padding: rem-convert(46px) rem-convert(40px);
 
     input[type='password'] {
       -webkit-text-security: square;
@@ -187,17 +187,17 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
     background-color: get-color(neutral-gray-2) !important;
     color: get-color(cool-gray-8) !important;
     border: none;
-    font-size: rem.convert(16px);
+    font-size: rem-convert(16px);
     font-weight: 300;
   }
 
   .cmp-error {
     color: get-color(cherry) !important;
-    font-size: rem.convert(16px);
+    font-size: rem-convert(16px);
     &::before {
       content: '\f071';
       font-family: 'FontAwesome';
-      margin: 0 rem.convert(12px) 0 0;
+      margin: 0 rem-convert(12px) 0 0;
     }
   }
 

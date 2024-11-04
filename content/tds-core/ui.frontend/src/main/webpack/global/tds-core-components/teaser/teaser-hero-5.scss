@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .hero-style-5 {
   @include teaser-default();
@@ -35,7 +35,7 @@
     @include mobile {
       margin-left: 0;
       border-left: 0 solid get-color(brand-white);
-      font-size: rem.convert(20px);
+      font-size: rem-convert(20px);
       align-content: flex-start;
       padding: 2rem;
     }
@@ -47,7 +47,7 @@
 
   .cmp-teaser__title {
     float: left;
-    max-width: rem.convert(530px);
+    max-width: rem-convert(530px);
     text-shadow: 0 0 0.063rem #919599;
     font-size: 2rem;
     letter-spacing: 0rem;
@@ -60,7 +60,7 @@
 
     &:after {
       font-weight: 600;
-      padding: rem.convert(0px 6px);
+      padding: rem-convert(0px 6px);
       position: relative;
       top: -8px;
       text-shadow: none;
@@ -70,7 +70,7 @@
 
     @include desktop {
       &:after {
-        padding: rem.convert(1px 9px);
+        padding: rem-convert(1px 9px);
         font-size: 20px;
         top: -10px;
       }
@@ -87,41 +87,41 @@
   }
 
   .cmp-teaser__description {
-    max-width: rem.convert(570px);
+    max-width: rem-convert(570px);
     text-shadow: 0 0 0 #919599;
     font-weight: normal;
-    font-size: rem.convert(35px);
+    font-size: rem-convert(35px);
     letter-spacing: normal;
     line-height: normal;
-    padding: 0 0 0 rem.convert(55px);
+    padding: 0 0 0 rem-convert(55px);
     margin-bottom: 0;
 
     @include desktop {
       margin-top: 0;
-      margin-left: rem.convert(55px);
-      border-left: rem.convert(5px) solid get-color(brand-white);
+      margin-left: rem-convert(55px);
+      border-left: rem-convert(5px) solid get-color(brand-white);
     }
 
     @include tablet {
       margin-top: 0;
-      margin-left: rem.convert(55px);
-      border-left: rem.convert(5px) solid transparent;
-      font-size: rem.convert(26px);
+      margin-left: rem-convert(55px);
+      border-left: rem-convert(5px) solid transparent;
+      font-size: rem-convert(26px);
       width: 90%;
     }
 
     @include mobile {
-      margin-top: rem.convert(20px);
+      margin-top: rem-convert(20px);
       margin-left: 0;
-      border-left: rem.convert(5px) solid transparent;
-      font-size: rem.convert(20px);
+      border-left: rem-convert(5px) solid transparent;
+      font-size: rem-convert(20px);
     }
 
     @include desktop-l {
       margin-top: 0;
-      margin-left: rem.convert(55px);
-      border-left: rem.convert(5px) solid transparent;
-      font-size: rem.convert(26px);
+      margin-left: rem-convert(55px);
+      border-left: rem-convert(5px) solid transparent;
+      font-size: rem-convert(26px);
       width: 90%;
     }
   }

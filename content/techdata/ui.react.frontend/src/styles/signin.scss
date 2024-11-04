@@ -1,6 +1,6 @@
 /* stylelint-disable -- Too much to fix, will delete file later. */
-@use "sass:map";
-@use "~sass-rem" as rem;
+@use 'sass:map';
+// @use 'sass-rem' as rem;
 
 .cmp-sign-in {
   display: flex;
@@ -49,7 +49,7 @@
 
       > i,
       svg {
-        font-size: rem.convert(12.8px) !important;
+        font-size: rem-convert(12.8px) !important;
       }
 
       &.active {

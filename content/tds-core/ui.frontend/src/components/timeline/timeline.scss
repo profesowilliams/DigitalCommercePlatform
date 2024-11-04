@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 /**
  * Container for the timeline component.
@@ -85,7 +85,7 @@
           text-align: center;
           color: map.get($color-palette, 'deep-teal');
           font-family: $font-family-everett;
-          font-size: rem.convert(14px);
+          font-size: rem-convert(14px);
           width: 70px;
         }
       }
@@ -128,7 +128,7 @@
          */
         .dp-title__text {
           font-weight: 400;
-          font-size: rem.convert(16px);
+          font-size: rem-convert(16px);
           line-height: 21px;
           font-family: $font-family-everett;
           color: map.get($color-palette, 'deep-teal');
@@ -140,7 +140,7 @@
          */
         .dp-description {
           font-weight: 400;
-          font-size: rem.convert(16px);
+          font-size: rem-convert(16px);
           line-height: 24px;
           font-family: 'Arial', sans-serif;
           color: map.get($color-palette, 'charcoal');

@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 @import '../../../site/variables';
 
@@ -8,7 +8,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  height: rem.convert(55px);
+  height: rem-convert(55px);
 
   @include mobile {
     flex-wrap: nowrap;
@@ -23,15 +23,15 @@
     color: get-color(text-mid-gray);
     width: 100%;
     text-transform: uppercase;
-    padding-bottom: rem.convert(25px);
+    padding-bottom: rem-convert(25px);
   }
 
   &__tab {
-    border-radius: rem.convert(5px);
-    border: rem.convert(1px) solid get-color(td-lightblue);
+    border-radius: rem-convert(5px);
+    border: rem-convert(1px) solid get-color(td-lightblue);
     width: 49%;
-    height: rem.convert(95px);
-    padding: rem.convert(10px);
+    height: rem-convert(95px);
+    padding: rem-convert(10px);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -51,7 +51,7 @@
     }
 
     &__items {
-      font-size: rem.convert(36px);
+      font-size: rem-convert(36px);
       color: get-color(td-lightblue);
     }
 

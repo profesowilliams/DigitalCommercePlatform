@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .hero-style-4 {
   position: relative;
@@ -34,7 +34,7 @@
   .cmp-teaser__title {
     float: left;
     width: 50%;
-    max-width: rem.convert(530px);
+    max-width: rem-convert(530px);
     text-shadow: 0 0 0.063rem #919599;
     font-size: 2rem;
     letter-spacing: 0rem;
@@ -47,7 +47,7 @@
 
     &:after {
       font-weight: 600;
-      padding: rem.convert(0px 6px);
+      padding: rem-convert(0px 6px);
       position: relative;
       top: -8px;
       text-shadow: none;
@@ -57,7 +57,7 @@
 
     @include desktop {
       &:after {
-        padding: rem.convert(1px 9px);
+        padding: rem-convert(1px 9px);
         font-size: 20px;
         top: -10px;
       }
@@ -85,7 +85,7 @@
     padding-right: 0;
     padding-bottom: 0;
     margin: 0rem;
-    max-width: rem.convert(550px);
+    max-width: rem-convert(550px);
 
     @include mobile {
       font-size: 0.6rem;

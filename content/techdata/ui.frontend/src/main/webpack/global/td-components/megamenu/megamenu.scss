@@ -1,3 +1,5 @@
+// @use 'sass-rem' as rem;
+
 @import '../../../../../../../../tds-core/ui.frontend/src/components/megamenu/megamenu.scss';
 @include desktop {
   .cmp-megamenu {

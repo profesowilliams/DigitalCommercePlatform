@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 /**
  * .dp-figure ported from ui.frontend/src/main/webpack/components/_image.scss
@@ -21,7 +21,7 @@
     * @class cmp-image--spacing-header
     */
   &--spacing-header {
-    padding: rem.convert(17px) rem.convert(20px) rem.convert(16px) rem.convert(10px);
+    padding: rem-convert(17px) rem-convert(20px) rem-convert(16px) rem-convert(10px);
   }
 
   /**
@@ -30,7 +30,7 @@
     * @class cmp-image--spacing-footer
     */
   &--spacing-footer {
-    padding: rem.convert(6px) 0 rem.convert(8px);
+    padding: rem-convert(6px) 0 rem-convert(8px);
   }
 
   /**
@@ -125,12 +125,12 @@
     * @class cmp-td-logo--header
     */
   &--header {
-    width: rem.convert(196px) !important;
-    padding: rem.convert(21px) rem.convert(26px) rem.convert(21px) rem.convert(10px);
+    width: rem-convert(196px) !important;
+    padding: rem-convert(21px) rem-convert(26px) rem-convert(21px) rem-convert(10px);
 
     @include mobile {
-      width: rem.convert(132px) !important;
-      padding: rem.convert(8px);
+      width: rem-convert(132px) !important;
+      padding: rem-convert(8px);
     }
   }
 
@@ -140,13 +140,13 @@
     * @class cmp-td-logo--header-without-left
     */
   &--header-without-left {
-    width: rem.convert(186px) !important;
-    padding: rem.convert(21px) rem.convert(26px) rem.convert(21px) rem.convert(0px);
+    width: rem-convert(186px) !important;
+    padding: rem-convert(21px) rem-convert(26px) rem-convert(21px) rem-convert(0px);
     box-sizing: border-box;
 
     @include mobile {
-      width: rem.convert(132px) !important;
-      padding: rem.convert(8px) rem.convert(8px) rem.convert(8px) rem.convert(0px);
+      width: rem-convert(132px) !important;
+      padding: rem-convert(8px) rem-convert(8px) rem-convert(8px) rem-convert(0px);
     }
   }
 
@@ -156,7 +156,7 @@
     * @class cmp-td-logo--footer
     */
   &--footer {
-    width: rem.convert(128px) !important;
-    padding: rem.convert(0px) rem.convert(0px) rem.convert(8px);
+    width: rem-convert(128px) !important;
+    padding: rem-convert(0px) rem-convert(0px) rem-convert(8px);
   }
 }

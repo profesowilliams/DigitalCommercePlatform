@@ -1,9 +1,9 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .radius-top {
   position: relative;
 }
 .radius-top .dp-title {
   position: absolute;
-  top: rem.convert(75px);
+  top: rem-convert(75px);
 }

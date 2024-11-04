@@ -1,10 +1,10 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .form-style-container {
   .cmp-form {
     .cmp-form-text,
     .cmp-form-options {
-      margin-bottom: rem.convert(20px);
+      margin-bottom: rem-convert(20px);
     }
 
     fieldset {
@@ -15,20 +15,20 @@
     .cmp-form-text input,
     .cmp-form-text textarea,
     .cmp-form-options select {
-      font-size: rem.convert(16px);
-      line-height: rem.convert(16px);
+      font-size: rem-convert(16px);
+      line-height: rem-convert(16px);
       border: 0;
-      border-bottom: rem.convert(1px) solid get-color(border-light-gray);
+      border-bottom: rem-convert(1px) solid get-color(border-light-gray);
       font-family: inherit;
       border-radius: 0;
       width: 100%;
       outline: none;
-      padding: rem.convert(15px) 0;
+      padding: rem-convert(15px) 0;
     }
 
     .cmp-form-text textarea {
-      border: rem.convert(1px) solid get-color(input-grey-borde);
-      padding: rem.convert(15px);
+      border: rem-convert(1px) solid get-color(input-grey-borde);
+      padding: rem-convert(15px);
       width: 100%;
     }
 
@@ -43,18 +43,18 @@
 
     label,
     legend {
-      font-size: rem.convert(14px);
-      line-height: rem.convert(16px);
+      font-size: rem-convert(14px);
+      line-height: rem-convert(16px);
       color: get-color(brand-text-gray);
-      margin-bottom: rem.convert(10px);
+      margin-bottom: rem-convert(10px);
       display: inline-block;
     }
 
     &-options {
       &__field-label {
         position: relative;
-        padding-left: rem.convert(10px);
-        margin-right: rem.convert(15px);
+        padding-left: rem-convert(10px);
+        margin-right: rem-convert(15px);
       }
       &__field-description {
         top: 0;
@@ -65,7 +65,7 @@
         &:after {
           position: absolute;
           left: 0;
-          top: rem.convert(2px);
+          top: rem-convert(2px);
           @include font-awesome-custom-icon;
           color: get-color(brand-text-gray);
         }
@@ -98,12 +98,12 @@
     }
 
     .cmp-form-button {
-      font-size: rem.convert(16px);
-      line-height: rem.convert(19px);
+      font-size: rem-convert(16px);
+      line-height: rem-convert(19px);
       background-color: get-color(td-dark-blue);
       width: 100%;
       border: none;
-      padding: rem.convert(12px) rem.convert(10px);
+      padding: rem-convert(12px) rem-convert(10px);
       font-weight: bold;
       text-align: center;
       color: white;
@@ -118,7 +118,7 @@
       display: none;
     }
     fieldset {
-      margin-bottom: rem.convert(40px);
+      margin-bottom: rem-convert(40px);
       position: relative;
       padding: 0;
       border: 0;
@@ -129,14 +129,14 @@
     .select-selected:after {
       position: absolute;
       content: '';
-      top: rem.convert(14px);
-      right: rem.convert(10px);
+      top: rem-convert(14px);
+      right: rem-convert(10px);
       width: 0;
       height: 0;
       border: solid #555555;
-      border-width: 0 rem.convert(3px) rem.convert(3px) 0;
+      border-width: 0 rem-convert(3px) rem-convert(3px) 0;
       display: inline-block;
-      padding: rem.convert(3px);
+      padding: rem-convert(3px);
       transform: rotate(45deg);
       -webkit-transform: rotate(45deg);
     }
@@ -144,7 +144,7 @@
     .select-items div,
     .select-selected {
       color: black;
-      padding: rem.convert(8px) rem.convert(16px);
+      padding: rem-convert(8px) rem-convert(16px);
       cursor: pointer;
       user-select: none;
       position: relative;
@@ -152,8 +152,8 @@
 
     .select-selected {
       background-color: white;
-      border-bottom: rem.convert(2px) solid #00558c;
-      padding: rem.convert(8px) rem.convert(16px) rem.convert(8px) 0;
+      border-bottom: rem-convert(2px) solid #00558c;
+      padding: rem-convert(8px) rem-convert(16px) rem-convert(8px) 0;
     }
 
     .select-items div {
@@ -168,21 +168,21 @@
       left: 0;
       right: 0;
       z-index: 99;
-      max-height: rem.convert(246px);
+      max-height: rem-convert(246px);
       overflow-y: scroll;
-      box-shadow: 0 rem.convert(3px) rem.convert(7px) 0 rgba(0, 0, 0, 0.23);
+      box-shadow: 0 rem-convert(3px) rem-convert(7px) 0 rgba(0, 0, 0, 0.23);
 
       /**** Scrollbar styles for Opera,Edge and Chrome ****/
       &::-webkit-scrollbar {
-        width: rem.convert(6px);
+        width: rem-convert(6px);
       }
       &::-webkit-scrollbar-track {
         background: get-color(brand-white);
       }
       &::-webkit-scrollbar-thumb {
         background: get-color(td-dark-blue);
-        border-radius: rem.convert(4px);
-        border: rem.convert(2px) solid get-color(td-color-blue);
+        border-radius: rem-convert(4px);
+        border: rem-convert(2px) solid get-color(td-color-blue);
       }
       /********** Scrollbar Styles for FireFox *****************/
 

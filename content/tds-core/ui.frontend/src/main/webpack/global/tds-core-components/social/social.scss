@@ -1,12 +1,12 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .cmp-social {
   display: flex;
   a {
     background-color: transparent;
-    width: rem.convert(28.58px);
-    height: rem.convert(28.58px);
-    margin-right: rem.convert(16.44px);
+    width: rem-convert(28.58px);
+    height: rem-convert(28.58px);
+    margin-right: rem-convert(16.44px);
     border-radius: 50%;
     &:last-child {
       margin-right: unset;

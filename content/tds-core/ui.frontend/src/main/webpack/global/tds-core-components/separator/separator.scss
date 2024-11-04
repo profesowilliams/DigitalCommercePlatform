@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .dp-separator {
   width: 100%;
@@ -119,19 +119,19 @@
 
     &-small {
       .cmp-separator {
-        margin: rem.convert(16px) 0;
+        margin: rem-convert(16px) 0;
       }
     }
 
     &-medium {
       .cmp-separator {
-        margin: rem.convert(32px) 0;
+        margin: rem-convert(32px) 0;
       }
     }
 
     &-large {
       .cmp-separator {
-        margin: rem.convert(64px) 0;
+        margin: rem-convert(64px) 0;
       }
     }
   }
@@ -201,6 +201,6 @@
 
 .tds-separator-horizontal {
   hr {
-    border-top-width: rem.convert(2px) !important;
+    border-top-width: rem-convert(2px) !important;
   }
 }

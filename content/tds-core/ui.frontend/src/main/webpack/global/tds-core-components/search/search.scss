@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .cmp-search {
   position: relative;
@@ -153,8 +153,8 @@
   border: 1px solid lightgray;
   outline: none;
   padding: 0;
-  padding-right: rem.convert(44px);
-  padding-left: rem.convert(10px);
+  padding-right: rem-convert(44px);
+  padding-left: rem-convert(10px);
   text-overflow: ellipsis;
   min-width: 200px;
   @include tablet {

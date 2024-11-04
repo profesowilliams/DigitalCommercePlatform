@@ -1,16 +1,16 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .mb-responsive-100-50 {
-  margin-bottom: rem.convert(50px);
+  margin-bottom: rem-convert(50px);
   @include media('>=lg') {
-    margin-bottom: rem.convert(100px);
+    margin-bottom: rem-convert(100px);
   }
 }
 
 .mx-10 {
-  margin-left: rem.convert(10px);
+  margin-left: rem-convert(10px);
 }
 
 .m-2 {
-  margin: rem.convert(32px);
+  margin: rem-convert(32px);
 }

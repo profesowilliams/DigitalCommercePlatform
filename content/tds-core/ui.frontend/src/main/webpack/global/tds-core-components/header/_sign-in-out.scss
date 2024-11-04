@@ -1,6 +1,6 @@
 /* stylelint-disable -- Too much to fix, will delete file later. */
 @use 'sass:map';
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 @import '../../abstracts/variables';
 @import '../../../../webpack/site/variables';
@@ -14,8 +14,8 @@
       outline: none !important;
       cursor: pointer;
       svg {
-        height: rem.convert(26px);
-        margin-right: rem.convert(10px);
+        height: rem-convert(26px);
+        margin-right: rem-convert(10px);
         &.sign-in {
           fill: get-color(header-links-blue);
         }
@@ -29,7 +29,7 @@
     &__link {
       font-size: $font-size-small;
       color: get-color(header-links-blue);
-      padding-top: rem.convert(4px);
+      padding-top: rem-convert(4px);
       outline: none !important;
     }
   }
@@ -85,7 +85,7 @@
 
       > i,
       svg {
-        font-size: rem.convert(12.8px) !important;
+        font-size: rem-convert(12.8px) !important;
       }
 
       &.active {

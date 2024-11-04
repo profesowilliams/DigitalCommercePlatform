@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 @keyframes a-fade-in {
   from {
@@ -70,12 +70,12 @@
     height: 2rem;
   }
   &_title {
-    margin: rem.convert(10px) rem.convert(10px) 0rem rem.convert(30px);
+    margin: rem-convert(10px) rem-convert(10px) 0rem rem-convert(30px);
     font-weight: 600;
   }
   &_body {
     margin: 2rem;
-    min-height: rem.convert(100px);
+    min-height: rem-convert(100px);
     font-size: $font-size-medium;
   }
   &_btn {
@@ -83,7 +83,7 @@
     background: get-color(brand-blue);
     width: 100%;
     cursor: pointer;
-    height: rem.convert(50px);
+    height: rem-convert(50px);
     &_text {
       margin: 1rem;
       font-size: $font-size-small;
@@ -94,38 +94,38 @@
   }
   &_close {
     font-size: 1.5rem;
-    height: rem.convert(39px);
-    width: rem.convert(39px);
+    height: rem-convert(39px);
+    width: rem-convert(39px);
     background: get-color(td-lighter-gray);
-    margin: rem.convert(2px);
+    margin: rem-convert(2px);
     cursor: pointer;
   }
 
   .cmp-modal_error-message {
     margin: 2rem;
     text-align: left;
-    max-width: rem.convert(500px);
+    max-width: rem-convert(500px);
     font-size: $font-size-small;
-    margin-bottom: rem.convert(20px);
+    margin-bottom: rem-convert(20px);
     color: get-color('brand-red-brilliant');
   }
 }
 
 ///details info modal content style///
 .cmp-details-info {
-  max-width: rem.convert(500px);
+  max-width: rem-convert(500px);
   &__info {
     font-size: $font-size-small;
-    margin-bottom: rem.convert(20px);
+    margin-bottom: rem-convert(20px);
     color: get-color('brand-text-gray');
   }
   &__line {
     display: grid;
     grid-template-columns: 30% 40% 30%;
-    min-height: rem.convert(53px);
+    min-height: rem-convert(53px);
     height: fit-content;
     align-items: flex-start;
-    padding-top: rem.convert(16px);
+    padding-top: rem-convert(16px);
     border-top: 1px solid get-color('secondary-light-grey');
     text-align: left;
     color: get-color('brand-text-gray');
@@ -145,7 +145,7 @@
     &__label {
       cursor: pointer;
       & .icon {
-        margin-left: rem.convert(5px);
+        margin-left: rem-convert(5px);
         color: get-color('td-primary-blue');
         & i:before {
           display: inline-block;
@@ -159,8 +159,8 @@
       }
     }
     &__content {
-      margin-top: rem.convert(10px);
-      margin-bottom: rem.convert(5px);
+      margin-top: rem-convert(10px);
+      margin-bottom: rem-convert(5px);
       font-size: $font-size-xsmall;
     }
   }
@@ -168,15 +168,15 @@
 
 ///vendor connection modal content style///
 .cmp-vendor-connection {
-  max-width: rem.convert(500px);
+  max-width: rem-convert(500px);
   &__error {
     color: get-color('brand-secondary-text');
-    margin-top: rem.convert(50px);
+    margin-top: rem-convert(50px);
   }
   &__header {
     font-size: $font-size-medium;
     font-weight: $font-weight-bold;
-    margin-bottom: rem.convert(20px);
+    margin-bottom: rem-convert(20px);
     color: get-color('brand-text-gray');
     text-align: left;
   }
@@ -187,7 +187,7 @@
       }
       display: grid;
       grid-template-columns: 20% 60% 20%;
-      min-height: rem.convert(53px);
+      min-height: rem-convert(53px);
       height: fit-content;
       align-items: center;
       border-top: 1px solid get-color('secondary-light-grey');
@@ -195,9 +195,9 @@
       color: get-color('brand-text-gray');
       border-top: 1px solid get-color('secondary-light-grey');
       &__logo {
-        padding: 0 rem.convert(8px) 0 0;
+        padding: 0 rem-convert(8px) 0 0;
         &__img {
-          height: rem.convert(30px);
+          height: rem-convert(30px);
         }
       }
       &__status {

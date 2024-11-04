@@ -1,9 +1,9 @@
 @use 'sass:map';
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .cmp-widget .cmp-title--small {
-  font-size: rem.convert(14px);
-  margin-bottom: rem.convert(15.5px);
+  font-size: rem-convert(14px);
+  margin-bottom: rem-convert(15.5px);
   font-weight: normal;
   text-transform: uppercase;
   color: get-color(text-mid-gray);
@@ -14,13 +14,13 @@
 }
 
 .cmp-widget .cmp-quote-button {
-  border: rem.convert(1px) solid map.get($color-palette, 'teal');
+  border: rem-convert(1px) solid map.get($color-palette, 'teal');
   // color: get-color(td-dark-blue);
   // background-color: get-color(brand-white);
   background-color: map.get($color-palette, 'teal');
   color: get-color(brand-white);
-  font-size: rem.convert(13px);
-  padding: rem.convert(6px) rem.convert(25px);
+  font-size: rem-convert(13px);
+  padding: rem-convert(6px) rem-convert(25px);
   width: 100%;
   transition: all 0.3s;
   cursor: pointer;
@@ -34,7 +34,7 @@
     cursor: not-allowed;
     color: get-color(brand-text-gray);
     background-color: get-color(v-divider-gray);
-    border: rem.convert(1px) solid get-color(brand-light-gray2);
+    border: rem-convert(1px) solid get-color(brand-light-gray2);
   }
 }
 
@@ -47,13 +47,13 @@
 }
 
 .cmp-widget .cmp-dropdown-custom {
-  margin-bottom: rem.convert(18px);
+  margin-bottom: rem-convert(18px);
   position: relative;
   z-index: 2;
   &__input {
     display: block;
-    padding: rem.convert(6.5px);
-    border: rem.convert(1px) solid get-color(brand-light-gray2);
+    padding: rem-convert(6.5px);
+    border: rem-convert(1px) solid get-color(brand-light-gray2);
     color: get-color(text-mid-gray);
     display: flex;
     justify-content: space-between;
@@ -62,7 +62,7 @@
     i,
     svg {
       color: get-color(td-lightblue);
-      font-size: rem.convert(16px);
+      font-size: rem-convert(16px);
       vertical-align: middle;
     }
     .fa-chevron-down {
@@ -74,7 +74,7 @@
     top: calc(100% - 15px);
     left: 0;
     width: 100%;
-    border: rem.convert(1px) solid get-color(brand-light-gray2);
+    border: rem-convert(1px) solid get-color(brand-light-gray2);
     transition: all 0.3s;
     visibility: hidden;
     opacity: 0;
@@ -85,10 +85,10 @@
     background-color: get-color(brand-white);
     margin: 0;
     li {
-      font-size: rem.convert(13px);
+      font-size: rem-convert(13px);
       color: get-color(text-mid-gray);
       transition: background-color 0.3s;
-      padding: rem.convert(8px) rem.convert(10px);
+      padding: rem-convert(8px) rem-convert(10px);
       cursor: pointer;
       &:hover {
         color: get-color(brand-white);
@@ -115,25 +115,25 @@
   .cmp-text-input {
     width: 100%;
     display: block;
-    border: rem.convert(1px) solid get-color(brand-light-gray2);
-    font-size: rem.convert(12px);
-    padding: rem.convert(7px 10px);
+    border: rem-convert(1px) solid get-color(brand-light-gray2);
+    font-size: rem-convert(12px);
+    padding: rem-convert(7px 10px);
     color: get-color(text-mid-gray);
-    margin-bottom: rem.convert(18px);
+    margin-bottom: rem-convert(18px);
 
     &_bottom-margin {
-      margin-bottom: rem.convert(18px);
+      margin-bottom: rem-convert(18px);
     }
   }
 
   .cmp-radio-buttons {
-    margin-bottom: rem.convert(12px);
+    margin-bottom: rem-convert(12px);
   }
   .cmp-radio-buttons__input {
-    padding: rem.convert(2px 0);
+    padding: rem-convert(2px 0);
     position: relative;
     input {
-      margin: rem.convert(0 15px 0 10px);
+      margin: rem-convert(0 15px 0 10px);
       position: absolute;
       opacity: 0;
       visibility: hidden;
@@ -144,25 +144,25 @@
         content: '';
         position: relative;
         display: inline-block;
-        width: rem.convert(13px);
-        height: rem.convert(13px);
-        margin: rem.convert(4px 14px 0 10px);
+        width: rem-convert(13px);
+        height: rem-convert(13px);
+        margin: rem-convert(4px 14px 0 10px);
         border-radius: 50%;
-        border: rem.convert(1px) solid get-color(text-mid-gray);
+        border: rem-convert(1px) solid get-color(text-mid-gray);
         transition: all 0.15s;
         background-color: get-color(brand-white);
         box-sizing: border-box;
       }
     }
     input:checked + label:before {
-      border: rem.convert(5px) solid get-color(td-lightblue);
+      border: rem-convert(5px) solid get-color(td-lightblue);
     }
   }
   .cmp-error-message {
     text-align: center;
     font-size: $font-size-xsmall;
     margin: 0px;
-    margin-bottom: rem.convert(26px);
+    margin-bottom: rem-convert(26px);
 
     &__red {
       color: get-color(brand-red-brilliant);

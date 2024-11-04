@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .cmp-barChart {
   font-family: 'Open Sans', sans-serif;
@@ -40,20 +40,20 @@
     flex-direction: row;
     overflow: hidden;
     white-space: nowrap;
-    height: rem.convert(15px);
-    margin-bottom: rem.convert(2px);
+    height: rem-convert(15px);
+    margin-bottom: rem-convert(2px);
   }
 
   &__legend {
     display: flex;
     flex-direction: column;
-    height: rem.convert(15px);
-    margin-bottom: rem.convert(2px);
+    height: rem-convert(15px);
+    margin-bottom: rem-convert(2px);
     div {
       display: flex;
       justify-content: flex-start;
       flex-direction: row;
-      margin-bottom: rem.convert(6px);
+      margin-bottom: rem-convert(6px);
     }
   }
 
@@ -67,7 +67,7 @@
       color: #555555;
       text-align: right;
       padding-left: 0.5rem;
-      width: rem.convert(105px);
+      width: rem-convert(105px);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

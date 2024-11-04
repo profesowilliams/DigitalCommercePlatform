@@ -1,3 +1,5 @@
+// @use 'sass-rem' as rem;
+
 .regionSelectDropdown {
   background-color: var(--brilliant, map-get($color-palette, 'brilliant'));
 }

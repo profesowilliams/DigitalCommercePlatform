@@ -1,8 +1,8 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .cmp-cart {
-  width: rem.convert(36px);
-  height: rem.convert(36px);
+  width: rem-convert(36px);
+  height: rem-convert(36px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,9 +15,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: rem.convert(36px);
-    height: rem.convert(32px);
-    margin-bottom: rem.convert(4px);
+    width: rem-convert(36px);
+    height: rem-convert(32px);
+    margin-bottom: rem-convert(4px);
   }
   &__number {
     display: none;
@@ -29,8 +29,8 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      width: rem.convert(36px);
-      height: rem.convert(32px);
+      width: rem-convert(36px);
+      height: rem-convert(32px);
     }
     .cmp-cart__number {
       position: relative;

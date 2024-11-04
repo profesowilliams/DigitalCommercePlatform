@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .cmp-text {
   color: map.get($color-palette, 'charcoal');
@@ -10,15 +10,15 @@
 
 $text-headings: (
   //  tag  size      weight line-height
-  'h1' rem.convert(54px) bold rem.convert(56px),
-  'h2' rem.convert(36px) bold rem.convert(40px),
-  'h3' rem.convert(36px) normal rem.convert(40px),
-  'h4' rem.convert(24px) bold rem.convert(32px),
-  'h5' rem.convert(24px) normal rem.convert(28px),
-  'h6' rem.convert(16px) bold rem.convert(24px)
+  'h1' rem-convert(54px) bold rem-convert(56px),
+  'h2' rem-convert(36px) bold rem-convert(40px),
+  'h3' rem-convert(36px) normal rem-convert(40px),
+  'h4' rem-convert(24px) bold rem-convert(32px),
+  'h5' rem-convert(24px) normal rem-convert(28px),
+  'h6' rem-convert(16px) bold rem-convert(24px)
 );
 
-$text-headings-mobile: ('h1' rem.convert(36px) bold rem.convert(40px), 'h2' rem.convert(28px) bold rem.convert(32px), 'h3' rem.convert(28px) normal rem.convert(32px), 'h4' rem.convert(20px) bold rem.convert(24px), 'h5' rem.convert(20px) normal rem.convert(24px), 'h6' rem.convert(16px) bold rem.convert(24px));
+$text-headings-mobile: ('h1' rem-convert(36px) bold rem-convert(40px), 'h2' rem-convert(28px) bold rem-convert(32px), 'h3' rem-convert(28px) normal rem-convert(32px), 'h4' rem-convert(20px) bold rem-convert(24px), 'h5' rem-convert(20px) normal rem-convert(24px), 'h6' rem-convert(16px) bold rem-convert(24px));
 
 .cmp-text {
   @each $heading, $fontSize, $weight, $lineHeight in $text-headings-mobile {

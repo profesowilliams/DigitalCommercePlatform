@@ -1,15 +1,15 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .cmp-cardView-carousel {
-  width: rem.convert(720px);
-  padding: 0 rem.convert(40px);
+  width: rem-convert(720px);
+  padding: 0 rem-convert(40px);
   font-family: $font-family;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   &__title {
-    font-size: rem.convert(24px);
+    font-size: rem-convert(24px);
     color: get-color(brand-blue);
     font-weight: normal;
     width: 100%;
@@ -24,11 +24,11 @@
     width: 100%;
 
     &--card {
-      width: rem.convert(172px);
-      height: rem.convert(270px);
-      margin-top: rem.convert(25px);
+      width: rem-convert(172px);
+      height: rem-convert(270px);
+      margin-top: rem-convert(25px);
       background-color: get-color(brand-white);
-      box-shadow: rem.convert(2px) rem.convert(2px) rem.convert(4px) 0 get-color(box-shadow);
+      box-shadow: rem-convert(2px) rem-convert(2px) rem-convert(4px) 0 get-color(box-shadow);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -36,18 +36,18 @@
 
       &img {
         width: 100%;
-        height: rem.convert(170px);
+        height: rem-convert(170px);
       }
 
       &--name {
         width: 100%;
-        height: rem.convert(35px);
+        height: rem-convert(35px);
         color: get-color(brand-white);
         background-color: get-color(brand-blue);
-        font-size: rem.convert(16px);
+        font-size: rem-convert(16px);
         text-align: center;
         position: relative;
-        top: rem.convert(170px);
+        top: rem-convert(170px);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -55,9 +55,9 @@
 
       &--position {
         font-size: $font-size-xsmall;
-        line-height: rem.convert(14px);
+        line-height: rem-convert(14px);
         text-align: center;
-        padding: rem.convert(15px) rem.convert(5px) rem.convert(8px);
+        padding: rem-convert(15px) rem-convert(5px) rem-convert(8px);
         height: 65px;
       }
     }

@@ -18,6 +18,7 @@ module.exports = {
     ],
     alias: {
       fortawesome: path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free'),
+     'sass-rem': path.join(__dirname, 'node_modules/sass-rem'),
     },
   },
   entry: {
@@ -61,8 +62,10 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              url: false,
-            },
+              sassOptions: {
+                includePaths: ['node_modules']
+              }
+            }
           },
           {
             loader: 'webpack-import-glob-loader',

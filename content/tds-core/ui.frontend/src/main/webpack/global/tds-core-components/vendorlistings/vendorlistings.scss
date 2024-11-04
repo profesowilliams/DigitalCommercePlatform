@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .vendor-listing {
   &--container {
@@ -119,15 +119,15 @@
       overflow-y: scroll;
       /**** Scrollbar styles for Opera,Edge and Chrome ****/
       &::-webkit-scrollbar {
-        width: rem.convert(6px);
+        width: rem-convert(6px);
       }
       &::-webkit-scrollbar-track {
         background: get-color(brand-white);
       }
       &::-webkit-scrollbar-thumb {
         background: get-color(td-dark-blue);
-        border-radius: rem.convert(4px);
-        border: rem.convert(2px) solid get-color(td-color-blue);
+        border-radius: rem-convert(4px);
+        border: rem-convert(2px) solid get-color(td-color-blue);
       }
       /********** Scrollbar Styles for FireFox *****************/
 
@@ -352,7 +352,7 @@
           overflow-y: scroll;
 
           &::-webkit-scrollbar {
-            width: rem.convert(6px);
+            width: rem-convert(6px);
           }
 
           &::-webkit-scrollbar-track {
@@ -361,8 +361,8 @@
 
           &::-webkit-scrollbar-thumb {
             background: get-color(td-dark-blue);
-            border-radius: rem.convert(4px);
-            border: rem.convert(2px) solid get-color(td-color-blue);
+            border-radius: rem-convert(4px);
+            border: rem-convert(2px) solid get-color(td-color-blue);
           }
 
           &::-webkit-scrollbar-button {

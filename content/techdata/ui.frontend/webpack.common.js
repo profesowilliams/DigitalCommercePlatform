@@ -34,7 +34,7 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|js)x?$/,
-        exclude: [/node_modules/, /webcomponents/],
+        exclude: [/webcomponents/],
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env', '@babel/preset-typescript'],

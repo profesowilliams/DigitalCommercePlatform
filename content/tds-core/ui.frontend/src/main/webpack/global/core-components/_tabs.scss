@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 @import '../../global/tds-core-components/tabs/tds-tabs.scss';
 
@@ -158,16 +158,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: rem.convert(100px);
-      height: rem.convert(100px);
+      width: rem-convert(100px);
+      height: rem-convert(100px);
       border-radius: 50%;
       border: 0 solid transparent;
       padding: 0;
-      margin-top: rem.convert(14px);
-      margin-bottom: rem.convert(18px);
+      margin-top: rem-convert(14px);
+      margin-bottom: rem-convert(18px);
       transition: border-color 0.3s;
       background-color: get-color(brand-white);
-      padding: rem.convert(10px);
+      padding: rem-convert(10px);
       img {
         width: auto;
         margin: 0 auto;
@@ -176,25 +176,25 @@
       &:active,
       &:focus {
         background-color: get-color(brand-light-blue) !important;
-        padding: rem.convert(10px);
+        padding: rem-convert(10px);
       }
     }
     &__tabpanel--text {
-      height: rem.convert(36px);
+      height: rem-convert(36px);
       width: 100%;
       font-family: $font-family-sans-serif;
-      font-size: rem.convert(16px);
+      font-size: rem-convert(16px);
       letter-spacing: 0;
-      line-height: rem.convert(16px);
+      line-height: rem-convert(16px);
       text-align: center;
       font-weight: 600;
     }
     &__tab {
       text-align: center;
-      padding: 0 rem.convert(8px);
+      padding: 0 rem-convert(8px);
       border-bottom: 0;
       font-size: $font-size-medium;
-      width: rem.convert(230px);
+      width: rem-convert(230px);
       &.cmp-tabs__tab--active,
       &:hover,
       &:active {

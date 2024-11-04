@@ -1,4 +1,4 @@
-@use "~sass-rem" as rem;
+// @use 'sass-rem' as rem;
 
 .cmp-region-list {
   &__title {
@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     line-height: 1.8;
-    margin-bottom: rem.convert(20px);
+    margin-bottom: rem-convert(20px);
     font-weight: normal !important;
     text-align: center;
     margin-top: 0;
@@ -18,7 +18,7 @@
     color: get-color(brand-text-gray);
     text-transform: uppercase;
     line-height: 1.8;
-    margin-bottom: rem.convert(20px);
+    margin-bottom: rem-convert(20px);
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -28,8 +28,8 @@
     }
 
     &--flag {
-      width: rem.convert(22px);
-      margin-right: rem.convert(5px);
+      width: rem-convert(22px);
+      margin-right: rem-convert(5px);
     }
 
     &--name {
@@ -71,13 +71,13 @@
 }
 .cmp-regions-modal-close {
   display: block;
-  width: rem.convert(20px);
-  height: rem.convert(20px);
+  width: rem-convert(20px);
+  height: rem-convert(20px);
   box-sizing: border-box;
   color: get-color(brand-black);
   text-decoration: none;
   position: absolute;
-  top: rem.convert(-80px);
+  top: rem-convert(-80px);
   right: 0;
   -webkit-transition: 0.5s ease-in-out;
   -moz-transition: 0.5s ease-in-out;
@@ -86,12 +86,12 @@
   &:before {
     content: '';
     display: block;
-    height: rem.convert(10px);
-    width: rem.convert(1px);
+    height: rem-convert(10px);
+    width: rem-convert(1px);
     background-color: get-color(brand-black);
     position: absolute;
     left: 0px;
-    top: rem.convert(10px);
+    top: rem-convert(10px);
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     -o-transform: rotate(45deg);
@@ -100,12 +100,12 @@
   &:after {
     content: '';
     display: block;
-    height: rem.convert(10px);
-    width: rem.convert(1px);
+    height: rem-convert(10px);
+    width: rem-convert(1px);
     background: black;
     position: absolute;
     left: 0px;
-    top: rem.convert(10px);
+    top: rem-convert(10px);
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
@@ -116,11 +116,11 @@
   position: absolute;
   top: 0px;
   right: 0px;
-  box-shadow: 0px 0px rem.convert(8px) rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px rem-convert(8px) rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
   transition: all 0.5s ease-in-out 0s;
   margin: auto;
-  width: rem.convert(1040px);
+  width: rem-convert(1040px);
   background-color: get-color(brand-white);
   -webkit-transition: 0.5s ease-in-out;
   -moz-transition: 0.5s ease-in-out;
