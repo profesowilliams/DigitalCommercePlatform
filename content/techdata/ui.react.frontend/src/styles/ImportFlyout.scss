@@ -1,0 +1,19 @@
+#import-quote-flyout {
+  /* Base styles for layout and container */
+  .layout-container {
+    gap: 1.88rem;
+  }
+  /* Styles for form elements */
+  .form-elements {
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  /* Styles for dropdown group */
+  .dropdown-group {
+    margin-top: 30px;
+    gap: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -4,6 +4,7 @@ import { ACCESS_TYPES, hasAccess } from '../../../../utils/user-utils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import RenewalFilter from '../RenewalFilter/RenewalFilter';
 import RenewalImport from '../RenewalImport/RenewalImport';
+import ImportFlyout from '../ImportFlyout/ImportFlyout';
 import VerticalSeparator from '../Widgets/VerticalSeparator';
 import RenewalDetailRenderers from './Columns/RenewalDetailRenderers';
 import {
@@ -89,6 +90,9 @@ function RenewalsGrid(props) {
     useExtendGridOperations(useRenewalGridState);
   const effects = useRenewalGridState((state) => state.effects);
   const category = useRenewalGridState((state) => state.analyticsCategory);
+  const importFlyoutConfig = useRenewalGridState(
+    (state) => state?.importFlyout
+  );
   const showImportButton = useRenewalGridState(
     (state) => state.showImportButton
   );
@@ -248,6 +252,10 @@ function RenewalsGrid(props) {
     setCustomState({
       key: 'showImportButton',
       value: response?.data?.content?.importHeader?.isDisplay,
+    });
+    setCustomState({
+      key: 'importFlyout',
+      value: { options: response?.data?.content?.importHeader?.options },
     });
 
     if (response?.data?.content?.canDoNewPurchase) {
@@ -562,6 +570,10 @@ function RenewalsGrid(props) {
         userData={userData}
         componentProp={gridConfig}
         onQueryChanged={onQueryChanged}
+      />
+      <ImportFlyout
+        store={useRenewalGridState}
+        importFlyout={gridConfig.importFlyout}
       />
       <RevisionFlyout
         store={useRenewalGridState}

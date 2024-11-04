@@ -10,6 +10,7 @@ use(["../../../common/utils.js"], function (utils) {
   const noResultsValues = {};
   const copyFlyout = {};
   const newPurchaseFlyout = {};
+  const importFlyout = {};
   const shareFlyout = {};
   const requestQuote = {};
   const revisionFlyout = {};
@@ -23,7 +24,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     optionDataList.map(
       (optionDataItem) =>
-        (optionData[optionDataItem] = properties["./optionData/" + optionDataItem])
+        (optionData[optionDataItem] =
+          properties["./optionData/" + optionDataItem])
     );
 
     if (optionData != null) {
@@ -47,7 +49,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     productGridList.map(
       (productGridItem) =>
-        (productGrid[productGridItem] = properties["./productGrid/" + productGridItem])
+        (productGrid[productGridItem] =
+          properties["./productGrid/" + productGridItem])
     );
 
     if (productGrid != null) {
@@ -73,7 +76,10 @@ use(["../../../common/utils.js"], function (utils) {
     };
 
     function populateOutterProperty(obj, prop, prefix) {
-      const populated = utils.fillFieldsDialogPropertiesWithPrefix(prop.values, prefix);
+      const populated = utils.fillFieldsDialogPropertiesWithPrefix(
+        prop.values,
+        prefix
+      );
       const daysPropertyName = properties[prefix + prop.propertyName];
       if (populated && daysPropertyName) {
         obj[daysPropertyName] = populated;
@@ -101,7 +107,8 @@ use(["../../../common/utils.js"], function (utils) {
     ];
 
     const orderingFromDashboard = utils.fillFieldsDialogPropertiesWithPrefix(
-      orderingPropertiesList, "./orderingFromDashboard/"
+      orderingPropertiesList,
+      "./orderingFromDashboard/"
     );
     if (orderingFromDashboard != null) {
       orderingFromDashboard.termsAndConditionsLink = utils.addHtmlIfNeeded(
@@ -122,16 +129,20 @@ use(["../../../common/utils.js"], function (utils) {
 
     noResultsValuesList.map(
       (noResultsValuesItem) =>
-        (noResultsValues[noResultsValuesItem] = properties["./searchResultsError/" + noResultsValuesItem])
+        (noResultsValues[noResultsValuesItem] =
+          properties["./searchResultsError/" + noResultsValuesItem])
     );
 
-    if (properties["./searchResultsError/noResultsImageFileReference"] != null) {
+    if (
+      properties["./searchResultsError/noResultsImageFileReference"] != null
+    ) {
       noResultsValues.noResultsImage =
         properties["./searchResultsError/noResultsImageFileReference"];
     }
 
     if (properties["./searchResultsError/noDataImageFileReference"] != null) {
-      noResultsValues.noDataImage = properties["./searchResultsError/noDataImageFileReference"];
+      noResultsValues.noDataImage =
+        properties["./searchResultsError/noDataImageFileReference"];
     }
 
     if (noResultsValues != null) {
@@ -176,7 +187,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     copyFlyoutList.map(
       (copyFlyoutItem) =>
-        (copyFlyout[copyFlyoutItem] = properties["./copyFlyout/" + copyFlyoutItem])
+        (copyFlyout[copyFlyoutItem] =
+          properties["./copyFlyout/" + copyFlyoutItem])
     );
 
     if (properties["./copyFlyout/copyFlyoutTitle"] != null) {
@@ -281,17 +293,33 @@ use(["../../../common/utils.js"], function (utils) {
     ];
 
     newPurchaseFlyoutList.map(
-      (property) => (newPurchaseFlyout[property] = properties["./newPurchaseFlyout/" + property])
+      (property) =>
+        (newPurchaseFlyout[property] =
+          properties["./newPurchaseFlyout/" + property])
     );
 
     if (properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]) {
-        newPurchaseFlyout["termsAndConditionsLinkNewPurchase"] =
-            utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]));
+      newPurchaseFlyout["termsAndConditionsLinkNewPurchase"] =
+        utils.addHtmlIfNeeded(
+          utils.transformUrlGivenEnvironment(
+            properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]
+          )
+        );
     }
 
-    if (properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"]) {
-        newPurchaseFlyout["adobeResellerTermsAndConditionsLinkNewPurchase"] =
-            utils.addHtmlIfNeeded(utils.transformUrlGivenEnvironment(properties["./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"]));
+    if (
+      properties[
+        "./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"
+      ]
+    ) {
+      newPurchaseFlyout["adobeResellerTermsAndConditionsLinkNewPurchase"] =
+        utils.addHtmlIfNeeded(
+          utils.transformUrlGivenEnvironment(
+            properties[
+              "./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"
+            ]
+          )
+        );
     }
 
     if (newPurchaseFlyout != null) {
@@ -312,6 +340,29 @@ use(["../../../common/utils.js"], function (utils) {
       newPurchaseFlyout.createNewPurchaseOrderEndpoint =
         this.serviceData.uiServiceDomain + this.createNewPurchaseOrderEndpoint;
     }
+
+    // Import Flyout
+    const importFlyoutList = [
+      "importTitle",
+      "completeTheRequiredFields",
+      "vendorImport",
+      "vendorProgram",
+      "uploadTemplateFile",
+      "dragAndDrop",
+      "maxSizeOf",
+      "browseFile",
+      "importButton",
+      "confirmationCompleteMessage",
+    ];
+    importFlyoutList.map(
+      (importFlyoutItem) =>
+        (importFlyout[importFlyoutItem] =
+          properties["./importFlyout/" + importFlyoutItem])
+    );
+    if (importFlyout != null) {
+      jsonObject["importFlyout"] = importFlyout;
+    }
+
     // Share Flyout
     const shareFlyoutList = [
       "shareFlyoutTitle",
@@ -349,7 +400,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     shareFlyoutList.map(
       (shareFlyoutItem) =>
-        (shareFlyout[shareFlyoutItem] = properties["./shareFlyout/" + shareFlyoutItem])
+        (shareFlyout[shareFlyoutItem] =
+          properties["./shareFlyout/" + shareFlyoutItem])
     );
 
     if (shareFlyout != null) {
@@ -376,7 +428,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     requestQuoteList.map(
       (requestQuoteItem) =>
-        (requestQuote[requestQuoteItem] = properties["./requestQuote/" + requestQuoteItem])
+        (requestQuote[requestQuoteItem] =
+          properties["./requestQuote/" + requestQuoteItem])
     );
 
     if (requestQuote != null) {
@@ -399,7 +452,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     revisionFlyoutList.map(
       (revisionFlyoutItem) =>
-        (revisionFlyout[revisionFlyoutItem] = properties["./revisionFlyout/" + revisionFlyoutItem])
+        (revisionFlyout[revisionFlyoutItem] =
+          properties["./revisionFlyout/" + revisionFlyoutItem])
     );
 
     if (revisionFlyout != null) {
@@ -427,7 +481,7 @@ use(["../../../common/utils.js"], function (utils) {
       "hideExportOption",
       "import",
       "genericError",
-      "genericErrorCode"
+      "genericErrorCode",
     ];
 
     labelList.map((labelListItem) => {
@@ -447,7 +501,8 @@ use(["../../../common/utils.js"], function (utils) {
     }
 
     if (properties["./labels/disableDefaultSort"]) {
-      jsonObject["disableDefaultSort"] = properties["./labels/disableDefaultSort"];
+      jsonObject["disableDefaultSort"] =
+        properties["./labels/disableDefaultSort"];
     } else if (
       properties["./labels/disableDefaultSort"] == null ||
       !properties["./labels/disableDefaultSort"]

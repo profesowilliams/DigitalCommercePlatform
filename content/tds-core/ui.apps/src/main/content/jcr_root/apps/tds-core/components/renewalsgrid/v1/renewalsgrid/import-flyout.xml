@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    sling:resourceType="granite/ui/components/coral/foundation/container">
+    <items jcr:primaryType="nt:unstructured">
+        <importFlyoutGroup
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/well">
+            <items jcr:primaryType="nt:unstructured">
+                <importTitle
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="grids.common.label.import"
+                    fieldLabel="Import"
+                    name="./importFlyout/importTitle"/>
+                <completeTheRequiredFields
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.importFlyout.label.completeTheRequiredFields"
+                    fieldLabel="Complete the required fields below to import new quotes."
+                    name="./importFlyout/completeTheRequiredFields"/>
+                <vendorImport
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.importFlyout.label.vendorImport"
+                    fieldLabel="Vendor"
+                    name="./importFlyout/vendorImport"/>
+                <vendorProgram
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.importFlyout.label.vendorProgram"
+                    fieldLabel="Vendor program"
+                    name="./importFlyout/vendorProgram"/>
+                <uploadTemplateFile
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.importFlyout.label.uploadTemplateFile"
+                    fieldLabel="Upload Temlate File"
+                    name="./importFlyout/uploadTemplateFile"/>
+                <dragAndDrop
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.importFlyout.label.dragAndDrop"
+                    fieldLabel="Drag and Drop or Choose file from device"
+                    name="./importFlyout/dragAndDrop"/>
+                <maxSizeOf
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.importFlyout.label.maxSizeOf"
+                    fieldLabel=", Max file size of"
+                    name="./importFlyout/maxSizeOf"/>
+                <browseFile
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.importFlyout.label.browseFile"
+                    fieldLabel="Browse file"
+                    name="./importFlyout/browseFile"/>
+                <importButton
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="mainDashboard.renewal.importFlyout.label.importButton"
+                    fieldLabel="Import"
+                    name="./importFlyout/importButton"/>
+                <confirmationCompleteMessage
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldDescription="grids.common.label.import"
+                    fieldLabel="Import"
+                    name="./importFlyout/confirmationCompleteMessage"/>
+            </items>
+        </importFlyoutGroup>
+    </items>
+</jcr:root>

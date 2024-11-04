@@ -5296,8 +5296,7 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "mainDashboard.renewal.newPurchaseFlyout.label.validating": "Validating",
     "mainDashboard.renewal.newPurchaseFlyout.label.unknownError":
       "Unknown error has occurred. Please try again.",
-    "mainDashboard.renewal.newPurchaseFlyout.label.unknownErrorCode":
-      "500",
+    "mainDashboard.renewal.newPurchaseFlyout.label.unknownErrorCode": "500",
     "mainDashboard.renewal.newPurchaseFlyout.label.accountDoesntExistError":
       "Account doesn't exist!",
     "mainDashboard.renewal.newPurchaseFlyout.label.quoteExistsError":
@@ -5328,10 +5327,23 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
       "No match found, please try again.",
     "mainDashboard.renewal.newPurchaseFlyout.label.pleaseEnterAValidPostalCode":
       "Please enter a valid postal code",
-     "mainDashboard.renewal.properties.label.genericError":
+
+    "mainDashboard.renewal.importFlyout.label.completeTheRequiredFields":
+      "Complete the required fields below to import new quotes.",
+    "mainDashboard.renewal.importFlyout.label.vendorImport": "Vendor",
+    "mainDashboard.renewal.importFlyout.label.vendorProgram": "Vendor program",
+    "mainDashboard.renewal.importFlyout.label.uploadTemplateFile":
+      "Upload Temlate File",
+    "mainDashboard.renewal.importFlyout.label.dragAndDrop":
+      "Drag & Drop or Choose file from device",
+    "mainDashboard.renewal.importFlyout.label.maxSizeOf": ", Max file size of",
+    "mainDashboard.renewal.importFlyout.label.browseFile": "Browse file",
+    "mainDashboard.renewal.importFlyout.label.confirmationCompleteMessage":
+      "Confirmation/complete message",
+
+    "mainDashboard.renewal.properties.label.genericError":
       "Unknown error has occurred. Please try again.",
-    "mainDashboard.renewal.properties.label.genericErrorCode":
-       "500",
+    "mainDashboard.renewal.properties.label.genericErrorCode": "500",
   });
 });
 
