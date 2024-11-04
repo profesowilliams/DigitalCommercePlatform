@@ -58,14 +58,14 @@
                 <importButton
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldDescription="mainDashboard.renewal.importFlyout.label.importButton"
+                    fieldDescription="grids.common.label.import"
                     fieldLabel="Import"
                     name="./importFlyout/importButton"/>
                 <confirmationCompleteMessage
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldDescription="grids.common.label.import"
-                    fieldLabel="Import"
+                    fieldDescription="mainDashboard.renewal.importFlyout.label.confirmationCompleteMessage"
+                    fieldLabel="Confirmation/complete message"
                     name="./importFlyout/confirmationCompleteMessage"/>
             </items>
         </importFlyoutGroup>
