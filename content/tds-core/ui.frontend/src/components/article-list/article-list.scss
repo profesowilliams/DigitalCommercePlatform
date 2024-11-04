@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 /**
  * Article List component.
  *
@@ -18,7 +21,7 @@
     flex-wrap: wrap;
 
     * {
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
     }
   }
 
@@ -169,8 +172,8 @@
     width: 100%;
 
     &__image-figure {
-      width: rem-convert(195px);
-      height: rem-convert(110px);
+      width: rem.convert(195px);
+      height: rem.convert(110px);
       margin: 0;
       display: inline-block;
     }
@@ -204,11 +207,11 @@
            * @class cmp-list__item
            */
         &__item {
-          box-shadow: 0 0 0 rem-convert(1px) get-color(secondary-light-grey);
-          margin-bottom: rem-convert(18px);
-          margin-left: rem-convert(25px);
-          margin-right: rem-convert(25px);
-          height: rem-convert(110px);
+          box-shadow: 0 0 0 rem.convert(1px) get-color(secondary-light-grey);
+          margin-bottom: rem.convert(18px);
+          margin-left: rem.convert(25px);
+          margin-right: rem.convert(25px);
+          height: rem.convert(110px);
           width: 100%;
 
           /**
@@ -219,8 +222,8 @@
           &__item-info {
             display: flex;
             flex-direction: column;
-            padding: rem-convert(10px) rem-convert(24px);
-            line-height: rem-convert(24px);
+            padding: rem.convert(10px) rem.convert(24px);
+            line-height: rem.convert(24px);
           }
 
           /**
@@ -240,7 +243,7 @@
              * @class cmp-list__item-date
              */
           &__item-date {
-            font-size: rem-convert(12px);
+            font-size: rem.convert(12px);
             color: get-color(brand-text-gray);
           }
 
@@ -250,7 +253,7 @@
              * @class cmp-list__item-title
              */
           &__item-title {
-            font-size: rem-convert(20px);
+            font-size: rem.convert(20px);
             font-weight: 500;
             color: get-color(brand-blue);
             background-color: transparent;
@@ -270,9 +273,9 @@
             min-height: 100%;
 
             &-figure {
-              width: rem-convert(195px);
-              min-width: rem-convert(195px);
-              height: rem-convert(110px);
+              width: rem.convert(195px);
+              min-width: rem.convert(195px);
+              height: rem.convert(110px);
               margin: 0;
               display: inline-block;
               overflow: hidden;

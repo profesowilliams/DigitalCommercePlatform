@@ -1,9 +1,12 @@
 /* stylelint-disable -- ryan.williams@tdsynnex.com: Too many errors to resolve right now */
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 @import '../../global/abstracts/mixins';
 @import '../../global/styles/helpers/colors.scss';
 
 .text {
-  color: map-get($color-palette, 'charcoal');
+  color: map.get($color-palette, 'charcoal');
 }
 
 .cmp-text {
@@ -18,7 +21,7 @@
         display: inline !important;
         &::before {
           content: '' !important;
-          color: map-get($color-palette, 'chartreuse');
+          color: map.get($color-palette, 'chartreuse');
           @include background-chartreuse;
           width: 15px !important;
           height: 15px;
@@ -35,9 +38,9 @@
           line-height: -10rem;
           padding-top: 0rem !important;
           li {
-            padding: rem-convert(24px) rem-convert(16px) 0 rem-convert(44px);
+            padding: rem.convert(24px) rem.convert(16px) 0 rem.convert(44px);
             position: relative;
-            line-height: rem-convert(24px);
+            line-height: rem.convert(24px);
 
             b {
               width: auto;
@@ -57,7 +60,7 @@
       }
     }
     p {
-      margin: rem-convert(16px) rem-convert(24px);
+      margin: rem.convert(16px) rem.convert(24px);
     }
   }
 
@@ -66,12 +69,12 @@
 
     li {
       counter-increment: li;
-      line-height: rem-convert(22px);
-      padding-bottom: rem-convert(5.44px);
+      line-height: rem.convert(22px);
+      padding-bottom: rem.convert(5.44px);
 
       &::before {
         content: counter(li);
-        width: rem-convert(20.8px);
+        width: rem.convert(20.8px);
       }
     }
   }
@@ -80,8 +83,8 @@
     padding-left: 15px;
 
     li {
-      line-height: rem-convert(20px);
-      padding-bottom: rem-convert(5.12px);
+      line-height: rem.convert(20px);
+      padding-bottom: rem.convert(5.12px);
       display: flex;
 
       &::before {
@@ -89,7 +92,7 @@
         font-weight: bold;
         width: auto;
         font-size: $font-size-custom-medium;
-        margin-right: rem-convert(10px);
+        margin-right: rem.convert(10px);
       }
     }
   }
@@ -161,11 +164,11 @@
 }
 
 .cmp-aem-alert {
-  border: rem-convert(1px) solid get-color(td-primary-blue);
-  padding: rem-convert(32px);
+  border: rem.convert(1px) solid get-color(td-primary-blue);
+  padding: rem.convert(32px);
   background-color: get-color(brand-white);
   color: get-color(text-mid-gray);
-  box-shadow: 0px 0px rem-convert(5px) 0px get-color(td-primary-blue) !important;
+  box-shadow: 0px 0px rem.convert(5px) 0px get-color(td-primary-blue) !important;
 }
 
 .dp-text--white * {
@@ -195,14 +198,14 @@
 .dp-text--xsmall {
   &,
   .cmp-text li {
-    font-size: rem-convert($font-size-xxsmall);
+    font-size: rem.convert($font-size-xxsmall);
   }
 }
 
 .dp-text--small {
   &,
   .cmp-text li {
-    font-size: rem-convert($font-size-small);
+    font-size: rem.convert($font-size-small);
   }
 }
 

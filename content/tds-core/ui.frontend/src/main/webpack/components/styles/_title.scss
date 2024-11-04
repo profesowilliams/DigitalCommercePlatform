@@ -1,4 +1,7 @@
 /* stylelint-disable -- ryan.williams@tdsynnex.com: Too many errors to resolve right now */
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 @import '../../site/_variables.scss';
 @import '../../global/abstracts/mixins';
 @import '../../global/styles/_font-face.scss';
@@ -47,7 +50,7 @@
     h2 {
       font-weight: bold;
       font-size: $font-size-digital-h2-card !important;
-      line-height: rem-convert(42px);
+      line-height: rem.convert(42px);
     }
   }
 }
@@ -93,7 +96,7 @@
 }
 
 .dp-title {
-  color: map-get($color-palette, 'charcoal');
+  color: map.get($color-palette, 'charcoal');
 
   @include typewriter-animation;
 

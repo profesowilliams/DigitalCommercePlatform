@@ -1,4 +1,6 @@
 /* stylelint-disable -- Too much to fix, will delete file later. */
+@use "sass:map";
+
 #navigation {
   & > ul {
     margin: 0;
@@ -29,14 +31,14 @@
 
     a {
       text-decoration: none;
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
       display: block;
       padding: 0;
       line-height: 36px;
     }
 
     .current {
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
       display: block;
       padding: 0;
     }
@@ -48,25 +50,25 @@
             li {
               &:hover {
                 ul {
-                  background-color: map-get($color-palette, 'neutral-gray-2');
+                  background-color: map.get($color-palette, 'neutral-gray-2');
 
                   li {
                     a {
-                      color: map-get($color-palette, 'charcoal');
+                      color: map.get($color-palette, 'charcoal');
 
                       &:hover {
-                        background-color: map-get($color-palette, 'brilliant');
+                        background-color: map.get($color-palette, 'brilliant');
                       }
                     }
                   }
                 }
 
                 a {
-                  color: map-get($color-palette, 'charcoal');
-                  color: map-get($color-palette, 'white');
+                  color: map.get($color-palette, 'charcoal');
+                  color: map.get($color-palette, 'white');
 
                   &:hover {
-                    color: map-get($color-palette, 'charcoal');
+                    color: map.get($color-palette, 'charcoal');
                   }
                 }
               }
@@ -85,20 +87,20 @@
           top: 65px;
           padding: 0;
           margin: 0;
-          background-color: map-get($color-palette, 'brilliant');
+          background-color: map.get($color-palette, 'brilliant');
 
           li {
             line-height: 36px;
 
             &:hover {
               font-weight: 400;
-              background-color: map-get($color-palette, 'teal');
+              background-color: map.get($color-palette, 'teal');
             }
 
             a {
               padding-left: 1pc;
               font-weight: 400;
-              color: map-get($color-palette, 'charcoal');
+              color: map.get($color-palette, 'charcoal');
             }
 
             div {
@@ -109,35 +111,35 @@
             }
 
             > ul {
-              background-color: map-get($color-palette, 'brilliant');
+              background-color: map.get($color-palette, 'brilliant');
 
               &:hover {
-                background-color: map-get($color-palette, 'neutral-gray-2');
+                background-color: map.get($color-palette, 'neutral-gray-2');
 
                 li {
                   &:hover {
                     ul {
-                      background-color: map-get($color-palette, 'brilliant');
+                      background-color: map.get($color-palette, 'brilliant');
 
                       li {
                         a {
-                          color: map-get($color-palette, 'charcoal');
+                          color: map.get($color-palette, 'charcoal');
 
                           &:hover {
-                            background-color: map-get($color-palette, 'neutral-gray-2');
-                            color: map-get($color-palette, 'charcoal');
+                            background-color: map.get($color-palette, 'neutral-gray-2');
+                            color: map.get($color-palette, 'charcoal');
                           }
                         }
                       }
                     }
 
                     a {
-                      color: map-get($color-palette, 'charcoal');
-                      color: map-get($color-palette, 'white');
+                      color: map.get($color-palette, 'charcoal');
+                      color: map.get($color-palette, 'white');
 
                       &:hover {
-                        background-color: map-get($color-palette, 'brilliant');
-                        color: map-get($color-palette, 'charcoal');
+                        background-color: map.get($color-palette, 'brilliant');
+                        color: map.get($color-palette, 'charcoal');
                       }
                     }
                   }
@@ -157,7 +159,7 @@
                 ul {
                   li {
                     a {
-                      color: map-get($color-palette, 'charcoal');
+                      color: map.get($color-palette, 'charcoal');
                     }
                   }
                 }
@@ -178,18 +180,18 @@
               top: -3px;
               padding: 0;
               margin: 0;
-              background-color: map-get($color-palette, 'brilliant');
+              background-color: map.get($color-palette, 'brilliant');
 
               > li {
                 line-height: 36px;
 
                 &:hover {
                   font-weight: 400;
-                  background-color: map-get($color-palette, 'teal');
+                  background-color: map.get($color-palette, 'teal');
                 }
 
                 a {
-                  color: map-get($color-palette, 'white');
+                  color: map.get($color-palette, 'white');
                 }
 
                 div {
@@ -211,7 +213,7 @@
                   top: -3px;
                   padding: 0;
                   margin: 0;
-                  background-color: map-get($color-palette, 'brilliant');
+                  background-color: map.get($color-palette, 'brilliant');
 
                   li {
                     line-height: 36px;
@@ -227,7 +229,7 @@
         position: relative;
         list-style: none;
         vertical-align: middle;
-        color: map-get($color-palette, 'charcoal');
+        color: map.get($color-palette, 'charcoal');
 
         &:focus-within {
           font-weight: 400;
@@ -237,7 +239,7 @@
           font-weight: 400;
 
           > a {
-            color: map-get($color-palette, 'teal');
+            color: map.get($color-palette, 'teal');
           }
         }
 
@@ -245,7 +247,7 @@
           width: 75pt;
           margin: auto;
           white-space: nowrap;
-          color: map-get($color-palette, 'charcoal');
+          color: map.get($color-palette, 'charcoal');
         }
       }
 
@@ -279,14 +281,14 @@
 
     a {
       text-decoration: none;
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
       display: block;
       padding: 0;
       line-height: 36px;
     }
 
     .current {
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
       display: block;
       padding: 0;
     }
@@ -298,25 +300,25 @@
             li {
               &:hover {
                 ul {
-                  background-color: map-get($color-palette, 'neutral-gray-2');
+                  background-color: map.get($color-palette, 'neutral-gray-2');
 
                   li {
                     a {
-                      color: map-get($color-palette, 'charcoal');
+                      color: map.get($color-palette, 'charcoal');
 
                       &:hover {
-                        background-color: map-get($color-palette, 'brilliant');
+                        background-color: map.get($color-palette, 'brilliant');
                       }
                     }
                   }
                 }
 
                 a {
-                  color: map-get($color-palette, 'charcoal');
-                  color: map-get($color-palette, 'white');
+                  color: map.get($color-palette, 'charcoal');
+                  color: map.get($color-palette, 'white');
 
                   &:hover {
-                    color: map-get($color-palette, 'charcoal');
+                    color: map.get($color-palette, 'charcoal');
                   }
                 }
               }
@@ -335,20 +337,20 @@
           top: 65px;
           padding: 0;
           margin: 0;
-          background-color: map-get($color-palette, 'brilliant');
+          background-color: map.get($color-palette, 'brilliant');
 
           li {
             line-height: 36px;
 
             &:hover {
               font-weight: 400;
-              background-color: map-get($color-palette, 'teal');
+              background-color: map.get($color-palette, 'teal');
             }
 
             a {
               padding-left: 1pc;
               font-weight: 400;
-              color: map-get($color-palette, 'charcoal');
+              color: map.get($color-palette, 'charcoal');
             }
 
             div {
@@ -359,35 +361,35 @@
             }
 
             > ul {
-              background-color: map-get($color-palette, 'brilliant');
+              background-color: map.get($color-palette, 'brilliant');
 
               &:hover {
-                background-color: map-get($color-palette, 'neutral-gray-2');
+                background-color: map.get($color-palette, 'neutral-gray-2');
 
                 li {
                   &:hover {
                     ul {
-                      background-color: map-get($color-palette, 'brilliant');
+                      background-color: map.get($color-palette, 'brilliant');
 
                       li {
                         a {
-                          color: map-get($color-palette, 'charcoal');
+                          color: map.get($color-palette, 'charcoal');
 
                           &:hover {
-                            background-color: map-get($color-palette, 'neutral-gray-2');
-                            color: map-get($color-palette, 'charcoal');
+                            background-color: map.get($color-palette, 'neutral-gray-2');
+                            color: map.get($color-palette, 'charcoal');
                           }
                         }
                       }
                     }
 
                     a {
-                      color: map-get($color-palette, 'charcoal');
-                      color: map-get($color-palette, 'white');
+                      color: map.get($color-palette, 'charcoal');
+                      color: map.get($color-palette, 'white');
 
                       &:hover {
-                        background-color: map-get($color-palette, 'brilliant');
-                        color: map-get($color-palette, 'charcoal');
+                        background-color: map.get($color-palette, 'brilliant');
+                        color: map.get($color-palette, 'charcoal');
                       }
                     }
                   }
@@ -407,7 +409,7 @@
                 ul {
                   li {
                     a {
-                      color: map-get($color-palette, 'charcoal');
+                      color: map.get($color-palette, 'charcoal');
                     }
                   }
                 }
@@ -428,13 +430,13 @@
               top: -3px;
               padding: 0;
               margin: 0;
-              background-color: map-get($color-palette, 'brilliant');
+              background-color: map.get($color-palette, 'brilliant');
 
               > li {
                 line-height: 36px;
 
                 a {
-                  color: map-get($color-palette, 'white');
+                  color: map.get($color-palette, 'white');
                 }
 
                 div {
@@ -456,7 +458,7 @@
                   top: -3px;
                   padding: 0;
                   margin: 0;
-                  background-color: map-get($color-palette, 'brilliant');
+                  background-color: map.get($color-palette, 'brilliant');
 
                   li {
                     line-height: 36px;
@@ -472,7 +474,7 @@
         position: relative;
         list-style: none;
         vertical-align: middle;
-        color: map-get($color-palette, 'charcoal');
+        color: map.get($color-palette, 'charcoal');
 
         &:focus-within {
           font-weight: 400;
@@ -486,7 +488,7 @@
           width: 75pt;
           margin: auto;
           white-space: nowrap;
-          color: map-get($color-palette, 'white');
+          color: map.get($color-palette, 'white');
         }
       }
 
@@ -502,7 +504,7 @@
 #navigation ul li ul a:hover,
 #navigation ul a:focus {
   text-decoration: none;
-  background-color: map-get($color-palette, 'neutral-gray-2');
+  background-color: map.get($color-palette, 'neutral-gray-2');
 }
 
 @include desktop {
@@ -528,5 +530,5 @@
 #navigation > ul > li > ul,
 #navigation > ul > li > ul > li > ul,
 #navigation > ul > li > ul > li > ul > li > ul {
-  border-top: solid 3px map-get($color-palette, 'teal');
+  border-top: solid 3px map.get($color-palette, 'teal');
 }

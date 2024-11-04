@@ -1,18 +1,21 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 @function get-color($base, $shade: base) {
-  $color: map-get($color-palette, $base);
+  $color: map.get($color-palette, $base);
   @return $color;
 }
 
 @mixin tds-tabs-hover {
   text-decoration: none !important;
-  height: rem-convert(27px);
+  height: rem.convert(27px);
 }
 
 //text colors
 .cmp-text {
   // TDS Primary text colors
   &__teal {
-    color: map-get($color-palette, 'teal') !important;
+    color: map.get($color-palette, 'teal') !important;
   }
 
   &__deep-teal {
@@ -20,7 +23,7 @@
   }
 
   &__aqua {
-    color: map-get($color-palette, 'aqua') !important;
+    color: map.get($color-palette, 'aqua') !important;
   }
 
   &__cool-gray-8 {
@@ -32,19 +35,19 @@
   }
 
   &__green {
-    color: map-get($color-palette, 'green') !important;
+    color: map.get($color-palette, 'green') !important;
   }
 
   &__chartreuse {
-    color: map-get($color-palette, 'chartreuse') !important;
+    color: map.get($color-palette, 'chartreuse') !important;
   }
 
   &__black {
-    color: map-get($color-palette, 'black') !important;
+    color: map.get($color-palette, 'black') !important;
   }
 
   &__white {
-    color: map-get($color-palette, 'white') !important;
+    color: map.get($color-palette, 'white') !important;
   }
 
   //TDS Secondary text colors
@@ -53,11 +56,11 @@
   }
 
   &__navy {
-    color: map-get($color-palette, 'navy') !important;
+    color: map.get($color-palette, 'navy') !important;
   }
 
   &__copper {
-    color: map-get($color-palette, 'copper') !important;
+    color: map.get($color-palette, 'copper') !important;
   }
 
   &__stone {
@@ -86,11 +89,11 @@
   }
 
   &__forest {
-    color: map-get($color-palette, 'forest') !important;
+    color: map.get($color-palette, 'forest') !important;
   }
 
   &__charcoal {
-    color: map-get($color-palette, 'charcoal') !important;
+    color: map.get($color-palette, 'charcoal') !important;
   }
 
   &__cool-gray-9 {
@@ -119,7 +122,7 @@
 .cmp-background {
   // TDS Primary background colors
   &__teal {
-    background-color: map-get($color-palette, 'teal') !important;
+    background-color: map.get($color-palette, 'teal') !important;
   }
 
   &__deep-teal {
@@ -127,11 +130,11 @@
   }
 
   &__aqua {
-    background-color: map-get($color-palette, 'aqua') !important;
+    background-color: map.get($color-palette, 'aqua') !important;
   }
 
   &__chartreuse {
-    background-color: map-get($color-palette, 'chartreuse') !important;
+    background-color: map.get($color-palette, 'chartreuse') !important;
   }
 
   &__cool-gray-8 {
@@ -143,15 +146,15 @@
   }
 
   &__green {
-    background-color: map-get($color-palette, 'green') !important;
+    background-color: map.get($color-palette, 'green') !important;
   }
 
   &__black {
-    background-color: map-get($color-palette, 'black') !important;
+    background-color: map.get($color-palette, 'black') !important;
   }
 
   &__white {
-    background-color: map-get($color-palette, 'white') !important;
+    background-color: map.get($color-palette, 'white') !important;
   }
 
   //TDS Secondary background colors
@@ -160,11 +163,11 @@
   }
 
   &__navy {
-    background-color: map-get($color-palette, 'navy') !important;
+    background-color: map.get($color-palette, 'navy') !important;
   }
 
   &__copper {
-    background-color: map-get($color-palette, 'copper') !important;
+    background-color: map.get($color-palette, 'copper') !important;
   }
 
   &__stone {
@@ -185,11 +188,11 @@
   }
 
   &__forest {
-    background-color: map-get($color-palette, 'forest') !important;
+    background-color: map.get($color-palette, 'forest') !important;
   }
 
   &__charcoal {
-    background-color: map-get($color-palette, 'charcoal') !important;
+    background-color: map.get($color-palette, 'charcoal') !important;
   }
 
   &__cool-gray-9 {
@@ -226,7 +229,7 @@
 .cmp-border {
   // TDS Primary colors
   &__teal {
-    border-color: map-get($color-palette, 'teal') !important;
+    border-color: map.get($color-palette, 'teal') !important;
   }
 
   &__deep-teal {
@@ -234,11 +237,11 @@
   }
 
   &__aqua {
-    border-color: map-get($color-palette, 'aqua') !important;
+    border-color: map.get($color-palette, 'aqua') !important;
   }
 
   &__chartreuse {
-    border-color: map-get($color-palette, 'chartreuse') !important;
+    border-color: map.get($color-palette, 'chartreuse') !important;
   }
 
   &__cool-gray-8 {
@@ -250,15 +253,15 @@
   }
 
   &__green {
-    border-color: map-get($color-palette, 'green') !important;
+    border-color: map.get($color-palette, 'green') !important;
   }
 
   &__black {
-    border-color: map-get($color-palette, 'black') !important;
+    border-color: map.get($color-palette, 'black') !important;
   }
 
   &__white {
-    border-color: map-get($color-palette, 'white') !important;
+    border-color: map.get($color-palette, 'white') !important;
   }
 
   //TDS Secondary colors
@@ -267,11 +270,11 @@
   }
 
   &__navy {
-    border-color: map-get($color-palette, 'navy') !important;
+    border-color: map.get($color-palette, 'navy') !important;
   }
 
   &__copper {
-    border-color: map-get($color-palette, 'copper') !important;
+    border-color: map.get($color-palette, 'copper') !important;
   }
 
   &__stone {
@@ -292,11 +295,11 @@
   }
 
   &__forest {
-    border-color: map-get($color-palette, 'forest') !important;
+    border-color: map.get($color-palette, 'forest') !important;
   }
 
   &__charcoal {
-    border-color: map-get($color-palette, 'charcoal') !important;
+    border-color: map.get($color-palette, 'charcoal') !important;
   }
 
   &__cool-gray-9 {
@@ -336,10 +339,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'teal') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'teal') !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'teal') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'teal') !important;
       }
     }
   }
@@ -348,10 +351,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(deep-teal) !important;
+        border-bottom: rem.convert(2px) solid get-color(deep-teal) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(deep-teal) !important;
+        border-bottom: rem.convert(2px) solid get-color(deep-teal) !important;
       }
     }
   }
@@ -360,10 +363,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'aqua') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'aqua') !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'aqua') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'aqua') !important;
       }
     }
   }
@@ -372,10 +375,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'chartreuse') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'chartreuse') !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'chartreuse') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'chartreuse') !important;
       }
     }
   }
@@ -384,10 +387,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'green') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'green') !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'green') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'green') !important;
       }
     }
   }
@@ -396,10 +399,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'black') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'black') !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'black') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'black') !important;
       }
     }
   }
@@ -408,10 +411,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'white') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'white') !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'white') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'white') !important;
       }
     }
   }
@@ -421,10 +424,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(steel-blue) !important;
+        border-bottom: rem.convert(2px) solid get-color(steel-blue) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(steel-blue) !important;
+        border-bottom: rem.convert(2px) solid get-color(steel-blue) !important;
       }
     }
   }
@@ -433,10 +436,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'navy') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'navy') !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'navy') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'navy') !important;
       }
     }
   }
@@ -445,10 +448,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'copper') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'copper') !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'copper') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'copper') !important;
       }
     }
   }
@@ -457,10 +460,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(stone) !important;
+        border-bottom: rem.convert(2px) solid get-color(stone) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(stone) !important;
+        border-bottom: rem.convert(2px) solid get-color(stone) !important;
       }
     }
   }
@@ -469,10 +472,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(cool-gray-1) !important;
+        border-bottom: rem.convert(2px) solid get-color(cool-gray-1) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(cool-gray-1) !important;
+        border-bottom: rem.convert(2px) solid get-color(cool-gray-1) !important;
       }
     }
   }
@@ -482,10 +485,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(cherry) !important;
+        border-bottom: rem.convert(2px) solid get-color(cherry) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(cherry) !important;
+        border-bottom: rem.convert(2px) solid get-color(cherry) !important;
       }
     }
   }
@@ -494,10 +497,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(amber) !important;
+        border-bottom: rem.convert(2px) solid get-color(amber) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(amber) !important;
+        border-bottom: rem.convert(2px) solid get-color(amber) !important;
       }
     }
   }
@@ -506,10 +509,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'forest') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'forest') !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'forest') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'forest') !important;
       }
     }
   }
@@ -518,10 +521,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'charcoal') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'charcoal') !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid map-get($color-palette, 'charcoal') !important;
+        border-bottom: rem.convert(2px) solid map.get($color-palette, 'charcoal') !important;
       }
     }
   }
@@ -530,10 +533,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(cool-gray-9) !important;
+        border-bottom: rem.convert(2px) solid get-color(cool-gray-9) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(cool-gray-9) !important;
+        border-bottom: rem.convert(2px) solid get-color(cool-gray-9) !important;
       }
     }
   }
@@ -542,10 +545,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(neutral-gray-2) !important;
+        border-bottom: rem.convert(2px) solid get-color(neutral-gray-2) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(neutral-gray-2) !important;
+        border-bottom: rem.convert(2px) solid get-color(neutral-gray-2) !important;
       }
     }
   }
@@ -555,10 +558,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(dark-blue) !important;
+        border-bottom: rem.convert(2px) solid get-color(dark-blue) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(dark-blue) !important;
+        border-bottom: rem.convert(2px) solid get-color(dark-blue) !important;
       }
     }
   }
@@ -567,10 +570,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(sky-blue) !important;
+        border-bottom: rem.convert(2px) solid get-color(sky-blue) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(sky-blue) !important;
+        border-bottom: rem.convert(2px) solid get-color(sky-blue) !important;
       }
     }
   }
@@ -579,10 +582,10 @@
     .cmp-tabs__tab {
       &:hover {
         @include tds-tabs-hover;
-        border-bottom: rem-convert(2px) solid get-color(legacy-gray) !important;
+        border-bottom: rem.convert(2px) solid get-color(legacy-gray) !important;
       }
       &--active {
-        border-bottom: rem-convert(2px) solid get-color(legacy-gray) !important;
+        border-bottom: rem.convert(2px) solid get-color(legacy-gray) !important;
       }
     }
   }
@@ -592,7 +595,7 @@
 .cmp-stroke-palette {
   // TDS Primary stroke colors
   &__teal {
-    stroke: map-get($color-palette, 'teal') !important;
+    stroke: map.get($color-palette, 'teal') !important;
   }
 
   &__deep-teal {
@@ -600,7 +603,7 @@
   }
 
   &__aqua {
-    stroke: map-get($color-palette, 'aqua') !important;
+    stroke: map.get($color-palette, 'aqua') !important;
   }
 
   &__cool-gray-8 {
@@ -612,19 +615,19 @@
   }
 
   &__green {
-    stroke: map-get($color-palette, 'green') !important;
+    stroke: map.get($color-palette, 'green') !important;
   }
 
   &__chartreuse {
-    stroke: map-get($color-palette, 'chartreuse') !important;
+    stroke: map.get($color-palette, 'chartreuse') !important;
   }
 
   &__black {
-    stroke: map-get($color-palette, 'black') !important;
+    stroke: map.get($color-palette, 'black') !important;
   }
 
   &__white {
-    stroke: map-get($color-palette, 'white') !important;
+    stroke: map.get($color-palette, 'white') !important;
   }
 
   //TDS Secondary stroke colors
@@ -633,11 +636,11 @@
   }
 
   &__navy {
-    stroke: map-get($color-palette, 'navy') !important;
+    stroke: map.get($color-palette, 'navy') !important;
   }
 
   &__copper {
-    stroke: map-get($color-palette, 'copper') !important;
+    stroke: map.get($color-palette, 'copper') !important;
   }
 
   &__stone {
@@ -666,11 +669,11 @@
   }
 
   &__forest {
-    stroke: map-get($color-palette, 'forest') !important;
+    stroke: map.get($color-palette, 'forest') !important;
   }
 
   &__charcoal {
-    stroke: map-get($color-palette, 'charcoal') !important;
+    stroke: map.get($color-palette, 'charcoal') !important;
   }
 
   &__cool-gray-9 {

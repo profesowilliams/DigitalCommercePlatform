@@ -1,14 +1,16 @@
+@use "~sass-rem" as rem;
+
 .cmp-adbutler {
-  width: rem-convert(210px);
-  margin: rem-convert(10px) rem-convert(15px) auto;
-  padding: rem-convert(5px) rem-convert(20px);
+  width: rem.convert(210px);
+  margin: rem.convert(10px) rem.convert(15px) auto;
+  padding: rem.convert(5px) rem.convert(20px);
   font-family: $font-family;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   &__content {
-    height: rem-convert(260px);
+    height: rem.convert(260px);
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -16,18 +18,18 @@
     &-title {
       font-size: $font-size-base;
       color: get-color(brand-light-blue);
-      margin-bottom: rem-convert(12px);
+      margin-bottom: rem.convert(12px);
     }
     &-ad {
-      width: rem-convert(125px);
-      height: rem-convert(90px);
-      box-shadow: 0 0 0 rem-convert(1px) get-color(brand-light-blue-shadow);
+      width: rem.convert(125px);
+      height: rem.convert(90px);
+      box-shadow: 0 0 0 rem.convert(1px) get-color(brand-light-blue-shadow);
     }
   }
 
   &__ad-to-cart {
     width: 100%;
-    height: rem-convert(28px);
+    height: rem.convert(28px);
     background-color: get-color(brand-blue);
     color: get-color(brand-white);
     font-size: $font-size-xsmall;
@@ -35,10 +37,10 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin: rem-convert(15px) 0;
+    margin: rem.convert(15px) 0;
     cursor: pointer;
     &--quantity {
-      width: rem-convert(15px);
+      width: rem.convert(15px);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -47,14 +49,14 @@
         cursor: pointer;
         font-size: $font-size-h6;
         background-color: get-color(brand-blue);
-        height: rem-convert(12px);
-        width: rem-convert(15px);
+        height: rem.convert(12px);
+        width: rem.convert(15px);
         color: get-color(brand-white);
       }
     }
     input {
-      width: rem-convert(45px);
-      margin-right: rem-convert(26px);
+      width: rem.convert(45px);
+      margin-right: rem.convert(26px);
       text-align: center;
     }
   }
@@ -91,26 +93,26 @@
         font-size: $font-size-h6;
 
         &:before {
-          width: rem-convert(12px);
-          height: rem-convert(12px);
+          width: rem.convert(12px);
+          height: rem.convert(12px);
           background: get-color(brand-white);
           content: '';
-          border-radius: rem-convert(2px);
-          border: rem-convert(1px) solid get-color(text-light-charcoal);
-          margin-right: rem-convert(5px);
+          border-radius: rem.convert(2px);
+          border: rem.convert(1px) solid get-color(text-light-charcoal);
+          margin-right: rem.convert(5px);
         }
         &:after {
           transform: rotate(-50deg);
           display: block;
-          width: rem-convert(7px);
-          height: rem-convert(3px);
+          width: rem.convert(7px);
+          height: rem.convert(3px);
           opacity: 0;
           background: transparent;
-          border-left: rem-convert(2px) solid get-color(text-light-charcoal);
-          border-bottom: rem-convert(2px) solid get-color(text-light-charcoal);
+          border-left: rem.convert(2px) solid get-color(text-light-charcoal);
+          border-bottom: rem.convert(2px) solid get-color(text-light-charcoal);
           content: '';
-          top: rem-convert(4px);
-          left: rem-convert(3px);
+          top: rem.convert(4px);
+          left: rem.convert(3px);
           position: absolute;
         }
       }

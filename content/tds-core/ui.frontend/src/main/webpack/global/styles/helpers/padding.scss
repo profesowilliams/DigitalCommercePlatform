@@ -1,6 +1,8 @@
+@use "~sass-rem" as rem;
+
 .pt-responsive {
-  padding-top: rem-convert(60px);
+  padding-top: rem.convert(60px);
   @include media('>=lg') {
-    padding-top: rem-convert(100px);
+    padding-top: rem.convert(100px);
   }
 }

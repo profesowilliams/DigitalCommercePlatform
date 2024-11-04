@@ -1,23 +1,24 @@
+@use "sass:map";
 
 .hero-style-2 {
-    @include teaser-default();
+  @include teaser-default();
 
-    .cmp-teaser {
-        &__pretitle {
-            color: map-get($color-palette, "charcoal");
-        }
-
-        &__title {
-            text-shadow: none;
-
-            &-link {
-                color: map-get($color-palette, "charcoal");
-            }
-        }
-
-        &__description {
-            color: map-get($color-palette, "charcoal");
-            text-shadow: none;
-        }
+  .cmp-teaser {
+    &__pretitle {
+      color: map.get($color-palette, 'charcoal');
     }
+
+    &__title {
+      text-shadow: none;
+
+      &-link {
+        color: map.get($color-palette, 'charcoal');
+      }
+    }
+
+    &__description {
+      color: map.get($color-palette, 'charcoal');
+      text-shadow: none;
+    }
+  }
 }

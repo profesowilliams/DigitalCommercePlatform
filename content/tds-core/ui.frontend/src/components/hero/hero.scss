@@ -1,4 +1,7 @@
 /* stylelint-disable -- This file needs to be refactored. */
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 /// Hero styles with mobile responsiveness, image configurations and font settings.
 /// @group Hero
 .hero {
@@ -54,7 +57,7 @@
   /// @access public
   /// @group Hero.Teaser
   .cmp-teaser {
-    color: map-get($color-palette, 'charcoal');
+    color: map.get($color-palette, 'charcoal');
     position: relative;
     @include mobile {
       height: 100%;
@@ -102,7 +105,7 @@
     }
 
     &__footer {
-      font-size: rem-convert(20px);
+      font-size: rem.convert(20px);
       @include mobile {
         font-size: 0.89rem;
       }
@@ -123,7 +126,7 @@
   }
 
   .cmp-item {
-    font-size: rem-convert(20px);
+    font-size: rem.convert(20px);
     @include mobile {
       font-size: 0.89rem;
       display: flex;
@@ -161,25 +164,25 @@
 
   .cmp-teaser__action-container {
     a {
-      padding: rem-convert(12.8px) rem-convert(24px);
+      padding: rem.convert(12.8px) rem.convert(24px);
       display: inline-block;
       background: $white;
-      border-radius: rem-convert(1px);
+      border-radius: rem.convert(1px);
       text-align: center;
       font-family: $font-family;
       font-style: normal;
       font-weight: 400;
-      font-size: rem-convert(20px);
-      line-height: rem-convert(18px);
+      font-size: rem.convert(20px);
+      line-height: rem.convert(18px);
       color: $brand-green;
-      margin-top: rem-convert(24px);
+      margin-top: rem.convert(24px);
       text-transform: capitalize;
 
       @include mobile {
-        padding: rem-convert(12px) rem-convert(20px);
+        padding: rem.convert(12px) rem.convert(20px);
         font-family: $font-family-everett;
-        font-size: rem-convert(16px);
-        line-height: rem-convert(24px);
+        font-size: rem.convert(16px);
+        line-height: rem.convert(24px);
         width: 100%;
       }
     }
@@ -303,7 +306,7 @@
       @include mobile {
         margin-left: 0;
         border-left: 0 solid get-color(brand-white);
-        font-size: rem-convert(20px);
+        font-size: rem.convert(20px);
         align-content: flex-start;
         padding: 2rem;
       }
@@ -314,41 +317,41 @@
     }
 
     .cmp-teaser__description {
-      max-width: rem-convert(570px);
+      max-width: rem.convert(570px);
       text-shadow: 0 0 0 #919599;
       font-weight: normal;
-      font-size: rem-convert(35px);
+      font-size: rem.convert(35px);
       letter-spacing: normal;
       line-height: normal;
-      padding: 0 0 0 rem-convert(55px);
+      padding: 0 0 0 rem.convert(55px);
       margin-bottom: 0;
 
       @include desktop {
         margin-top: 0;
-        margin-left: rem-convert(55px);
-        border-left: rem-convert(5px) solid get-color(brand-white);
+        margin-left: rem.convert(55px);
+        border-left: rem.convert(5px) solid get-color(brand-white);
       }
 
       @include tablet {
         margin-top: 0;
-        margin-left: rem-convert(55px);
-        border-left: rem-convert(5px) solid transparent;
-        font-size: rem-convert(26px);
+        margin-left: rem.convert(55px);
+        border-left: rem.convert(5px) solid transparent;
+        font-size: rem.convert(26px);
         width: 90%;
       }
 
       @include mobile {
-        margin-top: rem-convert(20px);
+        margin-top: rem.convert(20px);
         margin-left: 0;
-        border-left: rem-convert(5px) solid transparent;
-        font-size: rem-convert(20px);
+        border-left: rem.convert(5px) solid transparent;
+        font-size: rem.convert(20px);
       }
 
       @include desktop-l {
         margin-top: 0;
-        margin-left: rem-convert(55px);
-        border-left: rem-convert(5px) solid transparent;
-        font-size: rem-convert(26px);
+        margin-left: rem.convert(55px);
+        border-left: rem.convert(5px) solid transparent;
+        font-size: rem.convert(26px);
         width: 90%;
       }
     }
@@ -363,23 +366,23 @@
     }
     .cmp-teaser__action-container {
       a {
-        padding: rem-convert(8px) rem-convert(12px);
+        padding: rem.convert(8px) rem.convert(12px);
         display: inline-block;
         background: $white;
-        border-radius: rem-convert(2px);
+        border-radius: rem.convert(2px);
         text-align: center;
         font-family: $font-family;
         font-style: normal;
         font-weight: 400;
-        font-size: rem-convert(12px);
-        line-height: rem-convert(18px);
+        font-size: rem.convert(12px);
+        line-height: rem.convert(18px);
         color: $brand-green;
 
         @include mobile {
-          padding: rem-convert(12px) rem-convert(20px);
+          padding: rem.convert(12px) rem.convert(20px);
           font-family: $font-family-everett;
-          font-size: rem-convert(16px);
-          line-height: rem-convert(24px);
+          font-size: rem.convert(16px);
+          line-height: rem.convert(24px);
           width: 100%;
         }
       }
@@ -444,11 +447,11 @@
       }
 
       &:first-child {
-        background-color: var(--teal, map-get($color-palette, 'teal'));
+        background-color: var(--teal, map.get($color-palette, 'teal'));
       }
 
       &:last-child {
-        background-color: var(--deep-teal, map-get($color-palette, 'deep-teal'));
+        background-color: var(--deep-teal, map.get($color-palette, 'deep-teal'));
       }
 
       img {

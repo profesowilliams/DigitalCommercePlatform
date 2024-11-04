@@ -1,3 +1,5 @@
+@use "~sass-rem" as rem;
+
 .cmp-list-container {
   width: 1290px;
   display: -webkit-inline-box;
@@ -16,39 +18,39 @@
       padding: 0;
       li {
         list-style: none;
-        width: rem-convert(410px);
-        height: rem-convert(483px);
+        width: rem.convert(410px);
+        height: rem.convert(483px);
         @include background-neutral-gray-2;
         list-style: none;
         position: relative;
 
         img {
-          width: rem-convert(410px);
-          height: rem-convert(263px);
+          width: rem.convert(410px);
+          height: rem.convert(263px);
           position: absolute;
           top: 0;
         }
 
         .cmp-content-container {
-          width: rem-convert(354px);
-          height: rem-convert(220px);
+          width: rem.convert(354px);
+          height: rem.convert(220px);
           position: absolute;
-          bottom: rem-convert(38px);
+          bottom: rem.convert(38px);
           @include background-white;
           margin: 0 auto;
           left: 0;
           right: 0;
 
           &__text {
-            padding: 0 rem-convert(25px) rem-convert(40px);
+            padding: 0 rem.convert(25px) rem.convert(40px);
           }
 
           &__title {
             text-align: center;
-            font-size: rem-convert(20px);
-            padding: rem-convert(32px) 0 rem-convert(24px);
-            line-height: rem-convert(26px);
-            height: rem-convert(60px);
+            font-size: rem.convert(20px);
+            padding: rem.convert(32px) 0 rem.convert(24px);
+            line-height: rem.convert(26px);
+            height: rem.convert(60px);
             display: flex;
             justify-content: center;
             align-items: center;

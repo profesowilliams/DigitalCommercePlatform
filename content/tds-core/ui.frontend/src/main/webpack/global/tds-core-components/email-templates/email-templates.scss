@@ -1,13 +1,15 @@
+@use "~sass-rem" as rem;
+
 // DO NOT DELETE THIS FILE YET
 // Thanks,
 //Olivera (01/14/2022)
 
 // .cmp-email-template {
-//     width: rem-convert(612px);
+//     width: rem.convert(612px);
 //     display: flex;
 //     -ms-flex-direction: column;
 //     flex-direction: column;
-//     padding: rem-convert(54px) rem-convert(40px) rem-convert(46px) rem-convert(40px);
+//     padding: rem.convert(54px) rem.convert(40px) rem.convert(46px) rem.convert(40px);
 //     margin: 0 auto;
 //     background-color: get-color(brand-light-gray3);
 
@@ -15,7 +17,7 @@
 //         display: flex;
 //         -ms-flex-direction: column;
 //         flex-direction: column;
-//         padding: rem-convert(30px) rem-convert(68px) rem-convert(40px);
+//         padding: rem.convert(30px) rem.convert(68px) rem.convert(40px);
 //         background-color: gray;
 //         font-size: $font-size-base;
 
@@ -34,7 +36,7 @@
 //     }
 
 //     &-body {
-//         padding: rem-convert(40px) rem-convert(34px);
+//         padding: rem.convert(40px) rem.convert(34px);
 //         background-color: get-color(brand-white);
 //         font-size: $font-size-xsmall;
 //         display: flex;
@@ -43,7 +45,7 @@
 //     }
 
 //     &-footer {
-//         margin-top: rem-convert(34px);
+//         margin-top: rem.convert(34px);
 //         font-size: $font-size-xsmall;
 //         display: flex;
 //         -ms-flex-direction: column;

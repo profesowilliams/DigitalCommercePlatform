@@ -1,3 +1,5 @@
+@use "~sass-rem" as rem;
+
 .cmp-logos-layout {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -18,21 +20,21 @@
 
       img {
         &.rectangle-logo {
-          width: rem-convert(75px);
+          width: rem.convert(75px);
           height: auto;
         }
         &.square-circle-logo {
           width: auto;
-          height: rem-convert(48px);
+          height: rem.convert(48px);
           svg {
             width: auto;
-            height: rem-convert(48px);
+            height: rem.convert(48px);
           }
         }
       }
       .square-circle-logo {
         svg {
-          width: rem-convert(35px);
+          width: rem.convert(35px);
           height: auto;
           path {
             fill: teal !important;
@@ -44,7 +46,7 @@
       }
       .rectangle-logo {
         svg {
-          width: rem-convert(75px);
+          width: rem.convert(75px);
           height: auto;
         }
 

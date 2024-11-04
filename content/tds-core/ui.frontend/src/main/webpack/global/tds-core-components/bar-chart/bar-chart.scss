@@ -1,3 +1,5 @@
+@use "~sass-rem" as rem;
+
 @import '../../abstracts/variables';
 @import '../../../site/variables';
 
@@ -49,8 +51,8 @@
      */
     & canvas {
       padding-bottom: 0 !important;
-      height: rem-convert(116px) !important;
-      width: rem-convert(154px) !important;
+      height: rem.convert(116px) !important;
+      width: rem.convert(154px) !important;
     }
   }
 
@@ -62,8 +64,8 @@
     flex-direction: row;
     overflow: hidden;
     white-space: nowrap;
-    height: rem-convert(15px);
-    margin-bottom: rem-convert(2px);
+    height: rem.convert(15px);
+    margin-bottom: rem.convert(2px);
   }
 
   /**
@@ -72,21 +74,21 @@
   &__legend {
     display: flex;
     flex-direction: column;
-    height: rem-convert(15px);
-    margin-bottom: rem-convert(2px);
+    height: rem.convert(15px);
+    margin-bottom: rem.convert(2px);
 
     @include mobile {
       height: auto;
       grid-row: 2;
-      margin-top: rem-convert(15px);
-      padding-left: rem-convert(10px);
+      margin-top: rem.convert(15px);
+      padding-left: rem.convert(10px);
     }
 
     div {
       display: flex;
       justify-content: flex-start;
       flex-direction: row;
-      margin-bottom: rem-convert(6px);
+      margin-bottom: rem.convert(6px);
     }
   }
 
@@ -96,8 +98,8 @@
   &__sub-title {
     font-size: $font-size-xxsmall;
     color: get-color(text-light-charcoal);
-    padding: 0 0 0 rem-convert(5px) !important;
-    width: rem-convert(105px);
+    padding: 0 0 0 rem.convert(5px) !important;
+    width: rem.convert(105px);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -110,7 +112,7 @@
       font-size: $font-size-xxsmall;
       color: get-color(text-light-charcoal);
       text-align: right;
-      padding-left: rem-convert(40px);
+      padding-left: rem.convert(40px);
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -122,47 +124,47 @@
       font-size: $font-size-xxsmall;
       color: get-color(text-light-charcoal);
       text-align: right;
-      padding-left: rem-convert(5px);
+      padding-left: rem.convert(5px);
     }
 
     /**
      * Color variant 1 of the sub-title section.
      */
     &-color-1 {
-      border-right: rem-convert(6px) solid get-color(brand-primary-text);
-      padding-left: rem-convert(16px);
+      border-right: rem.convert(6px) solid get-color(brand-primary-text);
+      padding-left: rem.convert(16px);
     }
 
     /**
      * Color variant 2 of the sub-title section.
      */
     &-color-2 {
-      border-right: rem-convert(6px) solid get-color(brand-blue);
-      padding-left: rem-convert(16px);
+      border-right: rem.convert(6px) solid get-color(brand-blue);
+      padding-left: rem.convert(16px);
     }
 
     /**
      * Color variant 3 of the sub-title section.
      */
     &-color-3 {
-      border-right: rem-convert(6px) solid get-color(tertiary-dark-blue);
-      padding-left: rem-convert(16px);
+      border-right: rem.convert(6px) solid get-color(tertiary-dark-blue);
+      padding-left: rem.convert(16px);
     }
 
     /**
      * Color variant 4 of the sub-title section.
      */
     &-color-4 {
-      border-right: rem-convert(6px) solid get-color(td-primary-blue);
-      padding-left: rem-convert(16px);
+      border-right: rem.convert(6px) solid get-color(td-primary-blue);
+      padding-left: rem.convert(16px);
     }
 
     /**
      * Color variant 5 of the sub-title section.
      */
     &-color-5 {
-      border-right: rem-convert(6px) solid get-color(td-lightblue);
-      padding-left: rem-convert(16px);
+      border-right: rem.convert(6px) solid get-color(td-lightblue);
+      padding-left: rem.convert(16px);
     }
   }
 }

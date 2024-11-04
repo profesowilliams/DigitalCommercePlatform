@@ -1,7 +1,9 @@
+@use "~sass-rem" as rem;
+
 .cmp-quote-preview {
   &__note {
     width: 100%;
-    padding: rem-convert(20px 29px);
+    padding: rem.convert(20px 29px);
     .cmp-notes-container {
       padding: 0.8rem 0.78rem;
       background-color: $gray-lighter;

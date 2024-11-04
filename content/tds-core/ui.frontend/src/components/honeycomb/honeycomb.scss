@@ -1,23 +1,25 @@
+@use "sass:map";
+
 /**
  * Styles for the honeycomb component.
  *
  * @class honeycomb
  * @classdesc Styles for the honeycomb component.
  */
- .honeycomb {
+.honeycomb {
   &.cmp-honeycomb__dpb {
     .cmp-accordion__item {
       .cmp-honeycomb-svg {
-        fill: map-get($color-palette, 'aqua');
+        fill: map.get($color-palette, 'aqua');
         height: 126px;
         &:hover {
-          fill: map-get($color-palette, 'white');
+          fill: map.get($color-palette, 'white');
         }
       }
 
       &[data-cmp-expanded] {
         .cmp-accordion__title {
-          color: map-get($color-palette, 'white');
+          color: map.get($color-palette, 'white');
           margin-top: -2px;
           font-weight: 500;
         }
@@ -25,7 +27,7 @@
 
       .cmp-accordion__panel {
         .cmp-text {
-          color: map-get($color-palette, 'white');
+          color: map.get($color-palette, 'white');
         }
       }
     }

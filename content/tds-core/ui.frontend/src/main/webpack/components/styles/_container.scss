@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 .container--flex {
   .aem-Grid::before,
   .aem-Grid::after {
@@ -60,7 +63,7 @@
   float: unset !important;
   &__full-width > .cmp-container,
   &--max-1440 {
-    max-width: rem-convert(1440px);
+    max-width: rem.convert(1440px);
     margin: 0 auto !important;
     float: unset !important;
     clear: both !important;
@@ -122,26 +125,26 @@
 These style system class work for container component only. */
 @mixin padding-sizes($padding, $default, $sm, $md, $lg, $xlg) {
   & > .cmp-container {
-    #{$padding}: rem-convert($default);
+    #{$padding}: rem.convert($default);
   }
   &-small {
     & > .cmp-container {
-      #{$padding}: rem-convert($sm);
+      #{$padding}: rem.convert($sm);
     }
   }
   &-medium {
     & > .cmp-container {
-      #{$padding}: rem-convert($md);
+      #{$padding}: rem.convert($md);
     }
   }
   &-large {
     & > .cmp-container {
-      #{$padding}: rem-convert($lg);
+      #{$padding}: rem.convert($lg);
     }
   }
   &-extra-large {
     & > .cmp-container {
-      #{$padding}: rem-convert($xlg);
+      #{$padding}: rem.convert($xlg);
     }
   }
   &-dynamic {
@@ -192,7 +195,7 @@ These style system class work for container component only. */
     p {
       text-align: left;
       font-size: 22px;
-      color: map-get($color-palette, 'deep-teal');
+      color: map.get($color-palette, 'deep-teal');
       text-transform: uppercase;
     }
   }

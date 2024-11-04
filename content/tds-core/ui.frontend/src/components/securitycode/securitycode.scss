@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 $font-size-container: 16px;
 $z-index-value-up-of-popup: $pop-up-z-index-value + 1;
 $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
@@ -83,14 +86,14 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
 
   .cmp-form_icon {
     color: get-color(cherry);
-    margin-right: rem-convert(6px);
+    margin-right: rem.convert(6px);
     font-size: $font-size-container;
-    margin-top: rem-convert(3px);
+    margin-top: rem.convert(3px);
   }
 
   .cmp-form_error-message {
     color: get-color(cherry);
-    margin-left: rem-convert(6px);
+    margin-left: rem.convert(6px);
     font-size: $font-size-container;
   }
 
@@ -108,10 +111,10 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
     align-items: center;
     justify-content: space-evenly;
     height: inherit;
-    width: rem-convert(461px);
-    height: rem-convert(374px);
-    background-color: map-get($color-palette, 'white') !important;
-    padding: rem-convert(46px) rem-convert(40px);
+    width: rem.convert(461px);
+    height: rem.convert(374px);
+    background-color: map.get($color-palette, 'white') !important;
+    padding: rem.convert(46px) rem.convert(40px);
 
     input[type='password'] {
       -webkit-text-security: square;
@@ -184,17 +187,17 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
     background-color: get-color(neutral-gray-2) !important;
     color: get-color(cool-gray-8) !important;
     border: none;
-    font-size: rem-convert(16px);
+    font-size: rem.convert(16px);
     font-weight: 300;
   }
 
   .cmp-error {
     color: get-color(cherry) !important;
-    font-size: rem-convert(16px);
+    font-size: rem.convert(16px);
     &::before {
       content: '\f071';
       font-family: 'FontAwesome';
-      margin: 0 rem-convert(12px) 0 0;
+      margin: 0 rem.convert(12px) 0 0;
     }
   }
 
@@ -212,7 +215,7 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
       }
 
       & > input[disabled] {
-        color: map-get($color-palette, 'white') !important;
+        color: map.get($color-palette, 'white') !important;
         opacity: 1;
       }
     }
@@ -224,7 +227,7 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
       }
 
       & > input[disabled] {
-        color: map-get($color-palette, 'teal') !important;
+        color: map.get($color-palette, 'teal') !important;
         opacity: 1;
       }
     }
@@ -260,7 +263,7 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
       line-height: 48px;
       text-align: center;
       font-size: 2em;
-      color: map-get($color-palette, 'black') !important;
+      color: map.get($color-palette, 'black') !important;
       border: 0;
       border-bottom: 2px solid rgba(0, 0, 0, 0.3);
       transition: background-color 0.3s, color 0.3s, opacity 0.3s;
@@ -274,7 +277,7 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
       &:focus {
         outline: 0;
         box-shadow: none;
-        border-color: map-get($color-palette, 'teal') !important;
+        border-color: map.get($color-palette, 'teal') !important;
         animation: border-pulsate 1.5s infinite;
         -webkit-tap-highlight-color: transparent;
       }
@@ -285,7 +288,7 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
     }
 
     & > input[disabled] {
-      background: map-get($color-palette, 'white') !important;
+      background: map.get($color-palette, 'white') !important;
       opacity: 1;
     }
   }
@@ -310,9 +313,9 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
   }
 
   .cmp-button--primary {
-    background-color: map-get($color-palette, 'teal') !important;
+    background-color: map.get($color-palette, 'teal') !important;
     margin: 0 auto 0;
-    color: map-get($color-palette, 'white') !important;
+    color: map.get($color-palette, 'white') !important;
     line-height: 48px;
     border: 1px solid transparent;
     text-transform: uppercase;
@@ -324,15 +327,15 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
     -webkit-touch-callout: none;
 
     &:active {
-      background-color: map-get($color-palette, 'teal') !important;
-      color: map-get($color-palette, 'white') !important;
+      background-color: map.get($color-palette, 'teal') !important;
+      color: map.get($color-palette, 'white') !important;
       box-shadow: inset 0 0 4px 2px rgba(0, 0, 0, 0.1);
     }
 
     &:focus,
     &:hover {
-      background-color: map-get($color-palette, 'teal') !important;
-      color: map-get($color-palette, 'white') !important;
+      background-color: map.get($color-palette, 'teal') !important;
+      color: map.get($color-palette, 'white') !important;
     }
   }
 

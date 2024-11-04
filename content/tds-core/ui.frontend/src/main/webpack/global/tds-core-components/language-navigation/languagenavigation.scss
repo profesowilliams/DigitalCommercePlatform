@@ -1,4 +1,7 @@
 /* stylelint-disable -- Too much to fix, will delete file later. */
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 .languagenavigation {
   position: relative;
 
@@ -20,21 +23,21 @@
 }
 
 .languagenavigation svg {
-  height: rem-convert(26px);
-  width: rem-convert(26px);
-  padding-right: rem-convert(4px);
+  height: rem.convert(26px);
+  width: rem.convert(26px);
+  padding-right: rem.convert(4px);
   position: relative;
 }
 
 .regionSelectDropdown {
-  background-color: map-get($color-palette, 'brilliant');
+  background-color: map.get($color-palette, 'brilliant');
 }
 
 .cmp-region-select-dropdown {
-  border: rem-convert(0rem);
+  border: rem.convert(0rem);
   display: flex;
   flex-direction: column;
-  line-height: rem-convert(45px);
+  line-height: rem.convert(45px);
   margin: 0 !important;
 }
 
@@ -43,7 +46,7 @@
 }
 
 .techdata-header-style .languagenavigation .cmp-button__region-select {
-  background-color: map-get($color-palette, 'teal');
+  background-color: map.get($color-palette, 'teal');
 }
 .techdata-header-style .languagenavigation .cmp-radio-btn input {
   width: 1rem;
@@ -53,7 +56,7 @@
 }
 
 .cmp-form-options--radio {
-  padding: rem-convert(22px) 0 0 rem-convert(15px);
+  padding: rem.convert(22px) 0 0 rem.convert(15px);
   border: 0;
   display: flex;
   flex-direction: column;
@@ -66,7 +69,7 @@
 
 .techdata-header-style .languagenavigation .cmp-radio-btn {
   padding-left: 1.9375rem;
-  padding-top: rem-convert(5px);
+  padding-top: rem.convert(5px);
   &:hover {
     background-color: #e4e5e6;
   }
@@ -99,21 +102,21 @@
   left: 2px;
   width: 12px;
   height: 12px;
-  background-color: map-get($color-palette, 'teal');
+  background-color: map.get($color-palette, 'teal');
 }
 
 .cmp-form-options__field-description {
   position: relative;
   margin: 0;
   padding: 0;
-  top: rem-convert(-16px);
-  left: rem-convert(20px);
+  top: rem.convert(-16px);
+  left: rem.convert(20px);
 }
 
 .techdata-header-style .languagenavigation .cmp-form-options__field-description {
   top: unset;
   left: unset;
-  padding-left: rem-convert(15px);
+  padding-left: rem.convert(15px);
 }
 
 .cmp-dropbtn {
@@ -122,12 +125,12 @@
   padding: 0;
   min-height: 30px;
   background: none;
-  color: map-get($color-palette, 'charcoal');
+  color: map.get($color-palette, 'charcoal');
   border: none;
   cursor: pointer;
 
   @include mobile {
-    margin-bottom: rem-convert(0px);
+    margin-bottom: rem.convert(0px);
 
     & > .language-hiddenLabel {
       display: inline;
@@ -152,13 +155,13 @@
 }
 
 .cmp-show {
-  border-top: 3px solid var(--teal, map-get($color-palette, 'teal'));
+  border-top: 3px solid var(--teal, map.get($color-palette, 'teal'));
   display: block;
 }
 
 .cmp-languagenavigation__item-link {
   text-decoration: none;
-  color: map-get($color-palette, 'charcoal');
+  color: map.get($color-palette, 'charcoal');
 }
 
 .cmp-region-list {
@@ -168,7 +171,7 @@
     display: flex;
     flex-direction: column;
     line-height: 1.8;
-    margin-bottom: rem-convert(20px);
+    margin-bottom: rem.convert(20px);
     font-weight: normal !important;
     text-align: center;
     margin-top: 0;
@@ -181,7 +184,7 @@
     color: get-color(brand-text-gray);
     text-transform: uppercase;
     line-height: 1.8;
-    margin-bottom: rem-convert(20px);
+    margin-bottom: rem.convert(20px);
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -192,16 +195,16 @@
     }
 
     &--flag {
-      width: rem-convert(22px);
-      margin-right: rem-convert(5px);
+      width: rem.convert(22px);
+      margin-right: rem.convert(5px);
 
       svg {
         height: auto;
-        width: rem-convert(22px);
-        padding-right: rem-convert(4px);
-        box-shadow: 0 0 0 rem-convert(1px) get-color(td-lighter-gray);
+        width: rem.convert(22px);
+        padding-right: rem.convert(4px);
+        box-shadow: 0 0 0 rem.convert(1px) get-color(td-lighter-gray);
         position: relative;
-        top: rem-convert(1px);
+        top: rem.convert(1px);
       }
     }
 
@@ -227,7 +230,7 @@
 
 #countriesListModal {
   .modal {
-    padding-top: rem-convert(45px) !important;
+    padding-top: rem.convert(45px) !important;
   }
 }
 
@@ -236,7 +239,7 @@
   display: none;
   position: fixed;
   z-index: 1;
-  padding-top: rem-convert(50px);
+  padding-top: rem.convert(50px);
   left: 0;
   top: 0;
   width: 100%;
@@ -250,14 +253,14 @@
   &__content {
     background-color: #fefefe;
     margin: auto;
-    padding: rem-convert(40px) rem-convert(20px);
-    width: rem-convert(1280px);
+    padding: rem.convert(40px) rem.convert(20px);
+    width: rem.convert(1280px);
     box-shadow: 0 5px 5px 0 get-color(td-dark-blue);
-    border-top: rem-convert(2px) solid get-color(td-dark-blue);
-    box-shadow: inset 0 0 0 rem-convert(1px) get-color(td-dark-blue-shade);
+    border-top: rem.convert(2px) solid get-color(td-dark-blue);
+    box-shadow: inset 0 0 0 rem.convert(1px) get-color(td-dark-blue-shade);
 
     @include mobile {
-      width: rem-convert(320px);
+      width: rem.convert(320px);
     }
 
     /* The Close Button */
@@ -306,8 +309,8 @@
       }
 
       &:nth-of-type(2) {
-        border-left: rem-convert(1px) solid get-color(v-divider-darkgray);
-        border-right: rem-convert(1px) solid get-color(v-divider-darkgray);
+        border-left: rem.convert(1px) solid get-color(v-divider-darkgray);
+        border-right: rem.convert(1px) solid get-color(v-divider-darkgray);
 
         @include mobile {
           border-left: 0 solid get-color(v-divider-darkgray);
@@ -351,7 +354,7 @@
       &__separator {
         border-right: 0px solid get-color(brand-text-lightgray);
         column-width: 200px;
-        padding: 0 0 0 rem-convert(65px);
+        padding: 0 0 0 rem.convert(65px);
 
         @include mobile {
           padding: 0;

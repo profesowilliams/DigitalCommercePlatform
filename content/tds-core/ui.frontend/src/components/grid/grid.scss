@@ -1,3 +1,5 @@
+@use "~sass-rem" as rem;
+
 /**
  * Styles for the cmp-grid component with the ag-theme-alpine.
  *
@@ -8,7 +10,7 @@
   position: relative;
   height: 100%;
   width: 100%;
-  min-width: rem-convert(1376px);
+  min-width: rem.convert(1376px);
   overflow: auto;
 
   /**
@@ -31,8 +33,8 @@
     border-top: 2px solid get-color(brand-blue);
     border-bottom: 1px solid get-color(brand-blue);
     color: get-color(td-dark-blue);
-    height: rem-convert(34px) !important;
-    min-height: rem-convert(34px) !important;
+    height: rem.convert(34px) !important;
+    min-height: rem.convert(34px) !important;
   }
 
   .ag-header-viewport {
@@ -45,7 +47,7 @@
    * Styles for the ag-header-row.
    */
   .ag-header-row {
-    height: rem-convert(34px) !important;
+    height: rem.convert(34px) !important;
     color: get-color(td-dark-blue);
     font-weight: normal;
   }
@@ -72,10 +74,10 @@
   .ag-cell {
     display: grid;
     align-content: center;
-    line-height: rem-convert(32px);
+    line-height: rem.convert(32px);
 
     button {
-      line-height: rem-convert(16px);
+      line-height: rem.convert(16px);
       height: 50%;
       width: 100%;
       text-align: center;
@@ -86,7 +88,7 @@
       align-content: center;
       justify-content: center;
       align-items: center;
-      font-size: rem-convert(16px);
+      font-size: rem.convert(16px);
       box-sizing: border-box;
       background-color: inherit;
     }
@@ -116,7 +118,7 @@
   }
 
   .ag-root-wrapper-body {
-    margin-top: rem-convert(30px);
+    margin-top: rem.convert(30px);
   }
 
   .ag-paging-panel {
@@ -124,7 +126,7 @@
     top: 0;
     right: 0;
     border-top: none;
-    height: rem-convert(30px) !important;
+    height: rem.convert(30px) !important;
   }
 
   .ag-icon-previous,

@@ -1,3 +1,5 @@
+@use "~sass-rem" as rem;
+
 .font-xxsmall {
   font-size: $font-size-xxsmall;
 }
@@ -44,39 +46,39 @@
 }
 
 .cmp-h3 * {
-  font-size: rem-convert(28px);
-  line-height: rem-convert(42px);
+  font-size: rem.convert(28px);
+  line-height: rem.convert(42px);
 }
 
 .cmp-h4 * {
-  font-size: rem-convert(20px);
-  line-height: rem-convert(30px);
+  font-size: rem.convert(20px);
+  line-height: rem.convert(30px);
 }
 
 .cmp-h5 * {
-  font-size: rem-convert(16px);
-  line-height: rem-convert(24px);
+  font-size: rem.convert(16px);
+  line-height: rem.convert(24px);
 }
 
 .cmp-h6 * {
-  font-size: rem-convert(14px);
-  line-height: rem-convert(19.92px);
+  font-size: rem.convert(14px);
+  line-height: rem.convert(19.92px);
 }
 
 .cmp-paragraph {
   &-reg * {
-    font-size: rem-convert(16px);
-    line-height: rem-convert(24px);
+    font-size: rem.convert(16px);
+    line-height: rem.convert(24px);
   }
 
   &-large * {
-    font-size: rem-convert(20px);
-    line-height: rem-convert(30px);
+    font-size: rem.convert(20px);
+    line-height: rem.convert(30px);
   }
 
   &-small * {
-    font-size: rem-convert(14px);
-    line-height: rem-convert(16.8px);
+    font-size: rem.convert(14px);
+    line-height: rem.convert(16.8px);
   }
 }
 

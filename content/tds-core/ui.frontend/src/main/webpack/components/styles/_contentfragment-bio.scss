@@ -1,13 +1,15 @@
+@use "~sass-rem" as rem;
+
 .contentFragment-bio {
   .cmp-contentfragment {
     clear: both;
     overflow: hidden;
     width: 50%;
-    margin: 0 auto rem-convert(15px);
+    margin: 0 auto rem.convert(15px);
     @include mobile {
       width: 100%;
-      padding: 0 rem-convert(30px);
-      margin-top: rem-convert(20px);
+      padding: 0 rem.convert(30px);
+      margin-top: rem.convert(20px);
     }
     &__title,
     &__element-title,
@@ -16,16 +18,16 @@
     }
     &__element--photo {
       float: left;
-      margin-right: rem-convert(20px);
-      margin-bottom: rem-convert(40px);
+      margin-right: rem.convert(20px);
+      margin-bottom: rem.convert(40px);
       @include mobile {
-        margin: 0 auto rem-convert(40px);
+        margin: 0 auto rem.convert(40px);
         float: none;
         display: flex;
         justify-content: center;
       }
       img {
-        max-width: rem-convert(150px);
+        max-width: rem.convert(150px);
         @include mobile {
           border-radius: 50%;
         }
@@ -33,24 +35,24 @@
     }
     &__element--title {
       .cmp-contentfragment__element-value {
-        font-size: rem-convert(20px);
+        font-size: rem.convert(20px);
         color: gray;
         @include mobile {
-          font-size: rem-convert(16px);
-          line-height: rem-convert(22px);
+          font-size: rem.convert(16px);
+          line-height: rem.convert(22px);
         }
       }
     }
     &__element--name {
-      padding-top: rem-convert(40px);
+      padding-top: rem.convert(40px);
       @include mobile {
         padding-top: 0;
       }
       .cmp-contentfragment__element-value {
-        font-size: rem-convert(30px);
-        margin-bottom: rem-convert(10px);
+        font-size: rem.convert(30px);
+        margin-bottom: rem.convert(10px);
         @include mobile {
-          font-size: rem-convert(24px);
+          font-size: rem.convert(24px);
           font-weight: bold;
           margin-bottom: 0;
         }
@@ -60,26 +62,26 @@
     &__element--bio {
       display: block;
       clear: both;
-      margin-top: rem-convert(10px);
+      margin-top: rem.convert(10px);
       margin-left: 0;
-      border-top: rem-convert(1px) solid lightgray;
-      padding-top: rem-convert(30px);
+      border-top: rem.convert(1px) solid lightgray;
+      padding-top: rem.convert(30px);
       @include mobile {
         border-top: none;
-        padding-top: rem-convert(16px);
+        padding-top: rem.convert(16px);
       }
       .cmp-contentfragment__element-value {
         margin-inline-start: 0;
-        font-size: rem-convert(15px);
+        font-size: rem.convert(15px);
         @include mobile {
-          font-size: rem-convert(14px);
-          line-height: rem-convert(19px);
+          font-size: rem.convert(14px);
+          line-height: rem.convert(19px);
         }
       }
     }
     &__element--name,
     &__element--title {
-      margin-left: rem-convert(20px);
+      margin-left: rem.convert(20px);
       @include mobile {
         margin-left: 0;
       }

@@ -1,9 +1,11 @@
+@use "~sass-rem" as rem;
+
 // OUR PURPOSE TABS
 
 // tabs with chevron
 
 .cmp-tabs-our-purpose {
-  line-height: rem-convert(30px);
+  line-height: rem.convert(30px);
   .cmp-tabs {
     display: flex;
     &__tablist {
@@ -14,19 +16,19 @@
       width: -webkit-fill-available;
       width: 18%;
       margin: 0;
-      line-height: rem-convert(30px);
+      line-height: rem.convert(30px);
       .cmp-tabs__tab {
-        padding: 0 rem-convert(16px);
+        padding: 0 rem.convert(16px);
         position: relative;
-        top: rem-convert(-10px);
+        top: rem.convert(-10px);
       }
     }
 
     &__tabpanel {
       margin: 0 !important;
       width: 82%;
-      padding-left: rem-convert(45px);
-      border-left: rem-convert(1px) solid get-color(brand-scrollbar);
+      padding-left: rem.convert(45px);
+      border-left: rem.convert(1px) solid get-color(brand-scrollbar);
 
       p {
         margin-top: 0;
@@ -66,7 +68,7 @@
 // tabs left side
 
 .cmp-tabs-our-purpose-content-left {
-  line-height: rem-convert(30px);
+  line-height: rem.convert(30px);
   .cmp-tabs {
     display: flex;
     &__tablist {
@@ -77,19 +79,19 @@
       width: -webkit-fill-available;
       width: 18%;
       margin: 0;
-      line-height: rem-convert(50px);
+      line-height: rem.convert(50px);
       .cmp-tabs__tab {
-        padding: 0 rem-convert(16px);
+        padding: 0 rem.convert(16px);
         position: relative;
-        top: rem-convert(-10px);
+        top: rem.convert(-10px);
       }
     }
 
     &__tabpanel {
       margin: 0 !important;
       width: 82%;
-      padding-left: rem-convert(45px);
-      border-left: rem-convert(1px) solid get-color(brand-scrollbar);
+      padding-left: rem.convert(45px);
+      border-left: rem.convert(1px) solid get-color(brand-scrollbar);
 
       .cmp-container {
         padding-top: 0 !important;
@@ -125,7 +127,7 @@
 // tabs right side
 
 .cmp-tabs-our-purpose-content-right {
-  line-height: rem-convert(30px);
+  line-height: rem.convert(30px);
   .cmp-tabs {
     display: flex;
     direction: rtl;
@@ -137,21 +139,21 @@
       width: -webkit-fill-available;
       width: 18%;
       margin: 0;
-      line-height: rem-convert(50px);
+      line-height: rem.convert(50px);
       direction: ltr;
 
       .cmp-tabs__tab {
-        padding: 0 rem-convert(16px);
+        padding: 0 rem.convert(16px);
         position: relative;
-        top: rem-convert(-10px);
+        top: rem.convert(-10px);
       }
     }
 
     &__tabpanel {
       margin: 0 !important;
       width: 82%;
-      padding-right: rem-convert(45px);
-      border-right: rem-convert(1px) solid get-color(brand-scrollbar);
+      padding-right: rem.convert(45px);
+      border-right: rem.convert(1px) solid get-color(brand-scrollbar);
       direction: ltr;
 
       .cmp-container {

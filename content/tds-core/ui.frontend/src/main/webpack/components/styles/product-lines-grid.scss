@@ -1,3 +1,5 @@
+@use "~sass-rem" as rem;
+
 .cmp-product-lines-grid {
   height: 50%;
   width: 100%;
@@ -59,17 +61,17 @@
     // z-index: 1;
     // position: absolute;
     &__title {
-      margin-left: rem-convert(16px);
+      margin-left: rem.convert(16px);
       font-size: $font-size-base;
       font-weight: $font-weight-bold;
     }
     &__expand-collapse {
-      margin-left: rem-convert(16px);
+      margin-left: rem.convert(16px);
       font-size: $font-size-small;
       color: get-color(td-primary-blue);
       & span {
         cursor: pointer;
-        margin: 0 rem-convert(8px) 0 rem-convert(8px);
+        margin: 0 rem.convert(8px) 0 rem.convert(8px);
       }
     }
   }
@@ -77,11 +79,11 @@
   .ag-layout-auto-height .ag-center-cols-container,
   .ag-layout-print .ag-center-cols-clipper,
   .ag-layout-print .ag-center-cols-container {
-    min-height: rem-convert(0px);
+    min-height: rem.convert(0px);
   }
   .ag-root-wrapper {
     border: unset;
-    border-bottom: rem-convert(1px) solid get-color(brand-scrollbar);
+    border-bottom: rem.convert(1px) solid get-color(brand-scrollbar);
   }
   .ag-root-wrapper-body {
     .ag-header-container {
@@ -92,7 +94,7 @@
     }
 
     .ag-cell {
-      border-top: rem-convert(1px) solid get-color(brand-scrollbar);
+      border-top: rem.convert(1px) solid get-color(brand-scrollbar);
     }
 
     .ag-row-group-expanded {
@@ -128,21 +130,21 @@
   &__markup {
     display: flex;
     flex-direction: column;
-    height: rem-convert(32px);
+    height: rem.convert(32px);
     justify-content: center;
     align-items: center;
     font-size: $font-size-small;
     &--global {
-      padding: rem-convert(16px);
+      padding: rem.convert(16px);
       display: flex;
-      width: rem-convert(300px);
-      margin-bottom: rem-convert(16px);
+      width: rem.convert(300px);
+      margin-bottom: rem.convert(16px);
       margin-left: auto;
     }
     &__label {
       white-space: nowrap;
       text-align: center;
-      margin-right: rem-convert(16px);
+      margin-right: rem.convert(16px);
     }
     &__currency {
       margin: unset;
@@ -164,9 +166,9 @@
       }
     }
     &__button {
-      padding-top: rem-convert(3px);
-      padding-bottom: rem-convert(3px);
-      width: rem-convert(48px);
+      padding-top: rem.convert(3px);
+      padding-bottom: rem.convert(3px);
+      width: rem.convert(48px);
       &--active {
         color: get-color(brand-white);
         background-color: get-color(brand-button-blue);
@@ -175,10 +177,10 @@
   }
   &__quantity-widget {
     display: flex;
-    width: rem-convert(80px);
-    height: rem-convert(38px);
-    border: rem-convert(1px) solid get-color(td-dark-blue);
-    margin-top: rem-convert(5px);
+    width: rem.convert(80px);
+    height: rem.convert(38px);
+    border: rem.convert(1px) solid get-color(td-dark-blue);
+    margin-top: rem.convert(5px);
     justify-content: space-between;
     &__buttons {
       display: flex;
@@ -186,8 +188,8 @@
       &__button {
         background-color: get-color(td-dark-blue);
         color: get-color(brand-white);
-        width: rem-convert(18px);
-        height: rem-convert(18px);
+        width: rem.convert(18px);
+        height: rem.convert(18px);
         border-radius: unset;
         &--disabled {
           background-color: get-color(secondary-grey);
@@ -195,7 +197,7 @@
         }
       }
       .cmp-grid .ag-cell button {
-        line-height: rem-convert(12px);
+        line-height: rem.convert(12px);
       }
     }
     &__value {

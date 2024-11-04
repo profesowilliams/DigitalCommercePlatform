@@ -1,7 +1,9 @@
+@use "~sass-rem" as rem;
+
 // to handle the container max-width style
 .cmp-container--max-1440 {
   .cmp-tools {
-    max-width: rem-convert(1440px);
+    max-width: rem.convert(1440px);
   }
 }
 
@@ -12,7 +14,7 @@
   .cmp-tools,
   .cmp-tools--editor {
     margin: 0;
-    padding: rem-convert(10px);
+    padding: rem.convert(10px);
     display: flex;
     top: 50px;
     left: 0;
@@ -28,20 +30,20 @@
     }
     .cmp-tools__category-name {
       min-width: 180px;
-      padding-right: rem-convert(30px);
-      margin-right: rem-convert(10px);
+      padding-right: rem.convert(30px);
+      margin-right: rem.convert(10px);
       color: get-color(brand-blue);
-      font-size: rem-convert(13px);
+      font-size: rem.convert(13px);
       font-weight: 600;
-      line-height: rem-convert(20px);
+      line-height: rem.convert(20px);
     }
     li {
       list-style: none;
       a {
         color: get-color(brand-text-gray);
-        font-size: rem-convert(13px);
+        font-size: rem.convert(13px);
         font-weight: normal;
-        line-height: rem-convert(20px);
+        line-height: rem.convert(20px);
         text-decoration: none;
       }
     }

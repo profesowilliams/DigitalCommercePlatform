@@ -1,18 +1,21 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 .regionSelectDropdown {
-  border-top: 3px solid var(--teal, map-get($color-palette, 'teal'));
-  background-color: var(--brilliant, map-get($color-palette, 'brilliant'));
+  border-top: 3px solid var(--teal, map.get($color-palette, 'teal'));
+  background-color: var(--brilliant, map.get($color-palette, 'brilliant'));
 }
 
 .cmp-region-select-dropdown {
-  border: rem-convert(0rem);
+  border: rem.convert(0rem);
   display: flex;
   flex-direction: column;
-  line-height: rem-convert(45px);
+  line-height: rem.convert(45px);
   margin: 0 !important;
 }
 
 .cmp-form-options--radio {
-  padding: rem-convert(22px) 0 0 rem-convert(15px);
+  padding: rem.convert(22px) 0 0 rem.convert(15px);
   border: 0;
   display: flex;
   flex-direction: column;
@@ -22,26 +25,26 @@
   position: relative;
   margin: 0;
   padding: 0;
-  top: rem-convert(-16px);
-  left: rem-convert(20px);
+  top: rem.convert(-16px);
+  left: rem.convert(20px);
 }
 
 .cmp-dropbtn {
   font-size: 1rem;
-  margin: 0 rem-convert(16px);
+  margin: 0 rem.convert(16px);
   padding: 0;
-  min-height: rem-convert(30px);
+  min-height: rem.convert(30px);
   background: none;
   color: get-color(brand-black);
   border: none;
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 rem-convert(3px) 0 0px map-get($color-palette, 'teal');
+    box-shadow: 0 rem.convert(3px) 0 0px map.get($color-palette, 'teal');
   }
 
   &:active {
-    box-shadow: 0 rem-convert(3px) 0 0px map-get($color-palette, 'teal');
+    box-shadow: 0 rem.convert(3px) 0 0px map.get($color-palette, 'teal');
   }
 }
 
@@ -52,17 +55,17 @@
 
 .cmp-dropdown-content {
   display: none;
-  width: rem-convert(250px);
+  width: rem.convert(250px);
 }
 
 .cmp-show {
-  border-top: 3px solid var(--teal, map-get($color-palette, 'teal'));
+  border-top: 3px solid var(--teal, map.get($color-palette, 'teal'));
   display: block;
 }
 
 .cmp-languagenavigation__item-link {
   text-decoration: none;
-  color: map-get($color-palette, 'charcoal');
+  color: map.get($color-palette, 'charcoal');
 }
 
 .cmp-region-list {
@@ -72,7 +75,7 @@
     display: flex;
     flex-direction: column;
     line-height: 1.8;
-    margin-bottom: rem-convert(20px);
+    margin-bottom: rem.convert(20px);
     font-weight: normal !important;
     text-align: center;
     margin-top: 0;
@@ -84,7 +87,7 @@
     color: get-color(brand-text-gray);
     text-transform: uppercase;
     line-height: 1.8;
-    margin-bottom: rem-convert(20px);
+    margin-bottom: rem.convert(20px);
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -95,16 +98,16 @@
     }
 
     &--flag {
-      width: rem-convert(22px);
-      margin-right: rem-convert(5px);
+      width: rem.convert(22px);
+      margin-right: rem.convert(5px);
 
       svg {
         height: auto;
-        width: rem-convert(22px);
-        padding-right: rem-convert(4px);
-        box-shadow: 0 0 0 rem-convert(1px) get-color(td-lighter-gray);
+        width: rem.convert(22px);
+        padding-right: rem.convert(4px);
+        box-shadow: 0 0 0 rem.convert(1px) get-color(td-lighter-gray);
         position: relative;
-        top: rem-convert(1px);
+        top: rem.convert(1px);
       }
     }
 
@@ -140,7 +143,7 @@
   display: none;
   position: fixed;
   z-index: 1;
-  padding-top: rem-convert(50px);
+  padding-top: rem.convert(50px);
   left: 0;
   top: 0;
   width: 100%;
@@ -153,25 +156,25 @@
   &__content {
     background-color: get-color(brand-white);
     margin: auto;
-    padding: rem-convert(20px);
-    width: rem-convert(1040px);
-    border-top: rem-convert(2px) solid get-color(td-dark-blue);
-    box-shadow: inset 0 0 0 rem-convert(1px) get-color(td-dark-blue-shade);
+    padding: rem.convert(20px);
+    width: rem.convert(1040px);
+    border-top: rem.convert(2px) solid get-color(td-dark-blue);
+    box-shadow: inset 0 0 0 rem.convert(1px) get-color(td-dark-blue-shade);
 
     @include mobile {
-      width: rem-convert(320px);
+      width: rem.convert(320px);
     }
 
     /* The Close Button */
     &__close {
       color: get-color(secondary-ivory);
       float: right;
-      font-size: rem-convert(28px);
+      font-size: rem.convert(28px);
       font-weight: bold;
 
       &:hover,
       &:focus {
-        color: map-get($color-palette, 'charcoal');
+        color: map.get($color-palette, 'charcoal');
         text-decoration: none;
         cursor: pointer;
       }
@@ -198,7 +201,7 @@
     &__column {
       float: left;
       width: 50%;
-      padding: rem-convert(20px);
+      padding: rem.convert(20px);
 
       &:nth-child(2) {
         .language-modal__content__column__separator {
@@ -207,7 +210,7 @@
         }
       }
 
-      //column-width: rem-convert(250px);
+      //column-width: rem.convert(250px);
       @include mobile {
         float: none;
         width: unset;
@@ -218,8 +221,8 @@
       }
 
       &:nth-of-type(2) {
-        border-left: rem-convert(1px) solid get-color(v-divider-darkgray);
-        border-right: rem-convert(1px) solid get-color(v-divider-darkgray);
+        border-left: rem.convert(1px) solid get-color(v-divider-darkgray);
+        border-right: rem.convert(1px) solid get-color(v-divider-darkgray);
 
         @include mobile {
           border: none;
@@ -229,7 +232,7 @@
       &:first-child,
       &:last-child {
         width: 25%;
-        padding: rem-convert(20px) rem-convert(35px);
+        padding: rem.convert(20px) rem.convert(35px);
         overflow: hidden;
         white-space: normal;
 
@@ -264,7 +267,7 @@
         column-width: 200px;
 
         &:nth-of-type(2) {
-          //padding-left: rem-convert(74px);
+          //padding-left: rem.convert(74px);
           display: flex;
           flex-wrap: nowrap;
           flex-direction: row;

@@ -1,7 +1,9 @@
+@use "~sass-rem" as rem;
+
 .cmp-pdfPrinter {
   width: 100%;
   iframe {
-    width: rem-convert(800px);
-    height: rem-convert(400px);
+    width: rem.convert(800px);
+    height: rem.convert(400px);
   }
 }

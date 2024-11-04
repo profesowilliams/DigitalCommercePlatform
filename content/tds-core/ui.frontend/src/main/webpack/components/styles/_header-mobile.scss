@@ -1,3 +1,5 @@
+@use "~sass-rem" as rem;
+
 $header-height: 47px;
 
 #cmp-techdata-header {
@@ -46,7 +48,7 @@ $header-height: 47px;
           @include mobile {
             margin: 0 5.5px;
             .cmp-button__icon {
-              margin-top: rem-convert(0px);
+              margin-top: rem.convert(0px);
             }
           }
         }

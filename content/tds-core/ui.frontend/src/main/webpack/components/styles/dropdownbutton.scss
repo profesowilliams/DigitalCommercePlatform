@@ -1,3 +1,5 @@
+@use "sass:map";
+
 .dropdownbutton {
   position: relative;
   display: inline-block;
@@ -23,10 +25,10 @@
 
     &__dropdown {
       display: none;
-      border-top: 3px solid var(--teal, map-get($color-palette, 'teal'));
+      border-top: 3px solid var(--teal, map.get($color-palette, 'teal'));
       position: absolute;
       top: 60px;
-      background-color: map-get($color-palette, 'brilliant');
+      background-color: map.get($color-palette, 'brilliant');
       width: 12.0625rem;
       overflow: auto;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -39,7 +41,7 @@
       }
     }
     &__dropdown a {
-      color: var(--charcoal, map-get($color-palette, 'charcoal'));
+      color: var(--charcoal, map.get($color-palette, 'charcoal'));
       font-size: 1rem;
       line-height: 1.5rem;
       padding: 0.5rem 1rem;
@@ -47,7 +49,7 @@
       display: block;
 
       &:hover {
-        background-color: map-get($color-palette, 'neutral-gray-2');
+        background-color: map.get($color-palette, 'neutral-gray-2');
       }
     }
   }

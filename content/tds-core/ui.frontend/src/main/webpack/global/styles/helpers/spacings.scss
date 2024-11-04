@@ -1,3 +1,5 @@
+@use "~sass-rem" as rem;
+
 .m-0 {
   margin: 0;
 }
@@ -7,14 +9,14 @@
 }
 
 .v-divider {
-  box-shadow: rem-convert(1px) 0 0 0 get-color(v-divider-gray);
+  box-shadow: rem.convert(1px) 0 0 0 get-color(v-divider-gray);
   &:last-of-type {
     box-shadow: 0 0 0 0 get-color(v-divider-gray);
   }
 }
 
 .vx-divider {
-  border-left: rem-convert(1px) solid get-color(v-divider-darkgray);
-  border-right: rem-convert(1px) solid get-color(v-divider-darkgray);
-  padding: 0 rem-convert(35px);
+  border-left: rem.convert(1px) solid get-color(v-divider-darkgray);
+  border-right: rem.convert(1px) solid get-color(v-divider-darkgray);
+  padding: 0 rem.convert(35px);
 }

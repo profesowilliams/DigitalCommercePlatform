@@ -1,24 +1,27 @@
 /* stylelint-disable -- Too much to fix, will delete file later. */
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 @function is-alpha-color($color) {
   @return alpha($color) < 1;
 }
 
-$teal-color: map-get($color-palette, 'teal');
-$aqua: map-get($color-palette, 'aqua');
-$chartreuse: map-get($color-palette, 'chartreuse') !important;
+$teal-color: map.get($color-palette, 'teal');
+$aqua: map.get($color-palette, 'aqua');
+$chartreuse: map.get($color-palette, 'chartreuse') !important;
 $deep-teal: get-color(deep-teal);
 $cool-gray-8: get-color(cool-gray-8);
 $cool-gray-10: get-color(cool-gray-10);
-$green: map-get($color-palette, 'green');
-$black: map-get($color-palette, 'black');
-$white: map-get($color-palette, 'white');
+$green: map.get($color-palette, 'green');
+$black: map.get($color-palette, 'black');
+$white: map.get($color-palette, 'white');
 $steel-blue: get-color(steel-blue);
-$navy: map-get($color-palette, 'navy');
-$copper: map-get($color-palette, 'copper');
+$navy: map.get($color-palette, 'navy');
+$copper: map.get($color-palette, 'copper');
 $cool-gray-1: get-color(cool-gray-1);
 $cherry: get-color(cherry);
 $amber: get-color(amber);
-$forest: map-get($color-palette, 'forest');
+$forest: map.get($color-palette, 'forest');
 $cool-gray-9: get-color(cool-gray-9);
 $cobalt: get-color(cobalt);
 $dark-blue: #000c21;
@@ -26,7 +29,7 @@ $ocean: #00558c;
 $sky-blue: get-color(sky-blue);
 $legacy-gray: get-color(legacy-gray);
 $neutral-gray-2: get-color(neutral-gray-2);
-$charcoal: map-get($color-palette, 'charcoal');
+$charcoal: map.get($color-palette, 'charcoal');
 $stone: get-color(stone);
 $neutral-gray-1: get-color(neutral-gray-1);
 
@@ -86,7 +89,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 .cmp-button {
   cursor: pointer;
   white-space: nowrap;
-  color: map-get($color-palette, 'charcoal');
+  color: map.get($color-palette, 'charcoal');
 }
 
 .button {
@@ -109,7 +112,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
 .cmp-button--background-enabled {
   & .cmp-button {
-    border-radius: rem-convert(3px);
+    border-radius: rem.convert(3px);
     background-color: get-color(header-links-blue);
 
     &:hover {
@@ -169,7 +172,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
 .cmp-button {
   outline: unset;
-  padding: rem-convert(1px) rem-convert(6px);
+  padding: rem.convert(1px) rem.convert(6px);
   text-decoration: none;
   background: none;
   border-radius: 2px;
@@ -177,8 +180,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   &.btn-xxsmall {
     font-size: $font-size-custom-xxsmall;
     width: 100%;
-    padding: rem-convert(6px);
-    margin-top: rem-convert(18px);
+    padding: rem.convert(6px);
+    margin-top: rem.convert(18px);
   }
 
   &:active,
@@ -190,31 +193,31 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   &__disabled {
     color: get-color(text-light-charcoal);
     background-color: get-color(td-lighter-gray);
-    width: rem-convert(240px);
-    height: rem-convert(40px);
-    box-shadow: inset 0 0 0 rem-convert(1px) get-color(brand-light-gray2);
+    width: rem.convert(240px);
+    height: rem.convert(40px);
+    box-shadow: inset 0 0 0 rem.convert(1px) get-color(brand-light-gray2);
 
     &.btn-xxsmall {
       font-size: $font-size-custom-xxsmall;
       width: 100%;
-      padding: rem-convert(6px);
-      margin-top: rem-convert(18px);
+      padding: rem.convert(6px);
+      margin-top: rem.convert(18px);
     }
   }
 
   &__primary {
     color: get-color(brand-white);
     background-color: get-color(td-dark-blue);
-    width: rem-convert(240px);
-    height: rem-convert(40px);
+    width: rem.convert(240px);
+    height: rem.convert(40px);
   }
 
   &__outlined {
     color: get-color(td-dark-blue);
     background-color: get-color(brand-white);
-    width: rem-convert(240px);
-    height: rem-convert(40px);
-    box-shadow: inset 0 0 0 rem-convert(2px) get-color(td-dark-blue);
+    width: rem.convert(240px);
+    height: rem.convert(40px);
+    box-shadow: inset 0 0 0 rem.convert(2px) get-color(td-dark-blue);
   }
 
   &__region-select {
@@ -229,7 +232,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 .cmp-radio-btn {
   display: block;
   position: relative;
-  padding-left: rem-convert(22px);
+  padding-left: rem.convert(22px);
   cursor: pointer;
   font-size: 1rem;
   -webkit-user-select: none;
@@ -245,10 +248,10 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
     position: absolute;
     opacity: 0;
     cursor: pointer;
-    width: rem-convert(24px);
-    height: rem-convert(24px);
-    left: rem-convert(-2px);
-    top: rem-convert(-2px);
+    width: rem.convert(24px);
+    height: rem.convert(24px);
+    left: rem.convert(-2px);
+    top: rem.convert(-2px);
 
     &:checked {
       ~ {
@@ -268,20 +271,20 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
     position: absolute;
     top: 0;
     left: 0;
-    height: rem-convert(14px);
-    width: rem-convert(14px);
+    height: rem.convert(14px);
+    width: rem.convert(14px);
     background-color: get-color(brand-white);
     border-radius: 50%;
-    box-shadow: inset 0 0 0 rem-convert(2px) get-color(text-light-charcoal);
+    box-shadow: inset 0 0 0 rem.convert(2px) get-color(text-light-charcoal);
 
     &:after {
       content: '';
       position: absolute;
       display: none;
-      top: rem-convert(3.6px);
-      left: rem-convert(3.5px);
-      width: rem-convert(6px);
-      height: rem-convert(6px);
+      top: rem.convert(3.6px);
+      left: rem.convert(3.5px);
+      width: rem.convert(6px);
+      height: rem.convert(6px);
       border-radius: 50%;
       background-color: get-color(brand-white);
     }
@@ -297,22 +300,22 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
   .cmp-jump-to-top {
     box-sizing: border-box;
-    height: rem-convert(60px);
-    width: rem-convert(60px);
-    outline: rem-convert(1px) solid get-color(brand-light-gray2);
+    height: rem.convert(60px);
+    width: rem.convert(60px);
+    outline: rem.convert(1px) solid get-color(brand-light-gray2);
     background-color: get-color(brand-white);
-    box-shadow: 0 rem-convert(2px) rem-convert(4px) 0 get-color(brand-box-shadow);
+    box-shadow: 0 rem.convert(2px) rem.convert(4px) 0 get-color(brand-box-shadow);
     text-align: center;
     font-size: 30px;
     color: get-color(brand-blue);
 
     &:hover {
-      box-shadow: 0 rem-convert(4px) rem-convert(4px) 0 get-color(brand-box-shadow);
+      box-shadow: 0 rem.convert(4px) rem.convert(4px) 0 get-color(brand-box-shadow);
     }
 
     a {
-      height: rem-convert(60px);
-      width: rem-convert(60px);
+      height: rem.convert(60px);
+      width: rem.convert(60px);
       color: get-color(brand-blue) !important;
     }
   }
@@ -331,35 +334,35 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 }
 
 .cmp-tds-button {
-  font-size: rem-convert(16px);
+  font-size: rem.convert(16px);
   padding: 0px;
-  gap: rem-convert(10px);
+  gap: rem.convert(10px);
   outline: 0;
   transition: all 0.24s;
   text-decoration: none;
 
-  color: map-get($color-palette, 'white');
+  color: map.get($color-palette, 'white');
 
   .cmp-button {
-    font-size: rem-convert(16px);
-    padding: rem-convert(16px) rem-convert(57.5px);
-    gap: rem-convert(10px);
+    font-size: rem.convert(16px);
+    padding: rem.convert(16px) rem.convert(57.5px);
+    gap: rem.convert(10px);
     outline: 0;
     font-family: 'Arial', sans-serif;
     transition: all 0.24s;
     text-decoration: none;
 
-    background-color: map-get($color-palette, 'teal');
-    color: map-get($color-palette, 'white');
+    background-color: map.get($color-palette, 'teal');
+    color: map.get($color-palette, 'white');
 
     &:hover {
       background-color: $aqua;
-      color: map-get($color-palette, 'charcoal');
+      color: map.get($color-palette, 'charcoal');
     }
 
     &:disabled {
       background-color: get-color(cool-gray-1) !important;
-      color: map-get($color-palette, 'charcoal') !important;
+      color: map.get($color-palette, 'charcoal') !important;
       pointer-events: none;
     }
   }
@@ -377,7 +380,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   // $xlg
 
   @mixin background-handler($bgmode) {
-    background-color: map-get($color-palette, 'navy');
+    background-color: map.get($color-palette, 'navy');
   }
 
   &-dark-mode {
@@ -520,8 +523,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
     }
     .cmp-button__icon {
       color: $color;
-      font-size: rem-convert(16px);
-      padding: rem-convert(5px);
+      font-size: rem.convert(16px);
+      padding: rem.convert(5px);
     }
   }
 
@@ -645,8 +648,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
     }
     .cmp-button__icon {
       color: $color;
-      font-size: rem-convert(16px);
-      padding: rem-convert(5px);
+      font-size: rem.convert(16px);
+      padding: rem.convert(5px);
     }
   }
 
@@ -899,7 +902,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   // ////////////////////////
   &.btn-green {
     .cmp-button {
-      background-color: map-get($color-palette, 'green');
+      background-color: map.get($color-palette, 'green');
     }
   }
 
@@ -945,7 +948,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
   &.btn-black {
     .cmp-button {
-      background-color: map-get($color-palette, 'black');
+      background-color: map.get($color-palette, 'black');
     }
   }
 
@@ -992,7 +995,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   // ////////////////////////
   &.btn-white {
     .cmp-button {
-      background-color: map-get($color-palette, 'white');
+      background-color: map.get($color-palette, 'white');
       @include text-charcoal;
     }
   }
@@ -1090,7 +1093,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
   &.btn-navy {
     .cmp-button {
-      background-color: map-get($color-palette, 'navy');
+      background-color: map.get($color-palette, 'navy');
     }
   }
 
@@ -1136,7 +1139,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
   &.btn-copper {
     .cmp-button {
-      background-color: map-get($color-palette, 'copper');
+      background-color: map.get($color-palette, 'copper');
     }
   }
 
@@ -1342,7 +1345,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
   &.btn-forest {
     .cmp-button {
-      background-color: map-get($color-palette, 'forest');
+      background-color: map.get($color-palette, 'forest');
     }
   }
 
@@ -1388,7 +1391,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
   &.btn-charcoal {
     .cmp-button {
-      background-color: map-get($color-palette, 'charcoal');
+      background-color: map.get($color-palette, 'charcoal');
     }
   }
 
@@ -1945,7 +1948,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
 .button {
   &.cmp-button-default {
-    color: map-get($color-palette, 'charcoal');
+    color: map.get($color-palette, 'charcoal');
   }
 
   &.cmp-button-apj {

@@ -1,5 +1,7 @@
+@use "~sass-rem" as rem;
+
 .cmp-gauge-chart-wrap {
-  width: rem-convert(450px);
+  width: rem.convert(450px);
   margin: 0 15px;
 
   canvas {
@@ -20,7 +22,7 @@
       font-size: $font-size-small;
       text-transform: uppercase;
       color: get-color(text-mid-gray);
-      width: rem-convert(115px);
+      width: rem.convert(115px);
       align-self: baseline;
     }
     &__orders-processed {
@@ -33,7 +35,7 @@
       &--number {
         font-size: $font-size-custom-large;
         color: get-color(td-lightblue);
-        margin-right: rem-convert(20px);
+        margin-right: rem.convert(20px);
       }
       &--title {
         font-size: $font-size-custom-midi;
@@ -42,19 +44,19 @@
     }
   }
   .cmp-gauge-chart-period {
-    margin-top: rem-convert(20px);
+    margin-top: rem.convert(20px);
     display: flex;
     justify-content: center;
     > div {
       display: flex;
     }
     .cmp-gauge-chart-period--toggle {
-      margin: 0 rem-convert(14px);
+      margin: 0 rem.convert(14px);
       .switch {
         position: relative;
         display: inline-block;
-        width: rem-convert(37px);
-        height: rem-convert(22px);
+        width: rem.convert(37px);
+        height: rem.convert(22px);
         > input {
           opacity: 0;
           width: 0;
@@ -75,17 +77,17 @@
         &:before {
           position: absolute;
           content: '';
-          height: rem-convert(15px);
-          width: rem-convert(15px);
-          left: rem-convert(3px);
-          bottom: rem-convert(4px);
+          height: rem.convert(15px);
+          width: rem.convert(15px);
+          left: rem.convert(3px);
+          bottom: rem.convert(4px);
           background-color: white;
           -webkit-transition: 0.4s;
           transition: 0.4s;
         }
       }
       .round {
-        border-radius: rem-convert(34px);
+        border-radius: rem.convert(34px);
         &:before {
           border-radius: 50%;
         }
@@ -96,13 +98,13 @@
       }
 
       input:focus + .dot {
-        box-shadow: 0 0 rem-convert(1px) #000c21;
+        box-shadow: 0 0 rem.convert(1px) #000c21;
       }
 
       input:checked + .dot:before {
-        -webkit-transform: translateX(rem-convert(16px));
-        -ms-transform: translateX(rem-convert(16px));
-        transform: translateX(rem-convert(16px));
+        -webkit-transform: translateX(rem.convert(16px));
+        -ms-transform: translateX(rem.convert(16px));
+        transform: translateX(rem.convert(16px));
       }
     }
   }

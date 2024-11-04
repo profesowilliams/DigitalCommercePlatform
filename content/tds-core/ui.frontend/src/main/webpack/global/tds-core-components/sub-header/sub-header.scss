@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 @import '../../abstracts/variables';
 @import '../../../site/variables';
 @import '../../styles/helpers/dynamic-spacing.scss';
@@ -22,11 +25,11 @@
       color: get-color(brand-white);
 
       li {
-        padding: 0 rem-convert(13px) !important;
+        padding: 0 rem.convert(13px) !important;
         line-height: normal;
 
         & + li {
-          border-left: rem-convert(1px) solid get-color(brand-white);
+          border-left: rem.convert(1px) solid get-color(brand-white);
         }
 
         a,
@@ -57,17 +60,17 @@
       &__menu {
         position: absolute;
         z-index: 999;
-        top: rem-convert(60px);
-        left: rem-convert(0);
+        top: rem.convert(60px);
+        left: rem.convert(0);
         background-color: get-color(brand-white);
         width: 1440px;
-        height: rem-convert(417px);
+        height: rem.convert(417px);
         display: flex;
         justify-content: space-evenly;
 
         &__item {
-          padding-left: rem-convert(15px);
-          padding-right: rem-convert(30px);
+          padding-left: rem.convert(15px);
+          padding-right: rem.convert(30px);
 
           h2 {
             font-size: $font-size-custom-xxsmall;
@@ -76,8 +79,8 @@
           }
 
           img {
-            width: rem-convert(392px);
-            height: rem-convert(280px);
+            width: rem.convert(392px);
+            height: rem.convert(280px);
           }
         }
       }
@@ -146,7 +149,7 @@
       &.cmp-tabs__tablist li {
         &:first-child,
         &.dashboard {
-          //margin-right: rem-convert(54px);
+          //margin-right: rem.convert(54px);
         }
       }
 
@@ -155,7 +158,7 @@
         position: relative;
         padding: 0 !important;
         z-index: 10;
-        margin: 0 rem-convert(28px) 0 0;
+        margin: 0 rem.convert(28px) 0 0;
 
         span,
         a {
@@ -191,7 +194,7 @@
         }
 
         &:first-child {
-          //margin-right: rem-convert(54px);
+          //margin-right: rem.convert(54px);
         }
       }
     }
@@ -201,7 +204,7 @@
 
       .cmp-sub-header__wrapper ul li + li {
         display: none !important;
-        border-left: rem-convert(0px) solid get-color(brand-white);
+        border-left: rem.convert(0px) solid get-color(brand-white);
       }
     }
   }
@@ -219,11 +222,11 @@
       a,
       span.cmp-sub-header__span {
         white-space: nowrap;
-        height: rem-convert(40px);
+        height: rem.convert(40px);
         box-shadow: unset;
 
         &:hover {
-          border-bottom-width: rem-convert(2px);
+          border-bottom-width: rem.convert(2px);
           border-bottom-style: solid;
           border-bottom-color: inherit;
         }
@@ -233,14 +236,14 @@
         a,
         span.cmp-sub-header__span {
           white-space: nowrap;
-          border-bottom-width: rem-convert(2px);
+          border-bottom-width: rem.convert(2px);
           border-bottom-style: solid;
           border-bottom-color: inherit;
         }
       }
 
       &:first-child {
-        margin-left: rem-convert(48px);
+        margin-left: rem.convert(48px);
       }
     }
   }
@@ -249,7 +252,7 @@
 .cmp-sub-header {
   &--sub-nav {
     &.new-sub {
-      height: rem-convert(44px);
+      height: rem.convert(44px);
       @include subheader-span-border-bottom;
 
       & > .cmp-sub-header--content {
@@ -267,7 +270,7 @@
         }
 
         @include mobile {
-          //padding-left: rem-convert(39px);
+          //padding-left: rem.convert(39px);
           // commenting out temporarily until I check with Leo if it is important - Olivera
         }
 
@@ -323,13 +326,13 @@
       span.cmp-sub-header__span {
         white-space: nowrap;
         line-height: 2.5;
-        padding-right: rem-convert(48px) !important;
+        padding-right: rem.convert(48px) !important;
         @media (max-width: 1023px) {
-          padding-right: rem-convert(40px) !important;
+          padding-right: rem.convert(40px) !important;
         }
 
         @include mobile {
-          padding-right: rem-convert(7px) !important;
+          padding-right: rem.convert(7px) !important;
         }
       }
     }
@@ -337,11 +340,11 @@
     &__image {
       padding-right: 48px;
       @media (max-width: 1023px) {
-        padding-right: rem-convert(40px);
+        padding-right: rem.convert(40px);
       }
 
       @include mobile {
-        padding-right: rem-convert(7px);
+        padding-right: rem.convert(7px);
       }
 
       img {
@@ -581,7 +584,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'teal');
+          border-bottom: 1px solid map.get($color-palette, 'teal');
         }
       }
     }
@@ -599,7 +602,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'aqua');
+          border-bottom: 1px solid map.get($color-palette, 'aqua');
         }
       }
     }
@@ -608,7 +611,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'chartreuse');
+          border-bottom: 1px solid map.get($color-palette, 'chartreuse');
         }
       }
     }
@@ -617,7 +620,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'black');
+          border-bottom: 1px solid map.get($color-palette, 'black');
         }
       }
     }
@@ -644,7 +647,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'white');
+          border-bottom: 1px solid map.get($color-palette, 'white');
         }
       }
     }
@@ -662,7 +665,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'navy');
+          border-bottom: 1px solid map.get($color-palette, 'navy');
         }
       }
     }
@@ -671,7 +674,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'copper');
+          border-bottom: 1px solid map.get($color-palette, 'copper');
         }
       }
     }
@@ -680,7 +683,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'green');
+          border-bottom: 1px solid map.get($color-palette, 'green');
         }
       }
     }
@@ -707,7 +710,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'purple');
+          border-bottom: 1px solid map.get($color-palette, 'purple');
         }
       }
     }
@@ -716,7 +719,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'plum');
+          border-bottom: 1px solid map.get($color-palette, 'plum');
         }
       }
     }
@@ -725,7 +728,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'citron');
+          border-bottom: 1px solid map.get($color-palette, 'citron');
         }
       }
     }
@@ -752,7 +755,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'forest');
+          border-bottom: 1px solid map.get($color-palette, 'forest');
         }
       }
     }
@@ -770,7 +773,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'charcoal');
+          border-bottom: 1px solid map.get($color-palette, 'charcoal');
         }
       }
     }
@@ -806,7 +809,7 @@
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          border-bottom: 1px solid map-get($color-palette, 'brilliant');
+          border-bottom: 1px solid map.get($color-palette, 'brilliant');
         }
       }
     }
@@ -837,26 +840,26 @@
 /// below code is for the story 362383 sub-header - new styles for max width and dynamic paddings
 @mixin padding-sizes($padding, $default, $sm, $md, $lg, $xlg) {
   & > .cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
-    #{$padding}: rem-convert($default);
+    #{$padding}: rem.convert($default);
   }
   &-small {
     & > .cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
-      #{$padding}: rem-convert($sm);
+      #{$padding}: rem.convert($sm);
     }
   }
   &-medium {
     & > .cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
-      #{$padding}: rem-convert($md);
+      #{$padding}: rem.convert($md);
     }
   }
   &-large {
     & > .cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
-      #{$padding}: rem-convert($lg);
+      #{$padding}: rem.convert($lg);
     }
   }
   &-extra-large {
     & > .cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
-      #{$padding}: rem-convert($xlg);
+      #{$padding}: rem.convert($xlg);
     }
   }
   &-dynamic {

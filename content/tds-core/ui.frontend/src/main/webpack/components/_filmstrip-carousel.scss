@@ -1,15 +1,17 @@
+@use "~sass-rem" as rem;
+
 @import 'main';
 
 .cmp-filmstrip-carousel {
-  width: rem-convert(720px);
-  padding: 0 rem-convert(40px);
+  width: rem.convert(720px);
+  padding: 0 rem.convert(40px);
   font-family: $font-family;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   &__title {
-    font-size: rem-convert(24px);
+    font-size: rem.convert(24px);
     color: get-color(brand-blue);
     font-weight: normal;
     width: 100%;
@@ -24,12 +26,12 @@
     width: 100%;
 
     &--card {
-      width: rem-convert(172px);
-      height: rem-convert(270px);
-      margin-top: rem-convert(25px);
-      margin-bottom: rem-convert(25px);
+      width: rem.convert(172px);
+      height: rem.convert(270px);
+      margin-top: rem.convert(25px);
+      margin-bottom: rem.convert(25px);
       background-color: get-color(brand-white);
-      box-shadow: rem-convert(2px) rem-convert(2px) rem-convert(4px) 0 get-color(box-shadow);
+      box-shadow: rem.convert(2px) rem.convert(2px) rem.convert(4px) 0 get-color(box-shadow);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -37,15 +39,15 @@
 
       &img {
         width: 100%;
-        height: rem-convert(170px);
+        height: rem.convert(170px);
       }
 
       &--name {
         width: 100%;
-        height: rem-convert(35px);
+        height: rem.convert(35px);
         color: get-color(brand-white);
         background-color: get-color(brand-blue);
-        font-size: rem-convert(16px);
+        font-size: rem.convert(16px);
         text-align: center;
         display: flex;
         justify-content: center;
@@ -54,9 +56,9 @@
 
       &--position {
         font-size: $font-size-xsmall;
-        line-height: rem-convert(14px);
+        line-height: rem.convert(14px);
         text-align: center;
-        padding: rem-convert(15px) rem-convert(5px) rem-convert(8px);
+        padding: rem.convert(15px) rem.convert(5px) rem.convert(8px);
         height: 65px;
       }
     }
@@ -76,20 +78,20 @@
 }
 
 .cmp-filmstrip-slider {
-  width: rem-convert(640px);
-  height: rem-convert(305px);
+  width: rem.convert(640px);
+  height: rem.convert(305px);
   margin: 0 auto;
 }
 
 .slick-slide {
-  margin: 0 rem-convert(20px);
+  margin: 0 rem.convert(20px);
   width: auto !important;
   a {
     text-decoration: none !important;
     img {
       display: block;
       width: 100%;
-      height: rem-convert(170px);
+      height: rem.convert(170px);
       border: 0 solid transparent;
       box-shadow: 0 0 0 0 transparent;
     }
@@ -104,7 +106,7 @@
     img {
       display: block;
       width: 100%;
-      height: rem-convert(170px);
+      height: rem.convert(170px);
       border: 0 solid transparent;
       box-shadow: 0 0 0 0 transparent;
     }
@@ -117,37 +119,37 @@
     button {
       &:before {
         font-family: 'Font Awesome 5 Free' !important;
-        font-size: rem-convert(10px) !important;
-        border: solid rem-convert(1px) get-color(text-light-charcoal) !important;
+        font-size: rem.convert(10px) !important;
+        border: solid rem.convert(1px) get-color(text-light-charcoal) !important;
         border-radius: 50% !important;
-        line-height: rem-convert(10px) !important;
-        width: rem-convert(10px) !important;
-        height: rem-convert(10px) !important;
+        line-height: rem.convert(10px) !important;
+        width: rem.convert(10px) !important;
+        height: rem.convert(10px) !important;
         opacity: unset !important;
         color: transparent !important;
       }
       &:hover::before {
         border: solid 0 get-color(text-light-charcoal) !important;
-        line-height: rem-convert(14px) !important;
+        line-height: rem.convert(14px) !important;
         opacity: unset !important;
         color: transparent !important;
-        top: rem-convert(-0.022px) !important;
-        box-shadow: inset 0 0 0 rem-convert(7px) get-color(brand-blue) !important;
-        width: rem-convert(10px) !important;
-        height: rem-convert(10px) !important;
+        top: rem.convert(-0.022px) !important;
+        box-shadow: inset 0 0 0 rem.convert(7px) get-color(brand-blue) !important;
+        width: rem.convert(10px) !important;
+        height: rem.convert(10px) !important;
       }
     }
     &.slick-active {
       button {
         &:before {
           border: solid 0 get-color(text-light-charcoal) !important;
-          line-height: rem-convert(14px) !important;
+          line-height: rem.convert(14px) !important;
           opacity: unset !important;
           color: transparent !important;
-          top: rem-convert(-0.022px) !important;
-          box-shadow: inset 0 0 0 rem-convert(7px) get-color(brand-blue) !important;
-          width: rem-convert(10px) !important;
-          height: rem-convert(10px) !important;
+          top: rem.convert(-0.022px) !important;
+          box-shadow: inset 0 0 0 rem.convert(7px) get-color(brand-blue) !important;
+          width: rem.convert(10px) !important;
+          height: rem.convert(10px) !important;
         }
       }
     }

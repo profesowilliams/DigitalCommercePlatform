@@ -1,5 +1,8 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 .dp-list {
-  color: map-get($color-palette, 'charcoal');
+  color: map.get($color-palette, 'charcoal');
 
   &--teaser {
     .cmp-list {
@@ -200,7 +203,7 @@
   &--brand-grid-3 {
     .cmp-list {
       list-style-type: none;
-      line-height: rem-convert(12px);
+      line-height: rem.convert(12px);
       padding: 0;
     }
 
@@ -222,7 +225,7 @@
 
     .cmp-list__item-title {
       font-weight: $font-weight-normal;
-      font-size: rem-convert(13px);
+      font-size: rem.convert(13px);
       color: inherit;
     }
   }
@@ -371,17 +374,17 @@
             justify-content: center;
             display: flex;
             img.cmp-image__image {
-              width: rem-convert(75px);
-              height: rem-convert(75px);
+              width: rem.convert(75px);
+              height: rem.convert(75px);
             }
           }
           span.cmp-list__item-title {
             text-decoration: none;
-            font-size: rem-convert(13px);
-            line-height: rem-convert(15px);
+            font-size: rem.convert(13px);
+            line-height: rem.convert(15px);
             text-align: center;
             color: inherit;
-            margin: 0 rem-convert(5px);
+            margin: 0 rem.convert(5px);
           }
         }
       }

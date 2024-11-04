@@ -1,4 +1,6 @@
 /* stylelint-disable -- ryan.williams@tdsynnex.com: Too many errors to resolve right now */
+@use 'sass:map';
+@use "~sass-rem" as rem;
 
 .teaser-r-border {
   position: relative;
@@ -31,7 +33,7 @@
 
 .cmp-teaser,
 .dp-teaser {
-  color: map-get($color-palette, 'charcoal');
+  color: map.get($color-palette, 'charcoal');
 
   &__card {
     padding: 3.18rem 0.5rem;
@@ -48,7 +50,7 @@
       -ms-flex-direction: column;
       flex-direction: column;
       min-width: 0;
-      min-height: rem-convert(304px);
+      min-height: rem.convert(304px);
       background-color: get-color(brand-white);
       -webkit-background-clip: border-box;
       background-clip: border-box;
@@ -66,7 +68,7 @@
           color: get-color(brand-blue) !important;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
-          letter-spacing: rem-convert(-0.5px);
+          letter-spacing: rem.convert(-0.5px);
         }
 
         .cmp-teaser__title {
@@ -77,7 +79,7 @@
         }
 
         .cmp-teaser__image img {
-          box-shadow: 0 0 0 rem-convert(6px) get-color(brand-blue);
+          box-shadow: 0 0 0 rem.convert(6px) get-color(brand-blue);
         }
       }
 
@@ -123,8 +125,8 @@
       }
 
       &__description {
-        padding: 0 rem-convert(16px);
-        max-height: rem-convert(180px);
+        padding: 0 rem.convert(16px);
+        max-height: rem.convert(180px);
         word-wrap: break-word;
         text-overflow: initial !important;
         display: -webkit-box;
@@ -138,14 +140,14 @@
           -webkit-line-clamp: unset !important;
           display: block !important;
           overflow: unset !important;
-          width: rem-convert(190px);
-          height: rem-convert(180px);
+          width: rem.convert(190px);
+          height: rem.convert(180px);
         }
       }
     }
 
     &--aboutus {
-      padding: rem-convert(15px) rem-convert(35px) 0;
+      padding: rem.convert(15px) rem.convert(35px) 0;
       background-color: get-color(brand-blue) !important;
 
       .cmp-teaser {
@@ -156,7 +158,7 @@
         flex-direction: column;
         align-items: center;
         min-width: 0;
-        min-height: rem-convert(100px);
+        min-height: rem.convert(100px);
         -webkit-background-clip: border-box;
         background-clip: border-box;
         color: get-color(text-dark-grey) !important;
@@ -230,7 +232,7 @@
     &--image-highlight {
       &.cmp-teaser__card {
         .cmp-teaser {
-          min-height: rem-convert(287px);
+          min-height: rem.convert(287px);
 
           &:hover {
             .cmp-teaser__title-link {
@@ -322,15 +324,15 @@
     .cmp-teaser__image {
       height: auto;
       text-align: center;
-      max-width: rem-convert(120px);
+      max-width: rem.convert(120px);
       width: 100%;
 
       svg {
         border-radius: 50%;
-        padding: rem-convert(10px);
+        padding: rem.convert(10px);
         height: auto;
         transition: all 0.3s;
-        width: rem-convert(120px);
+        width: rem.convert(120px);
 
         path,
         polygon {
@@ -360,7 +362,7 @@
         -ms-flex-direction: column;
         flex-direction: column;
         min-width: 0;
-        min-height: rem-convert(304px);
+        min-height: rem.convert(304px);
         background-color: get-color(brand-white);
         -webkit-background-clip: border-box;
         background-clip: border-box;
@@ -379,7 +381,7 @@
             color: get-color(brand-blue) !important;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            letter-spacing: rem-convert(-0.5px);
+            letter-spacing: rem.convert(-0.5px);
           }
 
           .cmp-teaser__title {
@@ -389,7 +391,7 @@
           }
 
           .cmp-teaser__image img {
-            box-shadow: 0 0 0 rem-convert(6px) get-color(brand-blue);
+            box-shadow: 0 0 0 rem.convert(6px) get-color(brand-blue);
           }
         }
 
@@ -425,18 +427,18 @@
           img,
           svg {
             border-radius: 50%;
-            width: rem-convert(150px);
-            height: rem-convert(150px);
+            width: rem.convert(150px);
+            height: rem.convert(150px);
             position: absolute;
             left: 50%;
-            top: rem-convert(-5px);
+            top: rem.convert(-5px);
             transform: translateX(-50%) translateY(-33%);
           }
         }
 
         &__description {
-          padding: 0 rem-convert(30px) rem-convert(30px);
-          //max-height: rem-convert(144px);
+          padding: 0 rem.convert(30px) rem.convert(30px);
+          //max-height: rem.convert(144px);
           word-wrap: break-word;
           text-overflow: ellipsis;
           display: -webkit-box;
@@ -459,7 +461,7 @@
       }
 
       &--aboutus {
-        padding: rem-convert(15px) rem-convert(35px) 0;
+        padding: rem.convert(15px) rem.convert(35px) 0;
         background-color: get-color(brand-blue) !important;
 
         .cmp-teaser {
@@ -470,7 +472,7 @@
           flex-direction: column;
           align-items: center;
           min-width: 0;
-          min-height: rem-convert(100px);
+          min-height: rem.convert(100px);
           -webkit-background-clip: border-box;
           background-clip: border-box;
           color: get-color(text-dark-grey) !important;
@@ -544,7 +546,7 @@
       &--image-highlight {
         &.cmp-teaser__card {
           .cmp-teaser {
-            min-height: rem-convert(287px);
+            min-height: rem.convert(287px);
 
             &:hover {
               .cmp-teaser__title-link {
@@ -635,15 +637,15 @@
       .cmp-teaser__image {
         height: auto;
         text-align: center;
-        max-width: rem-convert(120px);
+        max-width: rem.convert(120px);
         width: 100%;
 
         svg {
           border-radius: 50%;
-          padding: rem-convert(10px);
+          padding: rem.convert(10px);
           height: auto;
           transition: all 0.3s;
-          width: rem-convert(120px);
+          width: rem.convert(120px);
 
           path,
           polygon {
@@ -668,7 +670,7 @@
             }
 
             .cmp-teaser__image img {
-              box-shadow: 0 0 0 rem-convert(6px) get-color(brand-green-synnex);
+              box-shadow: 0 0 0 rem.convert(6px) get-color(brand-green-synnex);
             }
           }
         }

@@ -1,15 +1,17 @@
+@use "~sass-rem" as rem;
+
 .hero-style-3 {
   @include teaser-default();
   @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) {
     .cmp-teaser {
       &__title {
-        margin: 0 0 rem-convert(14px);
+        margin: 0 0 rem.convert(14px);
       }
       &__title-link {
         font-size: 2rem;
       }
       &__content {
-        padding-top: rem-convert(46px);
+        padding-top: rem.convert(46px);
       }
       &__description {
         max-width: 100%;

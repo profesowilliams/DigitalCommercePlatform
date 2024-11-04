@@ -1,3 +1,5 @@
+@use "~sass-rem" as rem;
+
 /* stylelint-disable -- Too much to fix, will delete file later. */
 .headerutility {
   margin-right: 0 !important;
@@ -53,10 +55,10 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 150%;
-      padding-left: rem-convert(6.25px);
-      padding-right: rem-convert(48px);
-      padding-top: rem-convert(16px);
-      padding-bottom: rem-convert(16px);
+      padding-left: rem.convert(6.25px);
+      padding-right: rem.convert(48px);
+      padding-top: rem.convert(16px);
+      padding-bottom: rem.convert(16px);
       .cmp-image {
         display: inline;
         &__image {

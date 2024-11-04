@@ -1,9 +1,11 @@
+@use "~sass-rem" as rem;
+
 .cmp-search-criteria {
   font-size: $font-size-xsmall;
   font-family: $font-family-sans-serif;
   z-index: 1;
   // position: absolute;
-  margin-top: rem-convert(6px);
+  margin-top: rem.convert(6px);
 
   .hidden {
     display: none;
@@ -15,13 +17,13 @@
   }
   &__icon {
     color: white;
-    margin-left: rem-convert(10px);
-    margin-right: rem-convert(10px);
+    margin-left: rem.convert(10px);
+    margin-right: rem.convert(10px);
   }
   &__icon-button {
     color: black;
-    margin-left: rem-convert(10px);
-    margin-right: rem-convert(10px);
+    margin-left: rem.convert(10px);
+    margin-right: rem.convert(10px);
   }
   &--expanded {
     position: relative;
@@ -29,11 +31,11 @@
   &__header {
     cursor: pointer;
     display: flex;
-    margin-left: rem-convert(8px);
+    margin-left: rem.convert(8px);
     & svg,
     i {
       color: get-color(td-primary-blue);
-      margin-top: rem-convert(4px);
+      margin-top: rem.convert(4px);
       &:before {
         display: inline-block;
       }
@@ -42,17 +44,17 @@
       font-size: $font-size-small;
       font-weight: $font-weight-semi-bold;
       text-transform: uppercase;
-      margin-left: rem-convert(8px);
+      margin-left: rem.convert(8px);
     }
     &__filter {
       display: flex;
       align-items: center;
       justify-items: center;
-      margin-left: rem-convert(20px);
-      margin-right: rem-convert(20px);
-      padding-top: rem-convert(2px);
-      padding-left: rem-convert(20px);
-      padding-bottom: rem-convert(2px);
+      margin-left: rem.convert(20px);
+      margin-right: rem.convert(20px);
+      padding-top: rem.convert(2px);
+      padding-left: rem.convert(20px);
+      padding-bottom: rem.convert(2px);
       border-radius: 20px;
       background-color: black;
       color: white;
@@ -64,31 +66,31 @@
       justify-items: center;
       margin-left: 0;
       margin-right: 0;
-      padding-top: rem-convert(2px);
+      padding-top: rem.convert(2px);
       padding-left: 0;
-      padding-bottom: rem-convert(2px);
+      padding-bottom: rem.convert(2px);
       border-radius: 20px;
       color: black;
       cursor: pointer;
       .fs-16 {
-        font-size: rem-convert(16px);
+        font-size: rem.convert(16px);
       }
     }
   }
   &__content {
     display: flex;
-    margin-top: rem-convert(16px);
-    margin-bottom: rem-convert(16px);
+    margin-top: rem.convert(16px);
+    margin-bottom: rem.convert(16px);
     justify-content: space-between;
     &--hidden {
       display: none;
     }
     &__query-input {
       display: flex;
-      margin-right: rem-convert(16px);
+      margin-right: rem.convert(16px);
       width: 100%;
       &__prefix {
-        margin-right: rem-convert(5px);
+        margin-right: rem.convert(5px);
       }
       &__search {
         display: flex;
@@ -98,7 +100,7 @@
           text-decoration: underline;
           font-size: $font-size-xsmall;
           color: get-color(brand-button-blue);
-          margin: 0 rem-convert(16px) 0 rem-convert(16px);
+          margin: 0 rem.convert(16px) 0 rem.convert(16px);
           cursor: pointer;
         }
       }

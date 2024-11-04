@@ -1,20 +1,22 @@
+@use "~sass-rem" as rem;
+
 .tds-hero-5 {
   &.hero-style-5 {
     .cmp-teaser__description {
-      font-size: rem-convert(40px) !important;
+      font-size: rem.convert(40px) !important;
       font-family: $font-family-everett;
 
       @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) {
-        font-size: rem-convert(24px) !important;
+        font-size: rem.convert(24px) !important;
         border-color: white;
       }
 
       @include tablet {
-        font-size: rem-convert(32px) !important;
+        font-size: rem.convert(32px) !important;
       }
 
       @include mobile {
-        font-size: rem-convert(24px) !important;
+        font-size: rem.convert(24px) !important;
         padding: 0;
       }
     }
@@ -55,12 +57,12 @@
       &.dp-carousel__alert--hero1 {
         .dp-carousel__alert-container {
           flex-direction: column;
-          font-size: rem-convert(20px);
+          font-size: rem.convert(20px);
           justify-content: flex-end;
         }
 
         .dp-carousel__alert-buttons {
-          font-size: rem-convert(14px);
+          font-size: rem.convert(14px);
         }
 
         .dp-carousel__alert-button {
@@ -77,11 +79,11 @@
       &.dp-carousel__alert--hero1 {
         .dp-carousel__alert-container {
           flex-direction: column;
-          font-size: rem-convert(20px);
+          font-size: rem.convert(20px);
         }
 
         .dp-carousel__alert-buttons {
-          font-size: rem-convert(14px);
+          font-size: rem.convert(14px);
         }
 
         .dp-carousel__alert-button {

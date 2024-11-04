@@ -1,4 +1,6 @@
-  @keyframes spin {
+@use "sass:color";
+
+@keyframes spin {
       to {
           transform: rotate(1turn);
       }
@@ -23,13 +25,13 @@
           content: '';
           position: absolute;
           top: 0;
-          left: (($width)-($dot-size))/2;
+          left: calc((($width) - ($dot-size)) / 2);
           width: $dot-size;
           height: $dot-grith;
           border-radius: 50%;
           background: lighten($color, 50%);
           box-shadow: 0 ($height)-($dot-grith) lighten($color, 60%);
-          transform-origin: 50% $height/2;
+          transform-origin: 50% calc($height / 2);
       }
 
       &:before {
@@ -48,7 +50,7 @@
 
       &>.cmp-loading:after {
           transform: rotate(-135deg);
-          background: lighten($color, 60%);
+          background: color.adjust($color, $lightness: 60%);
       }
   }
 

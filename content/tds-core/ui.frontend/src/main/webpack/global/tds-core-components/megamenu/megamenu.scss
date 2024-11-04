@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 @include desktop {
   .cmp-megamenu {
     position: relative;
@@ -24,7 +27,7 @@
       li {
         display: inline;
         padding: 21px 0;
-        font-size: rem-convert(16px);
+        font-size: rem.convert(16px);
         border: 0 none;
 
         &:active,
@@ -35,10 +38,10 @@
 
         .cmp-megamenu__tab-text {
           transition: border 0.3s;
-          padding: 0 rem-convert(3px);
+          padding: 0 rem.convert(3px);
           // display: block;
-          min-height: rem-convert(30px);
-          border-bottom: transparent rem-convert(3px) solid;
+          min-height: rem.convert(30px);
+          border-bottom: transparent rem.convert(3px) solid;
           text-decoration: none;
           color: get-color(header-links-blue);
         }
@@ -63,35 +66,35 @@
       position: relative;
       left: -1em;
       display: block;
-      margin-left: rem-convert(16px);
+      margin-left: rem.convert(16px);
     }
   }
 
   .cmp-megamenu .cmp-navigation {
     display: flex;
     position: absolute;
-    min-height: rem-convert(370px);
-    border-top: rem-convert(2px) solid get-color(td-dark-blue);
+    min-height: rem.convert(370px);
+    border-top: rem.convert(2px) solid get-color(td-dark-blue);
     background-color: get-color(brand-white);
 
     .cmp-megamenu__wrapper {
       ul {
         min-width: 270px;
         list-style: none;
-        padding: 0 0 rem-convert(10px);
+        padding: 0 0 rem.convert(10px);
         margin: 0;
 
         li:first-child a {
-          padding-top: rem-convert(10px);
+          padding-top: rem.convert(10px);
         }
       }
 
       a {
         display: block;
         color: get-color(text-mid-gray);
-        padding: rem-convert(5px) rem-convert(21px);
+        padding: rem.convert(5px) rem.convert(21px);
         transition: all 0.3s;
-        font-size: rem-convert(13px);
+        font-size: rem.convert(13px);
         text-decoration: none;
       }
 
@@ -118,13 +121,13 @@
 
         i,
         svg {
-          margin-right: rem-convert(14px);
+          margin-right: rem.convert(14px);
         }
 
         &.cmp-megamenu__item--active,
         &:hover {
           background-color: get-color(brand-white);
-          color: map-get($color-palette, 'teal');
+          color: map.get($color-palette, 'teal');
         }
       }
       // hide mobile navbar items for desktop
@@ -146,9 +149,9 @@
     .cmp-megamenu-level-title {
       color: get-color(td-dark-blue);
       margin: 0;
-      border-bottom: rem-convert(1px) solid get-color(secondary-light-grey);
-      font-size: rem-convert(13px);
-      padding: rem-convert(0 10px 9px 0);
+      border-bottom: rem.convert(1px) solid get-color(secondary-light-grey);
+      font-size: rem.convert(13px);
+      padding: rem.convert(0 10px 9px 0);
       font-weight: normal;
     }
 
@@ -159,11 +162,11 @@
         }
       }
 
-      padding: rem-convert(10px 22px);
-      border-right: rem-convert(1px) solid get-color(brand-light-gray2);
+      padding: rem.convert(10px 22px);
+      border-right: rem.convert(1px) solid get-color(brand-light-gray2);
 
       a {
-        padding: rem-convert(5px 0px);
+        padding: rem.convert(5px 0px);
         display: flex;
         justify-content: space-between;
 
@@ -175,12 +178,12 @@
 
         &.cmp-megamenu__item--active,
         &:hover {
-          color: map-get($color-palette, 'teal');
+          color: map.get($color-palette, 'teal');
           font-weight: 600;
 
           i,
           svg {
-            color: map-get($color-palette, 'teal');
+            color: map.get($color-palette, 'teal');
           }
         }
       }
@@ -196,21 +199,21 @@
 
     .cmp-megamenu__quaternary {
       .cmp-megamenu__wrapper-item {
-        padding: rem-convert(9px 22px);
+        padding: rem.convert(9px 22px);
       }
 
       a {
-        padding-left: rem-convert(28px);
+        padding-left: rem.convert(28px);
       }
 
       .cmp-megamenu-level-title {
-        padding: rem-convert(5px 10px 4px 0px);
+        padding: rem.convert(5px 10px 4px 0px);
         cursor: pointer;
 
         i,
         svg {
           color: get-color(secondary-light-grey);
-          margin-right: rem-convert(15px);
+          margin-right: rem.convert(15px);
         }
       }
     }
@@ -241,9 +244,9 @@
             &__title {
               text-align: center;
               border-bottom: 1px solid get-color(secondary-light-grey);
-              line-height: rem-convert(50px);
+              line-height: rem.convert(50px);
               color: get-color(text-light-charcoal);
-              font-size: rem-convert(14px);
+              font-size: rem.convert(14px);
 
               &.inactive-md {
                 display: none;
@@ -302,7 +305,7 @@
                   border-bottom: 1px solid get-color(secondary-light-grey);
                   padding: 10px 0;
                   color: get-color(text-light-charcoal);
-                  font-size: rem-convert(14px);
+                  font-size: rem.convert(14px);
 
                   &:first-letter {
                     text-transform: capitalize;
@@ -313,7 +316,7 @@
                   border-bottom: 1px solid get-color(secondary-light-grey);
                   padding: 10px 0;
                   color: #000c21;
-                  font-size: rem-convert(14px);
+                  font-size: rem.convert(14px);
                   display: block;
 
                   &:first-letter {
@@ -327,7 +330,7 @@
                   padding: 0;
 
                   .cmp-navigation__group {
-                    padding-left: rem-convert(30px);
+                    padding-left: rem.convert(30px);
                     display: none;
 
                     &.inactive-md {
@@ -358,9 +361,9 @@
                 &__item {
                   color: get-color(text-light-charcoal);
                   font-family: $open-sans;
-                  font-size: rem-convert(14px);
+                  font-size: rem.convert(14px);
                   letter-spacing: 0;
-                  line-height: rem-convert(40px);
+                  line-height: rem.convert(40px);
 
                   &--level-0 {
                     &.has-child.active {
@@ -372,7 +375,7 @@
                     &:before {
                       content: '\f054';
                       font-family: 'Font Awesome 5 Free';
-                      font-size: rem-convert(16px);
+                      font-size: rem.convert(16px);
                       font-weight: 900;
                       color: get-color(border-lighter-gray);
                       position: absolute;
@@ -381,11 +384,11 @@
 
                     &.active {
                       > a {
-                        color: map-get($color-palette, 'teal');
+                        color: map.get($color-palette, 'teal');
                       }
 
                       &:before {
-                        color: map-get($color-palette, 'teal');
+                        color: map.get($color-palette, 'teal');
                         content: '\f078';
                       }
                     }

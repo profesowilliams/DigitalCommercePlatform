@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 #cmp-techdata-header {
   &.cmp-container {
     .megamenu {
@@ -22,7 +25,7 @@
       height: 100vh;
       left: 0;
       position: fixed;
-      top: rem-convert(44px);
+      top: rem.convert(44px);
       width: 100%;
       &--open.aem-GridColumn {
         display: block;
@@ -36,7 +39,7 @@
       border: 1px solid #707070;
       height: 100%;
       overflow-y: auto;
-      padding: rem-convert(0 15px);
+      padding: rem.convert(0 15px);
       position: relative;
       &__body {
         background-color: get-color(brand-white);
@@ -45,11 +48,11 @@
         flex-direction: column;
         margin: auto;
         max-height: 100%;
-        padding: rem-convert(30px);
+        padding: rem.convert(30px);
         padding-top: 0;
         position: absolute;
         width: 100%;
-        max-width: rem-convert(310px);
+        max-width: rem.convert(310px);
         overflow-x: hidden;
         overflow-y: auto;
         // disable scrollbar, but retain scroll.
@@ -67,11 +70,11 @@
         li {
           display: flex;
           justify-content: space-between;
-          padding: rem-convert(12px 0);
+          padding: rem.convert(12px 0);
           &:after {
             content: '\f054';
             font-family: 'Font Awesome 5 Free';
-            font-size: rem-convert(16px);
+            font-size: rem.convert(16px);
             font-weight: 900;
             color: get-color(border-lighter-gray);
           }
@@ -90,7 +93,7 @@
         left: 0;
         bottom: 0;
         right: 0;
-        background-color: map-get($color-palette, 'teal') !important; // To override the desktop inline style
+        background-color: map.get($color-palette, 'teal') !important; // To override the desktop inline style
         width: 100vw;
         flex-direction: column;
         justify-content: unset;
@@ -143,13 +146,13 @@
 
       .header-active.cmp-container .extrabutton .cmp-button__text {
         margin-left: 2px;
-        color: map-get($color-palette, 'white');
+        color: map.get($color-palette, 'white');
       }
       .header-active.cmp-container .extrabutton {
         padding: 2px 0;
       }
       .header-active.cmp-container .extrabutton .fa-handshake:before {
-        color: map-get($color-palette, 'white');
+        color: map.get($color-palette, 'white');
       }
 
       .masthead .header-active .masthead #mobile-header-container {
@@ -207,7 +210,7 @@
         display: flex;
         flex-direction: column-reverse;
         padding: 0;
-        background-color: map-get($color-palette, 'teal') !important; // To override the desktop inline style
+        background-color: map.get($color-palette, 'teal') !important; // To override the desktop inline style
       }
 
       .header-active.cmp-container .masthead .cmp-container .cmp-dropbtn {
@@ -344,7 +347,7 @@
       }
 
       .header-active .headerutility .minicart .cmp-cart__active .cmp-cart__number span {
-        color: map-get($color-palette, 'charcoal');
+        color: map.get($color-palette, 'charcoal');
       }
 
       .dp-figure {
@@ -356,7 +359,7 @@
         color: white;
       }
       &.cmp-container .header-active .languagenavigation .cmp-form-options__field-description {
-        color: map-get($color-palette, 'charcoal');
+        color: map.get($color-palette, 'charcoal');
       }
 
       .header-active.cmp-container .masthead .regionSelectDropdown {

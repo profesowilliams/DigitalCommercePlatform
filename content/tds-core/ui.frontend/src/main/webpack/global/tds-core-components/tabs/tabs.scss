@@ -1,3 +1,5 @@
+@use "~sass-rem" as rem;
+
 .cmp-tabs {
   .cmp-tabs__tablist {
     display: flex;
@@ -11,7 +13,7 @@
     display: inline-block;
     list-style: none;
     column-count: 2;
-    column-gap: rem-convert(65px);
+    column-gap: rem.convert(65px);
 
     li {
       text-align: left;
@@ -149,14 +151,14 @@
       padding: 0;
 
       &:not(:first-child) {
-        padding-left: rem-convert(16px);
+        padding-left: rem.convert(16px);
       }
 
       &:not(:last-child)::after {
         content: '|';
         font-weight: $font-weight-normal;
         float: right;
-        padding-left: rem-convert(16px);
+        padding-left: rem.convert(16px);
       }
 
       &.cmp-tabs__tab--active {
@@ -184,11 +186,11 @@
       border-radius: 50%;
       color: $color-background;
       font-weight: $font-weight-bold;
-      height: rem-convert(60px);
-      line-height: rem-convert(60px);
+      height: rem.convert(60px);
+      line-height: rem.convert(60px);
       margin: 0 1.5rem;
       text-align: center;
-      width: rem-convert(60px);
+      width: rem.convert(60px);
 
       &.cmp-tabs__tab--active {
         background: $color-link;
@@ -290,17 +292,17 @@
       list-style-type: none;
       flex-wrap: wrap;
       margin: 0;
-      padding: rem-convert(0 100px);
-      padding-top: rem-convert(10px);
+      padding: rem.convert(0 100px);
+      padding-top: rem.convert(10px);
       font-family: $open-sans;
-      font-size: rem-convert(16px);
+      font-size: rem.convert(16px);
       flex: 50%;
     }
 
     .cmp-tabs {
       &__tab {
         flex: 50%;
-        padding: rem-convert(2px 30px);
+        padding: rem.convert(2px 30px);
         text-align: left;
 
         &:hover {
@@ -369,16 +371,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: rem-convert(100px);
-      height: rem-convert(100px);
+      width: rem.convert(100px);
+      height: rem.convert(100px);
       border-radius: 50%;
       border: 0 solid transparent;
       padding: 0;
-      margin-top: rem-convert(14px);
-      margin-bottom: rem-convert(18px);
+      margin-top: rem.convert(14px);
+      margin-bottom: rem.convert(18px);
       transition: border-color 0.3s;
       background-color: get-color(brand-white);
-      padding: rem-convert(10px);
+      padding: rem.convert(10px);
 
       img {
         width: auto;
@@ -389,27 +391,27 @@
       &:active,
       &:focus {
         background-color: get-color(brand-light-blue) !important;
-        padding: rem-convert(10px);
+        padding: rem.convert(10px);
       }
     }
 
     &__tabpanel--text {
-      height: rem-convert(36px);
+      height: rem.convert(36px);
       width: 100%;
       font-family: $font-family-sans-serif;
-      font-size: rem-convert(16px);
+      font-size: rem.convert(16px);
       letter-spacing: 0;
-      line-height: rem-convert(16px);
+      line-height: rem.convert(16px);
       text-align: center;
       font-weight: 600;
     }
 
     &__tab {
       text-align: center;
-      padding: 0 rem-convert(8px);
+      padding: 0 rem.convert(8px);
       border-bottom: 0;
       font-size: $font-size-medium;
-      width: rem-convert(230px);
+      width: rem.convert(230px);
 
       &.cmp-tabs__tab--active,
       &:hover,

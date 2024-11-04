@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 // Teaser Synnex
 .cmp-tds-quadriptych-teaser {
   &.cmp-tds-quadriptych-teaser-synnex {
@@ -12,7 +15,7 @@
       @include teaser-synnex-color(get-color(brand-green-synnex));
       .cmp-teaser {
         &:hover {
-          box-shadow: 0 0 rem-convert(4px) rem-convert(4px) get-color(brand-box-shadow);
+          box-shadow: 0 0 rem.convert(4px) rem.convert(4px) get-color(brand-box-shadow);
 
           .cmp-teaser__title {
             background-color: get-color(brand-green-synnex) !important;
@@ -28,11 +31,11 @@
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  padding: rem-convert(25px);
-  width: rem-convert(300px);
+  padding: rem.convert(25px);
+  width: rem.convert(300px);
 
   .cmp-teaser {
-    box-shadow: 0 0 0 rem-convert(1px) rgb(0 0 0 / 5%);
+    box-shadow: 0 0 0 rem.convert(1px) rgb(0 0 0 / 5%);
     background-color: get-color(brand-white);
     display: flex;
     flex-direction: column;
@@ -41,7 +44,7 @@
 
     &:hover {
       outline: 0 solid get-color(brand-blue) !important;
-      box-shadow: rem-convert(2px) rem-convert(2px) rem-convert(4px) 0 rgba(0, 0, 0, 0.5);
+      box-shadow: rem.convert(2px) rem.convert(2px) rem.convert(4px) 0 rgba(0, 0, 0, 0.5);
 
       .cmp-teaser__title {
         background-color: get-color(brand-white) !important;
@@ -62,13 +65,13 @@
 
     .cmp-teaser__title {
       width: 100%;
-      min-height: rem-convert(45px);
-      background-color: map-get($color-palette, 'teal');
+      min-height: rem.convert(45px);
+      background-color: map.get($color-palette, 'teal');
       color: get-color(brand-white);
       text-align: left;
       font-family: $font-family-marketing;
       font-size: $font-size-marketing-h3;
-      padding-left: rem-convert(20px);
+      padding-left: rem.convert(20px);
       font-weight: normal;
 
       .cmp-teaser__title-link {
@@ -79,7 +82,7 @@
 
     .cmp-teaser__content {
       color: get-color(stone);
-      //   min-height: rem-convert(390px);
+      //   min-height: rem.convert(390px);
       min-height: auto;
 
       &-title {
@@ -88,7 +91,7 @@
 
       .cmp-teaser__description {
         font-family: $font-family-georgia;
-        padding: rem-convert(25px);
+        padding: rem.convert(25px);
         color: get-color(stone);
       }
 

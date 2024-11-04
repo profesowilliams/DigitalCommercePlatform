@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use "~sass-rem" as rem;
+
 /**
  * Styles for the masthead component.
  *
@@ -9,7 +12,7 @@
 
   &__full-width > .cmp-masthead,
   &--max-1440 {
-    max-width: rem-convert(1440px);
+    max-width: rem.convert(1440px);
     margin: 0 auto !important;
     float: unset !important;
     clear: both !important;
@@ -51,30 +54,30 @@
    */
 @mixin padding-sizes($padding, $default, $sm, $md, $lg, $xlg) {
   & > .cmp-masthead {
-    #{$padding}: rem-convert($default);
+    #{$padding}: rem.convert($default);
   }
 
   &-small {
     & > .cmp-masthead {
-      #{$padding}: rem-convert($sm);
+      #{$padding}: rem.convert($sm);
     }
   }
 
   &-medium {
     & > .cmp-masthead {
-      #{$padding}: rem-convert($md);
+      #{$padding}: rem.convert($md);
     }
   }
 
   &-large {
     & > .cmp-masthead {
-      #{$padding}: rem-convert($lg);
+      #{$padding}: rem.convert($lg);
     }
   }
 
   &-extra-large {
     & > .cmp-masthead {
-      #{$padding}: rem-convert($xlg);
+      #{$padding}: rem.convert($xlg);
     }
   }
 }
@@ -118,7 +121,7 @@
     p {
       text-align: left;
       font-size: 22px;
-      color: map-get($color-palette, 'deep-teal');
+      color: map.get($color-palette, 'deep-teal');
       text-transform: uppercase;
     }
   }

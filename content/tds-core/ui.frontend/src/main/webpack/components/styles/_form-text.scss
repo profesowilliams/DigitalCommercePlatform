@@ -1,5 +1,7 @@
+@use "sass:map";
+
 @function get-color($base, $shade: base) {
-    $color: map-get($color-palette, $base);
+    $color: map.get($color-palette, $base);
     @return $color;
   }
 
@@ -7,11 +9,11 @@
     &__teal {
         .cmp-form-text {
             .cmp-form-text__text {
-                color: map-get($color-palette, "teal") !important;
+                color: map.get($color-palette, "teal") !important;
 
-                &::placeholder { 
-                    color: map-get($color-palette, "teal") !important;
-                    opacity: 1; 
+                &::placeholder {
+                    color: map.get($color-palette, "teal") !important;
+                    opacity: 1;
                 }
             }
         }
@@ -20,24 +22,24 @@
     &__deep-teal {
         .cmp-form-text {
             .cmp-form-text__text {
-                color: map-get($color-palette, "deep-teal") !important;
+                color: map.get($color-palette, "deep-teal") !important;
 
-                &::placeholder { 
-                    color: map-get($color-palette, "deep-teal") !important;
-                    opacity: 1; 
+                &::placeholder {
+                    color: map.get($color-palette, "deep-teal") !important;
+                    opacity: 1;
                 }
             }
         }
       }
-    
+
     &__aqua {
         .cmp-form-text {
             .cmp-form-text__text {
-                color: map-get($color-palette, "aqua") !important;
+                color: map.get($color-palette, "aqua") !important;
 
-                &::placeholder { 
-                    color: map-get($color-palette, "aqua") !important;
-                    opacity: 1; 
+                &::placeholder {
+                    color: map.get($color-palette, "aqua") !important;
+                    opacity: 1;
                 }
             }
         }
