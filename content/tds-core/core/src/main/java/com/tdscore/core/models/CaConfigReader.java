@@ -402,6 +402,7 @@ public class CaConfigReader {
         enableShareOption = featureFlagsConfiguration.enableShareOption();
         enableNewPurchaseAction = featureFlagsConfiguration.enableNewPurchaseAction();
         enableImport = featureFlagsConfiguration.enableImport();
+        enableRequestQuote = featureFlagsConfiguration.enableRequestQuote();
         enableArchiveQuote = featureFlagsConfiguration.enableArchiveQuote();
         enableReviseOption = featureFlagsConfiguration.enableReviseOption();
         enableEntitlementCountryValidation = featureFlagsConfiguration.enableEntitlementCountryValidation();
