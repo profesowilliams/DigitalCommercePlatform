@@ -82,7 +82,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
   const { setFilterList, toggleFilterModal, clearUnappliedDateRange, setCustomState, resetFilterToState } = effects;
 
   useEffect(() => {
-    if (!filterList) {
+    if (!filterList || (filterList && JSON.stringify(filterList) !== JSON.stringify(aemFilterData))) {
       setFilterList(aemFilterData);
     }
   }, []);
