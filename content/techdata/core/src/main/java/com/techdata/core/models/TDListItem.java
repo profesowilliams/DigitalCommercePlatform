@@ -96,7 +96,7 @@ public class TDListItem extends VendorListItem  {
             ExtractSVGModel evg = pageImageResource.adaptTo(ExtractSVGModel.class);
             if (evg != null)
             {
-                vendorIcon = evg.isSvg() ? evg.getBinary() : (evg.getPath() + FILE_REFERENCE_RENDITION_PATH);
+                vendorIcon = evg.isSvg() ? evg.getBinary() : (pageImageResource.getPath() + FILE_REFERENCE_RENDITION_PATH);
             }else{
                 vendorIcon = "<svg>error</svg>";
             }
