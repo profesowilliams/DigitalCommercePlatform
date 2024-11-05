@@ -240,7 +240,7 @@ function FormPart2({
       addProductPayload,
     );
 
-    processResponse(response);
+    processResponseAddProductToGrid(response);
 
     setValidating(false);
     setPayloadWithoutNewItem(false);
@@ -248,7 +248,7 @@ function FormPart2({
   };
 
 
-  const processResponse = (response) => {
+  const processResponseAddProductToGrid = (response) => {
       if (response.errors.length > 0) {
         setErrorMessage(response.errors[0].message);
         setPlaceOrderActive(false);
@@ -317,32 +317,36 @@ function FormPart2({
           },
         ],
       };
-      const response = await vendorPartNoLookUp(
+
+      const response = await callServiceWrapper(
+        vendorPartNoLookUp,
         newPurchaseFlyout?.vendorPartNoLookUpEndpoint,
         payload
       );
 
-      const resellerIdExist =
-        checkIfResellerIdExist(response, resellerId) === true;
+      processResponseVendorPartNoLookUp(response, resellerId);
 
-      if (!resellerIdExist) {
-        setErrorMessage(
-          getDictionaryValueOrKey(newPurchaseFlyout?.productNotFound)
-        );
-      }
-      if (response?.isError) {
-        setErrorMessage(
-          getDictionaryValueOrKey(newPurchaseFlyout?.unknownErrorNewPurchase)
-        );
-        setVendorPartNumbers([]);
-      } else {
-        setVendorPartNumbers(response);
-      }
     } else {
       setIsAutocompleteOpen(false);
       setVendorPartNumbers([]);
     }
     setIsLoading(false);
+  };
+
+  const processResponseVendorPartNoLookUp = (response, resellerId) => {
+    if (response.errors.length > 0) {
+      setErrorMessage(getDictionaryValueOrKey(newPurchaseFlyout?.unknownErrorNewPurchase));
+      setVendorPartNumbers([]);
+    } else {
+      setVendorPartNumbers(response.data);
+
+      const resellerIdExist =
+        checkIfResellerIdExist(response.data, resellerId) === true;
+
+      if (!resellerIdExist) {
+        setErrorMessage(getDictionaryValueOrKey(newPurchaseFlyout?.productNotFound));
+      }
+    }
   };
 
   const findSelectedVendorPartNo = async (newInput) => {
