@@ -49,8 +49,7 @@ use(["../../../common/utils.js"], function (utils) {
 
     productGridList.map(
       (productGridItem) =>
-        (productGrid[productGridItem] =
-          properties["./productGrid/" + productGridItem])
+        (productGrid[productGridItem] = properties["./productGrid/" + productGridItem])
     );
 
     if (productGrid != null) {
@@ -187,8 +186,7 @@ use(["../../../common/utils.js"], function (utils) {
 
     copyFlyoutList.map(
       (copyFlyoutItem) =>
-        (copyFlyout[copyFlyoutItem] =
-          properties["./copyFlyout/" + copyFlyoutItem])
+        (copyFlyout[copyFlyoutItem] = properties["./copyFlyout/" + copyFlyoutItem])
     );
 
     if (properties["./copyFlyout/copyFlyoutTitle"] != null) {
@@ -452,8 +450,7 @@ use(["../../../common/utils.js"], function (utils) {
 
     revisionFlyoutList.map(
       (revisionFlyoutItem) =>
-        (revisionFlyout[revisionFlyoutItem] =
-          properties["./revisionFlyout/" + revisionFlyoutItem])
+        (revisionFlyout[revisionFlyoutItem] = properties["./revisionFlyout/" + revisionFlyoutItem])
     );
 
     if (revisionFlyout != null) {
@@ -482,6 +479,7 @@ use(["../../../common/utils.js"], function (utils) {
       "import",
       "genericError",
       "genericErrorCode",
+      "showArchive"
     ];
 
     labelList.map((labelListItem) => {
@@ -501,8 +499,7 @@ use(["../../../common/utils.js"], function (utils) {
     }
 
     if (properties["./labels/disableDefaultSort"]) {
-      jsonObject["disableDefaultSort"] =
-        properties["./labels/disableDefaultSort"];
+      jsonObject["disableDefaultSort"] = properties["./labels/disableDefaultSort"];
     } else if (
       properties["./labels/disableDefaultSort"] == null ||
       !properties["./labels/disableDefaultSort"]
@@ -522,6 +519,11 @@ use(["../../../common/utils.js"], function (utils) {
     if (this.serviceData && this.serviceData.enableImport) {
       jsonObject["enableImport"] = this.serviceData.enableImport;
     }
+
+    if (this.serviceData && this.serviceData.enableArchiveQuote) {
+       jsonObject["enableArchiveQuote"] = this.serviceData.enableArchiveQuote;
+    }
+
 
     if (this.serviceData && this.serviceData.enableReviseOption) {
       jsonObject["enableReviseOption"] = this.serviceData.enableReviseOption;

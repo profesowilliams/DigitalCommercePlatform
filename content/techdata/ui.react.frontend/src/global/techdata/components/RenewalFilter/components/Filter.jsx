@@ -61,32 +61,43 @@ function Filter({ id }) {
 
   return (
     <>
-      <div onClick={handleFilterClick} className="filter-accordion__item">
-        <div className="filter-accordion__item--group">
-          <h3 className={`${filter.open ? computeClassName('active') : ""}`}>{filter.title}</h3>
-          <Count
-            callback={() =>
-              pushEvent(ANALYTICS_TYPES.events.click, {
-                type: ANALYTICS_TYPES.types.button,
-                category: ANALYTICS_TYPES.category.renewalsTableInteraction,
-                name: ANALYTICS_TYPES.name.filterNumberCounter(
-                  checkCount(filter)
-                ),
-              })
-            }
-          >
-            {checkCount(filter)}
-          </Count>
-        </div>
-      </div>
-      <If condition={filter.field === "date"}>
-        <FilterDatePicker isOpen={filter.open} />
-      </If>
-      {childIds.length > 0 && (
-        <div className={computeClassName("filter-option__options")}>
-          <SubFilterList />
-        </div>
-      )}
+      {
+        filter.field !== "archives" ? (
+            <>
+            <div onClick={handleFilterClick} className="filter-accordion__item">
+                <div className="filter-accordion__item--group">
+                  <h3 className={`${filter.open ? computeClassName('active') : ""}`}>{filter.title}</h3>
+                  <Count
+                    callback={() =>
+                      pushEvent(ANALYTICS_TYPES.events.click, {
+                        type: ANALYTICS_TYPES.types.button,
+                        category: ANALYTICS_TYPES.category.renewalsTableInteraction,
+                        name: ANALYTICS_TYPES.name.filterNumberCounter(
+                          checkCount(filter)
+                        ),
+                      })
+                    }
+                  >
+                    {checkCount(filter)}
+                  </Count>
+                </div>
+              </div>
+              <If condition={filter.field === "date"}>
+                <FilterDatePicker isOpen={filter.open} />
+              </If>
+              {childIds.length > 0 && (
+                <div className={computeClassName("filter-option__options")}>
+                  <SubFilterList />
+                </div>
+              )}
+            </>
+        ) : (childIds.length > 0 && (
+             <div className={computeClassName("filter-option__options filter-archives")}>
+               <SubFilterList />
+             </div>
+           )
+        )
+      }
     </>
   );
 }

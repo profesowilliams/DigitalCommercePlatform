@@ -8,18 +8,29 @@ function SubFilter({ id }) {
   const filter = filterList[id];
   const childIds = filter?.childIds;
   return (
-    filter.open && (
-      <>
-        <FilterItem id={id} />
-        {childIds.length > 0 && (
-          <ul className="sub-filter">
-            {childIds.map((childId, index) => {
-              return <SubFilter key={index} id={childId} />;
-            })}
-          </ul>
-        )}
-      </>
-    )
+    <>
+        {
+            filter.open === true ? (
+              <>
+                <FilterItem id={id} />
+                {childIds.length > 0 && (
+                  <ul className="sub-filter">
+                    {childIds.map((childId, index) => {
+                      return <SubFilter key={index} id={childId} />;
+                    })}
+                  </ul>
+                )}
+              </>
+            ) : null
+        }
+        {
+            filter.field === 'archives' && (
+              <>
+                <FilterItem id={id} />
+              </>
+            )
+        }
+    </>
   );
 }
 

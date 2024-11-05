@@ -35,6 +35,9 @@ public @interface FeatureFlagsConfiguration {
     @Property(label = "Enable Request Quote Option", description = "Helps to enable Request Quote Option in Renewals grid and Renewals details.")
     boolean enableRequestQuote() default false;
 
+    @Property(label = "Enable Archive Quote Option", description = "Helps to enable Archive Quote Option in Renewals grid and Renewals details.")
+    boolean enableArchiveQuote() default false;
+
     @Property(label = "Enable Revise Quote Option", description = "Helps to enable Revise Quote Option in Renewals grid and Renewals details.")
     boolean enableReviseOption() default false;
 

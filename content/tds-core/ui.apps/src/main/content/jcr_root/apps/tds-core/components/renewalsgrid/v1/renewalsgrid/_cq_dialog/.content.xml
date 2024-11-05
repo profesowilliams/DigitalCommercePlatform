@@ -491,6 +491,11 @@
 													</items>
 												</field>
 											</actions>
+											<showArchive
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+													fieldLabel="Show Archive Button Label"
+													name="./labels/showArchive"/>
 										</items>
 									</column>
 								</items>

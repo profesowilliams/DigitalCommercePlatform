@@ -301,6 +301,8 @@ public class CaConfigReader {
 
     private boolean enableImport;
 
+    private boolean enableArchiveQuote;
+
     private boolean enableRequestQuote;
     private boolean enableReviseOption;
 
@@ -400,7 +402,7 @@ public class CaConfigReader {
         enableShareOption = featureFlagsConfiguration.enableShareOption();
         enableNewPurchaseAction = featureFlagsConfiguration.enableNewPurchaseAction();
         enableImport = featureFlagsConfiguration.enableImport();
-        enableRequestQuote = featureFlagsConfiguration.enableRequestQuote();
+        enableArchiveQuote = featureFlagsConfiguration.enableArchiveQuote();
         enableReviseOption = featureFlagsConfiguration.enableReviseOption();
         enableEntitlementCountryValidation = featureFlagsConfiguration.enableEntitlementCountryValidation();
 
@@ -918,6 +920,11 @@ public class CaConfigReader {
     public boolean getEnableImport() {
         return enableImport;
     }
+
+    public boolean getEnableArchiveQuote() {
+        return enableArchiveQuote;
+    }
+
 
     public boolean getEnableRequestQuote() {
         return enableRequestQuote;
