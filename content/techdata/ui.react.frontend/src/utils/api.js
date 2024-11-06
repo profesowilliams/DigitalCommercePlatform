@@ -84,7 +84,7 @@ export const callServiceWrapper = async (callback, endpoint, payload) => {
   try {
     response.data = await callback(endpoint, payload);
 
-   if (!response.data || Object.keys(response.data).length === 0 || response.data.isError) {
+   if (!response.data || response.data.isError) {
      setGenericError();
    }
 
