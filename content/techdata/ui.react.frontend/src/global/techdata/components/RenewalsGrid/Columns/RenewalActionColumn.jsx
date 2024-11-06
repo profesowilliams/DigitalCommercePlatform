@@ -20,7 +20,7 @@ import ActionsMenu from './ActionsMenu';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../../Analytics/analytics';
 import Button from '../../Widgets/Button';
 
-function _RenewalActionColumn({ eventProps }) {
+function _RenewalActionColumn({ eventProps, config }) {
   const { value, data } = eventProps;
   const [isToggled, setToggled] = useState(false);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
@@ -28,7 +28,9 @@ function _RenewalActionColumn({ eventProps }) {
   const divRef = useRef(null);
   const dialogRef = useRef();
   const effects = useRenewalGridState((state) => state.effects);
-  const openedActionMenu = useRenewalGridState((state) => state.openedActionMenu);
+  const openedActionMenu = useRenewalGridState(
+    (state) => state.openedActionMenu
+  );
   const { pageNumber } = useRenewalGridState((state) => state.pagination);
   const {
     detailUrl = '',
@@ -36,7 +38,9 @@ function _RenewalActionColumn({ eventProps }) {
     productGrid,
     ...endpoints
   } = useRenewalGridState((state) => state.aemConfig);
-  const analyticsCategory = useRenewalGridState((state) => state.analyticsCategory);
+  const analyticsCategory = useRenewalGridState(
+    (state) => state.analyticsCategory
+  );
 
   const isIconEnabled = useIsIconEnabled(
     data?.firstAvailableOrderDate,
@@ -59,7 +63,7 @@ function _RenewalActionColumn({ eventProps }) {
     orderRenewalEndpoint,
     renewalDetailsEndpoint,
     exportXLSRenewalsEndpoint,
-    exportPDFRenewalsEndpoint
+    exportPDFRenewalsEndpoint,
   } = endpoints;
 
   const orderEndpoints = {
@@ -76,20 +80,22 @@ function _RenewalActionColumn({ eventProps }) {
     width: '1.3rem',
   };
 
-  useOutsideClick(dialogRef, () => setShowActionsMenu(false), 'mousedown', [setShowActionsMenu]);
+  useOutsideClick(dialogRef, () => setShowActionsMenu(false), 'mousedown', [
+    setShowActionsMenu,
+  ]);
 
   useEffect(() => {
     const currentNode = eventProps.node;
     openedActionMenu !== currentNode?.rowIndex && setShowActionsMenu(false);
-  }, [eventProps.node,openedActionMenu]);
+  }, [eventProps.node, openedActionMenu]);
 
   const isTheLastRow = useMemo(() => {
     let maximumValue = 0;
-    eventProps.api.forEachNode(node => {      
+    eventProps.api.forEachNode((node) => {
       maximumValue = Math.max(node?.rowIndex, maximumValue);
-    });   
+    });
     return eventProps.node.rowIndex === maximumValue;
-  },[]);
+  }, []);
 
   useEffect(() => {
     getInitialToggleState();
@@ -135,24 +141,27 @@ function _RenewalActionColumn({ eventProps }) {
    * @returns void
    */
   const handleShowActionMenu = (evt) => {
-    setShowActionsMenu((st) => !st);   
-    parentPosition.current = {top: evt?.clientY, right: evt.clientX }; 
-    effects.setCustomState({key:'openedActionMenu', value: eventProps.node?.rowIndex});  
+    setShowActionsMenu((st) => !st);
+    parentPosition.current = { top: evt?.clientY, right: evt.clientX };
+    effects.setCustomState({
+      key: 'openedActionMenu',
+      value: eventProps.node?.rowIndex,
+    });
   };
 
   const dialogStyling = {
     position: 'fixed',
     top: parentPosition.current.top,
     left: parentPosition.current.right,
-    bottom:'initial',
+    bottom: 'initial',
     width: '15rem',
-    transform:`translate(-12.31rem,${isTheLastRow ? '-13rem' : '1rem'})`,          
-    '& .MuiDialog-container': {             
-      height:'max-content',           
-      '& .MuiPaper-root' : {
-        margin: 0
-      }
-    }
+    transform: `translate(-12.31rem,${isTheLastRow ? '-13rem' : '1rem'})`,
+    '& .MuiDialog-container': {
+      height: 'max-content',
+      '& .MuiPaper-root': {
+        margin: 0,
+      },
+    },
   };
 
   const downloadXLS = () => {
@@ -161,58 +170,64 @@ function _RenewalActionColumn({ eventProps }) {
         url: exportXLSRenewalsEndpoint,
         name: `Renewals Quote ${data?.source?.id}.xlsx`,
         postData: {
-          Id: data?.source?.id
-        }
+          Id: data?.source?.id,
+        },
       });
     } catch (error) {
-      console.error("error", error);
+      console.error('error', error);
     }
   };
 
   const downloadPDF = () => {
-    try {      
+    try {
       generateFileFromPost({
         url: exportPDFRenewalsEndpoint,
         name: `Renewals Quote ${data?.source?.id}.pdf`,
         postData: {
-          Id: data?.source?.id
+          Id: data?.source?.id,
         },
-        fileTypeExtension: fileExtensions.pdf
-      })
+        fileTypeExtension: fileExtensions.pdf,
+      });
     } catch (error) {
-      console.error("error", error);
+      console.error('error', error);
     }
-    }
-  
+  };
+
   const triggerCopyFlyout = () => {
     setShowActionsMenu(false);
-    effects.setCustomState({key:'showCopyFlyout',value:true})
-  }
+    effects.setCustomState({ key: 'showCopyFlyout', value: true });
+  };
 
   return (
     <>
-      <div className="cmp-renewal-action-container" style={{position:'relative'}} key={Math.random()}>
-        {isIconEnabled && !canRequestQuote || data.vendor.name === 'Adobe' ? (
-          <Button onClick={() => {
+      <div
+        className="cmp-renewal-action-container"
+        style={{ position: 'relative' }}
+        key={Math.random()}
+      >
+        {(isIconEnabled && !canRequestQuote) || data.vendor.name === 'Adobe' ? (
+          <Button
+            onClick={() => {
               if (data.vendor.name === 'Adobe') {
-                   redirectToRenewalDetail(detailUrl, data?.source?.id);
+                redirectToRenewalDetail(detailUrl, data?.source?.id);
               } else {
-                  handleCartIconClick();
+                handleCartIconClick();
               }
-          }}>
+            }}
+          >
             <span className="cmp-renewals-cart-icon">
               <CartIcon />
             </span>
           </Button>
         ) : (
-        <Button>
-          <span className="cmp-renewals-cart-icon">
-            <CartIcon
-              className="disabled"
-              fill="#bcc0c3"
-              style={{ pointerEvents: 'none' }}
-            />
-          </span>
+          <Button>
+            <span className="cmp-renewals-cart-icon">
+              <CartIcon
+                className="disabled"
+                fill="#bcc0c3"
+                style={{ pointerEvents: 'none' }}
+              />
+            </span>
           </Button>
         )}
         <PlaceOrderDialog
@@ -229,7 +244,8 @@ function _RenewalActionColumn({ eventProps }) {
         <span className="cmp-renewals-ellipsis" ref={divRef}>
           <EllipsisIcon onClick={handleShowActionMenu} style={iconStyle} />
         </span>
-        <ActionsMenu 
+        <ActionsMenu
+          config={config}
           onClose={() => setShowActionsMenu(false)}
           open={showActionsMenu}
           menuOptions={productGrid}
@@ -241,7 +257,7 @@ function _RenewalActionColumn({ eventProps }) {
           detailUrl={detailUrl}
           data={data}
           endpoints={endpoints}
-          />
+        />
       </div>
     </>
   );

@@ -5340,6 +5340,7 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "mainDashboard.renewal.importFlyout.label.browseFile": "Browse file",
     "mainDashboard.renewal.importFlyout.label.confirmationCompleteMessage":
       "Confirmation/complete message",
+    "mainDashboard.renewal.archive.label.archive": "Archive",
 
     "mainDashboard.renewal.properties.label.genericError":
       "Unknown error has occurred. Please try again.",
