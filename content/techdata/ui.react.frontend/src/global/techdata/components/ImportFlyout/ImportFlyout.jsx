@@ -121,11 +121,10 @@ export default function ImportFlyout({ store, importFlyout }) {
                 id="dropdown-1"
                 required
                 optionTextKey="text"
-                optionValueKey="parserId"
+                optionValueKey="text"
                 options={JSON.stringify(
-                  vendorProgramOptions.map(({ text, parserId }) => ({
-                    text,
-                    parserId,
+                  vendorProgramOptions.map(({ text }) => ({
+                    text
                   }))
                 )}
                 {...(vendor ? {} : { disabled: true })} // Dynamically apply the `disabled` attribute
