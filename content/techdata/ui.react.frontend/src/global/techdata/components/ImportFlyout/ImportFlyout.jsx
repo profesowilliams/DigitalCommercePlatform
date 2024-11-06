@@ -10,57 +10,29 @@ export default function ImportFlyout({ store, importFlyout }) {
   const [vendor, setVendor] = useState('');
   const [vendorProgram, setVendorProgram] = useState('');
   const [vendorProgramOptions, setVendorProgramOptions] = useState([]);
+  const [fileSelected, setFileSelected] = useState(false);
+
+  const handleFileChange = (event) => {
+    setFileSelected(event.target.files && event.target.files.length > 0);
+  };
+
+  // Close flyout function
   const closeFlyout = () =>
     effects.setCustomState({ key: 'importFlyout', value: { show: false } });
 
-  //TODO: Implement both handle logic
-
-  // This is vendorOptions data structure - delete it later
-  // (vendorOptions = [
-  //   {
-  //     text: 'IBM',
-  //     id: '8',
-  //     name: 'Programs',
-  //     options: [
-  //       {
-  //         text: 'Passport Advantage',
-  //         parserId: '123',
-  //       },
-  //     ],
-  //   },
-  // ]),
-
-  // In first dropdown I want to display vendorOptions[].text and set vendor to vendorOptions[].id
-  // In second dropdown I want to display vendorProgramOptions[].text and set vendorProgram to vendorProgramOptions[].parserId
-
-  // Tose are handleChange for both dropdowns
-  // const handleVendorChange = (event) => {
-  //   const selectedVendorId = event.target.value;
-  //   setVendorProgram('');
-  //   setVendor(selectedVendorId);
-
-  //   const selectedVendor = vendorOptions?.find(
-  //     (vendorOption) => vendorOption?.id === selectedVendorId
-  //   );
-  //   setVendorProgramOptions(selectedVendor?.options || []);
-  // };
-
-  // const handleVendorProgramChange = (event) => {
-  //   setVendorProgram(event.target.value);
-  // };
-
-  // Set up event listener for 'flyoutClosed'
-
   // Handle Vendor Selection
   const handleVendorChange = (event) => {
-    const selectedVendorId = event.target.value;
-    setVendorProgram('');
-    setVendor(selectedVendorId);
+    const selectedVendorId = event.detail?.value || event.target?.value;
 
-    const selectedVendor = vendorOptions.find(
-      (vendorOption) => vendorOption.id === selectedVendorId
-    );
-    setVendorProgramOptions(selectedVendor?.options || []);
+    if (selectedVendorId) {
+      setVendor(selectedVendorId);
+      setVendorProgram(''); // Clear the second dropdown when vendor changes
+
+      const selectedVendor = vendorOptions.find(
+        (vendorOption) => vendorOption.id === selectedVendorId
+      );
+      setVendorProgramOptions(selectedVendor?.options || []);
+    }
   };
 
   // Handle Vendor Program Selection
@@ -70,9 +42,29 @@ export default function ImportFlyout({ store, importFlyout }) {
 
   // Enable Import button based on dropdown selections
   useEffect(() => {
-    setEnableImport(vendor.length > 0 && vendorProgram.length > 0);
-  }, [vendor, vendorProgram]);
+    setEnableImport(
+      vendor.length > 0 && vendorProgram.length > 0 && fileSelected
+    );
+  }, [vendor, vendorProgram, fileSelected]);
 
+  useEffect(() => {
+    const dropdownElement = document.getElementById('dropdown');
+    if (dropdownElement) {
+      dropdownElement.addEventListener('value-changed', handleVendorChange);
+    }
+
+    // Clean up listener on component unmount
+    return () => {
+      if (dropdownElement) {
+        dropdownElement.removeEventListener(
+          'value-changed',
+          handleVendorChange
+        );
+      }
+    };
+  }, []);
+
+  // Flyout close listener
   useEffect(() => {
     const handleFlyoutClosed = (event) => closeFlyout();
     const flyoutElement = flyoutRef.current;
@@ -85,15 +77,6 @@ export default function ImportFlyout({ store, importFlyout }) {
       }
     };
   }, [flyoutRef]);
-
-  // Enable Import button
-  useEffect(() => {
-    if (vendor?.length > 0 && vendorProgram?.length > 0) {
-      setEnableImport(true);
-    } else {
-      setEnableImport(false);
-    }
-  }, [vendor, vendorProgram]);
 
   return (
     <tds-flyout
@@ -125,11 +108,11 @@ export default function ImportFlyout({ store, importFlyout }) {
                 id="dropdown"
                 required
                 optionTextKey="text"
-                optionValueKey="parserId"
+                optionValueKey="id"
                 options={JSON.stringify(
-                  vendorOptions.map(({ text, id }) => ({ text, value: id }))
+                  vendorOptions.map(({ text, id }) => ({ text, id }))
                 )}
-                onInput={handleVendorChange}
+                onValueChanged={(event) => handleVendorChange(event)} // Listen to a custom event
               >
                 {getDictionaryValueOrKey(importFlyout?.vendorImport) ||
                   'Vendor'}
@@ -142,10 +125,10 @@ export default function ImportFlyout({ store, importFlyout }) {
                 options={JSON.stringify(
                   vendorProgramOptions.map(({ text, parserId }) => ({
                     text,
-                    value: parserId,
+                    parserId,
                   }))
                 )}
-                {...(!vendor ? { disabled: '' } : {})}
+                {...(vendor ? {} : { disabled: true })} // Dynamically apply the `disabled` attribute
                 onInput={handleVendorProgramChange}
               >
                 {getDictionaryValueOrKey(importFlyout?.vendorProgram) ||
@@ -165,6 +148,7 @@ export default function ImportFlyout({ store, importFlyout }) {
               iconName="upload"
               iconState="default"
               maxFileSize="2MB"
+              onChange={handleFileChange}
             ></tds-file-input>
           </div>
         </div>
