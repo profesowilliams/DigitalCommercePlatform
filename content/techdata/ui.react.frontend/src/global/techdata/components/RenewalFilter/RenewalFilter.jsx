@@ -14,6 +14,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
   );
   const effects = useRenewalGridState((state) => state.effects);
   const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount);
+  const isFilterButtonDisable = useRenewalGridState( state => state.isFilterButtonDisable);
   const topReference = useRef();
   const analyticsCategory = useRenewalGridState((st) => st.analyticsCategory);
 
@@ -36,7 +37,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
   return (
     <div className="cmp-renewal-filter">
       <div
-        className="cmp-renewals-filter-container"
+        className={isFilterButtonDisable ? "cmp-renewals-filter-container disabled" : "cmp-renewals-filter-container"}
         onClick={handleFilterClick}
       >
         {appliedFilterCount !== 0 && <Count>{appliedFilterCount}</Count>}

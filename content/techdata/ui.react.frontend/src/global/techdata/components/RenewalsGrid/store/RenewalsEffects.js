@@ -13,6 +13,10 @@ export const renewalsEffects = (set, get) => {
     set({ isFilterModalOpen: !isFilterModalOpen });
   }
 
+  function toggleFilterButtonDisable(flag) {
+      set({ isFilterButtonDisable: flag });
+  }
+
   function finalResults(filteredList = []) {
     set({ finalResults: filteredList })
   }
@@ -189,6 +193,7 @@ export const renewalsEffects = (set, get) => {
   return {
     setFilterList,
     toggleFilterModal,
+    toggleFilterButtonDisable,
     finalResults,
     closeAllSections,
     setDateOptionsList,

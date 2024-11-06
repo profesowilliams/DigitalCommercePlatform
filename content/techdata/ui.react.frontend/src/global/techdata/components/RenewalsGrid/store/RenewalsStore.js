@@ -14,6 +14,7 @@ const INITIAL_STATE = {
     null
   ),
   isFilterModalOpen: false,
+  isFilterButtonDisable: true,
   appliedFilterCount: getLocalValueOrDefault(
     FILTER_LOCAL_STORAGE_KEY,
     'count',

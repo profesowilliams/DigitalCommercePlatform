@@ -383,6 +383,14 @@
     gap: 0.3rem;
     align-items: center;
     cursor: pointer;
+
+    &.disabled {
+        pointer-events: none;
+
+        button {
+            pointer-events: none;
+        }
+    }
     button {
       background: none;
       color: $brand-text-gray;

@@ -102,7 +102,7 @@ function RenewalsGrid(props) {
   const setUserData = useStore((state) => state.setUserData);
   const [isNewPurchaseEnabled, setIsNewPurchaseEnabled] = useState(false);
 
-  const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
+  const { setToolTipData, setCustomState, closeAndCleanToaster, toggleFilterButtonDisable } = effects;
 
   const componentProp = JSON.parse(props.componentProp);
   const dueDateKey = componentProp.options.defaultSortingColumnKey;
@@ -283,6 +283,11 @@ function RenewalsGrid(props) {
     );
     if (refinementGroups) {
       setCustomState({ key: 'refinements', value: refinementGroups });
+    }
+
+    if (mappedResponse) {
+        console.log(toggleFilterButtonDisable, "toggleFilterButtonDisable")
+        toggleFilterButtonDisable(false);
     }
 
     return mappedResponse;
@@ -503,6 +508,7 @@ function RenewalsGrid(props) {
           <RenewalFilter
             aemData={componentProp}
             onQueryChanged={onQueryChanged}
+
           />,
           <RenewalImport
             aemData={componentProp}
