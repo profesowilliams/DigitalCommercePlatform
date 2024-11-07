@@ -8,6 +8,7 @@ import {
   EyeLightIcon,
   RevisionIcon,
   ArchiveIcon,
+  RestoreIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { redirectToRenewalDetail } from '../utils/renewalUtils';
@@ -60,6 +61,11 @@ function ActionsMenu({
     enableShareOption,
     enableReviseOption,
   } = endpoints;
+
+  // TODO: connect proper fields to enableRestore and enableArchive
+
+  const enableArchive = true;
+  const enableRestore = true;
 
   useEffect(() => {
     let timer;
@@ -167,6 +173,17 @@ function ActionsMenu({
   const triggerArchive = () => {
     onClose();
   };
+  const triggerRestore = () => {
+    onClose();
+    enableRestore &&
+      !menuOptions?.showDownloadXLSButton &&
+      !menuOptions?.showDownloadPDFButton &&
+      (!enableReviseOption || !canRequestRevision) &&
+      (!enableShareOption || !canShare) &&
+      !canCopy &&
+      !canCopy &&
+      redirectToRenewalDetail(detailUrl, data?.source?.id, analyticsData);
+  };
 
   return (
     <Dialog
@@ -268,7 +285,7 @@ function ActionsMenu({
           </div>
         ) : null}
 
-        {config?.enableArchiveQuote ? (
+        {config?.enableArchiveQuote && enableArchive ? (
           <div
             className="cmp-renewals-actions-menu__item"
             onClick={triggerArchive}
@@ -278,6 +295,19 @@ function ActionsMenu({
             </span>
             <span className="cmp-renewals-actions-menu__item-label">
               {getDictionaryValueOrKey(config?.archiveLabels?.archive)}
+            </span>
+          </div>
+        ) : null}
+        {config?.enableArchiveQuote && enableRestore ? (
+          <div
+            className="cmp-renewals-actions-menu__item"
+            onClick={triggerRestore}
+          >
+            <span className="cmp-renewals-actions-menu__item-icon">
+              <RestoreIcon />
+            </span>
+            <span className="cmp-renewals-actions-menu__item-label">
+              {getDictionaryValueOrKey(config?.archiveLabels?.restore)}
             </span>
           </div>
         ) : null}
