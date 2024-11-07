@@ -128,8 +128,11 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Account Address Endpoint", description = "Account Address Endpoint")
     String accountAddressEndPoint();
 
-    @Property(label = "Import Document Quote Endpoint", description = "Get Import Quote Document Endpoint")
-    String importQuoteDocumentEndpoint();
+    @Property(label = "Import Document Quote Validate Endpoint", description = "Get Import Quote Document Validate Endpoint")
+    String importQuoteDocumentEndpointValidate();
+
+    @Property(label = "Import Document Quote Export Endpoint", description = "Get Import Quote Document Export Endpoint")
+    String importQuoteDocumentEndpointExport();
 
     @Property(label = "Punch Out Endpoint", description = "Punch Out Endpoint")
     String punchOutEndpoint();

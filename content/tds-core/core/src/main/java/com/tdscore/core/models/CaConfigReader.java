@@ -121,7 +121,9 @@ public class CaConfigReader {
 
     private String accountAddressEndPoint;
 
-    private String importQuoteDocumentEndpoint;
+    private String importQuoteDocumentEndpointValidate;
+
+    private String importQuoteDocumentEndpointExport;
 
     private String vendorConnectionEndpoint;
 
@@ -368,7 +370,8 @@ public class CaConfigReader {
         quickQuoteEndpoint = serviceEndPointsConfiguration.quickQuoteEndpoint();
         quotesPreviewPricingEndPoint = serviceEndPointsConfiguration.quotesPreviewPricingEndPoint();
         accountAddressEndPoint = serviceEndPointsConfiguration.accountAddressEndPoint();
-        importQuoteDocumentEndpoint = serviceEndPointsConfiguration.importQuoteDocumentEndpoint();
+        importQuoteDocumentEndpointValidate = serviceEndPointsConfiguration.importQuoteDocumentEndpointValidate();
+        importQuoteDocumentEndpointExport = serviceEndPointsConfiguration.importQuoteDocumentEndpointExport();
         configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();
         consumerRequestHeader = serviceEndPointsConfiguration.consumerRequestHeader();
         environmentRequestHeader = serviceEndPointsConfiguration.environmentRequestHeader();
@@ -650,8 +653,12 @@ public class CaConfigReader {
         return accountAddressEndPoint;
     }
 
-    public String getImportQuoteDocumentEndpoint() {
-        return importQuoteDocumentEndpoint;
+    public String getImportQuoteDocumentEndpointValidate() {
+        return importQuoteDocumentEndpointValidate;
+    }
+
+    public String getImportQuoteDocumentEndpointExport() {
+        return importQuoteDocumentEndpointExport;
     }
 
     public String getConfigurationsEndpoint() {
