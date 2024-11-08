@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import LineItem from './LineItem.jsx';
 import { thousandSeparator } from "../../helpers/formatting";
+import {
+  LoaderIcon
+} from '../../../../fluentIcons/FluentIcons';
 
 const NewPurchaseTable = ({
   data,
@@ -14,6 +17,7 @@ const NewPurchaseTable = ({
   setPlaceOrderActive,
   setPayloadWithoutNewItem,
   setBannerOpen,
+  isLoading
 }) => {
   const {
     productDetails,
@@ -80,19 +84,25 @@ const NewPurchaseTable = ({
           </tr>
         </thead>
         <tbody className="cmp-flyout-newPurchase__form-table__body">
-          {data?.items?.map((item, index) => (
-            <LineItem
-              key={index}
-              item={item}
-              data={data}
-              setItems={setItems}
-              setPlaceOrderActive={setPlaceOrderActive}
-              setPayloadWithoutNewItem={setPayloadWithoutNewItem}
-              setBannerOpen={setBannerOpen}
-            />
-          ))}
+              {data?.items?.map((item, index) => (
+                <LineItem
+                  key={index}
+                  item={item}
+                  data={data}
+                  setItems={setItems}
+                  setPlaceOrderActive={setPlaceOrderActive}
+                  setPayloadWithoutNewItem={setPayloadWithoutNewItem}
+                  setBannerOpen={setBannerOpen}
+                />
+              ))}
         </tbody>
       </table>
+        {isLoading ? (
+            <div className="data-table-loader">
+                <LoaderIcon className="loadingIcon-search-rotate"/>
+            </div>
+        ) : null
+        }
       <div className="cmp-flyout-newPurchase__form-table__subtotal">
         <span className="cmp-flyout-newPurchase__form-table__subtotal__title">
           {getDictionaryValueOrKey(subtotal)}

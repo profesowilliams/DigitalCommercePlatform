@@ -1269,6 +1269,11 @@ li[id^='combo-box-demo-option-']:active {
 .cmp-flyout-newPurchase-cannot-edit {
   padding-right: 21px;
 }
+ .data-table-loader {
+    text-align: center;
+    width: 100%;
+    margin: 20px 0;
+ }
 .new-purchase-footer-info {
   display: flex;
   flex-direction: column;

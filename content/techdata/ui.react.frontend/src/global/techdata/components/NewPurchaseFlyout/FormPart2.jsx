@@ -768,6 +768,7 @@ function FormPart2({
           config={newPurchaseFlyout}
           currency={currency}
           setCurrency={setCurrency}
+          isLoading={isLoading}
           defaultCurrency={defaultCurrency}
           subtotalValue={subtotalValue}
           setItems={setItems}

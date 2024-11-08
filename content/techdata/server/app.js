@@ -5891,7 +5891,7 @@ app.post("/ui-renewal/v1/Cart/Validate", function (req, res) {
 
   setTimeout(() => {
     return res.status(200).json(success);
-  }, 1000);
+  }, 500);
 });
 
 app.post("/ui-renewal/v1/Cart/CreateOrder", function (req, res) {
