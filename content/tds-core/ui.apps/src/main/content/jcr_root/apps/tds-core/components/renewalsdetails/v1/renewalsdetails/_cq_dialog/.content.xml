@@ -732,6 +732,24 @@
                                     </column>
                                 </items>
                             </newPurchaseFlyout>
+                            <archiveLabels
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Archive Labels"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                        <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                                <archiveLabels
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/include"
+                                                path="tds-core/components/renewalsdetails/v1/renewalsdetails/archive-labels"/> 
+                                        </items>
+                                        </column>
+                                </items>
+                         </archiveLabels>
                             <shareFlyout
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Share Flyout"

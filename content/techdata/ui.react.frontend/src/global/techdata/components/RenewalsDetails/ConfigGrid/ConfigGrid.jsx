@@ -27,6 +27,7 @@ import {
   BannerInfoIcon,
   SeparatorIcon,
   DismissFilledSmallIcon,
+  ArchiveDetailsIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 import { useRenewalGridState } from '../../RenewalsGrid/store/RenewalsStore';
 import CopyFlyout from '../../CopyFlyout/CopyFlyout';
@@ -294,6 +295,18 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
       </button>
     );
   }
+  if (gridProps?.enableArchiveQuote) {
+    buttons.push(
+      <button onClick={console.log('archive')} key="archive">
+        <ArchiveDetailsIcon className="cmp-renewal-preview__download--icon" />
+        <span
+          className={gridProps?.enableArchiveQuote ? 'separator' : undefined}
+        >
+          {getDictionaryValueOrKey(gridProps?.archiveLabels?.archive)}
+        </span>
+      </button>
+    );
+  }
 
   // Determine which buttons to show in the dropdown
   const directlyShownButtons =
@@ -315,15 +328,16 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
     setAutoRenewToggle(flag);
     setEnableAutoRenewError(false);
     setDisableAutoRenewError(false);
-  }
+  };
 
   const renewModalClose = (isDefault) => {
-      if (typeof isDefault === 'boolean') {
-        setAutoRenewToggle(typeof isDefault === 'boolean' ? isDefault : data?.autoRenew);
-      }
-      setModal(null);
-  }
-
+    if (typeof isDefault === 'boolean') {
+      setAutoRenewToggle(
+        typeof isDefault === 'boolean' ? isDefault : data?.autoRenew
+      );
+    }
+    setModal(null);
+  };
 
   const handleAutoRenewChange = (isToggled) => {
     setModal({

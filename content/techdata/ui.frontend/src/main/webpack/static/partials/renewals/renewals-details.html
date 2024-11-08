@@ -311,6 +311,9 @@
       yourOrderFor: 'details.renewal.label.yourOrderFor',
       hasBeenSuccessfullySubmittedForProcessing: 'details.renewal.label.hasBeenSuccessfullySubmittedForProcessing',
     },
+    archiveLabels: {
+      archive: 'mainDashboard.renewal.archive.label.archive',
+    },
     updateRenewalOrderEndpoint: 'http://localhost:3000/ui-renewal/v1/Update',
     uiServiceDomain: 'http://localhost:3000',
     getStatusEndpoint: 'http://localhost:3000/ui-renewal/v1/getStatus',
@@ -322,9 +325,11 @@
     enableShareOption: true,
     enableRequestQuote: true,
     enableNewPurchaseAction: true,
+    enableArchiveQuote: true,
     menuCopy: 'Copy',
     menuCopyWithHeaders: 'Copy with headers',
     menuExport: 'Export',
   };
+  
   renewalsDetailDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>
