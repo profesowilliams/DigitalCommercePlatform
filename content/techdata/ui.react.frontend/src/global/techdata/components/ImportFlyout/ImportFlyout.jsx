@@ -1,52 +1,104 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
+/**
+ * Component to render a flyout for importing vendor quotes, including vendor and vendor program selection.
+ * @param {Object} props - Component properties.
+ * @param {Function} props.store - Store function to manage state.
+ * @param {Object} props.importFlyout - Configuration for import flyout.
+ * @returns {JSX.Element} ImportFlyout component.
+ */
 export default function ImportFlyout({ store, importFlyout }) {
   const effects = store((state) => state.effects);
   const importFlyoutConfig = store((state) => state?.importFlyout);
   const flyoutRef = useRef(null);
-  const vendorOptions = importFlyoutConfig?.options || [];
+
+  // Vendor options fetched from importFlyoutConfig, initially empty
+  const [vendorOptions, setVendorOptions] = useState([]);
+
+  // Various states to manage the import flyout functionality
   const [enableImport, setEnableImport] = useState(false);
   const [vendor, setVendor] = useState('');
   const [vendorProgram, setVendorProgram] = useState('');
   const [vendorProgramOptions, setVendorProgramOptions] = useState([]);
   const [fileSelected, setFileSelected] = useState(false);
 
+  /**
+   * Handles the selection of a file for import.
+   * Updates the file selection state.
+   * @param {Event} event - The file input change event.
+   */
   const handleFileChange = (event) => {
     setFileSelected(event.target.files && event.target.files.length > 0);
   };
 
-  // Close flyout function
+  /**
+   * Closes the flyout.
+   * Sets the importFlyout state to not show the flyout.
+   */
   const closeFlyout = () =>
     effects.setCustomState({ key: 'importFlyout', value: { show: false } });
 
-  // Handle Vendor Selection
+  /**
+   * Handles vendor selection change.
+   * Updates the vendor state and fetches related vendor program options.
+   * @param {Event} event - The vendor selection event.
+   */
   const handleVendorChange = (event) => {
     const selectedVendorId = event.detail?.value || event.target?.value;
 
     if (selectedVendorId) {
+      // Set selected vendor state
       setVendor(selectedVendorId);
-      setVendorProgram(''); // Clear the second dropdown when vendor changes
+      // Clear any previously selected vendor program since the vendor changed
+      setVendorProgram('');
 
+      // Find the selected vendor to extract available program options
       const selectedVendor = vendorOptions.find(
-        (vendorOption) => vendorOption.id === selectedVendorId
+        (vendorOption) => String(vendorOption.id) === String(selectedVendorId)
       );
-      setVendorProgramOptions(selectedVendor?.options || []);
+
+      if (selectedVendor) {
+        // Update vendor program options if they exist
+        setVendorProgramOptions(selectedVendor.options || []);
+      }
     }
   };
 
-  // Handle Vendor Program Selection
+  /**
+   * Handles the selection change for the vendor program dropdown.
+   * Updates the vendor program state.
+   * @param {Event} event - The vendor program selection event.
+   */
   const handleVendorProgramChange = (event) => {
-    setVendorProgram(event.target.value);
+    const selectedProgram = event.detail?.value || event.target?.value;
+    setVendorProgram(selectedProgram);
   };
 
-  // Enable Import button based on dropdown selections
+  /**
+   * Enables the import button if a vendor, vendor program, and file are selected.
+   * Listens for changes in vendor, vendor program, and file selection state.
+   */
   useEffect(() => {
     setEnableImport(
       vendor.length > 0 && vendorProgram.length > 0 && fileSelected
     );
   }, [vendor, vendorProgram, fileSelected]);
 
+  /**
+   * Populates vendor options from importFlyoutConfig when available.
+   * This ensures the dropdown is populated as soon as the configuration data is loaded.
+   */
+  useEffect(() => {
+    if (importFlyoutConfig?.options && importFlyoutConfig.options.length > 0) {
+      setVendorOptions(importFlyoutConfig.options);
+    }
+  }, [importFlyoutConfig]);
+
+  /**
+   * Adds an event listener for the vendor dropdown value change event.
+   * Ensures that the correct function is called when a vendor is selected.
+   */
   useEffect(() => {
     const dropdownElement = document.getElementById('dropdown');
     if (dropdownElement) {
@@ -62,11 +114,14 @@ export default function ImportFlyout({ store, importFlyout }) {
         );
       }
     };
-  }, []);
+  }, [vendorOptions]);
 
-  // Flyout close listener
+  /**
+   * Adds a listener to handle when the flyout is closed.
+   * This ensures that the flyout closes gracefully.
+   */
   useEffect(() => {
-    const handleFlyoutClosed = (event) => closeFlyout();
+    const handleFlyoutClosed = () => closeFlyout();
     const flyoutElement = flyoutRef.current;
     if (flyoutElement) {
       flyoutElement.addEventListener('flyoutClosed', handleFlyoutClosed);
@@ -89,7 +144,7 @@ export default function ImportFlyout({ store, importFlyout }) {
       aria-labelledby="offcanvasLabel"
       scrollable
       backdrop="true"
-      class="offcanvas-backdrop"
+      className="offcanvas-backdrop"
     >
       <tds-flyout-header>
         <tds-flyout-title>
@@ -104,6 +159,7 @@ export default function ImportFlyout({ store, importFlyout }) {
         <div className="layout-container">
           <div className="form-elements">
             <div className="dropdown-group">
+              {/* Vendor Dropdown */}
               <tds-dropdown
                 id="dropdown"
                 required
@@ -112,11 +168,14 @@ export default function ImportFlyout({ store, importFlyout }) {
                 options={JSON.stringify(
                   vendorOptions.map(({ text, id }) => ({ text, id }))
                 )}
-                onValueChanged={(event) => handleVendorChange(event)} // Listen to a custom event
+                {...(vendorOptions.length === 0 ? { disabled: true } : {})} // Disable until options are loaded
+                onValueChanged={(event) => handleVendorChange(event)} // Capture value changes directly
               >
                 {getDictionaryValueOrKey(importFlyout?.vendorImport) ||
                   'Vendor'}
               </tds-dropdown>
+
+              {/* Vendor Program Dropdown */}
               <tds-dropdown
                 id="dropdown-1"
                 required
@@ -124,16 +183,18 @@ export default function ImportFlyout({ store, importFlyout }) {
                 optionValueKey="text"
                 options={JSON.stringify(
                   vendorProgramOptions.map(({ text }) => ({
-                    text
+                    text,
                   }))
                 )}
-                {...(vendor ? {} : { disabled: true })} // Dynamically apply the `disabled` attribute
+                {...(vendor ? {} : { disabled: true })} // Disable until vendor is selected
                 onInput={handleVendorProgramChange}
               >
                 {getDictionaryValueOrKey(importFlyout?.vendorProgram) ||
                   'Vendor Program'}
               </tds-dropdown>
             </div>
+
+            {/* File Input */}
             <tds-file-input
               headingText={
                 getDictionaryValueOrKey(importFlyout?.dragAndDrop) ||
