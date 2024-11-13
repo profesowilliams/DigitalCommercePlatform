@@ -38,7 +38,7 @@
     "watch": "webpack-dev-server --config ./webpack.dev.js --env.writeToDisk & watch 'clientlib' ./dist & aemsync -w ../ui.apps/src/main/content",
     "requirements-check": "node check_node_version.js",
     "test": "jest",
-    "prepare": "is-ci || (cd ../../../ && husky install content/techdata/ui.frontend/.husky)",
+    "prepare": "is-ci || (cd ../../../ && husky install content/techdata/ui.frontend/.husky && git submodule update --init --recursive)",
     "postinstall": "npm run requirements-check && npx update-browserslist-db@latest --force",
     "update-browserslist": "npx update-browserslist-db@latest --force"
   },

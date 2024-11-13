@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
+import FileInput from '../Widgets/FileUpload';
 
 /**
- * Component to render a flyout for importing vendor quotes, including vendor and vendor program selection.
+ * ImportFlyout component to render a flyout for importing vendor quotes, including vendor and vendor program selection.
  * @param {Object} props - Component properties.
  * @param {Function} props.store - Store function to manage state.
- * @param {Object} props.importFlyout - Configuration for import flyout.
- * @returns {JSX.Element} ImportFlyout component.
+ * @param {Object} props.importFlyout - Configuration for import flyout, providing localization and UI text.
+ * @returns {JSX.Element} The rendered ImportFlyout component.
  */
 export default function ImportFlyout({ store, importFlyout }) {
   const effects = store((state) => state.effects);
@@ -16,7 +17,7 @@ export default function ImportFlyout({ store, importFlyout }) {
   // Vendor options fetched from importFlyoutConfig, initially empty
   const [vendorOptions, setVendorOptions] = useState([]);
 
-  // Various states to manage the import flyout functionality
+  // States to manage the import flyout functionality
   const [enableImport, setEnableImport] = useState(false);
   const [vendor, setVendor] = useState('');
   const [vendorProgram, setVendorProgram] = useState('');
@@ -168,8 +169,8 @@ export default function ImportFlyout({ store, importFlyout }) {
                 options={JSON.stringify(
                   vendorOptions.map(({ text, id }) => ({ text, id }))
                 )}
-                {...(vendorOptions.length === 0 ? { disabled: true } : {})} // Disable until options are loaded
-                onValueChanged={(event) => handleVendorChange(event)} // Capture value changes directly
+                {...(vendorOptions.length === 0 ? { disabled: true } : {})}
+                onValueChanged={(event) => handleVendorChange(event)}
               >
                 {getDictionaryValueOrKey(importFlyout?.vendorImport) ||
                   'Vendor'}
@@ -186,7 +187,7 @@ export default function ImportFlyout({ store, importFlyout }) {
                     text,
                   }))
                 )}
-                {...(vendor ? {} : { disabled: true })} // Disable until vendor is selected
+                {...(vendor ? {} : { disabled: true })}
                 onInput={handleVendorProgramChange}
               >
                 {getDictionaryValueOrKey(importFlyout?.vendorProgram) ||
@@ -195,7 +196,7 @@ export default function ImportFlyout({ store, importFlyout }) {
             </div>
 
             {/* File Input */}
-            <tds-file-input
+            <FileInput
               headingText={
                 getDictionaryValueOrKey(importFlyout?.dragAndDrop) ||
                 'Drag & Drop or Choose file from device'
@@ -209,7 +210,7 @@ export default function ImportFlyout({ store, importFlyout }) {
               iconState="default"
               maxFileSize="2MB"
               onChange={handleFileChange}
-            ></tds-file-input>
+            />
           </div>
         </div>
       </tds-flyout-body>
