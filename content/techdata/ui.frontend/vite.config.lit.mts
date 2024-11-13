@@ -88,6 +88,12 @@ const prodConfig = {
     ...commonConfig.build,
     sourcemap: false,
     minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove all console.* statements
+        drop_debugger: true, // Optional: Remove debugger statements too
+      },
+    },
     rollupOptions: {
       ...commonConfig.build.rollupOptions,
       plugins: [terser()],

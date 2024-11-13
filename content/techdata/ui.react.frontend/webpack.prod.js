@@ -14,7 +14,13 @@ module.exports = merge(common, {
     ],
     optimization: {
         minimizer: [
-            new TerserPlugin(),
+            new TerserPlugin({
+                terserOptions: {
+                    compress: {
+                        drop_console: true,
+                    },
+                },
+            }),
             new OptimizeCSSAssetsPlugin({
                 cssProcessorPluginOptions: {
                     cssProcessor: require('cssnano'),
