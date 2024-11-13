@@ -37,13 +37,24 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
   return (
     <div className="cmp-renewal-filter">
       <div
-        className={isFilterButtonDisable ? "cmp-renewals-filter-container disabled" : "cmp-renewals-filter-container"}
-        onClick={handleFilterClick}
+        className={
+          isFilterButtonDisable
+            ? 'cmp-renewals-filter-container disabled'
+            : 'cmp-renewals-filter-container'
+        }
       >
         {appliedFilterCount !== 0 && <Count>{appliedFilterCount}</Count>}
-        <Button btnClass="cmp-renewals-filter__button">{getDictionaryValue("grids.common.label.filter", "Filter")}</Button>
-        <OptionsIcon/>
-        
+        <tds-button
+          id="renewals-filter-button"
+          type="button"
+          theme="light"
+          variant="link"
+          color="teal"
+          onClick={handleFilterClick}
+        >
+          <tds-icon name="options" state="default" />
+          {getDictionaryValue('grids.common.label.filter', 'Filter')}
+        </tds-button>
       </div>
       {isFilterModalOpen && (
         <FilterModal

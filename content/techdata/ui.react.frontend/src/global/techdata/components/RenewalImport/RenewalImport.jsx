@@ -21,14 +21,18 @@ export default function RenewalImport({ aemData, showImportButton }) {
         <>
           <VerticalSeparator />
           <div className="cmp-renewals-import">
-            <div
-              className="cmp-renewals-import-container"
-              onClick={handleOpenImportFlyout}
-            >
-              <Button btnClass="cmp-renewals-import-container__button">
+            <div className="cmp-renewals-import-container">
+              <tds-button
+                id="renewals-import-button"
+                type="button"
+                theme="light"
+                variant="link"
+                color="teal"
+                onClick={handleOpenImportFlyout}
+              >
+                <tds-icon name="import" state="default" />
                 {getDictionaryValueOrKey(aemData?.import)}
-              </Button>
-              <ImportIcon />
+              </tds-button>
             </div>
           </div>
         </>
