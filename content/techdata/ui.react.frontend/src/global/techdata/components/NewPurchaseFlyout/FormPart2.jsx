@@ -231,18 +231,20 @@ function FormPart2({
         items: filteredItemsPayload,
       };
 
-  const handleAddProductToGrid = async () => {
+  const validateOrder = () => {
+    handleAddProductToGrid(false);
+  };
+
+  const performAddNewProduct = () => {
+    handleAddProductToGrid(true);
+  };
+
+
+  const handleAddProductToGrid = async (isAddingNewProduct) => {
     setErrorMessage('');
     setBannerOpen(false);
     setPlaceOrderActive(false);
-    
-    if (payloadWithoutNewItem) {
-      setValidated(false);
-    }
-
-    if (validating) {
-      setValidated(true);
-    }
+    setValidated(false);
 
     const response = await callServiceWrapper(
       addProductToGrid,
@@ -251,7 +253,8 @@ function FormPart2({
     );
 
     const canOrder = response?.data?.canOrder;
-    if (canOrder) {
+    if (!isAddingNewProduct && canOrder) {
+      setValidated(true);
       setPlaceOrderActive(true);
     }
 
@@ -496,14 +499,16 @@ function FormPart2({
 
   useEffect(() => {
     if (vendorPartNo?.length > 0 && pickedEndDate) {
-      handleAddProductToGrid();
+      
+      performAddNewProduct();
       setVendorPartNo('');
     }
   }, [vendorPartNo, pickedEndDate]);
 
   useEffect(() => {
     if (payloadWithoutNewItem) {
-      handleAddProductToGrid();
+      
+      validateOrder();
     }
   }, [payloadWithoutNewItem]);
 
