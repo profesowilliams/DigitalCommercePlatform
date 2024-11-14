@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../Widgets/Button';
-import { ImportIcon } from '../../../../fluentIcons/FluentIcons';
+import Button from '../web-components/Button';
+import Icon from '../web-components/Icon';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import VerticalSeparator from '../Widgets/VerticalSeparator';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
@@ -22,7 +22,7 @@ export default function RenewalImport({ aemData, showImportButton }) {
           <VerticalSeparator />
           <div className="cmp-renewals-import">
             <div className="cmp-renewals-import-container">
-              <tds-button
+              <Button
                 id="renewals-import-button"
                 type="button"
                 theme="light"
@@ -30,9 +30,9 @@ export default function RenewalImport({ aemData, showImportButton }) {
                 color="teal"
                 onClick={handleOpenImportFlyout}
               >
-                <tds-icon name="import" state="default" />
+                <Icon name="import" state="default" />
                 {getDictionaryValueOrKey(aemData?.import)}
-              </tds-button>
+              </Button>
             </div>
           </div>
         </>
