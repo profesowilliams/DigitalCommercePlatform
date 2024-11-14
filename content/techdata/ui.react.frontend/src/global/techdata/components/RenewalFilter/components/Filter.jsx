@@ -61,10 +61,7 @@ function Filter({ id }) {
 
   return (
     <>
-      {
-        filter.field !== "archives" ? (
-            <>
-            <div onClick={handleFilterClick} className="filter-accordion__item">
+             <div onClick={handleFilterClick} className="filter-accordion__item">
                 <div className="filter-accordion__item--group">
                   <h3 className={`${filter.open ? computeClassName('active') : ""}`}>{filter.title}</h3>
                   <Count
@@ -90,14 +87,6 @@ function Filter({ id }) {
                   <SubFilterList />
                 </div>
               )}
-            </>
-        ) : (childIds.length > 0 && (
-             <div className={computeClassName("filter-option__options filter-archives")}>
-               <SubFilterList />
-             </div>
-           )
-        )
-      }
     </>
   );
 }

@@ -8,9 +8,7 @@ function SubFilter({ id }) {
   const filter = filterList[id];
   const childIds = filter?.childIds;
   return (
-    <>
-        {
-            filter.open === true ? (
+    filter.open && (
               <>
                 <FilterItem id={id} />
                 {childIds.length > 0 && (
@@ -21,16 +19,7 @@ function SubFilter({ id }) {
                   </ul>
                 )}
               </>
-            ) : null
-        }
-        {
-            filter.field === 'archives' && (
-              <>
-                <FilterItem id={id} />
-              </>
-            )
-        }
-    </>
+              )
   );
 }
 

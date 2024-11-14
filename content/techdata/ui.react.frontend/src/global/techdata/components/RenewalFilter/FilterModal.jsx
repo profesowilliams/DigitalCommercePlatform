@@ -54,26 +54,8 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
     aemData.filterType === null ? "static" : aemData.filterType;
 
   if (aemData.filterType === "dynamic" && filterData?.refinements) {
-    if (aemData.enableArchiveQuote && !JSON.stringify(filterData.refinements).includes('archives'))
-      filterData.refinements.push({
-            name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-            searchKey: "archives",
-            options: [{
-                searchKey: "archives",
-                text: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-            }]
-        });
     aemFilterData = normaliseAPIData(filterData.refinements);
   } else if (aemData.filterType === "static") {
-    if (aemData.enableArchiveQuote && !JSON.stringify(aemData.filterListValues).includes('archives'))
-        aemData.filterListValues.push({
-            name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-            searchKey: "archives",
-            options: [{
-                searchKey: "archives",
-                text: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-            }]
-        });
     aemFilterData = normaliseState(aemData.filterListValues);
   } else {
     aemFilterData = [];
