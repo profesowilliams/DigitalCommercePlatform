@@ -132,6 +132,7 @@ function NewPurchaseFlyout({
   const [currency, setCurrency] = useState('');
 
   // Buttons state
+  const [validated, setValidated] = useState(false);
   const [validating, setValidating] = useState(false);
   const [placeOrderActive, setPlaceOrderActive] = useState(false);
   const [payloadWithoutNewItem, setPayloadWithoutNewItem] = useState(false);
@@ -215,6 +216,7 @@ function NewPurchaseFlyout({
     setBannerOpen(false);
     setPayloadWithoutNewItem((prevState) => !prevState);
     setValidating(true);
+    setValidated(false);
   };
 
   const handlePlaceOrder = () => {
@@ -468,6 +470,8 @@ function NewPurchaseFlyout({
               setPlaceOrderDisable={setPlaceOrderDisable}
               validating={validating}
               setValidating={setValidating}
+              validated={validated}
+              setValidated={setValidated}
               setPlaceOrderActive={setPlaceOrderActive}
               payloadWithoutNewItem={payloadWithoutNewItem}
               setPayloadWithoutNewItem={setPayloadWithoutNewItem}

@@ -35,6 +35,8 @@ function FormPart2({
   setPlaceOrderDisable,
   validating,
   setValidating,
+  validated,
+  setValidated,
   setPlaceOrderActive,
   payloadWithoutNewItem,
   setPayloadWithoutNewItem,
@@ -233,12 +235,25 @@ function FormPart2({
     setErrorMessage('');
     setBannerOpen(false);
     setPlaceOrderActive(false);
+    
+    if (payloadWithoutNewItem) {
+      setValidated(false);
+    }
+
+    if (validating) {
+      setValidated(true);
+    }
 
     const response = await callServiceWrapper(
       addProductToGrid,
       newPurchaseFlyout?.addNewProductEndpoint,
       addProductPayload,
     );
+
+    const canOrder = response?.data?.canOrder;
+    if (canOrder) {
+      setPlaceOrderActive(true);
+    }
 
     processResponseAddProductToGrid(response);
 
@@ -443,8 +458,12 @@ function FormPart2({
   }, [items, calculateSubtotal]);
 
   useEffect(() => {
-    if (
-      payloadWithoutNewItem &&
+
+    if (validating) {
+      setPlaceOrderActive(false);
+    }
+    else if (
+      validated &&
       (blueBanner ||
         orangeBanner ||
         errorCriticalityZero ||
@@ -453,9 +472,6 @@ function FormPart2({
       setPlaceOrderActive(true);
       setBannerOpen(true);
     } else {
-      setPlaceOrderActive(false);
-    }
-    if (validating) {
       setPlaceOrderActive(false);
     }
   }, [blueBanner, validating]);
