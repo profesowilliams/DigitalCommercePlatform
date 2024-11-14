@@ -9,6 +9,7 @@ import {
   RevisionIcon,
   ArchiveIcon,
   RestoreIcon,
+  EnterArrowIcon
 } from '../../../../../fluentIcons/FluentIcons';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { redirectToRenewalDetail } from '../utils/renewalUtils';
@@ -37,6 +38,7 @@ function ActionsMenu({
   canRequestRevision,
   detailUrl,
   canRequestQuote,
+  triggerRequestFlyout,
 }) {
   const dialogRef = useRef();
   const { productGrid } = useRenewalGridState((st) => st.aemConfig);
@@ -60,6 +62,7 @@ function ActionsMenu({
     exportPDFRenewalsEndpoint,
     enableShareOption,
     enableReviseOption,
+    enableRequestQuote,
   } = endpoints;
 
   // TODO: connect proper fields to enableRestore and enableArchive
@@ -284,6 +287,17 @@ function ActionsMenu({
             </span>
           </div>
         ) : null}
+        {
+            (canRequestQuote && enableRequestQuote) && (
+                <span
+                    className="cmp-renewals-actions-menu__item request-quote"
+                    onClick={() => triggerRequestFlyout(data)}
+                  >
+                    <EnterArrowIcon/>
+                    Request quote
+                </span>
+            )
+        }
 
         {config?.enableArchiveQuote && enableArchive ? (
           <div

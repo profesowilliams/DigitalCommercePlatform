@@ -286,7 +286,6 @@ function RenewalsGrid(props) {
     }
 
     if (mappedResponse) {
-        console.log(toggleFilterButtonDisable, "toggleFilterButtonDisable")
         toggleFilterButtonDisable(false);
     }
 
@@ -426,11 +425,6 @@ function RenewalsGrid(props) {
   const processCustomClipboardAction = (params) =>
     copyToClipboardAction(params);
 
-  const triggerRequestFlyout = (data) => {
-    data['link'] = '';
-    setCustomState({ key: 'requestFlyout', value: { data, show: true } });
-  };
-
   useEffect(() => {
     const checkUrl = () => {
       if (
@@ -518,7 +512,7 @@ function RenewalsGrid(props) {
       />
       <BaseGrid
         columnList={componentProp.columnList}
-        definitions={renewalsDefinitions(componentProp, triggerRequestFlyout)}
+        definitions={renewalsDefinitions(componentProp)}
         config={gridConfig}
         options={options}
         sortingOrder={
@@ -590,6 +584,7 @@ function RenewalsGrid(props) {
         store={useRenewalGridState}
         requestFlyoutContent={gridConfig.requestQuote}
         subheaderReference={document.querySelector('.subheader > div > div')}
+        resetGrid={resetGrid}
       />
     </section>
   ) : null;

@@ -201,14 +201,29 @@
     justify-content: flex-end;
     padding-right: 12px;
   }
-  .request-quote {
+  .request-quote,
+  .requested-quote {
     text-align: right;
     display: flex;
     justify-content: flex-end;
     font-size: 14px;
     line-height: 16px;
-    color: #006fba;
     cursor: pointer;
+  }
+  .non-request-quote {
+    display: block;
+    text-align: right;
+  }
+  .requested-quote {
+      svg {
+        margin-left: 5px;
+        path {
+            fill: #262626;
+        }
+      }
+  }
+  .request-quote {
+    color: #006fba;
     svg {
       margin-right: 5px;
     }
@@ -994,9 +1009,10 @@ svg {
   }
 
   &.is-opportunity {
-    .cmp-renewals-actions-menu__item:not(.view-details) {
-      pointer-events: none;
-      color: $brand-text-lightgray;
+    .cmp-renewals-actions-menu__item:not(.view-details, .request-quote) {
+      // pointer-events: none;
+      // color: $brand-text-lightgray;
+      display: none;
 
       svg,
       path {

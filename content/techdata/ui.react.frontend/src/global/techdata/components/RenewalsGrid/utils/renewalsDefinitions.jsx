@@ -7,10 +7,22 @@ import DueDateDayColumn from '../Columns/DueDateDayColumn';
 import PriceColumn from '../Columns/PriceColumn';
 import RenewalActionColumn from "../Columns/RenewalActionColumn";
 import {
-    EnterArrowIcon
+    InfoIcon
 } from '../../../../../fluentIcons/FluentIcons';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
-export const renewalsDefinitions = (componentProp, triggerRequestFlyout) => {
+export const renewalsDefinitions = (componentProp) => {
+
+    const renderRequested = (data) => {
+        if (data?.quoteRequestedTime) {
+            return ( <span className="requested-quote"
+              >{getDictionaryValueOrKey(componentProp.requestQuote.requestedQuoteHeading)}
+              <InfoIcon  width="16" height="16" />
+              </span> );
+        } else {
+            return <span className="non-request-quote">-</span>
+        }
+    }
 
   const createColumnComponent = (eventProps, aemDefinition) => {  
     const { columnKey } = aemDefinition;
@@ -26,15 +38,8 @@ export const renewalsDefinitions = (componentProp, triggerRequestFlyout) => {
         <RenewalActionColumn eventProps={eventProps} config={componentProp} />
       ),
       total:
-        componentProp.enableRequestQuote && data.canRequestQuote ? (
-          <span
-            className="request-quote"
-            onClick={() => triggerRequestFlyout(data)}
-          >
-            <EnterArrowIcon />
-            Request quote
-          </span>
-        ) : (
+        componentProp.enableRequestQuote && data.canRequestQuote ?
+            renderRequested(data) : (
           <PriceColumn
             columnValue={data?.renewal?.total}
             currency={data?.renewal?.currency}

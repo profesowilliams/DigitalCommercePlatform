@@ -453,7 +453,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
           <>
             <div className="backdrop" onClick={closeAlert}></div>
             <div className="api-failed-section">
-              <div className="content-section">
+              <div className={errorFlags.incorrect ? "content-section incorrect-email" : "content-section"}>
                 {errorFlags.serverError ? (
                   <>
                     <WarningTriangleIcon />

@@ -198,6 +198,12 @@ function _RenewalActionColumn({ eventProps, config }) {
     effects.setCustomState({ key: 'showCopyFlyout', value: true });
   };
 
+  const triggerRequestFlyout = (data) => {
+    data['link'] = '';
+    setShowActionsMenu(false);
+    effects.setCustomState({ key: 'requestFlyout', value: { data, show: true } });
+  };
+
   return (
     <>
       <div
@@ -251,6 +257,7 @@ function _RenewalActionColumn({ eventProps, config }) {
           menuOptions={productGrid}
           sx={dialogStyling}
           canCopy={canCopy}
+          triggerRequestFlyout={triggerRequestFlyout}
           canRequestRevision={canRequestRevision}
           canShare={canShare}
           canRequestQuote={canRequestQuote}

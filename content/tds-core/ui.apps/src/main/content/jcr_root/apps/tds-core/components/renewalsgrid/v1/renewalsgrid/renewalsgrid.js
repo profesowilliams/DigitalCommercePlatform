@@ -423,14 +423,17 @@ use(["../../../common/utils.js"], function (utils) {
     // Request Quote
     const requestQuoteList = [
       "requestQuoteHeading",
+      "requestedQuoteHeading",
       "requestQuoteDescription",
       "additionalInformationLabel",
       "additionalInformationPlaceholderText",
       "requestQuoteButtonLabel",
       "successToastMessage",
-      "errorToastMessage",
-      "quoteRequestedMessage",
       "requestQuoteCommentCountText",
+      "requestQuoteCommentCount",
+      "errorToastMessage",
+      "quoteRequestedMessageToolTip",
+      "toolTipSuccessMessage",
     ];
 
     if (this.requestQuoteEndpoint && this.serviceData.uiServiceDomain) {

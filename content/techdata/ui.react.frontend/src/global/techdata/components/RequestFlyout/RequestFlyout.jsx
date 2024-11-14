@@ -13,7 +13,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
 import {useStore} from '../../../../utils/useStore';
 
-export function RequestFlyout({ store, requestFlyoutContent, subheaderReference }) {
+export function RequestFlyout({ store, requestFlyoutContent, subheaderReference, resetGrid }) {
   const requestFlyoutConfig = store((st) => st.requestFlyout);
   const quoteType = getDictionaryValueOrKey('Opportunity');
   const effects = store((st) => st.effects);
@@ -24,11 +24,13 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference 
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [requestObj, setRequestObj] = useState({});
+  const [count, setCount] = useState(getDictionaryValueOrKey(requestFlyoutContent.requestQuoteCommentCount));
 
   useEffect(() => {
     if (!requestFlyoutConfig?.show) {
       setRequestObj({});
       setCommentInput('');
+      resetCount();
     } else {
         setRequestObj({
             ...requestObj,
@@ -38,7 +40,13 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference 
     }
   }, [requestFlyoutConfig]);
 
+  const resetCount = () => {
+      setCount(getDictionaryValueOrKey(requestFlyoutContent.requestQuoteCommentCount));
+    };
+
     const handleCommentChange = (e) => {
+        const count = getDictionaryValueOrKey(requestFlyoutContent.requestQuoteCommentCount) || 300;
+        setCount(parseInt(count) - e.target.value.length);
         setCommentInput(e.target.value);
         setRequestObj({
           ...requestObj,
@@ -75,6 +83,8 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference 
             isSuccess: true,
             message: getDictionaryValueOrKey(requestFlyoutContent.successToastMessage)
         }
+
+        resetGrid && resetGrid();
 
         if (toaster) {
           closeFlyout();
@@ -134,7 +144,7 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference 
               value={commentInput}
               onChange={handleCommentChange}
               maxLength={getDictionaryValueOrKey(requestFlyoutContent.requestQuoteCommentCount) || 300}/>
-            <span className="char-count">{getDictionaryValueOrKey(requestFlyoutContent.requestQuoteCommentCountText)}</span>
+            <span className="char-count">{count}{' '}{getDictionaryValueOrKey(requestFlyoutContent.requestQuoteCommentCountText)}</span>
           </div>
         </Box>
       </section>

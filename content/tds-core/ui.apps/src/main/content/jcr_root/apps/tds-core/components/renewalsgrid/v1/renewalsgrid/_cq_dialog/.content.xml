@@ -1411,6 +1411,12 @@
 															fieldDescription="Request Quote Heading"
 															fieldLabel="Request Quote Heading"
 															name="./requestQuote/requestQuoteHeading"/>
+													<requestedQuoteHeading
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldDescription="Requested Quote Heading"
+															fieldLabel="Requested Quote Heading"
+															name="./requestQuote/requestedQuoteHeading"/>
 													<requestQuoteDescription
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
@@ -1441,16 +1447,26 @@
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Request Flyout Comment Count Text"
 															name="./requestQuote/requestQuoteCommentCountText"/>
+													<requestQuoteCommentCount
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Request Flyout Comment Count Text"
+															name="./requestQuote/requestQuoteCommentCount"/>
 													<errorToastMessage
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
 															fieldLabel="Error Toast Message"
 															name="./requestQuote/errorToastMessage"/>
-													<quoteRequestedMessage
+													<quoteRequestedMessageToolTip
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-															fieldLabel="Quote Requested Message"
-															name="./requestQuote/quoteRequestedMessage"/>
+															fieldLabel="Quote Requested ToolTip Message"
+															name="./requestQuote/quoteRequestedMessageToolTip"/>
+													<toolTipSuccessMessage
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+															fieldLabel="Quote Requested ToolTip Message"
+															name="./requestQuote/toolTipSuccessMessage"/>
 												</items>
 											</column>
 										</items>
