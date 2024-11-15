@@ -13,14 +13,21 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 export const renewalsDefinitions = (componentProp) => {
 
-    const renderRequested = (data) => {
-        if (data?.quoteRequestedTime) {
+    const renderPriceColumn = (componentProp, data) => {
+        if (componentProp.enableRequestQuote && data.canRequestQuote) {
+            return <span className="non-request-quote">-</span>
+        } else if (componentProp.enableRequestQuote && data?.quoteRequestedTime) {
             return ( <span className="requested-quote"
               >{getDictionaryValueOrKey(componentProp.requestQuote.requestedQuoteHeading)}
               <InfoIcon  width="16" height="16" />
               </span> );
         } else {
-            return <span className="non-request-quote">-</span>
+            return (
+              <PriceColumn
+                columnValue={data?.renewal?.total}
+                currency={data?.renewal?.currency}
+              />
+            );
         }
     }
 
@@ -37,14 +44,7 @@ export const renewalsDefinitions = (componentProp) => {
       actions: (
         <RenewalActionColumn eventProps={eventProps} config={componentProp} />
       ),
-      total:
-        componentProp.enableRequestQuote && data.canRequestQuote ?
-            renderRequested(data) : (
-          <PriceColumn
-            columnValue={data?.renewal?.total}
-            currency={data?.renewal?.currency}
-          />
-        ),
+      total: renderPriceColumn(componentProp, data),
       agreementNumber:
         data?.agreementNumber === 'Multiple'
           ? componentProp?.productGrid?.multipleLabel
