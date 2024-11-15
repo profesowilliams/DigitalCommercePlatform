@@ -164,7 +164,7 @@ export default function ImportFlyout({ store, importFlyout }) {
     >
       <FlyoutHeader>
         <FlyoutTitle>
-          {getDictionaryValueOrKey(importFlyout?.importTitle)}
+          {getDictionaryValueOrKey(importFlyout?.importTitle) || 'Import'}
         </FlyoutTitle>
       </FlyoutHeader>
       <FlyoutBody id="flyout-body">
@@ -226,10 +226,10 @@ export default function ImportFlyout({ store, importFlyout }) {
           type="button"
           variant="primary"
           theme="light"
-          label={getDictionaryValueOrKey(importFlyout?.importTitle)}
+          label={getDictionaryValueOrKey(importFlyout?.importTitle) || 'Import'}
           color="teal"
         >
-          {getDictionaryValueOrKey(importFlyout?.importButton)}
+          {getDictionaryValueOrKey(importFlyout?.importButton) || 'Import'}
         </FlyoutButton>
       </FlyoutFooter>
     </Flyout>
