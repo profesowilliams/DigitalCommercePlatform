@@ -6,6 +6,7 @@ import DueDateColumn from '../Columns/DueDateColumn';
 import DueDateDayColumn from '../Columns/DueDateDayColumn';
 import PriceColumn from '../Columns/PriceColumn';
 import RenewalActionColumn from "../Columns/RenewalActionColumn";
+import Tooltip from '../../web-components/Tooltip';
 import {
     InfoIcon
 } from '../../../../../fluentIcons/FluentIcons';
@@ -19,7 +20,9 @@ export const renewalsDefinitions = (componentProp) => {
         } else if (componentProp.enableRequestQuote && data?.quoteRequestedTime) {
             return ( <span className="requested-quote"
               >{getDictionaryValueOrKey(componentProp.requestQuote.requestedQuoteHeading)}
-              <InfoIcon  width="16" height="16" />
+              <tds-tooltip text="testing 123"  type="html" placement="bottom" arrow>
+                <InfoIcon width="16" height="16" />
+              </tds-tooltip>
               </span> );
         } else {
             return (

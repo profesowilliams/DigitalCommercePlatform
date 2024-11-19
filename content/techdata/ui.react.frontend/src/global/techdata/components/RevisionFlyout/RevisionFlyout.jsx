@@ -18,6 +18,8 @@ export function RevisionFlyout({ store, revisionFlyoutContent, subheaderReferenc
   const quoteType = getDictionaryValueOrKey('Renewal');
   const effects = store((st) => st.effects);
   const [enableRevision, setEnableRevision] = useState(false);
+  const [commentInput , setCommentInput] = useState('');
+  const activeAgreementID = revisionFlyoutConfig?.data?.source?.id || '';
   const [count, setCount] = useState(getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCount));
   const closeFlyout = () => effects.setCustomState({ key: 'revisionFlyout', value: {show:false} });
   const userData = useStore(state => state.userData);
@@ -26,9 +28,15 @@ export function RevisionFlyout({ store, revisionFlyoutContent, subheaderReferenc
   const [requestObj, setRequestObj] = useState({});
 
   useEffect(() => {
-    resetCount();
     if (!revisionFlyoutConfig?.show) {
       setRequestObj({});
+      setCommentInput('');
+      resetCount();
+    } else {
+        setRequestObj({
+            ...requestObj,
+            "QuoteNumber": activeAgreementID,
+        });
     }
   }, [revisionFlyoutConfig]);
 
@@ -39,14 +47,65 @@ export function RevisionFlyout({ store, revisionFlyoutContent, subheaderReferenc
   const handleCommentChange = (e) => {
     const count = getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCount) || 500;
     setCount(parseInt(count) - e.target.value.length);
-    updateRequestObject({
-      'AdditionalComments': e.target.value
+    setCommentInput(e.target.value);
+    setRequestObj({
+      ...requestObj,
+      "AdditionalComments": e.target.value
     });
   };
 
   const resetCount = () => {
     setCount(getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCount));
   };
+
+  const handleRevisionClick = async (event) => {
+        if(event) {
+          event.preventDefault();
+        }
+        setIsLoading(true);
+        let toaster = null;
+        const dataObj = requestObj;
+
+        const finalRequestObj = {
+          Data: dataObj
+        }
+        const response = await requestRevision(
+          finalRequestObj,
+          revisionFlyoutContent.reviseQuoteEndpoint
+        );
+        setIsLoading(false);
+        if (response?.success) {
+          // set success message
+          toaster = {
+              isOpen: true,
+              origin: 'fromRequestRevisionFlyout',
+              isAutoClose: true,
+              isSuccess: true,
+              message: getDictionaryValueOrKey(revisionFlyoutContent.successToastMessage)
+          }
+
+          // resetGrid && resetGrid();
+
+          if (toaster) {
+            closeFlyout();
+            effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+          }
+        } else {
+          // set success message
+          toaster = {
+              isOpen: true,
+              origin: 'fromRequestRevisionFlyoutout',
+              isAutoClose: true,
+              isSuccess: false,
+              message: getDictionaryValueOrKey(revisionFlyoutContent.errorToastMessage)
+          }
+
+          if (toaster) {
+            closeFlyout();
+            effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+          }
+        }
+    }
 
   const formBoxStyle = {
     '& > :not(style)': { width: '100%' },
@@ -65,6 +124,7 @@ export function RevisionFlyout({ store, revisionFlyoutContent, subheaderReferenc
       secondaryButton={false}
       classText="share-flyout revise-flyout"
       isLoading={isLoading}
+      onClickButton={handleRevisionClick}
       buttonLabel={getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionButtonLabel) || 'Request'}
       loadingButtonLabel={getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionButtonLabel) || 'Requesting'}
     >
@@ -82,8 +142,10 @@ export function RevisionFlyout({ store, revisionFlyoutContent, subheaderReferenc
             <textarea type="text"
               placeholder={getDictionaryValueOrKey(revisionFlyoutContent.additionalInformationPlaceholderText)}
               className="comments"
+              value={commentInput}
+              onChange={handleCommentChange}
               maxLength={getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCount)}/>
-            <span className="char-count">{getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCountText)}</span>
+            <span className="char-count">{count}{' '}{getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCountText)}</span>
           </div>
         </Box>
       </section>

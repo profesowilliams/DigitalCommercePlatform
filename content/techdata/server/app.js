@@ -4909,8 +4909,8 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                    "hasMultipleAgreementDuration": false,
                                    "canDownloadExcel": true,
                                    "canShareQuote": false,
-                                   "canRequestQuote": false,
-                                   "canRequestRevision": false,
+                                   "canRequestQuote": true,
+                                   "canRequestRevision": true,
                                    "feedBackMessages": [
                                        {
                                            "ruleNumber": 108,
@@ -5054,6 +5054,36 @@ app.post("/ui-renewal/v1/RequestQuoteEmail", function (req, res) {
 
   setTimeout(() => {
     return res.status(200).json(success);
+  }, 1000);
+});
+
+app.post("/ui-renewal/v1/ReviseQuoteEmail", function (req, res) {
+  const success = {
+    content: {
+      success: true,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+
+  const error = {
+    content: {
+      success: false,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: true,
+    },
+  };
+
+  //mockResponses.failedResponse
+
+  setTimeout(() => {
+    return res.status(200).json(error);
   }, 1000);
 });
 

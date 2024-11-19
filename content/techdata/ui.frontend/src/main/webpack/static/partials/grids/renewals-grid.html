@@ -200,6 +200,7 @@
     enableImport: true,
     enableRequestQuote: true,
     disableDefaultSort: true,
+    enableReviseOption: true,
     orderingFromDashboard: {
       showOrderingIcon: true,
       placeOrderDialogTitle: 'To continue placing your order for ({enduser-companyname}) please provide the following information.',
@@ -263,6 +264,7 @@
       quoteRequestedMessage: 'quoted Requested',
     },
     revisionFlyout: {
+      reviseQuoteEndpoint: 'http://localhost:3000/ui-renewal/v1/ReviseQuoteEmail',
       requestRevisionHeading: 'Request revision',
       requestRevisionDescription: 'After creating the quote, you will receive an email from our sales team. This process can take 24 - 48 hours.',
       additionalInformationLabel: 'Additional information request',
