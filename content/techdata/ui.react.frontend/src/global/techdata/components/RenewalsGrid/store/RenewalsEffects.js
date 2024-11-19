@@ -1,5 +1,5 @@
 import { FILTER_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import {  checkIfAnyDateRangeIsCleared, getLocalStorageData, removeLocalStorageData, setLocalStorageData } from "../utils/renewalUtils";
+import { checkIfAnyDateRangeIsCleared, getLocalStorageData, removeLocalStorageData, setLocalStorageData } from "../utils/renewalUtils";
 
 export const renewalsEffects = (set, get) => {
   function setFilterList(newFilterList = []) {
@@ -9,12 +9,18 @@ export const renewalsEffects = (set, get) => {
   function toggleFilterModal(options = {}) {
     const { justClose = false } = options;
     const { isFilterModalOpen } = get();
-    if (justClose) return set({ isFilterModalOpen: false });
+    if (justClose) {
+      if (isFilterModalOpen) {
+        set({ isFilterModalOpen: false });
+      }
+      return;
+    }
+
     set({ isFilterModalOpen: !isFilterModalOpen });
   }
 
   function toggleFilterButtonDisable(flag) {
-      set({ isFilterButtonDisable: flag });
+    set({ isFilterButtonDisable: flag });
   }
 
   function finalResults(filteredList = []) {
@@ -37,7 +43,7 @@ export const renewalsEffects = (set, get) => {
     const keepOpenList = dateSelected ? ['date'] : [];
     const keepOpened = ({ field }) => keepOpenList.includes(field);
     const filterList = get().filterList.map(filter => ({ ...filter, open: keepOpened(filter) }));
-    if(focusedInput) {
+    if (focusedInput) {
       set({ filterList });
     }
   }
@@ -47,23 +53,23 @@ export const renewalsEffects = (set, get) => {
     const indexFound = dateOptionsList.findIndex((_, index) => index === itemIndex);
     if (indexFound !== -1) {
       const options = dateOptionsList.slice().map(item => ({ ...item, checked: false }));
-      options[indexFound].checked = true;    
+      options[indexFound].checked = true;
       const dateSelected = options[indexFound].field;
       set({ dateOptionsList: options, dateSelected })
     }
   }
 
-  function setDatePickerState(fromDate = '', toDate = ''){    
+  function setDatePickerState(fromDate = '', toDate = '') {
     const deleteTimeZoneRegex = /T((?:\d{2}:){2}.*)$/g;
     const fromDateNoTime = fromDate ? new Date(fromDate).toISOString().replace(deleteTimeZoneRegex, () => 'T00:00:00.000Z') : null;
     const toDateNoTime = toDate ? new Date(toDate).toISOString().replace(deleteTimeZoneRegex, () => 'T05:00:00.000Z') : null;
-    set({datePickerState:[fromDateNoTime, toDateNoTime]})
+    set({ datePickerState: [fromDateNoTime, toDateNoTime] })
   }
 
-  function clearDateFilters(){
-    const {dateOptionsList} = get();
-    const allOptionsFalse = dateOptionsList.slice().map(item => ({...item,checked:false}));
-    set({datePickerState:null,dateOptionsList:allOptionsFalse,dateSelected:null,customStartDate:null,customEndDate:null});    
+  function clearDateFilters() {
+    const { dateOptionsList } = get();
+    const allOptionsFalse = dateOptionsList.slice().map(item => ({ ...item, checked: false }));
+    set({ datePickerState: null, dateOptionsList: allOptionsFalse, dateSelected: null, customStartDate: null, customEndDate: null });
   }
 
   function setAppliedFilterCount() {
@@ -80,63 +86,63 @@ export const renewalsEffects = (set, get) => {
       appliedFilterCount: dateSelected ? count += 1 : count,
     });
 
-    let filterObj = { ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY), ...{count} };
+    let filterObj = { ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY), ...{ count } };
     setLocalStorageData(FILTER_LOCAL_STORAGE_KEY, filterObj);
   }
 
-  function setCustomState({key='', value }, options){
+  function setCustomState({ key = '', value }, options) {
     if (options && options.saveToLocal === true) {
       setLocalStorageData(options.key, value);
     }
-    if (options && options.clearLocal === true){
+    if (options && options.clearLocal === true) {
       removeLocalStorageData(options.key)
     }
     const currentState = get()[key] || value;
-    if (typeof value === "object" && !Array.isArray(value)) return set({[key]:{...currentState,...value}})
-    set({[key]:value})
+    if (typeof value === "object" && !Array.isArray(value)) return set({ [key]: { ...currentState, ...value } })
+    set({ [key]: value })
   }
 
-  function setDateOptionList(dateOptionsList){    
+  function setDateOptionList(dateOptionsList) {
     if (!dateOptionsList) return;
     const dateOptionsWithLocalStorage = dateOptionsList.map(item => ({ ...item, checked: item.field === getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected }));
-    set({dateOptionsList : dateOptionsWithLocalStorage });
+    set({ dateOptionsList: dateOptionsWithLocalStorage });
   }
 
-  function closeAndCleanToaster(){
+  function closeAndCleanToaster() {
     const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
-    setCustomState({key:'toaster', value:{isOpen:false}},options);
+    setCustomState({ key: 'toaster', value: { isOpen: false } }, options);
   }
 
-  function checkOptionListSelected(){ 
-    const {dateOptionsList, filterList, customStartDate, customEndDate} = get();
+  function checkOptionListSelected() {
+    const { dateOptionsList, filterList, customStartDate, customEndDate } = get();
     const isChecked = (field) => field === getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected;
     const dateOptionsListLocalChecked = dateOptionsList.map(item => ({ ...item, checked: isChecked(item.field) }));
-    const mutatedDateList = checkIfAnyDateRangeIsCleared({dateOptionsList,filterList,customStartDate,customEndDate})  
-    if (!mutatedDateList) return set({dateOptionsList:dateOptionsListLocalChecked})
-    const {dateOptionsUncheckedList} = mutatedDateList;
-    set({dateOptionsList:dateOptionsUncheckedList});
+    const mutatedDateList = checkIfAnyDateRangeIsCleared({ dateOptionsList, filterList, customStartDate, customEndDate })
+    if (!mutatedDateList) return set({ dateOptionsList: dateOptionsListLocalChecked })
+    const { dateOptionsUncheckedList } = mutatedDateList;
+    set({ dateOptionsList: dateOptionsUncheckedList });
   }
 
-  function clearUnappliedDateRange(){ 
-    const {dateOptionsList} = get();
+  function clearUnappliedDateRange() {
+    const { dateOptionsList } = get();
     const dateApplied = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected;
     const isChecked = (field) => field === dateApplied;
     const dateOptionsListLocalChecked = dateOptionsList.map(item => ({ ...item, checked: isChecked(item.field) }));
-    if(dateApplied && dateApplied !== 'custom') {
-      set({dateOptionsList:dateOptionsListLocalChecked, customStartDate: null, customEndDate: null, datePickerState: null});
-    } else if(!dateApplied) {
+    if (dateApplied && dateApplied !== 'custom') {
+      set({ dateOptionsList: dateOptionsListLocalChecked, customStartDate: null, customEndDate: null, datePickerState: null });
+    } else if (!dateApplied) {
       clearDateFilters();
     }
   }
 
-  function resetFilterToState () {
+  function resetFilterToState() {
     const appliedFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
     const filtersDefault = closeSections([]).map((filter, index) => {
       if (index !== 0) {
-        return {...filter,applied:false,checked:false,open:false};
+        return { ...filter, applied: false, checked: false, open: false };
       }
       return filter;
-    });      
+    });
     setDatePickerState(appliedFilters?.customStartDate, appliedFilters?.customEndDate);
     set({
       filterList: appliedFilters?.filterList || filtersDefault,
@@ -147,11 +153,11 @@ export const renewalsEffects = (set, get) => {
   }
 
   function closeSections(keepOpenList) {
-    const {filterList} = get();
+    const { filterList } = get();
     const keepOpened = ({ field }) => keepOpenList.includes(field);
-    const filterListCopy = filterList.map(filter => { 
+    const filterListCopy = filterList.map(filter => {
       let isOpen = false;
-      if(keepOpened(filter)) {
+      if (keepOpened(filter)) {
         isOpen = filter.open;
       }
       return ({ ...filter, open: isOpen })
@@ -159,14 +165,14 @@ export const renewalsEffects = (set, get) => {
     return filterListCopy;
   }
 
-  function setAppliedFilter(optionFields) {    
-    const {filterList, dateSelected, customStartDate, customEndDate} = get();
+  function setAppliedFilter(optionFields) {
+    const { filterList, dateSelected, customStartDate, customEndDate } = get();
     setAppliedFilterCount();
     const activeSections = filterList.map(item => {
-      if(item.field==='date' && dateSelected) {
+      if (item.field === 'date' && dateSelected) {
         return item.field;
       }
-      if(item.checked && item.hasOwnProperty('parentId')) {
+      if (item.checked && item.hasOwnProperty('parentId')) {
         return item.field;
       }
     }).filter((element, index, arr) => {
@@ -175,17 +181,17 @@ export const renewalsEffects = (set, get) => {
     const filtersCopy = closeSections(activeSections).map((filter, index) => {
       if (index !== 0) {
         const applied = filter.checked;
-        return {...filter,applied};
+        return { ...filter, applied };
       }
       return filter;
     });
-    setFilterList(filtersCopy); 
+    setFilterList(filtersCopy);
     setLocalStorageData(FILTER_LOCAL_STORAGE_KEY, {
       ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY),
       optionFields,
       dateSelected,
-      customStartDate: dateSelected==='custom' ? customStartDate : null,
-      customEndDate: dateSelected==='custom' ? customEndDate : null,
+      customStartDate: dateSelected === 'custom' ? customStartDate : null,
+      customEndDate: dateSelected === 'custom' ? customEndDate : null,
       filterList: filtersCopy
     });
   }
@@ -198,7 +204,7 @@ export const renewalsEffects = (set, get) => {
     closeAllSections,
     setDateOptionsList,
     setDatePickerState,
-    clearDateFilters,   
+    clearDateFilters,
     setCustomState,
     setAppliedFilterCount,
     setToolTipData,

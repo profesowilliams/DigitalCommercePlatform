@@ -406,18 +406,7 @@
             pointer-events: none;
         }
     }
-    button {
-      background: none;
-      color: $brand-text-gray;
-      &.count {
-        background-color: map.get($color-palette, 'deep-teal');
-        color: #fff;
-      }
-      &.count.td-synnex {
-        background-color: $brand-green;
-        color: #fff;
-      }
-    }
+
     i,
     svg {
       color: #00558c;

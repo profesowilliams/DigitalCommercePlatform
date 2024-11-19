@@ -2,7 +2,7 @@
  * @fileoverview Contains the Flyout component and related subcomponents
  * such as FlyoutHeader, FlyoutBody, and FlyoutButton, for creating modular Flyout UIs.
  */
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 
 /**
  * Flyout component that serves as a wrapper for modal content.
@@ -13,25 +13,55 @@ import React, { forwardRef } from 'react';
  * @param {boolean} props.show - Whether the flyout is visible.
  * @param {'sm'|'md'|'lg'|'xl'} props.size - Size of the flyout.
  * @param {'start'|'end'|'top'|'bottom'} props.placement - Placement of the flyout.
+ * @param {function} props.onClose - Callback when the flyout is closed.
  * @param {React.ReactNode} props.children - The content of the flyout.
  * @param {Object} rest - Additional props passed to the `tds-flyout` element.
  * @param {React.Ref} ref - React reference for the flyout component.
  * @returns {JSX.Element} The rendered Flyout component.
  */
 const Flyout = forwardRef(
-  ({ title, backdrop, show, size, placement, children, ...rest }, ref) => (
-    <tds-flyout
-      ref={ref}
-      title={title}
-      backdrop={backdrop}
-      show={show}
-      size={size}
-      placement={placement}
-      {...rest}
-    >
-      {children}
-    </tds-flyout>
-  )
+  (
+    { title, backdrop, show, size, placement, onClose, children, ...rest },
+    ref
+  ) => {
+    const flyoutRef = useRef();
+
+    // Use provided ref or internal ref
+    const combinedRef = ref || flyoutRef;
+
+    // Add event listener for custom 'close' event
+    useEffect(() => {
+      const flyoutElement = combinedRef.current;
+
+      if (flyoutElement) {
+        const handleCloseEvent = (e) => {
+          if (onClose) {
+            onClose(e.detail); // Pass event details to onClose callback
+          }
+        };
+
+        flyoutElement.addEventListener('close', handleCloseEvent);
+
+        return () => {
+          flyoutElement.removeEventListener('close', handleCloseEvent);
+        };
+      }
+    }, [onClose, combinedRef]);
+
+    return (
+      <tds-flyout
+        ref={combinedRef}
+        title={title}
+        backdrop={backdrop}
+        show={show}
+        size={size}
+        placement={placement}
+        {...rest}
+      >
+        {children}
+      </tds-flyout>
+    );
+  }
 );
 
 /**

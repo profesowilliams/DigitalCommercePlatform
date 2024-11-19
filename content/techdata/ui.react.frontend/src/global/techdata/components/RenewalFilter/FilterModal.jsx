@@ -1,28 +1,38 @@
-import React, { useEffect, useState, useRef } from "react";
-import ReactDOM from "react-dom";
-import { FILTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
-import { pushEvent } from "../../../../utils/dataLayerUtils";
-import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
-import Button from "../Widgets/Button";
-import FilterHeader from "./components/FilterHeader";
-import FilterList from "./components/FilterList";
-import FilterTags from "./components/FilterTags";
-import useComputeBranding from "../../hooks/useComputeBranding";
-import normaliseAPIData from "./filterUtils/normaliseAPIData";
-import normaliseState from "./filterUtils/normaliseData";
-import { useMultiFilterSelected } from "./hooks/useFilteringState";
-import useFilteringSelected from "./hooks/useIsFilteringSelected";
+import React, { useEffect, useState, useRef } from 'react';
+import { FILTER_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
+import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
+import FilterList from './components/FilterList';
+import FilterTags from './components/FilterTags';
+import useComputeBranding from '../../hooks/useComputeBranding';
+import normaliseAPIData from './filterUtils/normaliseAPIData';
+import normaliseState from './filterUtils/normaliseData';
+import { useMultiFilterSelected } from './hooks/useFilteringState';
+import useFilteringSelected from './hooks/useIsFilteringSelected';
 
-import { RenewalErrorBoundary } from "./renewalErrorBoundary";
-import { getDictionaryValue } from "../../../../utils/utils";
-import { getLocalValueOrDefault } from "../BaseGrid/store/GridStore";
-import { getFilterAnalytics } from "../Analytics/analytics";
+import Flyout, {
+  FlyoutHeader,
+  FlyoutTitle,
+  FlyoutBody,
+  FlyoutFooter,
+  FlyoutButton,
+} from '../web-components/Flyout';
+
+import { RenewalErrorBoundary } from './renewalErrorBoundary';
+import { getDictionaryValue } from '../../../../utils/utils';
+import { getLocalValueOrDefault } from '../BaseGrid/store/GridStore';
+import { getFilterAnalytics } from '../Analytics/analytics';
 
 const FilterDialog = ({ children }) => {
   return <div className="filter-modal-container__popup">{children}</div>;
 };
 
-const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topReference, analyticsCategory }) => {
+const FilterModal = ({
+  aemData,
+  handleFilterCloseClick,
+  onQueryChanged,
+  topReference,
+  analyticsCategory,
+}) => {
   const {
     filterList,
     resetFilter,
@@ -31,55 +41,81 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
     _generateFilterFields,
   } = useMultiFilterSelected();
 
-  const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount); 
-  const isFilterModalOpen = useRenewalGridState( state => state.isFilterModalOpen);
+  const appliedFilterCount = useRenewalGridState(
+    (state) => state.appliedFilterCount
+  );
+  const isFilterModalOpen = useRenewalGridState(
+    (state) => state.isFilterModalOpen
+  );
 
-  useEffect(() => {    
-    const value = getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "filterList", null)
-    value && effects.setCustomState({key:'filterList',value});
-  },[resetFilter, filterData, appliedFilterCount, isFilterModalOpen])
+  useEffect(() => {
+    const value = getLocalValueOrDefault(
+      FILTER_LOCAL_STORAGE_KEY,
+      'filterList',
+      null
+    );
+    value && effects.setCustomState({ key: 'filterList', value });
+  }, [resetFilter, filterData, appliedFilterCount, isFilterModalOpen]);
 
-  const { computeClassName, isTDSynnex } = useComputeBranding(useRenewalGridState); 
+  const { computeClassName, isTDSynnex } =
+    useComputeBranding(useRenewalGridState);
 
-  const { setAppliedFilter } = useRenewalGridState( (state) => state.effects );
+  const { setAppliedFilter } = useRenewalGridState((state) => state.effects);
 
   const { hasFilterChangeAvailable, dateSelected } = useFilteringSelected();
 
   const [DOMLoaded, setDOMLoaded] = useState(false);
-  const customStartDate = useRenewalGridState(state => state.customStartDate);
-  const customEndDate = useRenewalGridState(state => state.customEndDate);
+  const customStartDate = useRenewalGridState((state) => state.customStartDate);
+  const customEndDate = useRenewalGridState((state) => state.customEndDate);
 
   let aemFilterData;
   aemData.filterType =
-    aemData.filterType === null ? "static" : aemData.filterType;
+    aemData.filterType === null ? 'static' : aemData.filterType;
 
-  if (aemData.filterType === "dynamic" && filterData?.refinements) {
-    if (aemData.enableArchiveQuote && !JSON.stringify(filterData.refinements).includes('archives'))
+  if (aemData.filterType === 'dynamic' && filterData?.refinements) {
+    if (
+      aemData.enableArchiveQuote &&
+      !JSON.stringify(filterData.refinements).includes('archives')
+    )
       filterData.refinements.push({
-            name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-            searchKey: "archives",
-            options: [{
-                searchKey: "archives",
-                text: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-            }]
-        });
+        name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
+        searchKey: 'archives',
+        options: [
+          {
+            searchKey: 'archives',
+            text: getDictionaryValue(aemData.showArchive, 'Show archives only'),
+          },
+        ],
+      });
     aemFilterData = normaliseAPIData(filterData.refinements);
-  } else if (aemData.filterType === "static") {
-    if (aemData.enableArchiveQuote && !JSON.stringify(aemData.filterListValues).includes('archives'))
-        aemData.filterListValues.push({
-            name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-            searchKey: "archives",
-            options: [{
-                searchKey: "archives",
-                text: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-            }]
-        });
+  } else if (aemData.filterType === 'static') {
+    if (
+      aemData.enableArchiveQuote &&
+      !JSON.stringify(aemData.filterListValues).includes('archives')
+    )
+      aemData.filterListValues.push({
+        name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
+        searchKey: 'archives',
+        options: [
+          {
+            searchKey: 'archives',
+            text: getDictionaryValue(aemData.showArchive, 'Show archives only'),
+          },
+        ],
+      });
     aemFilterData = normaliseState(aemData.filterListValues);
   } else {
     aemFilterData = [];
   }
 
-  const { setFilterList, toggleFilterModal, clearUnappliedDateRange, setCustomState, resetFilterToState } = effects;
+  const {
+    setFilterList,
+    clearDateFilters,
+    toggleFilterModal,
+    clearUnappliedDateRange,
+    setCustomState,
+    resetFilterToState,
+  } = effects;
 
   useEffect(() => {
     if (!filterList) {
@@ -90,47 +126,129 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
   useEffect(() => {
     const onPageLoad = () => setDOMLoaded(true);
     if (!document.querySelector('.subheader')) return;
-    if (document.readyState === "complete") {
+    if (document.readyState === 'complete') {
       onPageLoad();
     } else {
-      window.addEventListener("load", onPageLoad);
-      return () => window.removeEventListener("load", onPageLoad);
+      window.addEventListener('load', onPageLoad);
+      return () => window.removeEventListener('load', onPageLoad);
     }
   }, []);
+
+  const handleClearFilter = () => {
+    const filtersCopy = [...filterList].map((filter, index) => {
+      if (index !== 0) {
+        return { ...filter, open: false, checked: false };
+      }
+      return filter;
+    });
+    setFilterList(filtersCopy);
+    clearDateFilters();
+  };
 
   const root = filterList ? filterList[0] : false;
   const rootIds = root ? root.childIds : [];
   const filterDom = useRef();
-  const filterBodyDom = useRef();  
+  const filterBodyDom = useRef();
+
+  // useEffect(() => {
+  //   function dynamicFilterAdjustmnet() {
+  //     const subHeaderElement = document.querySelector('.subheader > div > div');
+  //     if (!subHeaderElement) return;
+  //     const { top, height } = document
+  //       .querySelector('.subheader > div > div')
+  //       .getBoundingClientRect();
+  //     if (top > 0) topReference.current = { top, height };
+  //     const gap = 7;
+  //     let topCalculation = top + gap + height;
+  //     if (dateSelected === 'custom' && topReference?.current) {
+  //       const { top, height } = topReference.current;
+  //       topCalculation = top + gap + height;
+  //       window.scrollTo(0, 0);
+  //     }
+  //     filterDom.current.style.top = `${topCalculation}px`;
+  //     filterDom.current.style.height = `calc(100vh - ${topCalculation}px)`;
+  //     filterBodyDom.current.style.height = `calc(100% - ${192}px)`;
+  //     document.body.style.overflow = 'hidden';
+  //   }
+  //   const timer = setTimeout(dynamicFilterAdjustmnet, 0);
+  //   window.addEventListener('scroll', dynamicFilterAdjustmnet);
+  //   window.addEventListener('load', dynamicFilterAdjustmnet);
+  //   return () => {
+  //     document.body.style.overflow = 'initial';
+  //     clearTimeout(timer);
+  //     window.removeEventListener('scroll', dynamicFilterAdjustmnet);
+  //     window.removeEventListener('load', dynamicFilterAdjustmnet);
+  //   };
+  // }, []);
+
+  const flyoutRef = useRef(null);
+
+  // Function to toggle body scroll
+  const toggleBodyScroll = (disable) => {
+    document.body.style.overflow = disable ? 'hidden' : 'auto';
+  };
+
+  // Manage body scroll based on modal state
+  useEffect(() => {
+    if (isFilterModalOpen) {
+      toggleBodyScroll(true);
+    } else {
+      toggleBodyScroll(false);
+      if (flyoutRef.current && !flyoutRef.current.show) {
+        toggleFilterModal({ justClose: true });
+      }
+    }
+
+    return () => {
+      toggleBodyScroll(false);
+    };
+  }, [isFilterModalOpen]);
+
+  /**
+   * Closes the import flyout.
+   *
+   * @function
+   */
+  const closeFlyout = () => {
+    toggleFilterModal({ justClose: true }); // Explicitly set state
+  };
+  /**
+   * Adds a listener to close the flyout gracefully when the event fires.
+   * Cleans up the listener on component unmount.
+   *
+   * @function
+   */
+  useEffect(() => {
+    const flyoutElement = flyoutRef.current;
+
+    if (flyoutElement) {
+      const handleFlyoutHidden = () => {
+        toggleFilterModal({ justClose: true });
+      };
+
+      const handleFlyoutClose = (e) => {
+        toggleFilterModal({ justClose: true });
+      };
+
+      flyoutElement.addEventListener('flyoutHidden', handleFlyoutHidden);
+      flyoutElement.addEventListener('close', handleFlyoutClose);
+
+      return () => {
+        flyoutElement.removeEventListener('flyoutHidden', handleFlyoutHidden);
+        flyoutElement.removeEventListener('close', handleFlyoutClose);
+      };
+    }
+  }, [flyoutRef, toggleFilterModal]);
 
   useEffect(() => {
-    function dynamicFilterAdjustmnet() {
-      const subHeaderElement = document.querySelector('.subheader > div > div');
-      if (!subHeaderElement) return;
-      const { top, height } = document.querySelector('.subheader > div > div').getBoundingClientRect();
-      if ( top > 0 ) topReference.current = {top, height};
-      const gap = 7;    
-      let topCalculation = top + gap + height;
-      if (dateSelected === 'custom' && topReference?.current){
-        const {top, height} = topReference.current;
-        topCalculation = top + gap + height;
-        window.scrollTo(0, 0);
-      }      
-      filterDom.current.style.top = `${topCalculation}px`;
-      filterDom.current.style.height = `calc(100vh - ${topCalculation}px)`;   
-      filterBodyDom.current.style.height = `calc(100% - ${192}px)`;     
-      document.body.style.overflow = "hidden";
+    if (flyoutRef.current) {
+      if (isFilterModalOpen) {
+        flyoutRef.current.setAttribute('show', 'true');
+      } else {
+        flyoutRef.current.removeAttribute('show');
+      }
     }
-    const timer = setTimeout(dynamicFilterAdjustmnet, 0);
-    window.addEventListener('scroll', dynamicFilterAdjustmnet);
-    window.addEventListener('load', dynamicFilterAdjustmnet);
-    return () => {
-      document.body.style.overflow = "initial";
-      clearTimeout(timer);
-      window.removeEventListener('scroll', dynamicFilterAdjustmnet);
-      window.removeEventListener('load', dynamicFilterAdjustmnet);
-    };
-  }, []);
+  }, [isFilterModalOpen]);
 
   /**
    * Triggerred when the "show results" button is clicked on
@@ -140,50 +258,95 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
     const [optionFields] = _generateFilterFields();
     setAppliedFilter(optionFields);
     toggleFilterModal();
-    if (resetFilter)
-      setCustomState({ key: "resetFilter", value: false });
+    if (resetFilter) setCustomState({ key: 'resetFilter', value: false });
     onQueryChanged();
     clearUnappliedDateRange();
   };
 
   const handleCloseModalClick = () => {
     resetFilterToState();
-    handleFilterCloseClick();    
+    handleFilterCloseClick();
   };
 
   if (!filterList) return null;
 
-  return DOMLoaded && 
-    <>
-      <div className="filter-modal-container" />
-      <div className={computeClassName("filter-modal-content")} ref={filterDom}>
-        <RenewalErrorBoundary>
-          <Button
-            onClick={handleCloseModalClick}
-            btnClass={computeClassName("filter-modal-content__close")}
-          />
-          <FilterDialog>
-            <FilterHeader onQueryChanged={onQueryChanged} />
-            <div className="filter-modal-content__body" ref={filterBodyDom}>
-              <div className={computeClassName("filter-accordion")} >
+  return (
+    DOMLoaded && (
+      <>
+        <Flyout
+          ref={flyoutRef}
+          {...(isFilterModalOpen ? { show: '' } : {})}
+          size="sm"
+          placement="end"
+          id="filter-flyout"
+          aria-labelledby="offcanvasLabel"
+          scrollable
+          backdrop="true"
+          onClose={() => {
+            closeFlyout();
+          }}
+        >
+          <FlyoutHeader>
+            <FlyoutTitle>
+              {getDictionaryValue('grids.common.label.filterTitle', 'Filters')}
+            </FlyoutTitle>
+          </FlyoutHeader>
+
+          <FlyoutBody>
+            <RenewalErrorBoundary>
+              <FilterDialog>
                 <FilterList rootIds={rootIds} />
-              </div>
-              <div className="filter-modal-bottom">
-                <FilterTags />
-                <Button
-                  btnClass={computeClassName("cmp-quote-button filter-modal-content__results")}
-                  onClick={showResult}
-                  disabled={!hasFilterChangeAvailable()}
-                  analyticsCallback={getFilterAnalytics.bind(null, analyticsCategory, _generateFilterFields())}
-                >
-                  {getDictionaryValue("grids.common.label.filterSearch", "Show results")}
-                </Button>
-              </div>
-            </div>
-          </FilterDialog>
-        </RenewalErrorBoundary>
-      </div>
-    </>
+              </FilterDialog>
+
+              <FilterTags />
+            </RenewalErrorBoundary>
+          </FlyoutBody>
+
+          <FlyoutFooter>
+            <FlyoutButton
+              type="button"
+              variant="tertiary"
+              theme="light"
+              onClick={handleClearFilter}
+              color="teal"
+              analyticsCallback={getFilterAnalytics.bind(
+                null,
+                analyticsCategory,
+                _generateFilterFields()
+              )}
+            >
+              {getDictionaryValue(
+                'grids.common.label.clearAllFilters',
+                'Clear all filters'
+              )}
+            </FlyoutButton>
+            <FlyoutButton
+              type="button"
+              variant="primary"
+              theme="light"
+              label={getDictionaryValue(
+                'grids.common.label.filterSearch',
+                'Show results'
+              )}
+              color="teal"
+              onClick={showResult}
+              {...(!hasFilterChangeAvailable() ? { disabled: '' } : {})}
+              analyticsCallback={getFilterAnalytics.bind(
+                null,
+                analyticsCategory,
+                _generateFilterFields()
+              )}
+            >
+              {getDictionaryValue(
+                'grids.common.label.filterSearch',
+                'Show results'
+              )}
+            </FlyoutButton>
+          </FlyoutFooter>
+        </Flyout>
+      </>
+    )
+  );
 };
 
 export default FilterModal;

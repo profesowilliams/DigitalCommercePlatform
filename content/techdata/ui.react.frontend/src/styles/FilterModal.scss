@@ -1,0 +1,175 @@
+@use 'sass:map';
+
+/**
+ * @file
+ * Styles for the Filter Modal component, including flyout positioning, 
+ * filter badge styles, and accordion group behavior.
+ */
+
+/**
+ * Mixin for reusable icon styles.
+ *
+ * @mixin icon-background
+ * @param {String} $url - The URL of the icon to use as a background image.
+ */
+@mixin icon-background($url) {
+  content: '';
+  display: inline-block;
+  width: $icon-size;
+  height: $icon-size;
+  background-image: url($url);
+  background-size: contain;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  margin-right: 0.25rem;
+}
+
+/**
+ * Variables for reusable values.
+ */
+$flyout-offset: -112px !default; // Offset for flyout positioning
+$flyout-offset-place-self: flex-end !default; // Alignment for flyout placement
+$filter-count-height: 1.5rem !default; // Height of filter count badge
+$filter-count-radius: 12px !default; // Border radius for filter count badge
+$icon-size: 24px !default; // Default size for icons
+
+/**
+ * Styles for the renewal filter component.
+ *
+ * @name cmp-renewal-filter
+ */
+.cmp-renewal-filter {
+  --flyout-offset: #{$flyout-offset};
+  --flyout-offset-place-self: #{$flyout-offset-place-self};
+
+  /**
+   * Styles for the flyout backdrop.
+   *
+   * @name tds-flyout.offcanvas-backdrop
+   */
+  tds-flyout.offcanvas-backdrop {
+    top: calc(var(--flyout-offset) * -1);
+  }
+
+  /**
+   * Container for the renewal filter with a count badge.
+   *
+   * @name cmp-renewals-filter-container
+   */
+  .cmp-renewals-filter-container {
+    /**
+     * Styles for the count badge within the filter.
+     *
+     * @name count.td-synnex
+     */
+    .count.td-synnex {
+      font-size: 1rem;
+      font-weight: normal;
+      height: $filter-count-height;
+      border-radius: $filter-count-radius;
+      background-color: map.get($color-palette, 'deep-teal');
+
+      /**
+       * Styles for the filter count text inside the badge.
+       *
+       * @name filter-count
+       */
+      .filter-count {
+        line-height: 97%;
+        margin-left: 2px;
+        position: relative;
+        left: 1px;
+        vertical-align: middle;
+      }
+
+      /**
+       * Styles for the close button inside the filter badge.
+       *
+       * @name filter-close
+       */
+      .filter-close {
+        line-height: 150%;
+        position: relative;
+        top: 2px;
+        right: -4px;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+/**
+ * Styles for the modal popup container.
+ *
+ * @name filter-modal-container__popup
+ */
+.filter-modal-container__popup {
+  /**
+   * Styles for individual accordion items in the modal.
+   *
+   * @name filter-accordion__item
+   */
+  .filter-accordion__item {
+    padding: 1.25rem 0;
+    position: relative;
+
+    /**
+     * Styles for the first accordion item to adjust its padding.
+     *
+     * @name filter-accordion__item:first-of-type
+     */
+    &:first-of-type {
+      padding-top: 0.25rem;
+    }
+
+    /**
+     * Styles for grouped accordion items with toggle behavior.
+     *
+     * @name filter-accordion__item--group
+     */
+    &--group {
+      cursor: pointer;
+
+      /**
+       * Styles for the text inside grouped accordion items.
+       *
+       * @name filter-accordion__item--group p
+       */
+      p {
+        color: $brand-charcoal;
+        font-family: Arial, sans-serif;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5rem;
+
+        /**
+         * Active state styles for accordion group text.
+         *
+         * @name filter-accordion__item--group p.active
+         */
+        &.active {
+          color: map.get($color-palette, 'charcoal');
+
+          /**
+           * Active state icon using `chevron-up` background.
+           *
+           * @name filter-accordion__item--group p.active:before
+           */
+          &:before {
+            @include icon-background('/content/dam/global-shared/icons/default/chevron-up.svg');
+          }
+        }
+
+        /**
+         * Default state icon using `chevron-down` background.
+         *
+         * @name filter-accordion__item--group p:before
+         */
+        &:before {
+          @include icon-background('/content/dam/global-shared/icons/default/chevron-down.svg');
+        }
+      }
+    }
+  }
+}
