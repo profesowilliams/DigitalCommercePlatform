@@ -434,6 +434,11 @@ $flyout-small-height-formax: 779px;
             .email-pills {
                 border-color: rgba(205, 22, 63, 1);
                 color: rgba(205, 22, 63, 1);
+                  &:hover {
+                    border-color: rgba(205, 22, 63, 1);
+                    background: rgba(99, 102, 106, 0.1);
+                    color: #006fba;
+                  }
 
                 svg {
                     color: rgba(205, 22, 63, 1);

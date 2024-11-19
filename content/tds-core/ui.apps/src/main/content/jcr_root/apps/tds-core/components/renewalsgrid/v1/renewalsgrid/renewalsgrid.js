@@ -471,6 +471,11 @@ use(["../../../common/utils.js"], function (utils) {
           properties["./revisionFlyout/" + revisionFlyoutItem])
     );
 
+    if (this.reviseQuoteEndpoint && this.serviceData.uiServiceDomain) {
+            revisionFlyout.reviseQuoteEndpoint =
+              this.serviceData.uiServiceDomain + this.reviseQuoteEndpoint;
+          }
+
     if (revisionFlyout != null) {
       jsonObject["revisionFlyout"] = revisionFlyout;
     }
