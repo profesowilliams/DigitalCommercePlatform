@@ -185,4 +185,7 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Renewal GetStatus Endpoint", description = "Renewal GetStatus Endpoint")
     String renewalGetStatusEndpoint();
 
+    @Property(label = "Archive or restore renewals Endpoint", description = "Archive or restore renewals Endpoint")
+    String archiveOrRestoreRenewalsEndpoint();
+
 }

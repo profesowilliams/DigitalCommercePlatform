@@ -7,6 +7,7 @@
     detailUrl: '/content/techdata/americas-language-masters/en/dcp/renewals/renewal-details',
     uiServiceEndPointExcel: '',
     exportPDFRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuotePdf',
+    archiveOrRestoreRenewalsEndpoint: 'http://localhost:3000/ui-renewal/v1/ArchiveOrRestoreRenewals',
     exportXLSRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuoteDetails',
     updateRenewalOrderEndpoint: 'http://localhost:3000/ui-renewal/v1/Update',
     getStatusEndpoint: 'http://localhost:3000/ui-renewal/v1/getStatus',
@@ -397,7 +398,12 @@
     },
     archiveLabels: {
       archive: 'mainDashboard.renewal.archive.label.archive',
-      restore: 'mainDashboard.renewal.archive.label.restore'
+      restore: 'mainDashboard.renewal.archive.label.restore',
+      archiveToasterSuccess: 'mainDashboard.renewal.archive.label.archiveToasterSuccess',
+      archiveToasterFail: 'mainDashboard.renewal.archive.label.archiveToasterFail',
+      restoreToasterSuccess: 'mainDashboard.renewal.archive.label.restoreToasterSuccess',
+      restoreToasterFail: 'mainDashboard.renewal.archive.label.restoreToasterFail',
+      undo: 'mainDashboard.renewal.archive.label.undo',
     }
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);

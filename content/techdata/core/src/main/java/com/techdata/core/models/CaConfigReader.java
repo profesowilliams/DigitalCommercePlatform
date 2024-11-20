@@ -232,6 +232,8 @@ public class CaConfigReader {
 
     private String languageVersion;
 
+    private String archiveOrRestoreRenewalsEndpoint;
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -299,6 +301,7 @@ public class CaConfigReader {
         renewalGetStatusEndpoint = serviceEndPointsConfiguration.renewalGetStatusEndpoint();
         exportXLSRenewalsEndpoint = serviceEndPointsConfiguration.exportXLSRenewalsEndpoint();
         exportPDFRenewalsEndpoint = serviceEndPointsConfiguration.exportPDFRenewalsEndpoint();
+        archiveOrRestoreRenewalsEndpoint = serviceEndPointsConfiguration.archiveOrRestoreRenewalsEndpoint();
         cartURL = mcConfiguration.cartURL();
         expressCheckoutRedirectUrl = mcConfiguration.expressCheckoutRedirectUrl();
         checkoutRedirectUrl = mcConfiguration.checkoutRedirectUrl();
@@ -763,5 +766,9 @@ public class CaConfigReader {
 
     public String getLanguageVersion() {
         return  languageVersion;
+    }
+
+    public String getArchiveOrRestoreRenewalsEndpoint() {
+        return archiveOrRestoreRenewalsEndpoint;
     }
 }

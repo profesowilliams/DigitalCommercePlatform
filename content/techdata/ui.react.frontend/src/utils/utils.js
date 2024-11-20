@@ -577,3 +577,21 @@ if(enableIntouchLogin()) {
 
     loadIntouchHeaderAndFooter();
 }
+
+export const archiveOrRestoreRenewals = async (url, postData) => {
+    try {
+        const params = {
+            method: 'POST',
+            url: url,
+            body: postData,
+            responseType: 'json',
+        };
+
+        const response = await usPost(url, postData, params);
+
+        return response;
+
+    } catch (error) {
+        console.error("error", error);
+    }
+};

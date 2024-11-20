@@ -101,6 +101,7 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.configurationsEndpoint()).thenReturn("configurationsEndpoint");
         when(serviceEndPointsConfiguration.consumerRequestHeader()).thenReturn("consumerRequestHeader");
         when(serviceEndPointsConfiguration.exportPDFRenewalsEndpoint()).thenReturn("exportPDFRenewalsEndpoint");
+        when(serviceEndPointsConfiguration.archiveOrRestoreRenewalsEndpoint()).thenReturn("archiveOrRestoreRenewalsEndpoint");
         when(mcConfiguration.shopDomain()).thenReturn("shopDomain");
         when(mcConfiguration.cartURL()).thenReturn("cartURL");
         when(mcConfiguration.expressCheckoutRedirectUrl()).thenReturn("expressCheckoutRedirectUrl");
@@ -202,6 +203,7 @@ class CaConfigReaderTest {
         assertEquals("productEmptyImageUrl", underTest.getProductEmptyImageUrl());
         assertEquals("agGridLicenseKey", underTest.getAgGridLicenseKey());
         assertEquals("exportPDFRenewalsEndpoint", underTest.getExportPDFRenewalsEndpoint());
+        assertEquals("archiveOrRestoreRenewalsEndpoint", underTest.getArchiveOrRestoreRenewalsEndpoint());
 
         assertEquals("languageVersion", underTest.getLanguageVersion());
     }

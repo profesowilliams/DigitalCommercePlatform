@@ -7,7 +7,8 @@ import Link from "../../Widgets/Link";
 import Modal from '../../Modal/Modal';
 import {
   generateFileFromPost as generateExcelFileFromPost,
-  getDictionaryValueOrKey
+  getDictionaryValueOrKey,
+  archiveOrRestoreRenewals
 } from '../../../../../utils/utils';
 import {
   errorDetails,
@@ -43,6 +44,7 @@ import {
 } from '../../Analytics/analytics';
 import CustomSwitchToggle from '../../Widgets/CustomSwitchToggle';
 import CustomTooltip from '../../Widgets/CustomTooltip';
+import { callServiceWrapper } from '../../../../../utils/api';
 
 function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
@@ -59,6 +61,116 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
     (state) => state.analyticsCategory
   );
   const isOpportunity = data.canRequestQuote;
+
+  const triggerArchive = async () => {
+    effects.setCustomState({
+      key: 'toaster',
+      value: { isOpen: false}});
+
+    const archived = true;
+
+    const postData = {
+      "quoteId": data?.source?.id,
+       "archived": archived
+    };
+
+    try {
+      const response = await callServiceWrapper(archiveOrRestoreRenewals,gridProps?.archiveOrRestoreRenewalsEndpoint, postData);
+
+      if (response.errors.length > 0) {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...archiveToasterFail },
+        });
+      } else {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...archiveToasterSuccess },
+        });
+      }
+    } catch (error) {
+      effects.setCustomState({
+        key: 'toaster',
+        value: { ...archiveToasterFail },
+      });
+    }
+  };
+
+  const triggerRestore = async () => {
+    effects.setCustomState({
+      key: 'toaster',
+      value: { isOpen: false}});
+
+    const archived = false;
+
+    const postData = {
+      "quoteId": data?.source?.id,
+       "archived": archived
+    };
+
+    try {
+      const response = await callServiceWrapper(archiveOrRestoreRenewals,gridProps?.archiveOrRestoreRenewalsEndpoint, postData);
+
+      if (response.errors.length > 0) {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...restoreToasterFail },
+        });
+      } else {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...restoreToasterSuccess },
+        });
+      }
+    } catch (error) {
+      effects.setCustomState({
+        key: 'toaster',
+        value: { ...restoreToasterFail },
+      });
+    }
+  };
+
+    const archiveToasterSuccess = {
+      isOpen: true,
+      origin: 'archiveRenewals',
+      isAutoClose: true,
+      isSuccess: true,
+      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.archiveToasterSuccess).replace("{0}", data?.endUser?.name?.text),
+      Child: (
+        <button onClick={triggerRestore}>
+            {getDictionaryValueOrKey(gridProps?.archiveLabels?.undo)}
+        </button>
+      ),
+    };
+
+    const archiveToasterFail = {
+      isOpen: true,
+      origin: 'archiveRenewals',
+      isAutoClose: true,
+      isSuccess: false,
+      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.archiveToasterFail),
+    };
+
+    const restoreToasterSuccess = {
+      isOpen: true,
+      origin: 'restoreRenewals',
+      isAutoClose: true,
+      isSuccess: true,
+      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.restoreToasterSuccess).replace("{0}", data?.endUser?.name?.text),
+      Child: (
+        <button onClick={triggerArchive}>
+            {getDictionaryValueOrKey(gridProps?.archiveLabels?.undo)}
+        </button>
+      ),
+    };
+
+    const restoreToasterFail = {
+      isOpen: true,
+      origin: 'restoreRenewals',
+      isAutoClose: true,
+      isSuccess: false,
+      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.restoreToasterFail),
+    };
 
   const downloadXLS = () => {
     try {
@@ -297,7 +409,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
   }
   if (gridProps?.enableArchiveQuote) {
     buttons.push(
-      <button onClick={console.log('archive')} key="archive">
+      <button onClick={triggerArchive} key="archive">
         <ArchiveDetailsIcon className="cmp-renewal-preview__download--icon" />
         <span
           className={gridProps?.enableArchiveQuote ? 'separator' : undefined}

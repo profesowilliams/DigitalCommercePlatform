@@ -498,7 +498,14 @@ use(["../../../common/utils.js"], function(utils) {
       }
 
       // Archive Labels
-      const archiveLabelsList = ["archive"];
+      const archiveLabelsList = [
+        "archive",
+        "archiveToasterSuccess",
+        "archiveToasterFail",
+        "restoreToasterSuccess",
+        "restoreToasterFail",
+        "undo",
+      ];
       archiveLabelsList.map(
         (archiveLabelsItem) =>
           (archiveLabels[archiveLabelsItem] =

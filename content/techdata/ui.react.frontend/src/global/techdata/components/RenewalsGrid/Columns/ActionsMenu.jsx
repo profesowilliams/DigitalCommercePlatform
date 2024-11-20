@@ -23,7 +23,9 @@ import {
   generateFileFromPost,
   getDictionaryValue,
   getDictionaryValueOrKey,
+  archiveOrRestoreRenewals,
 } from '../../../../../utils/utils';
+import { callServiceWrapper } from '../../../../../utils/api';
 
 function ActionsMenu({
   config,
@@ -46,6 +48,7 @@ function ActionsMenu({
   const analyticsCategory = useRenewalGridState((st) => st.analyticsCategory);
   const getDetailUrl = (id) =>
     `${window.location.origin}${detailUrl}.html?id=${data?.source?.id ?? ''}`;
+  const effects = useRenewalGridState((state) => state.effects);
 
   let analyticsData = {
     source: data.source,
@@ -63,6 +66,7 @@ function ActionsMenu({
     enableShareOption,
     enableReviseOption,
     enableRequestQuote,
+    archiveOrRestoreRenewalsEndpoint,
   } = endpoints;
 
   // TODO: connect proper fields to enableRestore and enableArchive
@@ -173,11 +177,74 @@ function ActionsMenu({
     onClose();
     setCustomState({ key: 'revisionFlyout', value: { data, show: true } });
   };
-  const triggerArchive = () => {
+
+  const triggerArchive = async () => {
+    effects.setCustomState({
+      key: 'toaster',
+      value: { isOpen: false}});
     onClose();
+    const archived = true;
+
+    const postData = {
+      "quoteId": data?.source?.id,
+       "archived": archived
+    };
+
+    try {
+      const response = await callServiceWrapper(archiveOrRestoreRenewals,archiveOrRestoreRenewalsEndpoint, postData);
+
+      if (response.errors.length > 0) {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...archiveToasterFail },
+        });
+      } else {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...archiveToasterSuccess },
+        });
+      }
+    } catch (error) {
+      effects.setCustomState({
+        key: 'toaster',
+        value: { ...archiveToasterFail },
+      });
+    }
   };
-  const triggerRestore = () => {
+
+  const triggerRestore = async () => {
+    effects.setCustomState({
+      key: 'toaster',
+      value: { isOpen: false}});
     onClose();
+    const archived = false;
+
+    const postData = {
+      "quoteId": data?.source?.id,
+       "archived": archived
+    };
+
+    try {
+      const response = await callServiceWrapper(archiveOrRestoreRenewals,archiveOrRestoreRenewalsEndpoint, postData);
+
+      if (response.errors.length > 0) {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...restoreToasterFail },
+        });
+      } else {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...restoreToasterSuccess },
+        });
+      }
+    } catch (error) {
+      effects.setCustomState({
+        key: 'toaster',
+        value: { ...restoreToasterFail },
+      });
+    }
+
     enableRestore &&
       !menuOptions?.showDownloadXLSButton &&
       !menuOptions?.showDownloadPDFButton &&
@@ -187,6 +254,48 @@ function ActionsMenu({
       !canCopy &&
       redirectToRenewalDetail(detailUrl, data?.source?.id, analyticsData);
   };
+
+    const archiveToasterSuccess = {
+      isOpen: true,
+      origin: 'archiveRenewals',
+      isAutoClose: true,
+      isSuccess: true,
+      message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterSuccess).replace("{0}", data?.endUser?.name),
+      Child: (
+        <button onClick={triggerRestore}>
+            {getDictionaryValueOrKey(config?.archiveLabels?.undo)}
+        </button>
+      ),
+    };
+
+    const archiveToasterFail = {
+      isOpen: true,
+      origin: 'archiveRenewals',
+      isAutoClose: true,
+      isSuccess: false,
+      message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterFail),
+    };
+
+    const restoreToasterSuccess = {
+      isOpen: true,
+      origin: 'restoreRenewals',
+      isAutoClose: true,
+      isSuccess: true,
+      message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterSuccess).replace("{0}", data?.endUser?.name),
+      Child: (
+        <button onClick={triggerArchive}>
+            {getDictionaryValueOrKey(config?.archiveLabels?.undo)}
+        </button>
+      ),
+    };
+
+    const restoreToasterFail = {
+      isOpen: true,
+      origin: 'restoreRenewals',
+      isAutoClose: true,
+      isSuccess: false,
+      message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterFail),
+    };
 
   return (
     <Dialog

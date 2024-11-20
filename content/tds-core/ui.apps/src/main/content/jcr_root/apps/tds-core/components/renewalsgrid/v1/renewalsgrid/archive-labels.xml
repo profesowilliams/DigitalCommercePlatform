@@ -19,6 +19,36 @@
                     fieldDescription="mainDashboard.renewal.archive.label.restore"
                     fieldLabel="Restore"
                     name="./archiveLabels/restore"/>
+                <archiveToasterSuccess
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldDescription="mainDashboard.renewal.archive.label.archiveToasterSuccess"
+                        fieldLabel="Archive toaster success"
+                        name="./archiveLabels/archiveToasterSuccess"/>
+                <archiveToasterFail
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldDescription="mainDashboard.renewal.archive.label.archiveToasterFail"
+                        fieldLabel="Archive toaster Fail"
+                        name="./archiveLabels/archiveToasterFail"/>
+                <restoreToasterSuccess
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldDescription="mainDashboard.renewal.archive.label.restoreToasterSuccess"
+                        fieldLabel="Restore toaster success"
+                        name="./archiveLabels/restoreToasterSuccess"/>
+                <restoreToasterFail
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldDescription="mainDashboard.renewal.archive.label.restoreToasterFail"
+                        fieldLabel="Restore toaster Fail"
+                        name="./archiveLabels/restoreToasterFail"/>
+                <undoArchive
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldDescription="mainDashboard.renewal.archive.label.undo"
+                        fieldLabel="Undo archive"
+                        name="./archiveLabels/undo"/>
             </items>
         </archiveLablelsGroup>
     </items>

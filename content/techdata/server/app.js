@@ -5372,6 +5372,11 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
       "Confirmation/complete message",
     "mainDashboard.renewal.archive.label.archive": "Archive",
     "mainDashboard.renewal.archive.label.restore": "Restore",
+    "mainDashboard.renewal.archive.label.archiveToasterSuccess": "Selected Quotes for {0} have been archived successfully.",
+    "mainDashboard.renewal.archive.label.archiveToasterFail": "Unable to archive selected quote at this time. Try again and if error persist contact your Tech Data Account Manager.",
+    "mainDashboard.renewal.archive.label.restoreToasterSuccess": "Selected Quotes for {0} have been restored successfully.",
+    "mainDashboard.renewal.archive.label.restoreToasterFail": "Unable to restore selected quote at this time. Try again and if error persist contact your Tech Data Account Manager.",
+    "mainDashboard.renewal.archive.label.undo": "Undo",
 
     "mainDashboard.renewal.properties.label.genericError":
       "Unknown error has occurred. Please try again.",
@@ -5999,6 +6004,26 @@ app.post("/ui-renewal/v1/CopyQuote", function (req, res) {
   setTimeout(() => {
     return res.status(200).json(success);
   }, 1000);
+});
+
+app.post("/ui-renewal/v1/ArchiveOrRestoreRenewals", function (req, res) {
+  const { quoteId, archived } = req.body;
+  console.log("ArchiveOrRestoreRenewals", quoteId, archived, req.body);
+
+  const success = {
+    content: {
+     status: "OK",
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+
+    setTimeout(() => {
+      return res.status(200).json(success);
+    }, 1000);
 });
 
 app.get("/ui-commerce/v2/orders", (req, res) => {

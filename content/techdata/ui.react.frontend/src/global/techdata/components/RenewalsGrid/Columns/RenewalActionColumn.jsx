@@ -64,6 +64,7 @@ function _RenewalActionColumn({ eventProps, config }) {
     renewalDetailsEndpoint,
     exportXLSRenewalsEndpoint,
     exportPDFRenewalsEndpoint,
+    archiveOrRestoreRenewalsEndpoint,
   } = endpoints;
 
   const orderEndpoints = {
