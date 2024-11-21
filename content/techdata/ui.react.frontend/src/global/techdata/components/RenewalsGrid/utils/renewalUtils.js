@@ -59,30 +59,30 @@ export function mapServiceData(response) {
     const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;
     const refinementGroups = mappedResponse?.data?.content?.refinementGroups;
     const showImportButton =
-      mappedResponse?.data?.content?.importHeader?.isDisplay;
+        mappedResponse?.data?.content?.importHeader?.isDisplay;
 
     if (mappedResponse.status !== 200 && !mappedResponse.data) {
-      return {
-        data: {
-          content: {
-            items: null,
-            totalItems,
-            pageCount,
-            pageNumber,
-            refinementGroups,
-            showImportButton,
-          },
-        },
-      };
+        return {
+            data: {
+                content: {
+                    items: null,
+                    totalItems,
+                    pageCount,
+                    pageNumber,
+                    refinementGroups,
+                    showImportButton,
+                },
+            },
+        };
     }
 
     mappedResponse.data.content = {
-      items: itemsWithActions,
-      totalItems,
-      pageCount,
-      pageNumber,
-      refinementGroups,
-      showImportButton,
+        items: itemsWithActions,
+        totalItems,
+        pageCount,
+        pageNumber,
+        refinementGroups,
+        showImportButton,
     };
 
     return mappedResponse;
@@ -248,10 +248,26 @@ export async function fetchRenewalsFilterByPost(config) {
         if (filterLocalStorage && filterLocalStorage.filterList) {
             const filterList = filterLocalStorage.filterList;
 
-            filterList[0].childIds.forEach(parentId => {
-                const parent = filterList[parentId];
-                if (parent && parent.childIds && parent.childIds.length > 0) {
-                    parent.childIds.forEach(childId => {
+            filterList.forEach((parent) => {
+                // Special handling for ShowArchived
+                if (parent.field === "Archives") {
+                    if (parent.checked) {
+                        params["ShowArchived"] = true; // Add ShowArchived as true
+                    }
+                    return; // Skip further processing for Archives
+                }
+
+                // Include filters without childIds if checked
+                if (parent.childIds.length === 0 && parent.checked) {
+                    if (!params[parent.field]) {
+                        params[parent.field] = [];
+                    }
+                    params[parent.field].push(parent.title);
+                }
+
+                // Process filters with childIds
+                if (parent.childIds && parent.childIds.length > 0) {
+                    parent.childIds.forEach((childId) => {
                         const child = filterList[childId];
                         if (child && child.checked) {
                             if (!params[child.field]) {
@@ -262,6 +278,11 @@ export async function fetchRenewalsFilterByPost(config) {
                     });
                 }
             });
+
+            // Ensure no duplicate ShowArchived entries
+            if (params["Archives"]) {
+                delete params["Archives"];
+            }
         }
 
         if (params.Type === undefined) {

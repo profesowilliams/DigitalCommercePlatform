@@ -1,18 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 
-/**
- * FileUpload component for uploading files.
- * @param {Object} props - Component properties.
- * @param {string} props.headingText - Heading text for the file upload component.
- * @param {string} props.secondaryText - Secondary text for additional information on file upload.
- * @param {string} props.buttonText - Text for the file selection button.
- * @param {string} props.iconName - Name of the icon to display.
- * @param {string} props.iconState - State of the icon (e.g., "default").
- * @param {string} props.maxFileSize - Maximum file size allowed for uploads.
- * @param {Function} props.onChange - Event handler function for file selection change.
- * @returns {JSX.Element} The rendered FileUpload component.
- */
 export default function FileUpload({
   headingText,
   secondaryText,
@@ -23,9 +11,11 @@ export default function FileUpload({
   onChange,
 }) {
   const isUploading = useRef(false);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   /**
    * Handles file upload by sending a POST request to the File Upload API.
+   * If the upload succeeds, appends the response data to the state.
    * If the upload fails, dispatch an event with the error details.
    * @param {File} file - The file to be uploaded.
    */
@@ -43,24 +33,29 @@ export default function FileUpload({
         formData,
         {
           headers: {
-            Site: 'EU',
+            Site: 'VN',
             'Content-Type': 'multipart/form-data',
             Consumer: 'Postman',
             'Accept-Language': 'en-US',
             TraceId: '123456',
+            Sessionid: 'YmQ0MmM5ZDMtYWQyZi00ZmEwLTk2NTQtMGMyNmYzZjgzOGJk',
           },
         }
       )
       .then((response) => {
         console.log('Upload successful:', response.data);
+
+        // Append the response data to the uploadedFiles state
+        setUploadedFiles((prevFiles) => [
+          ...prevFiles,
+          ...response.data.content.uploadStatus,
+        ]);
       })
       .catch((error) => {
-        // Check if the response has an error with "isError" set to true
         const errorMessage =
           error.response?.data?.error?.isError &&
           error.response.data.error.messages?.[0];
 
-        // Log the error for debugging
         console.log(
           'Dispatching error event for file:',
           file.name,
@@ -68,7 +63,6 @@ export default function FileUpload({
           errorMessage
         );
 
-        // Dispatch an event to communicate the file error back to File.tsx
         const errorEvent = new CustomEvent('file-upload-error', {
           detail: {
             fileName: file.name,
@@ -77,7 +71,7 @@ export default function FileUpload({
           bubbles: true,
           composed: true,
         });
-        document.dispatchEvent(errorEvent); // Dispatch to be caught by File.tsx
+        document.dispatchEvent(errorEvent);
       });
   };
 
@@ -108,6 +102,11 @@ export default function FileUpload({
       }
     };
   }, []);
+
+  // Log uploaded files to console whenever the state changes
+  useEffect(() => {
+    console.log('Updated uploadedFiles state:', uploadedFiles);
+  }, [uploadedFiles]);
 
   return (
     <div className="file-upload-container">

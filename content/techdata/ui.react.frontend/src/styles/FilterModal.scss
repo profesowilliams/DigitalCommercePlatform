@@ -52,6 +52,44 @@ $icon-size: 24px !default; // Default size for icons
   }
 
   /**
+ * Styles for the body of the flyout container within the filter modal.
+ *
+ * @name tds-flyout-body
+ * @description 
+ * Defines the structure and layout for the flyout body, ensuring it is 
+ * vertically flexible and occupies the full available height.
+ * 
+ * @output 
+ * - Sets the display to flex to enable flexible layouts.
+ * - Configures a column-based flex direction for vertical stacking.
+ * - Ensures the flyout body takes up the full height.
+ *
+ * @group FilterModal
+ */
+  tds-flyout-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  /**
+ * Styles for the active state of the filter tags container.
+ *
+ * @name filter-tags-container.active
+ * @description 
+ * Adds an auto margin to the top of the filter tags container in its active state,
+ * aligning it with the bottom of the modal or flyout.
+ *
+ * @output 
+ * - Adjusts the top margin dynamically based on container state.
+ *
+ * @group FilterModal
+ */
+  .filter-tags-container {
+    margin-top: auto;
+  }
+
+  /**
    * Container for the renewal filter with a count badge.
    *
    * @name cmp-renewals-filter-container
@@ -157,7 +195,9 @@ $icon-size: 24px !default; // Default size for icons
            * @name filter-accordion__item--group p.active:before
            */
           &:before {
-            @include icon-background('/content/dam/global-shared/icons/default/chevron-up.svg');
+            @include icon-background(
+              '/content/dam/global-shared/icons/default/chevron-up.svg'
+            );
           }
         }
 
@@ -167,7 +207,9 @@ $icon-size: 24px !default; // Default size for icons
          * @name filter-accordion__item--group p:before
          */
         &:before {
-          @include icon-background('/content/dam/global-shared/icons/default/chevron-down.svg');
+          @include icon-background(
+            '/content/dam/global-shared/icons/default/chevron-down.svg'
+          );
         }
       }
     }

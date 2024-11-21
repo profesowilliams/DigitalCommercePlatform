@@ -79,13 +79,8 @@ const FilterModal = ({
     )
       filterData.refinements.push({
         name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-        searchKey: 'archives',
-        options: [
-          {
-            searchKey: 'archives',
-            text: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-          },
-        ],
+        searchKey: 'Archives',
+        childIds: [11],
       });
     aemFilterData = normaliseAPIData(filterData.refinements);
   } else if (aemData.filterType === 'static') {
@@ -149,37 +144,6 @@ const FilterModal = ({
   const rootIds = root ? root.childIds : [];
   const filterDom = useRef();
   const filterBodyDom = useRef();
-
-  // useEffect(() => {
-  //   function dynamicFilterAdjustmnet() {
-  //     const subHeaderElement = document.querySelector('.subheader > div > div');
-  //     if (!subHeaderElement) return;
-  //     const { top, height } = document
-  //       .querySelector('.subheader > div > div')
-  //       .getBoundingClientRect();
-  //     if (top > 0) topReference.current = { top, height };
-  //     const gap = 7;
-  //     let topCalculation = top + gap + height;
-  //     if (dateSelected === 'custom' && topReference?.current) {
-  //       const { top, height } = topReference.current;
-  //       topCalculation = top + gap + height;
-  //       window.scrollTo(0, 0);
-  //     }
-  //     filterDom.current.style.top = `${topCalculation}px`;
-  //     filterDom.current.style.height = `calc(100vh - ${topCalculation}px)`;
-  //     filterBodyDom.current.style.height = `calc(100% - ${192}px)`;
-  //     document.body.style.overflow = 'hidden';
-  //   }
-  //   const timer = setTimeout(dynamicFilterAdjustmnet, 0);
-  //   window.addEventListener('scroll', dynamicFilterAdjustmnet);
-  //   window.addEventListener('load', dynamicFilterAdjustmnet);
-  //   return () => {
-  //     document.body.style.overflow = 'initial';
-  //     clearTimeout(timer);
-  //     window.removeEventListener('scroll', dynamicFilterAdjustmnet);
-  //     window.removeEventListener('load', dynamicFilterAdjustmnet);
-  //   };
-  // }, []);
 
   const flyoutRef = useRef(null);
 

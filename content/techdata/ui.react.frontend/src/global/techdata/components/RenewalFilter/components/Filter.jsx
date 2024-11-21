@@ -33,8 +33,16 @@ function Filter({ id }) {
     setFilterList(filtersCopy);
   };
 
-  const SubFilterList = () =>
-    childIds.map((childId) => <SubFilter key={childId} id={childId} />);
+  const SubFilterList = () => {
+    // If the filter title is "Archives", use `id` instead of `childId`
+    if (filter.field === 'Archives') {
+
+      return <SubFilter key={id} id={id} />;
+    }
+
+    // Otherwise, map over `childIds` as usual
+    return childIds.map((childId) => <SubFilter key={childId} id={childId} />);
+  };
 
   const checkCount = (f) => {
     if (dateSelected && f.field === 'date') {
@@ -63,7 +71,7 @@ function Filter({ id }) {
 
   return (
     <>
-      {filter.field !== 'archives' ? (
+      {filter.field !== 'Archives' ? (
         <>
           <div onClick={handleFilterClick} className="filter-accordion__item">
             <div className="filter-accordion__item--group">
@@ -97,7 +105,7 @@ function Filter({ id }) {
           )}
         </>
       ) : (
-        childIds.length > 0 && (
+        filter.field === 'Archives' && (
           <div
             className={computeClassName(
               'filter-option__options filter-archives'
