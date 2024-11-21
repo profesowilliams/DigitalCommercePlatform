@@ -39,6 +39,9 @@
           font-family: 'Arial';
           margin: 0;
         }
+        button {
+          color: $brand-cobalt;
+        }
       }
 
       &__error-title {
@@ -49,6 +52,7 @@
 
     .cmp-toaster-content-error {
       @include toasterContent($borderColor: #cd163f);
+      background-color: $banner-cherry;
 
       p {
         margin-bottom: 0;
