@@ -13,16 +13,18 @@ import {
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 export const renewalsDefinitions = (componentProp) => {
-
     const renderPriceColumn = (componentProp, data) => {
         if (componentProp.enableRequestQuote && data.canRequestQuote) {
             return <span className="non-request-quote">-</span>
         } else if (componentProp.enableRequestQuote && data?.quoteRequestedTime) {
             return ( <span className="requested-quote"
               >{getDictionaryValueOrKey(componentProp.requestQuote.requestedQuoteHeading)}
-              <tds-tooltip text="testing 123"  type="html" placement="bottom" arrow>
+              <Tooltip text={`<p><b>${getDictionaryValueOrKey(componentProp.requestQuote.toolTipHeading)}</b><br/><span>${getDictionaryValueOrKey(componentProp.requestQuote.timeStampRequested)}: 05/10/2024</span>
+                <p>${getDictionaryValueOrKey(componentProp.requestQuote.toolTipSuccessMessage)}</p>
+              </p>`}
+                type="html" placement="top" arrow={true} theme="dark">
                 <InfoIcon width="16" height="16" />
-              </tds-tooltip>
+              </Tooltip>
               </span> );
         } else {
             return (
@@ -34,7 +36,7 @@ export const renewalsDefinitions = (componentProp) => {
         }
     }
 
-  const createColumnComponent = (eventProps, aemDefinition) => {  
+  const createColumnComponent = (eventProps, aemDefinition) => {
     const { columnKey } = aemDefinition;
     const { value, data } = eventProps;
     const columnComponents = {
@@ -67,7 +69,7 @@ export const renewalsDefinitions = (componentProp) => {
     renewedduration: 186,
     dueDays: 127,
     dueDate: 110,
-    total: 110,
+    total: 131,
     actions: 100,
   };
 
@@ -79,7 +81,7 @@ export const renewalsDefinitions = (componentProp) => {
     agreementNumber: '130px',
     renewedduration: '200.632px',
     dueDays: '143.737px',
-    dueDate: '110.526px',
+    dueDate: '122.526px',
     total: '110.526px',
     actions: '100px',
   };
@@ -100,7 +102,7 @@ export const renewalsDefinitions = (componentProp) => {
     ...(aemDefinition?.type === 'plainText' ? { cellHeight: () => 45 } : {}),
     minWidth: columnsMinWidth[aemDefinition?.columnKey] || null,
     width: columnsWidth[aemDefinition?.columnKey] || null,
-    resizable: false, 
+    resizable: false,
     ...(fieldsWithCellStyle.includes(aemDefinition?.columnKey) ? {cellStyle} : {})
   });
 

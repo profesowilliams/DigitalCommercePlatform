@@ -99,6 +99,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
       setRequestObj({});
       setAccessErrObj([]);
     }
+    console.log(vendorName, quoteType, ":Testing")
     if (vendorName && quoteType) {
       setRequestObj({
         ...requestObj,
@@ -111,6 +112,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
         'EndUserName': endUserName,
         'SkipQuotAccessValidation': false,
         'Language': 'en-gb',
+        'EmailBody': getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteDescription),
+        'Signature': getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutSignatureLabel)
       });
     }
   }, [shareFlyoutConfig]);

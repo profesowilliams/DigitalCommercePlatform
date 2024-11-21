@@ -440,7 +440,8 @@ use(["../../../common/utils.js"], function (utils) {
       "requestQuoteCommentCountText",
       "requestQuoteCommentCount",
       "errorToastMessage",
-      "quoteRequestedMessageToolTip",
+      "toolTipHeading",
+      "timeStampRequested",
       "toolTipSuccessMessage",
     ];
 
