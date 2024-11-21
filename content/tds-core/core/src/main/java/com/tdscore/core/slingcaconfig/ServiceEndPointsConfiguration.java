@@ -233,4 +233,7 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Manage Subscription Endpoint", description = "Manage Subscription Endpoint")
     String manageSubscriptionEndpoint();
 
+    @Property(label = "Archive or restore renewals Endpoint", description = "Archive or restore renewals Endpoint")
+    String archiveOrRestoreRenewalsEndpoint();
+
 }

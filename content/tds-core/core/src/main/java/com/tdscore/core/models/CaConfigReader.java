@@ -314,6 +314,8 @@ public class CaConfigReader {
 
     private String languageVersion;
 
+    private String archiveOrRestoreRenewalsEndpoint;
+
     @PostConstruct
     public void init() {
 
@@ -386,6 +388,7 @@ public class CaConfigReader {
         renewalGetStatusEndpoint = serviceEndPointsConfiguration.renewalGetStatusEndpoint();
         exportXLSRenewalsEndpoint = serviceEndPointsConfiguration.exportXLSRenewalsEndpoint();
         exportPDFRenewalsEndpoint = serviceEndPointsConfiguration.exportPDFRenewalsEndpoint();
+        archiveOrRestoreRenewalsEndpoint = serviceEndPointsConfiguration.archiveOrRestoreRenewalsEndpoint();
      
         accountLookUpEndpoint = serviceEndPointsConfiguration.accountLookUpEndpoint();
         vendorPartNoLookUpEndpoint = serviceEndPointsConfiguration.vendorPartNoLookUpEndpoint();
@@ -952,5 +955,9 @@ public class CaConfigReader {
 
     public String getLanguageVersion() {
         return  languageVersion;
+    }
+
+    public String getArchiveOrRestoreRenewalsEndpoint() {
+        return archiveOrRestoreRenewalsEndpoint;
     }
 }

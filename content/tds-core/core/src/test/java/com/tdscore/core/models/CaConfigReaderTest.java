@@ -102,6 +102,7 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.configurationsEndpoint()).thenReturn("configurationsEndpoint");
         when(serviceEndPointsConfiguration.consumerRequestHeader()).thenReturn("consumerRequestHeader");
         when(serviceEndPointsConfiguration.exportPDFRenewalsEndpoint()).thenReturn("exportPDFRenewalsEndpoint");
+        when(serviceEndPointsConfiguration.archiveOrRestoreRenewalsEndpoint()).thenReturn("archiveOrRestoreRenewalsEndpoint");
         when(serviceEndPointsConfiguration.accountLookUpEndpoint()).thenReturn("accountLookUpEndpoint");
         when(serviceEndPointsConfiguration.vendorPartNoLookUpEndpoint()).thenReturn("vendorPartNoLookUpEndpoint");
         when(serviceEndPointsConfiguration.addNewProductEndpoint()).thenReturn("addNewProductEndpoint");
@@ -210,6 +211,7 @@ class CaConfigReaderTest {
         assertEquals("productEmptyImageUrl", underTest.getProductEmptyImageUrl());
         assertEquals("agGridLicenseKey", underTest.getAgGridLicenseKey());
         assertEquals("exportPDFRenewalsEndpoint", underTest.getExportPDFRenewalsEndpoint());
+        assertEquals("archiveOrRestoreRenewalsEndpoint", underTest.getArchiveOrRestoreRenewalsEndpoint());
         assertEquals("accountLookUpEndpoint", underTest.getAccountLookUpEndpoint());
         assertEquals("vendorPartNoLookUpEndpoint", underTest.getVendorPartNoLookUpEndpoint());
         assertEquals("addNewProductEndpoint", underTest.getAddNewProductEndpoint());
