@@ -208,7 +208,7 @@ function _RenewalActionColumn({ eventProps, config }) {
   return (
     <>
       <div
-        className="cmp-renewal-action-container"
+        className={(isIconEnabled && !canRequestQuote) || data.vendor.name === 'Adobe' ? "cmp-renewal-action-container" : "cmp-renewal-action-container cart-disabled"}
         style={{ position: 'relative' }}
         key={Math.random()}
       >

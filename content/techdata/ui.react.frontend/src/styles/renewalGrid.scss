@@ -209,6 +209,13 @@
     font-size: 14px;
     line-height: 16px;
     cursor: pointer;
+
+    tds-tooltip {
+        --tooltip-background: #000C21 !important;
+        --tooltip-text-color: #FFFFFF !important;
+        --tooltip-width: 246px !important;
+        --tooltip-hide : none;
+    }
   }
   .non-request-quote {
     display: block;
@@ -613,6 +620,11 @@ span.ag-group-value {
   padding-right: 2rem;
   > * {
     cursor: pointer;
+  }
+  &.cart-disabled {
+    > .btn-common > * {
+      cursor: default;
+    }
   }
 
   .btn-common {

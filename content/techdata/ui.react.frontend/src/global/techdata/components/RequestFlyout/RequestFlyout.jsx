@@ -123,6 +123,8 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference,
       secondaryButton={false}
       classText="share-flyout request-flyout"
       isLoading={isLoading}
+      disabledButton={isLoading}
+      showLoaderIcon={true}
       onClickButton={handleRequestClick}
       buttonLabel={getDictionaryValueOrKey(requestFlyoutContent.requestQuoteButtonLabel) || 'Request'}
       loadingButtonLabel={getDictionaryValueOrKey(requestFlyoutContent.requestQuoteButtonLabel) || 'Requesting'}

@@ -124,6 +124,8 @@ export function RevisionFlyout({ store, revisionFlyoutContent, subheaderReferenc
       secondaryButton={false}
       classText="share-flyout revise-flyout"
       isLoading={isLoading}
+      disabledButton={isLoading}
+      showLoaderIcon={true}
       onClickButton={handleRevisionClick}
       buttonLabel={getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionButtonLabel) || 'Request'}
       loadingButtonLabel={getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionButtonLabel) || 'Requesting'}

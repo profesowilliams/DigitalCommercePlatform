@@ -362,7 +362,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
         'Share'
       }
       disabledButton={!enableShare}
-      isShareFlyout={true}
+      showLoaderIcon={true}
       loadingButtonLabel={
         getDictionaryValueOrKey(
           shareFlyoutContent.shareFlyoutButtonSharingLabel

@@ -19,8 +19,8 @@ export const renewalsDefinitions = (componentProp) => {
         } else if (componentProp.enableRequestQuote && data?.quoteRequestedTime) {
             return ( <span className="requested-quote"
               >{getDictionaryValueOrKey(componentProp.requestQuote.requestedQuoteHeading)}
-              <Tooltip text={`<p><b>${getDictionaryValueOrKey(componentProp.requestQuote.toolTipHeading)}</b><br/><span>${getDictionaryValueOrKey(componentProp.requestQuote.timeStampRequested)}: 05/10/2024</span>
-                <p>${getDictionaryValueOrKey(componentProp.requestQuote.toolTipSuccessMessage)}</p>
+              <Tooltip text={`<p style="font-size: 12px; line-height: 18px"><b>${getDictionaryValueOrKey(componentProp.requestQuote.toolTipHeading)}</b><br/><span style="font-size: 12px; line-height: 18px; display: block;">${getDictionaryValueOrKey(componentProp.requestQuote.timeStampRequested)}:${data?.quoteRequestedTime}</span>
+                <p style="font-size: 16px; line-height: 21px">${getDictionaryValueOrKey(componentProp.requestQuote.toolTipSuccessMessage)}</p>
               </p>`}
                 type="html" placement="top" arrow={true} theme="dark">
                 <InfoIcon width="16" height="16" />

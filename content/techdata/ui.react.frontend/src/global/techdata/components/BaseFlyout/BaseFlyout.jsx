@@ -26,7 +26,7 @@ function BaseFlyout({
   analyticsCallback,
   buttonsSection = null,
   classText = '',
-  isShareFlyout,
+  showLoaderIcon,
   loadingButtonLabel
 }) {
   const BottomContent = () => bottomContent('footer');
@@ -85,13 +85,13 @@ function BaseFlyout({
                      analyticsCallback={analyticsCallback}
                    >
                      {
-                       (isLoading && isShareFlyout) ? (
+                       (isLoading && showLoaderIcon) ? (
                          <>
                            <SyncIcon />{getDictionaryValueOrKey(loadingButtonLabel)}
                          </>
                        ) : getDictionaryValueOrKey(buttonLabel)
                      }
-                     {isLoading && !isShareFlyout && <LoaderIcon />}
+                     {isLoading && !showLoaderIcon && <LoaderIcon />}
                    </Button>
               }
             </div>
