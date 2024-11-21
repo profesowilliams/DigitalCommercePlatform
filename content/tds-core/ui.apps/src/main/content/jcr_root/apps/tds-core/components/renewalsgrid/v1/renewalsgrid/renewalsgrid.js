@@ -696,6 +696,14 @@ use(["../../../common/utils.js"], function (utils) {
     }
 
     if (
+      this.archiveOrRestoreRenewalsEndpoint != null &&
+      this.serviceData.uiServiceDomain
+    ) {
+      jsonObject["archiveOrRestoreRenewalsEndpoint"] =
+        this.serviceData.uiServiceDomain + this.archiveOrRestoreRenewalsEndpoint;
+    }
+
+    if (
       this.updateRenewalOrderEndpoint != null &&
       this.serviceData.uiServiceDomain
     ) {

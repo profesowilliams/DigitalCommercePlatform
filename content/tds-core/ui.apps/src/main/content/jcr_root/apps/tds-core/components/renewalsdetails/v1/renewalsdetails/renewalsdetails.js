@@ -667,6 +667,14 @@ use(["../../../common/utils.js"], function(utils) {
           this.serviceData.uiServiceDomain + this.exportPDFRenewalsEndpoint;
       }
 
+      if (
+        this.archiveOrRestoreRenewalsEndpoint != null &&
+        this.serviceData.uiServiceDomain
+      ) {
+        jsonObject["archiveOrRestoreRenewalsEndpoint"] =
+          this.serviceData.uiServiceDomain + this.archiveOrRestoreRenewalsEndpoint;
+      }
+
       if (this.renewalDetailsEndpoint && this.serviceData.uiServiceDomain) {
         jsonObject["renewalDetailsEndpoint"] =
           this.serviceData.uiServiceDomain + this.renewalDetailsEndpoint;
