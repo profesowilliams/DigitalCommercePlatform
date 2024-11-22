@@ -4997,7 +4997,8 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                    "femPercentage": 0.0,
                                    "pomPercentage": 0.0,
                                    "samPercentage": 0.0,
-                                   "nsmPercentage": 0.0
+                                   "nsmPercentage": 0.0,
+                                   "archived": false,
                                }
                            ]
                        },
