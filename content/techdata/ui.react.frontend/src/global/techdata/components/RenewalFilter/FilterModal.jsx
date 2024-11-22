@@ -80,7 +80,6 @@ const FilterModal = ({
       filterData.refinements.push({
         name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
         searchKey: 'Archives',
-        childIds: [11],
       });
     aemFilterData = normaliseAPIData(filterData.refinements);
   } else if (aemData.filterType === 'static') {

@@ -28,7 +28,7 @@
  * Variables for reusable values.
  */
 $flyout-offset: -112px !default; // Offset for flyout positioning
-$flyout-offset-place-self: flex-end !default; // Alignment for flyout placement
+$flyout-offcanvas-place-self: flex-end !default; // Alignment for flyout placement
 $filter-count-height: 1.5rem !default; // Height of filter count badge
 $filter-count-radius: 12px !default; // Border radius for filter count badge
 $icon-size: 24px !default; // Default size for icons
@@ -40,7 +40,12 @@ $icon-size: 24px !default; // Default size for icons
  */
 .cmp-renewal-filter {
   --flyout-offset: #{$flyout-offset};
-  --flyout-offset-place-self: #{$flyout-offset-place-self};
+  --flyout-offcanvas-place-self: #{$flyout-offcanvas-place-self};
+  --flyout-offcanvas-margin-top: auto;
+  --flyout-offcanvas-body-height: calc(100vh - 263px);
+  --flyout-offcanvas-body-display: flex;
+  --flyout-offcanvas-body-flex-direction: column;
+  --flyout-offcanvas-body-position: relative;
 
   /**
    * Styles for the flyout backdrop.
@@ -87,6 +92,10 @@ $icon-size: 24px !default; // Default size for icons
  */
   .filter-tags-container {
     margin-top: auto;
+    position: absolute;
+    flex-shrink: 0;
+    bottom: 0;
+    bottom: 50px;
   }
 
   /**
@@ -142,6 +151,9 @@ $icon-size: 24px !default; // Default size for icons
  * @name filter-modal-container__popup
  */
 .filter-modal-container__popup {
+  overflow-y: auto;
+  flex-grow: 1;
+
   /**
    * Styles for individual accordion items in the modal.
    *

@@ -257,6 +257,11 @@ export async function fetchRenewalsFilterByPost(config) {
                     return; // Skip further processing for Archives
                 }
 
+                // Skip parent filters with childIds
+                if (parent.childIds && parent.childIds.length > 0) {
+                    return; // Exclude parent filters from the query string
+                }
+
                 // Include filters without childIds if checked
                 if (parent.childIds.length === 0 && parent.checked) {
                     if (!params[parent.field]) {
@@ -265,10 +270,10 @@ export async function fetchRenewalsFilterByPost(config) {
                     params[parent.field].push(parent.title);
                 }
 
-                // Process filters with childIds
+                // Process child nodes (if any)
                 if (parent.childIds && parent.childIds.length > 0) {
                     parent.childIds.forEach((childId) => {
-                        const child = filterList[childId];
+                        const child = filterList.find((f) => f.id === childId);
                         if (child && child.checked) {
                             if (!params[child.field]) {
                                 params[child.field] = [];
@@ -279,10 +284,12 @@ export async function fetchRenewalsFilterByPost(config) {
                 }
             });
 
-            // Ensure no duplicate ShowArchived entries
-            if (params["Archives"]) {
-                delete params["Archives"];
-            }
+            // Ensure no duplicates in query parameter arrays
+            Object.keys(params).forEach((key) => {
+                if (Array.isArray(params[key])) {
+                    params[key] = [...new Set(params[key])]; // Remove duplicates
+                }
+            });
         }
 
         if (params.Type === undefined) {
