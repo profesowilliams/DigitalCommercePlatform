@@ -99,23 +99,6 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
       setRequestObj({});
       setAccessErrObj([]);
     }
-    console.log(vendorName, quoteType, ":Testing")
-    if (vendorName && quoteType) {
-      setRequestObj({
-        ...requestObj,
-        'FirstName': userData?.firstName,
-        'LastName': userData?.lastName,
-        'QuoteNumber': activeAgreementID,
-        'ViewQuote': quoteType,
-        'VendorName': vendorName,
-        'QuoteId': activeAgreementID,
-        'EndUserName': endUserName,
-        'SkipQuotAccessValidation': false,
-        'Language': 'en-gb',
-        'EmailBody': getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteDescription),
-        'Signature': getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutSignatureLabel)
-      });
-    }
   }, [shareFlyoutConfig]);
 
   useEffect(() => {
@@ -154,9 +137,23 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
     setIsLoading(true);
     setEnableShare(false);
     let toaster = null;
-    const dataObj = requestObj;
+    let dataObj = requestObj;
     if (skipValidation) {
       dataObj.SkipQuotAccessValidation = true;
+    }
+    dataObj = {
+        ...dataObj,
+        'FirstName': userData?.firstName,
+        'LastName': userData?.lastName,
+        'QuoteNumber': activeAgreementID,
+        'ViewQuote': quoteType,
+        'VendorName': vendorName,
+        'QuoteId': activeAgreementID,
+        'EndUserName': endUserName,
+        'SkipQuotAccessValidation': false,
+        'Language': 'en-gb',
+        'EmailBody': getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteDescription),
+        'Signature': getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutSignatureLabel)
     }
     const finalRequestObj = {
       Data: dataObj
