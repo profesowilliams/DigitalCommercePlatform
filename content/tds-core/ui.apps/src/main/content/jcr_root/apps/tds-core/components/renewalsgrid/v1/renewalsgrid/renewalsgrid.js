@@ -25,8 +25,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     optionDataList.map(
       (optionDataItem) =>
-        (optionData[optionDataItem] =
-          properties["./optionData/" + optionDataItem])
+      (optionData[optionDataItem] =
+        properties["./optionData/" + optionDataItem])
     );
 
     if (optionData != null) {
@@ -50,8 +50,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     productGridList.map(
       (productGridItem) =>
-        (productGrid[productGridItem] =
-          properties["./productGrid/" + productGridItem])
+      (productGrid[productGridItem] =
+        properties["./productGrid/" + productGridItem])
     );
 
     if (productGrid != null) {
@@ -130,8 +130,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     noResultsValuesList.map(
       (noResultsValuesItem) =>
-        (noResultsValues[noResultsValuesItem] =
-          properties["./searchResultsError/" + noResultsValuesItem])
+      (noResultsValues[noResultsValuesItem] =
+        properties["./searchResultsError/" + noResultsValuesItem])
     );
 
     if (
@@ -188,8 +188,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     copyFlyoutList.map(
       (copyFlyoutItem) =>
-        (copyFlyout[copyFlyoutItem] =
-          properties["./copyFlyout/" + copyFlyoutItem])
+      (copyFlyout[copyFlyoutItem] =
+        properties["./copyFlyout/" + copyFlyoutItem])
     );
 
     if (properties["./copyFlyout/copyFlyoutTitle"] != null) {
@@ -295,8 +295,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     newPurchaseFlyoutList.map(
       (property) =>
-        (newPurchaseFlyout[property] =
-          properties["./newPurchaseFlyout/" + property])
+      (newPurchaseFlyout[property] =
+        properties["./newPurchaseFlyout/" + property])
     );
 
     if (properties["./newPurchaseFlyout/termsAndConditionsLinkNewPurchase"]) {
@@ -310,14 +310,14 @@ use(["../../../common/utils.js"], function (utils) {
 
     if (
       properties[
-        "./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"
+      "./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"
       ]
     ) {
       newPurchaseFlyout["adobeResellerTermsAndConditionsLinkNewPurchase"] =
         utils.addHtmlIfNeeded(
           utils.transformUrlGivenEnvironment(
             properties[
-              "./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"
+            "./newPurchaseFlyout/adobeResellerTermsAndConditionsLinkNewPurchase"
             ]
           )
         );
@@ -355,11 +355,23 @@ use(["../../../common/utils.js"], function (utils) {
       "importButton",
       "confirmationCompleteMessage",
     ];
+
+    if (this.importQuoteDocumentEndpointValidate && this.serviceData.uiServiceDomain) {
+      importFlyout["importQuoteDocumentEndpointValidate"] =
+        this.serviceData.uiServiceDomain + this.accountLookUpEndpoint;
+    }
+
+    if (this.importQuoteDocumentEndpointExport && this.serviceData.uiServiceDomain) {
+      importFlyout["importQuoteDocumentEndpointExport"] =
+        this.serviceData.uiServiceDomain + this.accountLookUpEndpoint;
+    }
+
     importFlyoutList.map(
       (importFlyoutItem) =>
-        (importFlyout[importFlyoutItem] =
-          properties["./importFlyout/" + importFlyoutItem])
+      (importFlyout[importFlyoutItem] =
+        properties["./importFlyout/" + importFlyoutItem])
     );
+
     if (importFlyout != null) {
       jsonObject["importFlyout"] = importFlyout;
     }
@@ -376,8 +388,8 @@ use(["../../../common/utils.js"], function (utils) {
     ];
     archiveLabelsList.map(
       (archiveLabelsItem) =>
-        (archiveLabels[archiveLabelsItem] =
-          properties["./archiveLabels/" + archiveLabelsItem])
+      (archiveLabels[archiveLabelsItem] =
+        properties["./archiveLabels/" + archiveLabelsItem])
     );
     if (archiveLabels != null) {
       jsonObject["archiveLabels"] = archiveLabels;
@@ -420,8 +432,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     shareFlyoutList.map(
       (shareFlyoutItem) =>
-        (shareFlyout[shareFlyoutItem] =
-          properties["./shareFlyout/" + shareFlyoutItem])
+      (shareFlyout[shareFlyoutItem] =
+        properties["./shareFlyout/" + shareFlyoutItem])
     );
 
     if (shareFlyout != null) {
@@ -452,8 +464,8 @@ use(["../../../common/utils.js"], function (utils) {
 
     requestQuoteList.map(
       (requestQuoteItem) =>
-        (requestQuote[requestQuoteItem] =
-          properties["./requestQuote/" + requestQuoteItem])
+      (requestQuote[requestQuoteItem] =
+        properties["./requestQuote/" + requestQuoteItem])
     );
 
     if (requestQuote != null) {
@@ -476,14 +488,14 @@ use(["../../../common/utils.js"], function (utils) {
 
     revisionFlyoutList.map(
       (revisionFlyoutItem) =>
-        (revisionFlyout[revisionFlyoutItem] =
-          properties["./revisionFlyout/" + revisionFlyoutItem])
+      (revisionFlyout[revisionFlyoutItem] =
+        properties["./revisionFlyout/" + revisionFlyoutItem])
     );
 
     if (this.reviseQuoteEndpoint && this.serviceData.uiServiceDomain) {
-            revisionFlyout.reviseQuoteEndpoint =
-              this.serviceData.uiServiceDomain + this.reviseQuoteEndpoint;
-          }
+      revisionFlyout.reviseQuoteEndpoint =
+        this.serviceData.uiServiceDomain + this.reviseQuoteEndpoint;
+    }
 
     if (revisionFlyout != null) {
       jsonObject["revisionFlyout"] = revisionFlyout;
@@ -620,7 +632,7 @@ use(["../../../common/utils.js"], function (utils) {
 
     jsonObject["uiServiceEndPoint"] =
       this.serviceData.uiServiceDomain +
-        this.serviceData.renewalsGridEndpoint || "";
+      this.serviceData.renewalsGridEndpoint || "";
 
     if (this.agGridLicenseKey) {
       jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
