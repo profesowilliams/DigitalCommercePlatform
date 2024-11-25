@@ -703,19 +703,6 @@ function ConfigGrid({
             setIsRequestedQuote={setIsRequestedQuote}
           />
         </div>
-        {gridProps.enableRequestQuote && data.canRequestQuote && !data.quoteRequestedTime && (
-          <>
-              <div className="opportunity-quote">
-                <p>
-                  <InfoIcon />
-                  {gridProps.quotePreview.quoteOpportunityText}
-                </p>
-                <button onClick={openRequestFlyOut}>
-                  {gridProps.quotePreview.quoteOpportunityRequestLabel}
-                </button>
-              </div>
-          </>
-        )}
         {data.feedBackMessages &&
           data.feedBackMessages.map((message, index) => {
             const errorCriticality = message?.errorCriticality;
@@ -767,6 +754,13 @@ function ConfigGrid({
                     )}
                     {errorMessage}
                   </p>
+                  { blueBanner && gridProps.enableRequestQuote && data.canRequestQuote && !data.quoteRequestedTime &&
+                    (
+                        <button onClick={openRequestFlyOut}>
+                          {gridProps.quotePreview.quoteOpportunityRequestLabel}
+                        </button>
+                    )
+                  }
                   {redBanner && message?.jsonUrlMessage && (
                     <a href="#error" target="_blank" onClick={openErrorFlyOut}>
                       {message.jsonUrlMessage}
