@@ -84,11 +84,11 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
           value: { ...archiveToasterFail },
         });
       } else {
-        setIsArchived(true);
         effects.setCustomState({
           key: 'toaster',
           value: { ...archiveToasterSuccess },
         });
+        setIsArchived(true);
       }
     } catch (error) {
       effects.setCustomState({
@@ -119,11 +119,11 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
           value: { ...restoreToasterFail },
         });
       } else {
-        setIsArchived(false);
         effects.setCustomState({
           key: 'toaster',
           value: { ...restoreToasterSuccess },
         });
+        setIsArchived(false);
       }
     } catch (error) {
       effects.setCustomState({
