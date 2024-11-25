@@ -46,7 +46,7 @@ import CustomSwitchToggle from '../../Widgets/CustomSwitchToggle';
 import CustomTooltip from '../../Widgets/CustomTooltip';
 import { callServiceWrapper } from '../../../../../utils/api';
 
-function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
+function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequestedQuote }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
     useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
@@ -574,6 +574,8 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState }) {
             store={useRenewalGridState}
             requestFlyoutContent={gridProps.requestQuote}
             subheaderReference={document.querySelector('.subheader > div > div')}
+            setIsRequestedQuote={setIsRequestedQuote}
+            changeRefreshDetailApiState={changeRefreshDetailApiState}
           />
           <ErrorFlyout
             store={useRenewalGridState}
@@ -646,6 +648,7 @@ function ConfigGrid({
   } = data;
   const { quotePreview } = gridProps;
   const effects = useRenewalGridState((state) => state.effects);
+  const [isRequestedQuote, setIsRequestedQuote] = useState(false);
   Object.keys(quotePreview).forEach((key) => {
     if (typeof quotePreview[key] === 'string') {
       quotePreview[key] = quotePreview[key].replace(/ No:/g, ' \u2116:');
@@ -697,18 +700,21 @@ function ConfigGrid({
             data={data}
             gridProps={gridProps}
             changeRefreshDetailApiState={changeRefreshDetailApiState}
+            setIsRequestedQuote={setIsRequestedQuote}
           />
         </div>
-        {gridProps.enableRequestQuote && data.canRequestQuote && (
-          <div className="opportunity-quote">
-            <p>
-              <InfoIcon />
-              {gridProps.quotePreview.quoteOpportunityText}
-            </p>
-            <button onClick={openRequestFlyOut}>
-              {gridProps.quotePreview.quoteOpportunityRequestLabel}
-            </button>
-          </div>
+        {gridProps.enableRequestQuote && data.canRequestQuote && !data.quoteRequestedTime && (
+          <>
+              <div className="opportunity-quote">
+                <p>
+                  <InfoIcon />
+                  {gridProps.quotePreview.quoteOpportunityText}
+                </p>
+                <button onClick={openRequestFlyOut}>
+                  {gridProps.quotePreview.quoteOpportunityRequestLabel}
+                </button>
+              </div>
+          </>
         )}
         {data.feedBackMessages &&
           data.feedBackMessages.map((message, index) => {

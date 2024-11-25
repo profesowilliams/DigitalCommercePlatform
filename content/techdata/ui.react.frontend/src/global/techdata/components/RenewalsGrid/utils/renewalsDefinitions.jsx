@@ -22,7 +22,7 @@ export const renewalsDefinitions = (componentProp) => {
               <Tooltip text={`<p style="font-size: 12px; line-height: 18px"><b>${getDictionaryValueOrKey(componentProp.requestQuote.toolTipHeading)}</b><br/><span style="font-size: 12px; line-height: 18px; display: block;">${getDictionaryValueOrKey(componentProp.requestQuote.timeStampRequested)}:${data?.quoteRequestedTime}</span>
                 <p style="font-size: 16px; line-height: 21px">${getDictionaryValueOrKey(componentProp.requestQuote.toolTipSuccessMessage)}</p>
               </p>`}
-                type="html" placement="top" arrow={true} theme="dark" autoPlacement={false}>
+                type="html" arrow={true} theme="dark" autoPlacement={true}>
                 <InfoIcon width="16" height="16" />
               </Tooltip>
               </span> );

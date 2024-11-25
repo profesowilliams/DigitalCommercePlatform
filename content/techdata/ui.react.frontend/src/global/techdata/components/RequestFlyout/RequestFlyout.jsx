@@ -13,7 +13,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
 import {useStore} from '../../../../utils/useStore';
 
-export function RequestFlyout({ store, requestFlyoutContent, subheaderReference, resetGrid }) {
+export function RequestFlyout({ store, requestFlyoutContent, subheaderReference, changeRefreshDetailApiState, resetGrid, setIsRequestedQuote }) {
   const requestFlyoutConfig = store((st) => st.requestFlyout);
   const quoteType = getDictionaryValueOrKey('Opportunity');
   const effects = store((st) => st.effects);
@@ -85,6 +85,7 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference,
         }
 
         resetGrid && resetGrid();
+        changeRefreshDetailApiState && changeRefreshDetailApiState();
 
         if (toaster) {
           closeFlyout();
