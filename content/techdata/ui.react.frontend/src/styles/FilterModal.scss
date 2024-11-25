@@ -92,7 +92,7 @@ $icon-size: 24px !default; // Default size for icons
  */
   .filter-tags-container {
     margin-top: auto;
-    position: absolute;
+    position: sticky;
     flex-shrink: 0;
     bottom: 0;
     bottom: 50px;
@@ -152,7 +152,7 @@ $icon-size: 24px !default; // Default size for icons
  */
 .filter-modal-container__popup {
   overflow-y: auto;
-  flex-grow: 1;
+  flex: 1;
 
   /**
    * Styles for individual accordion items in the modal.

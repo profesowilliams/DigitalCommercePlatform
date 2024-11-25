@@ -28,9 +28,7 @@ const FilterDialog = ({ children }) => {
 
 const FilterModal = ({
   aemData,
-  handleFilterCloseClick,
   onQueryChanged,
-  topReference,
   analyticsCategory,
 }) => {
   const {
@@ -57,16 +55,11 @@ const FilterModal = ({
     value && effects.setCustomState({ key: 'filterList', value });
   }, [resetFilter, filterData, appliedFilterCount, isFilterModalOpen]);
 
-  const { computeClassName, isTDSynnex } =
-    useComputeBranding(useRenewalGridState);
-
   const { setAppliedFilter } = useRenewalGridState((state) => state.effects);
 
   const { hasFilterChangeAvailable, dateSelected } = useFilteringSelected();
 
   const [DOMLoaded, setDOMLoaded] = useState(false);
-  const customStartDate = useRenewalGridState((state) => state.customStartDate);
-  const customEndDate = useRenewalGridState((state) => state.customEndDate);
 
   let aemFilterData;
   aemData.filterType =
@@ -108,7 +101,6 @@ const FilterModal = ({
     toggleFilterModal,
     clearUnappliedDateRange,
     setCustomState,
-    resetFilterToState,
   } = effects;
 
   useEffect(() => {
@@ -224,11 +216,6 @@ const FilterModal = ({
     if (resetFilter) setCustomState({ key: 'resetFilter', value: false });
     onQueryChanged();
     clearUnappliedDateRange();
-  };
-
-  const handleCloseModalClick = () => {
-    resetFilterToState();
-    handleFilterCloseClick();
   };
 
   if (!filterList) return null;

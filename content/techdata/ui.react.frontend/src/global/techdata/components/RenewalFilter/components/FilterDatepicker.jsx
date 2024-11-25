@@ -1,16 +1,14 @@
-import React,{ useEffect } from "react";
-import moment from "moment";
+import React, { useEffect } from 'react';
+import moment from 'moment';
+import { DateRangePicker } from 'react-dates-gte-react-17';
+import 'react-dates-gte-react-17/initialize';
+import { If } from '../../../helpers/If';
+import { useRenewalGridState } from '../../RenewalsGrid/store/RenewalsStore';
+import { DateOptionsList } from './DateOptionsList';
 import {
-  DateRangePicker
-} from "react-dates-gte-react-17";
-import "react-dates-gte-react-17/initialize";
-import { FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import { If } from "../../../helpers/If";
-import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
-import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
-import { DateOptionsList } from "./DateOptionsList";
-import { getClientLocale, localeByCountry } from "../../../../../utils/utils";
-import { ChevronLeftIcon, ChevronRightIcon } from "../../../../../fluentIcons/FluentIcons";
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '../../../../../fluentIcons/FluentIcons';
 
 function CustomStartEndText() {
   return (
@@ -18,35 +16,48 @@ function CustomStartEndText() {
       <div>Start</div>
       <div>End</div>
     </div>
-  )
+  );
 }
 
 export default function FilterDatePicker({ isOpen = false }) {
-
-  const [focusedInput, setFocusedInput] = React.useState("startDate");
-  const effects = useRenewalGridState(state => state.effects);
-  const aemConfig = useRenewalGridState(state => state.aemConfig);
-  const dateSelected = useRenewalGridState(state => state.dateSelected);
-  const branding = useRenewalGridState( state => state.branding || '');
-  let customStartDate = useRenewalGridState(state => state.customStartDate);
-  let customEndDate = useRenewalGridState(state => state.customEndDate);
-  const navIcons = branding === 'td-synnex' ?
-    { navPrev: <ChevronLeftIcon fill="#003031" />, navNext: <ChevronRightIcon fill="#003031" /> } : null
+  const [focusedInput, setFocusedInput] = React.useState('startDate');
+  const effects = useRenewalGridState((state) => state.effects);
+  const aemConfig = useRenewalGridState((state) => state.aemConfig);
+  const dateSelected = useRenewalGridState((state) => state.dateSelected);
+  const branding = useRenewalGridState((state) => state.branding || '');
+  let customStartDate = useRenewalGridState((state) => state.customStartDate);
+  let customEndDate = useRenewalGridState((state) => state.customEndDate);
+  const navIcons =
+    branding === 'td-synnex'
+      ? {
+          navPrev: <ChevronLeftIcon fill="#003031" />,
+          navNext: <ChevronRightIcon fill="#003031" />,
+        }
+      : null;
 
   useEffect(() => {
-    const brandingColor = branding === 'cmp-grid-techdata' ? '#000c21' : (branding === 'td-synnex' ? '#003031' : '#000c21')
-    document.documentElement.style.setProperty('--main-datepicker-color', brandingColor)
-  },[])
+    const brandingColor =
+      branding === 'cmp-grid-techdata'
+        ? '#000c21'
+        : branding === 'td-synnex'
+        ? '#003031'
+        : '#000c21';
+    document.documentElement.style.setProperty(
+      '--main-datepicker-color',
+      brandingColor
+    );
+  }, []);
 
-  useEffect(() => effects.setDateOptionList(aemConfig?.dateOptionValues), [aemConfig?.dateOptionValues]);
+  useEffect(
+    () => effects.setDateOptionList(aemConfig?.dateOptionValues),
+    [aemConfig?.dateOptionValues]
+  );
   /**
    * Unfortunately moment is a peer dependency of react-dates.
    * Normal date object wouldn't work.
    */
-  if (customStartDate)
-    customStartDate = moment(customStartDate);
-  if (customEndDate)
-    customEndDate = moment(customEndDate);
+  if (customStartDate) customStartDate = moment(customStartDate);
+  if (customEndDate) customEndDate = moment(customEndDate);
 
   function getDisplayFormatBasedOnLocale() {
     return 'MMM D, YYYY';
@@ -56,7 +67,7 @@ export default function FilterDatePicker({ isOpen = false }) {
     <>
       <div className="filter-datepicker-container">
         <If condition={isOpen}>
-          <DateOptionsList/>
+          <DateOptionsList />
           <If condition={dateSelected === 'custom'}>
             <CustomStartEndText />
             <DateRangePicker
@@ -64,19 +75,26 @@ export default function FilterDatePicker({ isOpen = false }) {
               startDateId="start-date"
               startDatePlaceholderText="Add date"
               endDatePlaceholderText="Add date"
-              endDate={customEndDate}         
+              endDate={customEndDate}
               {...navIcons}
               endDateId="end-date"
               verticalHeight={468}
-              showDefaultInputIcon={false}   
+              showDefaultInputIcon={false}
               customArrowIcon={<div className="customHyphen"></div>}
-              reopenPickerOnClearDates
-              keepOpenOnDateSelect={true}
-              onDatesChange={({ startDate, endDate }) => {   
-                effects.setCustomState({key:'customStartDate', value:startDate?.toISOString() || undefined});
-                effects.setCustomState({key:'customEndDate', value:endDate?.toISOString() || undefined});
-                if (startDate, endDate ) {
-                  effects.setDatePickerState(startDate?.toDate(), endDate?.toDate());
+              onDatesChange={({ startDate, endDate }) => {
+                effects.setCustomState({
+                  key: 'customStartDate',
+                  value: startDate?.toISOString() || undefined,
+                });
+                effects.setCustomState({
+                  key: 'customEndDate',
+                  value: endDate?.toISOString() || undefined,
+                });
+                if ((startDate, endDate)) {
+                  effects.setDatePickerState(
+                    startDate?.toDate(),
+                    endDate?.toDate()
+                  );
                 }
               }}
               isOutsideRange={() => false}
@@ -88,13 +106,12 @@ export default function FilterDatePicker({ isOpen = false }) {
               daySize={30}
               focusedInput={focusedInput}
               onFocusChange={(focusedInput) => {
-                  effects.closeAllSections(focusedInput);
-                  setFocusedInput(focusedInput || 'startDate')}}
-            />          
+                setFocusedInput(focusedInput);
+              }}
+            />
           </If>
         </If>
       </div>
     </>
   );
 }
-

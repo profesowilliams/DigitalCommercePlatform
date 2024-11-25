@@ -1,25 +1,44 @@
-import React, { useRef } from "react";
-import FilterModal from "./FilterModal";
-import Button from "../web-components/Button";
+import React, { useRef } from 'react';
+import FilterModal from './FilterModal';
+import Button from '../web-components/Button';
 import Icon from '../web-components/Icon';
-import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
-import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
-import Count from "./components/Count";
-import { OptionsIcon } from "../../../../fluentIcons/FluentIcons";
-import { getDictionaryValue } from "../../../../utils/utils";
-
+import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
+import { pushEvent, ANALYTICS_TYPES } from '../../../../utils/dataLayerUtils';
+import Count from './components/Count';
+import { OptionsIcon } from '../../../../fluentIcons/FluentIcons';
+import { getDictionaryValue } from '../../../../utils/utils';
+import { useMultiFilterSelected } from './hooks/useFilteringState';
 
 export default function RenewalFilter({ aemData, onQueryChanged }) {
   const isFilterModalOpen = useRenewalGridState(
     (state) => state.isFilterModalOpen
   );
-  const effects = useRenewalGridState((state) => state.effects);
-  const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount);
-  const isFilterButtonDisable = useRenewalGridState( state => state.isFilterButtonDisable);
+
+  const {
+    filterList,
+    resetFilter,
+    effects,
+    _generateFilterFields,
+  } = useMultiFilterSelected();
+
+  const appliedFilterCount = useRenewalGridState(
+    (state) => state.appliedFilterCount
+  );
+  const isFilterButtonDisable = useRenewalGridState(
+    (state) => state.isFilterButtonDisable
+  );
   const topReference = useRef();
   const analyticsCategory = useRenewalGridState((st) => st.analyticsCategory);
 
-  const { toggleFilterModal, closeAndCleanToaster } = effects;
+  const {
+    setFilterList,
+    clearDateFilters,
+    toggleFilterModal,
+    closeAndCleanToaster,
+    clearUnappliedDateRange,
+    setCustomState,
+  } = effects;
+
   const handleFilterClick = () => {
     //pushEvent(ANALYTICS_TYPES.events.click, {
     //  type: ANALYTICS_TYPES.types.button,
@@ -27,8 +46,35 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
     //  name: ANALYTICS_TYPES.name.filterIcon,
     //});
     toggleFilterModal();
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     closeAndCleanToaster();
+  };
+
+  const { setAppliedFilter } = useRenewalGridState((state) => state.effects);
+  
+  /**
+   * Triggerred when the "show results" button is clicked on
+   * Renewal filter.
+   */
+  const showResult = () => {
+    const [optionFields] = _generateFilterFields();
+    setAppliedFilter(optionFields);
+    if (resetFilter) setCustomState({ key: 'resetFilter', value: false });
+    onQueryChanged();
+    clearUnappliedDateRange();
+  };
+
+  const handleClearFilter = () => {
+    const filtersCopy = [...filterList].map((filter, index) => {
+      if (index !== 0) {
+        return { ...filter, open: false, checked: false };
+      }
+      return filter;
+    });
+    setFilterList(filtersCopy);
+    clearDateFilters();
+
+    showResult();
   };
 
   const handleFilterCloseClick = () => {
@@ -57,8 +103,8 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
         </Button>
         {appliedFilterCount !== 0 && (
           <Count>
-            <span className="filter-count">{appliedFilterCount}{' '}</span>
-            <span className="filter-close">
+            <span className="filter-count">{appliedFilterCount} </span>
+            <span className="filter-close" onClick={handleClearFilter}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

@@ -18,7 +18,6 @@ export const useMultiFilterSelected = () => {
 
   const _setOptionsFields = useCallback(
     ([optionFields, hasData]) => {
-      // optionFieldsRef.current = hasFilterLocalStorageData() ? getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.optionFields : optionFields; 
       optionFieldsRef.current = optionFields; 
       isFilterDataPopulated.current = hasData;
 
@@ -26,10 +25,6 @@ export const useMultiFilterSelected = () => {
     },
     [filterList, dateSelected]
   );
-
-  function hasFilterLocalStorageData() {
-    return isObject(getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.optionFields);
-  }
 
   useEffect(() => {
     const optionFields = _generateFilterFields();       
