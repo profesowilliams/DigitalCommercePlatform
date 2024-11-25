@@ -26,11 +26,7 @@ const FilterDialog = ({ children }) => {
   return <div className="filter-modal-container__popup">{children}</div>;
 };
 
-const FilterModal = ({
-  aemData,
-  onQueryChanged,
-  analyticsCategory,
-}) => {
+const FilterModal = ({ aemData, onQueryChanged, analyticsCategory }) => {
   const {
     filterList,
     resetFilter,
@@ -166,6 +162,8 @@ const FilterModal = ({
    */
   const closeFlyout = () => {
     toggleFilterModal({ justClose: true }); // Explicitly set state
+    setFilterList(aemFilterData); // Reset the filter state
+    clearDateFilters();
   };
   /**
    * Adds a listener to close the flyout gracefully when the event fires.

@@ -97,6 +97,8 @@ export default function FilterDatePicker({ isOpen = false }) {
                   );
                 }
               }}
+              reopenPickerOnClearDates={true}
+              keepOpenOnDateSelect={true}
               isOutsideRange={() => false}
               numberOfMonths={1}
               displayFormat={getDisplayFormatBasedOnLocale()}
