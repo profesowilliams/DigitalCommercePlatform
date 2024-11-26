@@ -260,7 +260,7 @@ function ActionsMenu({
     const archiveToasterSuccess = {
       isOpen: true,
       origin: 'archiveRenewals',
-      isAutoClose: true,
+      isAutoClose: false,
       isSuccess: true,
       message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterSuccess).replace("{0}", data?.endUser?.name),
       Child: (
@@ -273,7 +273,7 @@ function ActionsMenu({
     const archiveToasterFail = {
       isOpen: true,
       origin: 'archiveRenewals',
-      isAutoClose: true,
+      isAutoClose: false,
       isSuccess: false,
       message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterFail),
     };
@@ -281,7 +281,7 @@ function ActionsMenu({
     const restoreToasterSuccess = {
       isOpen: true,
       origin: 'restoreRenewals',
-      isAutoClose: true,
+      isAutoClose: false,
       isSuccess: true,
       message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterSuccess).replace("{0}", data?.endUser?.name),
       Child: (
@@ -294,7 +294,7 @@ function ActionsMenu({
     const restoreToasterFail = {
       isOpen: true,
       origin: 'restoreRenewals',
-      isAutoClose: true,
+      isAutoClose: false,
       isSuccess: false,
       message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterFail),
     };

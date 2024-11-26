@@ -138,7 +138,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
     const archiveToasterSuccess = {
       isOpen: true,
       origin: 'archiveRenewals',
-      isAutoClose: true,
+      isAutoClose: false,
       isSuccess: true,
       message: getDictionaryValueOrKey(gridProps?.archiveLabels?.archiveToasterSuccess).replace("{0}", data?.endUser?.name?.text),
       Child: (
@@ -151,7 +151,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
     const archiveToasterFail = {
       isOpen: true,
       origin: 'archiveRenewals',
-      isAutoClose: true,
+      isAutoClose: false,
       isSuccess: false,
       message: getDictionaryValueOrKey(gridProps?.archiveLabels?.archiveToasterFail),
     };
@@ -159,7 +159,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
     const restoreToasterSuccess = {
       isOpen: true,
       origin: 'restoreRenewals',
-      isAutoClose: true,
+      isAutoClose: false,
       isSuccess: true,
       message: getDictionaryValueOrKey(gridProps?.archiveLabels?.restoreToasterSuccess).replace("{0}", data?.endUser?.name?.text),
       Child: (
@@ -172,7 +172,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
     const restoreToasterFail = {
       isOpen: true,
       origin: 'restoreRenewals',
-      isAutoClose: true,
+      isAutoClose: false,
       isSuccess: false,
       message: getDictionaryValueOrKey(gridProps?.archiveLabels?.restoreToasterFail),
     };
@@ -481,133 +481,132 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
     setAutoRenewToggle(data?.autoRenew);
   }, [data?.autoRenew]);
   return (
-    (!isArchived &&
         <div
           className={
             isOpportunity
               ? 'cmp-product-lines-grid__header opportunity-quote-disabled'
               : 'cmp-product-lines-grid__header'
           }
+          style={{ display: isArchived ? 'none' : 'flex' }}
+    >
+      <span className="cmp-product-lines-grid__header__title">
+        {gridProps.lineItemDetailsLabel}
+      </span>
+      {data?.displayAutoRenew && (
+        <CustomTooltip
+          title={tooltipText}
+          placement="bottom"
+          arrow
+          disableInteractive={true}
+          open={!data?.isAutoRenewEnabled && data?.showToolTip && isTooltipOpen}
+          onClose={() => setIsTooltipOpen(false)}
         >
-          <span className="cmp-product-lines-grid__header__title">
-            {gridProps.lineItemDetailsLabel}
-          </span>
-          {data?.displayAutoRenew && (
-            <CustomTooltip
-              title={tooltipText}
-              placement="bottom"
-              arrow
-              disableInteractive={true}
-              open={!data?.isAutoRenewEnabled && data?.showToolTip && isTooltipOpen}
-              onClose={() => setIsTooltipOpen(false)}
-            >
-              <div
-                className="auto-renew"
-                onMouseEnter={() => setIsTooltipOpen(true)}
-                onMouseLeave={() => setIsTooltipOpen(false)}
-              >
-                <CustomSwitchToggle
-                  toggled={autoRenewToggle}
-                  disabled={!data?.isAutoRenewEnabled}
-                  onToggleChanged={handleAutoRenewChange}
-                />
-                <span className="auto-renew__text">
-                  {getDictionaryValueOrKey(gridProps?.productLines?.autoRenew)}
-                </span>
-                <span className="auto-renew__separator">
-                  <SeparatorIcon />
-                </span>
-              </div>
-            </CustomTooltip>
-          )}
-          <div className="cmp-renewal-preview__download">
-            {directlyShownButtons}
-            {dropdownButtons.length > 0 && (
-              <>
-                <button
-                  className="more-button"
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <span>
-                    More{' '}
-                    <ChevronDownIcon className="cmp-renewal-preview__download--icon" />
-                  </span>
-                </button>
-                {showDropdown && (
-                  <div
-                    className="dropdown-content"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    {dropdownButtons}
-                  </div>
-                )}
-              </>
-            )}
+          <div
+            className="auto-renew"
+            onMouseEnter={() => setIsTooltipOpen(true)}
+            onMouseLeave={() => setIsTooltipOpen(false)}
+          >
+            <CustomSwitchToggle
+              toggled={autoRenewToggle}
+              disabled={!data?.isAutoRenewEnabled}
+              onToggleChanged={handleAutoRenewChange}
+            />
+            <span className="auto-renew__text">
+              {getDictionaryValueOrKey(gridProps?.productLines?.autoRenew)}
+            </span>
+            <span className="auto-renew__separator">
+              <SeparatorIcon />
+            </span>
           </div>
+        </CustomTooltip>
+      )}
+      <div className="cmp-renewal-preview__download">
+        {directlyShownButtons}
+        {dropdownButtons.length > 0 && (
+          <>
+            <button
+              className="more-button"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <span>
+                More{' '}
+                <ChevronDownIcon className="cmp-renewal-preview__download--icon" />
+              </span>
+            </button>
+            {showDropdown && (
+              <div
+                className="dropdown-content"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                {dropdownButtons}
+              </div>
+            )}
+          </>
+        )}
+      </div>
 
-          <Toaster
-            onClose={onCloseToaster}
-            store={useRenewalGridState}
-            message={{
-              successSubmission: 'successSubmission',
-              failedSubmission: 'failedSubmission',
-            }}
-          />
-          <CopyFlyout
-            store={useRenewalGridState}
-            copyFlyout={gridProps.copyFlyout}
-            subheaderReference={document.querySelector('.subheader > div > div')}
-          />
-          <ShareFlyout
-            store={useRenewalGridState}
-            shareFlyoutContent={gridProps.shareFlyout}
-            reseller={data.reseller}
-            subheaderReference={document.querySelector('.subheader > div > div')}
-          />
-          <RevisionFlyout
-            store={useRenewalGridState}
-            revisionFlyoutContent={gridProps.revisionFlyout}
-            reseller={data.reseller}
-            subheaderReference={document.querySelector('.subheader > div > div')}
-          />
-          <RequestFlyout
-            store={useRenewalGridState}
-            requestFlyoutContent={gridProps.requestQuote}
-            subheaderReference={document.querySelector('.subheader > div > div')}
-            setIsRequestedQuote={setIsRequestedQuote}
-            changeRefreshDetailApiState={changeRefreshDetailApiState}
-          />
-          <ErrorFlyout
-            store={useRenewalGridState}
-            subheaderReference={document.querySelector('.subheader > div > div')}
-          />
-          {modal && (
-            <Modal
-              modalAction={modal.action}
-              modalContent={modal.content}
-              modalProperties={modal.properties}
-              actionErrorMessage={modal.errorMessage}
-              customClass="cmp-auto-renew-modal"
-            ></Modal>
-          )}
-          {enableAutoRenewError && (
-            <AutoRenewError
-              errorMessage={gridProps?.productLines?.errorAutoRenewEnabled}
-              tryAgainHandler={tryAutoRenewToggle}
-              closeHandler={setEnableAutoRenewError}
-            />
-          )}
-          {disableAutoRenewError && (
-            <AutoRenewError
-              errorMessage={gridProps?.productLines?.errorAutoRenewNotEnabled}
-              tryAgainHandler={tryAutoRenewToggle}
-              closeHandler={setDisableAutoRenewError}
-            />
-          )}
-        </div>
-    )
+      <Toaster
+        onClose={onCloseToaster}
+        store={useRenewalGridState}
+        message={{
+          successSubmission: 'successSubmission',
+          failedSubmission: 'failedSubmission',
+        }}
+      />
+      <CopyFlyout
+        store={useRenewalGridState}
+        copyFlyout={gridProps.copyFlyout}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+      />
+      <ShareFlyout
+        store={useRenewalGridState}
+        shareFlyoutContent={gridProps.shareFlyout}
+        reseller={data.reseller}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+      />
+      <RevisionFlyout
+        store={useRenewalGridState}
+        revisionFlyoutContent={gridProps.revisionFlyout}
+        reseller={data.reseller}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+      />
+      <RequestFlyout
+        store={useRenewalGridState}
+        requestFlyoutContent={gridProps.requestQuote}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+        setIsRequestedQuote={setIsRequestedQuote}
+        changeRefreshDetailApiState={changeRefreshDetailApiState}
+      />
+      <ErrorFlyout
+        store={useRenewalGridState}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+      />
+      {modal && (
+        <Modal
+          modalAction={modal.action}
+          modalContent={modal.content}
+          modalProperties={modal.properties}
+          actionErrorMessage={modal.errorMessage}
+          customClass="cmp-auto-renew-modal"
+        ></Modal>
+      )}
+      {enableAutoRenewError && (
+        <AutoRenewError
+          errorMessage={gridProps?.productLines?.errorAutoRenewEnabled}
+          tryAgainHandler={tryAutoRenewToggle}
+          closeHandler={setEnableAutoRenewError}
+        />
+      )}
+      {disableAutoRenewError && (
+        <AutoRenewError
+          errorMessage={gridProps?.productLines?.errorAutoRenewNotEnabled}
+          tryAgainHandler={tryAutoRenewToggle}
+          closeHandler={setDisableAutoRenewError}
+        />
+      )}
+    </div>
   );
 }
 
