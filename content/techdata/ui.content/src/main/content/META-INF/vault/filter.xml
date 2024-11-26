@@ -2,6 +2,5 @@
 <workspaceFilter version="1.0">
     <filter root="/conf/techdata" mode="update"/>
     <filter root="/content/techdata" mode="merge"/>
-    <filter root="/content/dam/techdata" mode="merge"/>
     <filter root="/content/experience-fragments/techdata" mode="merge"/>
 </workspaceFilter>

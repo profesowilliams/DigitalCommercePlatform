@@ -89,6 +89,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
           value: { ...archiveToasterSuccess },
         });
         setIsArchived(true);
+        effects.refreshRenealsGrid();
       }
     } catch (error) {
       effects.setCustomState({
@@ -124,6 +125,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
           value: { ...restoreToasterSuccess },
         });
         setIsArchived(false);
+        effects.refreshRenealsGrid();
       }
     } catch (error) {
       effects.setCustomState({

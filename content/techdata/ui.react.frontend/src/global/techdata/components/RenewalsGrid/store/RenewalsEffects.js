@@ -196,6 +196,10 @@ export const renewalsEffects = (set, get) => {
     });
   }
 
+  function refreshRenealsGrid() {
+    set({ renewalsGridRefreshIndex: get().renewalsGridRefreshIndex + 1 });
+  }
+
   return {
     setFilterList,
     toggleFilterModal,
@@ -214,5 +218,6 @@ export const renewalsEffects = (set, get) => {
     clearUnappliedDateRange,
     resetFilterToState,
     setAppliedFilter,
+    refreshRenealsGrid,
   };
 };

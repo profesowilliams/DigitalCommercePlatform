@@ -73,6 +73,7 @@ const INITIAL_STATE = {
   showCopyFlyout: false,
   analyticsCategory: 'renewals',
   showImportButton: false,
+  renewalsGridRefreshIndex: 0,
 };
 
 const store = (set, get, a) => ({

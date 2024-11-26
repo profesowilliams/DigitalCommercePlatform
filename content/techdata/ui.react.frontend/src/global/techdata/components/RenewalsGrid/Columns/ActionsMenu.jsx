@@ -203,6 +203,7 @@ function ActionsMenu({
           key: 'toaster',
           value: { ...archiveToasterSuccess },
         });
+        effects.refreshRenealsGrid();
       }
     } catch (error) {
       effects.setCustomState({
@@ -237,6 +238,7 @@ function ActionsMenu({
           key: 'toaster',
           value: { ...restoreToasterSuccess },
         });
+        effects.refreshRenealsGrid();
       }
     } catch (error) {
       effects.setCustomState({

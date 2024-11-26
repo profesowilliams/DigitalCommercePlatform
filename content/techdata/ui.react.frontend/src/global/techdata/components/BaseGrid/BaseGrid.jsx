@@ -3,6 +3,7 @@ import { useStore } from '../../../../utils/useStore';
 import Grid from '../Grid/Grid';
 import ErrorBoundaryBaseGrid from './utils/ErrorBoundaryBaseGrid';
 import { getBaseColumnDefinitions } from './utils/GenericColumnTypes';
+import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 
 const _BaseGrid = ({
   columnList,
@@ -13,6 +14,7 @@ const _BaseGrid = ({
   const [gridKey, setGridKey] = React.useState(0);
   const userData = useStore(state => state.userData);
   const columnDefs = getBaseColumnDefinitions(columnList, definitions, userData);
+  const renewalsGridRefreshIndex = useRenewalGridState((state) => state.renewalsGridRefreshIndex);
 
   useEffect(() => {
     setGridKey(gridKey + 1);
@@ -20,7 +22,7 @@ const _BaseGrid = ({
 
   return (
     <div className="cmp-base-grid">
-      <Grid key={gridKey}
+      <Grid key={gridKey + renewalsGridRefreshIndex}
         columnDefinition={columnDefs}
         customizedDetailedRender={DetailRenderers}
         suppressPaginationPanel={true}

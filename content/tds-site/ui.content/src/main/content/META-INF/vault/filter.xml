@@ -2,6 +2,5 @@
 <workspaceFilter version="1.0">
     <filter root="/conf/tds-site" mode="merge"/>
     <filter root="/content/tds-site" mode="merge"/>
-    <filter root="/content/dam/tds-site/asset.jpg" mode="merge"/>
     <filter root="/content/experience-fragments/tds-site" mode="merge"/>
 </workspaceFilter>
