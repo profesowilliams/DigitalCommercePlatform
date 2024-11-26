@@ -138,9 +138,6 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
     setEnableShare(false);
     let toaster = null;
     let dataObj = requestObj;
-    if (skipValidation) {
-      dataObj.SkipQuotAccessValidation = true;
-    }
     dataObj = {
         ...dataObj,
         'FirstName': userData?.firstName,
@@ -154,6 +151,9 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
         'Language': 'en-gb',
         'EmailBody': getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteDescription),
         'Signature': getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutSignatureLabel)
+    }
+    if (skipValidation) {
+      dataObj.SkipQuotAccessValidation = true;
     }
     const finalRequestObj = {
       Data: dataObj

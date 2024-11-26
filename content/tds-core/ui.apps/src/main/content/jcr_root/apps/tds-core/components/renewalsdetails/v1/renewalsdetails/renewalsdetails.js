@@ -598,6 +598,7 @@ use(["../../../common/utils.js"], function(utils) {
 
       // No result values
       const noResultsValuesList = [
+        "noResultsTitle",
         "noDataTitle",
         "noDataDescription",
         "noDataImageFileReference",
@@ -608,7 +609,17 @@ use(["../../../common/utils.js"], function(utils) {
           (noResultsValues[noResultsValuesItem] =
             properties["./searchResultsError/" + noResultsValuesItem])
       );
+       if (
+         properties["./searchResultsError/noResultsImageFileReference"] != null
+       ) {
+         noResultsValues.noResultsImage =
+           properties["./searchResultsError/noResultsImageFileReference"];
+       }
 
+       if (properties["./searchResultsError/noDataImageFileReference"] != null) {
+         noResultsValues.noDataImage =
+           properties["./searchResultsError/noDataImageFileReference"];
+       }
       if (noResultsValues != null) {
         jsonObject["searchResultsError"] = noResultsValues;
       }
