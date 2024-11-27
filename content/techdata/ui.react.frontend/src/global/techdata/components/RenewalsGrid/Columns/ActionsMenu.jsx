@@ -69,10 +69,7 @@ function ActionsMenu({
     archiveOrRestoreRenewalsEndpoint,
   } = endpoints;
 
-  // TODO: connect proper fields to enableRestore and enableArchive
-
-  const enableArchive = true;
-  const enableRestore = true;
+  const enableArchive = !data?.archived;
 
   useEffect(() => {
     let timer;
@@ -247,7 +244,7 @@ function ActionsMenu({
       });
     }
 
-    enableRestore &&
+    !enableArchive &&
       !menuOptions?.showDownloadXLSButton &&
       !menuOptions?.showDownloadPDFButton &&
       (!enableReviseOption || !canRequestRevision) &&
@@ -331,7 +328,7 @@ function ActionsMenu({
             )}
           </span>
         </div>
-        {canCopy ? (
+        {canCopy && enableArchive ? (
           <div
             className="cmp-renewals-actions-menu__item"
             onClick={triggerCopyFlyout}
@@ -342,7 +339,7 @@ function ActionsMenu({
             <span className="cmp-renewals-actions-menu__item-label">Copy</span>
           </div>
         ) : null}
-        {enableShareOption && canShare ? (
+        {enableShareOption && canShare && enableArchive ? (
           <div
             className="cmp-renewals-actions-menu__item"
             onClick={triggerShareFlyout}
@@ -353,7 +350,7 @@ function ActionsMenu({
             <span className="cmp-renewals-actions-menu__item-label">Share</span>
           </div>
         ) : null}
-        {enableReviseOption && canRequestRevision ? (
+        {enableReviseOption && canRequestRevision && enableArchive ? (
           <div
             className="cmp-renewals-actions-menu__item"
             onClick={triggerRevisionFlyout}
@@ -366,7 +363,7 @@ function ActionsMenu({
             </span>
           </div>
         ) : null}
-        {menuOptions?.showDownloadPDFButton ? (
+        {menuOptions?.showDownloadPDFButton && enableArchive ? (
           <div
             className="cmp-renewals-actions-menu__item"
             onClick={downloadPDF}
@@ -382,7 +379,7 @@ function ActionsMenu({
             </span>
           </div>
         ) : null}
-        {menuOptions?.showDownloadXLSButton ? (
+        {menuOptions?.showDownloadXLSButton && enableArchive ? (
           <div
             className="cmp-renewals-actions-menu__item"
             onClick={downloadXLS}
@@ -399,7 +396,7 @@ function ActionsMenu({
           </div>
         ) : null}
         {
-            (canRequestQuote && enableRequestQuote) && (
+            (canRequestQuote && enableRequestQuote && enableArchive) && (
                 <span
                     className="cmp-renewals-actions-menu__item request-quote"
                     onClick={() => triggerRequestFlyout(data)}
@@ -423,7 +420,7 @@ function ActionsMenu({
             </span>
           </div>
         ) : null}
-        {config?.enableArchiveQuote && enableRestore ? (
+        {config?.enableArchiveQuote && !enableArchive ? (
           <div
             className="cmp-renewals-actions-menu__item"
             onClick={triggerRestore}

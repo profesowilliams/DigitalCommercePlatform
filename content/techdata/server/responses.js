@@ -471,6 +471,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -586,6 +587,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -701,6 +703,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -813,6 +816,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -928,6 +932,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -1038,6 +1043,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -1153,6 +1159,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -1265,6 +1272,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -1377,6 +1385,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -1489,6 +1498,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -1601,6 +1611,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -1718,6 +1729,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -1833,6 +1845,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -1947,6 +1960,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -2061,6 +2075,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -2173,6 +2188,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -2289,6 +2305,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -2406,6 +2423,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -2521,6 +2539,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -2633,6 +2652,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -2748,6 +2768,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -2863,6 +2884,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -2975,6 +2997,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -3087,6 +3110,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
       {
         source: {
@@ -3201,6 +3225,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
+        "archived": false,
       },
     ],
     refinementGroups: {
