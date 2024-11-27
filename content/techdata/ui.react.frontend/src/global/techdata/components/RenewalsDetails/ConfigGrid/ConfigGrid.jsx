@@ -61,7 +61,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
   const analyticsCategory = useRenewalGridState(
     (state) => state.analyticsCategory
   );
-  const isOpportunity = data.canRequestQuote;
+  const isOpportunity = data.canRequestQuote || data.quoteType === "Opportunity";
 
   const triggerArchive = async () => {
     effects.setCustomState({

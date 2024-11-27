@@ -657,7 +657,7 @@ export const formatDetailsShortDescription = (columnData = "") => {
     const { product = [false, false] } = columnData;
     const [techdata, manufacturer] = product;
     const description = manufacturer?.name;
-    if (!description) return "N/A";
+    if (!description) return "-";
     const matchFirstWords = /^(.*?\s){12}/;
     const matched = description.match(matchFirstWords);
     if (true || !matched || !matched.length) return description;

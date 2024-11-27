@@ -109,7 +109,7 @@ function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="fal
                 </a>
               ) : (line.serialCellNotFoundMessage
                     ? line.serialCellNotFoundMessage
-                    : "N/A"
+                    : "-"
               )}
             </span>}
             {line.subscriptionId && <span>

@@ -440,7 +440,7 @@ function RenewalPreviewGrid(
       // cellRenderer: (props) => Object.keys(props?.data).includes("contract") ? <div>{props?.data?.vendorPartNo}</div>: "",
       valueGetter: ({ data }) =>
         !data?.id?.includes('Agreement')
-          ? data.product.find((p) => p.family)?.family ?? 'N/A'
+          ? data.product.find((p) => p.family)?.family ?? '-'
           : '',
       width: gridColumnWidths.productFamily,
     },

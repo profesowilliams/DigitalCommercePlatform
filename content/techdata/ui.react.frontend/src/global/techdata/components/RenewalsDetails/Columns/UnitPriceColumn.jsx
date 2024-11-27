@@ -88,7 +88,7 @@ function UnitPriceColumn(props) {
 
 
   return !isEditing ? (
-    <div className="cmp-unitprice">{value === '-' ? value : new Intl.NumberFormat('en', {style: "decimal"}).format(value)}</div>
+    <div className="cmp-unitprice">{value === '-' || !value ? '-' : new Intl.NumberFormat('en', {style: "decimal"}).format(value)}</div>
   ) : (
     <div className="cmp-unitprice-edit">
       <TextField
