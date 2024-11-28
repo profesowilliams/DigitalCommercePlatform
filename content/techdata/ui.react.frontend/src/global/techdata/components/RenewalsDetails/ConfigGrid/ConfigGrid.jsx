@@ -154,6 +154,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
       isAutoClose: false,
       isSuccess: false,
       message: getDictionaryValueOrKey(gridProps?.archiveLabels?.archiveToasterFail),
+      Child: null,
     };
 
     const restoreToasterSuccess = {
@@ -175,6 +176,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
       isAutoClose: false,
       isSuccess: false,
       message: getDictionaryValueOrKey(gridProps?.archiveLabels?.restoreToasterFail),
+      Child: null,
     };
 
   const downloadXLS = () => {

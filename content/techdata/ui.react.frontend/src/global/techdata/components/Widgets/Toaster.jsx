@@ -1,6 +1,6 @@
 import React, { useEffect, memo, useCallback, useRef, useState } from "react";
 import Drawer from "@mui/material/Drawer";
-import { CheckmarkCircle, Dismiss, CautionIcon } from "../../../../fluentIcons/FluentIcons";
+import { CheckmarkCircle, Dismiss, ErrorIcon } from "../../../../fluentIcons/FluentIcons";
 import { teal, red } from "@mui/material/colors";
 import shallow from "zustand/shallow";
 
@@ -101,7 +101,7 @@ function Toaster({
               {isSuccess ? (
                 <CheckmarkCircle fill={teal[800]} />
               ) : (
-                <CautionIcon fill={red[900]} />
+                <ErrorIcon fill={red[900]} />
               )}
             </div>
             <div className="cmp-toaster-content__message">

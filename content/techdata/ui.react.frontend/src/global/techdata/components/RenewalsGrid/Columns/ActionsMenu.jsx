@@ -273,6 +273,7 @@ function ActionsMenu({
       isAutoClose: false,
       isSuccess: false,
       message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterFail),
+      Child: null,
     };
 
     const restoreToasterSuccess = {
@@ -294,6 +295,7 @@ function ActionsMenu({
       isAutoClose: false,
       isSuccess: false,
       message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterFail),
+      Child: null,
     };
 
   return (
