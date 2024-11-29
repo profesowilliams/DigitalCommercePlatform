@@ -1,0 +1,53 @@
+<div class="video-embed">
+     <sly data-sly-use.video="${'embed-video.js' @ serviceData=serviceData}"></sly>
+         <sly data-sly-test="${video.videoType == 'vidyard'}">
+             <script type="text/javascript" async src="https://play.vidyard.com/embed/v4.js"></script>
+             <div style="position: relative; overflow: hidden; padding-top: 56.25%;">
+             <iframe class="vidyard_iframe"
+                     src="https://play.vidyard.com/${video.videoId}"
+                     width="${video.width}"
+                     height="${video.height}"
+                     scrolling="no"
+                     frameborder="0"
+                     allowtransparency="true"
+                     allowfullscreen
+                     style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;"></iframe>
+               </div>
+         </sly>
+ 
+         <sly data-sly-test="${video.videoType == 'synthesia'}">
+             <div style="position: relative; overflow: hidden; padding-top: 56.25%;">
+                 <iframe src="https://share.synthesia.io/embeds/videos/${video.videoId}"
+                         loading="lazy"
+                         title="Synthesia video player"
+                         allowfullscreen
+                         allow="encrypted-media; fullscreen;"
+                         style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0; overflow:hidden;"></iframe>
+             </div>
+         </sly>
+ 
+         <sly data-sly-test="${video.videoType == 'dam'}">
+             <style type="text/css">
+                 #s7video_div.s7videoviewer {
+                     width: 100%;
+                     height: auto;
+                 }
+             </style>
+             <script type="text/javascript" src="https://s7d9.scene7.com/s7viewers/html5/js/VideoViewer.js"></script>
+             <div id="s7video_div" class="video"></div>
+             <script type="text/javascript">
+                 var s7videoviewer = new s7viewers.VideoViewer({
+                     containerId: "s7video_div",
+                     params: {
+                         serverurl: "https://s7d9.scene7.com/is/image/",
+                         contenturl: "https://s7d9.scene7.com/is/content/",
+                         asset: "${video.videoId @ context='scriptString'}",
+                     }
+                 });
+                 s7videoviewer.init();
+             </script>
+         </sly>
+     </sly>
+ </div>
+ <sly 
+ data-sly-use.commonsTemplates="core/wcm/components/commons/v1/templates.html" data-sly-call="${commonsTemplates.placeholder @ isEmpty = true}"></sly>
