@@ -839,9 +839,9 @@ function ConfigGrid({
                     </a>
                   )}
                     
-                  <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, data?.source?.id, data?.endUser?.name?.text, false)}>
-                      {getDictionaryValueOrKey(gridProps?.archiveLabels?.restore)}1{gridProps?.archiveLabels?.restore}1
-                  </button>
+                  {message?.jsonUrlMessage ===  "Restore" && <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, data?.source?.id, data?.endUser?.name?.text, false)}>
+                      {getDictionaryValueOrKey(gridProps?.archiveLabels?.restore)}
+                  </button>}
                 </div>
               )
             );
