@@ -357,12 +357,12 @@ use(["../../../common/utils.js"], function (utils) {
     ];
 
     if (this.importQuoteDocumentEndpointValidate && this.serviceData.uiServiceDomain) {
-      importFlyout["importQuoteDocumentEndpointValidate"] =
+      importFlyout.importQuoteDocumentEndpointValidate =
         this.serviceData.uiServiceDomain + this.accountLookUpEndpoint;
     }
 
     if (this.importQuoteDocumentEndpointExport && this.serviceData.uiServiceDomain) {
-      importFlyout["importQuoteDocumentEndpointExport"] =
+      importFlyout.importQuoteDocumentEndpointExport =
         this.serviceData.uiServiceDomain + this.accountLookUpEndpoint;
     }
 
