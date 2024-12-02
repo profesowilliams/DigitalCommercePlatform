@@ -57,7 +57,7 @@ const triggerArchiveRestore = async (setIsArchived, gridProps, effects, quoteId,
       archived
         ? gridProps?.archiveLabels?.restoreToasterSuccess
         : gridProps?.archiveLabels?.archiveToasterSuccess
-    ).replace("{0}", endUserName),
+    )?.replace("{0}", endUserName),
     Child: (
       <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, quoteId, endUserName, !archived)}>
           {getDictionaryValueOrKey(gridProps?.archiveLabels?.undo)}
@@ -205,7 +205,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
       origin: 'archiveRenewals',
       isAutoClose: false,
       isSuccess: true,
-      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.archiveToasterSuccess).replace("{0}", data?.endUser?.name?.text),
+      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.archiveToasterSuccess)?.replace("{0}", data?.endUser?.name?.text),
       Child: (
         <button onClick={triggerRestore}>
             {getDictionaryValueOrKey(gridProps?.archiveLabels?.undo)}
@@ -227,7 +227,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
       origin: 'restoreRenewals',
       isAutoClose: false,
       isSuccess: true,
-      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.restoreToasterSuccess).replace("{0}", data?.endUser?.name?.text),
+      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.restoreToasterSuccess)?.replace("{0}", data?.endUser?.name?.text),
       Child: (
         <button onClick={triggerArchive}>
             {getDictionaryValueOrKey(gridProps?.archiveLabels?.undo)}
@@ -745,6 +745,18 @@ function ConfigGrid({
     });
   };
 
+  const getFeedbackMessageCTA = (message) => {
+    if (message?.jsonUrlMessage ===  "Restore") {
+      return (
+        <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, data?.source?.id, data?.endUser?.name?.text, false)}>
+          {getDictionaryValueOrKey(gridProps?.archiveLabels?.restore)}
+        </button>
+      );
+    }
+
+    return null;
+  }
+
   return (
     <div className="cmp-renewals-qp__config-grid details-upper-wrapper">
       <div className="header-container">
@@ -838,10 +850,8 @@ function ConfigGrid({
                       {message.jsonUrlMessage}
                     </a>
                   )}
-                    
-                  {message?.jsonUrlMessage ===  "Restore" && <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, data?.source?.id, data?.endUser?.name?.text, false)}>
-                      {getDictionaryValueOrKey(gridProps?.archiveLabels?.restore)}
-                  </button>}
+
+                  {getFeedbackMessageCTA(message)}
                 </div>
               )
             );

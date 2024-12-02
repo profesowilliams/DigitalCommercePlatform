@@ -259,7 +259,7 @@ function ActionsMenu({
       origin: 'archiveRenewals',
       isAutoClose: false,
       isSuccess: true,
-      message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterSuccess).replace("{0}", data?.endUser?.name),
+      message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterSuccess)?.replace("{0}", data?.endUser?.name),
       Child: (
         <button onClick={triggerRestore}>
             {getDictionaryValueOrKey(config?.archiveLabels?.undo)}
@@ -281,7 +281,7 @@ function ActionsMenu({
       origin: 'restoreRenewals',
       isAutoClose: false,
       isSuccess: true,
-      message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterSuccess).replace("{0}", data?.endUser?.name),
+      message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterSuccess)?.replace("{0}", data?.endUser?.name),
       Child: (
         <button onClick={triggerArchive}>
             {getDictionaryValueOrKey(config?.archiveLabels?.undo)}
