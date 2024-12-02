@@ -46,7 +46,73 @@ import CustomSwitchToggle from '../../Widgets/CustomSwitchToggle';
 import CustomTooltip from '../../Widgets/CustomTooltip';
 import { callServiceWrapper } from '../../../../../utils/api';
 
-function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequestedQuote }) {
+
+const triggerArchiveRestore = async (setIsArchived, gridProps, effects, quoteId, endUserName, archived = false) => {
+  const toasterSuccess = {
+    isOpen: true,
+    origin: 'restoreRenewals',
+    isAutoClose: false,
+    isSuccess: true,
+    message: getDictionaryValueOrKey(
+      archived
+        ? gridProps?.archiveLabels?.restoreToasterSuccess
+        : gridProps?.archiveLabels?.archiveToasterSuccess
+    ).replace("{0}", endUserName),
+    Child: (
+      <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, quoteId, endUserName, !archived)}>
+          {getDictionaryValueOrKey(gridProps?.archiveLabels?.undo)}
+      </button>
+    ),
+  };
+
+  const toasterFail = {
+    isOpen: true,
+    origin: 'restoreRenewals',
+    isAutoClose: false,
+    isSuccess: false,
+    message: getDictionaryValueOrKey(archived
+      ? gridProps?.archiveLabels?.restoreToasterFail
+      : gridProps?.archiveLabels?.archiveToasterFail
+    ),
+    Child: null,
+  };
+  
+  effects.setCustomState({
+    key: 'toaster',
+    value: { isOpen: false}});
+
+  const postData = {
+    "quoteId": quoteId,
+     "archived": archived
+  };
+
+  try {
+    const response = await callServiceWrapper(archiveOrRestoreRenewals,gridProps?.archiveOrRestoreRenewalsEndpoint, postData);
+
+    if (response.errors.length > 0) {
+      effects.setCustomState({
+        key: 'toaster',
+        value: { ...toasterFail },
+      });
+    } else {
+      effects.setCustomState({
+        key: 'toaster',
+        value: { ...toasterSuccess },
+      });
+      setIsArchived(archived);
+      effects.refreshRenealsGrid();
+    }
+  } catch (error) {
+    console.log('error', error);
+    
+    effects.setCustomState({
+      key: 'toaster',
+      value: { ...toasterFail },
+    });
+  }
+};
+
+function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequestedQuote, isArchived, setIsArchived }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
     useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
@@ -55,7 +121,6 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
   const [modal, setModal] = useState(null);
   const [enableAutoRenewError, setEnableAutoRenewError] = useState(false);
   const [disableAutoRenewError, setDisableAutoRenewError] = useState(false);
-  const [isArchived, setIsArchived] = useState(data?.archived);
 
   const effects = useRenewalGridState((state) => state.effects);
   const analyticsCategory = useRenewalGridState(
@@ -652,6 +717,8 @@ function ConfigGrid({
   const { quotePreview } = gridProps;
   const effects = useRenewalGridState((state) => state.effects);
   const [isRequestedQuote, setIsRequestedQuote] = useState(false);
+  const [isArchived, setIsArchived] = useState(data?.archived);
+
   Object.keys(quotePreview).forEach((key) => {
     if (typeof quotePreview[key] === 'string') {
       quotePreview[key] = quotePreview[key].replace(/ No:/g, ' \u2116:');
@@ -704,6 +771,8 @@ function ConfigGrid({
             gridProps={gridProps}
             changeRefreshDetailApiState={changeRefreshDetailApiState}
             setIsRequestedQuote={setIsRequestedQuote}
+            isArchived={isArchived}
+            setIsArchived={setIsArchived}
           />
         </div>
         {data.feedBackMessages &&
@@ -769,6 +838,10 @@ function ConfigGrid({
                       {message.jsonUrlMessage}
                     </a>
                   )}
+                    
+                  <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, data?.source?.id, data?.endUser?.name?.text, false)}>
+                      {getDictionaryValueOrKey(gridProps?.archiveLabels?.restore)}1{gridProps?.archiveLabels?.restore}1
+                  </button>
                 </div>
               )
             );

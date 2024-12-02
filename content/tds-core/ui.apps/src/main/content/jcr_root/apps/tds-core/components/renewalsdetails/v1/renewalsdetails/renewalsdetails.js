@@ -500,6 +500,7 @@ use(["../../../common/utils.js"], function(utils) {
       // Archive Labels
       const archiveLabelsList = [
         "archive",
+        "restore",
         "archiveToasterSuccess",
         "archiveToasterFail",
         "restoreToasterSuccess",

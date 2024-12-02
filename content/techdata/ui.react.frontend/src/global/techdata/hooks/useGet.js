@@ -9,7 +9,7 @@ import useAuth from "./useAuth";
 //                                  isLoading - boolean indicating that loading is in progress, 
 //                                  error - actual error, if null, there is no error]
 
-export default function useGet(url) {
+export default function useGet(url, refreshKey) {
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -48,6 +48,6 @@ export default function useGet(url) {
     return () => {
       isMounted = false;
     };
-  }, [isExtraReloadDisabled(), isLoggedIn, refreshRenewalDetailApi]);
+  }, [isExtraReloadDisabled(), isLoggedIn, refreshRenewalDetailApi, refreshKey]);
   return [response, isLoading, error];
 }

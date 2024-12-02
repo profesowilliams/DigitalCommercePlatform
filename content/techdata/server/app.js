@@ -4919,6 +4919,29 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                            "refId": "",
                                            "type": "",
                                            "jsonUrl": ""
+                                       },
+                                       {
+                                           "ruleNumber": 110,
+                                           "errorCriticality": 2,
+                                           "message": "This agreement has been archived. Restore this agreement to continue working with it.",
+                                           "refId": "",
+                                           "type": "",
+                                           "jsonUrl": "",
+                                           "jsonUrlMessage": "Restore",
+                                           "apiParameters": {
+                                               "url": "ui-renewal/v1/ArchiveOrRestoreRenewals",
+                                               "method": "POST",
+                                               "parameters": [
+                                                   {
+                                                       "key": "archived",
+                                                       "value": "true"
+                                                   },
+                                                   {
+                                                       "key": "quoteId",
+                                                       "value": "U100000006025"
+                                                   }
+                                               ]
+                                           }
                                        }
                                    ],
                                    "itemsActive": [
@@ -4998,7 +5021,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                    "pomPercentage": 0.0,
                                    "samPercentage": 0.0,
                                    "nsmPercentage": 0.0,
-                                   "archived": false,
+                                   "archived": true,
                                }
                            ]
                        },

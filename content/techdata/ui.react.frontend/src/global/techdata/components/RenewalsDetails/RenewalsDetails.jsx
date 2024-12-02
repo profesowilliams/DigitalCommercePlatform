@@ -44,10 +44,12 @@ import GridSubTotal from './GridSubTotal';
 import { Button } from '@mui/material';
 import useComputeBranding from '../../hooks/useComputeBranding';
 import useIsIconEnabled from '../RenewalsGrid/Orders/hooks/useIsIconEnabled';
+import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 
 let redBanner = false;
 
 function RenewalsDetails(props) {
+  const renewalsGridRefreshIndex = useRenewalGridState((state) => state.renewalsGridRefreshIndex);
   const componentProp = JSON.parse(props.componentProp);
   const errorMessages = componentProp?.errorMessages;
   const effects = useRenewalsDetailsStore((state) => state.effects);
@@ -55,7 +57,8 @@ function RenewalsDetails(props) {
   const { id = 'U100000008378', type = 'renewal' } = getUrlParams();
   const [modal, setModal] = useState(null);
   let [apiResponse, isLoading, error] = useGet(
-    `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`
+    `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`,
+    renewalsGridRefreshIndex
   );
   const userData = useStore((state) => state.userData);
 
@@ -230,7 +233,7 @@ function RenewalsDetails(props) {
         );
       }
     }
-  }, [apiResponse, isExtraReloadDisabled(), isLoggedIn]);
+  }, [apiResponse, isExtraReloadDisabled(), isLoggedIn, renewalsGridRefreshIndex]);
 
   // Close Cancel Dialog logic, reset data if necessary
   const closeCancelDialog = (resetFlag) => {
