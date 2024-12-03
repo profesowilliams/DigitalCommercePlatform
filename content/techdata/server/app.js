@@ -5137,7 +5137,7 @@ app.post("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
   //mockResponses.failedResponse
 
   setTimeout(() => {
-    return res.status(200).json(notFound);
+    return res.status(200).json(success);
   }, 1000);
 });
 

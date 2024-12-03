@@ -14,6 +14,7 @@ import { shareQuote } from './api';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
 import {useStore} from '../../../../utils/useStore';
+import { callServiceWrapper } from '../../../../utils/api';
 
 function ErrorModelEmailPill({item, updateAccessErrObject}) {
 
@@ -158,13 +159,12 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
     const finalRequestObj = {
       Data: dataObj
     }
-    const response = await shareQuote(
-      finalRequestObj,
-      shareFlyoutContent.shareQuoteEndpoint
-    );
+
+    const response = await callServiceWrapper(shareQuote,shareFlyoutContent.shareQuoteEndpoint, finalRequestObj);
+
     setIsLoading(false);
     setEnableShare(true);
-    if (response?.success) {
+    if (response.errors.length ===  0) {
       // set success message
       toaster = {
           isOpen: true,
@@ -181,10 +181,10 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
     }
     else {
       setApiResponseFlag(true);
-      setErrorObj(response.messages);
+      setErrorObj(response.data.messages);
       let accessObj = [];
-      if (response?.code === 400) {
-        accessObj = response.messages.filter((item) => {
+      if (response?.data?.code === 400) {
+        accessObj = response.data.messages.filter((item) => {
           return item.message?.indexOf('access ') > -1;
         });
         let errorFlags = {
@@ -192,13 +192,13 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
           accessFlag: 0,
           serverFlag: 0
         }
-        for(var i = 0; i < response.messages.length; i++) {
-          if (response.messages[i]?.message?.indexOf('Invalid') > -1) {
+        for(var i = 0; i < response.data.messages.length; i++) {
+          if (response.data.messages[i]?.message?.indexOf('Invalid') > -1) {
             errorFlags = {
               ...errorFlags,
               incorrectFlag: 1
             }
-          } else if (response.messages[i]?.message?.indexOf('access') > -1) {
+          } else if (response.data.messages[i]?.message?.indexOf('access') > -1) {
             errorFlags = {
               ...errorFlags,
               accessFlag: 1
@@ -458,8 +458,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
                   <>
                     <WarningTriangleIcon />
                     <div className="error-message-section">
-                      <h3>{shareFlyoutContent.shareFailedLabel}</h3>
-                      <p>{shareFlyoutContent.shareFailedDescription}</p>
+                      <h3>{getDictionaryValueOrKey(shareFlyoutContent.shareFailedLabel)}</h3>
+                      <p>{getDictionaryValueOrKey(shareFlyoutContent.shareFailedDescription)}</p>
                     </div>
                   </>
                 ) : null}
@@ -467,8 +467,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
                   <>
                     <ProhibitedIcon />
                     <div className="error-message-section">
-                      <h3>{shareFlyoutContent.incorrectEmailLabel}</h3>
-                      <p>{shareFlyoutContent.incorrectEmailDescription}</p>
+                      <h3>{getDictionaryValueOrKey(shareFlyoutContent.incorrectEmailLabel)}</h3>
+                      <p>{getDictionaryValueOrKey(shareFlyoutContent.incorrectEmailDescription)}</p>
                       {errorObj?.map((item) => {
                         if (
                           item.email &&
@@ -486,8 +486,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
                   <>
                     <WarningTriangleIcon />
                     <div className="error-message-section">
-                      <h3>{shareFlyoutContent.recipientNotFoundLabel}</h3>
-                      <p>{shareFlyoutContent.recipientNotFoundDescription}</p>
+                      <h3>{getDictionaryValueOrKey(shareFlyoutContent.recipientNotFoundLabel)}</h3>
+                      <p>{getDictionaryValueOrKey(shareFlyoutContent.recipientNotFoundDescription)}</p>
                       {accessErrObj?.map((item, i) => {
                         if (item.email && item.message.indexOf('access') > -1) {
                           return (
@@ -508,14 +508,14 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
                 {errorFlags.serverError ? (
                   <>
                     <a className="cancel-btn" href={`#`} onClick={closeAlert}>
-                      {shareFlyoutContent.shareFailedCancelLabel}
+                      {getDictionaryValueOrKey(shareFlyoutContent.shareFailedCancelLabel)}
                     </a>
                     <a
                       className="try-again-btn"
                       href={`#`}
                       onClick={handleTryAgainBtn}
                     >
-                      {shareFlyoutContent.shareFailedTryAgainLabel}
+                      {getDictionaryValueOrKey(shareFlyoutContent.shareFailedTryAgainLabel)}
                     </a>
                   </>
                 ) : null}
@@ -526,21 +526,21 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
                       href={`#`}
                       onClick={closeAlert}
                     >
-                      {shareFlyoutContent.incorrectEmailTryAgainLabel}
+                      {getDictionaryValueOrKey(shareFlyoutContent.incorrectEmailTryAgainLabel)}
                     </a>
                   </>
                 ) : null}
                 {errorFlags.notFound ? (
                   <>
                     <a className="cancel-btn" href={`#`} onClick={closeAlert}>
-                      {shareFlyoutContent.recipientNotFoundCancelLabel}
+                      {getDictionaryValueOrKey(shareFlyoutContent.recipientNotFoundCancelLabel)}
                     </a>
                     <a
                       className="try-again-btn"
                       href={`#`}
                       onClick={(e) => handleTryAgainBtn(e, true)}
                     >
-                      {shareFlyoutContent.recipientNotFoundContinueLabel}
+                      {getDictionaryValueOrKey(shareFlyoutContent.recipientNotFoundContinueLabel)}
                     </a>
                   </>
                 ) : null}
