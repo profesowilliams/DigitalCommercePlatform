@@ -13,6 +13,15 @@
 .cmp-renewal-preview {
   font-family: 'Open Sans', sans-serif;
 
+
+
+    &.no-orders {
+        .cmp-renewal-preview__subtotal,
+        .place-cmp-order-dialog-container {
+            display: none;
+        }
+    }
+
   .details-container {
     padding: 0 2rem;
     display: flex;

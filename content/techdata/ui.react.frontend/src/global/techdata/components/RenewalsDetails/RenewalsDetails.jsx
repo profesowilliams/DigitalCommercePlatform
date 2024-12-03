@@ -442,7 +442,7 @@ function RenewalsDetails(props) {
         componentProp.productLines.enableActiveLicence === 'true' &&
         renewalsDetails?.itemsActive?.length > 0
           ? 'cmp-quote-preview cmp-renewal-preview cmp-renewal-preview-active'
-          : 'cmp-quote-preview cmp-renewal-preview'
+          : (renewalsDetails?.items?.length === 0 ? 'cmp-quote-preview cmp-renewal-preview no-orders' : 'cmp-quote-preview cmp-renewal-preview')
       }
       ref={renewalsRef}
     >

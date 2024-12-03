@@ -45,7 +45,7 @@ function Price({ value }, data, compProps) {
     data?.canRequestQuote && compProps?.enableRequestQuote;
   return (
     <div className="price">
-      {isRequestQuoteFlag ? '-' : thousandSeparator(value)}
+      {isRequestQuoteFlag ? '-' : value ? thousandSeparator(value) : '-'}
     </div>
   );
 }
