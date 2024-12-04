@@ -18,6 +18,10 @@ export default function useGet(url, refreshKey) {
   const refreshRenewalDetailApi = useStore(state => state.refreshRenewalDetailApi);
 
   useEffect(() => {
+    setIsLoading(true);
+  }, [refreshKey]);
+
+  useEffect(() => {
     let isMounted = true;
      try {
       get(url, { withCredentials: isHttpOnlyEnabled() })

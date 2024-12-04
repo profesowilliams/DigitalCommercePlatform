@@ -748,9 +748,9 @@ function ConfigGrid({
   const getFeedbackMessageCTA = (message) => {
     if (message?.jsonUrlMessage ===  "Restore") {
       return (
-        <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, data?.source?.id, data?.endUser?.name?.text, false)}>
+        <a href="#" onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, data?.source?.id, data?.endUser?.name?.text, false)}>
           {getDictionaryValueOrKey(gridProps?.archiveLabels?.restore)}
-        </button>
+        </a>
       );
     }
 

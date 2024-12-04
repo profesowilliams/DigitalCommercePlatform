@@ -129,6 +129,10 @@ function RenewalsDetails(props) {
   }, [isIconEnabled]);
 
   useEffect(() => {
+    setRenewalsDetails(null);
+  }, [renewalsGridRefreshIndex]);
+
+  useEffect(() => {
     const renewalsNode = renewalsRef.current;
     const parentRenewalsStyle =
       renewalsNode?.parentNode?.parentNode?.parentNode;
@@ -233,7 +237,7 @@ function RenewalsDetails(props) {
         );
       }
     }
-  }, [apiResponse, isExtraReloadDisabled(), isLoggedIn, renewalsGridRefreshIndex]);
+  }, [apiResponse, isExtraReloadDisabled(), isLoggedIn]);
 
   // Close Cancel Dialog logic, reset data if necessary
   const closeCancelDialog = (resetFlag) => {

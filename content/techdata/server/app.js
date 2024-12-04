@@ -5031,7 +5031,10 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                            "isError": false
                        }
                    };
-  res.json(response);
+
+  setTimeout(() => {
+    res.status(200).json(response);
+  }, 5000);
 });
 
 app.get("/UI-Renewal/v1/GetAdobeRenewalAuditLogs", function (req, res) {
