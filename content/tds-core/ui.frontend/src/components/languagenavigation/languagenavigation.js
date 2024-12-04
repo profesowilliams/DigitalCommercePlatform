@@ -69,11 +69,6 @@ import events from '../../utils/events';
   }
 
   function hideRegionSelectDropdown() {
-    if (userIsLoggedIn) {
-      document.getElementsByClassName('languagenavigation')[0].style.display = 'none';
-    } else if (isExtraReloadDisabled()) {
-      // document.getElementsByClassName('languagenavigation')[0].style.display = 'none';
-    }
     const languageSelectorOpeners = document.querySelectorAll('.regionSelectDropdown');
 
     for (let i = 0; i < languageSelectorOpeners.length; i++) {
