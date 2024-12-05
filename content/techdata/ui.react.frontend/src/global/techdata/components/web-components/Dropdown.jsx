@@ -25,6 +25,12 @@ const Dropdown = ({
   children,
   ...rest
 }) => {
+  const handleValueChanged = (event) => {
+    if (onValueChanged) {
+      onValueChanged(event.detail); // Pass the event detail to the handler
+    }
+  };
+
   return (
     <tds-dropdown
       id={id}
@@ -33,7 +39,7 @@ const Dropdown = ({
       optionValueKey={optionValueKey}
       options={options}
       disabled={disabled}
-      onValueChanged={onValueChanged}
+      onValueChanged={handleValueChanged} // Attach listener here
       {...rest}
     >
       {children}

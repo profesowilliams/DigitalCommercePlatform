@@ -36,7 +36,6 @@ function Filter({ id }) {
   const SubFilterList = () => {
     // If the filter title is "Archives", use `id` instead of `childId`
     if (filter.field === 'Archives') {
-
       return <SubFilter key={id} id={id} />;
     }
 

@@ -1,9 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+/**
+ * FilterModal component for managing and displaying filters in a flyout.
+ *
+ * @module FilterModal
+ */
+
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { FILTER_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import FilterList from './components/FilterList';
 import FilterTags from './components/FilterTags';
-import useComputeBranding from '../../hooks/useComputeBranding';
 import normaliseAPIData from './filterUtils/normaliseAPIData';
 import normaliseState from './filterUtils/normaliseData';
 import { useMultiFilterSelected } from './hooks/useFilteringState';
@@ -22,10 +27,26 @@ import { getDictionaryValue } from '../../../../utils/utils';
 import { getLocalValueOrDefault } from '../BaseGrid/store/GridStore';
 import { getFilterAnalytics } from '../Analytics/analytics';
 
+/**
+ * FilterDialog component for wrapping filter children elements.
+ *
+ * @param {Object} props - Component properties.
+ * @param {React.ReactNode} props.children - Child components.
+ * @returns {JSX.Element} The FilterDialog component.
+ */
 const FilterDialog = ({ children }) => {
   return <div className="filter-modal-container__popup">{children}</div>;
 };
 
+/**
+ * Main FilterModal component for managing and rendering filters.
+ *
+ * @param {Object} props - Component properties.
+ * @param {Object} props.aemData - Data for rendering filters.
+ * @param {Function} props.onQueryChanged - Callback triggered on filter changes.
+ * @param {string} props.analyticsCategory - Analytics category for tracking events.
+ * @returns {JSX.Element|null} The FilterModal component.
+ */
 const FilterModal = ({ aemData, onQueryChanged, analyticsCategory }) => {
   const {
     filterList,
@@ -42,40 +63,36 @@ const FilterModal = ({ aemData, onQueryChanged, analyticsCategory }) => {
     (state) => state.isFilterModalOpen
   );
 
-  useEffect(() => {
-    const value = getLocalValueOrDefault(
-      FILTER_LOCAL_STORAGE_KEY,
-      'filterList',
-      null
-    );
-    value && effects.setCustomState({ key: 'filterList', value });
-  }, [resetFilter, filterData, appliedFilterCount, isFilterModalOpen]);
-
   const { setAppliedFilter } = useRenewalGridState((state) => state.effects);
-
   const { hasFilterChangeAvailable, dateSelected } = useFilteringSelected();
 
   const [DOMLoaded, setDOMLoaded] = useState(false);
 
-  let aemFilterData;
-  aemData.filterType =
-    aemData.filterType === null ? 'static' : aemData.filterType;
-
-  if (aemData.filterType === 'dynamic' && filterData?.refinements) {
+  /**
+   * Memoized computation of filter data based on the provided AEM data.
+   */
+  const aemFilterData = useMemo(() => {
     if (
+      aemData.filterType === 'dynamic' &&
+      filterData?.refinements &&
+      !filterData.refinements.some(
+        (refinement) => refinement.searchKey === 'Archives'
+      )
+    ) {
+      if (aemData.enableArchiveQuote) {
+        filterData.refinements.push({
+          name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
+          searchKey: 'Archives',
+        });
+      }
+      return normaliseAPIData(filterData.refinements);
+    } else if (
+      aemData.filterType === 'static' &&
       aemData.enableArchiveQuote &&
-      !JSON.stringify(filterData.refinements).includes('archives')
-    )
-      filterData.refinements.push({
-        name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
-        searchKey: 'Archives',
-      });
-    aemFilterData = normaliseAPIData(filterData.refinements);
-  } else if (aemData.filterType === 'static') {
-    if (
-      aemData.enableArchiveQuote &&
-      !JSON.stringify(aemData.filterListValues).includes('archives')
-    )
+      !aemData.filterListValues.some((filter) =>
+        filter.options?.some((option) => option.searchKey === 'archives')
+      )
+    ) {
       aemData.filterListValues.push({
         name: getDictionaryValue(aemData.showArchive, 'Show archives only'),
         searchKey: 'archives',
@@ -86,10 +103,12 @@ const FilterModal = ({ aemData, onQueryChanged, analyticsCategory }) => {
           },
         ],
       });
-    aemFilterData = normaliseState(aemData.filterListValues);
-  } else {
-    aemFilterData = [];
-  }
+      return normaliseState(aemData.filterListValues);
+    }
+    return aemData.filterType === 'dynamic'
+      ? normaliseAPIData(filterData?.refinements || [])
+      : normaliseState(aemData.filterListValues || []);
+  }, [aemData, filterData]);
 
   const {
     setFilterList,
@@ -100,10 +119,10 @@ const FilterModal = ({ aemData, onQueryChanged, analyticsCategory }) => {
   } = effects;
 
   useEffect(() => {
-    if (!filterList) {
-      setFilterList(aemFilterData);
+    if (!filterList || filterList.length === 0) {
+      setFilterList([...aemFilterData]);
     }
-  }, []);
+  }, [aemFilterData, filterList, setFilterList]);
 
   useEffect(() => {
     const onPageLoad = () => setDOMLoaded(true);
@@ -116,6 +135,9 @@ const FilterModal = ({ aemData, onQueryChanged, analyticsCategory }) => {
     }
   }, []);
 
+  /**
+   * Clears all filters and resets date filters.
+   */
   const handleClearFilter = () => {
     const filtersCopy = [...filterList].map((filter, index) => {
       if (index !== 0) {
@@ -129,17 +151,18 @@ const FilterModal = ({ aemData, onQueryChanged, analyticsCategory }) => {
 
   const root = filterList ? filterList[0] : false;
   const rootIds = root ? root.childIds : [];
-  const filterDom = useRef();
-  const filterBodyDom = useRef();
 
   const flyoutRef = useRef(null);
 
-  // Function to toggle body scroll
+  /**
+   * Toggles body scroll based on the modal state.
+   *
+   * @param {boolean} disable - Whether to disable scrolling.
+   */
   const toggleBodyScroll = (disable) => {
     document.body.style.overflow = disable ? 'hidden' : 'auto';
   };
 
-  // Manage body scroll based on modal state
   useEffect(() => {
     if (isFilterModalOpen) {
       toggleBodyScroll(true);
@@ -156,21 +179,14 @@ const FilterModal = ({ aemData, onQueryChanged, analyticsCategory }) => {
   }, [isFilterModalOpen]);
 
   /**
-   * Closes the import flyout.
-   *
-   * @function
+   * Closes the filter modal flyout and resets filters.
    */
   const closeFlyout = () => {
-    toggleFilterModal({ justClose: true }); // Explicitly set state
-    setFilterList(aemFilterData); // Reset the filter state
+    toggleFilterModal({ justClose: true });
+    setFilterList([...aemFilterData]); // Reset the filter state
     clearDateFilters();
   };
-  /**
-   * Adds a listener to close the flyout gracefully when the event fires.
-   * Cleans up the listener on component unmount.
-   *
-   * @function
-   */
+
   useEffect(() => {
     const flyoutElement = flyoutRef.current;
 
@@ -204,8 +220,7 @@ const FilterModal = ({ aemData, onQueryChanged, analyticsCategory }) => {
   }, [isFilterModalOpen]);
 
   /**
-   * Triggerred when the "show results" button is clicked on
-   * Renewal filter.
+   * Applies filters and triggers the query change callback.
    */
   const showResult = () => {
     const [optionFields] = _generateFilterFields();
@@ -230,9 +245,7 @@ const FilterModal = ({ aemData, onQueryChanged, analyticsCategory }) => {
           aria-labelledby="offcanvasLabel"
           scrollable
           backdrop="true"
-          onClose={() => {
-            closeFlyout();
-          }}
+          onClose={closeFlyout}
         >
           <FlyoutHeader>
             <FlyoutTitle>

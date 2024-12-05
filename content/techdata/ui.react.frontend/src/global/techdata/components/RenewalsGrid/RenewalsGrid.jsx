@@ -90,9 +90,6 @@ function RenewalsGrid(props) {
     useExtendGridOperations(useRenewalGridState);
   const effects = useRenewalGridState((state) => state.effects);
   const category = useRenewalGridState((state) => state.analyticsCategory);
-  const importFlyoutConfig = useRenewalGridState(
-    (state) => state?.importFlyout
-  );
   const showImportButton = useRenewalGridState(
     (state) => state.showImportButton
   );
