@@ -260,17 +260,18 @@ export default function ImportFlyout({ store, importFlyout }) {
   return (
     <>
       {/* Toast */}
-      {toastVisible && (
-        <Toast
-          id="import-toast"
-          variant={toastVariant}
-          placement="top-right"
-          size="medium"
-          onClose={() => setToastVisible(false)} // Close the Toast
-        >
-          <ToastHeader>{toastMessage}</ToastHeader>
-        </Toast>
-      )}
+      <Toast
+        id="import-toast"
+        {...(toastVisible ? { show: '' } : {})}
+        variant={toastVariant}
+        placement="custom"
+        top="6.6rem"
+        right="0"
+        size="medium"
+        onClose={() => setToastVisible(false)} // Close the Toast
+      >
+        <ToastHeader>{toastMessage}</ToastHeader>
+      </Toast>
 
       {/* Flyout */}
       <Flyout
@@ -363,11 +364,14 @@ export default function ImportFlyout({ store, importFlyout }) {
               const vendorName = selectedVendor ? selectedVendor.text : '';
 
               if (!vendorName || !vendorProgram) {
-                setToastMessage(
-                  'Please select a valid vendor and program before importing.'
-                );
-                setToastVariant('alert');
-                setToastVisible(true);
+                setToastVisible(false); // Explicitly set to false first
+                setTimeout(() => {
+                  setToastMessage(
+                    'Please select a valid vendor and program before importing.'
+                  );
+                  setToastVariant('alert');
+                  setToastVisible(true); // Reapply show after reset
+                }, 10);
                 return;
               }
 
@@ -385,18 +389,24 @@ export default function ImportFlyout({ store, importFlyout }) {
                 );
 
                 // Show success toast
-                setToastMessage('Files imported successfully!');
-                setToastVariant('confirmation');
-                setToastVisible(true);
+                setToastVisible(false); // Reset visibility first
+                setTimeout(() => {
+                  setToastMessage('Files imported successfully!');
+                  setToastVariant('confirmation');
+                  setToastVisible(true); // Reapply show after reset
+                }, 10);
 
                 closeFlyout();
               } catch (error) {
                 console.error('Failed to import files:', error);
 
                 // Show error toast
-                setToastMessage('Failed to import files. Please try again.');
-                setToastVariant('error');
-                setToastVisible(true);
+                setToastVisible(false); // Reset visibility first
+                setTimeout(() => {
+                  setToastMessage('Failed to import files. Please try again.');
+                  setToastVariant('error');
+                  setToastVisible(true); // Reapply show after reset
+                }, 10);
               }
             }}
           >
