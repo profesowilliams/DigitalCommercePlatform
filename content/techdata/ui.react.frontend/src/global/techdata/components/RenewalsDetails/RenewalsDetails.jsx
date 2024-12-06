@@ -383,7 +383,9 @@ function RenewalsDetails(props) {
             origin: 'fromUpdate',
             isAutoClose: true,
             isSuccess: false,
-            message: componentProp.quoteEditing?.failedUpdate,
+            message: getDictionaryValueOrKey(
+              componentProp.quoteEditing?.weAreSorry
+            ),
           };
           effects.setCustomState({ key: 'toaster', value: { ...toaster } });
         }
@@ -398,7 +400,7 @@ function RenewalsDetails(props) {
 
       if (ex.status === 200) {
         if (ex?.data?.salesContentEmail) {
-          errorMessage = componentProp.quoteEditing?.failedUpdate?.replace(
+          errorMessage = getDictionaryValueOrKey(componentProp.quoteEditing?.failedUpdate)?.replace(
             '{email}',
             ex.data.salesContentEmail
           );
