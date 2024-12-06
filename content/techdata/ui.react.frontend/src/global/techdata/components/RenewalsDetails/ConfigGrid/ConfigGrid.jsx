@@ -45,6 +45,7 @@ import {
 import CustomSwitchToggle from '../../Widgets/CustomSwitchToggle';
 import CustomTooltip from '../../Widgets/CustomTooltip';
 import { callServiceWrapper } from '../../../../../utils/api';
+import { getStatusLoopUntilStatusIsActive } from "../../RenewalsGrid/Orders/orderingRequests";
 
 
 const triggerArchiveRestore = async (setIsArchived, gridProps, effects, quoteId, endUserName, archived = false) => {
@@ -55,8 +56,8 @@ const triggerArchiveRestore = async (setIsArchived, gridProps, effects, quoteId,
     isSuccess: true,
     message: getDictionaryValueOrKey(
       archived
-        ? gridProps?.archiveLabels?.restoreToasterSuccess
-        : gridProps?.archiveLabels?.archiveToasterSuccess
+        ? gridProps?.archiveLabels?.archiveToasterSuccess
+        : gridProps?.archiveLabels?.restoreToasterSuccess
     )?.replace("{0}", endUserName),
     Child: (
       <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, quoteId, endUserName, !archived)}>
@@ -71,8 +72,8 @@ const triggerArchiveRestore = async (setIsArchived, gridProps, effects, quoteId,
     isAutoClose: false,
     isSuccess: false,
     message: getDictionaryValueOrKey(archived
-      ? gridProps?.archiveLabels?.restoreToasterFail
-      : gridProps?.archiveLabels?.archiveToasterFail
+      ? gridProps?.archiveLabels?.archiveToasterFail
+      : gridProps?.archiveLabels?.restoreToasterFail
     ),
     Child: null,
   };
@@ -95,11 +96,19 @@ const triggerArchiveRestore = async (setIsArchived, gridProps, effects, quoteId,
         value: { ...toasterFail },
       });
     } else {
+      const isActiveQuote = await getStatusLoopUntilStatusIsActive({
+        getStatusEndpoint: gridProps?.getStatusEndpoint,
+        id: quoteId,
+        delay: 2000,
+        iterations: 7,
+      });
+
       effects.setCustomState({
         key: 'toaster',
         value: { ...toasterSuccess },
       });
       setIsArchived(archived);
+
       effects.refreshRenealsGrid();
     }
   } catch (error) {
@@ -149,11 +158,19 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
           value: { ...archiveToasterFail },
         });
       } else {
+        const isActiveQuote = await getStatusLoopUntilStatusIsActive({
+          getStatusEndpoint: gridProps?.getStatusEndpoint,
+          id: quoteId,
+          delay: 2000,
+          iterations: 7,
+        });
+
         effects.setCustomState({
           key: 'toaster',
           value: { ...archiveToasterSuccess },
         });
         setIsArchived(true);
+
         effects.refreshRenealsGrid();
       }
     } catch (error) {
@@ -185,11 +202,19 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
           value: { ...restoreToasterFail },
         });
       } else {
+        const isActiveQuote = await getStatusLoopUntilStatusIsActive({
+          getStatusEndpoint: gridProps?.getStatusEndpoint,
+          id: quoteId,
+          delay: 2000,
+          iterations: 7,
+        });
+
         effects.setCustomState({
           key: 'toaster',
           value: { ...restoreToasterSuccess },
         });
         setIsArchived(false);
+
         effects.refreshRenealsGrid();
       }
     } catch (error) {

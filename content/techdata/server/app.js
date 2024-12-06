@@ -4919,29 +4919,6 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                            "refId": "",
                                            "type": "",
                                            "jsonUrl": ""
-                                       },
-                                       {
-                                           "ruleNumber": 110,
-                                           "errorCriticality": 2,
-                                           "message": "This agreement has been archived. Restore this agreement to continue working with it.",
-                                           "refId": "",
-                                           "type": "",
-                                           "jsonUrl": "",
-                                           "jsonUrlMessage": "Restore",
-                                           "apiParameters": {
-                                               "url": "ui-renewal/v1/ArchiveOrRestoreRenewals",
-                                               "method": "POST",
-                                               "parameters": [
-                                                   {
-                                                       "key": "archived",
-                                                       "value": "true"
-                                                   },
-                                                   {
-                                                       "key": "quoteId",
-                                                       "value": "U100000006025"
-                                                   }
-                                               ]
-                                           }
                                        }
                                    ],
                                    "itemsActive": [
@@ -5021,7 +4998,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                    "pomPercentage": 0.0,
                                    "samPercentage": 0.0,
                                    "nsmPercentage": 0.0,
-                                   "archived": true,
+                                   "archived": false,
                                }
                            ]
                        },
@@ -5032,8 +5009,37 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                        }
                    };
 
+  const response2 = {"content":{"details":[{"source":{"salesOrg":"VN91","targetSystem":"R3","key":"U877722926960","system":"RQEu","id":"U877722926960"},"published":"2024-11-22T10:56:13.228Z","shipTo":{"nameUpper":"","contact":[],"address":{}},"items":[{"id":"1","product":[{"type":"TECHDATA","id":"ADB65304752CA01A12","name":"-","family":"Captivate for teams"},{"type":"MANUFACTURER","id":"65304752CA01A12","name":"Captivate for teams ALL Multiple Platforms Multi Asian Languages Subscription New","manufacturer":"Adobe","manufacturerId":"3","family":"Captivate for teams"}],"quantity":6.0,"qty":0.0,"confirmedQuantity":0.0,"references":[],"updated":"0001-01-01T00:00:00","unitPrice":10159000.0,"unitCost":375.24,"totalPrice":60954000.0,"unitListPrice":10368000.0,"unitPriceCurrency":"VND","unitCostCurrency":"USD","unitListPriceCurrency":"VND","extendedListPrice":0.0,"requested":"0001-01-01T00:00:00","femAmount":0.0,"pomAmount":0.0,"samAmount":0.0,"nsmAmount":0.0,"femPercentage":0.0,"pomPercentage":0.0,"samPercentage":0.0,"nsmPercentage":0.0,"agreements":[],"attributes":[],"serialNumbers":[null],"discounts":[{"type":"Standard","value":"2.02"}],"contract":{"id":"P3005100000","renewedDuration":"1 Year","endDate":"2024-10-02T00:00:00Z","newAgreementStartDate":"2024-10-03T00:00:00Z","newAgreementEndDate":"2025-10-02T00:00:00Z","formattedEndDate":"02/10/2024","formattedNewAgreementStartDate":"03/10/2024","formattedNewAgreementEndDate":"02/10/2025","dueDate":"2024-10-02T00:00:00Z","hasMultipleSupportLevelForThisAgreement":false,"hasMultipleDueDateForThisAgreement":false,"hasMultipleDurationForThisAgreement":false,"agreementDuration":"03/10/2024 - 02/10/2025","formattedDueDate":"02/10/2024","autoRenew":false},"subscriptionId":"1f1e1ba4ed440bb638301bf6303ebfNA","agency":"ManualAutoRenew","isResellerPriceOverride":false}],"attributes":[],"programName":"VIP MP Commercial","firstAvailableOrderDate":"2024-09-02T00:00:00Z","lastOrderDate":"2025-10-02T00:00:00Z","amountSaved":0.0,"linkedRenewals":[],"dueDate":"2024-10-02T00:00:00Z","endUserType":"Commercial","vendorLogo":"https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=30","vendorLogoPdf":"https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=20","previousResellerPO":"Auto-migration - Jun 2024","isValid":false,"canOrder":false,"canEditQty":false,"canEditResellerPrice":false,"canEditLines":false,"canCopy":false,"formattedPublished":"22/11/2024","formattedFirstAvailableOrderDate":"02/09/2024","formattedLastOrderDate":"02/10/2025","formattedDueDate":"02/10/2024","formattedCreated":"22/11/2024","formattedUpdated":"22/11/2024","formattedExpiry":"02/10/2024","vendor":{"id":"3","name":"Adobe","vendorsTDName":"Adobe"},"renewalLevel":"Level 1 1 - 9","hasMultipleSupportLevel":false,"hasMultipleAgreements":false,"hasMultipleRenewedDuration":false,"hasMultipleDueDates":false,"agreementNumber":"P3005100000","renewedDuration":"1 Year","agreementDuration":"03/10/2024 - 02/10/2025","hasMultipleAgreementDuration":false,"canDownloadExcel":false,"canShareQuote":false,"canRequestQuote":false,"canRequestRevision":false,"itemsActive":[{"id":"1","product":[{"type":"TECHDATA","id":"ADB65304752CA01A12","family":"Captivate for teams"},{"type":"MANUFACTURER","id":"65304752CA01A12","name":"Captivate for teams ALL Multiple Platforms Multi Asian Languages Subscription New","manufacturer":"Adobe","manufacturerId":"3","family":"Captivate for teams"}],"quantity":6.0,"subscriptionId":"1f1e1ba4ed440bb638301bf6303ebfNA"}],"additionalInfo":[{"key":"SubStatus","value":"PreviewFailed"},{}],"renewalLevelActive":"Level 1 1 - 9","canAddMore":false,"autoRenew":false,"isAutoRenewEnabled":false,"displayAutoRenew":false,"showToolTip":false,"revision":1.0,"subRevision":0.0,"activeFlag":"Y","price":60954000.0,"currency":"VND","quoteType":"Renewal","created":"2024-11-22T10:56:13.228Z","updated":"2024-11-22T10:56:13.228Z","expiry":"2024-10-02T00:00:00Z","status":"Active","orders":[],"vendorReference":[{"type":"QuoteId","value":"P3005100000"}],"femAmount":0.0,"pomAmount":0.0,"samAmount":0.0,"nsmAmount":0.0,"femPercentage":0.0,"pomPercentage":0.0,"samPercentage":0.0,"nsmPercentage":0.0,"archived":true}]},"error":{"code":0,"messages":[],"isError":false}}
+
+  if (id === "archived") { 
+    response.content.details[0].archived = true;
+    //add to feedbackmessages
+    response.content.details[0].feedBackMessages.push({
+      "ruleNumber": 110,
+      "errorCriticality": 2,
+      "message": "This agreement has been archived. Restore this agreement to continue working with it.",
+      "refId": "",
+      "type": "",
+      "jsonUrl": "",
+      "jsonUrlMessage": "Restore",
+      "apiParameters": {
+        "url": "ui-renewal/v1/ArchiveOrRestoreRenewals",
+        "method": "POST",
+        "parameters": [
+          {
+            "key": "archived",
+            "value": "true"
+          },
+          {
+            "key": "quoteId",
+            "value": "U100000006025"
+          }
+        ]
+      }
+    });
+  }
   setTimeout(() => {
-    res.status(200).json(response);
+    res.status(200).json(id === 'error' ? response2 : response);
   }, 5000);
 });
 

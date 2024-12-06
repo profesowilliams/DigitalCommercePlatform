@@ -45,6 +45,7 @@ import { Button } from '@mui/material';
 import useComputeBranding from '../../hooks/useComputeBranding';
 import useIsIconEnabled from '../RenewalsGrid/Orders/hooks/useIsIconEnabled';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
+import ErrorBoundaryBaseGrid from '../BaseGrid/utils/ErrorBoundaryBaseGrid';
 
 let redBanner = false;
 
@@ -721,4 +722,10 @@ function RenewalsDetails(props) {
   );
 }
 
-export default RenewalsDetails;
+const ErrorBoundaryRenewalsDetails = (props) => (
+  <ErrorBoundaryBaseGrid message="There was an error please try again later">
+    <RenewalsDetails {...props} />
+  </ErrorBoundaryBaseGrid>
+);
+
+export default ErrorBoundaryRenewalsDetails;

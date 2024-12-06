@@ -26,6 +26,7 @@ import {
   archiveOrRestoreRenewals,
 } from '../../../../../utils/utils';
 import { callServiceWrapper } from '../../../../../utils/api';
+import { getStatusLoopUntilStatusIsActive } from '../Orders/orderingRequests';
 
 function ActionsMenu({
   config,
@@ -196,10 +197,18 @@ function ActionsMenu({
           value: { ...archiveToasterFail },
         });
       } else {
+        const isActiveQuote = await getStatusLoopUntilStatusIsActive({
+          getStatusEndpoint: config?.getStatusEndpoint,
+          id: data?.source?.id,
+          delay: 2000,
+          iterations: 7,
+        });
+
         effects.setCustomState({
           key: 'toaster',
           value: { ...archiveToasterSuccess },
         });
+
         effects.refreshRenealsGrid();
       }
     } catch (error) {
@@ -231,10 +240,18 @@ function ActionsMenu({
           value: { ...restoreToasterFail },
         });
       } else {
+        const isActiveQuote = await getStatusLoopUntilStatusIsActive({
+          getStatusEndpoint: config?.getStatusEndpoint,
+          id: data?.source?.id,
+          delay: 2000,
+          iterations: 7,
+        });
+
         effects.setCustomState({
           key: 'toaster',
           value: { ...restoreToasterSuccess },
         });
+
         effects.refreshRenealsGrid();
       }
     } catch (error) {

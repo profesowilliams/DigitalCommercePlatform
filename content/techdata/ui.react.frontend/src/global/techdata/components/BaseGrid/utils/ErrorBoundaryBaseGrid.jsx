@@ -20,7 +20,7 @@ export default class ErrorBoundaryBaseGrid extends React.Component {
     if (this.state.hasError) {
       return (
         <div className="d-flex justify-content-center">
-          <h5>Something went wrong on the base grid component</h5>
+          <h5>{this.props.message || 'Something went wrong on the base grid component'}</h5>
         </div>
       );
     }
