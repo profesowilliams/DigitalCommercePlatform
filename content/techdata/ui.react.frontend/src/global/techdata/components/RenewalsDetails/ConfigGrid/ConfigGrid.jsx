@@ -137,138 +137,6 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
   );
   const isOpportunity = data.canRequestQuote || data.quoteType === "Opportunity";
 
-  const triggerArchive = async () => {
-    effects.setCustomState({
-      key: 'toaster',
-      value: { isOpen: false}});
-
-    const archived = true;
-
-    const postData = {
-      "quoteId": data?.source?.id,
-       "archived": archived
-    };
-
-    try {
-      const response = await callServiceWrapper(archiveOrRestoreRenewals,gridProps?.archiveOrRestoreRenewalsEndpoint, postData);
-
-      if (response.errors.length > 0) {
-        effects.setCustomState({
-          key: 'toaster',
-          value: { ...archiveToasterFail },
-        });
-      } else {
-        const isActiveQuote = await getStatusLoopUntilStatusIsActive({
-          getStatusEndpoint: gridProps?.getStatusEndpoint,
-          id: quoteId,
-          delay: 2000,
-          iterations: 7,
-        });
-
-        effects.setCustomState({
-          key: 'toaster',
-          value: { ...archiveToasterSuccess },
-        });
-        setIsArchived(true);
-
-        effects.refreshRenealsGrid();
-      }
-    } catch (error) {
-      effects.setCustomState({
-        key: 'toaster',
-        value: { ...archiveToasterFail },
-      });
-    }
-  };
-
-  const triggerRestore = async () => {
-    effects.setCustomState({
-      key: 'toaster',
-      value: { isOpen: false}});
-
-    const archived = false;
-
-    const postData = {
-      "quoteId": data?.source?.id,
-       "archived": archived
-    };
-
-    try {
-      const response = await callServiceWrapper(archiveOrRestoreRenewals,gridProps?.archiveOrRestoreRenewalsEndpoint, postData);
-
-      if (response.errors.length > 0) {
-        effects.setCustomState({
-          key: 'toaster',
-          value: { ...restoreToasterFail },
-        });
-      } else {
-        const isActiveQuote = await getStatusLoopUntilStatusIsActive({
-          getStatusEndpoint: gridProps?.getStatusEndpoint,
-          id: quoteId,
-          delay: 2000,
-          iterations: 7,
-        });
-
-        effects.setCustomState({
-          key: 'toaster',
-          value: { ...restoreToasterSuccess },
-        });
-        setIsArchived(false);
-
-        effects.refreshRenealsGrid();
-      }
-    } catch (error) {
-      effects.setCustomState({
-        key: 'toaster',
-        value: { ...restoreToasterFail },
-      });
-    }
-  };
-
-    const archiveToasterSuccess = {
-      isOpen: true,
-      origin: 'archiveRenewals',
-      isAutoClose: false,
-      isSuccess: true,
-      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.archiveToasterSuccess)?.replace("{0}", data?.endUser?.name?.text),
-      Child: (
-        <button onClick={triggerRestore}>
-            {getDictionaryValueOrKey(gridProps?.archiveLabels?.undo)}
-        </button>
-      ),
-    };
-
-    const archiveToasterFail = {
-      isOpen: true,
-      origin: 'archiveRenewals',
-      isAutoClose: false,
-      isSuccess: false,
-      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.archiveToasterFail),
-      Child: null,
-    };
-
-    const restoreToasterSuccess = {
-      isOpen: true,
-      origin: 'restoreRenewals',
-      isAutoClose: false,
-      isSuccess: true,
-      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.restoreToasterSuccess)?.replace("{0}", data?.endUser?.name?.text),
-      Child: (
-        <button onClick={triggerArchive}>
-            {getDictionaryValueOrKey(gridProps?.archiveLabels?.undo)}
-        </button>
-      ),
-    };
-
-    const restoreToasterFail = {
-      isOpen: true,
-      origin: 'restoreRenewals',
-      isAutoClose: false,
-      isSuccess: false,
-      message: getDictionaryValueOrKey(gridProps?.archiveLabels?.restoreToasterFail),
-      Child: null,
-    };
-
   const downloadXLS = () => {
     try {
       pushDataLayer(
@@ -506,7 +374,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
   }
   if (gridProps?.enableArchiveQuote) {
     buttons.push(
-      <button onClick={triggerArchive} key="archive">
+      <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, data?.source?.id, data?.endUser?.name?.text, true)} key="archive">
         <ArchiveDetailsIcon className="cmp-renewal-preview__download--icon" />
         <span
           className={gridProps?.enableArchiveQuote ? 'separator' : undefined}
