@@ -292,6 +292,7 @@ function Grid(props) {
       popupParent={popupParent}
       getRowId={getRowId}
       sortingOrder={sortingOrder}
+      suppressCellSelection={true}
     >
       {filteredColumns.map((column) => {
         return (
