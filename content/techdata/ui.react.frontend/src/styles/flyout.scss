@@ -1,5 +1,5 @@
 /* stylelint-disable -- Too much to fix, will delete file later. */
-@use "sass:map";
+@use 'sass:map';
 
 $flyout-padding: 16px;
 $flyout-small-height: 780px;
@@ -431,19 +431,19 @@ $flyout-small-height-formax: 779px;
         gap: 10px;
 
         &.incorrect-email {
-            .email-pills {
-                border-color: rgba(205, 22, 63, 1);
-                color: rgba(205, 22, 63, 1);
-                  &:hover {
-                    border-color: rgba(205, 22, 63, 1);
-                    background: rgba(99, 102, 106, 0.1);
-                    color: #006fba;
-                  }
-
-                svg {
-                    color: rgba(205, 22, 63, 1);
-                }
+          .email-pills {
+            border-color: rgba(205, 22, 63, 1);
+            color: rgba(205, 22, 63, 1);
+            &:hover {
+              border-color: rgba(205, 22, 63, 1);
+              background: rgba(99, 102, 106, 0.1);
+              color: #006fba;
             }
+
+            svg {
+              color: rgba(205, 22, 63, 1);
+            }
+          }
         }
         h3 {
           font-size: 16px;
@@ -503,6 +503,10 @@ $flyout-small-height-formax: 779px;
         border-top: 1px solid #d9d8d7;
         margin-top: 10px;
         text-align: right;
+        display: flex;
+        place-content: flex-end;
+        gap: 1.5rem;
+
         a {
           padding: 8px 20px;
           background-color: #00558c;
@@ -1285,11 +1289,11 @@ li[id^='combo-box-demo-option-']:active {
 .cmp-flyout-newPurchase-cannot-edit {
   padding-right: 21px;
 }
- .data-table-loader {
-    text-align: center;
-    width: 100%;
-    margin: 20px 0;
- }
+.data-table-loader {
+  text-align: center;
+  width: 100%;
+  margin: 20px 0;
+}
 .new-purchase-footer-info {
   display: flex;
   flex-direction: column;

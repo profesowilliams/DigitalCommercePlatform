@@ -444,11 +444,11 @@ export function ShareFlyout({
                 shareFlyoutContent.shareFlyoutQuoteDescription
               )}
             </p>
-            <a className="email-preview-section-quote-btn" href={`#`}>
+            <tds-button type="button" variant="secondary" color="teal">
               {getDictionaryValueOrKey(
                 shareFlyoutContent.shareFlyoutQuoteButtonLabel
               )}
-            </a>
+            </tds-button>
           </div>
           <div>
             <textarea
@@ -460,7 +460,13 @@ export function ShareFlyout({
               maxLength={getDictionaryValueOrKey(
                 shareFlyoutContent.shareFlyoutCommentCount
               )}
-              onChange={(e) => handleCommentChange(e)}
+              onChange={(e) => {
+                handleCommentChange(e);
+                const target = e.target;
+                target.style.height = 'auto'; // Reset height to allow shrink
+                target.style.height = `${target.scrollHeight}px`; // Set height based on scrollHeight
+              }}
+              style={{ overflow: 'hidden', resize: 'none' }} // Ensure smooth auto-expand
             />
             <span className="char-count">
               {count}{' '}
