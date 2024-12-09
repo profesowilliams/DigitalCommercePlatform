@@ -184,6 +184,9 @@ function RenewalPlanOptions({ labels, data, node }) {
   );
 
   const formatTotalValue = (option) => {
+    if (!option?.total || parseInt(option?.total) === 0 ) {
+        return '-';
+    }
     return aemConfig?.displayCurrencyName
       ? `${thousandSeparator(option?.total)} ${data?.renewal?.currency}`
       : `$ ${thousandSeparator(option?.total)}`;
