@@ -12,9 +12,7 @@ import Dropdown from '../web-components/Dropdown';
 import FileInput from '../web-components/FileInput';
 import {
   Toast,
-  ToastBody,
   ToastHeader,
-  ToastLink,
 } from '../web-components/Toast';
 import Upload from './Upload';
 import Export from './Export';
@@ -88,10 +86,16 @@ export default function ImportFlyout({ store, importFlyout }) {
   );
 
   /**
-   * Handles file removal by updating the uploadedFiles state.
+   * Handles the removal of a selected file from the uploaded files list.
+   *
+   * This function removes the specified file from the `uploadedFiles` state and
+   * ensures that the file is also removed from the internal tracker in the `Upload` module.
    *
    * @function
    * @param {Object} removedFile - The file object that was removed.
+   * @param {File} removedFile.file - The actual file object being removed.
+   * @param {string} removedFile.file.name - The name of the file being removed.
+   * @returns {void}
    */
   const handleFileRemoved = (removedFile) => {
     // Remove the file from the uploadedFiles state
@@ -105,6 +109,17 @@ export default function ImportFlyout({ store, importFlyout }) {
     Upload.removeUploadedFile(removedFile.file.name);
   };
 
+  /**
+   * Clears all uploaded files from the file input element.
+   *
+   * This function dispatches a custom event, `clear-file-uploads`, on the
+   * `tds-file-input` component to clear all files in the file input interface.
+   * It ensures that the UI reflects the removal of all uploaded files.
+   * The event bubbles and is composed to reach its target element.
+   *
+   * @function
+   * @returns {void}
+   */
   const clearAllFiles = () => {
     const fileInputElement = document.querySelector('tds-file-input');
     if (fileInputElement) {
@@ -119,7 +134,19 @@ export default function ImportFlyout({ store, importFlyout }) {
   /**
    * Closes the import flyout and clears all related states, including uploaded files.
    *
+   * This function hides the Flyout component by updating its state in the global
+   * store, clears all local states related to the import process, and resets any
+   * uploaded files both in the UI and the `Upload` module.
+   *
+   * **Actions Performed:**
+   * - Hides the Flyout by setting `importFlyout.show` to `false`.
+   * - Clears the selected vendor, vendor program, and their options.
+   * - Resets the file selection state and uploaded files list.
+   * - Dispatches a custom event to clear all files in the file input element.
+   * - Calls the `Upload.resetUploadedFiles` method to reset file tracking.
+   *
    * @function
+   * @returns {void}
    */
   const closeFlyout = () => {
     // Hide the Flyout
@@ -138,6 +165,24 @@ export default function ImportFlyout({ store, importFlyout }) {
     Upload.resetUploadedFiles();
   };
 
+  /**
+   * Adds an event listener to the vendor program dropdown for handling value changes.
+   *
+   * This effect runs whenever the `vendorProgramOptions` state changes. It attaches
+   * a `value-changed` event listener to the dropdown element with the ID `vendorProgram`.
+   * When a value change event is triggered, the `handleVendorProgramChange` function
+   * is called to update the state. The event listener is removed during cleanup to
+   * prevent memory leaks.
+   *
+   * **Behavior:**
+   * - Listens for the `value-changed` event on the `vendorProgram` dropdown.
+   * - Triggers the `handleVendorProgramChange` function with the event as its argument.
+   * - Cleans up by removing the event listener when the component unmounts or the
+   *   `vendorProgramOptions` dependency changes.
+   *
+   * @function
+   * @returns {void}
+   */
   useEffect(() => {
     const dropdownElement = document.getElementById('vendorProgram');
     if (dropdownElement) {
@@ -151,11 +196,20 @@ export default function ImportFlyout({ store, importFlyout }) {
   }, [vendorProgramOptions]);
 
   /**
-   * Handles vendor selection change by updating the vendor state
-   * and fetching the corresponding vendor program options.
+   * Handles vendor selection change.
+   *
+   * This function updates the selected vendor state (`vendor`) based on the
+   * value provided in the selection event. It clears the existing vendor program
+   * state (`vendorProgram`) and fetches the available vendor program options for
+   * the newly selected vendor. The vendor program options are then updated in
+   * the state (`vendorProgramOptions`).
    *
    * @function
    * @param {Event} event - The vendor selection event.
+   * @param {Object} event.detail - Custom event detail containing the selected value.
+   * @param {string} event.detail.value - The ID of the selected vendor.
+   * @param {HTMLElement} [event.target] - The target element that triggered the event.
+   * @returns {void}
    */
   const handleVendorChange = (event) => {
     const selectedVendorId = event.detail?.value || event.target?.value;
@@ -177,8 +231,17 @@ export default function ImportFlyout({ store, importFlyout }) {
   /**
    * Handles vendor program selection change.
    *
+   * This function is triggered when the vendor program dropdown value changes.
+   * It updates the `vendorProgram` state with the newly selected program value.
+   * If no valid program value is detected in the event, it logs an informational
+   * message to the console and does not update the state.
+   *
    * @function
    * @param {Event} event - The vendor program selection event.
+   * @param {Object} event.detail - Custom detail object containing the selected value.
+   * @param {string} event.detail.value - The value of the selected vendor program.
+   * @param {HTMLElement} [event.target] - The target element from which the value is derived.
+   * @returns {void}
    */
   const handleVendorProgramChange = (event) => {
     const selectedProgram = event.detail?.value || event.target?.value;
@@ -192,10 +255,19 @@ export default function ImportFlyout({ store, importFlyout }) {
   };
 
   /**
-   * Enables or disables the import button based on selected
-   * vendor, vendor program, and file.
+   * Enables or disables the import button based on selected vendor, vendor program, and uploaded files.
+   *
+   * This effect runs whenever the `vendor`, `vendorProgram`, or `uploadedFiles` state changes.
+   * It checks whether all required conditions for enabling the import button are met:
+   * - A vendor is selected.
+   * - A vendor program is selected.
+   * - At least one file has been uploaded.
+   *
+   * If all conditions are satisfied, the `enableImport` state is set to `true`,
+   * enabling the import button. Otherwise, it is set to `false`.
    *
    * @function
+   * @returns {void}
    */
   useEffect(() => {
     // Check if all required conditions are met
@@ -206,21 +278,61 @@ export default function ImportFlyout({ store, importFlyout }) {
   }, [vendor, vendorProgram, uploadedFiles]);
 
   /**
-   * Populates vendor options based on importFlyoutConfig.
+   * Populates vendor options based on the import flyout configuration.
+   *
+   * This effect runs whenever the `importFlyoutConfig` changes. It sets the
+   * `vendorOptions` state with the options provided by the `importFlyoutConfig`.
+   * If there is exactly one vendor option available, it automatically selects
+   * that vendor by updating the `vendor` state and triggering the
+   * `handleVendorChange` function to ensure dependent states like `vendorProgramOptions`
+   * are also updated.
    *
    * @function
+   * @returns {void}
    */
   useEffect(() => {
     if (importFlyoutConfig?.options && importFlyoutConfig.options.length > 0) {
       setVendorOptions(importFlyoutConfig.options);
+
+      // Automatically select vendor if there's only one option
+      if (importFlyoutConfig.options.length === 1) {
+        const singleVendor = importFlyoutConfig.options[0].id;
+        setVendor(singleVendor); // Set vendor state
+        handleVendorChange({ detail: { value: singleVendor } }); // Trigger onValueChanged logic
+      }
     }
   }, [importFlyoutConfig]);
 
   /**
-   * Adds an event listener to handle vendor dropdown value changes.
-   * Cleans up the event listener on component unmount.
+   * Automatically selects the vendor program if there is only one available option.
+   *
+   * This effect runs whenever the `vendorProgramOptions` array changes. If the array
+   * contains exactly one item, it updates the `vendorProgram` state with the single
+   * option's `text` and triggers the `handleVendorProgramChange` function to simulate
+   * a value selection event.
    *
    * @function
+   * @returns {void}
+   */
+  useEffect(() => {
+    if (vendorProgramOptions.length === 1) {
+      const singleProgram = vendorProgramOptions[0].text;
+      setVendorProgram(singleProgram); // Automatically set vendor program
+      handleVendorProgramChange({ detail: { value: singleProgram } }); // Trigger logic
+    }
+  }, [vendorProgramOptions]);
+
+  /**
+   * Adds an event listener to the vendor dropdown for handling value changes.
+   *
+   * This effect attaches a `value-changed` event listener to the `vendor` dropdown
+   * element whenever the `vendorOptions` state changes. The listener triggers the
+   * `handleVendorChange` function, which updates the selected vendor and its related
+   * state. The event listener is cleaned up when the component unmounts or when the
+   * `vendorOptions` state changes.
+   *
+   * @function
+   * @returns {void}
    */
   useEffect(() => {
     const dropdownElement = document.getElementById('vendor');
@@ -239,10 +351,15 @@ export default function ImportFlyout({ store, importFlyout }) {
   }, [vendorOptions]);
 
   /**
-   * Adds a listener to close the flyout gracefully when the event fires.
-   * Cleans up the listener on component unmount.
+   * Adds an event listener to handle the `flyoutClosed` event on the Flyout component.
+   *
+   * This effect attaches a `flyoutClosed` event listener to the Flyout component referenced
+   * by `flyoutRef`. When the event is triggered, the `closeFlyout` function is called to
+   * clear related states and perform cleanup. The event listener is removed during cleanup
+   * to prevent memory leaks.
    *
    * @function
+   * @returns {void}
    */
   useEffect(() => {
     const handleFlyoutClosed = () => closeFlyout();
@@ -304,7 +421,10 @@ export default function ImportFlyout({ store, importFlyout }) {
                   required
                   optionTextKey="text"
                   optionValueKey="id"
-                  value={vendor}
+                  value={
+                    vendor ||
+                    (vendorOptions.length === 1 ? vendorOptions[0].id : '')
+                  }
                   options={JSON.stringify(
                     vendorOptions.map(({ text, id }) => ({ text, id }))
                   )}
@@ -320,7 +440,12 @@ export default function ImportFlyout({ store, importFlyout }) {
                   required
                   optionTextKey="text"
                   optionValueKey="text"
-                  value={vendorProgram}
+                  value={
+                    vendorProgram ||
+                    (vendorProgramOptions.length === 1
+                      ? vendorProgramOptions[0].text
+                      : '')
+                  }
                   options={JSON.stringify(
                     vendorProgramOptions.map(({ text }) => ({
                       text,
