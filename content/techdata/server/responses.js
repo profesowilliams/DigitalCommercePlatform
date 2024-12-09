@@ -471,7 +471,7 @@ const renewalSearchResponse = {
         pomPercentage: 0.0,
         samPercentage: 0.0,
         nsmPercentage: 0.0,
-        "archived": false,
+        "archived": true,
       },
       {
         source: {

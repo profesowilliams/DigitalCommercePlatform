@@ -204,12 +204,26 @@ function ActionsMenu({
           iterations: 7,
         });
 
-        effects.setCustomState({
-          key: 'toaster',
-          value: { ...archiveToasterSuccess },
-        });
+        if (!isActiveQuote) {
+          effects.setCustomState({
+            key: 'toaster',
+            value: {
+              isOpen: true,
+              origin: 'restoreRenewals',
+              isAutoClose: false,
+              isSuccess: false,
+              message: getDictionaryValueOrKey(config.weAreSorry),
+              Child: null,
+            },
+          });
+        } else {
+          effects.setCustomState({
+            key: 'toaster',
+            value: { ...archiveToasterSuccess },
+          });
 
-        effects.refreshRenealsGrid();
+          effects.refreshRenealsGrid();
+        }
       }
     } catch (error) {
       effects.setCustomState({
@@ -247,12 +261,26 @@ function ActionsMenu({
           iterations: 7,
         });
 
-        effects.setCustomState({
-          key: 'toaster',
-          value: { ...restoreToasterSuccess },
-        });
+        if (!isActiveQuote) {
+          effects.setCustomState({
+            key: 'toaster',
+            value: {
+              isOpen: true,
+              origin: 'restoreRenewals',
+              isAutoClose: false,
+              isSuccess: false,
+              message: getDictionaryValueOrKey(config.weAreSorry),
+              Child: null,
+            },
+          });
+        } else {
+          effects.setCustomState({
+            key: 'toaster',
+            value: { ...restoreToasterSuccess },
+          });
 
-        effects.refreshRenealsGrid();
+          effects.refreshRenealsGrid();
+        }
       }
     } catch (error) {
       effects.setCustomState({

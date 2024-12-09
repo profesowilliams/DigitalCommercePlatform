@@ -171,6 +171,12 @@
 												fieldDescription="mainDashboard.renewal.properties.label.genericErrorCode"
 												fieldLabel="Unknown error code"
 												name="./labels/genericErrorCode"/>
+                                            <weAreSorry
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="details.renewal.quoteEditing.label.weAreSorry"
+                                                fieldLabel="We are sorry, your update could not be processed, please try again later."
+                                                name="./labels/weAreSorry"/>
 										</items>
 									</column>
 								</items>

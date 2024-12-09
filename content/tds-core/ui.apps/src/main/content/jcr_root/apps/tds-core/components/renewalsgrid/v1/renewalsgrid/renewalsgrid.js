@@ -521,6 +521,7 @@ use(["../../../common/utils.js"], function (utils) {
       "import",
       "genericError",
       "genericErrorCode",
+      "weAreSorry",
       "showArchive",
     ];
 

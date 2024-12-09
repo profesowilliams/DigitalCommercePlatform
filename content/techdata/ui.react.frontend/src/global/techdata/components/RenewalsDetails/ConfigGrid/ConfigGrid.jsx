@@ -103,13 +103,27 @@ const triggerArchiveRestore = async (setIsArchived, gridProps, effects, quoteId,
         iterations: 7,
       });
 
-      effects.setCustomState({
-        key: 'toaster',
-        value: { ...toasterSuccess },
-      });
-      setIsArchived(archived);
+      if (!isActiveQuote) {
+        effects.setCustomState({
+          key: 'toaster',
+          value: {
+            isOpen: true,
+            origin: 'restoreRenewals',
+            isAutoClose: false,
+            isSuccess: false,
+            message: getDictionaryValueOrKey(gridProps.quoteEditing?.weAreSorry),
+            Child: null,
+          },
+        });
+      } else {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...toasterSuccess },
+        });
+        setIsArchived(archived);
 
-      effects.refreshRenealsGrid();
+        effects.refreshRenealsGrid();
+      }
     }
   } catch (error) {
     console.log('error', error);
