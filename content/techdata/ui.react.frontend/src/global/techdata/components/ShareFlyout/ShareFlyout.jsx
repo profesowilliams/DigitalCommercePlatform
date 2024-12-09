@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   WarningTriangleIcon,
   ProhibitedIcon,
-  DeleteIcon
+  DeleteIcon,
 } from '../../../../fluentIcons/FluentIcons';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { Button, TextField, Autocomplete, Chip } from '@mui/material';
@@ -13,11 +13,10 @@ import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { shareQuote } from './api';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
-import {useStore} from '../../../../utils/useStore';
+import { useStore } from '../../../../utils/useStore';
 import { callServiceWrapper } from '../../../../utils/api';
 
-function ErrorModelEmailPill({item, updateAccessErrObject}) {
-
+function ErrorModelEmailPill({ item, updateAccessErrObject }) {
   const [editPill, setEditPill] = useState(false);
   const [value, setValue] = useState(item.email);
   const [isError, setError] = useState(false);
@@ -37,7 +36,7 @@ function ErrorModelEmailPill({item, updateAccessErrObject}) {
         setError(false);
         setEditPill(false);
         updateAccessErrObject({
-          [item.email]: e.target.value
+          [item.email]: e.target.value,
         });
       } else {
         setError(true);
@@ -51,34 +50,51 @@ function ErrorModelEmailPill({item, updateAccessErrObject}) {
 
   const deleteEmailPill = () => {
     updateAccessErrObject({
-      [item.email]: ''
+      [item.email]: '',
     });
   };
 
-  return (
-      editPill === false ?
-        <span className="email-pills" onDoubleClick={editEmailPill}>{value}
-          <span className="close-icon" onClick={deleteEmailPill}><DeleteIcon width="15" height="15" /></span></span> :
-        <input className={isError ? 'error-input' : ''} value={value} type="text"
-          onKeyDown={handleEnter}
-          onChange={updateValue}
-        />
+  return editPill === false ? (
+    <span className="email-pills" onDoubleClick={editEmailPill}>
+      {value}
+      <span className="close-icon" onClick={deleteEmailPill}>
+        <DeleteIcon width="15" height="15" />
+      </span>
+    </span>
+  ) : (
+    <input
+      className={isError ? 'error-input' : ''}
+      value={value}
+      type="text"
+      onKeyDown={handleEnter}
+      onChange={updateValue}
+    />
   );
 }
 
-export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, reseller }) {
+export function ShareFlyout({
+  store,
+  shareFlyoutContent,
+  subheaderReference,
+  reseller,
+}) {
   const shareFlyoutConfig = store((st) => st.shareFlyout);
   const vendorName = shareFlyoutConfig?.data?.vendor?.name || '';
-  const endUserName = reseller ? reseller.name : shareFlyoutConfig?.data?.endUser?.name;
+  const endUserName = reseller
+    ? reseller.name
+    : shareFlyoutConfig?.data?.endUser?.name;
   const firstName = shareFlyoutConfig?.data?.endUser?.contact?.firstName || '';
   const lastName = shareFlyoutConfig?.data?.endUser?.contact?.lastName || '';
   const quoteType = getDictionaryValueOrKey('Renewal');
   const activeAgreementID = shareFlyoutConfig?.data?.source?.id || '';
   const effects = store((st) => st.effects);
   const [enableShare, setEnableShare] = useState(false);
-  const closeFlyoutModal = () => effects.setCustomState({ key: 'shareFlyout', value: {show:false} });
-  const [count, setCount] = useState(getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount));
-  const userData = useStore(state => state.userData);
+  const closeFlyoutModal = () =>
+    effects.setCustomState({ key: 'shareFlyout', value: { show: false } });
+  const [count, setCount] = useState(
+    getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount)
+  );
+  const userData = useStore((state) => state.userData);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [requestObj, setRequestObj] = useState({});
@@ -89,8 +105,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
   const [errorFlags, setErrorFlags] = useState({
     incorrect: false,
     notFound: false,
-    serverError: false
-  })
+    serverError: false,
+  });
   const [errorObj, setErrorObj] = useState({});
   const [accessErrObj, setAccessErrObj] = useState([]);
 
@@ -114,14 +130,14 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
     setErrorFlags({
       incorrect: false,
       notFound: false,
-      serverError: false
+      serverError: false,
     });
     setApiResponseFlag(false);
     setAccessErrObj([]);
   };
 
   const handleTryAgainBtn = (e, skipValidation) => {
-    if(event) {
+    if (event) {
       e.preventDefault();
     }
     closeAlert();
@@ -132,7 +148,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
   };
 
   const handleShareItClick = async (event, skipValidation) => {
-    if(event) {
+    if (event) {
       event.preventDefault();
     }
     setIsLoading(true);
@@ -140,46 +156,55 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
     let toaster = null;
     let dataObj = requestObj;
     dataObj = {
-        ...dataObj,
-        'FirstName': userData?.firstName,
-        'LastName': userData?.lastName,
-        'QuoteNumber': activeAgreementID,
-        'ViewQuote': quoteType,
-        'VendorName': vendorName,
-        'QuoteId': activeAgreementID,
-        'EndUserName': endUserName,
-        'SkipQuotAccessValidation': false,
-        'Language': 'en-gb',
-        'EmailBody': getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteDescription),
-        'Signature': getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutSignatureLabel)
-    }
+      ...dataObj,
+      FirstName: userData?.firstName,
+      LastName: userData?.lastName,
+      QuoteNumber: activeAgreementID,
+      ViewQuote: quoteType,
+      VendorName: vendorName,
+      QuoteId: activeAgreementID,
+      EndUserName: endUserName,
+      SkipQuotAccessValidation: false,
+      Language: 'en-gb',
+      EmailBody: getDictionaryValueOrKey(
+        shareFlyoutContent.shareFlyoutQuoteDescription
+      ),
+      Signature: getDictionaryValueOrKey(
+        shareFlyoutContent.shareFlyoutSignatureLabel
+      ),
+    };
     if (skipValidation) {
       dataObj.SkipQuotAccessValidation = true;
     }
     const finalRequestObj = {
-      Data: dataObj
-    }
+      Data: dataObj,
+    };
 
-    const response = await callServiceWrapper(shareQuote,shareFlyoutContent.shareQuoteEndpoint, finalRequestObj);
+    const response = await callServiceWrapper(
+      shareQuote,
+      shareFlyoutContent.shareQuoteEndpoint,
+      finalRequestObj
+    );
 
     setIsLoading(false);
     setEnableShare(true);
-    if (response.errors.length ===  0) {
+    if (response.errors.length === 0) {
       // set success message
       toaster = {
-          isOpen: true,
-          origin: 'fromShareFlyout',
-          isAutoClose: true,
-          isSuccess: true,
-          message: getDictionaryValueOrKey(shareFlyoutContent.shareSuccessMessage)
-      }
+        isOpen: true,
+        origin: 'fromShareFlyout',
+        isAutoClose: true,
+        isSuccess: true,
+        message: getDictionaryValueOrKey(
+          shareFlyoutContent.shareSuccessMessage
+        ),
+      };
 
       if (toaster) {
         closeFlyout();
         effects.setCustomState({ key: 'toaster', value: { ...toaster } });
       }
-    }
-    else {
+    } else {
       setApiResponseFlag(true);
       setErrorObj(response.data.messages);
       let accessObj = [];
@@ -190,46 +215,48 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
         let errorFlags = {
           incorrectFlag: 0,
           accessFlag: 0,
-          serverFlag: 0
-        }
-        for(var i = 0; i < response.data.messages.length; i++) {
+          serverFlag: 0,
+        };
+        for (var i = 0; i < response.data.messages.length; i++) {
           if (response.data.messages[i]?.message?.indexOf('Invalid') > -1) {
             errorFlags = {
               ...errorFlags,
-              incorrectFlag: 1
-            }
-          } else if (response.data.messages[i]?.message?.indexOf('access') > -1) {
+              incorrectFlag: 1,
+            };
+          } else if (
+            response.data.messages[i]?.message?.indexOf('access') > -1
+          ) {
             errorFlags = {
               ...errorFlags,
-              accessFlag: 1
-            }
+              accessFlag: 1,
+            };
           } else {
             errorFlags = {
               ...errorFlags,
-              serverFlag: 1
-            }
+              serverFlag: 1,
+            };
           }
         }
         if (errorFlags.incorrectFlag > 0) {
           setErrorFlags({
             ...errorFlags,
-            incorrect: true
-           });
+            incorrect: true,
+          });
         } else if (errorFlags.accessFlag > 0) {
           setErrorFlags({
             ...errorFlags,
-            notFound: true
+            notFound: true,
           });
         } else {
           setErrorFlags({
             ...errorFlags,
-            serverError: true
+            serverError: true,
           });
         }
       } else {
         setErrorFlags({
           ...errorFlags,
-          serverError: true
+          serverError: true,
         });
       }
       setAccessErrObj(accessObj);
@@ -241,45 +268,45 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
   };
 
   const updateAccessErrObject = (updatedObj) => {
-   let errObj = [...accessErrObj];
-   for (var i=0; i < accessErrObj.length; i++) {
-    if (errObj[i].email === Object.keys(updatedObj)[0]) {
-      if (Object.values(updatedObj)[0] === '') {
-        errObj.splice([i], 1);
-      } else {
-        errObj[i].email = Object.values(updatedObj)[0];
+    let errObj = [...accessErrObj];
+    for (var i = 0; i < accessErrObj.length; i++) {
+      if (errObj[i].email === Object.keys(updatedObj)[0]) {
+        if (Object.values(updatedObj)[0] === '') {
+          errObj.splice([i], 1);
+        } else {
+          errObj[i].email = Object.values(updatedObj)[0];
+        }
+        break;
       }
-      break;
     }
-   }
-   const updatedEmailsArr = errObj.map((item) => item.email);
-   const toArr = toEmailsArr;
-   const ccArr = ccEmailsArr;
-   if (isValidEmailFormat(Object.values(updatedObj)[0])) {
-     const toIndex = toArr.indexOf(Object.keys(updatedObj)[0]);
-     const ccIndex = ccArr.indexOf(Object.keys(updatedObj)[0]);
-     if (toIndex > -1) {
-      toArr.splice(toIndex, 1);
-      toArr.push(Object.values(updatedObj)[0]);
-      setToEmailsArr([...toArr]);
-     } else if (ccIndex > -1) {
-       ccArr.splice(ccIndex, 1);
-       ccArr.push(Object.values(updatedObj)[0]);
-       setCcEmailsArr([...ccArr]);
-      }
-     setAccessErrObj([...errObj]);
-   } else if (Object.values(updatedObj)[0] === '' ) {
+    const updatedEmailsArr = errObj.map((item) => item.email);
+    const toArr = toEmailsArr;
+    const ccArr = ccEmailsArr;
+    if (isValidEmailFormat(Object.values(updatedObj)[0])) {
       const toIndex = toArr.indexOf(Object.keys(updatedObj)[0]);
-       const ccIndex = ccArr.indexOf(Object.keys(updatedObj)[0]);
-       if (toIndex > -1) {
+      const ccIndex = ccArr.indexOf(Object.keys(updatedObj)[0]);
+      if (toIndex > -1) {
+        toArr.splice(toIndex, 1);
+        toArr.push(Object.values(updatedObj)[0]);
+        setToEmailsArr([...toArr]);
+      } else if (ccIndex > -1) {
+        ccArr.splice(ccIndex, 1);
+        ccArr.push(Object.values(updatedObj)[0]);
+        setCcEmailsArr([...ccArr]);
+      }
+      setAccessErrObj([...errObj]);
+    } else if (Object.values(updatedObj)[0] === '') {
+      const toIndex = toArr.indexOf(Object.keys(updatedObj)[0]);
+      const ccIndex = ccArr.indexOf(Object.keys(updatedObj)[0]);
+      if (toIndex > -1) {
         toArr.splice(toIndex, 1);
         setToEmailsArr([...toArr]);
-       } else if (ccIndex > -1) {
-         ccArr.splice(ccIndex, 1);
-         setCcEmailsArr([...ccArr]);
-        }
-       setAccessErrObj([...errObj]);
-   }
+      } else if (ccIndex > -1) {
+        ccArr.splice(ccIndex, 1);
+        setCcEmailsArr([...ccArr]);
+      }
+      setAccessErrObj([...errObj]);
+    }
   };
 
   const isValidEmailFormat = (email) => {
@@ -298,15 +325,17 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
   const updateRequestObject = (updatedData) => {
     setRequestObj({
       ...requestObj,
-      ...updatedData
+      ...updatedData,
     });
   };
 
   const handleCommentChange = (e) => {
-    const count = getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount) || 500;
+    const count =
+      getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount) ||
+      500;
     setCount(parseInt(count) - e.target.value.length);
     updateRequestObject({
-      'AdditionalComments': e.target.value
+      AdditionalComments: e.target.value,
     });
   };
 
@@ -321,13 +350,15 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
     setErrorFlags({
       incorrect: false,
       notFound: false,
-      serverError: false
+      serverError: false,
     });
     setResetDataFlag(true);
   };
 
   const resetCount = () => {
-    setCount(getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount));
+    setCount(
+      getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount)
+    );
   };
 
   const formBoxStyle = {
@@ -453,13 +484,27 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
           <>
             <div className="backdrop" onClick={closeAlert}></div>
             <div className="api-failed-section">
-              <div className={errorFlags.incorrect ? "content-section incorrect-email" : "content-section"}>
+              <div
+                className={
+                  errorFlags.incorrect
+                    ? 'content-section incorrect-email'
+                    : 'content-section'
+                }
+              >
                 {errorFlags.serverError ? (
                   <>
                     <WarningTriangleIcon />
                     <div className="error-message-section">
-                      <h3>{getDictionaryValueOrKey(shareFlyoutContent.shareFailedLabel)}</h3>
-                      <p>{getDictionaryValueOrKey(shareFlyoutContent.shareFailedDescription)}</p>
+                      <h3>
+                        {getDictionaryValueOrKey(
+                          shareFlyoutContent.shareFailedLabel
+                        )}
+                      </h3>
+                      <p>
+                        {getDictionaryValueOrKey(
+                          shareFlyoutContent.shareFailedDescription
+                        )}
+                      </p>
                     </div>
                   </>
                 ) : null}
@@ -467,8 +512,16 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
                   <>
                     <ProhibitedIcon />
                     <div className="error-message-section">
-                      <h3>{getDictionaryValueOrKey(shareFlyoutContent.incorrectEmailLabel)}</h3>
-                      <p>{getDictionaryValueOrKey(shareFlyoutContent.incorrectEmailDescription)}</p>
+                      <h3>
+                        {getDictionaryValueOrKey(
+                          shareFlyoutContent.incorrectEmailLabel
+                        )}
+                      </h3>
+                      <p>
+                        {getDictionaryValueOrKey(
+                          shareFlyoutContent.incorrectEmailDescription
+                        )}
+                      </p>
                       {errorObj?.map((item) => {
                         if (
                           item.email &&
@@ -486,8 +539,16 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
                   <>
                     <WarningTriangleIcon />
                     <div className="error-message-section">
-                      <h3>{getDictionaryValueOrKey(shareFlyoutContent.recipientNotFoundLabel)}</h3>
-                      <p>{getDictionaryValueOrKey(shareFlyoutContent.recipientNotFoundDescription)}</p>
+                      <h3>
+                        {getDictionaryValueOrKey(
+                          shareFlyoutContent.recipientNotFoundLabel
+                        )}
+                      </h3>
+                      <p>
+                        {getDictionaryValueOrKey(
+                          shareFlyoutContent.recipientNotFoundDescription
+                        )}
+                      </p>
                       {accessErrObj?.map((item, i) => {
                         if (item.email && item.message.indexOf('access') > -1) {
                           return (
@@ -507,41 +568,63 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference, res
               <div className="button-section">
                 {errorFlags.serverError ? (
                   <>
-                    <a className="cancel-btn" href={`#`} onClick={closeAlert}>
-                      {getDictionaryValueOrKey(shareFlyoutContent.shareFailedCancelLabel)}
-                    </a>
-                    <a
-                      className="try-again-btn"
-                      href={`#`}
+                    <tds-button
+                      type="button"
+                      variant="tertiary"
+                      color="teal"
+                      onClick={closeAlert}
+                    >
+                      {getDictionaryValueOrKey(
+                        shareFlyoutContent.shareFailedCancelLabel
+                      )}
+                    </tds-button>
+                    <tds-button
+                      type="button"
+                      variant="primary"
+                      color="teal"
                       onClick={handleTryAgainBtn}
                     >
-                      {getDictionaryValueOrKey(shareFlyoutContent.shareFailedTryAgainLabel)}
-                    </a>
+                      {getDictionaryValueOrKey(
+                        shareFlyoutContent.shareFailedTryAgainLabel
+                      )}
+                    </tds-button>
                   </>
                 ) : null}
                 {errorFlags.incorrect ? (
                   <>
-                    <a
-                      className="try-again-btn"
-                      href={`#`}
+                    <tds-button
+                      type="button"
+                      variant="primary"
+                      color="teal"
                       onClick={closeAlert}
                     >
-                      {getDictionaryValueOrKey(shareFlyoutContent.incorrectEmailTryAgainLabel)}
-                    </a>
+                      {getDictionaryValueOrKey(
+                        shareFlyoutContent.incorrectEmailTryAgainLabel
+                      )}
+                    </tds-button>
                   </>
                 ) : null}
                 {errorFlags.notFound ? (
                   <>
-                    <a className="cancel-btn" href={`#`} onClick={closeAlert}>
-                      {getDictionaryValueOrKey(shareFlyoutContent.recipientNotFoundCancelLabel)}
-                    </a>
-                    <a
-                      className="try-again-btn"
-                      href={`#`}
+                    <tds-button
+                      type="button"
+                      variant="tertiary"
+                      color="teal"
+                      onClick={closeAlert}
+                    >
+                      {getDictionaryValueOrKey(
+                        shareFlyoutContent.recipientNotFoundCancelLabel
+                      )}
+                    </tds-button>
+                    <tds-button
+                      variant="primary"
+                      color="teal"
                       onClick={(e) => handleTryAgainBtn(e, true)}
                     >
-                      {getDictionaryValueOrKey(shareFlyoutContent.recipientNotFoundContinueLabel)}
-                    </a>
+                      {getDictionaryValueOrKey(
+                        shareFlyoutContent.recipientNotFoundContinueLabel
+                      )}
+                    </tds-button>
                   </>
                 ) : null}
               </div>
