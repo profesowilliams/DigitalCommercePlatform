@@ -34,10 +34,11 @@
                  }
              </style>
              <script type="text/javascript" src="https://s7d9.scene7.com/s7viewers/html5/js/VideoViewer.js"></script>
-             <div id="s7video_div" class="video"></div>
+             <div id="${video.safeVideoId}" class="video"></div>
              <script type="text/javascript">
-                 var s7videoviewer = new s7viewers.VideoViewer({
-                     containerId: "s7video_div",
+               (function() {
+                 const s7videoviewer = new s7viewers.VideoViewer({
+                     containerId: "${video.safeVideoId @ context='scriptString'}",
                      params: {
                          serverurl: "https://s7d9.scene7.com/is/image/",
                          contenturl: "https://s7d9.scene7.com/is/content/",
@@ -45,6 +46,7 @@
                      }
                  });
                  s7videoviewer.init();
+                })();
              </script>
          </sly>
      </sly>

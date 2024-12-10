@@ -5037,6 +5037,35 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
         ]
       }
     });
+  } else if (id === "requestquote") {
+    response.content.details[0].canRequestQuote = true;
+    response.content.details[0].feedBackMessages.push({
+      "ruleNumber": 111,
+      "errorCriticality": 3,
+      "message": "This is an opportunity and some details are missing . Click Request quote to be contacted by your TechData representative with more details.",
+      "refId": "",
+      "type": "",
+      "jsonUrl": "",
+      "jsonUrlMessage": "Request quote",
+      "apiParameters": {
+          "url": "ui-renewal/v1/RequestQuoteEmail",
+          "method": "POST",
+          "parameters": [
+              {
+                  "key": "QuoteId",
+                  "value": "U889111986578"
+              },
+              {
+                  "key": "QuoteType",
+                  "value": "Opportunity"
+              },
+              {
+                  "key": "AdditionalInformation",
+                  "value": "Will Come from FE"
+              }
+          ]
+      }
+    });
   }
   setTimeout(() => {
     res.status(200).json(id === 'error' ? response2 : response);
