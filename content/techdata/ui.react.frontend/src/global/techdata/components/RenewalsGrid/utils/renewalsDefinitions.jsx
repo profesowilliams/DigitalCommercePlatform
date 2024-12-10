@@ -16,7 +16,7 @@ export const renewalsDefinitions = (componentProp) => {
     const renderPriceColumn = (componentProp, data) => {
         if (componentProp.enableRequestQuote && data.canRequestQuote) {
             return <span className="non-request-quote">-</span>
-        } else if (componentProp.enableRequestQuote && data?.quoteRequestedTime) {
+        } else if (componentProp.enableRequestQuote && data?.formattedQuoteRequestedTime) {
             return (
               <span className="requested-quote">
                 {getDictionaryValueOrKey(
@@ -27,7 +27,7 @@ export const renewalsDefinitions = (componentProp) => {
                     componentProp.requestQuote.toolTipHeading
                   )}</b><br/><span style="font-size: 12px; line-height: 18px; display: block;">${getDictionaryValueOrKey(
                     componentProp.requestQuote.timeStampRequested
-                  )}:${data?.quoteRequestedTime}</span>
+                  )}:${data?.formattedQuoteRequestedTime}</span>
                 <p style="font-size: 16px; line-height: 21px">${getDictionaryValueOrKey(
                   componentProp.requestQuote.toolTipSuccessMessage
                 )}</p>

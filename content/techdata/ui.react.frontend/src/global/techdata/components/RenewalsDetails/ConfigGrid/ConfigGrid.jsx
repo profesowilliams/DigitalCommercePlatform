@@ -745,7 +745,7 @@ function ConfigGrid({
                     )}
                     {errorMessage}
                   </p>
-                  { blueBanner && gridProps.enableRequestQuote && data.canRequestQuote && !data.quoteRequestedTime &&
+                  { blueBanner && gridProps.enableRequestQuote && data.canRequestQuote && !data.formattedQuoteRequestedTime &&
                     (
                         <button onClick={openRequestFlyOut}>
                           {gridProps.quotePreview.quoteOpportunityRequestLabel}

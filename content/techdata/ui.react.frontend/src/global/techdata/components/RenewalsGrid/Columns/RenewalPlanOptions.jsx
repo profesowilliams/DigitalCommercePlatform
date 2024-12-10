@@ -179,9 +179,12 @@ function RenewalPlanOptions({ labels, data, node }) {
     });
   }
 
-  const renewalDetailsURL = id => encodeURI(
-    `${window.location.origin}${detailUrl}.html?id=${id ?? ""}`
-  );
+  const renewalDetailsURL = (id, data) => {
+    const type = data?.source?.type ? data?.source?.type.toLowerCase() : '';
+    return encodeURI(
+               `${window.location.origin}${detailUrl}.html?id=${id ?? ""}&type=${type ?? ""}`
+             );
+  }
 
   const formatTotalValue = (option) => {
     if (!option?.total || parseInt(option?.total) === 0 ) {
@@ -192,8 +195,8 @@ function RenewalPlanOptions({ labels, data, node }) {
       : `$ ${thousandSeparator(option?.total)}`;
   };
 
-  const optionPlanLink = id => <Link
-    href={renewalDetailsURL(id)}
+  const optionPlanLink = (id, data) => <Link
+    href={renewalDetailsURL(id, data)}
     variant="renewal-links__secondary"
     underline="none"
   >
@@ -275,7 +278,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                     {showPlanLabels(option)}
                   </span>
                   <p>{`${getDictionaryValue("details.renewal.label.quoteId", "Quote ID")}:`}  {option?.quoteID ? option?.quoteID : 'No data provided'}</p>
-                  <p>{`${getDictionaryValue("grids.renewal.label.refNo", "Ref No")}:`} {optionPlanLink(option?.id)}</p>
+                  <p>{`${getDictionaryValue("grids.renewal.label.refNo", "Ref No")}:`} {optionPlanLink(option?.id, data)}</p>
                   <p>{`${getDictionaryValue("grids.renewal.label.expiryDate", "Expiry Date")}:`}  {formatExpiryDateLabel(option)}</p>
                 </div>
                 {isPlanSelected(option) && (
