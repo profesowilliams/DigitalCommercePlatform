@@ -597,10 +597,12 @@ export const analyticsColumnDataToPush = (name) => ({
 export const redirectToRenewalDetail = (
     detailUrl,
     id = "",
+    data,
     analyticsData = null
 ) => {
+    const type = data?.source?.type ? data?.source?.type.toLowerCase() : '';
     const renewalDetailsURL = encodeURI(
-        `${window.location.origin}${detailUrl}.html?id=${id ?? ""}`
+        `${window.location.origin}${detailUrl}.html?id=${id ?? ""}&type=${type ?? ""}`
     );
 
     if (isObject(analyticsData)) {

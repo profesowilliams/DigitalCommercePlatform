@@ -320,7 +320,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                         <>
                           <span className="vertical-separator"></span>
                           <Button
-                            onClick={() => redirectToRenewalDetail(detailUrl, option?.id)}
+                            onClick={() => redirectToRenewalDetail(detailUrl, option?.id, data)}
                             analyticsCallback={getRowAnalytics.bind(null,
                               analyticsCategory,
                               ANALYTIC_CONSTANTS.Grid.RowActions.ViewDetailExpanded,
