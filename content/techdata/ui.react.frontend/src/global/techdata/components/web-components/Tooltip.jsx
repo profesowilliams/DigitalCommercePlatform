@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react';
  *
  * @param {object} props - The properties object.
  * @param {string} props.text - The tooltip text.
+ * @param {boolean} props.autoPlacement - Automatically determine the tooltip placement.
  * @param {string} props.placement - The tooltip placement (e.g., 'top', 'bottom', 'right', etc.).
  * @param {string} props.strategy - The positioning strategy, either 'absolute' or 'fixed'.
  * @param {number|object|function} props.offset - Offset options for distance, axes, or custom function.
@@ -19,6 +20,7 @@ import React, { useEffect, useRef } from 'react';
  */
 const Tooltip = ({
   text,
+  autoPlacement,
   placement,
   strategy,
   offset,
@@ -28,7 +30,7 @@ const Tooltip = ({
   arrowPadding,
   size,
   hide,
-    children,
+  children,
   ...rest
 }) => {
   const tooltipRef = useRef();
@@ -37,6 +39,7 @@ const Tooltip = ({
     <tds-tooltip
       ref={tooltipRef}
       text={text}
+      autoPlacement={autoPlacement}
       placement={placement}
       strategy={strategy}
       offset={offset}

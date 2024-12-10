@@ -1,4 +1,4 @@
-@use "sass:map";
+@use 'sass:map';
 
 @mixin common-planoption-card {
   padding: 0 22px 1rem 0;
@@ -103,6 +103,7 @@
     .ag-root-wrapper-body {
       .ag-body-viewport {
         min-height: 300px;
+        flex-flow: column;
       }
     }
   }
@@ -132,6 +133,11 @@
   .ag-theme-alpine .ag-layout-print .ag-center-cols-container {
     min-height: auto;
   }
+
+  .ag-row-hover {
+    z-index: 1;
+  }
+
   .cmp-grid.ag-theme-alpine .planDetails {
     .ag-row {
       border-bottom: none;
@@ -211,10 +217,10 @@
     cursor: pointer;
 
     tds-tooltip {
-        --tooltip-background: #000C21 !important;
-        --tooltip-text-color: #FFFFFF !important;
-        --tooltip-width: 246px !important;
-        --tooltip-hide: none !important;
+      --tooltip-background: #000c21 !important;
+      --tooltip-text-color: #ffffff !important;
+      --tooltip-width: 246px !important;
+      --tooltip-hide: none !important;
     }
   }
   .non-request-quote {
@@ -222,12 +228,12 @@
     text-align: right;
   }
   .requested-quote {
-      svg {
-        margin-left: 5px;
-        path {
-            fill: #262626;
-        }
+    svg {
+      margin-left: 5px;
+      path {
+        fill: #262626;
       }
+    }
   }
   .request-quote {
     color: #006fba;
@@ -407,11 +413,11 @@
     cursor: pointer;
 
     &.disabled {
-        pointer-events: none;
+      pointer-events: none;
 
-        button {
-            pointer-events: none;
-        }
+      button {
+        pointer-events: none;
+      }
     }
 
     i,
