@@ -566,7 +566,7 @@ const renewalSearchResponse = {
         canImport: false,
         hasMultipleAgreementDuration: false,
         canDownloadExcel: true,
-        canShareQuote: false,
+        canShareQuote: true,
         canRequestQuote: false,
         canRequestRevision: false,
         additionalInfo: [],

@@ -58,6 +58,13 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
     setInputValue(value);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.target.value?.trim() !== '' && event.key === "Tab") {
+      setInputValue('');
+      handleSelect(event, [event.target.value], '', null);
+    }
+  }
+
   const handleSelect = (event, value, situation, option) => {
     if (event?.keyCode === 8) {
       selectedEmails.pop();
@@ -132,6 +139,7 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
             onChange={(e, value, situation, option) => {
               handleSelect(e, value, situation, option);
             }}
+            onKeyDown={handleKeyDown}
             inputValue={inputValue}
             onInputChange={handleInputChange}
             renderTags={(value, getTagProps) =>
