@@ -71,7 +71,7 @@ function ActionsMenu({
   } = endpoints;
 
   const enableArchive = !data?.archived;
-  const enableDownloadPDF = data?.canDownloadPDF
+  const enableDownloadPDF = data?.canDownLoadPDF
 
   useEffect(() => {
     let timer;
