@@ -59,9 +59,19 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
   };
 
   const handleKeyDown = (event) => {
-    if (event.target.value?.trim() !== '' && event.key === "Tab") {
+    let value = event.target.value || '';
+    const processAndRemoveCharacter = event.key === " " || event.key === "," || event.key === ";";
+    const processNewEmail = event.key === "Tab" || processAndRemoveCharacter;
+
+    if (processAndRemoveCharacter) {
+      event.preventDefault();
+    }
+
+    value = value.trim();
+    
+    if (value !== '' && processNewEmail) {
+      handleSelect(event, [value], '', null);
       setInputValue('');
-      handleSelect(event, [event.target.value], '', null);
     }
   }
 
