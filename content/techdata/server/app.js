@@ -4544,7 +4544,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                    "reseller": {
                                        "id": "90005",
                                        "isValid": true,
-                                       "canEdit": false,
+                                       "canEdit": true,
                                        "incumbent": false,
                                        "vendorAccountNumber": {
                                            "text": "P1005108534",
@@ -4553,6 +4553,14 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                            "isDisplay": true,
                                            "canEdit": false,
                                            "allowedLength": 100000
+                                       },
+                                       "customerPO": {
+                                           "text": "P2005108534",
+                                           "isValid": true,
+                                           "isMandatory": false,
+                                           "isDisplay": true,
+                                           "canEdit": true,
+                                           "allowedLength": 35
                                        },
                                        "name": "CONG TY TNHH BAT DONG SAN",
                                        "nameUpper": "CONG TY TNHH BAT DONG SAN",
@@ -4571,7 +4579,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                                    "isValid": true,
                                                    "isMandatory": false,
                                                    "isDisplay": true,
-                                                   "canEdit": false,
+                                                   "canEdit": true,
                                                    "allowedLength": 100000
                                                },
                                                "phone": {
@@ -4878,14 +4886,6 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                    "canEditResellerPrice": true,
                                    "canEditLines": true,
                                    "canCopy": false,
-                                   "customerPO": {
-                                       "text": "P2005108534",
-                                       "isValid": true,
-                                       "isMandatory": false,
-                                       "isDisplay": true,
-                                       "canEdit": true,
-                                       "allowedLength": 35
-                                   },
                                    "formattedPublished": "04/10/2024",
                                    "formattedFirstAvailableOrderDate": "07/06/2025",
                                    "formattedLastOrderDate": "07/07/2026",

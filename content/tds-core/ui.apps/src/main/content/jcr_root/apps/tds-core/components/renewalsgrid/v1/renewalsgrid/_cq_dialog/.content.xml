@@ -1456,7 +1456,7 @@
 													<requestQuoteCommentCount
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-															fieldLabel="Request Flyout Comment Count Text"
+															fieldLabel="Request Flyout Comment Count "
 															name="./requestQuote/requestQuoteCommentCount"/>
 													<errorToastMessage
 															jcr:primaryType="nt:unstructured"

@@ -34,6 +34,8 @@ function ResellerInfo({
   const resellerResponseAsObj = isObject(reseller.vendorAccountNumber);
   const resellerData = getModifiedResellerData(resellerResponseAsObj, reseller);
 
+  console.log(resellerData, 'testing');
+
   const paymentTerms = reseller.paymentTerms || '';
 
   const { canEdit, isValid } = reseller;

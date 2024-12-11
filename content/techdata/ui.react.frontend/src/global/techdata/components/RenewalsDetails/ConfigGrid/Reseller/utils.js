@@ -1,6 +1,6 @@
 export default function getModifiedResellerData(resellerResponseAsObj, reseller) {  
   
-  const { contact, address } = reseller;  
+  const { contact, address } = reseller;
   if (resellerResponseAsObj) {
     return {
       id: reseller?.id,
@@ -18,6 +18,7 @@ export default function getModifiedResellerData(resellerResponseAsObj, reseller)
         postalCode: address?.postalCode,
       },
       vendorAccountNumber: reseller.vendorAccountNumber.text,
+      customerPO: reseller?.customerPO?.text
     };
   }
 

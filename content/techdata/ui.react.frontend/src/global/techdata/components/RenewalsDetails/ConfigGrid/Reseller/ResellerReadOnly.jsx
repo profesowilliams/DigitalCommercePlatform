@@ -9,9 +9,10 @@ export default function ResellerReadOnly({
   paymentTermsVal,
   previousResellerPO,
 }) {
-  const { id, contact, address, vendorAccountNumber } = resellerData;
+console.log(customerPO, previousResellerPO, 'testing')
+  const { id, contact, address, vendorAccountNumber, customerPO } = resellerData;
 
-  const { shipToLabel, paymentTerms, previousPurchaseOrderNoEndLabel } = resellerLabels;
+  const { shipToLabel, paymentTerms, previousPurchaseOrderNoEndLabel, autorenewPurchaseOrderNoEndLabel } = resellerLabels;
 
   const addSeparator = (items) => {
     return items?.filter(Boolean)?.join(', ');
@@ -56,6 +57,13 @@ export default function ResellerReadOnly({
           )}
         >
           {previousResellerPO}
+        </Info>
+        <Info
+          label={getDictionaryValueOrKey(
+            autorenewPurchaseOrderNoEndLabel
+          )}
+        >
+          {customerPO}
         </Info>
         <Info label={getDictionaryValueOrKey(paymentTerms)}>
           {paymentTermsVal}

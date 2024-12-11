@@ -944,6 +944,11 @@
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     fieldLabel="Previous purchase order No: Label"
                                                                     name="./reseller/previousPurchaseOrderNoEndLabel"/>
+                                                            <autorenewPurchaseOrderNoEndLabel
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Auto-renew purchase order No: Label"
+                                                                    name="./reseller/autorenewPurchaseOrderNoEndLabel"/>
                                                         </items>
                                                     </resellerGroup>
                                                     <agreementInfo
@@ -1136,6 +1141,11 @@
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldLabel="Request Flyout Comment Count Text"
                                                             name="./requestQuote/requestQuoteCommentCountText"/>
+                                                    <requestQuoteCommentCount
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Request Flyout Comment Count"
+                                                            name="./requestQuote/requestQuoteCommentCount"/>
                                                     <requestQuoteButtonLabel
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

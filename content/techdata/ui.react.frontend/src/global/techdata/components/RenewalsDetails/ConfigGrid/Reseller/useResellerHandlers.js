@@ -3,7 +3,7 @@ import { createProducedSetter } from "../Common/utils";
 import isEmail from 'validator/es/lib/isEmail';
 
 export default function useResellerHandlers(detailsObj, setStateFunction) {
-    const { contact } = detailsObj;
+    const { contact, customerPO } = detailsObj;
     const [isEmailValid, setIsEmailValid] = useState(
         contact[0]?.email?.isValid || true
     );
@@ -32,6 +32,10 @@ export default function useResellerHandlers(detailsObj, setStateFunction) {
             let email = e.target.value;
             producedSet("contact[0].email.text", email);
             validateEmail(email);
+        },
+        customerPO: (e) => {
+        console.log(e, 'testing');
+            producedSet("customerPO.text", e.target.value);
         },
         phone: (e) => {
             if (phoneRegex.test(e.target.value))

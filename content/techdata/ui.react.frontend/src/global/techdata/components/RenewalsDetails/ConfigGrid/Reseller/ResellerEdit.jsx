@@ -19,7 +19,8 @@ export default function ResellerEdit({
   shipToOnChange,
   branding,
 }) {
-  const { contact } = resellerDetails;
+  const { contact, customerPO } = resellerDetails;
+  console.log(resellerDetails, 'Testing');
   const contactName = contact[0].name;
   const [shipToEditLabel] = useState(getDictionaryValueOrKey(resellerLabels.shipToEditLabel));
   const [addresses, setAddresses] = useState([]);
@@ -115,6 +116,20 @@ export default function ResellerEdit({
           {...populateFieldConfigsFromService(contact[0]['email'])}
         />
       )}
+      {customerPO.canEdit && (
+          <CustomTextField
+            id="reseller-customerpo"
+            label={getDictionaryValue(
+              resellerLabels.autorenewPurchaseOrderNoEndLabel,
+              'Customer Purchase Order No:'
+            )}
+            variant="standard"
+            onChange={handlers['customerPO']}
+            helperText={getFieldMessage(customerPO)}
+            {...handleValidation(customerPO, true)}
+            {...populateFieldConfigsFromService(customerPO)}
+          />
+        )}
       {contact[0]['phone'].canEdit && (
         <CustomTextField
           id="reseller-phone"

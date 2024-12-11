@@ -155,7 +155,7 @@ export const extractDetailRenewalData = (quote) => {
 };
 
 export const extractDetailResellerData = (quote) => {
-  const { id, contact, address, vendorAccountNumber } = quote;
+  const { id, contact, address, vendorAccountNumber, customerPO } = quote;
   const [_contact] = contact;
   return {
     id,
@@ -175,6 +175,7 @@ export const extractDetailResellerData = (quote) => {
       county: address?.county,
       countryCode: address?.countryCode,
     },
+    customerPO: customerPO?.text || customerPO,
     vendorAccountNumber: vendorAccountNumber?.text,
   };
 };
@@ -246,7 +247,7 @@ export const mapRenewalForUpdateDetails = (
     renewalQuote?.items,
     renewalsDetailsOriginal?.items
   );
-  const { endUser, reseller, shipTo, customerPO, source } = renewalQuote;
+  const { endUser, reseller, shipTo, source } = renewalQuote;
   const resellerData = extractDetailResellerData(reseller);
   const endUserData = extractDetailRenewalData(endUser);
   const shipToData = extractDetailShipToData(shipTo);
@@ -254,11 +255,10 @@ export const mapRenewalForUpdateDetails = (
   return {
     reseller: { ...resellerData },
     source: { id: source?.id },
-    customerPO: customerPO?.text || customerPO,
     endUser: { ...endUserData, name: endUser?.name?.text },
     shipTo: { ...shipToData },
     items,
-    POAllowedLength: customerPO?.allowedLength,
+    POAllowedLength: resellerData?.customerPO?.allowedLength,
     EANumber,
     orderSource: 'Details',
   };
