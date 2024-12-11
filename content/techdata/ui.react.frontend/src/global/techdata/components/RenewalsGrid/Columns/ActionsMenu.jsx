@@ -71,6 +71,7 @@ function ActionsMenu({
   } = endpoints;
 
   const enableArchive = !data?.archived;
+  const enableDownloadPDF = data?.canDownloadPDF
 
   useEffect(() => {
     let timer;
@@ -410,7 +411,7 @@ function ActionsMenu({
             </span>
           </div>
         ) : null}
-        {menuOptions?.showDownloadPDFButton && enableArchive ? (
+        {menuOptions?.showDownloadPDFButton && enableArchive && enableDownloadPDF ? (
           <div
             className="cmp-renewals-actions-menu__item"
             onClick={downloadPDF}
