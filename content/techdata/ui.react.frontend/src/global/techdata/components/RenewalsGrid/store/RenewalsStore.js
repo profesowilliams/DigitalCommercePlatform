@@ -74,6 +74,8 @@ const INITIAL_STATE = {
   analyticsCategory: 'renewals',
   showImportButton: false,
   renewalsGridRefreshIndex: 0,
+  renewalsGridActionPerformed : false,
+  renewalsGridActionPerformedColumn : '',
 };
 
 const store = (set, get, a) => ({

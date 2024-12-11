@@ -200,6 +200,17 @@ export const renewalsEffects = (set, get) => {
     set({ renewalsGridRefreshIndex: get().renewalsGridRefreshIndex + 1 });
   }
 
+  function setRenewalsGridActionPerformed(selectedColumn) {
+    set({
+      renewalsGridActionPerformed: true,
+      renewalsGridActionPerformedColumn: selectedColumn
+    });
+  }
+
+  function resetRenewalsGridActionPerformed() {
+    set({renewalsGridActionPerformed : false});
+  }
+
   return {
     setFilterList,
     toggleFilterModal,
@@ -219,5 +230,7 @@ export const renewalsEffects = (set, get) => {
     resetFilterToState,
     setAppliedFilter,
     refreshRenealsGrid,
+    setRenewalsGridActionPerformed,
+    resetRenewalsGridActionPerformed,
   };
 };

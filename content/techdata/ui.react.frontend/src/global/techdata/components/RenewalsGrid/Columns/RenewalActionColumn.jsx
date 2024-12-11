@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
-import { CartIcon, CopyIcon, DownloadIcon, EllipsisIcon, EyeIcon, EyeLightIcon } from '../../../../../fluentIcons/FluentIcons';
+import { CartIcon, CopyIcon, DownloadIcon, EllipsisIcon, EyeIcon, EyeLightIcon, LoaderIcon } from '../../../../../fluentIcons/FluentIcons';
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import VerticalSeparator from '../../Widgets/VerticalSeparator';
 import useIsIconEnabled from '../Orders/hooks/useIsIconEnabled';
@@ -48,6 +48,8 @@ function _RenewalActionColumn({ eventProps, config }) {
     orderingFromDashboard?.showOrderingIcon
   );
 
+  const renewalsGridActionPerformed = useRenewalGridState((state) => state.renewalsGridActionPerformed);
+  const renewalsGridActionPerformedColumn = useRenewalGridState((state) => state.renewalsGridActionPerformedColumn);
   const canCopy = data?.canCopy;
   const canShare = data?.canShareQuote;
   const canRequestRevision = data?.canRequestRevision;
@@ -248,9 +250,14 @@ function _RenewalActionColumn({ eventProps, config }) {
           store={useRenewalGridState}
         />
         <VerticalSeparator />
-        <span className="cmp-renewals-ellipsis" ref={divRef}>
-          <EllipsisIcon onClick={handleShowActionMenu} style={iconStyle} />
-        </span>
+        {renewalsGridActionPerformed && renewalsGridActionPerformedColumn === data.source?.id ? (
+          <LoaderIcon className="loadingIcon-search-rotate" />
+          ):(
+            <span className="cmp-renewals-ellipsis" ref={divRef}>
+              <EllipsisIcon onClick={handleShowActionMenu} style={iconStyle} />
+            </span>
+          )
+        }
         <ActionsMenu
           config={config}
           onClose={() => setShowActionsMenu(false)}

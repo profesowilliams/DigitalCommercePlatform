@@ -190,20 +190,29 @@ function ActionsMenu({
     };
 
     try {
+      effects.setRenewalsGridActionPerformed(data.source?.id);
+
       const response = await callServiceWrapper(archiveOrRestoreRenewals,archiveOrRestoreRenewalsEndpoint, postData);
+
+      effects.resetRenewalsGridActionPerformed();
 
       if (response.errors.length > 0) {
         effects.setCustomState({
           key: 'toaster',
           value: { ...archiveToasterFail },
         });
+
       } else {
+        effects.setRenewalsGridActionPerformed(data.source?.id);
+
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint: config?.getStatusEndpoint,
           id: data?.source?.id,
           delay: 2000,
           iterations: 7,
         });
+
+        effects.resetRenewalsGridActionPerformed();
 
         if (!isActiveQuote) {
           effects.setCustomState({
@@ -227,6 +236,7 @@ function ActionsMenu({
         }
       }
     } catch (error) {
+      effects.resetRenewalsGridActionPerformed();
       effects.setCustomState({
         key: 'toaster',
         value: { ...archiveToasterFail },
@@ -247,7 +257,11 @@ function ActionsMenu({
     };
 
     try {
+      effects.setRenewalsGridActionPerformed(data.source?.id);
+
       const response = await callServiceWrapper(archiveOrRestoreRenewals,archiveOrRestoreRenewalsEndpoint, postData);
+
+      effects.resetRenewalsGridActionPerformed();
 
       if (response.errors.length > 0) {
         effects.setCustomState({
@@ -255,12 +269,16 @@ function ActionsMenu({
           value: { ...restoreToasterFail },
         });
       } else {
+        effects.setRenewalsGridActionPerformed(data.source?.id);
+
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint: config?.getStatusEndpoint,
           id: data?.source?.id,
           delay: 2000,
           iterations: 7,
         });
+
+        effects.resetRenewalsGridActionPerformed();
 
         if (!isActiveQuote) {
           effects.setCustomState({
@@ -284,6 +302,7 @@ function ActionsMenu({
         }
       }
     } catch (error) {
+      effects.resetRenewalsGridActionPerformed();
       effects.setCustomState({
         key: 'toaster',
         value: { ...restoreToasterFail },
