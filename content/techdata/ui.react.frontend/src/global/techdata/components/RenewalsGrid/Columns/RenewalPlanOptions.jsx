@@ -286,18 +286,31 @@ function RenewalPlanOptions({ labels, data, node }) {
                     {
                       labels?.showDownloadPDFButton && (
                         <>
-                          <Button onClick={() => downloadPDF(option.id)}
-                            analyticsCallback={getRowAnalytics.bind(null,
-                              analyticsCategory,
-                              ANALYTIC_CONSTANTS.Grid.RowActions.DownloadPdfExpanded,
-                              analyticsData)}>
-                            <DownloadIcon className="cmp-svg-icon__charcoal" />
-                            <span>
-                              &nbsp;&nbsp;{getDictionaryValue(
-                                "button.common.label.downloadPDF",
-                                "Download PDF")}
-                            </span>
-                          </Button>
+                            {data?.canDownloadExcel ? (
+                              <Button onClick={() => downloadPDF(option.id)}
+                                analyticsCallback={getRowAnalytics.bind(null,
+                                  analyticsCategory,
+                                  ANALYTIC_CONSTANTS.Grid.RowActions.DownloadPdfExpanded,
+                                  analyticsData)}>
+                                <DownloadIcon className="cmp-svg-icon__charcoal" />
+                                <span>
+                                  &nbsp;&nbsp;{getDictionaryValue(
+                                    "button.common.label.downloadPDF",
+                                    "Download PDF")}
+                                </span>
+                              </Button>
+                              ) : (
+                                <>
+                                  <button disabled>
+                                        <DownloadIcon className="cmp-svg-icon__charcoal" />
+                                       <span>
+                                         &nbsp;&nbsp;{getDictionaryValue(
+                                           "button.common.label.downloadPDF",
+                                           "Download PDF")}
+                                       </span>
+                                  </button>
+                                </>
+                              )}
                         </>
                       )
                     }
@@ -306,16 +319,27 @@ function RenewalPlanOptions({ labels, data, node }) {
                       labels?.showDownloadXLSButton && (
                         <>
                           <span className="vertical-separator"></span>
-                          <Button onClick={() => exportXlsPlan(option?.id)}
-                            analyticsCallback={getRowAnalytics.bind(null,
-                              analyticsCategory,
-                              ANALYTIC_CONSTANTS.Grid.RowActions.DownloadXlsExpanded,
-                              analyticsData)}>
-                            <DownloadIcon className="cmp-svg-icon__charcoal" />
-                            <span>&nbsp;&nbsp;{getDictionaryValue(
-                              "button.common.label.downloadXLS",
-                              "Download XLS")}</span>
-                          </Button>
+                          {data?.canDownloadExcel ? (
+                              <Button onClick={() => exportXlsPlan(option?.id)}
+                                analyticsCallback={getRowAnalytics.bind(null,
+                                  analyticsCategory,
+                                  ANALYTIC_CONSTANTS.Grid.RowActions.DownloadXlsExpanded,
+                                  analyticsData)}>
+                                <DownloadIcon className="cmp-svg-icon__charcoal" />
+                                <span>&nbsp;&nbsp;{getDictionaryValue(
+                                  "button.common.label.downloadXLS",
+                                  "Download XLS")}</span>
+                              </Button>
+                          ) : (
+                            <>
+                              <button disabled>
+                                <DownloadIcon className="cmp-svg-icon__charcoal" />
+                                <span>&nbsp;&nbsp;{getDictionaryValue(
+                                  "button.common.label.downloadXLS",
+                                  "Download XLS")}</span>
+                              </button>
+                            </>
+                          )}
                         </>
                       )}
                     {
