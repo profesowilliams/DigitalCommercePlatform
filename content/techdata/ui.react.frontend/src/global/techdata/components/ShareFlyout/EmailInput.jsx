@@ -58,6 +58,19 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
     setInputValue(value);
   };
 
+  const addNewEmail = (email) => {
+    if (email !== '') {
+      handleSelect(null, [email], '', null);
+      setInputValue('');
+    }
+  }
+
+  const handleOnBlur = (event) => {
+    const value = event.target.value.trim() || '';
+
+    addNewEmail(value);
+  }
+
   const handleKeyDown = (event) => {
     let value = event.target.value || '';
     const processAndRemoveCharacter = event.key === " " || event.key === "," || event.key === ";";
@@ -70,8 +83,7 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
     value = value.trim();
     
     if (value !== '' && processNewEmail) {
-      handleSelect(event, [value], '', null);
-      setInputValue('');
+      addNewEmail(value);
     }
   }
 
@@ -150,6 +162,7 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
               handleSelect(e, value, situation, option);
             }}
             onKeyDown={handleKeyDown}
+            onBlur={handleOnBlur}
             inputValue={inputValue}
             onInputChange={handleInputChange}
             renderTags={(value, getTagProps) =>
