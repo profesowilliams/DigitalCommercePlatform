@@ -150,6 +150,8 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
     (state) => state.analyticsCategory
   );
   const isOpportunity = data.canRequestQuote || data.quoteType === "Opportunity";
+  const showArchive = data?.canArchive
+  const enableDownLoadPDF = data?.canDownLoadPDF
 
   const downloadXLS = () => {
     try {
@@ -353,7 +355,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
     );
   }
 
-  if (gridProps?.productLines?.showDownloadPDFButton) {
+  if (gridProps?.productLines?.showDownloadPDFButton && enableDownLoadPDF) {
     buttons.push(
       <button onClick={downloadPDF} key="downloadPDF">
         <DownloadIcon className="cmp-renewal-preview__download--icon" />
@@ -386,7 +388,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
       </button>
     );
   }
-  if (gridProps?.enableArchiveQuote) {
+  if (gridProps?.enableArchiveQuote && showArchive) {
     buttons.push(
       <button onClick={() => triggerArchiveRestore(setIsArchived, gridProps, effects, data?.source?.id, data?.endUser?.name?.text, true)} key="archive">
         <ArchiveDetailsIcon className="cmp-renewal-preview__download--icon" />

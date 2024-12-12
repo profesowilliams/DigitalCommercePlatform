@@ -4530,484 +4530,616 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
   const { id } = req.query;
 
   const response = {
-                       "content": {
-                           "details": [
-                               {
-                                   "source": {
-                                       "salesOrg": "VN91",
-                                       "targetSystem": "R3",
-                                       "key": "U878234265752",
-                                       "system": "RQEu",
-                                       "id": "U878234265752"
-                                   },
-                                   "published": "2024-10-04T10:11:20.178Z",
-                                   "reseller": {
-                                       "id": "90005",
-                                       "isValid": true,
-                                       "canEdit": true,
-                                       "incumbent": false,
-                                       "vendorAccountNumber": {
-                                           "text": "P1005108534",
-                                           "isValid": true,
-                                           "isMandatory": false,
-                                           "isDisplay": true,
-                                           "canEdit": false,
-                                           "allowedLength": 100000
-                                       },
-                                       "customerPO": {
-                                           "text": "P2005108534",
-                                           "isValid": true,
-                                           "isMandatory": false,
-                                           "isDisplay": true,
-                                           "canEdit": true,
-                                           "allowedLength": 35
-                                       },
-                                       "name": "CONG TY TNHH BAT DONG SAN",
-                                       "nameUpper": "CONG TY TNHH BAT DONG SAN",
-                                       "contact": [
-                                           {
-                                               "name": {
-                                                   "text": "Luis Mora",
-                                                   "isValid": true,
-                                                   "isMandatory": false,
-                                                   "isDisplay": true,
-                                                   "canEdit": false,
-                                                   "allowedLength": 100000
-                                               },
-                                               "email": {
-                                                   "text": "luis.mora@test3.com",
-                                                   "isValid": true,
-                                                   "isMandatory": false,
-                                                   "isDisplay": true,
-                                                   "canEdit": true,
-                                                   "allowedLength": 100000
-                                               },
-                                               "phone": {
-                                                   "text": "0974674547 MS CHINH",
-                                                   "isValid": true,
-                                                   "isMandatory": false,
-                                                   "isDisplay": true,
-                                                   "canEdit": false,
-                                                   "allowedLength": 100000
-                                               }
-                                           }
-                                       ],
-                                       "address": {
-                                           "line1": "59 CAO THANG, QUAN 3, TP. HCM ",
-                                           "city": "Thành Phố Hồ Chí Minh, Việt Nam",
-                                           "postalCode": "700000",
-                                           "country": "VN"
-                                       }
-                                   },
-                                   "endUser": {
-                                       "isValid": true,
-                                       "canEdit": false,
-                                       "name": {
-                                           "text": "ExternalUser7",
-                                           "isValid": true,
-                                           "isMandatory": false,
-                                           "isDisplay": true,
-                                           "canEdit": false,
-                                           "allowedLength": 100000
-                                       },
-                                       "nameUpper": "EXTERNALUSER7",
-                                       "eaNumber": {
-                                           "text": "P2005108534",
-                                           "isValid": true,
-                                           "isMandatory": false,
-                                           "isDisplay": true,
-                                           "canEdit": false,
-                                           "allowedLength": 100000
-                                       },
-                                       "contact": [
-                                           {
-                                               "name": {
-                                                   "text": "Name10 LastName10",
-                                                   "isValid": true,
-                                                   "isMandatory": false,
-                                                   "isDisplay": true,
-                                                   "canEdit": false,
-                                                   "allowedLength": 100000
-                                               },
-                                               "email": {
-                                                   "text": "test.email10+1718719580953@test.email10.com",
-                                                   "isValid": true,
-                                                   "isMandatory": false,
-                                                   "isDisplay": true,
-                                                   "canEdit": false,
-                                                   "allowedLength": 100000
-                                               },
-                                               "phone": {
-                                                   "text": "",
-                                                   "isValid": true,
-                                                   "isMandatory": false,
-                                                   "isDisplay": true,
-                                                   "canEdit": false,
-                                                   "allowedLength": 100000
-                                               }
-                                           }
-                                       ],
-                                       "address": {
-                                           "line1": {
-                                               "text": "Tuoi Tre Tower, No. 60A,",
-                                               "isValid": true,
-                                               "isMandatory": false,
-                                               "isDisplay": true,
-                                               "canEdit": false,
-                                               "allowedLength": 100000
-                                           },
-                                           "line2": {
-                                               "text": "Hoang Van Thu Street, Ward 9, Phu Nhuan",
-                                               "isValid": true,
-                                               "isMandatory": false,
-                                               "isDisplay": true,
-                                               "canEdit": false,
-                                               "allowedLength": 100000
-                                           },
-                                           "line3": {
-                                               "isValid": true,
-                                               "isMandatory": false,
-                                               "isDisplay": false,
-                                               "canEdit": false,
-                                               "allowedLength": 100000
-                                           },
-                                           "city": {
-                                               "text": "Ho Chi Minh City",
-                                               "isValid": true,
-                                               "isMandatory": false,
-                                               "isDisplay": true,
-                                               "canEdit": false,
-                                               "allowedLength": 100000
-                                           },
-                                           "postalCode": {
-                                               "text": "700000",
-                                               "isValid": true,
-                                               "isMandatory": false,
-                                               "isDisplay": true,
-                                               "canEdit": false,
-                                               "allowedLength": 100000
-                                           },
-                                           "country": {
-                                               "text": "Vietnam",
-                                               "isValid": true,
-                                               "isMandatory": false,
-                                               "isDisplay": true,
-                                               "canEdit": false,
-                                               "allowedLength": 100000
-                                           },
-                                           "countryCode": {
-                                               "text": "VN",
-                                               "isValid": true,
-                                               "isMandatory": false,
-                                               "isDisplay": true,
-                                               "canEdit": false,
-                                               "allowedLength": 100000
-                                           }
-                                       },
-                                       "preferredLanguage": "en-US"
-                                   },
-                                   "shipTo": {
-                                       "id": {
-                                           "isValid": true,
-                                           "isMandatory": false,
-                                           "isDisplay": false,
-                                           "canEdit": false,
-                                           "allowedLength": 100000
-                                       },
-                                       "nameUpper": "",
-                                       "contact": [],
-                                       "address": {}
-                                   },
-                                   "items": [
-                                       {
-                                           "id": "1",
-                                           "product": [
-                                               {
-                                                   "type": "TECHDATA",
-                                                   "id": "ADB65304883CA03A12",
-                                                   "name": "-",
-                                                   "family": "Acrobat"
-                                               },
-                                               {
-                                                   "type": "MANUFACTURER",
-                                                   "id": "65304883CA03A12",
-                                                   "name": "Acrobat Standard DC for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                                                   "manufacturer": "Adobe",
-                                                   "manufacturerId": "3",
-                                                   "family": "Acrobat"
-                                               }
-                                           ],
-                                           "quantity": 5.0,
-                                           "qty": 0.0,
-                                           "confirmedQuantity": 0.0,
-                                           "references": [],
-                                           "updated": "0001-01-01T00:00:00",
-                                           "unitPrice": 3584000.0,
-                                           "unitCost": 135.96,
-                                           "totalPrice": 17920000.0,
-                                           "unitListPrice": 4006000.0,
-                                           "unitPriceCurrency": "VND",
-                                           "unitCostCurrency": "USD",
-                                           "unitListPriceCurrency": "VND",
-                                           "extendedListPrice": 0.0,
-                                           "requested": "0001-01-01T00:00:00",
-                                           "femAmount": 0.0,
-                                           "pomAmount": 0.0,
-                                           "samAmount": 0.0,
-                                           "nsmAmount": 0.0,
-                                           "femPercentage": 0.0,
-                                           "pomPercentage": 0.0,
-                                           "samPercentage": 0.0,
-                                           "nsmPercentage": 0.0,
-                                           "agreements": [],
-                                           "attributes": [],
-                                           "serialNumbers": [
-                                               null
-                                           ],
-                                           "discounts": [
-                                               {
-                                                   "type": "Standard",
-                                                   "value": "10.53"
-                                               }
-                                           ],
-                                           "contract": {
-                                               "id": "P2005108534",
-                                               "renewedDuration": "1 Year",
-                                               "endDate": "2025-07-07T00:00:00Z",
-                                               "newAgreementStartDate": "2025-07-08T00:00:00Z",
-                                               "newAgreementEndDate": "2026-07-07T00:00:00Z",
-                                               "formattedEndDate": "07/07/2025",
-                                               "formattedNewAgreementStartDate": "08/07/2025",
-                                               "formattedNewAgreementEndDate": "07/07/2026",
-                                               "dueDate": "2025-07-07T00:00:00Z",
-                                               "hasMultipleSupportLevelForThisAgreement": false,
-                                               "hasMultipleDueDateForThisAgreement": false,
-                                               "hasMultipleDurationForThisAgreement": false,
-                                               "agreementDuration": "08/07/2025 - 07/07/2026",
-                                               "formattedDueDate": "07/07/2025",
-                                               "autoRenew": false
-                                           },
-                                           "subscriptionId": "18653a6be341be86dd4756d05db667NA",
-                                           "agency": "CreateOrder",
-                                           "minimumQuantity": 0.0,
-                                           "maximumQuantity": 99999.0,
-                                           "isResellerPriceOverride": false
-                                       },
-                                       {
-                                           "id": "2",
-                                           "product": [
-                                               {
-                                                   "type": "TECHDATA",
-                                                   "id": "ADB65304470CA03A12",
-                                                   "name": "-",
-                                                   "family": "Acrobat"
-                                               },
-                                               {
-                                                   "type": "MANUFACTURER",
-                                                   "id": "65304470CA03A12",
-                                                   "name": "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                                                   "manufacturer": "Adobe",
-                                                   "manufacturerId": "3",
-                                                   "family": "Acrobat"
-                                               }
-                                           ],
-                                           "quantity": 70.0,
-                                           "qty": 0.0,
-                                           "confirmedQuantity": 0.0,
-                                           "references": [],
-                                           "updated": "0001-01-01T00:00:00",
-                                           "unitPrice": 5738000.0,
-                                           "unitCost": 217.68,
-                                           "totalPrice": 401660000.0,
-                                           "unitListPrice": 6412000.0,
-                                           "unitPriceCurrency": "VND",
-                                           "unitCostCurrency": "USD",
-                                           "unitListPriceCurrency": "VND",
-                                           "extendedListPrice": 0.0,
-                                           "requested": "0001-01-01T00:00:00",
-                                           "femAmount": 0.0,
-                                           "pomAmount": 0.0,
-                                           "samAmount": 0.0,
-                                           "nsmAmount": 0.0,
-                                           "femPercentage": 0.0,
-                                           "pomPercentage": 0.0,
-                                           "samPercentage": 0.0,
-                                           "nsmPercentage": 0.0,
-                                           "agreements": [],
-                                           "attributes": [],
-                                           "serialNumbers": [
-                                               null
-                                           ],
-                                           "discounts": [
-                                               {
-                                                   "type": "Standard",
-                                                   "value": "10.51"
-                                               }
-                                           ],
-                                           "contract": {
-                                               "id": "P2005108534",
-                                               "renewedDuration": "1 Year",
-                                               "endDate": "2025-07-07T00:00:00Z",
-                                               "newAgreementStartDate": "2025-07-08T00:00:00Z",
-                                               "newAgreementEndDate": "2026-07-07T00:00:00Z",
-                                               "formattedEndDate": "07/07/2025",
-                                               "formattedNewAgreementStartDate": "08/07/2025",
-                                               "formattedNewAgreementEndDate": "07/07/2026",
-                                               "dueDate": "2025-07-07T00:00:00Z",
-                                               "hasMultipleSupportLevelForThisAgreement": false,
-                                               "hasMultipleDueDateForThisAgreement": false,
-                                               "hasMultipleDurationForThisAgreement": false,
-                                               "agreementDuration": "08/07/2025 - 07/07/2026",
-                                               "formattedDueDate": "07/07/2025",
-                                               "autoRenew": false
-                                           },
-                                           "subscriptionId": "b0890122364f9680f5daa4db93135fNA",
-                                           "agency": "CreateOrder",
-                                           "minimumQuantity": 0.0,
-                                           "maximumQuantity": 99999.0,
-                                           "isResellerPriceOverride": false
-                                       }
-                                   ],
-                                   "attributes": [],
-                                   "programName": "VIP MP Commercial",
-                                   "quoteCurrent": false,
-                                   "firstAvailableOrderDate": "2025-06-07T00:00:00Z",
-                                   "lastOrderDate": "2026-07-07T00:00:00Z",
-                                   "amountSaved": 0.0,
-                                   "linkedRenewals": [],
-                                   "dueDate": "2025-07-07T00:00:00Z",
-                                   "endUserType": "Commercial",
-                                   "vendorLogo": "https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=30",
-                                   "vendorLogoPdf": "https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=20",
-                                   "previousResellerPO": "PreviousResellerPO",
-                                   "isValid": true,
-                                   "canOrder": false,
-                                   "canEditQty": false,
-                                   "canEditResellerPrice": true,
-                                   "canEditLines": true,
-                                   "canCopy": false,
-                                   "formattedPublished": "04/10/2024",
-                                   "formattedFirstAvailableOrderDate": "07/06/2025",
-                                   "formattedLastOrderDate": "07/07/2026",
-                                   "formattedDueDate": "07/07/2025",
-                                   "formattedCreated": "04/10/2024",
-                                   "formattedUpdated": "04/10/2024",
-                                   "formattedExpiry": "07/07/2025",
-                                   "vendor": {
-                                       "id": "3",
-                                       "name": "Adobe",
-                                       "vendorsTDName": "Adobe"
-                                   },
-                                   "renewalLevel": "Level 3 50 - 99",
-                                   "hasMultipleSupportLevel": false,
-                                   "hasMultipleAgreements": false,
-                                   "hasMultipleRenewedDuration": false,
-                                   "hasMultipleDueDates": false,
-                                   "agreementNumber": "P2005108534",
-                                   "renewedDuration": "1 Year",
-                                   "agreementDuration": "08/07/2025 - 07/07/2026",
-                                   "hasMultipleAgreementDuration": false,
-                                   "canDownloadExcel": true,
-                                   "canShareQuote": false,
-                                   "canRequestQuote": true,
-                                   "canRequestRevision": true,
-                                   "feedBackMessages": [
-                                       {
-                                           "ruleNumber": 108,
-                                           "errorCriticality": 2,
-                                           "message": "Auto renew is currently off. If not turned on at least 3 days before the agreement end date you will need to process an order via this page after the due date.",
-                                           "refId": "",
-                                           "type": "",
-                                           "jsonUrl": ""
-                                       }
-                                   ],
-                                   "itemsActive": [
-                                       {
-                                           "id": "1",
-                                           "product": [
-                                               {
-                                                   "type": "TECHDATA",
-                                                   "id": "ADB65304883CA03A12",
-                                                   "family": "Acrobat"
-                                               },
-                                               {
-                                                   "type": "MANUFACTURER",
-                                                   "id": "65304883CA03A12",
-                                                   "name": "Acrobat Standard DC for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                                                   "manufacturer": "Adobe",
-                                                   "manufacturerId": "3",
-                                                   "family": "Acrobat"
-                                               }
-                                           ],
-                                           "quantity": 5.0,
-                                           "subscriptionId": "18653a6be341be86dd4756d05db667NA"
-                                       },
-                                       {
-                                           "id": "2",
-                                           "product": [
-                                               {
-                                                   "type": "TECHDATA",
-                                                   "id": "ADB65304470CA03A12",
-                                                   "family": "Acrobat"
-                                               },
-                                               {
-                                                   "type": "MANUFACTURER",
-                                                   "id": "65304470CA03A12",
-                                                   "name": "Acrobat Pro for teams ALL Multiple Platforms Multi Asian Languages Subscription New",
-                                                   "manufacturer": "Adobe",
-                                                   "manufacturerId": "3",
-                                                   "family": "Acrobat"
-                                               }
-                                           ],
-                                           "quantity": 70.0,
-                                           "subscriptionId": "b0890122364f9680f5daa4db93135fNA"
-                                       }
-                                   ],
-                                   "additionalInfo": [
-                                       {},
-                                       {}
-                                   ],
-                                   "renewalLevelActive": "Level 3 50 - 99",
-                                   "canAddMore": true,
-                                   "autoRenew": false,
-                                   "isAutoRenewEnabled": true,
-                                   "displayAutoRenew": true,
-                                   "showToolTip": false,
-                                   "revision": 1.0,
-                                   "subRevision": 0.0,
-                                   "activeFlag": "Y",
-                                   "price": 419580000.0,
-                                   "currency": "VND",
-                                   "quoteType": "Renewal",
-                                   "created": "2024-10-04T10:11:20.178Z",
-                                   "updated": "2024-10-04T10:11:20.178Z",
-                                   "expiry": "2025-07-07T00:00:00Z",
-                                   "status": "Active",
-                                   "orders": [],
-                                   "vendorReference": [
-                                       {
-                                           "type": "QuoteId",
-                                           "value": "P2005108534"
-                                       }
-                                   ],
-                                   "femAmount": 0.0,
-                                   "pomAmount": 0.0,
-                                   "samAmount": 0.0,
-                                   "nsmAmount": 0.0,
-                                   "femPercentage": 0.0,
-                                   "pomPercentage": 0.0,
-                                   "samPercentage": 0.0,
-                                   "nsmPercentage": 0.0,
-                                   "archived": false,
-                               }
-                           ]
-                       },
-                       "error": {
-                           "code": 0,
-                           "messages": [],
-                           "isError": false
-                       }
-                   };
+    "content": {
+        "details": [
+            {
+                "source": {
+                    "salesOrg": "VN91",
+                    "targetSystem": "R3",
+                    "key": "U881704807218",
+                    "system": "RQEu",
+                    "id": "U881704807218"
+                },
+                "published": "2024-10-23T12:43:31.618Z",
+                "reseller": {
+                    "id": "2000760",
+                    "isValid": true,
+                    "canEdit": false,
+                    "incumbent": false,
+                    "vendorAccountNumber": {
+                        "text": "7208877",
+                        "isValid": true,
+                        "isMandatory": false,
+                        "isDisplay": false,
+                        "canEdit": false,
+                        "allowedLength": 100000
+                    },
+                    "paymentTerms": "Payable on receipt",
+                    "nameUpper": "",
+                    "contact": [
+                        {
+                            "name": {
+                                "isValid": true,
+                                "isMandatory": false,
+                                "isDisplay": true,
+                                "canEdit": false,
+                                "allowedLength": 40
+                            },
+                            "email": {
+                                "text": "",
+                                "isValid": true,
+                                "isMandatory": false,
+                                "isDisplay": true,
+                                "canEdit": false,
+                                "allowedLength": 120
+                            },
+                            "phone": {
+                                "text": "",
+                                "isValid": true,
+                                "isMandatory": false,
+                                "isDisplay": true,
+                                "canEdit": false,
+                                "allowedLength": 30
+                            }
+                        }
+                    ],
+                    "address": {},
+                    "customerPO": {
+                        "text": "19665904",
+                        "isValid": true,
+                        "isMandatory": false,
+                        "isDisplay": true,
+                        "canEdit": true,
+                        "allowedLength": 35
+                    }
+                },
+                "endUser": {
+                    "isValid": false,
+                    "canEdit": false,
+                    "name": {
+                        "text": "AGRICULTURE INSURANCE COMPANY OF INDIA LIMITED",
+                        "isValid": false,
+                        "isMandatory": false,
+                        "isDisplay": true,
+                        "canEdit": false,
+                        "allowedLength": 40
+                    },
+                    "nameUpper": "AGRICULTURE INSURANCE COMPANY OF INDIA LIMITED",
+                    "eaNumber": {
+                        "text": "3871429",
+                        "isValid": true,
+                        "isMandatory": false,
+                        "isDisplay": false,
+                        "canEdit": false,
+                        "allowedLength": 100000
+                    },
+                    "contact": [
+                        {
+                            "name": {
+                                "text": "",
+                                "isValid": true,
+                                "isMandatory": false,
+                                "isDisplay": true,
+                                "canEdit": false,
+                                "allowedLength": 40
+                            },
+                            "email": {
+                                "text": "",
+                                "isValid": true,
+                                "isMandatory": false,
+                                "isDisplay": true,
+                                "canEdit": false,
+                                "allowedLength": 120
+                            },
+                            "phone": {
+                                "text": "",
+                                "isValid": true,
+                                "isMandatory": false,
+                                "isDisplay": true,
+                                "canEdit": false,
+                                "allowedLength": 30
+                            }
+                        }
+                    ],
+                    "address": {
+                        "line1": {
+                            "text": "AMBADEEP 13TH FLOOR 14",
+                            "isValid": true,
+                            "isMandatory": false,
+                            "isDisplay": true,
+                            "canEdit": false,
+                            "allowedLength": 40
+                        },
+                        "line2": {
+                            "isValid": true,
+                            "isMandatory": false,
+                            "isDisplay": true,
+                            "canEdit": false,
+                            "allowedLength": 40
+                        },
+                        "line3": {
+                            "isValid": true,
+                            "isMandatory": false,
+                            "isDisplay": false,
+                            "canEdit": false,
+                            "allowedLength": 100000
+                        },
+                        "city": {
+                            "isValid": true,
+                            "isMandatory": false,
+                            "isDisplay": true,
+                            "canEdit": false,
+                            "allowedLength": 40
+                        },
+                        "postalCode": {
+                            "isValid": true,
+                            "isMandatory": false,
+                            "isDisplay": true,
+                            "canEdit": false,
+                            "allowedLength": 10
+                        },
+                        "country": {
+                            "isValid": true,
+                            "isMandatory": false,
+                            "isDisplay": false,
+                            "canEdit": false,
+                            "allowedLength": 100000
+                        },
+                        "countryCode": {
+                            "isValid": true,
+                            "isMandatory": false,
+                            "isDisplay": false,
+                            "canEdit": false,
+                            "allowedLength": 100000
+                        }
+                    }
+                },
+                "shipTo": {
+                    "id": {
+                        "isValid": true,
+                        "isMandatory": false,
+                        "isDisplay": false,
+                        "canEdit": false,
+                        "allowedLength": 100000
+                    },
+                    "nameUpper": "",
+                    "contact": [],
+                    "address": {}
+                },
+                "items": [
+                    {
+                        "id": "1",
+                        "product": [
+                            {
+                                "type": "TECHDATA",
+                                "id": "IBME02AULL",
+                                "name": "-",
+                                "family": "Application Platform & Integration"
+                            },
+                            {
+                                "type": "MANUFACTURER",
+                                "id": "E02AULL",
+                                "name": "IBM App Connect Enterprise Processor Value Unit (PVU) Annual SW Subscription <(>&<)> Support Renewal 12 Months",
+                                "manufacturer": "IBM",
+                                "manufacturerId": "8",
+                                "family": "Application Platform & Integration"
+                            }
+                        ],
+                        "quantity": 3010.0,
+                        "qty": 0.0,
+                        "confirmedQuantity": 0.0,
+                        "references": [],
+                        "updated": "0001-01-01T00:00:00",
+                        "unitCost": 0.0,
+                        "unitPriceCurrency": "NA",
+                        "unitCostCurrency": "NA",
+                        "unitListPriceCurrency": "NA",
+                        "extendedListPrice": 0.0,
+                        "requested": "0001-01-01T00:00:00",
+                        "femAmount": 0.0,
+                        "pomAmount": 0.0,
+                        "samAmount": 0.0,
+                        "nsmAmount": 0.0,
+                        "femPercentage": 0.0,
+                        "pomPercentage": 0.0,
+                        "samPercentage": 0.0,
+                        "nsmPercentage": 0.0,
+                        "agreements": [],
+                        "attributes": [],
+                        "serialNumbers": [
+                            null
+                        ],
+                        "discounts": [
+                            {
+                                "type": "Standard",
+                                "value": "0.0"
+                            }
+                        ],
+                        "contract": {
+                            "id": "234520",
+                            "endDate": "2023-12-31T00:00:00Z",
+                            "newAgreementStartDate": "2024-02-01T00:00:00Z",
+                            "newAgreementEndDate": "2025-01-31T00:00:00Z",
+                            "formattedEndDate": "31/12/2023",
+                            "formattedNewAgreementStartDate": "01/02/2024",
+                            "formattedNewAgreementEndDate": "31/01/2025",
+                            "dueDate": "2023-12-31T00:00:00Z",
+                            "hasMultipleSupportLevelForThisAgreement": false,
+                            "hasMultipleDueDateForThisAgreement": false,
+                            "hasMultipleDurationForThisAgreement": false,
+                            "agreementDuration": "01/02/2024 - 31/01/2025",
+                            "formattedDueDate": "31/12/2023",
+                            "autoRenew": false
+                        },
+                        "agency": "TestAgency",
+                        "minimumQuantity": 0.0,
+                        "maximumQuantity": 99999.0,
+                        "isResellerPriceOverride": false
+                    },
+                    {
+                        "id": "2",
+                        "product": [
+                            {
+                                "type": "TECHDATA",
+                                "id": "IBME0P9JLL",
+                                "name": "-",
+                                "family": "Process Transformation"
+                            },
+                            {
+                                "type": "MANUFACTURER",
+                                "id": "E0P9JLL",
+                                "name": "IBM Business Automation Workflow Enterpr",
+                                "manufacturer": "IBM",
+                                "manufacturerId": "8",
+                                "family": "Process Transformation"
+                            }
+                        ],
+                        "quantity": 3220.0,
+                        "qty": 0.0,
+                        "confirmedQuantity": 0.0,
+                        "references": [],
+                        "updated": "0001-01-01T00:00:00",
+                        "unitCost": 0.0,
+                        "unitPriceCurrency": "NA",
+                        "unitCostCurrency": "NA",
+                        "unitListPriceCurrency": "NA",
+                        "extendedListPrice": 0.0,
+                        "requested": "0001-01-01T00:00:00",
+                        "femAmount": 0.0,
+                        "pomAmount": 0.0,
+                        "samAmount": 0.0,
+                        "nsmAmount": 0.0,
+                        "femPercentage": 0.0,
+                        "pomPercentage": 0.0,
+                        "samPercentage": 0.0,
+                        "nsmPercentage": 0.0,
+                        "agreements": [],
+                        "attributes": [],
+                        "serialNumbers": [
+                            null
+                        ],
+                        "discounts": [
+                            {
+                                "type": "Standard",
+                                "value": "0.0"
+                            }
+                        ],
+                        "contract": {
+                            "id": "234520",
+                            "endDate": "2023-12-31T00:00:00Z",
+                            "newAgreementStartDate": "2024-02-01T00:00:00Z",
+                            "newAgreementEndDate": "2025-01-31T00:00:00Z",
+                            "formattedEndDate": "31/12/2023",
+                            "formattedNewAgreementStartDate": "01/02/2024",
+                            "formattedNewAgreementEndDate": "31/01/2025",
+                            "dueDate": "2023-12-31T00:00:00Z",
+                            "hasMultipleSupportLevelForThisAgreement": false,
+                            "hasMultipleDueDateForThisAgreement": false,
+                            "hasMultipleDurationForThisAgreement": false,
+                            "agreementDuration": "01/02/2024 - 31/01/2025",
+                            "formattedDueDate": "31/12/2023",
+                            "autoRenew": false
+                        },
+                        "agency": "TestAgency",
+                        "minimumQuantity": 0.0,
+                        "maximumQuantity": 99999.0,
+                        "isResellerPriceOverride": false
+                    },
+                    {
+                        "id": "3",
+                        "product": [
+                            {
+                                "type": "TECHDATA",
+                                "id": "IBME025SLL1",
+                                "name": "-",
+                                "family": "Application Platform & Integration"
+                            },
+                            {
+                                "type": "MANUFACTURER",
+                                "id": "E025SLL",
+                                "name": "IBM WEB APPL SVR  NETWORK DEPLOYMENT",
+                                "manufacturer": "IBM",
+                                "manufacturerId": "8",
+                                "family": "Application Platform & Integration"
+                            }
+                        ],
+                        "quantity": 12950.0,
+                        "qty": 0.0,
+                        "confirmedQuantity": 0.0,
+                        "references": [],
+                        "updated": "0001-01-01T00:00:00",
+                        "unitCost": 0.0,
+                        "unitPriceCurrency": "NA",
+                        "unitCostCurrency": "NA",
+                        "unitListPriceCurrency": "NA",
+                        "extendedListPrice": 0.0,
+                        "requested": "0001-01-01T00:00:00",
+                        "femAmount": 0.0,
+                        "pomAmount": 0.0,
+                        "samAmount": 0.0,
+                        "nsmAmount": 0.0,
+                        "femPercentage": 0.0,
+                        "pomPercentage": 0.0,
+                        "samPercentage": 0.0,
+                        "nsmPercentage": 0.0,
+                        "agreements": [],
+                        "attributes": [],
+                        "serialNumbers": [
+                            null
+                        ],
+                        "discounts": [
+                            {
+                                "type": "Standard",
+                                "value": "0.0"
+                            }
+                        ],
+                        "contract": {
+                            "id": "234520",
+                            "endDate": "2023-12-31T00:00:00Z",
+                            "newAgreementStartDate": "2024-02-01T00:00:00Z",
+                            "newAgreementEndDate": "2025-01-31T00:00:00Z",
+                            "formattedEndDate": "31/12/2023",
+                            "formattedNewAgreementStartDate": "01/02/2024",
+                            "formattedNewAgreementEndDate": "31/01/2025",
+                            "dueDate": "2023-12-31T00:00:00Z",
+                            "hasMultipleSupportLevelForThisAgreement": false,
+                            "hasMultipleDueDateForThisAgreement": false,
+                            "hasMultipleDurationForThisAgreement": false,
+                            "agreementDuration": "01/02/2024 - 31/01/2025",
+                            "formattedDueDate": "31/12/2023",
+                            "autoRenew": false
+                        },
+                        "agency": "TestAgency",
+                        "minimumQuantity": 0.0,
+                        "maximumQuantity": 99999.0,
+                        "isResellerPriceOverride": false
+                    },
+                    {
+                        "id": "4",
+                        "product": [
+                            {
+                                "type": "TECHDATA",
+                                "id": "IBME025QLL",
+                                "name": "-",
+                                "family": "Systems - Middleware Open"
+                            },
+                            {
+                                "type": "MANUFACTURER",
+                                "id": "E025QLL",
+                                "name": "IBM WebSphere Application Server Processor Value Unit (PVU) Annual SW Subscription <(>&<)> Support Renewal",
+                                "manufacturer": "IBM",
+                                "manufacturerId": "8",
+                                "family": "Systems - Middleware Open"
+                            }
+                        ],
+                        "quantity": 10220.0,
+                        "qty": 0.0,
+                        "confirmedQuantity": 0.0,
+                        "references": [],
+                        "updated": "0001-01-01T00:00:00",
+                        "unitCost": 0.0,
+                        "unitPriceCurrency": "NA",
+                        "unitCostCurrency": "NA",
+                        "unitListPriceCurrency": "NA",
+                        "extendedListPrice": 0.0,
+                        "requested": "0001-01-01T00:00:00",
+                        "femAmount": 0.0,
+                        "pomAmount": 0.0,
+                        "samAmount": 0.0,
+                        "nsmAmount": 0.0,
+                        "femPercentage": 0.0,
+                        "pomPercentage": 0.0,
+                        "samPercentage": 0.0,
+                        "nsmPercentage": 0.0,
+                        "agreements": [],
+                        "attributes": [],
+                        "serialNumbers": [
+                            null
+                        ],
+                        "discounts": [
+                            {
+                                "type": "Standard",
+                                "value": "0.0"
+                            }
+                        ],
+                        "contract": {
+                            "id": "234520",
+                            "endDate": "2023-12-31T00:00:00Z",
+                            "newAgreementStartDate": "2024-02-01T00:00:00Z",
+                            "newAgreementEndDate": "2025-01-31T00:00:00Z",
+                            "formattedEndDate": "31/12/2023",
+                            "formattedNewAgreementStartDate": "01/02/2024",
+                            "formattedNewAgreementEndDate": "31/01/2025",
+                            "dueDate": "2023-12-31T00:00:00Z",
+                            "hasMultipleSupportLevelForThisAgreement": false,
+                            "hasMultipleDueDateForThisAgreement": false,
+                            "hasMultipleDurationForThisAgreement": false,
+                            "agreementDuration": "01/02/2024 - 31/01/2025",
+                            "formattedDueDate": "31/12/2023",
+                            "autoRenew": false
+                        },
+                        "agency": "TestAgency",
+                        "minimumQuantity": 0.0,
+                        "maximumQuantity": 99999.0,
+                        "isResellerPriceOverride": false
+                    },
+                    {
+                        "id": "5",
+                        "product": [
+                            {
+                                "type": "TECHDATA",
+                                "id": "IBME0MHALL",
+                                "name": "-",
+                                "family": "Application Platform & Integration"
+                            },
+                            {
+                                "type": "MANUFACTURER",
+                                "id": "E0MHALL",
+                                "name": "IBM MobileFirst Platform Foundation Application Annual SW Subscription & Support Renewal 12 Months",
+                                "manufacturer": "IBM",
+                                "manufacturerId": "8",
+                                "family": "Application Platform & Integration"
+                            }
+                        ],
+                        "quantity": 1.0,
+                        "qty": 0.0,
+                        "confirmedQuantity": 0.0,
+                        "references": [],
+                        "updated": "0001-01-01T00:00:00",
+                        "unitCost": 0.0,
+                        "unitPriceCurrency": "NA",
+                        "unitCostCurrency": "NA",
+                        "unitListPriceCurrency": "NA",
+                        "extendedListPrice": 0.0,
+                        "requested": "0001-01-01T00:00:00",
+                        "femAmount": 0.0,
+                        "pomAmount": 0.0,
+                        "samAmount": 0.0,
+                        "nsmAmount": 0.0,
+                        "femPercentage": 0.0,
+                        "pomPercentage": 0.0,
+                        "samPercentage": 0.0,
+                        "nsmPercentage": 0.0,
+                        "agreements": [],
+                        "attributes": [],
+                        "serialNumbers": [
+                            null
+                        ],
+                        "discounts": [
+                            {
+                                "type": "Standard",
+                                "value": "0.0"
+                            }
+                        ],
+                        "contract": {
+                            "id": "234520",
+                            "endDate": "2023-12-31T00:00:00Z",
+                            "newAgreementStartDate": "2024-02-01T00:00:00Z",
+                            "newAgreementEndDate": "2025-01-31T00:00:00Z",
+                            "formattedEndDate": "31/12/2023",
+                            "formattedNewAgreementStartDate": "01/02/2024",
+                            "formattedNewAgreementEndDate": "31/01/2025",
+                            "dueDate": "2023-12-31T00:00:00Z",
+                            "hasMultipleSupportLevelForThisAgreement": false,
+                            "hasMultipleDueDateForThisAgreement": false,
+                            "hasMultipleDurationForThisAgreement": false,
+                            "agreementDuration": "01/02/2024 - 31/01/2025",
+                            "formattedDueDate": "31/12/2023",
+                            "autoRenew": false
+                        },
+                        "agency": "TestAgency",
+                        "minimumQuantity": 0.0,
+                        "maximumQuantity": 99999.0,
+                        "isResellerPriceOverride": false
+                    }
+                ],
+                "attributes": [],
+                "programName": "Passport Advantage",
+                "quoteCurrent": false,
+                "firstAvailableOrderDate": "2024-10-23T00:00:00Z",
+                "lastOrderDate": "2023-12-31T00:00:00Z",
+                "amountSaved": 0.0,
+                "linkedRenewals": [],
+                "dueDate": "2023-12-31T00:00:00Z",
+                "endUserType": "N/A",
+                "vendorLogo": "https://sit.dc.tdebusiness.cloud/content/dam/techdata/shared/vendors-logos/logo-ibm.svg",
+                "vendorLogoPdf": "https://sit.dc.tdebusiness.cloud/content/dam/techdata/shared/vendors-logos/logo-ibm.png",
+                "isValid": false,
+                "canOrder": false,
+                "canEditQty": false,
+                "canEditResellerPrice": true,
+                "canEditLines": false,
+                "canCopy": false,
+                "formattedPublished": "23/10/2024",
+                "formattedFirstAvailableOrderDate": "23/10/2024",
+                "formattedLastOrderDate": "31/12/2023",
+                "formattedDueDate": "31/12/2023",
+                "formattedCreated": "23/10/2024",
+                "formattedUpdated": "23/10/2024",
+                "formattedExpiry": "31/12/2023",
+                "vendor": {
+                    "id": "8",
+                    "name": "IBM"
+                },
+                "hasMultipleSupportLevel": false,
+                "hasMultipleAgreements": false,
+                "hasMultipleRenewedDuration": false,
+                "hasMultipleDueDates": false,
+                "agreementNumber": "234520",
+                "agreementDuration": "01/02/2024 - 31/01/2025",
+                "hasMultipleAgreementDuration": false,
+                "canDownloadExcel": true,
+                "canShareQuote": true,
+                "canRequestQuote": false,
+                "canRequestRevision": true,
+                "feedBackMessages": [],
+                "itemsActive": [],
+                "additionalInfo": [
+                    {},
+                    {}
+                ],
+                "canAddMore": false,
+                "autoRenew": false,
+                "isAutoRenewEnabled": false,
+                "displayAutoRenew": false,
+                "showToolTip": false,
+                "canArchive": true,
+                "canDownLoadPDF": true,
+                "revision": 1.0,
+                "subRevision": 0.0,
+                "activeFlag": "Y",
+                "price": 0.0,
+                "currency": "NA",
+                "quoteType": "Renewal",
+                "created": "2024-10-23T12:43:31.618Z",
+                "updated": "2024-10-23T12:43:31.618Z",
+                "expiry": "2023-12-31T00:00:00Z",
+                "status": "Active",
+                "orders": [],
+                "vendorReference": [
+                    {
+                        "type": "QuoteId",
+                        "value": "19665904"
+                    }
+                ],
+                "femAmount": 0.0,
+                "pomAmount": 0.0,
+                "samAmount": 0.0,
+                "nsmAmount": 0.0,
+                "femPercentage": 0.0,
+                "pomPercentage": 0.0,
+                "samPercentage": 0.0,
+                "nsmPercentage": 0.0,
+                "archived": false
+            }
+        ]
+    },
+    "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+    }
+};
 
   const response2 = {"content":{"details":[{"source":{"salesOrg":"VN91","targetSystem":"R3","key":"U877722926960","system":"RQEu","id":"U877722926960"},"published":"2024-11-22T10:56:13.228Z","shipTo":{"nameUpper":"","contact":[],"address":{}},"items":[{"id":"1","product":[{"type":"TECHDATA","id":"ADB65304752CA01A12","name":"-","family":"Captivate for teams"},{"type":"MANUFACTURER","id":"65304752CA01A12","name":"Captivate for teams ALL Multiple Platforms Multi Asian Languages Subscription New","manufacturer":"Adobe","manufacturerId":"3","family":"Captivate for teams"}],"quantity":6.0,"qty":0.0,"confirmedQuantity":0.0,"references":[],"updated":"0001-01-01T00:00:00","unitPrice":10159000.0,"unitCost":375.24,"totalPrice":60954000.0,"unitListPrice":10368000.0,"unitPriceCurrency":"VND","unitCostCurrency":"USD","unitListPriceCurrency":"VND","extendedListPrice":0.0,"requested":"0001-01-01T00:00:00","femAmount":0.0,"pomAmount":0.0,"samAmount":0.0,"nsmAmount":0.0,"femPercentage":0.0,"pomPercentage":0.0,"samPercentage":0.0,"nsmPercentage":0.0,"agreements":[],"attributes":[],"serialNumbers":[null],"discounts":[{"type":"Standard","value":"2.02"}],"contract":{"id":"P3005100000","renewedDuration":"1 Year","endDate":"2024-10-02T00:00:00Z","newAgreementStartDate":"2024-10-03T00:00:00Z","newAgreementEndDate":"2025-10-02T00:00:00Z","formattedEndDate":"02/10/2024","formattedNewAgreementStartDate":"03/10/2024","formattedNewAgreementEndDate":"02/10/2025","dueDate":"2024-10-02T00:00:00Z","hasMultipleSupportLevelForThisAgreement":false,"hasMultipleDueDateForThisAgreement":false,"hasMultipleDurationForThisAgreement":false,"agreementDuration":"03/10/2024 - 02/10/2025","formattedDueDate":"02/10/2024","autoRenew":false},"subscriptionId":"1f1e1ba4ed440bb638301bf6303ebfNA","agency":"ManualAutoRenew","isResellerPriceOverride":false}],"attributes":[],"programName":"VIP MP Commercial","firstAvailableOrderDate":"2024-09-02T00:00:00Z","lastOrderDate":"2025-10-02T00:00:00Z","amountSaved":0.0,"linkedRenewals":[],"dueDate":"2024-10-02T00:00:00Z","endUserType":"Commercial","vendorLogo":"https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=30","vendorLogoPdf":"https://s7d9.scene7.com/is/image/techdata/adobe-logo?&fmt=png-alpha&hei=20","previousResellerPO":"Auto-migration - Jun 2024","isValid":false,"canOrder":false,"canEditQty":false,"canEditResellerPrice":false,"canEditLines":false,"canCopy":false,"formattedPublished":"22/11/2024","formattedFirstAvailableOrderDate":"02/09/2024","formattedLastOrderDate":"02/10/2025","formattedDueDate":"02/10/2024","formattedCreated":"22/11/2024","formattedUpdated":"22/11/2024","formattedExpiry":"02/10/2024","vendor":{"id":"3","name":"Adobe","vendorsTDName":"Adobe"},"renewalLevel":"Level 1 1 - 9","hasMultipleSupportLevel":false,"hasMultipleAgreements":false,"hasMultipleRenewedDuration":false,"hasMultipleDueDates":false,"agreementNumber":"P3005100000","renewedDuration":"1 Year","agreementDuration":"03/10/2024 - 02/10/2025","hasMultipleAgreementDuration":false,"canDownloadExcel":false,"canShareQuote":false,"canRequestQuote":false,"canRequestRevision":false,"itemsActive":[{"id":"1","product":[{"type":"TECHDATA","id":"ADB65304752CA01A12","family":"Captivate for teams"},{"type":"MANUFACTURER","id":"65304752CA01A12","name":"Captivate for teams ALL Multiple Platforms Multi Asian Languages Subscription New","manufacturer":"Adobe","manufacturerId":"3","family":"Captivate for teams"}],"quantity":6.0,"subscriptionId":"1f1e1ba4ed440bb638301bf6303ebfNA"}],"additionalInfo":[{"key":"SubStatus","value":"PreviewFailed"},{}],"renewalLevelActive":"Level 1 1 - 9","canAddMore":false,"autoRenew":false,"isAutoRenewEnabled":false,"displayAutoRenew":false,"showToolTip":false,"revision":1.0,"subRevision":0.0,"activeFlag":"Y","price":60954000.0,"currency":"VND","quoteType":"Renewal","created":"2024-11-22T10:56:13.228Z","updated":"2024-11-22T10:56:13.228Z","expiry":"2024-10-02T00:00:00Z","status":"Active","orders":[],"vendorReference":[{"type":"QuoteId","value":"P3005100000"}],"femAmount":0.0,"pomAmount":0.0,"samAmount":0.0,"nsmAmount":0.0,"femPercentage":0.0,"pomPercentage":0.0,"samPercentage":0.0,"nsmPercentage":0.0,"archived":true}]},"error":{"code":0,"messages":[],"isError":false}}
 

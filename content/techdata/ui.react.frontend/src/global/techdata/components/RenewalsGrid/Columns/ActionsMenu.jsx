@@ -72,6 +72,7 @@ function ActionsMenu({
 
   const enableArchive = !data?.archived;
   const enableDownloadPDF = data?.canDownLoadPDF
+  const showArchive = data?.canArchive
 
   useEffect(() => {
     let timer;
@@ -474,7 +475,7 @@ function ActionsMenu({
             )
         }
 
-        {config?.enableArchiveQuote && enableArchive ? (
+        {config?.enableArchiveQuote && enableArchive && showArchive ? (
           <div
             className="cmp-renewals-actions-menu__item"
             onClick={triggerArchive}
