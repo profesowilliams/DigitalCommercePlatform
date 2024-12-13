@@ -120,18 +120,33 @@ export function RevisionFlyout({ store, revisionFlyoutContent, subheaderReferenc
       width="768px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionHeading) || 'Request revision'}
+      titleLabel={
+        getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionHeading) ||
+        'Request revision'
+      }
       secondaryButton={false}
       classText="share-flyout revise-flyout"
       isLoading={isLoading}
       disabledButton={isLoading}
       showLoaderIcon={true}
       onClickButton={handleRevisionClick}
-      buttonLabel={getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionButtonLabel) || 'Request'}
-      loadingButtonLabel={getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionButtonLabel) || 'Requesting'}
+      buttonLabel={
+        getDictionaryValueOrKey(
+          revisionFlyoutContent.requestRevisionButtonLabel
+        ) || 'Request'
+      }
+      loadingButtonLabel={
+        getDictionaryValueOrKey(
+          revisionFlyoutContent.requestRevisionButtonLabel
+        ) || 'Requesting'
+      }
     >
       <section className="cmp-flyout__content">
-        <p>{getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionDescription)}</p>
+        <p>
+          {getDictionaryValueOrKey(
+            revisionFlyoutContent.requestRevisionDescription
+          )}
+        </p>
         <Box
           className="cmp-flyout__share-form"
           component="form"
@@ -140,14 +155,35 @@ export function RevisionFlyout({ store, revisionFlyoutContent, subheaderReferenc
           autoComplete="off"
         >
           <div>
-            <label>{getDictionaryValueOrKey(revisionFlyoutContent.additionalInformationLabel)}</label>
-            <textarea type="text"
-              placeholder={getDictionaryValueOrKey(revisionFlyoutContent.additionalInformationPlaceholderText)}
+            <label>
+              {getDictionaryValueOrKey(
+                revisionFlyoutContent.additionalInformationLabel
+              )}
+            </label>
+            <textarea
+              type="text"
+              placeholder={getDictionaryValueOrKey(
+                revisionFlyoutContent.additionalInformationPlaceholderText
+              )}
               className="comments"
               value={commentInput}
-              onChange={handleCommentChange}
-              maxLength={getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCount)}/>
-            <span className="char-count">{count}{' '}{getDictionaryValueOrKey(revisionFlyoutContent.requestRevisionCommentCountText)}</span>
+              onChange={(e) => {
+                handleCommentChange(e);
+                const target = e.target;
+                target.style.height = 'auto'; // Reset height to allow shrink
+                target.style.height = `${target.scrollHeight}px`; // Set height based on scrollHeight
+              }}
+              style={{ overflow: 'hidden', resize: 'none' }} // Ensure smooth auto-expand
+              maxLength={getDictionaryValueOrKey(
+                revisionFlyoutContent.requestRevisionCommentCount
+              )}
+            />
+            <span className="char-count">
+              {count}{' '}
+              {getDictionaryValueOrKey(
+                revisionFlyoutContent.requestRevisionCommentCountText
+              )}
+            </span>
           </div>
         </Box>
       </section>

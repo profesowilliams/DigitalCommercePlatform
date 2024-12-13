@@ -5,7 +5,7 @@ import {
   DeleteIcon,
 } from '../../../../fluentIcons/FluentIcons';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
-import { Button, TextField, Autocomplete, Chip } from '@mui/material';
+import { TextField, Autocomplete, Chip } from '@mui/material';
 import Box from '@mui/material/Box';
 import { CustomTextField } from '../Widgets/CustomTextField';
 import { EmailInput } from '../ShareFlyout/EmailInput';
@@ -15,6 +15,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
 import { useStore } from '../../../../utils/useStore';
 import { callServiceWrapper } from '../../../../utils/api';
+import Button from '../web-components/Button';
 
 function ErrorModelEmailPill({ item, updateAccessErrObject }) {
   const [editPill, setEditPill] = useState(false);
@@ -444,11 +445,11 @@ export function ShareFlyout({
                 shareFlyoutContent.shareFlyoutQuoteDescription
               )}
             </p>
-            <tds-button type="button" variant="secondary" color="teal">
+            <Button type="button" variant="secondary" color="teal">
               {getDictionaryValueOrKey(
                 shareFlyoutContent.shareFlyoutQuoteButtonLabel
               )}
-            </tds-button>
+            </Button>
           </div>
           <div>
             <textarea
@@ -574,7 +575,7 @@ export function ShareFlyout({
               <div className="button-section">
                 {errorFlags.serverError ? (
                   <>
-                    <tds-button
+                    <Button
                       type="button"
                       variant="tertiary"
                       color="teal"
@@ -583,8 +584,8 @@ export function ShareFlyout({
                       {getDictionaryValueOrKey(
                         shareFlyoutContent.shareFailedCancelLabel
                       )}
-                    </tds-button>
-                    <tds-button
+                    </Button>
+                    <Button
                       type="button"
                       variant="primary"
                       color="teal"
@@ -593,12 +594,12 @@ export function ShareFlyout({
                       {getDictionaryValueOrKey(
                         shareFlyoutContent.shareFailedTryAgainLabel
                       )}
-                    </tds-button>
+                    </Button>
                   </>
                 ) : null}
                 {errorFlags.incorrect ? (
                   <>
-                    <tds-button
+                    <Button
                       type="button"
                       variant="primary"
                       color="teal"
@@ -607,12 +608,12 @@ export function ShareFlyout({
                       {getDictionaryValueOrKey(
                         shareFlyoutContent.incorrectEmailTryAgainLabel
                       )}
-                    </tds-button>
+                    </Button>
                   </>
                 ) : null}
                 {errorFlags.notFound ? (
                   <>
-                    <tds-button
+                    <Button
                       type="button"
                       variant="tertiary"
                       color="teal"
@@ -621,8 +622,8 @@ export function ShareFlyout({
                       {getDictionaryValueOrKey(
                         shareFlyoutContent.recipientNotFoundCancelLabel
                       )}
-                    </tds-button>
-                    <tds-button
+                    </Button>
+                    <Button
                       variant="primary"
                       color="teal"
                       onClick={(e) => handleTryAgainBtn(e, true)}
@@ -630,7 +631,7 @@ export function ShareFlyout({
                       {getDictionaryValueOrKey(
                         shareFlyoutContent.recipientNotFoundContinueLabel
                       )}
-                    </tds-button>
+                    </Button>
                   </>
                 ) : null}
               </div>
