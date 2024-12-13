@@ -481,8 +481,6 @@ function ActionsMenu({
             type="button"
             variant="link"
             color="teal"
-            /* TODO ryan.williams 2024-12-12: Singular usecase due to icon dimensions. Refactor inline style to CSS variable. */
-            style={{ display: 'inline-flex' }}
           >
             <MenuIcon
               name="enterarrow"
