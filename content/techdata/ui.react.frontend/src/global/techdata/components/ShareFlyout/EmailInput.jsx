@@ -65,10 +65,16 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
     }
   }
 
+  const isExistingEmail = (email) => {
+    return selectedEmails.includes(email);
+  }
+
   const handleOnBlur = (event) => {
     const value = event.target.value.trim() || '';
 
-    addNewEmail(value);
+    if (!isExistingEmail(value)) {
+      addNewEmail(value);
+    }
   }
 
   const handleKeyDown = (event) => {
@@ -81,8 +87,8 @@ export function EmailInput({ id, label, required, enableShareButton, resetDataFl
     }
 
     value = value.trim();
-    
-    if (value !== '' && processNewEmail) {
+
+    if (!isExistingEmail(value) && value !== '' && processNewEmail) {
       addNewEmail(value);
     }
   }
