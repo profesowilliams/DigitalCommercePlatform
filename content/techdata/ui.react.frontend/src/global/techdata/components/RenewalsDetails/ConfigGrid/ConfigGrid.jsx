@@ -152,6 +152,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
   const isOpportunity = data.canRequestQuote || data.quoteType === "Opportunity";
   const showArchive = data?.canArchive
   const enableDownLoadPDF = data?.canDownLoadPDF
+  const enableDownloadExcel = data?.canDownloadExcel
 
   const downloadXLS = () => {
     try {
@@ -369,7 +370,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
     );
   }
 
-  if (gridProps?.productLines?.showDownloadXLSButton) {
+  if (gridProps?.productLines?.showDownloadXLSButton && enableDownloadExcel) {
     buttons.push(
       <button onClick={downloadXLS} key="downloadXLS">
         <DownloadIcon className="cmp-renewal-preview__download--icon" />

@@ -72,6 +72,7 @@ function ActionsMenu({
 
   const enableArchive = !data?.archived;
   const enableDownloadPDF = data?.canDownLoadPDF
+  const enableDownloadExcel = data?.canDownloadExcel
   const showArchive = data?.canArchive
 
   useEffect(() => {
@@ -447,7 +448,7 @@ function ActionsMenu({
             </span>
           </div>
         ) : null}
-        {menuOptions?.showDownloadXLSButton && enableArchive ? (
+        {menuOptions?.showDownloadXLSButton && enableArchive && enableDownloadExcel ? (
           <div
             className="cmp-renewals-actions-menu__item"
             onClick={downloadXLS}
