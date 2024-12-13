@@ -1,0 +1,24 @@
+.cmp-renewal-action-container {
+  --button-gap: 0.31rem;
+  --button-display: flex;
+  --button-padding: 0;
+  --tds-button-display: flex;
+  --tds-button-flex-direction: column;
+  --menu-width: 11.2578125rem;
+
+  tds-menu {
+    position: fixed;
+    right: 12.5rem;
+    top: -1.5rem;
+    display: flex;
+
+    tds-menu-button {
+      align-content: center;
+      font-family: Arial;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 150%; /* 1.3125rem */
+    }
+  }
+}

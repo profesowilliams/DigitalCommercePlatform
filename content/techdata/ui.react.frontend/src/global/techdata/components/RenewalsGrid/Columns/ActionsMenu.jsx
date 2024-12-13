@@ -1,16 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import Dialog from '@mui/material/Dialog';
 import { useRenewalGridState } from '../store/RenewalsStore';
-import {
-  CopyIcon,
-  ShareIcon,
-  DownloadIcon,
-  EyeLightIcon,
-  RevisionIcon,
-  ArchiveIcon,
-  RestoreIcon,
-  EnterArrowIcon
-} from '../../../../../fluentIcons/FluentIcons';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { redirectToRenewalDetail } from '../utils/renewalUtils';
 import {
@@ -27,6 +16,12 @@ import {
 } from '../../../../../utils/utils';
 import { callServiceWrapper } from '../../../../../utils/api';
 import { getStatusLoopUntilStatusIsActive } from '../Orders/orderingRequests';
+import {
+  Menu,
+  MenuItem,
+  MenuButton,
+  MenuIcon,
+} from '../../web-components/Menu';
 
 function ActionsMenu({
   config,
@@ -74,7 +69,6 @@ function ActionsMenu({
   const enableDownloadPDF = data?.canDownLoadPDF
   const enableDownloadExcel = data?.canDownloadExcel
   const showArchive = data?.canArchive
-
   useEffect(() => {
     let timer;
     if (open) {
@@ -182,19 +176,24 @@ function ActionsMenu({
   const triggerArchive = async () => {
     effects.setCustomState({
       key: 'toaster',
-      value: { isOpen: false}});
+      value: { isOpen: false },
+    });
     onClose();
     const archived = true;
 
     const postData = {
-      "quoteId": data?.source?.id,
-       "archived": archived
+      quoteId: data?.source?.id,
+      archived: archived,
     };
 
     try {
       effects.setRenewalsGridActionPerformed(data.source?.id);
 
-      const response = await callServiceWrapper(archiveOrRestoreRenewals,archiveOrRestoreRenewalsEndpoint, postData);
+      const response = await callServiceWrapper(
+        archiveOrRestoreRenewals,
+        archiveOrRestoreRenewalsEndpoint,
+        postData
+      );
 
       effects.resetRenewalsGridActionPerformed();
 
@@ -203,7 +202,6 @@ function ActionsMenu({
           key: 'toaster',
           value: { ...archiveToasterFail },
         });
-
       } else {
         effects.setRenewalsGridActionPerformed(data.source?.id);
 
@@ -249,19 +247,24 @@ function ActionsMenu({
   const triggerRestore = async () => {
     effects.setCustomState({
       key: 'toaster',
-      value: { isOpen: false}});
+      value: { isOpen: false },
+    });
     onClose();
     const archived = false;
 
     const postData = {
-      "quoteId": data?.source?.id,
-       "archived": archived
+      quoteId: data?.source?.id,
+      archived: archived,
     };
 
     try {
       effects.setRenewalsGridActionPerformed(data.source?.id);
 
-      const response = await callServiceWrapper(archiveOrRestoreRenewals,archiveOrRestoreRenewalsEndpoint, postData);
+      const response = await callServiceWrapper(
+        archiveOrRestoreRenewals,
+        archiveOrRestoreRenewalsEndpoint,
+        postData
+      );
 
       effects.resetRenewalsGridActionPerformed();
 
@@ -321,189 +324,204 @@ function ActionsMenu({
       redirectToRenewalDetail(detailUrl, data?.source?.id, analyticsData);
   };
 
-    const archiveToasterSuccess = {
-      isOpen: true,
-      origin: 'archiveRenewals',
-      isAutoClose: false,
-      isSuccess: true,
-      message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterSuccess)?.replace("{0}", data?.endUser?.name),
-      Child: (
-        <button onClick={triggerRestore}>
-            {getDictionaryValueOrKey(config?.archiveLabels?.undo)}
-        </button>
-      ),
-    };
+  const archiveToasterSuccess = {
+    isOpen: true,
+    origin: 'archiveRenewals',
+    isAutoClose: false,
+    isSuccess: true,
+    message: getDictionaryValueOrKey(
+      config?.archiveLabels?.archiveToasterSuccess
+    )?.replace('{0}', data?.endUser?.name),
+    Child: (
+      <button onClick={triggerRestore}>
+        {getDictionaryValueOrKey(config?.archiveLabels?.undo)}
+      </button>
+    ),
+  };
 
-    const archiveToasterFail = {
-      isOpen: true,
-      origin: 'archiveRenewals',
-      isAutoClose: false,
-      isSuccess: false,
-      message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterFail),
-      Child: null,
-    };
+  const archiveToasterFail = {
+    isOpen: true,
+    origin: 'archiveRenewals',
+    isAutoClose: false,
+    isSuccess: false,
+    message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterFail),
+    Child: null,
+  };
 
-    const restoreToasterSuccess = {
-      isOpen: true,
-      origin: 'restoreRenewals',
-      isAutoClose: false,
-      isSuccess: true,
-      message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterSuccess)?.replace("{0}", data?.endUser?.name),
-      Child: (
-        <button onClick={triggerArchive}>
-            {getDictionaryValueOrKey(config?.archiveLabels?.undo)}
-        </button>
-      ),
-    };
+  const restoreToasterSuccess = {
+    isOpen: true,
+    origin: 'restoreRenewals',
+    isAutoClose: false,
+    isSuccess: true,
+    message: getDictionaryValueOrKey(
+      config?.archiveLabels?.restoreToasterSuccess
+    )?.replace('{0}', data?.endUser?.name),
+    Child: (
+      <button onClick={triggerArchive}>
+        {getDictionaryValueOrKey(config?.archiveLabels?.undo)}
+      </button>
+    ),
+  };
 
-    const restoreToasterFail = {
-      isOpen: true,
-      origin: 'restoreRenewals',
-      isAutoClose: false,
-      isSuccess: false,
-      message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterFail),
-      Child: null,
-    };
+  const restoreToasterFail = {
+    isOpen: true,
+    origin: 'restoreRenewals',
+    isAutoClose: false,
+    isSuccess: false,
+    message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterFail),
+    Child: null,
+  };
 
   return (
-    <Dialog
+    <Menu
       onClose={onClose}
       ref={dialogRef}
-      hideBackdrop
       open={open}
-      disableScrollLock
-      sx={sx}
+      flip={true}
+      placement="bottom-start"
+      alignment="start"
+      auto-placement
+      allowed-placements='["top-start", "bottom-start"]'
     >
-      <div
-        className={
-          canRequestQuote
-            ? 'cmp-renewals-actions-menu is-opportunity'
-            : 'cmp-renewals-actions-menu'
-        }
+      {/* HACK ryan.williams 2024-12-12: This div is intentionally left blank. */}
+      {/* NOTE ryan.williams 2024-12-12: 
+          This blank div is needed in order for the first MenuItem to work. 
+          If this div is removed, the first MenuItem will not work. There is a re-render issue with the parent 
+          component, ActionsMenu. The menu is positioned by an offset in the Menu web component.
+      */}
+      {/* TODO ryan.williams 2024-12-12: Add the offset to the React component. */}
+      <div></div>
+      <MenuItem
+        onClick={() => {
+          redirectToRenewalDetail(detailUrl, data?.source?.id, analyticsData);
+          onClose();
+        }}
       >
-        <div
-          className="cmp-renewals-actions-menu__item view-details"
-          onClick={() =>
-            redirectToRenewalDetail(detailUrl, data?.source?.id, analyticsData)
-          }
+        <MenuButton type="button" variant="link" color="teal">
+          <MenuIcon name="eye" state="default" />
+          {getDictionaryValue('button.common.label.seeDetails', 'View details')}
+        </MenuButton>
+      </MenuItem>
+      {canCopy && enableArchive ? (
+        <MenuItem
+          onClick={() => {
+            triggerCopyFlyout();
+            onClose();
+          }}
         >
-          <span className="cmp-renewals-actions-menu__item-icon">
-            <EyeLightIcon />
-          </span>
-          <span className="cmp-renewals-actions-menu__item-label">
+          <MenuButton type="button" variant="link" color="teal">
+            <MenuIcon name="copy" state="default" />
+            Copy
+          </MenuButton>
+        </MenuItem>
+      ) : null}
+      {enableShareOption && canShare && enableArchive ? (
+        <MenuItem
+          onClick={() => {
+            triggerShareFlyout();
+            onClose();
+          }}
+        >
+          <MenuButton type="button" variant="link" color="teal">
+            <MenuIcon name="share" state="default" />
+            Share
+          </MenuButton>
+        </MenuItem>
+      ) : null}
+      {enableReviseOption && canRequestRevision && enableArchive ? (
+        <MenuItem onClick={triggerRevisionFlyout}>
+          <MenuButton type="button" variant="link" color="teal">
+            <MenuIcon name="revision" state="default" viewbox="0 0 16 16" />
+            Request revision
+          </MenuButton>
+        </MenuItem>
+      ) : null}
+      {menuOptions?.showDownloadPDFButton &&
+      enableArchive &&
+      enableDownloadPDF ? (
+        <MenuItem
+          onClick={() => {
+            downloadPDF();
+            onClose();
+          }}
+        >
+          <MenuButton type="button" variant="link" color="teal">
+            <MenuIcon name="download" state="default" />
             {getDictionaryValue(
-              'button.common.label.seeDetails',
-              'See details'
+              'button.common.label.downloadPDF',
+              'Download PDF'
             )}
-          </span>
-        </div>
-        {canCopy && enableArchive ? (
-          <div
-            className="cmp-renewals-actions-menu__item"
-            onClick={triggerCopyFlyout}
+          </MenuButton>
+        </MenuItem>
+      ) : null}
+      {menuOptions?.showDownloadXLSButton && enableArchive && enableDownloadExcel ? (
+        <MenuItem
+          onClick={() => {
+            downloadXLS();
+            onClose();
+          }}
+        >
+          <MenuButton type="button" variant="link" color="teal">
+            <MenuIcon name="download" state="default" />
+            {getDictionaryValue(
+              'button.common.label.downloadXLS',
+              'Download XLS'
+            )}
+          </MenuButton>
+        </MenuItem>
+      ) : null}
+      {canRequestQuote && enableRequestQuote && enableArchive && (
+        <MenuItem
+          onClick={() => {
+            triggerRequestFlyout(data);
+            onClose();
+          }}
+        >
+          <MenuButton
+            type="button"
+            variant="link"
+            color="teal"
+            /* TODO ryan.williams 2024-12-12: Singular usecase due to icon dimensions. Refactor inline style to CSS variable. */
+            style={{ display: 'inline-flex' }}
           >
-            <span className="cmp-renewals-actions-menu__item-icon">
-              <CopyIcon width="16" height="16" />
-            </span>
-            <span className="cmp-renewals-actions-menu__item-label">Copy</span>
-          </div>
-        ) : null}
-        {enableShareOption && canShare && enableArchive ? (
-          <div
-            className="cmp-renewals-actions-menu__item"
-            onClick={triggerShareFlyout}
-          >
-            <span className="cmp-renewals-actions-menu__item-icon">
-              <ShareIcon width="16" height="16" />
-            </span>
-            <span className="cmp-renewals-actions-menu__item-label">Share</span>
-          </div>
-        ) : null}
-        {enableReviseOption && canRequestRevision && enableArchive ? (
-          <div
-            className="cmp-renewals-actions-menu__item"
-            onClick={triggerRevisionFlyout}
-          >
-            <span className="cmp-renewals-actions-menu__item-icon">
-              <RevisionIcon width="16" height="16" />
-            </span>
-            <span className="cmp-renewals-actions-menu__item-label">
-              Request revision
-            </span>
-          </div>
-        ) : null}
-        {menuOptions?.showDownloadPDFButton && enableArchive && enableDownloadPDF ? (
-          <div
-            className="cmp-renewals-actions-menu__item"
-            onClick={downloadPDF}
-          >
-            <span className="cmp-renewals-actions-menu__item-icon">
-              <DownloadIcon />
-            </span>
-            <span className="cmp-renewals-actions-menu__item-label">
-              {getDictionaryValue(
-                'button.common.label.downloadPDF',
-                'Download PDF'
-              )}
-            </span>
-          </div>
-        ) : null}
-        {menuOptions?.showDownloadXLSButton && enableArchive && enableDownloadExcel ? (
-          <div
-            className="cmp-renewals-actions-menu__item"
-            onClick={downloadXLS}
-          >
-            <span className="cmp-renewals-actions-menu__item-icon">
-              <DownloadIcon />
-            </span>
-            <span className="cmp-renewals-actions-menu__item-label">
-              {getDictionaryValue(
-                'button.common.label.downloadXLS',
-                'Download XLS'
-              )}
-            </span>
-          </div>
-        ) : null}
-        {
-            (canRequestQuote && enableRequestQuote && enableArchive) && (
-                <span
-                    className="cmp-renewals-actions-menu__item request-quote"
-                    onClick={() => triggerRequestFlyout(data)}
-                  >
-                    <EnterArrowIcon/>
-                    Request quote
-                </span>
-            )
-        }
+            <MenuIcon
+              name="enterarrow"
+              state="default"
+              size="28"
+              viewbox="0 0 24 24"
+            />
+            Request quote
+          </MenuButton>
+        </MenuItem>
+      )}
 
-        {config?.enableArchiveQuote && enableArchive && showArchive ? (
-          <div
-            className="cmp-renewals-actions-menu__item"
-            onClick={triggerArchive}
-          >
-            <span className="cmp-renewals-actions-menu__item-icon">
-              <ArchiveIcon />
-            </span>
-            <span className="cmp-renewals-actions-menu__item-label">
-              {getDictionaryValueOrKey(config?.archiveLabels?.archive)}
-            </span>
-          </div>
-        ) : null}
-        {config?.enableArchiveQuote && !enableArchive ? (
-          <div
-            className="cmp-renewals-actions-menu__item"
-            onClick={triggerRestore}
-          >
-            <span className="cmp-renewals-actions-menu__item-icon">
-              <RestoreIcon />
-            </span>
-            <span className="cmp-renewals-actions-menu__item-label">
-              {getDictionaryValueOrKey(config?.archiveLabels?.restore)}
-            </span>
-          </div>
-        ) : null}
-      </div>
-    </Dialog>
+      {config?.enableArchiveQuote && enableArchive && showArchive ? (
+        <MenuItem
+          onClick={() => {
+            triggerArchive();
+            onClose();
+          }}
+        >
+          <MenuButton type="button" variant="link" color="teal">
+            <MenuIcon name="archive" state="default" />
+            {getDictionaryValueOrKey(config?.archiveLabels?.archive)}
+          </MenuButton>
+        </MenuItem>
+      ) : null}
+      {config?.enableArchiveQuote && !enableArchive ? (
+        <MenuItem
+          onClick={() => {
+            triggerRestore();
+            onClose();
+          }}
+        >
+          <MenuButton type="button" variant="link" color="teal">
+            <MenuIcon name="restore" state="default" />
+            {getDictionaryValueOrKey(config?.archiveLabels?.restore)}
+          </MenuButton>
+        </MenuItem>
+      ) : null}
+    </Menu>
   );
 }
 

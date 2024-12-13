@@ -1,5 +1,13 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
-import { CartIcon, CopyIcon, DownloadIcon, EllipsisIcon, EyeIcon, EyeLightIcon, LoaderIcon } from '../../../../../fluentIcons/FluentIcons';
+import {
+  CartIcon,
+  CopyIcon,
+  DownloadIcon,
+  EllipsisIcon,
+  EyeIcon,
+  EyeLightIcon,
+  LoaderIcon,
+} from '../../../../../fluentIcons/FluentIcons';
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import VerticalSeparator from '../../Widgets/VerticalSeparator';
 import useIsIconEnabled from '../Orders/hooks/useIsIconEnabled';
@@ -13,8 +21,11 @@ import {
   setLocalStorageData,
 } from '../utils/renewalUtils';
 import { useRenewalGridState } from '../store/RenewalsStore';
-import Dialog from "@mui/material/Dialog";
-import { fileExtensions, generateFileFromPost } from '../../../../../utils/utils';
+import Dialog from '@mui/material/Dialog';
+import {
+  fileExtensions,
+  generateFileFromPost,
+} from '../../../../../utils/utils';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import ActionsMenu from './ActionsMenu';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../../Analytics/analytics';
@@ -48,8 +59,12 @@ function _RenewalActionColumn({ eventProps, config }) {
     orderingFromDashboard?.showOrderingIcon
   );
 
-  const renewalsGridActionPerformed = useRenewalGridState((state) => state.renewalsGridActionPerformed);
-  const renewalsGridActionPerformedColumn = useRenewalGridState((state) => state.renewalsGridActionPerformedColumn);
+  const renewalsGridActionPerformed = useRenewalGridState(
+    (state) => state.renewalsGridActionPerformed
+  );
+  const renewalsGridActionPerformedColumn = useRenewalGridState(
+    (state) => state.renewalsGridActionPerformedColumn
+  );
   const canCopy = data?.canCopy;
   const canShare = data?.canShareQuote;
   const canRequestRevision = data?.canRequestRevision;
@@ -204,13 +219,20 @@ function _RenewalActionColumn({ eventProps, config }) {
   const triggerRequestFlyout = (data) => {
     data['link'] = '';
     setShowActionsMenu(false);
-    effects.setCustomState({ key: 'requestFlyout', value: { data, show: true } });
+    effects.setCustomState({
+      key: 'requestFlyout',
+      value: { data, show: true },
+    });
   };
 
   return (
     <>
       <div
-        className={(isIconEnabled && !canRequestQuote) || data.vendor.name === 'Adobe' ? "cmp-renewal-action-container" : "cmp-renewal-action-container cart-disabled"}
+        className={
+          (isIconEnabled && !canRequestQuote) || data.vendor.name === 'Adobe'
+            ? 'cmp-renewal-action-container'
+            : 'cmp-renewal-action-container cart-disabled'
+        }
         style={{ position: 'relative' }}
         key={Math.random()}
       >
@@ -250,20 +272,19 @@ function _RenewalActionColumn({ eventProps, config }) {
           store={useRenewalGridState}
         />
         <VerticalSeparator />
-        {renewalsGridActionPerformed && renewalsGridActionPerformedColumn === data.source?.id ? (
+        {renewalsGridActionPerformed &&
+        renewalsGridActionPerformedColumn === data.source?.id ? (
           <LoaderIcon className="loadingIcon-search-rotate" />
-          ):(
-            <span className="cmp-renewals-ellipsis" ref={divRef}>
-              <EllipsisIcon onClick={handleShowActionMenu} style={iconStyle} />
-            </span>
-          )
-        }
+        ) : (
+          <span className="cmp-renewals-ellipsis" ref={divRef}>
+            <EllipsisIcon onClick={handleShowActionMenu} style={iconStyle} />
+          </span>
+        )}
         <ActionsMenu
           config={config}
           onClose={() => setShowActionsMenu(false)}
           open={showActionsMenu}
           menuOptions={productGrid}
-          sx={dialogStyling}
           canCopy={canCopy}
           triggerRequestFlyout={triggerRequestFlyout}
           canRequestRevision={canRequestRevision}

@@ -1,55 +1,84 @@
-import React from "react";
+import React from 'react';
 import Link from '../../Widgets/Link';
 import ContractColumn from '../Columns/ContractColumn';
-import DistiQuoteColumn from "../Columns/DistiQuoteColumn";
+import DistiQuoteColumn from '../Columns/DistiQuoteColumn';
 import DueDateColumn from '../Columns/DueDateColumn';
 import DueDateDayColumn from '../Columns/DueDateDayColumn';
 import PriceColumn from '../Columns/PriceColumn';
-import RenewalActionColumn from "../Columns/RenewalActionColumn";
+import RenewalActionColumn from '../Columns/RenewalActionColumn';
 import Tooltip from '../../web-components/Tooltip';
-import {
-    InfoIcon
-} from '../../../../../fluentIcons/FluentIcons';
+import { InfoIcon } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 export const renewalsDefinitions = (componentProp) => {
-    const renderPriceColumn = (componentProp, data) => {
-        if (componentProp.enableRequestQuote && data.canRequestQuote) {
-            return <span className="non-request-quote">-</span>
-        } else if (componentProp.enableRequestQuote && data?.formattedQuoteRequestedTime) {
-            return (
-              <span className="requested-quote">
-                {getDictionaryValueOrKey(
-                  componentProp.requestQuote.requestedQuoteHeading
-                )}
-                <Tooltip
-                  text={`<p style="font-size: 12px; line-height: 18px"><b>${getDictionaryValueOrKey(
-                    componentProp.requestQuote.toolTipHeading
-                  )}</b><br/><span style="font-size: 12px; line-height: 18px; display: block;">${getDictionaryValueOrKey(
-                    componentProp.requestQuote.timeStampRequested
-                  )}:${data?.formattedQuoteRequestedTime}</span>
+  const handleMouseOver = (event) => {
+    const target = event.currentTarget;
+    const closestRow = target.closest('.ag-row');
+
+    if (closestRow) {
+      closestRow.style.zIndex = '10'; // Add z-index inline style
+    } else {
+      console.log('No ag-row found for the hovered element.');
+    }
+  };
+
+  const handleMouseLeave = (event) => {
+    const target =
+      event?.currentTarget || document.querySelector('.cmp-renewals-ellipsis');
+    const closestRow = target?.closest('.ag-row');
+
+    if (closestRow) {
+      closestRow.style.zIndex = ''; // Remove the z-index inline style
+    } else {
+      console.log('No ag-row found for the element.');
+    }
+  };
+
+  const renderPriceColumn = (componentProp, data) => {
+    if (componentProp.enableRequestQuote && data.canRequestQuote) {
+      return <span className="non-request-quote">-</span>;
+    } else if (
+      componentProp.enableRequestQuote &&
+      data?.formattedQuoteRequestedTime
+    ) {
+      return (
+        <span className="requested-quote">
+          {getDictionaryValueOrKey(
+            componentProp.requestQuote.requestedQuoteHeading
+          )}
+          <Tooltip
+            text={`<p style="font-size: 12px; line-height: 18px"><b>${getDictionaryValueOrKey(
+              componentProp.requestQuote.toolTipHeading
+            )}</b><br/><span style="font-size: 12px; line-height: 18px; display: block;">${getDictionaryValueOrKey(
+              componentProp.requestQuote.timeStampRequested
+            )}:${data?.formattedQuoteRequestedTime}</span>
                 <p style="font-size: 16px; line-height: 21px">${getDictionaryValueOrKey(
                   componentProp.requestQuote.toolTipSuccessMessage
                 )}</p>
               </p>`}
-                  type="html"
-                  hide
-                  arrow={true}
-                  placement="bottom"
-                >
-                  <InfoIcon width="16" height="16" />
-                </Tooltip>
-              </span>
-            );
-        } else {
-            return (
-              <PriceColumn
-                columnValue={data?.renewal?.total}
-                currency={data?.renewal?.currency}
-              />
-            );
-        }
+            type="html"
+            hide
+            arrow={true}
+            placement="bottom"
+          >
+            <InfoIcon
+              width="16"
+              height="16"
+              onMouseOver={handleMouseOver} 
+              onMouseLeave={handleMouseLeave} 
+            />
+          </Tooltip>
+        </span>
+      );
+    } else {
+      return (
+        <PriceColumn
+          columnValue={data?.renewal?.total}
+          currency={data?.renewal?.currency}
+        />
+      );
     }
+  };
 
   const createColumnComponent = (eventProps, aemDefinition) => {
     const { columnKey } = aemDefinition;
@@ -110,15 +139,22 @@ export const renewalsDefinitions = (componentProp) => {
 
   const fieldsWithCellStyle = ['Id', 'total'];
 
-  const cellStyle = {'text-overflow':'initial','white-space':'nowrap', 'overflow': 'visible', 'padding': 0};
+  const cellStyle = {
+    'text-overflow': 'initial',
+    'white-space': 'nowrap',
+    overflow: 'visible',
+    padding: 0,
+  };
 
-  const columnOverrides = aemDefinition => ({
+  const columnOverrides = (aemDefinition) => ({
     hoverable: hoverableList.includes(aemDefinition?.columnKey),
     ...(aemDefinition?.type === 'plainText' ? { cellHeight: () => 45 } : {}),
     minWidth: columnsMinWidth[aemDefinition?.columnKey] || null,
     width: columnsWidth[aemDefinition?.columnKey] || null,
     resizable: false,
-    ...(fieldsWithCellStyle.includes(aemDefinition?.columnKey) ? {cellStyle} : {})
+    ...(fieldsWithCellStyle.includes(aemDefinition?.columnKey)
+      ? { cellStyle }
+      : {}),
   });
 
   return {
