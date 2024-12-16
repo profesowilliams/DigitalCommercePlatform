@@ -228,21 +228,45 @@ export async function fetchRenewalsFilterByPost(config) {
             params.DueDateFrom = new Date(params.DueDateFrom).toISOString();
         }
 
-        const isSameFilter =
-            isSameFilterRepeated(previousFilter.current, params) ||
-            isFromRenewalDetailsPage();
+        // Debugging initial state
+        console.debug("Initial previousFilter.current:", previousFilter.current);
 
-        if (isSameFilter && previousFilter.current?.PageNumber > 1 && params.PageNumber > 1) {
-            if (previousFilter.current?.PageNumber === params.PageNumber) {
-                delete params.PageNumber
-            } else {
-                previousFilter.current.PageNumber = params.PageNumber - 1;
+        // Ensure previousFilter is properly initialized
+        if (!previousFilter.current || typeof previousFilter.current !== "object") {
+            console.warn(
+                "previousFilter.current was not initialized correctly. Resetting to an empty object."
+            );
+            previousFilter.current = { PageNumber: 1 };
+        }
+
+        // Determine if filters are unchanged
+        const isSameFilter = isSameFilterRepeated(previousFilter.current, params) || isFromRenewalDetailsPage();
+
+        console.debug("isSameFilter:", isSameFilter);
+        console.debug("Initial params.PageNumber:", params.PageNumber);
+
+        // Adjust PageNumber logic
+        if (isSameFilter) {
+            if (params.PageNumber > 1 && previousFilter.current.PageNumber !== params.PageNumber) {
+                console.debug("Synchronizing previous PageNumber with params.PageNumber.");
+                previousFilter.current.PageNumber = params.PageNumber;
             }
-        } else if (isSameFilter && previousFilter.current?.PageNumber === undefined && params.PageNumber === undefined) {
-            delete params.PageNumber;
-        } else if (isSameFilter && previousFilter.current?.PageNumber === undefined && params.PageNumber > 1) {
-            previousFilter.current.PageNumber === params.PageNumber - 1;
-        };
+        } else {
+            console.debug("Filters have changed. Resetting PageNumber to 1.");
+            params.PageNumber = 1;
+            previousFilter.current.PageNumber = 1;
+        }
+
+        // Ensure refinements reset PageNumber
+        if (!isSameFilter || searchCriteria.current?.value || params.PageNumber > 1) {
+            console.debug("Filters have been refined. Resetting PageNumber to 1.");
+            params.PageNumber = 1;
+            previousFilter.current.PageNumber = 1;
+        }
+
+        // Debugging final state
+        console.debug("Final params:", params);
+        console.debug("Previous filter state:", previousFilter.current);
 
         // Add logic to parse filterLocalStorage and build query parameters based on checked childIds
         if (filterLocalStorage && filterLocalStorage.filterList) {
@@ -329,10 +353,11 @@ export async function fetchRenewalsFilterByPost(config) {
         const url = `${baseUrl}?${queryParams.toString()}`;
         try {
             const result = await usGet(url);
-            previousFilter.current = { ...params };
+            previousFilter.current = { ...params }; // Update with the latest params
             return result;
         } catch (error) {
-            console.log("🚀error on get http method renewals grid >>", error);
+            console.error("🚀 Error fetching renewal data:", error);
+            throw error;
         }
     }
     return false;
