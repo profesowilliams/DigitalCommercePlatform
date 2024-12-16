@@ -112,11 +112,11 @@ function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="fal
                     : "-"
               )}
             </span>}
-             {line.subscriptionId && <span>
+             {line.subscriptionId && lineDetailsLabels.subscriptionId && <span>
                   <b>{lineDetailsLabels?.subscriptionId}</b>
-                  {line.subscriinstanceptionId}
+                  {line.subscriptionId}
              </span>}
-            {line.instance && <span>
+            {line.instance &&  <span>
               <b>{lineDetailsLabels?.instanceLabel}</b>
               {line.instance}
             </span>}
