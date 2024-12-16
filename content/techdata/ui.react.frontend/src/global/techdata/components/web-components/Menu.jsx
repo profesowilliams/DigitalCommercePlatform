@@ -135,6 +135,12 @@ const MenuIcon = ({
   );
 };
 
+const MenuText = forwardRef((props, ref) => (
+  <tds-menu-text ref={ref} {...props}>
+    {props.children}
+  </tds-menu-text>
+));
+
 // Export all components
-export { Menu, MenuItem, MenuButton, MenuIcon };
+export { Menu, MenuItem, MenuButton, MenuIcon, MenuText };
 export default Menu;
