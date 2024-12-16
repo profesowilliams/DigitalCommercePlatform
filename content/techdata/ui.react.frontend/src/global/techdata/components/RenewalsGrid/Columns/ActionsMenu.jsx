@@ -21,6 +21,7 @@ import {
   MenuItem,
   MenuButton,
   MenuIcon,
+  MenuText,
 } from '../../web-components/Menu';
 
 function ActionsMenu({
@@ -66,9 +67,9 @@ function ActionsMenu({
   } = endpoints;
 
   const enableArchive = !data?.archived;
-  const enableDownloadPDF = data?.canDownLoadPDF
-  const enableDownloadExcel = data?.canDownloadExcel
-  const showArchive = data?.canArchive
+  const enableDownloadPDF = data?.canDownLoadPDF;
+  const enableDownloadExcel = data?.canDownloadExcel;
+  const showArchive = data?.canArchive;
   useEffect(() => {
     let timer;
     if (open) {
@@ -399,7 +400,12 @@ function ActionsMenu({
       >
         <MenuButton type="button" variant="link" color="teal">
           <MenuIcon name="eye" state="default" />
-          {getDictionaryValue('button.common.label.seeDetails', 'View details')}
+          <MenuText>
+            {getDictionaryValue(
+              'button.common.label.seeDetails',
+              'View details'
+            )}
+          </MenuText>
         </MenuButton>
       </MenuItem>
       {canCopy && enableArchive ? (
@@ -411,7 +417,7 @@ function ActionsMenu({
         >
           <MenuButton type="button" variant="link" color="teal">
             <MenuIcon name="copy" state="default" />
-            Copy
+            <MenuText>Copy</MenuText>
           </MenuButton>
         </MenuItem>
       ) : null}
@@ -424,7 +430,7 @@ function ActionsMenu({
         >
           <MenuButton type="button" variant="link" color="teal">
             <MenuIcon name="share" state="default" />
-            Share
+            <MenuText>Share</MenuText>
           </MenuButton>
         </MenuItem>
       ) : null}
@@ -432,7 +438,7 @@ function ActionsMenu({
         <MenuItem onClick={triggerRevisionFlyout}>
           <MenuButton type="button" variant="link" color="teal">
             <MenuIcon name="revision" state="default" viewbox="0 0 16 16" />
-            Request revision
+            <MenuText>Request revision</MenuText>
           </MenuButton>
         </MenuItem>
       ) : null}
@@ -447,14 +453,18 @@ function ActionsMenu({
         >
           <MenuButton type="button" variant="link" color="teal">
             <MenuIcon name="download" state="default" />
-            {getDictionaryValue(
-              'button.common.label.downloadPDF',
-              'Download PDF'
-            )}
+            <MenuText>
+              {getDictionaryValue(
+                'button.common.label.downloadPDF',
+                'Download PDF'
+              )}
+            </MenuText>
           </MenuButton>
         </MenuItem>
       ) : null}
-      {menuOptions?.showDownloadXLSButton && enableArchive && enableDownloadExcel ? (
+      {menuOptions?.showDownloadXLSButton &&
+      enableArchive &&
+      enableDownloadExcel ? (
         <MenuItem
           onClick={() => {
             downloadXLS();
@@ -463,10 +473,12 @@ function ActionsMenu({
         >
           <MenuButton type="button" variant="link" color="teal">
             <MenuIcon name="download" state="default" />
-            {getDictionaryValue(
-              'button.common.label.downloadXLS',
-              'Download XLS'
-            )}
+            <MenuText>
+              {getDictionaryValue(
+                'button.common.label.downloadXLS',
+                'Download XLS'
+              )}
+            </MenuText>
           </MenuButton>
         </MenuItem>
       ) : null}
@@ -477,18 +489,14 @@ function ActionsMenu({
             onClose();
           }}
         >
-          <MenuButton
-            type="button"
-            variant="link"
-            color="teal"
-          >
+          <MenuButton type="button" variant="link" color="teal">
             <MenuIcon
               name="enterarrow"
               state="default"
               size="28"
               viewbox="0 0 24 24"
             />
-            Request quote
+            <MenuText>Request quote</MenuText>
           </MenuButton>
         </MenuItem>
       )}
@@ -502,7 +510,9 @@ function ActionsMenu({
         >
           <MenuButton type="button" variant="link" color="teal">
             <MenuIcon name="archive" state="default" />
-            {getDictionaryValueOrKey(config?.archiveLabels?.archive)}
+            <MenuText>
+              {getDictionaryValueOrKey(config?.archiveLabels?.archive)}
+            </MenuText>
           </MenuButton>
         </MenuItem>
       ) : null}
@@ -514,8 +524,10 @@ function ActionsMenu({
           }}
         >
           <MenuButton type="button" variant="link" color="teal">
-            <MenuIcon name="restore" state="default" />
-            {getDictionaryValueOrKey(config?.archiveLabels?.restore)}
+            <MenuIcon name="restore" state="default" viewbox="0 0 16 16" />
+            <MenuText>
+              {getDictionaryValueOrKey(config?.archiveLabels?.restore)}
+            </MenuText>
           </MenuButton>
         </MenuItem>
       ) : null}
