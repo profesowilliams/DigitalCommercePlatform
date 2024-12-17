@@ -186,16 +186,17 @@ function ActionsMenu({
       quoteId: data?.source?.id,
       archived: archived,
     };
-    console.log('Post Data:', postData);
 
     try {
+      effects.setRenewalsGridActionPerformed(data.source?.id);
+
       const response = await callServiceWrapper(
         archiveOrRestoreRenewals,
         archiveOrRestoreRenewalsEndpoint,
         postData
       );
 
-      console.log('API Response:', response);
+      effects.resetRenewalsGridActionPerformed();
 
       if (response.errors.length > 0) {
         effects.setCustomState({
@@ -203,6 +204,8 @@ function ActionsMenu({
           value: { ...archiveToasterFail },
         });
       } else {
+        effects.setRenewalsGridActionPerformed(data.source?.id);
+
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint: config?.getStatusEndpoint,
           id: data?.source?.id,
@@ -210,8 +213,9 @@ function ActionsMenu({
           iterations: 7,
         });
 
+        effects.resetRenewalsGridActionPerformed();
+
         if (!isActiveQuote) {
-          console.warn('Quote is not active.');
           effects.setCustomState({
             key: 'toaster',
             value: {
@@ -224,7 +228,6 @@ function ActionsMenu({
             },
           });
         } else {
-          console.log('Quote is active. Refreshing grid.');
           effects.setCustomState({
             key: 'toaster',
             value: { ...archiveToasterSuccess },
@@ -234,7 +237,7 @@ function ActionsMenu({
         }
       }
     } catch (error) {
-      console.error('Error in triggerRestore:', error);
+      effects.resetRenewalsGridActionPerformed();
       effects.setCustomState({
         key: 'toaster',
         value: { ...archiveToasterFail },
@@ -243,16 +246,20 @@ function ActionsMenu({
   };
 
   const triggerRestore = async () => {
+    effects.setCustomState({
+      key: 'toaster',
+      value: { isOpen: false },
+    });
+    onClose();
+    const archived = false;
+
+    const postData = {
+      quoteId: data?.source?.id,
+      archived: archived,
+    };
+
     try {
-      if (!data?.source?.id) {
-        throw new Error('Missing source ID');
-      }
-
-      effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
-      onClose();
-
-      const postData = { quoteId: data.source.id, archived: false };
-      console.log('Post Data:', postData);
+      effects.setRenewalsGridActionPerformed(data.source?.id);
 
       const response = await callServiceWrapper(
         archiveOrRestoreRenewals,
@@ -260,46 +267,48 @@ function ActionsMenu({
         postData
       );
 
-      console.log('API Response:', response);
+      effects.resetRenewalsGridActionPerformed();
 
-      if (response.errors?.length > 0) {
-        console.error('API Errors:', response.errors);
+      if (response.errors.length > 0) {
         effects.setCustomState({
           key: 'toaster',
           value: { ...restoreToasterFail },
         });
-        return;
-      }
-
-      const isActiveQuote = await getStatusLoopUntilStatusIsActive({
-        getStatusEndpoint: config?.getStatusEndpoint,
-        id: data.source.id,
-        delay: 2000,
-        iterations: 7,
-      });
-
-      if (!isActiveQuote) {
-        console.warn('Quote is not active.');
-        effects.setCustomState({
-          key: 'toaster',
-          value: {
-            isOpen: true,
-            origin: 'restoreRenewals',
-            isAutoClose: false,
-            isSuccess: false,
-            message: getDictionaryValueOrKey(config.weAreSorry),
-          },
-        });
       } else {
-        console.log('Quote is active. Refreshing grid.');
-        effects.setCustomState({
-          key: 'toaster',
-          value: { ...restoreToasterSuccess },
+        effects.setRenewalsGridActionPerformed(data.source?.id);
+
+        const isActiveQuote = await getStatusLoopUntilStatusIsActive({
+          getStatusEndpoint: config?.getStatusEndpoint,
+          id: data?.source?.id,
+          delay: 2000,
+          iterations: 7,
         });
-        effects.refreshRenealsGrid();
+
+        effects.resetRenewalsGridActionPerformed();
+
+        if (!isActiveQuote) {
+          effects.setCustomState({
+            key: 'toaster',
+            value: {
+              isOpen: true,
+              origin: 'restoreRenewals',
+              isAutoClose: false,
+              isSuccess: false,
+              message: getDictionaryValueOrKey(config.weAreSorry),
+              Child: null,
+            },
+          });
+        } else {
+          effects.setCustomState({
+            key: 'toaster',
+            value: { ...restoreToasterSuccess },
+          });
+
+          effects.refreshRenealsGrid();
+        }
       }
     } catch (error) {
-      console.error('Error in triggerRestore:', error);
+      effects.resetRenewalsGridActionPerformed();
       effects.setCustomState({
         key: 'toaster',
         value: { ...restoreToasterFail },
