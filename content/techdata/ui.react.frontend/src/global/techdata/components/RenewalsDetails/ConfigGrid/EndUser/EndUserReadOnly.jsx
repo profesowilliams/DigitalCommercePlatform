@@ -32,12 +32,13 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
         </Info>
         <Info>{address.postalCode ?? ''}</Info>
       </p>
-      <p>
+      <div>
         <Info
           label={getDictionaryValue(
             'details.renewal.label.endUserType',
             'End user type'
           )}
+          spaceBetween
         >
           {endUserType}
         </Info>
@@ -46,6 +47,7 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
             'details.renewal.label.vendorAccountNo',
             'Vendor account №'
           )}
+          spaceBetween
         >
           {endUserData.vendorAccountNumber}
         </Info>
@@ -54,10 +56,11 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
             'details.renewal.label.prevPONo',
             'Previous purchase order №'
           )}
+          spaceBetween
         >
           {endUserData.previousEndUserPO}
         </Info>
-      </p>
+      </div>
     </div>
   );
 };

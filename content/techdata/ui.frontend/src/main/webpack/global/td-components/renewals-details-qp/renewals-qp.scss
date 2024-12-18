@@ -30,11 +30,11 @@
     }
   }
   .header-container {
-    padding: 0 15px;
+    padding: 0;
     .image-container {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       margin-left: 3px;
       .back-to-renewal {
         color: get-color(brand-text-gray);
@@ -54,7 +54,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1rem;
+    padding-top: 34px;
     .quote-preview {
       color: map-get($color-palette, 'teal');
       font-size: 24px;
@@ -126,7 +126,6 @@
 .cmp-renewals-qp__agreement-info,
 .cmp-renewals-qp__enduser-info {
   padding: 30px;
-  margin: 15px;
   position: relative;
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 1);
@@ -134,13 +133,13 @@
   min-height: 427px;
   height: max-content;
   &--title {
-    color: $brand-green;
+    color: map-get($color-palette, 'charcoal');
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0;
-    line-height: 22px;
+    line-height: 18px;
     cursor: pointer;
-    margin-bottom: 10px !important;
+    margin-bottom: 20px !important;
   }
   &--sub-title {
     color: rgba(85, 85, 85, 1);
@@ -149,6 +148,7 @@
     line-height: 20px;
   }
   &--address-group {
+    margin-top: 20px;
     color: map-get($color-palette, 'charcoal');
     font-size: 16px;
     letter-spacing: 0;

@@ -9,7 +9,6 @@ export default function ResellerReadOnly({
   paymentTermsVal,
   previousResellerPO,
 }) {
-console.log(customerPO, previousResellerPO, 'testing')
   const { id, contact, address, vendorAccountNumber, customerPO } = resellerData;
 
   const { shipToLabel, paymentTerms, previousPurchaseOrderNoEndLabel, autorenewPurchaseOrderNoEndLabel } = resellerLabels;
@@ -34,12 +33,13 @@ console.log(customerPO, previousResellerPO, 'testing')
         <Info>{addSeparator([address.city, address.country])}</Info>
         <Info>{address.postalCode}</Info>
       </p>
-      <p>
+      <div>
         <Info
           label={getDictionaryValue(
             'details.renewal.label.resellerAccountNo',
             'Account Nº'
           )}
+          spaceBetween
         >
           {id}
         </Info>
@@ -48,6 +48,7 @@ console.log(customerPO, previousResellerPO, 'testing')
             'details.renewal.label.vendorAccountNo',
             'Vendor account Nº'
           )}
+          spaceBetween
         >
           {vendorAccountNumber}
         </Info>
@@ -55,6 +56,7 @@ console.log(customerPO, previousResellerPO, 'testing')
           label={getDictionaryValueOrKey(
             previousPurchaseOrderNoEndLabel
           )}
+          spaceBetween
         >
           {previousResellerPO}
         </Info>
@@ -62,15 +64,18 @@ console.log(customerPO, previousResellerPO, 'testing')
           label={getDictionaryValueOrKey(
             autorenewPurchaseOrderNoEndLabel
           )}
+          spaceBetween
         >
           {customerPO}
         </Info>
-        <Info label={getDictionaryValueOrKey(paymentTerms)}>
+        <Info label={getDictionaryValueOrKey(paymentTerms)}
+        spaceBetween
+        >
           {paymentTermsVal}
         </Info>
-      </p>
+      </div>
       {shipToData?.id?.text && (
-        <p>
+        <div>
           <span className="cmp-renewals-qp__reseller-info--sub-title">
             {getDictionaryValueOrKey(shipToLabel)}
           </span>
@@ -83,7 +88,7 @@ console.log(customerPO, previousResellerPO, 'testing')
               shipToData?.address?.stateName,
             ])}
           </Info>
-        </p>
+        </div>
       )}
     </div>
   );

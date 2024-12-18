@@ -30,7 +30,8 @@ function DisplayItemInfo({
   noColon = false,
   boldLabel = false,
   multipleOrderFlag = false,
-  disableMultipleAgreement = false
+  disableMultipleAgreement = false,
+  spaceBetween = false
 }) {
 
   const SpanInfo = (
@@ -54,10 +55,19 @@ function DisplayItemInfo({
     <>
     <ErrorDisplayItemBoundary>
       <If condition={label && children} Else={SpanInfo}>
-        <span>
-          {toggleBoldLabel()}
-          {!noColon ? ":" : ""} {disableMultipleAgreement ? italicText(handleObjectResponseForApj(children)) : handleObjectResponseForApj(children)}
-        </span>
+        {spaceBetween ? (<div className="info-custom-component--space-between">
+            <span>
+              {toggleBoldLabel()}
+              {!noColon ? ":" : ""} 
+            </span>
+            <span>
+              {disableMultipleAgreement ? italicText(handleObjectResponseForApj(children)) : handleObjectResponseForApj(children)}
+            </span>
+          </div>): (<span>
+            {toggleBoldLabel()}
+            {!noColon ? ":" : ""} 
+            {disableMultipleAgreement ? italicText(handleObjectResponseForApj(children)) : handleObjectResponseForApj(children)}
+          </span>)}
       </If>
     </ErrorDisplayItemBoundary>
     </>
