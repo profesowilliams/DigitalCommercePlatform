@@ -188,7 +188,7 @@ function ActionsMenu({
     };
 
     try {
-      effects.setRenewalsGridActionPerformed(data.source?.id);
+      effects.setRenewalsGridActionPerformed(data?.source?.id);
 
       const response = await callServiceWrapper(
         archiveOrRestoreRenewals,
@@ -204,7 +204,7 @@ function ActionsMenu({
           value: { ...archiveToasterFail },
         });
       } else {
-        effects.setRenewalsGridActionPerformed(data.source?.id);
+        effects.setRenewalsGridActionPerformed(data?.source?.id);
 
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint: config?.getStatusEndpoint,
@@ -259,7 +259,7 @@ function ActionsMenu({
     };
 
     try {
-      effects.setRenewalsGridActionPerformed(data.source?.id);
+      effects.setRenewalsGridActionPerformed(data?.source?.id);
 
       const response = await callServiceWrapper(
         archiveOrRestoreRenewals,
@@ -275,7 +275,7 @@ function ActionsMenu({
           value: { ...restoreToasterFail },
         });
       } else {
-        effects.setRenewalsGridActionPerformed(data.source?.id);
+        effects.setRenewalsGridActionPerformed(data?.source?.id);
 
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint: config?.getStatusEndpoint,
