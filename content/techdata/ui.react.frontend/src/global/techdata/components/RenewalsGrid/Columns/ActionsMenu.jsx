@@ -23,6 +23,7 @@ import {
   MenuIcon,
   MenuText,
 } from '../../web-components/Menu';
+import {triggerArchiveRestore} from "../../utils/ArchiveActions";
 
 function ActionsMenu({
   config,
@@ -174,205 +175,6 @@ function ActionsMenu({
     setCustomState({ key: 'revisionFlyout', value: { data, show: true } });
   };
 
-  const triggerArchive = async () => {
-    effects.setCustomState({
-      key: 'toaster',
-      value: { isOpen: false },
-    });
-    onClose();
-    const archived = true;
-
-    const postData = {
-      quoteId: data?.source?.id,
-      archived: archived,
-    };
-
-    try {
-      effects.setRenewalsGridActionPerformed(data?.source?.id);
-
-      const response = await callServiceWrapper(
-        archiveOrRestoreRenewals,
-        archiveOrRestoreRenewalsEndpoint,
-        postData
-      );
-
-      effects.resetRenewalsGridActionPerformed();
-
-      if (response.errors.length > 0) {
-        effects.setCustomState({
-          key: 'toaster',
-          value: { ...archiveToasterFail },
-        });
-      } else {
-        effects.setRenewalsGridActionPerformed(data?.source?.id);
-
-        const isActiveQuote = await getStatusLoopUntilStatusIsActive({
-          getStatusEndpoint: config?.getStatusEndpoint,
-          id: data?.source?.id,
-          delay: 2000,
-          iterations: 7,
-        });
-
-        effects.resetRenewalsGridActionPerformed();
-
-        if (!isActiveQuote) {
-          effects.setCustomState({
-            key: 'toaster',
-            value: {
-              isOpen: true,
-              origin: 'restoreRenewals',
-              isAutoClose: false,
-              isSuccess: false,
-              message: getDictionaryValueOrKey(config.weAreSorry),
-              Child: null,
-            },
-          });
-        } else {
-          effects.setCustomState({
-            key: 'toaster',
-            value: { ...archiveToasterSuccess },
-          });
-
-          effects.refreshRenealsGrid();
-        }
-      }
-    } catch (error) {
-      effects.resetRenewalsGridActionPerformed();
-      effects.setCustomState({
-        key: 'toaster',
-        value: { ...archiveToasterFail },
-      });
-    }
-  };
-
-  const triggerRestore = async () => {
-    effects.setCustomState({
-      key: 'toaster',
-      value: { isOpen: false },
-    });
-    onClose();
-    const archived = false;
-
-    const postData = {
-      quoteId: data?.source?.id,
-      archived: archived,
-    };
-
-    try {
-      effects.setRenewalsGridActionPerformed(data?.source?.id);
-
-      const response = await callServiceWrapper(
-        archiveOrRestoreRenewals,
-        archiveOrRestoreRenewalsEndpoint,
-        postData
-      );
-
-      effects.resetRenewalsGridActionPerformed();
-
-      if (response.errors.length > 0) {
-        effects.setCustomState({
-          key: 'toaster',
-          value: { ...restoreToasterFail },
-        });
-      } else {
-        effects.setRenewalsGridActionPerformed(data?.source?.id);
-
-        const isActiveQuote = await getStatusLoopUntilStatusIsActive({
-          getStatusEndpoint: config?.getStatusEndpoint,
-          id: data?.source?.id,
-          delay: 2000,
-          iterations: 7,
-        });
-
-        effects.resetRenewalsGridActionPerformed();
-
-        if (!isActiveQuote) {
-          effects.setCustomState({
-            key: 'toaster',
-            value: {
-              isOpen: true,
-              origin: 'restoreRenewals',
-              isAutoClose: false,
-              isSuccess: false,
-              message: getDictionaryValueOrKey(config.weAreSorry),
-              Child: null,
-            },
-          });
-        } else {
-          effects.setCustomState({
-            key: 'toaster',
-            value: { ...restoreToasterSuccess },
-          });
-
-          effects.refreshRenealsGrid();
-        }
-      }
-    } catch (error) {
-      effects.resetRenewalsGridActionPerformed();
-      effects.setCustomState({
-        key: 'toaster',
-        value: { ...restoreToasterFail },
-      });
-    }
-
-    !enableArchive &&
-      !menuOptions?.showDownloadXLSButton &&
-      !menuOptions?.showDownloadPDFButton &&
-      (!enableReviseOption || !canRequestRevision) &&
-      (!enableShareOption || !canShare) &&
-      !canCopy &&
-      !canCopy &&
-      redirectToRenewalDetail(detailUrl, data?.source?.id, analyticsData);
-  };
-
-  const archiveToasterSuccess = {
-    isOpen: true,
-    origin: 'archiveRenewals',
-    isAutoClose: false,
-    isSuccess: true,
-    message: getDictionaryValueOrKey(
-      config?.archiveLabels?.archiveToasterSuccess
-    )?.replace('{0}', data?.endUser?.name),
-    Child: (
-      <button onClick={triggerRestore}>
-        {getDictionaryValueOrKey(config?.archiveLabels?.undo)}
-      </button>
-    ),
-  };
-
-  const archiveToasterFail = {
-    isOpen: true,
-    origin: 'archiveRenewals',
-    isAutoClose: false,
-    isSuccess: false,
-    message: getDictionaryValueOrKey(config?.archiveLabels?.archiveToasterFail),
-    Child: null,
-  };
-
-  const restoreToasterSuccess = {
-    isOpen: true,
-    origin: 'restoreRenewals',
-    isAutoClose: false,
-    isSuccess: true,
-    message: getDictionaryValueOrKey(
-      config?.archiveLabels?.restoreToasterSuccess
-    )?.replace('{0}', data?.endUser?.name),
-    Child: (
-      <button onClick={triggerArchive}>
-        {getDictionaryValueOrKey(config?.archiveLabels?.undo)}
-      </button>
-    ),
-  };
-
-  const restoreToasterFail = {
-    isOpen: true,
-    origin: 'restoreRenewals',
-    isAutoClose: false,
-    isSuccess: false,
-    message: getDictionaryValueOrKey(config?.archiveLabels?.restoreToasterFail),
-    Child: null,
-  };
-
   return (
     <Menu
       onClose={onClose}
@@ -504,7 +306,10 @@ function ActionsMenu({
       {config?.enableArchiveQuote && enableArchive && showArchive ? (
         <MenuItem
           onClick={() => {
-            triggerArchive();
+            triggerArchiveRestore(null, config?.archiveLabels?.archiveToasterSuccess, config?.archiveLabels?.restoreToasterSuccess,
+                                    config?.archiveLabels?.undo, config?.archiveLabels?.archiveToasterFail, config?.archiveLabels?.restoreToasterFail,
+                                    config?.weAreSorry, archiveOrRestoreRenewalsEndpoint, config?.getStatusEndpoint, effects, data?.source?.id,
+                                    data?.endUser?.name, true, true, onClose)
             onClose();
           }}
         >
@@ -519,7 +324,10 @@ function ActionsMenu({
       {config?.enableArchiveQuote && !enableArchive ? (
         <MenuItem
           onClick={() => {
-            triggerRestore();
+            triggerArchiveRestore(null, config?.archiveLabels?.archiveToasterSuccess, config?.archiveLabels?.restoreToasterSuccess,
+                                    config?.archiveLabels?.undo, config?.archiveLabels?.archiveToasterFail, config?.archiveLabels?.restoreToasterFail,
+                                    config?.weAreSorry, archiveOrRestoreRenewalsEndpoint, config?.getStatusEndpoint, effects, data?.source?.id,
+                                    data?.endUser?.name, false, true, onClose)
             onClose();
           }}
         >
