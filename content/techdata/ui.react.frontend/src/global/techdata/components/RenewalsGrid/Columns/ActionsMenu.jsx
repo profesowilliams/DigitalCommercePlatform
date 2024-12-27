@@ -219,7 +219,7 @@ function ActionsMenu({
         >
           <MenuButton type="button" variant="link" color="teal">
             <MenuIcon name="copy" state="default" />
-            <MenuText>Copy</MenuText>
+            <MenuText>{getDictionaryValue(config?.copyFlyout?.title, 'Copy')}</MenuText>
           </MenuButton>
         </MenuItem>
       ) : null}
@@ -232,7 +232,7 @@ function ActionsMenu({
         >
           <MenuButton type="button" variant="link" color="teal">
             <MenuIcon name="share" state="default" />
-            <MenuText>Share</MenuText>
+            <MenuText>{getDictionaryValue(config?.shareFlyout?.shareFlyoutTitle, 'Share')}</MenuText>
           </MenuButton>
         </MenuItem>
       ) : null}
@@ -240,7 +240,7 @@ function ActionsMenu({
         <MenuItem onClick={triggerRevisionFlyout}>
           <MenuButton type="button" variant="link" color="teal">
             <MenuIcon name="revision" state="default" viewbox="0 0 16 16" />
-            <MenuText>Request revision</MenuText>
+            <MenuText>{getDictionaryValue(config?.revisionFlyout?.requestRevisionHeading, 'Request Revision')}</MenuText>
           </MenuButton>
         </MenuItem>
       ) : null}
@@ -298,7 +298,7 @@ function ActionsMenu({
               size="28"
               viewbox="0 0 24 24"
             />
-            <MenuText>Request quote</MenuText>
+            <MenuText>{getDictionaryValue(config?.requestQuote?.requestQuoteHeading, 'Request quote')}</MenuText>
           </MenuButton>
         </MenuItem>
       )}

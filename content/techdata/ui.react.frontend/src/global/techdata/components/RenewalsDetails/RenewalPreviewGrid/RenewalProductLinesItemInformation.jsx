@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
 import OrderDetailsSerialNumbers from "../../OrderDetails/OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 import { formatDetailsShortDescription } from "../../RenewalsGrid/utils/renewalUtils";
+import {useStore} from '../../../../../utils/useStore';
 
 const hasSerialNumbers = (line) => line.serialNumbers && line.serialNumbers.length > 0 && line.serialNumbers[0];
 
@@ -26,6 +27,7 @@ function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="fal
   const description =  formatDetailsShortDescription(line);
   const subscriptionId = line?.subscriptionId;
   const serialHasValue = hasSerialNumbers(line);
+  const userData = useStore(state => state.userData);
   const formatShopDomainUrl = useCallback(() => {
     if (shopDomainPage.length > 1 && line.product) {
       const hasHttp = /^(http|https):/gm.test(shopDomainPage);
@@ -112,7 +114,7 @@ function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="fal
                     : "-"
               )}
             </span>}
-             {line.subscriptionId && lineDetailsLabels.subscriptionId && <span>
+             {line.subscriptionId && lineDetailsLabels.subscriptionId && userData?.country !== 'VN' && <span>
                   <b>{lineDetailsLabels?.subscriptionId}</b>
                   {line.subscriptionId}
              </span>}

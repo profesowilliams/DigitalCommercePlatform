@@ -262,7 +262,7 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
               : undefined
           }
         >
-          Request revision
+          {getDictionaryValue(gridProps?.revisionFlyout?.requestRevisionHeading, 'Request Revision')}
         </span>
       </button>
     );
