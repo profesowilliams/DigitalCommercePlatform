@@ -550,12 +550,6 @@
   }
 }
 
-.zero-quantity-row div,
-.zero-quantity-row span,
-.zero-quantity-row p,
-.zero-quantity-row b {
-  color: #888b8d !important;
-}
 
 .details-error-blue-banner {
   padding: 20px;
@@ -575,5 +569,14 @@
     align-items: center;
     gap: 15px;
     flex: 0 0 80%;
+  }
+}
+.cmp-renewal-preview .cmp-grid.ag-theme-alpine {
+  & .ag-header-row {
+    background-color: #FFFFFF !important;
+  }
+  & .ag-header {
+    border-top: 2px solid $brand-charcoal !important;
+    border-bottom: 1px solid $brand-charcoal !important;
   }
 }
