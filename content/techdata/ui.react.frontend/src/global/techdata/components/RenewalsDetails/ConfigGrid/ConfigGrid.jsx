@@ -470,8 +470,8 @@ function GridHeader({ gridProps, data, changeRefreshDetailApiState, setIsRequest
         store={useRenewalGridState}
         requestFlyoutContent={gridProps.requestQuote}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        setIsRequestedQuote={setIsRequestedQuote}
         changeRefreshDetailApiState={changeRefreshDetailApiState}
+        pageType="details"
       />
       <ErrorFlyout
         store={useRenewalGridState}

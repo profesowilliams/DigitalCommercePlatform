@@ -70,6 +70,30 @@ const getFilterAnalytics = (category, filterData) => {
   };
 };
 
+const getRequestQuoteAnalytics = (quoteType, component, quoteNum, vendorName) => {
+  const pageType = component === 'dashboard' ? `Dashboard|${quoteNum}` : `Renewal Details|${quoteNum}`;
+  const retObject = {
+    "event": "Request Quote",
+    "origin": pageType,
+    "quote_type": 2, // (1, 2, or 3 depending on the case)
+    "action": "request quote - flyout open",
+    "vendor": vendorName // (e.g., "Adobe")
+  };
+  return retObject;
+};
+
+const getRequestQuoteClickedAnalytics = (quoteType, component, quoteNum, vendorName, result) => {
+    const pageType = component === 'dashboard' ? `Dashboard|${quoteNum}` : `Renewal Details|${quoteNum}`;
+    return {
+        "event": "Request Quote",
+        "origin": pageType,
+        "quote_type": 2,
+        "action": "request quote - confirmation",
+        "label": result, // (either "success" or "failure")
+        "vendor": vendorName
+    }
+}
+
 const getRowAnalytics = (category, action, itemData) => {
   const analyticsCategory = category.replace(/ /g, '');
   const infoKey = `${analyticsCategory}Info`;
@@ -159,6 +183,8 @@ export {
   getFilterAnalytics,
   getPaginationAnalytics,
   getRowAnalytics,
+  getRequestQuoteAnalytics,
+  getRequestQuoteClickedAnalytics,
   getSearchAnalytics,
   getSortAnalytics,
   pushDataLayer,

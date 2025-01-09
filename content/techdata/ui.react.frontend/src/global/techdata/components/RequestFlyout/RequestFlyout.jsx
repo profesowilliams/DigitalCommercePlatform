@@ -10,14 +10,16 @@ import { CustomTextField } from '../Widgets/CustomTextField';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { requestQuote } from './api';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
+import { pushDataLayer, getRequestQuoteAnalytics, getRequestQuoteClickedAnalytics } from '../Analytics/analytics';
 import {useStore} from '../../../../utils/useStore';
 
-export function RequestFlyout({ store, requestFlyoutContent, subheaderReference, changeRefreshDetailApiState, resetGrid, setIsRequestedQuote }) {
+export function RequestFlyout({ store, requestFlyoutContent, subheaderReference, changeRefreshDetailApiState, resetGrid, pageType }) {
   const requestFlyoutConfig = store((st) => st.requestFlyout);
   const quoteType = getDictionaryValueOrKey('Opportunity');
   const effects = store((st) => st.effects);
   const activeAgreementID = requestFlyoutConfig?.data?.source?.id || '';
+  console.log(requestFlyoutConfig, 'testing');
+  const vendorName = requestFlyoutConfig?.data?.vendor?.name;
   const [commentInput , setCommentInput] = useState('');
   const closeFlyout = () => effects.setCustomState({ key: 'requestFlyout', value: {show:false} });
   const userData = useStore(state => state.userData);
@@ -62,6 +64,17 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference,
       if(event) {
         event.preventDefault();
       }
+
+      // Request quote analytics
+      pushDataLayer(
+          getRequestQuoteAnalytics(
+            quoteType,
+            pageType,
+            activeAgreementID,
+            vendorName
+          )
+      );
+
       setIsLoading(true);
       let toaster = null;
       const dataObj = requestObj;
@@ -84,6 +97,17 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference,
             message: getDictionaryValueOrKey(requestFlyoutContent.successToastMessage)
         }
 
+        // Request quote analytics
+          pushDataLayer(
+              getRequestQuoteClickedAnalytics(
+                quoteType,
+                pageType,
+                activeAgreementID,
+                vendorName,
+                'success'
+              )
+          );
+
         resetGrid && resetGrid();
         changeRefreshDetailApiState && changeRefreshDetailApiState();
 
@@ -92,7 +116,7 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference,
           effects.setCustomState({ key: 'toaster', value: { ...toaster } });
         }
       } else {
-        // set success message
+        // set failure message
         toaster = {
             isOpen: true,
             origin: 'fromRequestFlyout',
@@ -100,6 +124,17 @@ export function RequestFlyout({ store, requestFlyoutContent, subheaderReference,
             isSuccess: false,
             message: getDictionaryValueOrKey(requestFlyoutContent.errorToastMessage)
         }
+
+        // Request quote analytics
+          pushDataLayer(
+              getRequestQuoteClickedAnalytics(
+                quoteType,
+                pageType,
+                activeAgreementID,
+                vendorName,
+                'failure'
+              )
+          );
 
         if (toaster) {
           effects.setCustomState({ key: 'toaster', value: { ...toaster } });

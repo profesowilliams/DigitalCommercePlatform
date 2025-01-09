@@ -582,6 +582,8 @@ function RenewalsGrid(props) {
         requestFlyoutContent={gridConfig.requestQuote}
         subheaderReference={document.querySelector('.subheader > div > div')}
         resetGrid={resetGrid}
+        pageType="dashboard"
+
       />
     </section>
   ) : null;
