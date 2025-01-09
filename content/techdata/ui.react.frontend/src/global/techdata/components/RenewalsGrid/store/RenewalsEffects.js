@@ -110,7 +110,7 @@ export const renewalsEffects = (set, get) => {
 
   function closeAndCleanToaster() {
     const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
-    setCustomState({ key: 'toaster', value: { isOpen: false } }, options);
+    setCustomState({ key: 'toaster', value: { isOpen: false, Child: null } }, options);
   }
 
   function checkOptionListSelected() {
