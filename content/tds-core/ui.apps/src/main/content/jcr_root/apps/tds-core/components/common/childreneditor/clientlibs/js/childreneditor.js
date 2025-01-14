@@ -24,15 +24,17 @@
 
     var selectors = {
         self: "[data-cmp-is='childrenEditor']",
+        order: "[data-cmp-hook-childreneditor='order']",
+        delete: "[data-cmp-hook-childreneditor='delete']",
         add: "[data-cmp-hook-childreneditor='add']",
         insertComponentDialog: {
             self: "coral-dialog.InsertComponentDialog",
-            selectList: "coral-selectlist"
+            selectList: ".InsertComponentDialog-list"
         },
         item: {
             icon: "[data-cmp-hook-childreneditor='itemIcon']",
             input: "[data-cmp-hook-childreneditor='itemTitle']",
-            hiddenInput: "[data-cmp-hook-childreneditor='itemResourceType']"
+            hiddenItemResourceType: "[data-cmp-hook-childreneditor='itemResourceType']",
         }
     };
 
@@ -101,16 +103,7 @@
                 var url = this._path + POST_SUFFIX;
 
                 this._processChildren();
-
-                return $.ajax({
-                    type: "POST",
-                    url: url,
-                    async: false,
-                    data: {
-                        "delete": this._deletedChildren,
-                        "order": this._orderedChildren
-                    }
-                });
+                return $.Deferred().resolve();
             },
 
             /**
@@ -121,6 +114,8 @@
             _init: function() {
                 this._elements.self = this._config.el;
                 this._elements.add = this._elements.self.querySelectorAll(selectors.add)[0];
+                this._elements.order = this._elements.self.querySelectorAll(selectors.order)[0];
+                this._elements.delete = this._elements.self.querySelectorAll(selectors.delete)[0];
                 this._path = this._elements.self.dataset["containerPath"];
 
                 // store a reference to the Children Editor object
@@ -226,9 +221,9 @@
                                                 $(item).find('.coral3-Checkbox input').attr('value', "false");
                                                 $(item).find('.coral3-Checkbox').attr('value', "false");
 
-                                                var hiddenInput = item.querySelectorAll(selectors.item.hiddenInput)[0];
-                                                hiddenInput.value = resourceType;
-                                                hiddenInput.name = "./" + name + "/" + PN_RESOURCE_TYPE;
+                                                var hiddenItemResourceType = item.querySelectorAll(selectors.item.hiddenItemResourceType)[0];
+                                                hiddenItemResourceType.value = resourceType;
+                                                hiddenItemResourceType.name = "./" + name + "/" + PN_RESOURCE_TYPE;
 
                                                 var itemIcon = item.querySelectorAll(selectors.item.icon)[0];
                                                 var icon = that._renderIcon(components[0]);
@@ -252,19 +247,21 @@
                     that._elements.add.parentNode.removeChild(that._elements.add);
                 }
 
-                Coral.commons.ready(that._elements.self, function() {
+                Coral.commons.ready(that._elements.self, function(item) {
+                    // coral-collection:remove event is triggered either when the element is removed
+                    // or when the element is moved/reordered (in that case we'll temporarily remove it
+                    // and it will be added back by the subsequent coral-collection:add event)
                     that._elements.self.on("coral-collection:remove", function(event) {
-                        var name = event.detail.item.dataset["name"];
-                        that._deletedChildren.push(name);
+                        const elementToDelete = event.detail.item.dataset["name"];
+                        that._deletedChildren.push(elementToDelete);
                     });
 
+                    // coral-collection:add event is triggered either when the new element is added
+                    // or when the element is moved/reordered (in that case we'll add back the temporarily
+                    // removed element, hence we have to remove that element from the deleted list)
                     that._elements.self.on("coral-collection:add", function(event) {
-                        var name = event.detail.item.dataset["name"];
-                        var index = that._deletedChildren.indexOf(name);
-
-                        if (index > -1) {
-                            that._deletedChildren.splice(index, 1);
-                        }
+                        const elementToAdd = event.detail.item.dataset["name"];
+                        that._deletedChildren = that._deletedChildren.filter(elementToDelete => elementToDelete !== elementToAdd);
                     });
                 });
             },
@@ -282,6 +279,8 @@
                     var name = items[i].dataset["name"];
                     this._orderedChildren.push(name);
                 }
+                this._elements.order.value = this._orderedChildren.join();
+                this._elements.delete.value = this._deletedChildren.join();
             }
         };
     })();
@@ -291,9 +290,12 @@
      */
     channel.on("foundation-contentloaded", function(event) {
         $(event.target).find(selectors.self).each(function() {
-            new ChildrenEditor({
-                el: this
-            });
+            // prevent multiple initialization
+            if ($(this).data("childrenEditor") === undefined) {
+                new ChildrenEditor({
+                    el: this
+                });
+            }
         });
     });
 
@@ -307,13 +309,9 @@
             var el = form.querySelectorAll(selectors.self)[0];
             var childrenEditor = $(el).data("childrenEditor");
             if (childrenEditor) {
-                return {
-                    post: function() {
-                        return childrenEditor.update();
-                    }
-                };
+                return childrenEditor.update();
             } else {
-                return {};
+                return $.Deferred().resolve();
             }
         }
     });
