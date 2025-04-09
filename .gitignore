@@ -1,5 +1,26 @@
 # Created by https://www.gitignore.io/api/eclipse,java,maven
 
+.terraform/
+AEM_automation/
+dispatcher/
+tds-component-lib/
+Diagrams/
+pom.xml
+all/
+core/
+ui.config/
+ui.content/
+azure-pipelines.yml
+tds-site/
+server/
+ui.apps.structure/
+ui.react.frontend.forms/
+ui.react.frontend.search/
+ui.tests/
+archetype.properties
+*.yml
+*.md
+
 ### Eclipse ###
 *.pydevproject
 .metadata
