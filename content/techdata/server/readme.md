@@ -1,1 +1,0 @@
-usage : supervisor app
