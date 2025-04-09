@@ -27,7 +27,7 @@ import {
   QUOTE_DETAILS_LOGO_LABEL_VALUE,
   WHITE_LABEL_BACK_TO_QUOTE_DETAILS,
 } from "../../../../utils/constants";
-import format from "date-fns/format/index";
+// import format from "date-fns/format/index";
 
 const QuoteDetails = ({ componentProp }) => {
   const {

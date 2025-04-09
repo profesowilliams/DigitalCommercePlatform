@@ -153,7 +153,13 @@ function compareMaps(map1, map2) {
     }
     for (let [key, val] of map1) {
         const testVal = map2.get(key);
-        if (testVal !== val || (testVal === undefined && !map2.has(key))) {
+
+        // Handle arrays deep comparison
+        if (Array.isArray(val) && Array.isArray(testVal)) {
+            if (val.length !== testVal.length || !val.every((v, i) => v === testVal[i])) {
+                return false;
+            }
+        } else if (val !== testVal) {
             return false;
         }
     }
@@ -161,20 +167,63 @@ function compareMaps(map1, map2) {
 }
 
 export function isSameFilterRepeated(previousFilter, newFilter) {
-    // Convert filter objects to arrays of key-value pairs excluding 'sortBy' and 'PageNumber'
-    const prevFilterArray = Object.entries(previousFilter).filter(
-        ([key]) => key !== "sortBy" && key !== "PageNumber"
-    );
-    const newFilterArray = Object.entries(newFilter).filter(
-        ([key]) => key !== "sortBy" && key !== "PageNumber"
-    );
+    console.debug("Previous Filter:", previousFilter);
+    console.debug("New Filter:", newFilter);
+
+    // Handle edge cases for undefined/null filters
+    if (!previousFilter || !newFilter) {
+        console.warn("One of the filters is undefined or null.");
+        return false;
+    }
+
+    // Normalize filters: ensure all keys have consistent structure
+    const normalizeFilter = (filter) => {
+        const normalized = { ...filter };
+
+        // Ensure 'Type' defaults to an empty array
+        normalized.Type = Array.isArray(normalized.Type) ? normalized.Type : [];
+
+        // Preserve 'ShowArchived' explicitly if it already exists
+        if (filter.hasOwnProperty("ShowArchived")) {
+            normalized.ShowArchived = filter.ShowArchived;
+        } else if (filter.Archives && filter.Archives.includes("Show archives only")) {
+            // Infer 'ShowArchived' from 'Archives'
+            normalized.ShowArchived = true;
+        } else {
+            normalized.ShowArchived = false; // Default when absent
+        }
+
+        console.debug("Inside normalizeFilter - Filter Input:", filter);
+        console.debug("Inside normalizeFilter - Filter Output:", normalized);
+
+        return normalized;
+    };
+
+    const normalizedPrevFilter = normalizeFilter(previousFilter);
+    const normalizedNewFilter = normalizeFilter(newFilter);
+
+    console.debug("Normalized Previous Filter:", normalizedPrevFilter);
+    console.debug("Normalized New Filter:", normalizedNewFilter);
+
+    // Filter out PageNumber from comparison
+    const filterEntries = (filter) =>
+        Object.entries(filter).filter(([key]) => key !== "PageNumber");
+
+    const prevFilterArray = filterEntries(normalizedPrevFilter);
+    const newFilterArray = filterEntries(normalizedNewFilter);
+
+    console.debug("Filtered Previous Filter Array:", prevFilterArray);
+    console.debug("Filtered New Filter Array:", newFilterArray);
 
     // Convert arrays to maps for easier comparison
     const prevMap = new Map(prevFilterArray);
     const newMap = new Map(newFilterArray);
 
     // Compare the two maps
-    return compareMaps(prevMap, newMap);
+    const result = compareMaps(prevMap, newMap);
+    console.debug("Are Filters the Same?:", result);
+
+    return result;
 }
 
 export async function fetchRenewalsFilterByPost(config) {
@@ -240,29 +289,40 @@ export async function fetchRenewalsFilterByPost(config) {
         }
 
         // Determine if filters are unchanged
-        const isSameFilter = isSameFilterRepeated(previousFilter.current, params) || isFromRenewalDetailsPage();
+        const filtersAreSame = isSameFilterRepeated(previousFilter.current, params);
+        const isFromDetailsPage = isFromRenewalDetailsPage();
 
-        console.debug("isSameFilter:", isSameFilter);
-        console.debug("Initial params.PageNumber:", params.PageNumber);
+        const isSameFilter = filtersAreSame; // Only consider filtersAreSame for determining equality
+
+        console.debug("Is From Renewal Details Page?:", isFromDetailsPage);
 
         // Adjust PageNumber logic
-        if (isSameFilter) {
-            if (params.PageNumber > 1 && previousFilter.current.PageNumber !== params.PageNumber) {
-                console.debug("Synchronizing previous PageNumber with params.PageNumber.");
-                previousFilter.current.PageNumber = params.PageNumber;
-            }
-        } else {
+        if (!isSameFilter) {
             console.debug("Filters have changed. Resetting PageNumber to 1.");
             params.PageNumber = 1;
             previousFilter.current.PageNumber = 1;
+        } else if (params.PageNumber && params.PageNumber !== previousFilter.current.PageNumber) {
+            console.debug("PageNumber changed. Navigating to PageNumber:", params.PageNumber);
+            previousFilter.current.PageNumber = params.PageNumber; // Allow navigation to the desired page
+        } else if (!params.PageNumber) {
+            console.debug("No PageNumber provided. Defaulting to previous PageNumber.");
+            params.PageNumber = previousFilter.current.PageNumber || 1;
         }
 
         // Ensure refinements reset PageNumber
-        if (!isSameFilter || searchCriteria.current?.value || params.PageNumber > 1) {
-            console.debug("Filters have been refined. Resetting PageNumber to 1.");
+        if (!isSameFilter || searchCriteria.current?.value) {
+            console.debug("Filters or search criteria changed. Resetting PageNumber to 1.");
             params.PageNumber = 1;
             previousFilter.current.PageNumber = 1;
+        } else if (params.PageNumber !== previousFilter.current.PageNumber) {
+            console.debug("Navigating to a new PageNumber:", params.PageNumber);
+            previousFilter.current.PageNumber = params.PageNumber;
+        } else {
+            console.debug("Filters unchanged. Keeping current PageNumber:", params.PageNumber);
         }
+
+        // Synchronize previousFilter with current params
+        previousFilter.current = { ...params };
 
         // Debugging final state
         console.debug("Final params:", params);
@@ -273,13 +333,17 @@ export async function fetchRenewalsFilterByPost(config) {
             const filterList = filterLocalStorage.filterList;
 
             filterList.forEach((parent) => {
-                // Special handling for ShowArchived
-                if (parent.field === "Archives") {
-                    if (parent.checked) {
-                        params["ShowArchived"] = true; // Add ShowArchived as true
-                    }
-                    return; // Skip further processing for Archives
+                // Add ShowArchived explicitly if it is checked
+                if (filterLocalStorage && filterLocalStorage.filterList) {
+                    filterLocalStorage.filterList.forEach((filter) => {
+                        if (filter.field === "Archives" && filter.checked) {
+                            params.ShowArchived = true; // Set ShowArchived to true
+                        }
+                    });
                 }
+
+                // Ensure ShowArchived is always included, defaulting to false if not set
+                params.ShowArchived = params.ShowArchived ?? false;
 
                 // Skip parent filters with childIds
                 if (parent.childIds && parent.childIds.length > 0) {

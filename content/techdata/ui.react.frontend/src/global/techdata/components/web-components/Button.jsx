@@ -87,18 +87,17 @@ const Button = ({
       backgroundColor={backgroundColor}
       size={size}
       label={label}
-      disabled={disabled}
+      {...(disabled ? { disabled: true } : {})}
       type={type}
       url={url}
       target={target}
       variant={variant}
       theme={theme}
-      minimal={minimal}
       id={id}
       name={name}
       className={className}
       color={color}
-      compact={compact}
+      {...(compact ? { compact: true } : {})}
       {...rest} // Spread any additional props
     >
       {label || children}

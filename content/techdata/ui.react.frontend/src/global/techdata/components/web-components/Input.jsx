@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, forwardRef } from 'react';
 
 /**
  * A wrapper component for the `tds-input` web component with additional functionality.
@@ -13,38 +13,47 @@ import React, { useRef } from 'react';
  * @param {boolean} props.indeterminate - For checkbox, whether the input is in an indeterminate state.
  * @param {string} props.pattern - Regex pattern for validation (for types like 'tel').
  * @param {React.ReactNode} props.children - Additional elements or content to render inside the input.
+ * @param {React.Ref} ref - A ref to be forwarded to the `tds-input` web component.
  * @returns {JSX.Element} The rendered `tds-input` component.
  */
-const Input = ({
-  type,
-  placeholder,
-  label,
-  disabled,
-  required,
-  checked,
-  indeterminate,
-  pattern,
-  children,
-  ...rest
-}) => {
-  const inputRef = useRef();
-
-  return (
-    <tds-input
-      ref={inputRef}
-      type={type}
-      placeholder={placeholder}
-      label={label}
-      disabled={disabled}
-      required={required}
-      checked={checked}
-      indeterminate={indeterminate}
-      pattern={pattern}
-      {...rest} // Spread any additional props
-    >
-      {children}
-    </tds-input>
-  );
-};
+const Input = forwardRef(
+  (
+    {
+      type,
+      placeholder,
+      label,
+      disabled,
+      required,
+      checked,
+      indeterminate,
+      pattern,
+      readonly,
+      value,
+      children,
+      ...rest
+    },
+    ref
+  ) => {
+    return (
+      <tds-input
+        ref={ref}
+        type={type}
+        placeholder={placeholder}
+        label={label}
+        {...(disabled ? { disabled: true } : {})}
+        {...(required ? { required: true } : {})}
+        {...(checked ? { checked: true } : {})}
+        {...(indeterminate ? { indeterminate: true } : {})}
+        pattern={pattern}
+        {...(readonly ? { readonly: true } : {})}
+        value={value}
+        {...rest} // Spread any additional props
+      >
+        {children}
+      </tds-input>
+    );
+  }
+);
 
 export default Input;
+export { Input };
